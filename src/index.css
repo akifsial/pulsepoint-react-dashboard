@@ -1,0 +1,263 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&display=swap");
+@import "tailwindcss";
+
+.website {
+  --font-primary: "Geist", sans-serif;
+  --font-secondary: "Space Grotesk", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --font-display-sm: "Bricolage Grotesque", sans-serif;
+
+  --primary-color: #F1EFFA;
+  --primary-color-hover: #1d5263;
+  --secondary-color: #f97316;
+  --text-color: #111827;
+  --muted-text: #6b7280;
+  --background-color: #ffffff;
+  --border-color: #e5e7eb;
+
+  --primary-bg: #f8f8f8;
+  --secondary-bg: #f3f7fa;
+  --tertiary-bg: #eff0f0;
+  --quaternary-bg: #fcfcfc;
+  --quinary-bg: #cee2ff;
+  --bg-dullblue: #edf7fe;
+  --bg-muted: #d9dde7;
+  --bg-accent: #e5f0f6;
+
+  --border-accent: #b1d4ec;
+  --border-subtle: #d5d7da;
+  --border-soft: #b1defd;
+  --border-neutral: #cecece;
+  --border-dark: rgba(0, 0, 0, 0.4);
+  --border-light: rgba(0, 0, 0, 0.1);
+
+  --container-width-sm: 640px;
+  --container-width-md: 768px;
+  --container-width-lg: 1024px;
+  --container-width-xl: 1214px;
+  --container-width-2xl: 1230px;
+}
+.website * {
+  box-sizing: border-box;
+}
+
+.website {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-secondary);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  line-height: 1.2;
+}
+
+.website .font-primary {
+  font-family: var(--font-primary);
+}
+
+.website .font-secondary {
+  font-family: var(--font-secondary);
+}
+.website .default_container {
+  @apply mx-auto w-full max-w-[var(--container-width-xl)] px-6 md:px-4 lg:px-4 flex-wrap;
+}
+
+.website h1 {
+  font-size: 60px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+.website h2 {
+  font-size: 45px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+.website h3 {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+.website h4 {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+.website h5 {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+.website h6 {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: var(--font-primary);
+}
+
+.website .default_para {
+  font-size: 16px;
+  font-family: var(--font-primary);
+  font-weight: 400;
+}
+.website .medium_para {
+  font-size: 16px;
+  font-family: var(--font-primary);
+  font-weight: 500;
+}
+.website .bold_para {
+  font-size: 16px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+}
+.website .sm_para {
+  font-size: 14px;
+  font-family: var(--font-primary);
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .website h1 {
+    font-size: 36px;
+  }
+  .website h2 {
+    font-size: 31px;
+  }
+  .website h3 {
+    font-size: 21px;
+  }
+  .website h4,
+  .website h5,
+  .website h6 {
+    font-size: 18px;
+  }
+}
+
+/* === DASHBOARD STYLES === */
+.dashboard {
+  --font-primary: "Geist", sans-serif;
+  --font-secondary: "Space Grotesk", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --font-display-sm: "Bricolage Grotesque", sans-serif;
+
+  --primary-color: #F1EFFA;
+  --primary-color-hover: #E7F2F9;
+  --primary-color-hover-light: #F2F9FC;
+  --color-accent: #10b981;
+  --color-danger: #ef4444;
+  --color-text: #1f2937;
+  --color-muted: #6b7280;
+  --color-bg: #f9fafb;
+  --color-card: #ffffff;
+  --color-border: #e5e7eb;
+
+  --bg-panel: #f3f4f6;
+  --bg-hover: #f1f5f9;
+
+  --border-soft: #2525251a;
+  --border-strong: #9ca3af;
+
+  --container-width-sm: 640px;
+  --container-width-md: 768px;
+  --container-width-lg: 1024px;
+  --container-width-xl: 1200px;
+  --container-width-2xl: 1280px;
+}
+
+.dashboard * {
+  box-sizing: border-box;
+}
+.dashboard .font-primary {
+  font-family: var(--font-primary);
+}
+.dashboard .font-secondary {
+  font-family: var(--font-secondary);
+}
+.dashboard .font-display {
+  font-family: var(--font-display);
+}
+.dashboard .font-display-sm {
+  font-family: var(--font-display-sm);
+}
+
+.dashboard {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-primary);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.4;
+  background: linear-gradient(
+    107.76deg,
+    #f4f7ff -2.99%,
+    #ddeff7 64.85%,
+    #d6e0f9 113.61%
+  );
+}
+
+.dashboard .container {
+  @apply mx-auto w-full px-4 max-w-[var(--container-width-xl)];
+}
+
+.dashboard h1 {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: var(----font-secondary);
+}
+.dashboard h2 {
+  font-size: 25px;
+  font-weight: 700;
+  font-family: var(--font-secondary);
+}
+.dashboard h3 {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: var(----font-secondary);
+}
+.dashboard h4 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.dashboard h5 {
+  font-size: 18px;
+  font-weight: 500;
+}
+.dashboard h6 {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dashboard .text-sm {
+  font-size: 14px;
+}
+.dashboard .text-xs {
+  font-size: 12px;
+}
+
+.dashboard .para {
+  font-size: 15px;
+  font-family: var(--font-primary);
+  font-weight: 400;
+}
+
+.dashboard .para-bold {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .dashboard h1 {
+    font-size: 28px;
+  }
+  .dashboard h2 {
+    font-size: 20px;
+  }
+  .dashboard h3 {
+    font-size: 20px;
+  }
+}
+
+/* 
+*{
+  border:2px solid red;
+} */
