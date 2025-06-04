@@ -39,7 +39,7 @@ const PatinetReviews: React.FC = () => {
                     Filter by
                   </p>
                   <PrimaryButton
-                    btnText="Ratigs"
+                    btnText="Ratings"
                     showImg={true}
                     imgClass="w-[24px] h-[24px] object-cover"
                     img={filterIcon}
