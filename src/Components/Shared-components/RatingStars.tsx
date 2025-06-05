@@ -46,7 +46,7 @@ const RatingStars = ({
         opacity: 1,
         cursor: isDisabled ? "auto" : "pointer",
       }}
-      value={value}
+      value={Number(value)}      
       onChange={onChange}
       itemStyles={myStyles}
       isDisabled={isDisabled}

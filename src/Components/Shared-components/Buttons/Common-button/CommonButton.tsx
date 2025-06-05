@@ -37,7 +37,7 @@ export const PrimaryButton: React.FC<PrimaryBtnProps> = ({
   );
 
   if (linkTo) {
-    return (
+    return (  
       <Link
         to={linkTo}
         className={`rounded-lg cursor-pointer ${
