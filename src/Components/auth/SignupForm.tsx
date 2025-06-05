@@ -6,6 +6,7 @@ import { IoMailOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
 import SelectField from "../SelectField";
 import signupLogo from "@assets/media/images/signup-logo.png";
+import OnBoardingLayout from "./OnBoradingLayout";
 
 interface FormData {
   firstName: string;
@@ -133,34 +134,9 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[linear-gradient(107.76deg,_#F4F7FF_-2.99%,_#DDEFF7_64.85%,_#D6E0F9_113.61%)] flex items-center justify-center gap-[20px] py-12 px-4 sm:px-6 lg:px-8">
-        <div className="flex-shrink-0 w-1/2 bg-[#FAFAFA]">
-          {/* Image */}
-            <img
-              src={dummyImage}
-              alt="User Image"
-              className="w-full h-auto object-cover rounded-[10px]"
-            />
-        </div>
-
-        {/* Form */}
-        <div className="w-full bg-white p-8 rounded-[10px]">
-            {/* Logo Image */}
-            <div className="flex justify-center mb-6">
-              <img
-                src={signupLogo}
-                alt="Signup Logo"
-                className="w-[243px] h-[55px]"
-              />
-            </div>
-            <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
-              Sign Up
-            </p>
-            <p className="text-[#252525CC] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
-              Join to explore and share care insights
-            </p>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+    <>
+    <OnBoardingLayout>
+   <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -325,8 +301,9 @@ const SignupForm = () => {
                 Sign Up
               </button>
             </form>
-        </div>
-    </div>
+    </OnBoardingLayout>
+ 
+    </>
   );
 };
 
