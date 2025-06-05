@@ -195,7 +195,7 @@ const SignupForm = () => {
     <>
       <OnBoardingLayout>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="h-[629px] overflow-y-auto">
+          <div className="min-h-[629px] overflow-y-auto">
             <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
               Sign Up
             </p>
@@ -466,7 +466,7 @@ const SignupForm = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-4"
           >
             Sign Up
           </button>

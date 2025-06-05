@@ -1,0 +1,151 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom"; // For navigation
+import InputField from "../InputField"; // Reusable input component
+import { IoMailOutline } from "react-icons/io5";
+import { IoLockClosedOutline } from "react-icons/io5";
+import OnBoardingLayout from "./OnBoradingLayout";
+import { FaGoogle, FaTwitter, FaFacebook } from "react-icons/fa"; // Social media icons
+
+const LoginPage = () => {
+    const [formData, setFormData] = useState({
+        usernameOrEmail: "",
+        password: "",
+        rememberMe: false,
+    });
+
+    const [errors, setErrors] = useState({
+        usernameOrEmail: "",
+        password: "",
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value, type, checked } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
+    };
+
+    const validateForm = () => {
+        const newErrors: any = {
+            usernameOrEmail: "",
+            password: "",
+        };
+
+        if (!formData.usernameOrEmail) newErrors.usernameOrEmail = "Email or Username is required.";
+        if (!formData.password) newErrors.password = "Password is required.";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (validateForm()) {
+            // Simulate form submission
+            console.log("Login Submitted", formData);
+
+            // Navigate to the dashboard or account page after successful login
+            // navigate("/dashboard"); (Uncomment and use if you have a routing setup)
+        }
+    };
+
+    return (
+        <OnBoardingLayout>
+            <div className="flex flex-col min-h-screen p-6">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Login</h2>
+                <p className="text-lg text-gray-600 mb-6">Join to explore and share care insights.</p>
+
+                <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md">
+                    {/* Email or Username Input */}
+                    <InputField
+                        label="Email or Username*"
+                        asterisk={true}
+                        icon={IoMailOutline}
+                        id="usernameOrEmail"
+                        name="usernameOrEmail"
+                        type="text"
+                        value={formData.usernameOrEmail}
+                        onChange={handleChange}
+                        errorMessage={errors.usernameOrEmail}
+                        placeholder="Enter your email or username"
+                    />
+                    {errors.usernameOrEmail && (
+                        <p className="mt-1 text-sm text-red-600">{errors.usernameOrEmail}</p>
+                    )}
+
+                    {/* Password Input */}
+                    <InputField
+                        label="Create a Password*"
+                        asterisk={true}
+                        icon={IoLockClosedOutline}
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        errorMessage={errors.password}
+                        placeholder="Enter your password"
+                    />
+                    {errors.password && (
+                        <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                    )}
+
+                    {/* Remember Me & Forgot Password */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                                name="rememberMe"
+                                checked={formData.rememberMe}
+                                onChange={handleChange}
+                                className="mr-2"
+                            />
+                            <label htmlFor="rememberMe" className="text-sm text-gray-700">
+                                Remember me
+                            </label>
+                        </div>
+
+                        {/* Forgot Password */}
+                        <Link to="/forgot-password" className="text-sm text-blue-600 hover:underline">
+                            Forgot Password?
+                        </Link>
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors"
+                    >
+                        Login
+                    </button>
+                    {/* "Or signup with" Section */}
+                    <div className="flex items-center justify-center space-x-2 mt-4">
+                        <p className="text-sm text-gray-600">or signup with</p>
+                    </div>
+
+                    {/* Social Media Icons */}
+                    <div className="flex justify-center space-x-4 mt-4">
+                        <FaGoogle className="text-2xl text-red-600 cursor-pointer hover:text-red-500" />
+                        <FaTwitter className="text-2xl text-blue-400 cursor-pointer hover:text-blue-300" />
+                        <FaFacebook className="text-2xl text-blue-600 cursor-pointer hover:text-blue-500" />
+                    </div>
+                    {/* "Don't have an account yet?" Section */}
+                    <div className="flex justify-center mt-6">
+                        <p className="text-sm text-gray-600">
+                            Don't have an account yet?{" "}
+                            <Link to="/signup" className="text-blue-600 hover:underline">
+                                Register now
+                            </Link>
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+        </OnBoardingLayout>
+    );
+};
+
+export default LoginPage;
