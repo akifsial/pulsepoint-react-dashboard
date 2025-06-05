@@ -4,6 +4,8 @@ import InputField from "../InputField";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoMailOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
+import SelectField from "../SelectField";
+import signupLogo from "@assets/media/images/signup-logo.png";
 
 interface FormData {
   firstName: string;
@@ -45,6 +47,30 @@ const SignupForm = () => {
     password: "",
     confirmPassword: "",
   });
+  // select data population
+  const genderOptions = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
+    { value: "prefer-not-to-say", label: "Prefer not to say" },
+  ];
+
+  const maritalStatusOptions = [
+    { value: "single", label: "Single" },
+    { value: "married", label: "Married" },
+    { value: "divorced", label: "Divorced" },
+    { value: "widowed", label: "Widowed" },
+    { value: "separated", label: "Separated" },
+  ];
+
+  const insuranceTypeOptions = [
+    { value: "health", label: "Health Insurance" },
+    { value: "dental", label: "Dental Insurance" },
+    { value: "vision", label: "Vision Insurance" },
+    { value: "life", label: "Life Insurance" },
+    { value: "disability", label: "Disability Insurance" },
+  ];
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -120,6 +146,14 @@ const SignupForm = () => {
 
         {/* Form */}
         <div className="w-1/2">
+         {/* Logo Image */}
+          <div className="flex justify-center mb-6">
+            <img
+              src={signupLogo} 
+              alt="Signup Logo"
+              className="w-[243px] h-[55px]"
+            />
+          </div>
           <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
             Sign Up
           </p>
@@ -168,6 +202,7 @@ const SignupForm = () => {
                   asterisk={true}
                   icon={IoMailOutline}
                   id="email"
+                  name="email"
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -182,6 +217,7 @@ const SignupForm = () => {
                   asterisk={true}
                   icon={IoCallOutline}
                   id="phone"
+                  name="phone"
                   type="number"
                   value={formData.phone}
                   onChange={handleChange}
@@ -199,6 +235,7 @@ const SignupForm = () => {
                   asterisk={true} // Display asterisk for required field
                   icon={IoPersonOutline} // Use appropriate icon (you can change the icon as needed)
                   id="age"
+                  name="age"
                   type="number"
                   value={formData.age}
                   onChange={handleChange}
@@ -208,22 +245,16 @@ const SignupForm = () => {
                 {errors.age && <p className="mt-1 text-sm text-red-600">{errors.age}</p>} {/* Display error message if any */}
               </div>
               <div>
-                <label htmlFor="gender" className="text-sm font-medium text-gray-700">
-                  Gender<span className="text-red-500">*</span>
-                </label>
-                <select
+                <SelectField
+                  label="Gender"
                   id="gender"
                   name="gender"
+                  asterisk={true}
                   value={formData.gender}
                   onChange={handleChange}
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                  <option value="prefer-not-to-say">Prefer not to say</option>
-                </select>
+                  options={genderOptions}
+                  errorMessage={errors.gender}
+                />
                 {errors.gender && <p className="mt-1 text-sm text-red-600">{errors.gender}</p>}
               </div>
             </div>
@@ -231,76 +262,57 @@ const SignupForm = () => {
             {/* Marital Status, and Insurance Type */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="maritalStatus" className="text-sm font-medium text-gray-700">
-                  Marital Status<span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="maritalStatus"
+                <SelectField
+                  label="Marital Status"
+                  id="maritalStatus" 
                   name="maritalStatus"
                   value={formData.maritalStatus}
                   onChange={handleChange}
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
-                >
-                  <option value="">Select Status</option>
-                  <option value="single">Single</option>
-                  <option value="married">Married</option>
-                  <option value="divorced">Divorced</option>
-                  <option value="widowed">Widowed</option>
-                  <option value="separated">Separated</option>
-                </select>
+                  options={maritalStatusOptions}
+                  errorMessage={errors.maritalStatus}
+                />
                 {errors.maritalStatus && <p className="mt-1 text-sm text-red-600">{errors.maritalStatus}</p>}
               </div>
               <div>
-                <label htmlFor="insuranceType" className="text-sm font-medium text-gray-700">
-                  Insurance Type<span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="insuranceType"
-                  name="insuranceType"
-                  value={formData.insuranceType}
-                  onChange={handleChange}
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
-                >
-                  <option value="">Select Insurance Type</option>
-                  <option value="health">Health Insurance</option>
-                  <option value="dental">Dental Insurance</option>
-                  <option value="vision">Vision Insurance</option>
-                  <option value="life">Life Insurance</option>
-                  <option value="disability">Disability Insurance</option>
-                </select>
+                <SelectField
+                label="Insurance Type"
+                id="insuranceType"
+                name="insuranceType"
+                value={formData.insuranceType}
+                onChange={handleChange}
+                options={insuranceTypeOptions}
+                errorMessage={errors.insuranceType}
+              />
                 {errors.insuranceType && <p className="mt-1 text-sm text-red-600">{errors.insuranceType}</p>}
               </div>
             </div>
             {/* Password Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                 Create a Password<span className="text-red-500">*</span>
-                </label>
-                <input
+                <InputField
+                  label="Create a Password"
+                  asterisk={true}
                   id="password"
                   name="password"
                   type="password"
                   value={formData.password}
                   onChange={handleChange}
+                  errorMessage={errors.password}
                   placeholder="Enter your password"
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
                 />
                 {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
               </div>
-
               <div>
-                <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
-                  Confirm Password<span className="text-red-500">*</span>
-                </label>
-                <input
+                <InputField
+                  label="Confirm Password"
+                  asterisk={true}
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
+                  errorMessage={errors.confirmPassword}
                   placeholder="Confirm your password"
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
                 />
                 {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
               </div>
