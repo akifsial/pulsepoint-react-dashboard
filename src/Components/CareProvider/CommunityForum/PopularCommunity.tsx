@@ -34,7 +34,7 @@ const PopularCommunity = () => {
   ];
   return (
     <>
-      <div className="w-[25%]">
+      <div className="w-[292px]">
         <div>
           <CommonInput
             placeholder="Search Communities "

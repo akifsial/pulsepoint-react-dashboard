@@ -60,15 +60,7 @@ const CommunityFeed = () => {
 >
 
       <h2 className="mb-4">Your Feed</h2>
-      <PrimaryButton
-                  btnText="Home"
-                  showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={addCommunity}
-                  imgPosition="left"
-                  btnClass="flex items-center gap-3 px-4 py-[10px] rounded-[10px] transition-all bg-[#28A2FF] text-white activeborder border-[#000] px-4 w-full md:w-[98px] py-[5.5px] rounded-[20px] text-[#252525] font-medium"
-                  
-                />
+      <button className="bg-[#28A2FF] rounded-[20px]">Home</button>
 
       {postList.map((post, index) => (
         <div key={index} className="post mb-6">
