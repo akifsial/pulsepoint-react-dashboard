@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // For navigation
-import InputField from "../InputField"; // Reusable input component for form fields
+import { Link } from "react-router-dom"; 
+import InputField from "../InputField"; 
 import OnBoardingLayout from "./OnBoradingLayout";
 
 const ForgotPasswordPage = () => {
@@ -66,7 +66,6 @@ const ForgotPasswordPage = () => {
             onChange={handleChange}
             errorMessage={errors.email}
             placeholder="contact@organization.org"
-            style="font-[Geist] font-[500] text-[16px] leading-[140%] tracking-[0%]"
           />
           {errors.email && (
             <p className="mt-1 text-sm text-red-600">{errors.email}</p>
