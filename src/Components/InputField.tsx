@@ -12,7 +12,8 @@ interface InputFieldProps {
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     icon?: React.ComponentType<{ size: number; color: string }>;
     gray?: boolean;
-    [rest: string]: any; // To allow any other props passed to the input element
+    errorMessage?: string;
+    [rest: string]: any;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -40,7 +41,7 @@ const InputField: React.FC<InputFieldProps> = ({
                 <div className="flex">
                     <label
                         htmlFor={id}
-                            className="block mb-1 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
+                        className="block mb-1 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
                     >
                         {label}
                     </label>

@@ -4,6 +4,10 @@ import InputField from "../InputField";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoMailOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
+import SelectField from "../SelectField";
+import signupLogo from "@assets/media/images/signup-logo.png";
+import OnBoardingLayout from "./OnBoradingLayout";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   firstName: string;
@@ -16,6 +20,11 @@ interface FormData {
   insuranceType: string;
   password: string;
   confirmPassword: string;
+  zipCode: string;
+  city: string;
+  state: string;
+  streetAddress: string;
+  preferredCommunication: string[];
 }
 
 const SignupForm = () => {
@@ -31,6 +40,11 @@ const SignupForm = () => {
     careNeeds: "",
     password: "",
     confirmPassword: "",
+    zipCode: "",
+    city: "",
+    state: "",
+    streetAddress: "",
+    preferredCommunication: [],
   });
 
   const [errors, setErrors] = useState<FormData>({
@@ -44,7 +58,45 @@ const SignupForm = () => {
     insuranceType: "",
     password: "",
     confirmPassword: "",
+    zipCode: "",
+    city: "",
+    state: "",
+    streetAddress: "",
+    preferredCommunication: "",
   });
+
+  const navigate = useNavigate(); // Hook to navigate
+  // select data population
+  const genderOptions = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
+    { value: "prefer-not-to-say", label: "Prefer not to say" },
+  ];
+
+  const maritalStatusOptions = [
+    { value: "single", label: "Single" },
+    { value: "married", label: "Married" },
+    { value: "divorced", label: "Divorced" },
+    { value: "widowed", label: "Widowed" },
+    { value: "separated", label: "Separated" },
+  ];
+
+  const insuranceTypeOptions = [
+    { value: "health", label: "Health Insurance" },
+    { value: "dental", label: "Dental Insurance" },
+    { value: "vision", label: "Vision Insurance" },
+    { value: "life", label: "Life Insurance" },
+    { value: "disability", label: "Disability Insurance" },
+  ];
+  const cityOptions = [
+    { value: "new_york", label: "New York" },
+    { value: "los_angeles", label: "Los Angeles" },
+    { value: "chicago", label: "Chicago" },
+    { value: "houston", label: "Houston" },
+    { value: "miami", label: "Miami" },
+  ];
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -52,6 +104,21 @@ const SignupForm = () => {
       ...prev,
       [name]: value,
     }));
+  };
+  // handle checkbox changes
+  const handleCommunicationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    setFormData((prev) => {
+      let updatedPreferredCommunication = [...prev.preferredCommunication];
+      if (checked) {
+        updatedPreferredCommunication.push(value);
+      } else {
+        updatedPreferredCommunication = updatedPreferredCommunication.filter(
+          (item) => item !== value
+        );
+      }
+      return { ...prev, preferredCommunication: updatedPreferredCommunication };
+    });
   };
 
 
@@ -67,6 +134,11 @@ const SignupForm = () => {
       insuranceType: "",
       password: "",
       confirmPassword: "",
+      zipCode: "",
+      city: "",
+      state: "",
+      streetAddress: "",
+      preferredCommunication: "",
     };
 
     if (!formData.firstName) newErrors.firstName = "First name is required.";
@@ -79,6 +151,13 @@ const SignupForm = () => {
     if (!formData.insuranceType) newErrors.insuranceType = "Insurance type is required.";
     if (!formData.password || formData.password.length < 8) newErrors.password = "Password must be at least 8 characters.";
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords must match.";
+    if (!formData.zipCode) newErrors.zipCode = "Zip code is required.";
+    if (!formData.city) newErrors.city = "City is required.";
+    if (!formData.state) newErrors.state = "State is required.";
+    if (!formData.streetAddress) newErrors.streetAddress = "Street address is required.";
+    if (formData.preferredCommunication.length === 0) {
+      newErrors.preferredCommunication = "Please select at least one communication method.";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -90,6 +169,7 @@ const SignupForm = () => {
       // Simulate form submission
       console.log("Form Submitted", formData);
       // Reset form after successful submission (Optional)
+      navigate("/account-created"); // Redirect to /account-created
       setFormData({
         firstName: "",
         lastName: "",
@@ -102,221 +182,299 @@ const SignupForm = () => {
         careNeeds: "",
         password: "",
         confirmPassword: "",
+        zipCode: "",
+        city: "",
+        state: "",
+        streetAddress: "",
+        preferredCommunication: "",
       });
     }
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#FAFAFA] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="flex items-center justify-center w-full bg-white rounded-lg shadow-lg p-8 space-x-8">
-        {/* Image */}
-        <div className="flex-shrink-0 w-1/2">
-          <img
-            src={dummyImage}
-            alt="User Image"
-            className="w-full h-auto object-cover rounded-[10px]"
-          />
-        </div>
-
-        {/* Form */}
-        <div className="w-1/2">
-          <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
-            Sign Up
-          </p>
-          <p className="text-[#252525CC] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
-            Join to explore and share care insights
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <InputField
-                  label="First Name"
-                  asterisk={true}
-                  icon={IoPersonOutline}
-                  id="firstName"
-                  type="text"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  errorMessage={errors.firstName}
-                  placeholder="Enter your first name"
-                />
-                {errors.firstName && <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>}
-              </div>
-              <div>
-                <InputField
-                  label="Last Name"
-                  asterisk={true}
-                  icon={IoPersonOutline}
-                  id="lastName"
-                  type="text"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  errorMessage={errors.firstName}
-                  placeholder="Enter your last name"
-                />
-                {errors.lastName && <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>}
-              </div>
-            </div>
-
-            {/* Other Form Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <InputField
-                  label="Email Address"
-                  asterisk={true}
-                  icon={IoMailOutline}
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  errorMessage={errors.firstName}
-                  placeholder="e.g. username@mail.com"
-                />
-                {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
-              </div>
-              <div>
-                <InputField
-                  label="Phone Number"
-                  asterisk={true}
-                  icon={IoCallOutline}
-                  id="phone"
-                  type="number"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  errorMessage={errors.firstName}
-                  placeholder="e.g., +1 800 555 1234"
-                />
-                {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <InputField
-                  label="Age"
-                  asterisk={true} // Display asterisk for required field
-                  icon={IoPersonOutline} // Use appropriate icon (you can change the icon as needed)
-                  id="age"
-                  type="number"
-                  value={formData.age}
-                  onChange={handleChange}
-                  errorMessage={errors.age} // Display error message for age
-                  placeholder="Enter your age" // Placeholder text
-                />
-                {errors.age && <p className="mt-1 text-sm text-red-600">{errors.age}</p>} {/* Display error message if any */}
-              </div>
-              <div>
-                <label htmlFor="gender" className="text-sm font-medium text-gray-700">
-                  Gender<span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="gender"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                  <option value="prefer-not-to-say">Prefer not to say</option>
-                </select>
-                {errors.gender && <p className="mt-1 text-sm text-red-600">{errors.gender}</p>}
-              </div>
-            </div>
-
-            {/* Marital Status, and Insurance Type */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="maritalStatus" className="text-sm font-medium text-gray-700">
-                  Marital Status<span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="maritalStatus"
-                  name="maritalStatus"
-                  value={formData.maritalStatus}
-                  onChange={handleChange}
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
-                >
-                  <option value="">Select Status</option>
-                  <option value="single">Single</option>
-                  <option value="married">Married</option>
-                  <option value="divorced">Divorced</option>
-                  <option value="widowed">Widowed</option>
-                  <option value="separated">Separated</option>
-                </select>
-                {errors.maritalStatus && <p className="mt-1 text-sm text-red-600">{errors.maritalStatus}</p>}
-              </div>
-              <div>
-                <label htmlFor="insuranceType" className="text-sm font-medium text-gray-700">
-                  Insurance Type<span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="insuranceType"
-                  name="insuranceType"
-                  value={formData.insuranceType}
-                  onChange={handleChange}
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
-                >
-                  <option value="">Select Insurance Type</option>
-                  <option value="health">Health Insurance</option>
-                  <option value="dental">Dental Insurance</option>
-                  <option value="vision">Vision Insurance</option>
-                  <option value="life">Life Insurance</option>
-                  <option value="disability">Disability Insurance</option>
-                </select>
-                {errors.insuranceType && <p className="mt-1 text-sm text-red-600">{errors.insuranceType}</p>}
-              </div>
-            </div>
-            {/* Password Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                  Password<span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Enter your password"
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
-                />
-                {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
-              </div>
-
-              <div>
-                <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
-                  Confirm Password<span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="Confirm your password"
-                  className="mt-1 py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
-                />
-                {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors"
-            >
+    <>
+      <OnBoardingLayout>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="min-h-[629px] overflow-y-auto">
+            <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
               Sign Up
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+            </p>
+            <p className="text-[#252525CC] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
+              Join to explore and share care insights
+            </p>
+          {/* Name Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <InputField
+                label="First Name"
+                asterisk={true}
+                icon={IoPersonOutline}
+                id="firstName"
+                type="text"
+                value={formData.firstName}
+                onChange={handleChange}
+                errorMessage={errors.firstName}
+                placeholder="Enter your first name"
+              />
+              {errors.firstName && <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>}
+            </div>
+            <div>
+              <InputField
+                label="Last Name"
+                asterisk={true}
+                icon={IoPersonOutline}
+                id="lastName"
+                type="text"
+                value={formData.lastName}
+                onChange={handleChange}
+                errorMessage={errors.firstName}
+                placeholder="Enter your last name"
+              />
+              {errors.lastName && <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>}
+            </div>
+          </div>
+
+          {/* Other Form Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <InputField
+                label="Email Address"
+                asterisk={true}
+                icon={IoMailOutline}
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                errorMessage={errors.firstName}
+                placeholder="e.g. username@mail.com"
+              />
+              {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+            </div>
+            <div>
+              <InputField
+                label="Phone Number"
+                asterisk={true}
+                icon={IoCallOutline}
+                id="phone"
+                name="phone"
+                type="number"
+                value={formData.phone}
+                onChange={handleChange}
+                errorMessage={errors.firstName}
+                placeholder="e.g., +1 800 555 1234"
+              />
+              {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <InputField
+                label="Age"
+                asterisk={true}
+                icon={IoPersonOutline}
+                id="age"
+                name="age"
+                type="number"
+                value={formData.age}
+                onChange={handleChange}
+                errorMessage={errors.age}
+                placeholder="Enter your age"
+              />
+              {errors.age && <p className="mt-1 text-sm text-red-600">{errors.age}</p>}
+            </div>
+            <div>
+              <SelectField
+                label="Gender"
+                id="gender"
+                name="gender"
+                asterisk={true}
+                value={formData.gender}
+                onChange={handleChange}
+                options={genderOptions}
+                errorMessage={errors.gender}
+              />
+              {errors.gender && <p className="mt-1 text-sm text-red-600">{errors.gender}</p>}
+            </div>
+          </div>
+
+          {/* Marital Status, and Insurance Type */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <SelectField
+                label="Marital Status"
+                id="maritalStatus"
+                name="maritalStatus"
+                value={formData.maritalStatus}
+                onChange={handleChange}
+                options={maritalStatusOptions}
+                errorMessage={errors.maritalStatus}
+              />
+              {errors.maritalStatus && <p className="mt-1 text-sm text-red-600">{errors.maritalStatus}</p>}
+            </div>
+            <div>
+              <SelectField
+                label="Insurance Type"
+                id="insuranceType"
+                name="insuranceType"
+                value={formData.insuranceType}
+                onChange={handleChange}
+                options={insuranceTypeOptions}
+                errorMessage={errors.insuranceType}
+              />
+              {errors.insuranceType && <p className="mt-1 text-sm text-red-600">{errors.insuranceType}</p>}
+            </div>
+          </div>
+          {/* zip code and city */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <InputField
+                label="Zip Code"
+                asterisk={true}
+                id="zipCode"
+                name="zipCode"
+                type="text"
+                value={formData.zipCode}
+                onChange={handleChange}
+                errorMessage={errors.zipCode}
+                placeholder="Enter your zip code"
+              />
+              {errors.zipCode && <p className="mt-1 text-sm text-red-600">{errors.zipCode}</p>}
+            </div>
+            <div>
+              <SelectField
+                label="City"
+                id="city"
+                name="city"
+                asterisk={true}
+                value={formData.city}
+                onChange={handleChange}
+                options={cityOptions}
+                errorMessage={errors.city}
+              />
+              {errors.city && <p className="mt-1 text-sm text-red-600">{errors.city}</p>}
+            </div>
+          </div>
+
+          {/* state and street adress */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <InputField
+                label="State"
+                asterisk={true}
+                id="state"
+                name="state"
+                type="text"
+                value={formData.state}
+                onChange={handleChange}
+                errorMessage={errors.state}
+                placeholder="e.g., California"
+              />
+              {errors.state && <p className="mt-1 text-sm text-red-600">{errors.state}</p>}
+            </div>
+            <div>
+              <InputField
+                label="Street Address"
+                asterisk={true}
+                id="streetAddress"
+                name="streetAddress"
+                type="text"
+                value={formData.streetAddress}
+                onChange={handleChange}
+                errorMessage={errors.streetAddress}
+                placeholder="e.g., 123 Main Street"
+              />
+              {errors.streetAddress && <p className="mt-1 text-sm text-red-600">{errors.streetAddress}</p>}
+            </div>
+          </div>
+
+
+          {/* Password Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <InputField
+                label="Create a Password"
+                asterisk={true}
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                errorMessage={errors.password}
+                placeholder="Enter your password"
+              />
+              {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+            </div>
+            <div>
+              <InputField
+                label="Confirm Password"
+                asterisk={true}
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                errorMessage={errors.confirmPassword}
+                placeholder="Confirm your password"
+              />
+              {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
+            </div>
+          </div>
+          <div className="space-y-4">
+            <p className="text-lg font-semibold">Preferred Communication Method</p>
+            <div className="flex space-x-6">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="email"
+                  name="preferredCommunication"
+                  value="email"
+                  checked={formData.preferredCommunication.includes("email")}
+                  onChange={handleCommunicationChange}
+                  className="mr-2"
+                />
+                <label htmlFor="email">Via Email Address</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="phone"
+                  name="preferredCommunication"
+                  value="phone"
+                  checked={formData.preferredCommunication.includes("phone")}
+                  onChange={handleCommunicationChange}
+                  className="mr-2"
+                />
+                <label htmlFor="phone">Via Phone Number</label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="sms"
+                  name="preferredCommunication"
+                  value="sms"
+                  checked={formData.preferredCommunication.includes("sms")}
+                  onChange={handleCommunicationChange}
+                  className="mr-2"
+                />
+                <label htmlFor="sms">Via SMS Text</label>
+              </div>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-4"
+          >
+            Sign Up
+          </button>
+          </div>
+        </form>
+      </OnBoardingLayout>
+
+    </>
   );
 };
 
