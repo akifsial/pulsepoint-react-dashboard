@@ -275,7 +275,7 @@ const SignupForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                  Password<span className="text-red-500">*</span>
+                 Create a Password<span className="text-red-500">*</span>
                 </label>
                 <input
                   id="password"
