@@ -5,7 +5,7 @@ import SignupForm from "@components/auth/SignupForm"; // ✅ Import SignupForm
 export const websitePublicRoutes = [
   { path: '/', element: <HomePage /> },
   { path: '/about-us', element: <AboutUs/> },
-    { path: '/signup', element: <SignupForm /> }, // ✅ Add Signup route
+    { path: '/signup', element: <SignupForm /> },
 ];
 
 // export const websitePrivateRoutes = [

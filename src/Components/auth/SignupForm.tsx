@@ -133,33 +133,32 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#FAFAFA] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="flex items-center justify-center w-full bg-white rounded-lg shadow-lg p-8 space-x-8">
-        {/* Image */}
-        <div className="flex-shrink-0 w-1/2">
-          <img
-            src={dummyImage}
-            alt="User Image"
-            className="w-full h-auto object-cover rounded-[10px]"
-          />
+    <div className="min-h-screen w-full bg-[linear-gradient(107.76deg,_#F4F7FF_-2.99%,_#DDEFF7_64.85%,_#D6E0F9_113.61%)] flex items-center justify-center gap-[20px] py-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex-shrink-0 w-1/2 bg-[#FAFAFA]">
+          {/* Image */}
+            <img
+              src={dummyImage}
+              alt="User Image"
+              className="w-full h-auto object-cover rounded-[10px]"
+            />
         </div>
 
         {/* Form */}
-        <div className="w-1/2">
-         {/* Logo Image */}
-          <div className="flex justify-center mb-6">
-            <img
-              src={signupLogo} 
-              alt="Signup Logo"
-              className="w-[243px] h-[55px]"
-            />
-          </div>
-          <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
-            Sign Up
-          </p>
-          <p className="text-[#252525CC] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
-            Join to explore and share care insights
-          </p>
+        <div className="w-full bg-white p-8 rounded-[10px]">
+            {/* Logo Image */}
+            <div className="flex justify-center mb-6">
+              <img
+                src={signupLogo}
+                alt="Signup Logo"
+                className="w-[243px] h-[55px]"
+              />
+            </div>
+            <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
+              Sign Up
+            </p>
+            <p className="text-[#252525CC] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
+              Join to explore and share care insights
+            </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Fields */}
@@ -228,36 +227,36 @@ const SignupForm = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <InputField
-                  label="Age"
-                  asterisk={true} // Display asterisk for required field
-                  icon={IoPersonOutline} // Use appropriate icon (you can change the icon as needed)
-                  id="age"
-                  name="age"
-                  type="number"
-                  value={formData.age}
-                  onChange={handleChange}
-                  errorMessage={errors.age} // Display error message for age
-                  placeholder="Enter your age" // Placeholder text
-                />
-                {errors.age && <p className="mt-1 text-sm text-red-600">{errors.age}</p>} {/* Display error message if any */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <InputField
+                    label="Age"
+                    asterisk={true}
+                    icon={IoPersonOutline} 
+                    id="age"
+                    name="age"
+                    type="number"
+                    value={formData.age}
+                    onChange={handleChange}
+                    errorMessage={errors.age} 
+                    placeholder="Enter your age" 
+                  />
+                  {errors.age && <p className="mt-1 text-sm text-red-600">{errors.age}</p>} 
+                </div>
+                <div>
+                  <SelectField
+                    label="Gender"
+                    id="gender"
+                    name="gender"
+                    asterisk={true}
+                    value={formData.gender}
+                    onChange={handleChange}
+                    options={genderOptions}
+                    errorMessage={errors.gender}
+                  />
+                  {errors.gender && <p className="mt-1 text-sm text-red-600">{errors.gender}</p>}
+                </div>
               </div>
-              <div>
-                <SelectField
-                  label="Gender"
-                  id="gender"
-                  name="gender"
-                  asterisk={true}
-                  value={formData.gender}
-                  onChange={handleChange}
-                  options={genderOptions}
-                  errorMessage={errors.gender}
-                />
-                {errors.gender && <p className="mt-1 text-sm text-red-600">{errors.gender}</p>}
-              </div>
-            </div>
 
             {/* Marital Status, and Insurance Type */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -318,16 +317,15 @@ const SignupForm = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors"
-            >
-              Sign Up
-            </button>
-          </form>
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors"
+              >
+                Sign Up
+              </button>
+            </form>
         </div>
-      </div>
     </div>
   );
 };
