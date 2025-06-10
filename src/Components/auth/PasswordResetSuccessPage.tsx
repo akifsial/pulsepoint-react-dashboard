@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // For navigation
 import OnBoardingLayout from "./OnBoradingLayout";
-import { IoCheckmarkCircle } from "react-icons/io5";
 import successIcon from "@assets/media/images/reset-success-icon.png"; // Adjust the path if necessary
 
 // const PasswordResetSuccessPage = () => {
