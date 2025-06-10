@@ -4,9 +4,10 @@ import OnBoardingLayout from "./OnBoradingLayout";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import successIcon from "@assets/media/images/reset-success-icon.png"; // Adjust the path if necessary
 
-const PasswordResetSuccessPage = () => {
+// const PasswordResetSuccessPage = () => {
+const PasswordResetSuccessPage: React.FC = () => {
   return (
-    <OnBoardingLayout>
+    <OnBoardingLayout noShowLogo={true}>
       <div className="flex flex-col justify-center items-center text-center min-h-[400px]">
         {/* Success Icon */}
         <div className="mb-4">
