@@ -265,3 +265,9 @@
 ::-webkit-scrollbar-thumb {
   background: transparent;
 }
+
+/* html,
+body,
+#root {
+  height: 100%;
+} */

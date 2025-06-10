@@ -63,7 +63,7 @@ const ResetPasswordPage = () => {
 
   return (
     <OnBoardingLayout>
-      <div className="flex flex-col justify-center items-start">
+      <div className="flex flex-col min-h-screen p-6 justify-center items-start">
         <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-4">
           Reset Password
         </h2>

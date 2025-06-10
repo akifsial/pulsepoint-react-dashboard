@@ -7,7 +7,7 @@ import successIcon from "@assets/media/images/reset-success-icon.png"; // Adjust
 const PasswordResetSuccessPage: React.FC = () => {
   return (
     <OnBoardingLayout noShowLogo={true}>
-      <div className="flex flex-col justify-center items-center text-center min-h-[400px]">
+      <div className="flex flex-col justify-center items-center text-center min-h-screen p-6">
         {/* Success Icon */}
         <div className="mb-4">
           <div className="w-[86px] h-[86px] rounded-full flex items-center justify-center">

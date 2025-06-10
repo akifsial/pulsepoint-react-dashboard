@@ -23,7 +23,7 @@ const OnBoardingLayout: React.FC<OnBoardingLayoutProps> = ({
         />
       </div>
       {/* Form */}
-  <div className="w-1/2  rounded-[10px] bg-white shadow-sm p-3 lg:p-[28px] flex flex-col gap-[10px] overflow-y-auto">        {/* Logo Image: Only render if noShowLogo is false */}
+  <div className="w-1/2 lg:w-1/2 xl:w-1/2 rounded-[10px] bg-white shadow-sm p-3 lg:p-[28px] flex flex-col gap-[10px] overflow-y-auto">        {/* Logo Image: Only render if noShowLogo is false */}
         {!noShowLogo && (
           <div className="flex justify-center">
             <img
