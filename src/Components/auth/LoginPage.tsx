@@ -57,15 +57,16 @@ const LoginPage = () => {
   return (
     <OnBoardingLayout>
       <div className="flex flex-col min-h-screen p-6 items-center justify-center">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Login</h2>
-        <p className="text-lg text-gray-600 mb-6">
+        <h2 className="text-[35px] font-bold leading-[140%] tracking-[0%] text-[#1A1A1A] font-space-grotesk mb-4">
+          Login
+        </h2>
+        <p className="text-[16px] font-normal leading-[150%] tracking-[0%] text-[#252525CC] font-geist mb-6">
           Join to explore and share care insights.
         </p>
-
         <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md">
           {/* Email or Username Input */}
           <InputField
-            label="Email or Username*"
+            label="Email or Username"
             asterisk={true}
             icon={IoMailOutline}
             id="usernameOrEmail"
@@ -84,7 +85,7 @@ const LoginPage = () => {
 
           {/* Password Input */}
           <InputField
-            label="Create a Password*"
+            label="Create a Password"
             asterisk={true}
             icon={IoLockClosedOutline}
             id="password"
