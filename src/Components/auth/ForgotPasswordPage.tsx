@@ -77,12 +77,14 @@ const ForgotPasswordPage = () => {
           )}
 
           {/* Update Password Button */}
+          <Link to="/reset-password">
           <button
             type="submit"
             className="w-full max-w-[570px] h-[46px] bg-[#28A2FF] text-white rounded-[10px] px-[10px] flex items-center justify-center gap-[10px] font-[Inter] font-semibold text-[14px] leading-[24px] tracking-[0%] transition-colors"
           >
             Update Password
           </button>
+          </Link>
 
           {/* Back to Login Link */}
           <div className="mt-4 flex justify-center">
