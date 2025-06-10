@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // For navigation
-import InputField from "../InputField"; // Reusable input component for form fields
+import { Link } from "react-router-dom"; 
+import InputField from "../InputField"; 
 import OnBoardingLayout from "./OnBoradingLayout";
 import { IoMailOutline } from "react-icons/io5";
 
@@ -69,7 +69,10 @@ const ForgotPasswordPage = () => {
             onChange={handleChange}
             errorMessage={errors.email}
             placeholder="contact@organization.org"
+<<<<<<< HEAD
             className="w-full max-w-[570px] h-[50px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] font-medium text-[16px] leading-[140%] tracking-[0%] text-[#1A1A1A] mb-3"
+=======
+>>>>>>> 90ee5c00dc29430117d784d918cf6aad5474037a
           />
 
           {errors.email && (
