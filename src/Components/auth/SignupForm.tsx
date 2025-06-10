@@ -194,8 +194,9 @@ const SignupForm = () => {
   return (
     <>
       <OnBoardingLayout>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="min-h-[629px] overflow-y-auto">
+          <div className="min-h-screen max-h-screen flex flex-col">
+        <form onSubmit={handleSubmit} className="space-y-6 overflow-y-auto ">
+          <div className="px-4 py-6">
             <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
               Sign Up
             </p>
@@ -472,6 +473,7 @@ const SignupForm = () => {
           </button>
           </div>
         </form>
+        </div>
       </OnBoardingLayout>
 
     </>
