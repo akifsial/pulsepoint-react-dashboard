@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // For navigation
-import InputField from "../InputField"; 
+import InputField from "../InputField";
 import { IoMailOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import OnBoardingLayout from "./OnBoradingLayout";
 import googleIcon from "@assets/media/images/google.png";
 import fbIcon from "@assets/media/images/fb.png";
 import twiterIcon from "@assets/media/images/twiter.png";
+import SocialLoginSection from "../SocialLoginSection"; // Import the new component
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -53,6 +54,10 @@ const LoginPage = () => {
       // navigate("/dashboard"); (Uncomment and use if you have a routing setup)
     }
   };
+
+  function handleSocialLogin(provider: string): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <OnBoardingLayout>
@@ -135,37 +140,11 @@ const LoginPage = () => {
           >
             Login
           </button>
-          <div className="flex items-center justify-center w-full mt-4">
-            <div className="flex items-center w-[306px] h-[11px] gap-[23px]">
-              <div className="w-[70px] h-[1.5px] bg-[#252525] opacity-20" />
-              <p className="text-[16px] leading-[26px] font-semibold text-[#252525] align-middle font-[Geist] opacity-50">
-                Or Sign up With
-              </p>
-              <div className="w-[70px] h-[1.5px] bg-[#252525] opacity-20" />
-            </div>
-          </div>
-
-          {/* Social Media Icons */}
-          <div className="flex justify-center space-x-4 mt-4">
-            <img
-              src={googleIcon}
-              alt="Google"
-              className="w-8 h-8 cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => handleSocialLogin("google")}
-            />{" "}
-            <img
-              src={twiterIcon}
-              alt="Facebook"
-              className="w-8 h-8 cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => handleSocialLogin("twiter")}
-            />{" "}
-            <img
-              src={fbIcon}
-              alt="fb"
-              className="w-8 h-8 cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => handleSocialLogin("fb")}
-            />{" "}
-          </div>
+          {/* calling component for Social icons */}
+          <SocialLoginSection
+            action="login"
+            handleSocialLogin={handleSocialLogin}
+          />
           {/* "Don't have an account yet?" Section */}
           <div className="flex justify-center mt-6">
             <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">

@@ -5,9 +5,9 @@ import { IoPersonOutline } from "react-icons/io5";
 import { IoMailOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
 import SelectField from "../SelectField";
-import signupLogo from "@assets/media/images/signup-logo.png";
 import OnBoardingLayout from "./OnBoradingLayout";
 import { useNavigate } from "react-router-dom";
+import SocialLoginSection from "../SocialLoginSection"; // Import the new component
 
 interface FormData {
   firstName: string;
@@ -190,6 +190,10 @@ const SignupForm = () => {
       });
     }
   };
+
+  function handleSocialLogin(provider: string): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <>
@@ -471,6 +475,8 @@ const SignupForm = () => {
           >
             Sign Up
           </button>
+         {/* calling component for Social icons */}
+          <SocialLoginSection action="signup" handleSocialLogin={handleSocialLogin} />
           </div>
         </form>
         </div>
