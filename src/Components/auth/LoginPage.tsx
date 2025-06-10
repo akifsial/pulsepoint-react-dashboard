@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // For navigation
-import InputField from "../InputField"; // Reusable input component
+import InputField from "../InputField"; 
 import { IoMailOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import OnBoardingLayout from "./OnBoradingLayout";
@@ -111,7 +111,10 @@ const LoginPage = () => {
                 onChange={handleChange}
                 className="mr-2"
               />
-              <label htmlFor="rememberMe" className="text-sm text-gray-700">
+              <label
+                htmlFor="rememberMe"
+                className="text-[16px] leading-[100%] tracking-[0.016em] text-[#252525] text-center align-middle font-medium font-[Geist]"
+              >
                 Remember me
               </label>
             </div>
@@ -119,7 +122,7 @@ const LoginPage = () => {
             {/* Forgot Password */}
             <Link
               to="/forgot-password"
-              className="text-sm text-blue-600 hover:underline"
+              className="text-[16px] leading-[100%] tracking-[0.016em] text-[#252525] text-center align-middle font-medium font-[Geist] hover:underline"
             >
               Forgot Password?
             </Link>
@@ -132,9 +135,14 @@ const LoginPage = () => {
           >
             Login
           </button>
-          {/* "Or signup with" Section */}
-          <div className="flex items-center justify-center space-x-2 mt-4">
-            <p className="text-sm text-gray-600">or signup with</p>
+          <div className="flex items-center justify-center w-full mt-4">
+            <div className="flex items-center w-[306px] h-[11px] gap-[23px]">
+              <div className="w-[70px] h-[1.5px] bg-[#252525] opacity-20" />
+              <p className="text-[16px] leading-[26px] font-semibold text-[#252525] align-middle font-[Geist] opacity-50">
+                Or Sign up With
+              </p>
+              <div className="w-[70px] h-[1.5px] bg-[#252525] opacity-20" />
+            </div>
           </div>
 
           {/* Social Media Icons */}
@@ -160,9 +168,12 @@ const LoginPage = () => {
           </div>
           {/* "Don't have an account yet?" Section */}
           <div className="flex justify-center mt-6">
-            <p className="text-sm text-gray-600">
-              Don't have an account yet?{" "}
-              <Link to="/signup" className="text-blue-600 underline">
+            <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
+              Don’t have an account yet?{" "}
+              <Link
+                to="/signup"
+                className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
+              >
                 Register now
               </Link>
             </p>
