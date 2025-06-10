@@ -6,7 +6,7 @@ import { IoMailOutline } from "react-icons/io5";
 import { IoCallOutline } from "react-icons/io5";
 import SelectField from "../SelectField";
 import OnBoardingLayout from "./OnBoradingLayout";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialLoginSection from "../SocialLoginSection"; // Import the new component
 
 interface FormData {
@@ -468,20 +468,34 @@ const SignupForm = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-4"
-          >
-            Sign Up
-          </button>
-         {/* calling component for Social icons */}
-          <SocialLoginSection action="signup" handleSocialLogin={handleSocialLogin} />
-          </div>
-        </form>
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-4"
+              >
+                Sign Up
+              </button>
+              {/* calling component for Social icons */}
+              <SocialLoginSection
+                action="signup"
+                handleSocialLogin={handleSocialLogin}
+              />
+              {/* "Don't have an account yet?" Section */}
+              <div className="flex justify-center mt-6">
+                <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
+                  Already have an account?{" "}
+                  <Link
+                    to="/login"
+                    className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
+                  >
+                    Login now
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </form>
         </div>
       </OnBoardingLayout>
-
     </>
   );
 };
