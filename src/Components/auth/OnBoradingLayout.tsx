@@ -23,7 +23,7 @@ const OnBoardingLayout: React.FC<OnBoardingLayoutProps> = ({
         />
       </div>
       {/* Form */}
-      <div className="w-1/2 lg:w-1/2 xl:w-1/2 rounded-[10px] bg-white shadow-sm p-3 lg:p-[28px] flex flex-col gap-[10px] overflow-y-auto">
+      <div className="h-full min-h-[759px] w-1/2 lg:w-1/2 xl:w-1/2 rounded-[10px] bg-white shadow-sm p-3 lg:p-[28px] flex flex-col justify-center gap-[10px] overflow-y-auto">
         {" "}
         {/* Logo Image: Only render if noShowLogo is false */}
         {!noShowLogo && (
@@ -36,7 +36,7 @@ const OnBoardingLayout: React.FC<OnBoardingLayoutProps> = ({
           </div>
         )}
         {/* {children} */}
-        <div className="w-full shrink-0 h-full min-h-[630px]">{children}</div>
+        {children}
       </div>
     </div>
   );
