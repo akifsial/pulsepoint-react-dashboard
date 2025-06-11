@@ -1,5 +1,4 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { sidebarLinks } from "./SidebarLinks";
 import React, { useEffect, useState } from "react";
 import SiteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";

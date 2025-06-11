@@ -1,7 +1,5 @@
 import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
 import React from "react";
-import contacts from "@assets/media/svgs/dashboard-svgs/contacts.svg";
-import flags from "@assets/media/svgs/dashboard-svgs/flag.svg";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
@@ -12,7 +10,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActivityCard";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import Admindb from "@assets/media/svgs/admin-db-svgs/admin-dashboard.svg";
@@ -193,29 +190,6 @@ const AdminDashboard: React.FC = () => {
               />
             )}
           />
-        </div>
-      </div>
-      <div className="bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <div>
-          <div className="flex md:flex-row flex-col md:items-center md:justify-between mb-4">
-            <h3 className="mb-3 md:mb-0">Community Forum Activity</h3>
-            <div className="flex items-center gap-3">
-              <p className="text-[#252525] font-medium text-sm">Filter by</p>
-              <PrimaryButton
-                btnText="Today"
-                showImg={true}
-                imgClass="w-[24px] h-[24px] object-cover"
-                img={filterIcon}
-                imgPosition="left"
-                btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                // onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-              />
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2  grid-cols-1 gap-[13px]">
-            <ForumActivityCard />
-            <ForumActivityCard />
-          </div>
         </div>
       </div>
     </div>
