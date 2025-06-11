@@ -122,75 +122,77 @@ const SignupForm = () => {
   };
 
 
-  const validateForm = () => {
-    const newErrors: FormData = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      age: "",
-      gender: "",
-      maritalStatus: "",
-      insuranceType: "",
-      password: "",
-      confirmPassword: "",
-      zipCode: "",
-      city: "",
-      state: "",
-      streetAddress: "",
-      preferredCommunication: "",
-    };
+  // const validateForm = () => {
+  //   const newErrors: FormData = {
+  //     firstName: "",
+  //     lastName: "",
+  //     email: "",
+  //     phone: "",
+  //     age: "",
+  //     gender: "",
+  //     maritalStatus: "",
+  //     insuranceType: "",
+  //     password: "",
+  //     confirmPassword: "",
+  //     zipCode: "",
+  //     city: "",
+  //     state: "",
+  //     streetAddress: "",
+  //     preferredCommunication: "",
+  //   };
 
-    if (!formData.firstName) newErrors.firstName = "First name is required.";
-    if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Valid email is required.";
-    if (!formData.phone || formData.phone.length < 10) newErrors.phone = "Valid phone number is required.";
-    if (!formData.age) newErrors.age = "Age is required.";
-    if (!formData.gender) newErrors.gender = "Gender is required.";
-    if (!formData.maritalStatus) newErrors.maritalStatus = "Marital status is required.";
-    if (!formData.insuranceType) newErrors.insuranceType = "Insurance type is required.";
-    if (!formData.password || formData.password.length < 8) newErrors.password = "Password must be at least 8 characters.";
-    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords must match.";
-    if (!formData.zipCode) newErrors.zipCode = "Zip code is required.";
-    if (!formData.city) newErrors.city = "City is required.";
-    if (!formData.state) newErrors.state = "State is required.";
-    if (!formData.streetAddress) newErrors.streetAddress = "Street address is required.";
-    if (formData.preferredCommunication.length === 0) {
-      newErrors.preferredCommunication = "Please select at least one communication method.";
-    }
+  //   if (!formData.firstName) newErrors.firstName = "First name is required.";
+  //   if (!formData.lastName) newErrors.lastName = "Last name is required.";
+  //   if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Valid email is required.";
+  //   if (!formData.phone || formData.phone.length < 10) newErrors.phone = "Valid phone number is required.";
+  //   if (!formData.age) newErrors.age = "Age is required.";
+  //   if (!formData.gender) newErrors.gender = "Gender is required.";
+  //   if (!formData.maritalStatus) newErrors.maritalStatus = "Marital status is required.";
+  //   if (!formData.insuranceType) newErrors.insuranceType = "Insurance type is required.";
+  //   if (!formData.password || formData.password.length < 8) newErrors.password = "Password must be at least 8 characters.";
+  //   if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords must match.";
+  //   if (!formData.zipCode) newErrors.zipCode = "Zip code is required.";
+  //   if (!formData.city) newErrors.city = "City is required.";
+  //   if (!formData.state) newErrors.state = "State is required.";
+  //   if (!formData.streetAddress) newErrors.streetAddress = "Street address is required.";
+  //   if (formData.preferredCommunication.length === 0) {
+  //     newErrors.preferredCommunication = "Please select at least one communication method.";
+  //   }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (validateForm()) {
+  //     console.log("Form Submitted", formData);
+  //     navigate("/account-created"); 
+  //     setFormData({
+  //       firstName: "",
+  //       lastName: "",
+  //       email: "",
+  //       phone: "",
+  //       age: "",
+  //       gender: "",
+  //       maritalStatus: "",
+  //       insuranceType: "",
+  //       careNeeds: "",
+  //       password: "",
+  //       confirmPassword: "",
+  //       zipCode: "",
+  //       city: "",
+  //       state: "",
+  //       streetAddress: "",
+  //       preferredCommunication: "",
+  //     });
+  //   }
+  // };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      // Simulate form submission
-      console.log("Form Submitted", formData);
-      // Reset form after successful submission (Optional)
-      navigate("/account-created"); // Redirect to /account-created
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        age: "",
-        gender: "",
-        maritalStatus: "",
-        insuranceType: "",
-        careNeeds: "",
-        password: "",
-        confirmPassword: "",
-        zipCode: "",
-        city: "",
-        state: "",
-        streetAddress: "",
-        preferredCommunication: "",
-      });
-    }
-  };
-
+  e.preventDefault();
+  navigate("/login");  // Redirect to login page
+};
   function handleSocialLogin(provider: string): void {
     throw new Error("Function not implemented.");
   }
