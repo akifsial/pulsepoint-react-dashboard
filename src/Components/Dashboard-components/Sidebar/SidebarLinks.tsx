@@ -1,4 +1,7 @@
 import dashboardIcon from "@assets/media/svgs/dashboard-svgs/Dashboard.svg";
+import UserIcon from "@assets/media/svgs/dashboard-svgs/user.svg";
+import userActive from "@assets/media/svgs/dashboard-svgs/user-active2.svg";
+import userHover from "@assets/media/svgs/dashboard-svgs/user-hover.svg";
 import reviewIcon from "@assets/media/svgs/dashboard-svgs/Review.svg";
 import communityIcon from "@assets/media/svgs/dashboard-svgs/Community.svg";
 import dashboardHover from "@assets/media/svgs/dashboard-svgs/dashboard-hover.svg";
@@ -58,6 +61,15 @@ export const AdminSidebarLinks: SidebarLink[] = [
       default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+   {
+    label: "Care Providers",
+    path: "/admin/care-provider",
+    icon: {
+      default: <img src={UserIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={userActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   {
