@@ -32,7 +32,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
         <div className="flex">
           <label
             htmlFor={id}
-            className="block mb-1 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
+            className="block mb-1 text-[14px] font-[400] text-[#252525] leading-[1.08] tracking-[0%] align-bottom font-[Geist]"
           >
             {label}
           </label>
@@ -44,7 +44,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           id={id}
           value={value}
           onChange={onChange}
-          className={`py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full ${gray ? 'bg-gray-100' : ''}`}
+          className={`py-3 px-4 border border-[#252525B2] rounded-[8px] bg-[#FBFCFD] w-full h-[50px] ${gray ? 'bg-gray-100' : ''}`}
           {...rest}
         >
           <option value="">Select {label}</option>

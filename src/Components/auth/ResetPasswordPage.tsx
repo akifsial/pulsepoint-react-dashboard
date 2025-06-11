@@ -103,7 +103,7 @@ const ResetPasswordPage = () => {
 
           <button
             type="submit"
-            className="w-full h-[46px] bg-[#28A2FF] text-white rounded-[10px] px-[10px] flex items-center justify-center gap-[10px] font-[Inter] font-semibold text-[14px] leading-[24px] tracking-[0%] transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-[#28A2FF] focus:ring-offset-2"
+            className="w-full h-[46px] bg-[#28A2FF] text-white rounded-[10px] px-[10px] flex items-center justify-center gap-[10px] font-[Inter] font-semibold text-[14px] leading-[24px] tracking-[0%] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
           >
             Update Password
           </button>
