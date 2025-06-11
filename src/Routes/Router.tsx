@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { DashboardRoutes } from "./DashboardRoutes";
 import { websitePublicRoutes } from "./WebsiteRoutes";
+import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
 
 const Router: React.FC = () => {
@@ -11,6 +12,19 @@ const Router: React.FC = () => {
       ))}
 
       {DashboardRoutes.map(({ path, element, children }) => (
+        <Route key={path} path={path} element={element}>
+          {children?.map((child) => (
+            <Route
+              key={child.path || "index"}
+              path={child.path}
+              element={child.element}
+              index={child.path === "" ? true : undefined}
+            />
+          ))}
+        </Route>
+      ))}
+      {/* Admin Routes */}
+      {AdminRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
           {children?.map((child) => (
             <Route

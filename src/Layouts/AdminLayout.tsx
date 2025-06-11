@@ -4,7 +4,7 @@ import { sidebarLinks } from "@components/Dashboard-components/Sidebar/SidebarLi
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-const CareProviderLayout = () => {
+const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -24,4 +24,4 @@ const CareProviderLayout = () => {
   );
 };
 
-export default CareProviderLayout;
+export default AdminLayout;
