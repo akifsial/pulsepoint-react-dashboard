@@ -61,7 +61,7 @@ export const AdminSidebarLinks: SidebarLink[] = [
     },
   },
   {
-    label: "Patients Reviews",
+    label: "My Reviews",
     path: "/admin/patient-reviews",
     icon: {
       default: <img src={reviewIcon} alt="Dashboard" className="w-5 h-5" />,
