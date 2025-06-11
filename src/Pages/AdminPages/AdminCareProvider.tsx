@@ -31,7 +31,7 @@ const CareProviderDashboard: React.FC = () => {
   const columns = [
     {
       accessor: "userData",
-      header: "Patient’s Name",
+      header: "Provider’s Name",
       showSort: true,
       cell: ({ row }: any) => {
         const { first_name, last_name, email } = row.original;
@@ -106,22 +106,27 @@ const CareProviderDashboard: React.FC = () => {
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
         <StatsCommonCards
-          count={128}
-          title="Total Patient Reviews"
+          count={40}
+          title={
+            <>
+              Total Care <br />
+              Providers Listing
+            </>
+          }
           cardImg={contacts}
           imgBg="#EEE0FF"
           borderBg="#9747FF"
         />
         <StatsCommonCards
-          count={10}
-          title="Unread Messages or Questions"
+          count={25}
+          title="Total Reviews Written"
           cardImg={stars}
           imgBg="#D8F6D4"
           borderBg="#52C343"
         />
         <StatsCommonCards
           count={10}
-          title="Flagged Reviews"
+          title="Average Rating Given"
           cardImg={flags}
           imgBg="#FFE8CF"
           borderBg="#F98A17"
@@ -136,7 +141,7 @@ const CareProviderDashboard: React.FC = () => {
       </div>
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Recent Reviews</h3>
+          <h3 className="md:mb-0 mb-3">Care Providers</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">

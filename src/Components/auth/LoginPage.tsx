@@ -4,10 +4,8 @@ import InputField from "../InputField";
 import { IoMailOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import OnBoardingLayout from "./OnBoradingLayout";
-import googleIcon from "@assets/media/images/google.png";
-import fbIcon from "@assets/media/images/fb.png";
-import twiterIcon from "@assets/media/images/twiter.png";
 import SocialLoginSection from "../SocialLoginSection"; // Import the new component
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -30,30 +28,39 @@ const LoginPage = () => {
     }));
   };
 
-  const validateForm = () => {
-    const newErrors: any = {
-      usernameOrEmail: "",
-      password: "",
-    };
+  // const validateForm = () => {
+  //   const newErrors: any = {
+  //     usernameOrEmail: "",
+  //     password: "",
+  //   };
 
-    if (!formData.usernameOrEmail)
-      newErrors.usernameOrEmail = "Email or Username is required.";
-    if (!formData.password) newErrors.password = "Password is required.";
+  //   if (!formData.usernameOrEmail)
+  //     newErrors.usernameOrEmail = "Email or Username is required.";
+  //   if (!formData.password) newErrors.password = "Password is required.";
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (validateForm()) {
+  //     console.log("Login Submitted", formData);
+  //   }
+  // };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      // Simulate form submission
-      console.log("Login Submitted", formData);
+  e.preventDefault();
+  
+  // Simulate form submission
+  console.log("Login Submitted", formData);
 
-      // Navigate to the dashboard or account page after successful login
-      // navigate("/dashboard"); (Uncomment and use if you have a routing setup)
-    }
-  };
+  // Navigate to the dashboard after successful login
+  navigate("/admin/dashboard"); // Use navigate to redirect
+};
+const navigate = useNavigate();
+
+
 
   function handleSocialLogin(provider: string): void {
     throw new Error("Function not implemented.");
