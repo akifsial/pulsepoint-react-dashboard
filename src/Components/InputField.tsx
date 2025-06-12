@@ -1,0 +1,77 @@
+import React, { useState, ChangeEvent } from "react";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+
+// Defining types for the component props
+interface InputFieldProps {
+    label?: string;
+    asterisk?: boolean;
+    id?: string;
+    type?: string;
+    placeholder?: string;
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    icon?: React.ComponentType<{ size: number; color: string }>;
+    gray?: boolean;
+    [rest: string]: any; // To allow any other props passed to the input element
+}
+
+const InputField: React.FC<InputFieldProps> = ({
+    label = "",
+    id = "",
+    type = "text",
+    placeholder = "",
+    value,
+    onChange,
+    icon: IconComponent,
+    gray,
+    asterisk,
+    ...rest
+}) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const isPassword = type === "password";
+
+    const handleToggle = () => {
+        setShowPassword((prev) => !prev);
+    };
+
+    return (
+        <div className="w-full mb-4">
+            {label && (
+                <div className="flex">
+                    <label
+                        htmlFor={id}
+                            className="block mb-1 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
+                    >
+                        {label}
+                    </label>
+                    {asterisk && (<span className="text-red-500">*</span>)}
+                </div>
+            )}
+            <div className="relative">
+                <input
+                    id={id}
+                    type={isPassword && showPassword ? "text" : type}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    className="py-3 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
+                    {...rest}
+                />
+                <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black">
+                    {isPassword ? (
+                        showPassword ? (
+                            <IoEyeOutline size={18} onClick={handleToggle} color="#292D32" />
+                        ) : (
+                            <IoEyeOffOutline size={18} onClick={handleToggle} color="#292D32" />
+                        )
+                    ) : (
+                        IconComponent && <IconComponent size={18} color="#292D32" />  // Render the icon dynamically
+                    )}
+                </div>
+
+            </div>
+        </div>
+    );
+};
+
+export default InputField;

@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import userProfile from "@assets/media/svgs/dashboard-svgs/userProfile.svg";
 import postImage from "@assets/media/images/dashboard-images/postImage.png";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
 import share from "@assets/media/svgs/dashboard-svgs/share.svg";
 import comment from "@assets/media/svgs/dashboard-svgs/comment.svg";
-import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
+import home from "@assets/media/svgs/dashboard-svgs/home.svg";
+import popular from "@assets/media/svgs/dashboard-svgs/popular.svg";
 
 const postList = [
   {
@@ -34,6 +32,7 @@ const postList = [
       "My 78-year-old dad is struggling with mobilityMy 78-year-old dad is struggling with mobilityMy 78-year-old dad is struggling with mobility",
   },
 ];
+
 const buttons = [
   {
     btnText: "32k",
@@ -49,22 +48,58 @@ const buttons = [
     btnIcon: share,
   },
 ];
+
 const CommunityFeed = () => {
+  const [activeTab, setActiveTab] = useState("home");
+  const [activePostActions, setActivePostActions] = useState(null); 
+  const togglePostActions = (index) => {
+    if (activePostActions === index) {
+      setActivePostActions(null); 
+    } else {
+      setActivePostActions(index); 
+    }
+  };
+
+  const filteredPosts = activeTab === "home" ? postList : postList.slice(0, 1);
+
   return (
-   <div
-  className="w-[75%] h-[661px] overflow-y-auto pr-2"
-  style={{
-    scrollbarWidth: "none",       
-    msOverflowStyle: "none",       
-  }}
->
+    <div
+      className={`sm:w-[813px] sm:h-[661px] overflow-y-auto transition-colors duration-300`}
+      style={{
+        scrollbarWidth: "none",
+        msOverflowStyle: "none",
+      }}
+    >
+      <h2 className="text-xl font-semibold mb-3.5 text-[#252525]">Your Feed</h2>
+      <div className="flex gap-[5px] mb-6">
+        <button
+          onClick={() => setActiveTab("home")}
+          className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
+            activeTab === "home"
+              ? "bg-[#28A2FF] text-white"
+              : "bg-[#D9E7EE] text-[#252525]"
+          }`}
+        >
+          <img src={home} alt="" />
+          Home
+        </button>
 
-      <h2 className="mb-4">Your Feed</h2>
-      <button className="bg-[#28A2FF] rounded-[20px]">Home</button>
+        <button
+          onClick={() => setActiveTab("Popular")}
+          className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
+            activeTab === "Popular"
+              ? "bg-[#28A2FF] text-white"
+              : "bg-[#D9E7EE] text-[#252525]"
+          }`}
+        >
+          <img src={popular} alt="" />
+          Popular
+        </button>
+      </div>
 
-      {postList.map((post, index) => (
-        <div key={index} className="post mb-6">
-          <div className="post_content bg-white rounded-[10px] p-4">
+      {filteredPosts.map((post, index) => (
+        <div key={index} className="post mb-6 relative">
+          <div className="post_content bg-white rounded-[10px] p-4 relative">
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center gap-3">
                 <div className="relative">
@@ -79,12 +114,15 @@ const CommunityFeed = () => {
                   <p className="font-semibold mb-1 text-[#252525] leading-tight">
                     {post.userName}
                   </p>
-                  <span className="text-sm text-gray-500 leading-tight">
-                    {post.userPost}
-                  </span>
+                  <span className="text-sm text-gray-500 leading-tight">{post.userPost}</span>
                 </div>
               </div>
-              <div>
+
+              <button
+                className="cursor-pointer relative z-20"
+                onClick={() => togglePostActions(index)}
+                aria-label="Toggle post actions"
+              >
                 <svg
                   width="26"
                   height="26"
@@ -93,33 +131,33 @@ const CommunityFeed = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <g opacity="0.8">
-                    <path
-                      d="M13.1599 14.0063C13.7508 14.0063 14.2299 13.5273 14.2299 12.9363C14.2299 12.3453 13.7508 11.8662 13.1599 11.8662C12.5689 11.8662 12.0898 12.3453 12.0898 12.9363C12.0898 13.5273 12.5689 14.0063 13.1599 14.0063Z"
+                    <circle
+                      cx="13.16"
+                      cy="5.45"
+                      r="1.07"
                       stroke="#252525"
                       strokeWidth="2.14"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
                     />
-                    <path
-                      d="M13.1599 6.51605C13.7508 6.51605 14.2299 6.03698 14.2299 5.44602C14.2299 4.85505 13.7508 4.37598 13.1599 4.37598C12.5689 4.37598 12.0898 4.85505 12.0898 5.44602C12.0898 6.03698 12.5689 6.51605 13.1599 6.51605Z"
+                    <circle
+                      cx="13.16"
+                      cy="12.94"
+                      r="1.07"
                       stroke="#252525"
                       strokeWidth="2.14"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
                     />
-                    <path
-                      d="M13.1599 21.4966C13.7508 21.4966 14.2299 21.0175 14.2299 20.4266C14.2299 19.8356 13.7508 19.3565 13.1599 19.3565C12.5689 19.3565 12.0898 19.8356 12.0898 20.4266C12.0898 21.0175 12.5689 21.4966 13.1599 21.4966Z"
+                    <circle
+                      cx="13.16"
+                      cy="20.43"
+                      r="1.07"
                       stroke="#252525"
                       strokeWidth="2.14"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
                     />
                   </g>
                 </svg>
-              </div>
+              </button>
             </div>
 
-            <div className="">
+            <div>
               <h3 className="mb-2.5">{post.title}</h3>
               <p className="text-sm text-[#252525] mb-7">
                 {post.desc} <span className="text-[#868686]">Read more..</span>
@@ -129,20 +167,20 @@ const CommunityFeed = () => {
             <div className="mb-2.5">
               <img src={post.postImage} alt="" className="rounded-md" />
             </div>
+
             <div className="flex gap-2.5 mb-2.5">
               {buttons.map((btn, idx) => (
                 <button
                   key={idx}
-                  className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5  min-w-[88px] justify-center"
+                  className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center"
                 >
-                  <img src={btn.btnIcon} alt="icon" className="object-cover " />
+                  <img src={btn.btnIcon} alt="icon" className="object-cover" />
                   {btn.btnText}
-                  {btn.downarrow && (
-                    <img src={btn.downarrow} alt="" className="" />
-                  )}
+                  {btn.downarrow && <img src={btn.downarrow} alt="" />}
                 </button>
               ))}
             </div>
+
             <div>
               <input
                 type="text"
@@ -151,51 +189,64 @@ const CommunityFeed = () => {
                 style={{ borderColor: "#D3D3D3" }}
               />
             </div>
-            <div className="flex items-start gap-3 mb-5">
-              <div className="">
-                <img
-                  alt=""
-                  src={post.userImage}
-                  className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200"
-                />
+
+            {activePostActions === index && (
+              <div className="absolute top-14 right-4 bg-white border border-gray-300 rounded-md shadow-md p-3 z-50 w-[150px]">
+                <button
+                  onClick={() => alert(`Flagged post: ${post.title}`)}
+                  className="w-full text-left px-3 py-2 hover:bg-[#E7F2F9] rounded">
+                  Flag Post
+                </button>
+                <button
+                  onClick={() => alert(`Saved post: ${post.title}`)}
+                  className="w-full text-left px-3 py-2 hover:bg-[#E7F2F9] rounded"
+                >
+                  Save Post
+                </button>
               </div>
+            )}
+
+            <div className="flex items-start gap-3 mb-5">
+              <img
+                alt=""
+                src={post.userImage}
+                className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200"
+              />
               <div>
-                <div className="flex flex-col">
-                  <p className="font-semibold mb-1 text-[#252525] leading-tight">
-                    {post.userName}
-                  </p>
-                  <span className="text-[12px] mb-2 text-gray-500 leading-tight">
-                    {post.userTime}
-                  </span>
-                  <p className="text-sm mb-2.5">{post.userReview}</p>
-                  <div className="flex gap-2.5 mb-2.5">
-                    {buttons.map((btn, idx) => (
-                      <button
-                        key={idx}
-                        className="flex text-[12px] items-center gap-1 bg-[#E6E9EB] rounded-[32px] px-1 py-1.5  min-w-[75px] justify-center"
-                      >
+                <p className="font-semibold mb-1 text-[#252525] leading-tight">
+                  {post.userName}
+                </p>
+                <span className="text-[12px] mb-2 text-gray-500 leading-tight">
+                  {post.userTime}
+                </span>
+                <p className="text-sm mb-2.5">{post.userReview}</p>
+                <div className="flex gap-2.5 mb-2.5">
+                  {buttons.map((btn, idx) => (
+                    <button
+                      key={idx}
+                      className="flex text-[12px] items-center gap-1 bg-[#E6E9EB] rounded-[32px] px-1 py-1.5 min-w-[75px] justify-center"
+                    >
+                      <img
+                        src={btn.btnIcon}
+                        alt="icon"
+                        className="object-cover h-[19px] w-[19px]"
+                      />
+                      {btn.btnText}
+                      {btn.downarrow && (
                         <img
-                          src={btn.btnIcon}
-                          alt="icon"
-                          className="object-cover h-[19px] w-[19px]"
+                          src={btn.downarrow}
+                          alt=""
+                          className="object-cover h-5 w-5"
                         />
-                        {btn.btnText}
-                        {btn.downarrow && (
-                          <img
-                            src={btn.downarrow}
-                            alt=""
-                            className="object-cover h-5 w-5"
-                          />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="text-sm text-[#007AB2]">- View 2 replies</p>
+                      )}
+                    </button>
+                  ))}
                 </div>
+                <p className="text-sm text-[#007AB2]">- View 2 replies</p>
               </div>
             </div>
-                <div><p className="text-[#007AB2] font-medium text-sm">Show 5 more Comments</p></div>
-            
+
+            <p className="text-[#007AB2] font-medium text-sm">Show 5 more Comments</p>
           </div>
         </div>
       ))}
