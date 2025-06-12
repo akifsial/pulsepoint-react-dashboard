@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // For navigation
 import InputField from "../InputField";
-import { IoMailOutline } from "react-icons/io5";
+import { IoPersonOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import OnBoardingLayout from "./OnBoradingLayout";
 import SocialLoginSection from "../SocialLoginSection"; // Import the new component
@@ -80,7 +80,7 @@ const navigate = useNavigate();
           <InputField
             label="Email or Username"
             asterisk={true}
-            icon={IoMailOutline}
+           icon={IoPersonOutline}
             id="usernameOrEmail"
             name="usernameOrEmail"
             type="text"
@@ -153,7 +153,7 @@ const navigate = useNavigate();
             handleSocialLogin={handleSocialLogin}
           />
           {/* "Don't have an account yet?" Section */}
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center">
             <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
               Don’t have an account yet?{" "}
               <Link
