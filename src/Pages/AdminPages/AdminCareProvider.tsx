@@ -12,7 +12,7 @@ import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
-import Admindb from "@assets/media/svgs/admin-db-svgs/admin-dashboard.svg";
+// import Admindb from "@assets/media/svgs/admin-db-svgs/admin-dashboard.svg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 
 const CareProviderDashboard: React.FC = () => {
@@ -24,7 +24,7 @@ const CareProviderDashboard: React.FC = () => {
     date?: string;
     email?: string;
     image?: string;
-    rating?: any;
+    rating?: number | string | React.ReactNode;
     reviews?: string;
     specialization?: string;
     location?: string;
@@ -35,7 +35,7 @@ const CareProviderDashboard: React.FC = () => {
       accessor: "userData",
       header: "Provider’s Name",
       showSort: true,
-      cell: ({ row }: any) => {
+      cell: ({ row }: { row: { original: dataTypes } }) => {
         const { first_name, last_name, email } = row.original;
         return (
           <div className="flex items-center gap-3">
@@ -138,12 +138,12 @@ const CareProviderDashboard: React.FC = () => {
     },
   ];
 
-  const handleRowSelect = (row: Person) => {
+  const handleRowSelect = (row: dataTypes) => {
     console.log("Selected row:", row);
   };
 
-  const renderActions = (row: Person) => (
-    <button onClick={() => alert(`Edit ${row.name}`)}>Edit</button>
+  const renderActions = (row: dataTypes) => (
+    <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>Edit</button>
   );
   return (
     <div className="mb-10">
@@ -217,7 +217,7 @@ const CareProviderDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <TanDataTable<dataTypes>
             columns={columns}
             data={data}
@@ -234,7 +234,24 @@ const CareProviderDashboard: React.FC = () => {
               />
             )}
           />
-        </div>
+        </div> */}
+        <div>
+  <TanDataTable<dataTypes>
+    columns={columns}
+    data={data}
+    showCheckbox={false}
+    onRowSelect={handleRowSelect}
+    showActions={true}
+    className="my-custom-class"
+    actions={(row) => (
+      <DropdownActions
+        onView={() => console.log("View", row.id)}
+        onEdit={() => console.log("Edit", row.id)}
+        onDelete={() => console.log("Delete", row.id)}
+      />
+    )}
+  />
+</div>
       </div>
     </div>
   );

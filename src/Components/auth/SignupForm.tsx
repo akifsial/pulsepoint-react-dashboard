@@ -4,7 +4,7 @@ import InputField from "../InputField";
 import SelectField from "../SelectField";
 import OnBoardingLayout from "./OnBoradingLayout";
 import { Link, useNavigate } from "react-router-dom";
-import SocialLoginSection from "../SocialLoginSection"; // Import the new component
+import SocialLoginSection from "../SocialLoginSection"; 
 import {
   IoPersonOutline,
   IoCallOutline,
@@ -21,6 +21,7 @@ interface FormData {
   gender: string;
   maritalStatus: string;
   insuranceType: string;
+  careNeeds: string;
   password: string;
   confirmPassword: string;
   zipCode: string;
@@ -65,7 +66,8 @@ const SignupForm = () => {
     city: "",
     state: "",
     streetAddress: "",
-    preferredCommunication: "",
+    preferredCommunication: [],
+    careNeeds: "",
   });
 
   const navigate = useNavigate(); // Hook to navigate
@@ -198,7 +200,7 @@ const SignupForm = () => {
     e.preventDefault();
     navigate("/login"); // Redirect to login page
   };
-  function handleSocialLogin(provider: string): void {
+  function handleSocialLogin(): void {
     throw new Error("Function not implemented.");
   }
 
@@ -311,16 +313,6 @@ const SignupForm = () => {
                   )}
                 </div>
                 <div>
-                  {/* <SelectField
-                    label="Gender"
-                    id="gender"
-                    name="gender"
-                    asterisk={true}
-                    value={formData.gender}
-                    onChange={handleChange}
-                    options={genderOptions}
-                    errorMessage={errors.gender}
-                  /> */}
                   <SelectField
                     label="Gender"
                     id="gender"
@@ -329,7 +321,6 @@ const SignupForm = () => {
                     value={formData.gender}
                     onChange={handleChange}
                     options={genderOptions}
-                    icon={IoPersonOutline} // Custom icon for gender
                     errorMessage={errors.gender}
                   />
 
@@ -374,6 +365,24 @@ const SignupForm = () => {
                   )}
                 </div>
               </div>
+
+              {/* care needs */}
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+                  <InputField
+                    label="Care Needs (Optional)"
+                    id="careNeeds"
+                    name="careNeeds"
+                    type="text"
+                    value={formData.careNeeds}
+                    onChange={handleChange}
+                    errorMessage={errors.careNeeds}
+                    placeholder="Enter your care need"
+                  />
+                  {errors.careNeeds && (
+                    <p className="mt-1 text-sm text-red-600">{errors.careNeeds}</p>
+                  )}
+                </div>
+
               {/* zip code and city */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
