@@ -1,8 +1,5 @@
 import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
 import React from "react";
-import contacts from "@assets/media/svgs/dashboard-svgs/contacts.svg";
-import stars from "@assets/media/svgs/dashboard-svgs/stars.svg";
-import flags from "@assets/media/svgs/dashboard-svgs/flag.svg";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
@@ -13,7 +10,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActivityCard";
+import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
+import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
+import Admindb from "@assets/media/svgs/admin-db-svgs/admin-dashboard.svg";
+import alice from "@assets/media/images/dashboard-images/alice.svg";
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -26,6 +26,8 @@ const CareProviderDashboard: React.FC = () => {
     image?: string;
     rating?: any;
     reviews?: string;
+    specialization?: string;
+    location?: string;
   };
 
   const columns = [
@@ -66,8 +68,13 @@ const CareProviderDashboard: React.FC = () => {
       showSort: true,
     },
     {
-      accessor: "reviews",
-      header: "Reviews",
+      accessor: "specialization",
+      header: "Specialization",
+      showSort: true,
+    },
+    {
+      accessor: "location",
+      header: "Location",
       showSort: true,
     },
   ];
@@ -79,9 +86,11 @@ const CareProviderDashboard: React.FC = () => {
       last_name: "Border",
       date: "9/04/12",
       email: "alice.border@example.com",
-      image: "/images/alice.png",
+      // image: "/images/dashboard-images/alice.svg",
+      image: alice,
       rating: <RatingStars value={5} isDisabled={true} />,
-      reviews: "Great service!",
+      specialization: "Elderly care",
+      location: "📍200 1st St SW, Rochester",
     },
     {
       id: 2,
@@ -91,7 +100,41 @@ const CareProviderDashboard: React.FC = () => {
       email: "michael.schofield@example.com",
       image: "/images/michael.png",
       rating: <RatingStars value={3} isDisabled={true} />,
-      reviews: "Very satisfied with the care provided.",
+      specialization: "Post-surgical rehab",
+      location: "📍190 E Bannock St, Boise, ID 83712",
+    },
+    {
+      id: 3,
+      first_name: "Sarah",
+      last_name: "Johnson",
+      date: "10/04/19",
+      email: "sarah.johnson@example.com",
+      image: "/images/sarah.png",
+      rating: <RatingStars value={4} isDisabled={true} />,
+      specialization: "Harmony Memory Care",
+      location: "📍T9500 Euclid Ave, Cleveland,",
+    },
+    {
+      id: 4,
+      first_name: "John",
+      last_name: "Doe",
+      date: "12/04/22",
+      email: "john.doe@example.com",
+      image: "/images/john.png",
+      rating: <RatingStars value={5} isDisabled={true} />,
+      specialization: "Fitness  services.",
+      location: "📍1468 Madison Ave, NY 10029",
+    },
+    {
+      id: 5,
+      first_name: "Emily",
+      last_name: "Davis",
+      date: "15/04/23",
+      email: "emily.davis@example.com",
+      image: "/images/emily.png",
+      rating: <RatingStars value={2} isDisabled={true} />,
+      specialization: "Rehabilitation Center",
+      location: "📍8900 N Kendall Dr, Miami, FL 33176",
     },
   ];
 
@@ -113,30 +156,23 @@ const CareProviderDashboard: React.FC = () => {
               Providers Listing
             </>
           }
-          cardImg={contacts}
+          cardImg={userSearch}
           imgBg="#EEE0FF"
           borderBg="#9747FF"
         />
         <StatsCommonCards
           count={25}
           title="Total Reviews Written"
-          cardImg={stars}
+          cardImg={WriteReview}
           imgBg="#D8F6D4"
           borderBg="#52C343"
         />
         <StatsCommonCards
-          count={10}
+          count={4.6}
           title="Average Rating Given"
-          cardImg={flags}
+          cardImg={ThumbsUp}
           imgBg="#FFE8CF"
           borderBg="#F98A17"
-        />
-        <StatsCommonCards
-          count={87}
-          title="Profile Views This Month"
-          cardImg={userSearch}
-          imgBg="#E2F0F6"
-          borderBg="#007AB2"
         />
       </div>
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
@@ -156,7 +192,7 @@ const CareProviderDashboard: React.FC = () => {
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
                 <PrimaryButton
-                  btnText="View All Reviews"
+                  btnText="View All Listing"
                   btnTextClass="text-[#FFFFFF] text-sm font-semibold"
                   showImg={true}
                   imgClass="w-[14px] h-[13px] object-cover"
@@ -198,29 +234,6 @@ const CareProviderDashboard: React.FC = () => {
               />
             )}
           />
-        </div>
-      </div>
-      <div className="bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <div>
-          <div className="flex md:flex-row flex-col md:items-center md:justify-between mb-4">
-            <h3 className="mb-3 md:mb-0">Community Forum Activity</h3>
-            <div className="flex items-center gap-3">
-              <p className="text-[#252525] font-medium text-sm">Filter by</p>
-              <PrimaryButton
-                btnText="Today"
-                showImg={true}
-                imgClass="w-[24px] h-[24px] object-cover"
-                img={filterIcon}
-                imgPosition="left"
-                btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                // onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-              />
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2  grid-cols-1 gap-[13px]">
-            <ForumActivityCard />
-            <ForumActivityCard />
-          </div>
         </div>
       </div>
     </div>

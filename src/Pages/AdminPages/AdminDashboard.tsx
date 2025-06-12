@@ -13,6 +13,7 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import Admindb from "@assets/media/svgs/admin-db-svgs/admin-dashboard.svg";
+import alice from "@assets/media/images/dashboard-images/alice.svg";
 
 const AdminDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -25,6 +26,8 @@ const AdminDashboard: React.FC = () => {
     image?: string;
     rating?: any;
     reviews?: string;
+    specialization?: string;
+    location?: string;
   };
 
   const columns = [
@@ -65,8 +68,13 @@ const AdminDashboard: React.FC = () => {
       showSort: true,
     },
     {
-      accessor: "reviews",
-      header: "Reviews",
+      accessor: "specialization",
+      header: "Specialization",
+      showSort: true,
+    },
+    {
+      accessor: "location",
+      header: "Location",
       showSort: true,
     },
   ];
@@ -78,9 +86,11 @@ const AdminDashboard: React.FC = () => {
       last_name: "Border",
       date: "9/04/12",
       email: "alice.border@example.com",
-      image: "/images/alice.png",
+      // image: "/images/dashboard-images/alice.svg",
+      image: alice,
       rating: <RatingStars value={5} isDisabled={true} />,
-      reviews: "Great service!",
+      specialization: "Elderly care",
+      location: "📍200 1st St SW, Rochester",
     },
     {
       id: 2,
@@ -90,7 +100,41 @@ const AdminDashboard: React.FC = () => {
       email: "michael.schofield@example.com",
       image: "/images/michael.png",
       rating: <RatingStars value={3} isDisabled={true} />,
-      reviews: "Very satisfied with the care provided.",
+      specialization: "Post-surgical rehab",
+      location: "📍190 E Bannock St, Boise, ID 83712",
+    },
+    {
+      id: 3,
+      first_name: "Sarah",
+      last_name: "Johnson",
+      date: "10/04/19",
+      email: "sarah.johnson@example.com",
+      image: "/images/sarah.png",
+      rating: <RatingStars value={4} isDisabled={true} />,
+      specialization: "Harmony Memory Care",
+      location: "📍T9500 Euclid Ave, Cleveland,",
+    },
+    {
+      id: 4,
+      first_name: "John",
+      last_name: "Doe",
+      date: "12/04/22",
+      email: "john.doe@example.com",
+      image: "/images/john.png",
+      rating: <RatingStars value={5} isDisabled={true} />,
+      specialization: "Fitness  services.",
+      location: "📍1468 Madison Ave, NY 10029",
+    },
+    {
+      id: 5,
+      first_name: "Emily",
+      last_name: "Davis",
+      date: "15/04/23",
+      email: "emily.davis@example.com",
+      image: "/images/emily.png",
+      rating: <RatingStars value={2} isDisabled={true} />,
+      specialization: "Rehabilitation Center",
+      location: "📍8900 N Kendall Dr, Miami, FL 33176",
     },
   ];
 
@@ -124,7 +168,7 @@ const AdminDashboard: React.FC = () => {
           borderBg="#52C343"
         />
         <StatsCommonCards
-          count={10}
+          count={4.6}
           title="Average Rating Given"
           cardImg={ThumbsUp}
           imgBg="#FFE8CF"
