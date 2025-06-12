@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react";
+import { IoIosArrowDown } from "react-icons/io"; 
 
 // Defining types for the component props
 interface SelectFieldProps {
@@ -8,7 +9,7 @@ interface SelectFieldProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   options: { value: string; label: string }[];
-  icon?: React.ComponentType<{ size: number; color: string }>;
+  icon?: React.ComponentType<{ size: number; color: string }>; 
   gray?: boolean;
   errorMessage?: string;
   [rest: string]: any;
@@ -20,7 +21,6 @@ const SelectField: React.FC<SelectFieldProps> = ({
   value,
   onChange,
   options,
-  icon: IconComponent,
   asterisk,
   gray,
   errorMessage,
@@ -44,7 +44,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           id={id}
           value={value}
           onChange={onChange}
-          className={`py-3 px-4 border border-[#252525B2] rounded-[8px] bg-[#FBFCFD] w-full h-[50px] ${gray ? 'bg-gray-100' : ''}`}
+          className={`py-3 px-4 border border-[#252525B2] rounded-[8px] bg-[#FBFCFD] w-full h-[50px] ${gray ? 'bg-gray-100' : ''} appearance-none`}
           {...rest}
         >
           <option value="">Select {label}</option>
@@ -55,8 +55,10 @@ const SelectField: React.FC<SelectFieldProps> = ({
           ))}
         </select>
 
+        {/* Custom dropdown icon */}
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black">
-          {IconComponent && <IconComponent size={18} color="#292D32" />}
+          {/* Render the custom icon (React Icon) */}
+        <IoIosArrowDown/>
         </div>
       </div>
       {errorMessage && <p className="mt-1 text-sm text-red-600">{errorMessage}</p>}

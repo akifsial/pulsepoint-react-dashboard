@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import dummyImage from "@assets/media/images/signup-img.png";
+// import arrowIcon from "@assets/media/images/arrow-down.svg";
 import InputField from "../InputField";
-import { IoPersonOutline } from "react-icons/io5";
-import { IoMailOutline } from "react-icons/io5";
-import { IoCallOutline } from "react-icons/io5";
 import SelectField from "../SelectField";
 import OnBoardingLayout from "./OnBoradingLayout";
 import { Link, useNavigate } from "react-router-dom";
 import SocialLoginSection from "../SocialLoginSection"; // Import the new component
-import { IoLocationSharp } from "react-icons/io5";
+import {
+  IoPersonOutline,
+  IoCallOutline,
+  IoMailOutline,
+  IoLocationSharp,
+} from "react-icons/io5";
 
 interface FormData {
   firstName: string;
@@ -309,7 +311,7 @@ const SignupForm = () => {
                   )}
                 </div>
                 <div>
-                  <SelectField
+                  {/* <SelectField
                     label="Gender"
                     id="gender"
                     name="gender"
@@ -318,7 +320,19 @@ const SignupForm = () => {
                     onChange={handleChange}
                     options={genderOptions}
                     errorMessage={errors.gender}
+                  /> */}
+                  <SelectField
+                    label="Gender"
+                    id="gender"
+                    name="gender"
+                    asterisk={true}
+                    value={formData.gender}
+                    onChange={handleChange}
+                    options={genderOptions}
+                    icon={IoPersonOutline} // Custom icon for gender
+                    errorMessage={errors.gender}
                   />
+
                   {errors.gender && (
                     <p className="mt-1 text-sm text-red-600">{errors.gender}</p>
                   )}
@@ -428,7 +442,7 @@ const SignupForm = () => {
                     onChange={handleChange}
                     errorMessage={errors.streetAddress}
                     placeholder="e.g., 123 Main Street"
-                    icon={IoLocationSharp} 
+                    icon={IoLocationSharp}
                   />
                   {errors.streetAddress && (
                     <p className="mt-1 text-sm text-red-600">
