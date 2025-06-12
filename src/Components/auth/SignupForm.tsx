@@ -501,10 +501,10 @@ const SignupForm = () => {
                 </div>
               </div>
               <div className="space-y-4">
-                <p className="text-lg font-semibold">
+                <p className="text-md font-semibold">
                   Preferred Communication Method
                 </p>
-                <div className="flex space-x-6">
+                <div className="flex text-[16px] font-[500] text-gray-500 leading-[140%] tracking-[0%] font-[Geist] space-x-6">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -515,7 +515,7 @@ const SignupForm = () => {
                         "email"
                       )}
                       onChange={handleCommunicationChange}
-                      className="mr-2"
+                      className="mr-2 scale-150 border-gray opacity-20"
                     />
                     <label htmlFor="email">Via Email Address</label>
                   </div>
@@ -529,7 +529,7 @@ const SignupForm = () => {
                         "phone"
                       )}
                       onChange={handleCommunicationChange}
-                      className="mr-2"
+                      className="mr-2 scale-150 border-gray opacity-20"
                     />
                     <label htmlFor="phone">Via Phone Number</label>
                   </div>
@@ -541,7 +541,7 @@ const SignupForm = () => {
                       value="sms"
                       checked={formData.preferredCommunication.includes("sms")}
                       onChange={handleCommunicationChange}
-                      className="mr-2"
+                      className="mr-2 scale-150 border-gray opacity-20"
                     />
                     <label htmlFor="sms">Via SMS Text</label>
                   </div>
@@ -557,7 +557,7 @@ const SignupForm = () => {
               </button>
               {/* calling component for Social icons */}
               <SocialLoginSection
-                action="signup"
+                action="login"
                 handleSocialLogin={handleSocialLogin}
               />
               {/* "Don't have an account yet?" Section */}

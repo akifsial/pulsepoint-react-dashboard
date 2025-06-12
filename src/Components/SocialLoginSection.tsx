@@ -19,23 +19,23 @@ const SocialLoginSection: React.FC<SocialLoginSectionProps> = ({ action, handleS
       </div>
 
       {/* Social Media Icons */}
-      <div className="flex justify-center space-x-4 mt-4">
+      <div className="flex justify-center space-x-1 mt-4">
         <img
           src={googleIcon}
           alt="Google"
-          className="w-8 h-8 cursor-pointer hover:opacity-80 transition-opacity"
+          className="w-12 h-12 cursor-pointer hover:opacity-80 transition-opacity"
           onClick={() => handleSocialLogin("google")}
         />
         <img
           src={twiterIcon}
           alt="Twitter"
-          className="w-8 h-8 cursor-pointer hover:opacity-80 transition-opacity"
+          className="w-12 h-12 cursor-pointer hover:opacity-80 transition-opacity"
           onClick={() => handleSocialLogin("twitter")}
         />
         <img
           src={fbIcon}
           alt="Facebook"
-          className="w-8 h-8 cursor-pointer hover:opacity-80 transition-opacity"
+          className="w-12 h-12 cursor-pointer hover:opacity-80 transition-opacity"
           onClick={() => handleSocialLogin("facebook")}
         />
       </div>

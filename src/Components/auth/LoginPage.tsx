@@ -149,7 +149,7 @@ const navigate = useNavigate();
           </button>
           {/* calling component for Social icons */}
           <SocialLoginSection
-            action="login"
+            action="signup"
             handleSocialLogin={handleSocialLogin}
           />
           {/* "Don't have an account yet?" Section */}

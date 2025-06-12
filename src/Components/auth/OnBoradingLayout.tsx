@@ -4,14 +4,15 @@ import signupLogo from "@assets/media/images/signup-logo.png";
 
 interface OnBoardingLayoutProps {
   children: ReactNode;
-  noShowLogo?: boolean; // Added prop to control logo visibility
+  noShowLogo?: boolean; 
+  logoParentClass?: string; 
 }
 
 // const OnBoardingLayout = ({ children }) => {
 const OnBoardingLayout: React.FC<OnBoardingLayoutProps> = ({
   children,
   noShowLogo,
-  // logoParentClass,
+  logoParentClass,
 }) => {
   return (
     <div className="h-full w-full bg-[linear-gradient(107.76deg,_#F4F7FF_-2.99%,_#DDEFF7_64.85%,_#D6E0F9_113.61%)] flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-[20px] py-6 lg:py-12 px-4 sm:px-6 lg:px-8">
@@ -28,7 +29,7 @@ const OnBoardingLayout: React.FC<OnBoardingLayoutProps> = ({
         {" "}
         {/* Logo Image: Only render if noShowLogo is false */}
         {!noShowLogo && (
-          <div className={`flex justify-center`}>
+          <div className={`flex justify-center ${logoParentClass}`}>
             <img
               src={signupLogo}
               alt="Signup Logo"
@@ -36,7 +37,6 @@ const OnBoardingLayout: React.FC<OnBoardingLayoutProps> = ({
             />
           </div>
         )}
-        {/* {children} */}
         {children}
       </div>
     </div>
