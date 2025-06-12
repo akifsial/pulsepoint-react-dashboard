@@ -198,7 +198,7 @@ const SignupForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/login"); // Redirect to login page
+    navigate("/account-created");  
   };
   function handleSocialLogin(): void {
     throw new Error("Function not implemented.");
