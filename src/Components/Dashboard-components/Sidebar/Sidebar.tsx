@@ -1,5 +1,4 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { sidebarLinks } from "./SidebarLinks";
 import React, { useEffect, useState } from "react";
 import SiteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
@@ -9,7 +8,7 @@ interface SidebarProps {
   onClose: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
@@ -52,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             />
           </div>
         </div>
-        {sidebarLinks.map((link, index) => {
+        {sidebarData.map((link, index) => {
           const isActive = location.pathname === link.path;
 
           const [isHovered, setIsHovered] = useState(false);

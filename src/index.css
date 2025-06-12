@@ -257,7 +257,17 @@
   }
 }
 
-/* 
-*{
-  border:2px solid red;
+/* Hide scrollbar but keep scroll functionality */
+::-webkit-scrollbar {
+  width: 0px;  
+  height: 0px; 
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* html,
+body,
+#root {
+  height: 100%;
 } */

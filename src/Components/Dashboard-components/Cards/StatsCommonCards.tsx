@@ -1,6 +1,7 @@
 import React from "react";
-import { StatsCommonCardsProps } from "./Types/Index";
+import { StatsCommonCardsProps } from "./Types/Index";  // Importing the interface
 
+// Define the StatsCommonCards component as a functional component
 const StatsCommonCards: React.FC<StatsCommonCardsProps> = ({
   count,
   title,
@@ -9,9 +10,9 @@ const StatsCommonCards: React.FC<StatsCommonCardsProps> = ({
   borderBg,
 }) => {
   return (
-    <div className="bg-white rounded-[10px] px-6 py-6 flex justify-between  relative">
+    <div className="bg-white rounded-[10px] px-6 py-6 flex justify-between relative">
       <div
-        className="absolute top-0 left-2 h-[84%] my-auto bottom-0 rounded-[10px]  border-l-[4px]"
+        className="absolute top-0 left-2 h-[84%] my-auto bottom-0 rounded-[10px] border-l-[4px]"
         style={{ borderColor: borderBg }}
       ></div>
 
@@ -33,4 +34,5 @@ const StatsCommonCards: React.FC<StatsCommonCardsProps> = ({
   );
 };
 
+// Export the component
 export default StatsCommonCards;
