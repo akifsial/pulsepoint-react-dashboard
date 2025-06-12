@@ -87,7 +87,7 @@ const CareProviderDashboard: React.FC = () => {
       last_name: "Border",
       date: "9/04/12",
       email: "alice.border@example.com",
-            // image: "/images/dashboard-images/alice.svg",
+      // image: "/images/dashboard-images/alice.svg",
       image: alice,
       rating: <RatingStars value={5} isDisabled={true} />,
       specialization: "Elderly care",
@@ -144,7 +144,9 @@ const CareProviderDashboard: React.FC = () => {
   };
 
   const renderActions = (row: dataTypes) => (
-    <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>Edit</button>
+    <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>
+      Edit
+    </button>
   );
 
   const handleTabClick = (tab: "all" | "saved") => {
@@ -223,47 +225,59 @@ const CareProviderDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-    <div className="mb-4 flex">
-  <div
-    className={`tab ${activeTab === "all" ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]" : "bg-white"} `}
-    onClick={() => handleTabClick("all")}
-    style={{
-      width: "213px",
-      height: "47px",
-      gap: "10px",
-      paddingTop: "18px",
-      paddingRight: "10px",
-      paddingBottom: "18px",
-      paddingLeft: "10px",
-    }}
-  >
-    <p
-      className={`font-medium text-sm ${activeTab === "all" ? "text-[#007AB2]" : "text-[#252525CC]"}`}
-    >
-      All Care Providers
-    </p>
-  </div>
-  <div
-    className={`tab ${activeTab === "saved" ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]" : "bg-white"} `}
-    onClick={() => handleTabClick("saved")}
-    style={{
-      width: "213px",
-      height: "47px",
-      gap: "10px",
-      paddingTop: "18px",
-      paddingRight: "10px",
-      paddingBottom: "18px",
-      paddingLeft: "10px",
-    }}
-  >
-    <p
-      className={`font-medium text-sm ${activeTab === "saved" ? "text-[#007AB2]" : "text-[#252525CC]"}`}
-    >
-      Saved Care Providers
-    </p>
-  </div>
-</div>
-
+        <div className="mb-4 flex">
+          <div
+            className={`tab ${
+              activeTab === "all"
+                ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]"
+                : "bg-white"
+            } `}
+            onClick={() => handleTabClick("all")}
+            style={{
+              width: "213px",
+              height: "47px",
+              gap: "10px",
+              paddingTop: "18px",
+              paddingRight: "10px",
+              paddingBottom: "18px",
+              paddingLeft: "10px",
+            }}
+          >
+            <p
+              className={`font-medium text-sm ${
+                activeTab === "all" ? "text-[#007AB2]" : "text-[#252525CC]"
+              }`}
+            >
+              All Care Providers
+            </p>
+          </div>
+          <div
+            className={`tab ${
+              activeTab === "saved"
+                ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]"
+                : "bg-white"
+            } `}
+            onClick={() => handleTabClick("saved")}
+            style={{
+              width: "213px",
+              height: "47px",
+              gap: "10px",
+              paddingTop: "18px",
+              paddingRight: "10px",
+              paddingBottom: "18px",
+              paddingLeft: "10px",
+            }}
+          >
+            <p
+              className={`font-medium text-sm ${
+                activeTab === "saved" ? "text-[#007AB2]" : "text-[#252525CC]"
+              }`}
+            >
+              Saved Care Providers
+            </p>
+          </div>
+        </div>
+        
         <div>
           {activeTab === "all" ? (
             <TanDataTable<dataTypes>
@@ -282,7 +296,21 @@ const CareProviderDashboard: React.FC = () => {
               )}
             />
           ) : (
-            <div className="text-center text-lg">No saved care providers yet.</div>
+            <TanDataTable<dataTypes>
+              columns={columns}
+              data={data.slice(0, 3)}
+              showCheckbox={false}
+              onRowSelect={handleRowSelect}
+              showActions={true}
+              className="my-custom-class"
+              actions={(row) => (
+                <DropdownActions
+                  onView={() => console.log("View", row.id)}
+                  onEdit={() => console.log("Edit", row.id)}
+                  onDelete={() => console.log("Delete", row.id)}
+                />
+              )}
+            />
           )}
         </div>
       </div>
