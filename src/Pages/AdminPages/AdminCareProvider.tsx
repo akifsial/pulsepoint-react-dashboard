@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
-import React from "react";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
@@ -12,11 +12,12 @@ import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
-// import Admindb from "@assets/media/svgs/admin-db-svgs/admin-dashboard.svg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
+  const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
+
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -86,7 +87,7 @@ const CareProviderDashboard: React.FC = () => {
       last_name: "Border",
       date: "9/04/12",
       email: "alice.border@example.com",
-      // image: "/images/dashboard-images/alice.svg",
+            // image: "/images/dashboard-images/alice.svg",
       image: alice,
       rating: <RatingStars value={5} isDisabled={true} />,
       specialization: "Elderly care",
@@ -145,6 +146,11 @@ const CareProviderDashboard: React.FC = () => {
   const renderActions = (row: dataTypes) => (
     <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>Edit</button>
   );
+
+  const handleTabClick = (tab: "all" | "saved") => {
+    setActiveTab(tab);
+  };
+
   return (
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
@@ -181,7 +187,7 @@ const CareProviderDashboard: React.FC = () => {
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
-              <div className="flex items gap-4 ">
+              <div className="flex items gap-4">
                 <PrimaryButton
                   btnText="Ratigs"
                   showImg={true}
@@ -217,41 +223,68 @@ const CareProviderDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-        {/* <div>
-          <TanDataTable<dataTypes>
-            columns={columns}
-            data={data}
-            showCheckbox={false}
-            onRowSelect={handleRowSelect}
-            actions={renderActions}
-            showActions={true}
-            className="my-custom-class"
-            actions={(row) => (
-              <DropdownActions
-                onView={() => console.log("View", row.id)}
-                onEdit={() => console.log("Edit", row.id)}
-                onDelete={() => console.log("Delete", row.id)}
-              />
-            )}
-          />
-        </div> */}
-        <div>
-  <TanDataTable<dataTypes>
-    columns={columns}
-    data={data}
-    showCheckbox={false}
-    onRowSelect={handleRowSelect}
-    showActions={true}
-    className="my-custom-class"
-    actions={(row) => (
-      <DropdownActions
-        onView={() => console.log("View", row.id)}
-        onEdit={() => console.log("Edit", row.id)}
-        onDelete={() => console.log("Delete", row.id)}
-      />
-    )}
-  />
+    <div className="mb-4 flex">
+  <div
+    className={`tab ${activeTab === "all" ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]" : "bg-white"} `}
+    onClick={() => handleTabClick("all")}
+    style={{
+      width: "213px",
+      height: "47px",
+      gap: "10px",
+      paddingTop: "18px",
+      paddingRight: "10px",
+      paddingBottom: "18px",
+      paddingLeft: "10px",
+    }}
+  >
+    <p
+      className={`font-medium text-sm ${activeTab === "all" ? "text-[#007AB2]" : "text-[#252525CC]"}`}
+    >
+      All Care Providers
+    </p>
+  </div>
+  <div
+    className={`tab ${activeTab === "saved" ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]" : "bg-white"} `}
+    onClick={() => handleTabClick("saved")}
+    style={{
+      width: "213px",
+      height: "47px",
+      gap: "10px",
+      paddingTop: "18px",
+      paddingRight: "10px",
+      paddingBottom: "18px",
+      paddingLeft: "10px",
+    }}
+  >
+    <p
+      className={`font-medium text-sm ${activeTab === "saved" ? "text-[#007AB2]" : "text-[#252525CC]"}`}
+    >
+      Saved Care Providers
+    </p>
+  </div>
 </div>
+
+        <div>
+          {activeTab === "all" ? (
+            <TanDataTable<dataTypes>
+              columns={columns}
+              data={data}
+              showCheckbox={false}
+              onRowSelect={handleRowSelect}
+              showActions={true}
+              className="my-custom-class"
+              actions={(row) => (
+                <DropdownActions
+                  onView={() => console.log("View", row.id)}
+                  onEdit={() => console.log("Edit", row.id)}
+                  onDelete={() => console.log("Delete", row.id)}
+                />
+              )}
+            />
+          ) : (
+            <div className="text-center text-lg">No saved care providers yet.</div>
+          )}
+        </div>
       </div>
     </div>
   );
