@@ -224,6 +224,7 @@ const SignupForm = () => {
                     asterisk={true}
                     icon={IoPersonOutline}
                     id="firstName"
+                    name="firstName"
                     type="text"
                     value={formData.firstName}
                     onChange={handleChange}
@@ -242,6 +243,7 @@ const SignupForm = () => {
                     asterisk={true}
                     icon={IoPersonOutline}
                     id="lastName"
+                    name="lastName"
                     type="text"
                     value={formData.lastName}
                     onChange={handleChange}
@@ -551,7 +553,7 @@ const SignupForm = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6"
+                className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
               >
                 Sign Up
               </button>

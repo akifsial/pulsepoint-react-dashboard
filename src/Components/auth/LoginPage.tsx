@@ -143,7 +143,7 @@ const navigate = useNavigate();
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors"
+            className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors cursor-pointer"
           >
             Login
           </button>
