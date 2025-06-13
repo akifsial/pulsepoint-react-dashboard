@@ -32,7 +32,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
         <div className="flex">
           <label
             htmlFor={id}
-            className="block mb-1 text-[14px] font-[400] text-[#252525] leading-[1.08] tracking-[0%] align-bottom font-[Geist]"
+            className="block mb-1 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
           >
             {label}
           </label>
