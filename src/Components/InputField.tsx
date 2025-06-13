@@ -59,10 +59,10 @@ const InputField: React.FC<InputFieldProps> = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] flex justify-between items-center text-[16px] font-medium text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-gray-500 focus:outline-none"
+          className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] flex justify-between items-center font-[Geist] text-[16px] font-medium text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-gray-500 focus:outline-none"
           {...rest}
         />
-        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black">
+        <div className="absolute right-3 top-1/2 flex justify-center items-center transform -translate-y-1/2 cursor-pointer text-black">
           {isPassword ? (
             showPassword ? (
               <IoEyeOutline size={18} onClick={handleToggle} color="#292D32" />
