@@ -339,6 +339,7 @@ const SignupForm = () => {
                     label="Marital Status"
                     id="maritalStatus"
                     name="maritalStatus"
+                    asterisk={true}
                     value={formData.maritalStatus}
                     onChange={handleChange}
                     options={maritalStatusOptions}
@@ -355,6 +356,7 @@ const SignupForm = () => {
                     label="Insurance Type"
                     id="insuranceType"
                     name="insuranceType"
+                    asterisk={true}
                     value={formData.insuranceType}
                     onChange={handleChange}
                     options={insuranceTypeOptions}
@@ -445,7 +447,6 @@ const SignupForm = () => {
                 <div>
                   <InputField
                     label="Street Address"
-                    asterisk={true}
                     id="streetAddress"
                     name="streetAddress"
                     type="text"
