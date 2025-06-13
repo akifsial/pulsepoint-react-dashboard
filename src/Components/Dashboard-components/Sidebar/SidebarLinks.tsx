@@ -53,10 +53,11 @@ export const sidebarLinks: SidebarLink[] = [
     },
   },
 ];
+
 export const PatientSidebarLinks: SidebarLink[] = [
   {
     label: "Dashboard",
-    path: "/admin/dashboard",
+    path: "/patient/dashboard",
     icon: {
       default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
@@ -65,7 +66,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
   },
    {
     label: "Care Providers",
-    path: "/admin/care-provider",
+    path: "/patient/care-provider",
     icon: {
       default: <img src={UserIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
@@ -74,7 +75,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
   },
   {
     label: "My Reviews",
-    path: "/admin/patient-reviews",
+    path: "/patient/patient-reviews",
     icon: {
       default: <img src={reviewIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={reviewHover} alt="Dashboard" className="w-5 h-5" />,
@@ -83,7 +84,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
   },
   {
     label: "Community Forum",
-    path: "/admin/community-forum",
+    path: "/patient/community-forum",
     icon: {
       default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,

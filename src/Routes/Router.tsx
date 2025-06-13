@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { DashboardRoutes } from "./DashboardRoutes";
 import { websitePublicRoutes } from "./WebsiteRoutes";
-import { AdminRoutes } from "./AdminRoutes";
+import { PatientRoutes } from "./PatientRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
 
 const Router: React.FC = () => {
@@ -23,8 +23,9 @@ const Router: React.FC = () => {
           ))}
         </Route>
       ))}
-      {/* Admin Routes */}
-      {AdminRoutes.map(({ path, element, children }) => (
+
+      {/* Patient Routes */}
+      {PatientRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
           {children?.map((child) => (
             <Route
