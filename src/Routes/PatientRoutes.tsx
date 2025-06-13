@@ -1,4 +1,3 @@
-
 import PatientLayout from "@layouts/PatientLayout";
 import AdminCommunityForum from "@pages/PatientPages/AdminCommunityForum";
 import AdminDashboard from "@pages/PatientPages/AdminDashboard";
