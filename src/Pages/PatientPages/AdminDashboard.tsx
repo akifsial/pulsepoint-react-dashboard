@@ -12,8 +12,10 @@ import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
-// import Admindb from "@assets/media/svgs/admin-db-svgs/admin-dashboard.svg";
+// import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.svg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
+import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
+import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 
 const AdminDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -145,6 +147,8 @@ const AdminDashboard: React.FC = () => {
   const renderActions = (row: Person) => (
     <button onClick={() => alert(`Edit ${row.name}`)}>Edit</button>
   );
+  const [searchText, setSearchText] = React.useState<string>("");
+
   return (
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
@@ -174,10 +178,26 @@ const AdminDashboard: React.FC = () => {
           imgBg="#FFE8CF"
           borderBg="#F98A17"
         />
+        {/* <StatsCommonCards
+          imageSrc={Patientdbimg}  
+        /> */}
       </div>
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Care Providers</h3>
+          {/* searchbar */}
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
+            <CommonInput
+              placeholder="Search with Provider name , zip code"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              showImg={true}
+              imgSrc={searchIcon}
+              imgLeft={true}
+              inputClassName="text-sm"
+              containerClassName="w-full max-w-sm"
+            />
+          </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
@@ -217,13 +237,12 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-        {/* <div>
+        <div>
           <TanDataTable<dataTypes>
             columns={columns}
             data={data}
             showCheckbox={false}
             onRowSelect={handleRowSelect}
-            actions={renderActions}
             showActions={true}
             className="my-custom-class"
             actions={(row) => (
@@ -234,24 +253,7 @@ const AdminDashboard: React.FC = () => {
               />
             )}
           />
-        </div> */}
-        <div>
-  <TanDataTable<dataTypes>
-    columns={columns}
-    data={data}
-    showCheckbox={false}
-    onRowSelect={handleRowSelect}
-    showActions={true}
-    className="my-custom-class"
-    actions={(row) => (
-      <DropdownActions
-        onView={() => console.log("View", row.id)}
-        onEdit={() => console.log("Edit", row.id)}
-        onDelete={() => console.log("Delete", row.id)}
-      />
-    )}
-  />
-</div>
+        </div>
       </div>
     </div>
   );
