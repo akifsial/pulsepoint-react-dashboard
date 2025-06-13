@@ -61,13 +61,13 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <OnBoardingLayout logoParentClass="flex justify-center items-center">
+    <OnBoardingLayout logoParentClass="absolute top-35 right-0 left-0 flex justify-center">
       <div className="flex flex-col min-h-screen p-6 justify-center items-start">
-        <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-4">
+        <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-1">
           Reset Password
         </h2>
 
-        <p className="font-[Geist] font-normal text-[16px] leading-[150%] tracking-[0%] text-[#252525CC] mb-6">
+        <p className="font-[Geist] font-normal text-[16px] leading-[150%] tracking-[0%] text-[#252525CC] mb-4">
           Enter your new password and reset your password{" "}
         </p>
 

@@ -4,9 +4,9 @@ import AdminDashboard from "@pages/PatientPages/AdminDashboard";
 import AdminCareProvider from "@pages/PatientPages/AdminCareProvider";
 import AdminPatientReviews from "@pages/PatientPages/AdminPatientReviews";
 
-export const AdminsRoutes = [
+export const PatientRoutes = [
   {
-    path: "/admin", 
+    path: "/patient", 
     element: <PatientLayout />,
     children: [
       { path: "dashboard", element: <AdminDashboard /> },

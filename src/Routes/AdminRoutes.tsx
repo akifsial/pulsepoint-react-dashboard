@@ -1,18 +1,23 @@
-import PatientLayout from "@layouts/PatientLayout";
-import AdminCommunityForum from "@pages/PatientPages/AdminCommunityForum";
-import AdminDashboard from "@pages/PatientPages/AdminDashboard";
-import AdminCareProvider from "@pages/PatientPages/AdminCareProvider";
-import AdminPatientReviews from "@pages/PatientPages/AdminPatientReviews";
+import AdminLayout from "@layouts/AdminLayout";
+import AdminCareProvidersControl from "@pages/AdminDashboardPages/AdminCareProvidersControl";
+import AdminForumModeration from "@pages/AdminDashboardPages/AdminForumModeration";
+import AdminPatientsManagement from "@pages/AdminDashboardPages/AdminPatientsManagement";
+import AdminReportsandAnalytics from "@pages/AdminDashboardPages/AdminReportsandAnalytics";
+import AdminReviews from "@pages/AdminDashboardPages/AdminReviews";
+import AdminDashboard from "@pages/AdminDashboardPages/AdminDashboard";
+
 
 export const AdminRoutes = [
   {
     path: "/admin", 
-    element: <PatientLayout />,
+    element: <AdminLayout />,
     children: [
-      { path: "dashboard", element: <AdminDashboard /> },
-      { path: "care-provider", element: <AdminCareProvider/> },
-      { path: "patient-reviews", element: <AdminPatientReviews /> },
-      { path: "community-forum", element: <AdminCommunityForum /> },
+      { path: "", element: <AdminDashboard /> },
+      { path: "patients-management", element: <AdminPatientsManagement/> },
+      { path: "care-providers", element: <AdminCareProvidersControl /> },
+      { path: "reviews", element: <AdminReviews/> },
+      { path: "forum-moderation", element: <AdminForumModeration/> },
+      { path: "reports", element: <AdminReportsandAnalytics/> },
     ],
   },
 ];

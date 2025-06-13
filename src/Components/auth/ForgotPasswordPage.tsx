@@ -43,7 +43,7 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <OnBoardingLayout  logoParentClass="absolute top-38 right-0 left-0 flex justify-center">
+    <OnBoardingLayout logoParentClass="absolute top-38 right-0 left-0 flex justify-center">
       <div className="flex flex-col justify-center items-start min-h-screen">
         {/* Heading */}
         <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-4">

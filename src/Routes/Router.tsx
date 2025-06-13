@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { DashboardRoutes } from "./DashboardRoutes";
 import { websitePublicRoutes } from "./WebsiteRoutes";
+import { PatientRoutes } from "./PatientRoutes";
 import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
 
@@ -23,7 +24,20 @@ const Router: React.FC = () => {
           ))}
         </Route>
       ))}
-      {/* Admin Routes */}
+
+      {/* Patient Routes */}
+      {PatientRoutes.map(({ path, element, children }) => (
+        <Route key={path} path={path} element={element}>
+          {children?.map((child) => (
+            <Route
+              key={child.path || "index"}
+              path={child.path}
+              element={child.element}
+              index={child.path === "" ? true : undefined}
+            />
+          ))}
+        </Route>
+      ))}
       {AdminRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
           {children?.map((child) => (

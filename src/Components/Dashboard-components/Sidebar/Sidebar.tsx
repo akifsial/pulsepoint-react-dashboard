@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import SiteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import searchIcon from "@assets/media/svgs/dashboard-svgs/search.svg";
+import { SidebarLink } from "./SidebarLinks";
+
 interface SidebarProps {
+  sidebarData: SidebarLink[];
   isOpen: boolean;
   onClose: () => void;
 }

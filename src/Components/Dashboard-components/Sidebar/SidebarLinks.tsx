@@ -10,6 +10,12 @@ import communityHover from "@assets/media/svgs/dashboard-svgs/Community-hover.sv
 import dashboardActive from "@assets/media/svgs/dashboard-svgs/Dashboard-active.svg";
 import reviewActive from "@assets/media/svgs/dashboard-svgs/review-active.svg";
 import communityActive from "@assets/media/svgs/dashboard-svgs/Community-active.svg";
+import patients from "@assets/media/svgs/patient.svg";
+import pactive from "@assets/media/svgs/patient-active.svg";
+import care from "@assets/media/svgs/care.svg";
+import cactive from "@assets/media/svgs/care-active.svg"
+import reports from "@assets/media/svgs/reports.svg";
+import ractive from "@assets/media/svgs/reports-active.svg";
 import type { ReactNode } from "react";
 
 type SidebarIconSet = {
@@ -53,10 +59,11 @@ export const sidebarLinks: SidebarLink[] = [
     },
   },
 ];
+
 export const PatientSidebarLinks: SidebarLink[] = [
   {
     label: "Dashboard",
-    path: "/admin/dashboard",
+    path: "/patient/dashboard",
     icon: {
       default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
@@ -65,7 +72,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
   },
    {
     label: "Care Providers",
-    path: "/admin/care-provider",
+    path: "/patient/care-provider",
     icon: {
       default: <img src={UserIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
@@ -74,7 +81,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
   },
   {
     label: "My Reviews",
-    path: "/admin/patient-reviews",
+    path: "/patient/patient-reviews",
     icon: {
       default: <img src={reviewIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={reviewHover} alt="Dashboard" className="w-5 h-5" />,
@@ -83,7 +90,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
   },
   {
     label: "Community Forum",
-    path: "/admin/community-forum",
+    path: "/patient/community-forum",
     icon: {
       default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
@@ -94,7 +101,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
 export const AdminSidebarLinks: SidebarLink[] = [
   {
     label: "Dashboard",
-    path: "/admin/dashboard",
+    path: "/admin",
     icon: {
       default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
@@ -103,16 +110,25 @@ export const AdminSidebarLinks: SidebarLink[] = [
   },
    {
     label: "Patients Management",
-    path: "/admin/care-provider",
+    path: "/admin/patients-management",
     icon: {
-      default: <img src={UserIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={userActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={patients} alt="Dashboard" className="w-5 h-5" />,
+      // hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={pactive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   {
     label: "Care Providers Control",
-    path: "/admin/patient-reviews",
+    path: "/admin/care-providers",
+    icon: {
+      default: <img src={care} alt="Dashboard" className="w-5 h-5" />,
+      // hover: <img src={reviewHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={cactive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Reviews",
+    path: "/admin/reviews",
     icon: {
       default: <img src={reviewIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={reviewHover} alt="Dashboard" className="w-5 h-5" />,
@@ -120,17 +136,8 @@ export const AdminSidebarLinks: SidebarLink[] = [
     },
   },
   {
-    label: "Reviews",
-    path: "/admin/community-forum",
-    icon: {
-      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
-    },
-  },
-  {
     label: "Forum Moderation",
-    path: "/admin/community-forum",
+    path: "/admin/forum-moderation",
     icon: {
       default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
@@ -139,11 +146,11 @@ export const AdminSidebarLinks: SidebarLink[] = [
   },
   {
     label: "Reports and Analytics",
-    path: "/admin/community-forum",
+    path: "/admin/reports",
     icon: {
-      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={reports} alt="Dashboard" className="w-5 h-5" />,
+      // hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={ractive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
 ];
