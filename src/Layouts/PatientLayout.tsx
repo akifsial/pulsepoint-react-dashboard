@@ -4,7 +4,7 @@ import { AdminSidebarLinks } from "@components/Dashboard-components/Sidebar/Side
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-const AdminLayout = () => {
+const PatientLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -24,4 +24,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default PatientLayout;

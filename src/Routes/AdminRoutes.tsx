@@ -1,14 +1,14 @@
 
-import AdminLayout from "@layouts/AdminLayout";
-import AdminCommunityForum from "@pages/AdminPages/AdminCommunityForum";
-import AdminDashboard from "@pages/AdminPages/AdminDashboard";
-import AdminCareProvider from "@pages/AdminPages/AdminCareProvider";
-import AdminPatientReviews from "@pages/AdminPages/AdminPatientReviews";
+import PatientLayout from "@layouts/PatientLayout";
+import AdminCommunityForum from "@pages/PatientPages/AdminCommunityForum";
+import AdminDashboard from "@pages/PatientPages/AdminDashboard";
+import AdminCareProvider from "@pages/PatientPages/AdminCareProvider";
+import AdminPatientReviews from "@pages/PatientPages/AdminPatientReviews";
 
 export const AdminRoutes = [
   {
     path: "/admin", 
-    element: <AdminLayout />,
+    element: <PatientLayout />,
     children: [
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "care-provider", element: <AdminCareProvider/> },
