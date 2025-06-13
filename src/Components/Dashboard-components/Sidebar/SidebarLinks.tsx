@@ -53,7 +53,7 @@ export const sidebarLinks: SidebarLink[] = [
     },
   },
 ];
-export const AdminSidebarLinks: SidebarLink[] = [
+export const PatientSidebarLinks: SidebarLink[] = [
   {
     label: "Dashboard",
     path: "/admin/dashboard",
