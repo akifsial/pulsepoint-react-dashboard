@@ -56,7 +56,7 @@ const LoginPage = () => {
     console.log("Login Submitted", formData);
 
     // Navigate to the dashboard after successful login
-    navigate("/admin/dashboard"); // Use navigate to redirect
+    navigate("/patient/dashboard"); // Use navigate to redirect
   };
   const navigate = useNavigate();
 
