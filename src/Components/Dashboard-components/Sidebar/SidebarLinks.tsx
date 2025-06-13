@@ -91,4 +91,62 @@ export const PatientSidebarLinks: SidebarLink[] = [
     },
   },
 ];
+export const AdminSidebarLinks: SidebarLink[] = [
+  {
+    label: "Dashboard",
+    path: "/admin/dashboard",
+    icon: {
+      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+   {
+    label: "Patients Management",
+    path: "/admin/care-provider",
+    icon: {
+      default: <img src={UserIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={userActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Care Providers Control",
+    path: "/admin/patient-reviews",
+    icon: {
+      default: <img src={reviewIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={reviewHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={reviewActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Reviews",
+    path: "/admin/community-forum",
+    icon: {
+      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Forum Moderation",
+    path: "/admin/community-forum",
+    icon: {
+      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Reports and Analytics",
+    path: "/admin/community-forum",
+    icon: {
+      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+];
+
+
 
