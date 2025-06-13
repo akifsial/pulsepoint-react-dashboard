@@ -518,7 +518,7 @@ const SignupForm = () => {
                         "email"
                       )}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-gray opacity-20"
+                      className="mr-2 scale-150 border-[#FFFFFF]"
                     />
                     <label htmlFor="email">Via Email Address</label>
                   </div>
@@ -532,7 +532,7 @@ const SignupForm = () => {
                         "phone"
                       )}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-gray opacity-20"
+                      className="mr-2 scale-150 border-[#FFFFFF]"
                     />
                     <label htmlFor="phone">Via Phone Number</label>
                   </div>
@@ -544,7 +544,7 @@ const SignupForm = () => {
                       value="sms"
                       checked={formData.preferredCommunication.includes("sms")}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-gray opacity-20"
+                      className="mr-2 scale-150 border-[#FFFFFF]"
                     />
                     <label htmlFor="sms">Via SMS Text</label>
                   </div>

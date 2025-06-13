@@ -65,7 +65,7 @@ const LoginPage = () => {
   }
 
   return (
-    <OnBoardingLayout>
+    <OnBoardingLayout logoParentClass="absolute top-14 right-0 left-0 flex justify-center">
       <div className="flex flex-col min-h-screen p-6 justify-center">
         <h2 className="text-[35px] font-bold leading-[140%] tracking-[0%] text-[#1A1A1A] font-space-grotesk mb-2">
           Login
@@ -120,7 +120,7 @@ const LoginPage = () => {
                 // value="email"
                 checked={formData.rememberMe}
                 onChange={handleChange}
-                className="mr-1 scale-125 border-gray opacity-20"
+                className="mr-1 scale-125 border-[#FFFFFF]"
               />
               <label
                 htmlFor="rememberMe"
