@@ -7,6 +7,13 @@ import share from "@assets/media/svgs/dashboard-svgs/share.svg";
 import comment from "@assets/media/svgs/dashboard-svgs/comment.svg";
 import home from "@assets/media/svgs/dashboard-svgs/home.svg";
 import popular from "@assets/media/svgs/dashboard-svgs/popular.svg";
+import Flagwhite from "@assets/media/svgs/dashboard-svgs/flag4.svg";
+import Flagblue from "@assets/media/svgs/dashboard-svgs/flag3.svg";
+import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
+import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
+
+import WhiteHome from "@assets/media/svgs/dashboard-svgs/homeWhite.svg";
+import Whitepopular from "@assets/media/svgs/dashboard-svgs/popularWhite.svg";
 
 const postList = [
   {
@@ -51,12 +58,12 @@ const buttons = [
 
 const CommunityFeed = () => {
   const [activeTab, setActiveTab] = useState("home");
-  const [activePostActions, setActivePostActions] = useState(null); 
+  const [activePostActions, setActivePostActions] = useState(null);
   const togglePostActions = (index) => {
     if (activePostActions === index) {
-      setActivePostActions(null); 
+      setActivePostActions(null);
     } else {
-      setActivePostActions(index); 
+      setActivePostActions(index);
     }
   };
 
@@ -72,30 +79,31 @@ const CommunityFeed = () => {
     >
       <h2 className="text-xl font-semibold mb-3.5 text-[#252525]">Your Feed</h2>
       <div className="flex gap-[5px] mb-6">
-        <button
-          onClick={() => setActiveTab("home")}
-          className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
-            activeTab === "home"
-              ? "bg-[#28A2FF] text-white"
-              : "bg-[#D9E7EE] text-[#252525]"
-          }`}
-        >
-          <img src={home} alt="" />
-          Home
-        </button>
+  <button
+    onClick={() => setActiveTab("home")}
+    className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
+      activeTab === "home"
+        ? "bg-[#28A2FF] text-white"
+        : "bg-[#D9E7EE] text-[#252525]"
+    }`}
+  >
+    <img src={activeTab === "home" ? WhiteHome : home} alt="Home" />
+    Home
+  </button>
 
-        <button
-          onClick={() => setActiveTab("Popular")}
-          className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
-            activeTab === "Popular"
-              ? "bg-[#28A2FF] text-white"
-              : "bg-[#D9E7EE] text-[#252525]"
-          }`}
-        >
-          <img src={popular} alt="" />
-          Popular
-        </button>
-      </div>
+  <button
+    onClick={() => setActiveTab("Popular")}
+    className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
+      activeTab === "Popular"
+        ? "bg-[#28A2FF] text-white"
+        : "bg-[#D9E7EE] text-[#252525]"
+    }`}
+  >
+    <img src={activeTab === "Popular" ? Whitepopular : popular} alt="Popular" />
+    Popular
+  </button>
+</div>
+
 
       {filteredPosts.map((post, index) => (
         <div key={index} className="post mb-6 relative">
@@ -114,7 +122,9 @@ const CommunityFeed = () => {
                   <p className="font-semibold mb-1 text-[#252525] leading-tight">
                     {post.userName}
                   </p>
-                  <span className="text-sm text-gray-500 leading-tight">{post.userPost}</span>
+                  <span className="text-sm text-gray-500 leading-tight">
+                    {post.userPost}
+                  </span>
                 </div>
               </div>
 
@@ -191,16 +201,30 @@ const CommunityFeed = () => {
             </div>
 
             {activePostActions === index && (
-              <div className="absolute top-14 right-4 bg-white border border-gray-300 rounded-md shadow-md p-3 z-50 w-[150px]">
+              <div className="absolute top-14 right-4  bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50 ">
                 <button
                   onClick={() => alert(`Flagged post: ${post.title}`)}
-                  className="w-full text-left px-3 py-2 hover:bg-[#E7F2F9] rounded">
+                  className="group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2 mb-0.5"
+                >
+                  <span className="inline-block group-hover:hidden">
+                    <img src={Flagwhite} alt="Flagwhite" />
+                  </span>
+                  <span className="hidden group-hover:inline-block">
+                    <img src={Flagblue} alt="Flagblue" />
+                  </span>
                   Flag Post
                 </button>
+
                 <button
                   onClick={() => alert(`Saved post: ${post.title}`)}
-                  className="w-full text-left px-3 py-2 hover:bg-[#E7F2F9] rounded"
+                  className="group w-full text-left  pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
                 >
+                  <span className="inline-block group-hover:hidden">
+                    <img src={Save} alt="Save" />
+                  </span>
+                  <span className="hidden group-hover:inline-block">
+                    <img src={SaveBlue} alt="SaveBlue" />
+                  </span>
                   Save Post
                 </button>
               </div>
@@ -246,7 +270,9 @@ const CommunityFeed = () => {
               </div>
             </div>
 
-            <p className="text-[#007AB2] font-medium text-sm">Show 5 more Comments</p>
+            <p className="text-[#007AB2] font-medium text-sm">
+              Show 5 more Comments
+            </p>
           </div>
         </div>
       ))}
