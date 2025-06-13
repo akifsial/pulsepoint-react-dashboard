@@ -507,7 +507,7 @@ const SignupForm = () => {
                 <p className="text-md font-semibold">
                   Preferred Communication Method
                 </p>
-                <div className="flex text-[16px] font-[500] text-gray-500 leading-[140%] tracking-[0%] font-[Geist] space-x-6">
+                <div className="flex text-[14px] font-[500] text-gray-500 leading-[140%] tracking-[0%] font-[Geist] space-x-6">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
