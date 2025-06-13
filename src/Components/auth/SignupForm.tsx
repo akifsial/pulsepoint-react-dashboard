@@ -507,7 +507,7 @@ const SignupForm = () => {
                 <p className="text-md font-semibold">
                   Preferred Communication Method
                 </p>
-                <div className="flex text-[14px] font-[500] text-gray-500 leading-[140%] tracking-[0%] font-[Geist] space-x-6">
+                <div className="flex text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -518,9 +518,9 @@ const SignupForm = () => {
                         "email"
                       )}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF]"
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="email">Via Email Address</label>
+                    <label htmlFor="email" className="ml-1">Via Email Address</label>
                   </div>
                   <div className="flex items-center">
                     <input
@@ -532,9 +532,9 @@ const SignupForm = () => {
                         "phone"
                       )}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF]"
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="phone">Via Phone Number</label>
+                    <label htmlFor="phone" className="ml-1">Via Phone Number</label>
                   </div>
                   <div className="flex items-center">
                     <input
@@ -544,9 +544,9 @@ const SignupForm = () => {
                       value="sms"
                       checked={formData.preferredCommunication.includes("sms")}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF]"
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="sms">Via SMS Text</label>
+                    <label htmlFor="sms" className="ml-1">Via SMS Text</label>
                   </div>
                 </div>
               </div>

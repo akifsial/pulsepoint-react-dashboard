@@ -120,7 +120,7 @@ const LoginPage = () => {
                 // value="email"
                 checked={formData.rememberMe}
                 onChange={handleChange}
-                className="mr-1 scale-125 border-[#FFFFFF]"
+                className="mr-1.5 scale-125 border-[#FFFFFF] align-middle text-center"
               />
               <label
                 htmlFor="rememberMe"
