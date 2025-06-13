@@ -44,11 +44,20 @@ const SelectField: React.FC<SelectFieldProps> = ({
         </div>
       )}
       <div className="relative">
-        <select
+        {/* <select
           id={id}
           value={value}
           onChange={onChange}
           className={`py-3 px-4 border border-[#252525B2] rounded-[8px] bg-[#FBFCFD] w-full h-[50px] ${
+            gray ? "bg-gray-100" : ""
+          } appearance-none`}
+          {...rest}
+        > */}
+        <select
+          id={id}
+          value={value}
+          onChange={onChange}
+          className={`w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] flex justify-between items-center font-[Geist] text-[16px] font-normal text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-gray-500 focus:outline-none ${
             gray ? "bg-gray-100" : ""
           } appearance-none`}
           {...rest}
