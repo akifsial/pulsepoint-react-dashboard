@@ -1,5 +1,5 @@
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import React from "react";
+import React, { useState } from "react"; 
 import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
 import community1 from "@assets/media/svgs/dashboard-svgs/community1.svg";
 import community2 from "@assets/media/svgs/dashboard-svgs/community2.svg";
@@ -8,8 +8,11 @@ import community4 from "@assets/media/svgs/dashboard-svgs/community4.svg";
 import community5 from "@assets/media/svgs/dashboard-svgs/community5.svg";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import CommunityModal from "@components/CommunityModal";
+
 
 const PopularCommunity = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const popularCommunity = [
     {
       icon: community1,
@@ -32,8 +35,19 @@ const PopularCommunity = () => {
       title: "Patient Rights & Safety",
     },
   ];
+    // Handle the form submission logic for community creation
+  const handleCommunitySubmit = async (data: any) => {
+    console.log("Community Data Submitted", data);
+    // Handle the actual community creation logic here
+  };
   return (
     <>
+      {/* Modal */}
+      <CommunityModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} // Close the modal
+        onSubmit={handleCommunitySubmit} // Handle the form submission
+      />
       <div className="w-[292px]">
         <div>
           <CommonInput
@@ -48,7 +62,10 @@ const PopularCommunity = () => {
         <div className="bg-white rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
           <h4 className="mb-2">Popular Communities</h4>
           {popularCommunity.map((community, idx) => (
-            <div key={idx} className="flex items-center gap-3.5 py-[13px] border-b border-b-[#E6E6E6] last:border-b-0">
+            <div
+              key={idx}
+              className="flex items-center gap-3.5 py-[13px] border-b border-b-[#E6E6E6] last:border-b-0"
+            >
               <img
                 src={community.icon}
                 alt={community.title}
@@ -59,14 +76,14 @@ const PopularCommunity = () => {
           ))}
         </div>
         <PrimaryButton
-                  btnText="Create Community"
-                  showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={addCommunity}
-                  imgPosition="left"
-                  btnClass="border border-[#000] px-4 w-full py-[10px] rounded-[10px] text-[#252525] font-semibold"
-                  
-                />
+          btnText="Create Community" 
+          showImg={true}
+          img={addCommunity}
+          imgClass="w-[19px] h-[19px] object-cover"
+          imgPosition="left"
+          btnClass="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center "
+          onClick={() => setIsModalOpen(true)} // This triggers modal opening
+        />
       </div>
     </>
   );
