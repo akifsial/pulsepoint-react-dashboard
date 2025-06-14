@@ -36,7 +36,7 @@ const CommunityStep1 = ({ onNext, onClose }) => {
       <button
         type="submit"
         onClick={onNext}
-        className="w-48 bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+        className="cursor-pointer w-48 bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
       >
         Next
       </button>

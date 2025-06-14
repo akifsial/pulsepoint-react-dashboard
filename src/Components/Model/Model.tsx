@@ -10,7 +10,7 @@ const Model = ({ setIsOpen, children }) => {
           className="absolute right-[30px] top-[30px]"
           aria-label="Close"
         >
-          <img src={closeArrow} alt="Close" className="w-6 h-6" />
+          <img src={closeArrow} alt="Close" className="w-6 h-6 cursor-pointer" />
         </button>
 
         <div>{children}</div>

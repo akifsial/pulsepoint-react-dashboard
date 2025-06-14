@@ -87,7 +87,7 @@ const CommunityFeed = () => {
         : "bg-[#D9E7EE] text-[#252525]"
     }`}
   >
-    <img src={activeTab === "home" ? WhiteHome : home} alt="Home" />
+    <img src={activeTab === "home"?   WhiteHome :home} alt="Home" />
     Home
   </button>
 

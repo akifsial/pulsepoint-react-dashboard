@@ -29,14 +29,14 @@ const CommunityStep2 = ({ onNext, onBack }) => {
         <button
           type="button"
           onClick={onBack}
-          className="w-48 bg-[#E4E4E4] border border-[#AFAFAF] text-[#252525] py-[13px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+          className="cursor-pointer w-48 bg-[#E4E4E4] border border-[#AFAFAF] text-[#252525] py-[13px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
         >
           Back
         </button>
         <button
           onClick={onNext}
           type="submit"
-          className="w-48 bg-[#28A2FF] text-white py-[13.5px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+          className="cursor-pointer w-48 bg-[#28A2FF] text-white py-[13.5px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
         >
           Next
         </button>
