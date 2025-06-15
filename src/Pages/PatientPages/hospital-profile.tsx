@@ -3,6 +3,7 @@ import ContactInformationCard from "@components/contact-information-card";
 import RatingsReviewsSection from "@components/ratings-reviews-section";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import HospitalProfileCard from "@components/hospital-profile-card";
+import PlusIcon from "@assets/media/svgs/patient-db-svgs/add-circle.svg";
 
 const HospitalProfile = () => {
   const handleGoBack = () => {
@@ -14,6 +15,10 @@ const HospitalProfile = () => {
     // In a real app, this would open a review form modal or navigate to review page
     console.log("Open add review modal/page");
   };
+
+  function setIsModalOpen(arg0: boolean): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <div className="min-h-screen bg-medical-bg">
@@ -35,12 +40,27 @@ const HospitalProfile = () => {
                 {hospitalData.name}
               </h1> */}
             </div>
-            <PrimaryButton
-              btnText="Add A Review"
-              btnClass="bg-gray-800 text-white hover:bg-gray-700 flex items-center space-x-2"
-              img={<Plus className="h-4 w-4" />}
-              onClick={handleAddReview}
-            />
+<PrimaryButton
+  btnText="Add A Review"
+  showImg
+  img={
+    <span className="flex items-center justify-center w-[19px] h-[19px] rounded-full bg-white">
+      <img src={PlusIcon} alt="add" className="w-[11px] h-[11px]" />
+    </span>
+  }
+  imgClass="w-[19px] h-[19px]"
+  imgPosition="left"
+  btnClass="
+    flex items-center justify-center gap-[4px]
+    w-[180px] h-[46px]
+    p-2 rounded-[8px]
+    bg-[#252525]
+    text-white font-spaceGrotesk font-bold
+    text-[14px] leading-[32px]
+  "
+  onClick={() => setIsModalOpen(true)}
+/>
+
           </div>
         </div>
       </header>
