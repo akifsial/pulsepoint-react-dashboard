@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 interface CommunityModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: any) => void; // Simplified the type for now
+  onSubmit: (data: any) => void; 
 }
 
 const CommunityModal: React.FC<CommunityModalProps> = ({ isOpen, onClose, onSubmit }) => {
@@ -26,9 +26,9 @@ const CommunityModal: React.FC<CommunityModalProps> = ({ isOpen, onClose, onSubm
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Community Form Data:", formData);  // Log form data to the console
-    onSubmit(formData); // Call onSubmit prop with form data
-    onClose();  // Close the modal after form submission
+    console.log("Community Form Data:", formData); 
+    onSubmit(formData); 
+    onClose(); 
   };
 
   // Modal close handler (clicking outside modal or pressing Escape)
