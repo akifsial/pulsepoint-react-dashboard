@@ -50,37 +50,35 @@ const LoginPage = () => {
   // };
 
   const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  
-  // Simulate form submission
-  console.log("Login Submitted", formData);
+    e.preventDefault();
 
-  // Navigate to the dashboard after successful login
-  navigate("/admin/dashboard"); // Use navigate to redirect
-};
-const navigate = useNavigate();
+    // Simulate form submission
+    console.log("Login Submitted", formData);
 
-
+    // Navigate to the dashboard after successful login
+    navigate("/patient/dashboard"); // Use navigate to redirect
+  };
+  const navigate = useNavigate();
 
   function handleSocialLogin(provider: string): void {
     throw new Error("Function not implemented.");
   }
 
   return (
-    <OnBoardingLayout>
-      <div className="flex flex-col min-h-screen p-6 items-center justify-center">
-        <h2 className="text-[35px] font-bold leading-[140%] tracking-[0%] text-[#1A1A1A] font-space-grotesk mb-4">
+    <OnBoardingLayout logoParentClass="absolute top-14 right-0 left-0 flex justify-center">
+      <div className="flex flex-col min-h-screen p-6 justify-center">
+        <h2 className="text-[35px] font-bold leading-[140%] tracking-[0%] text-[#1A1A1A] font-space-grotesk mb-2">
           Login
         </h2>
-        <p className="text-[16px] font-normal leading-[150%] tracking-[0%] text-[#252525CC] font-geist mb-6">
+        <p className="text-[16px] font-normal leading-[150%] tracking-[0%] text-[#252525CC] font-geist mb-4">
           Join to explore and share care insights.
         </p>
-        <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md">
+        <form onSubmit={handleSubmit} className="space-y-6 w-full items-center">
           {/* Email or Username Input */}
           <InputField
             label="Email or Username"
             asterisk={true}
-           icon={IoPersonOutline}
+            icon={IoPersonOutline}
             id="usernameOrEmail"
             name="usernameOrEmail"
             type="text"
@@ -119,9 +117,10 @@ const navigate = useNavigate();
                 type="checkbox"
                 id="rememberMe"
                 name="rememberMe"
+                // value="email"
                 checked={formData.rememberMe}
                 onChange={handleChange}
-                className="mr-2"
+                className="mr-1.5 scale-125 border-[#FFFFFF] align-middle text-center"
               />
               <label
                 htmlFor="rememberMe"
@@ -143,7 +142,7 @@ const navigate = useNavigate();
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors"
+            className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors cursor-pointer mb-1"
           >
             Login
           </button>

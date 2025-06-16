@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // For navigation
-import InputField from "../InputField"; // Reusable input component for form fields
+import { Link } from "react-router-dom"; 
+import InputField from "../InputField";
 import OnBoardingLayout from "./OnBoradingLayout";
 import { IoMailOutline } from "react-icons/io5";
 
@@ -43,15 +43,15 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <OnBoardingLayout>
-      <div className="flex flex-col justify-center items-start min-h-screen">
+    <OnBoardingLayout logoParentClass="absolute top-36 right-0 left-0 flex justify-center">
+      <div className="flex flex-col justify-center p-6 items-start min-h-screen">
         {/* Heading */}
-        <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-4">
+        <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-1">
           Forgot Password?
         </h2>
 
         {/* Content */}
-        <p className="font-[Geist] font-normal text-[16px] leading-[150%] tracking-[0%] text-[#252525CC] mb-6">
+        <p className="font-[Geist] font-normal text-[16px] leading-[150%] tracking-[0%] text-[#252525CC] mb-4">
           Enter your email address and we'll send you an email with a link to
           reset your password.
         </p>
@@ -69,7 +69,6 @@ const ForgotPasswordPage = () => {
             onChange={handleChange}
             errorMessage={errors.email}
             placeholder="contact@organization.org"
-            className="w-full max-w-[570px] h-[50px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] font-medium text-[16px] leading-[140%] tracking-[0%] text-[#1A1A1A] mb-3 focus:outline-none"
           />
 
           {errors.email && (
@@ -80,7 +79,7 @@ const ForgotPasswordPage = () => {
           <Link to="/reset-password">
           <button
             type="submit"
-            className="w-full max-w-[570px] h-[46px] bg-[#28A2FF] text-white rounded-[10px] px-[10px] flex items-center justify-center gap-[10px] font-[Inter] font-semibold text-[14px] leading-[24px] tracking-[0%] transition-colors"
+            className="w-full max-w-[570px] h-[46px] bg-[#28A2FF] text-white rounded-[10px] px-[10px] flex items-center justify-center gap-[10px] font-[Inter] font-semibold text-[14px] leading-[24px] tracking-[0%] transition-colors cursor-pointer"
           >
             Update Password
           </button>

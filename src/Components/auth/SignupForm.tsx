@@ -224,6 +224,7 @@ const SignupForm = () => {
                     asterisk={true}
                     icon={IoPersonOutline}
                     id="firstName"
+                    name="firstName"
                     type="text"
                     value={formData.firstName}
                     onChange={handleChange}
@@ -242,6 +243,7 @@ const SignupForm = () => {
                     asterisk={true}
                     icon={IoPersonOutline}
                     id="lastName"
+                    name="lastName"
                     type="text"
                     value={formData.lastName}
                     onChange={handleChange}
@@ -337,6 +339,7 @@ const SignupForm = () => {
                     label="Marital Status"
                     id="maritalStatus"
                     name="maritalStatus"
+                    asterisk={true}
                     value={formData.maritalStatus}
                     onChange={handleChange}
                     options={maritalStatusOptions}
@@ -353,6 +356,7 @@ const SignupForm = () => {
                     label="Insurance Type"
                     id="insuranceType"
                     name="insuranceType"
+                    asterisk={true}
                     value={formData.insuranceType}
                     onChange={handleChange}
                     options={insuranceTypeOptions}
@@ -443,7 +447,6 @@ const SignupForm = () => {
                 <div>
                   <InputField
                     label="Street Address"
-                    asterisk={true}
                     id="streetAddress"
                     name="streetAddress"
                     type="text"
@@ -504,7 +507,7 @@ const SignupForm = () => {
                 <p className="text-md font-semibold">
                   Preferred Communication Method
                 </p>
-                <div className="flex text-[16px] font-[500] text-gray-500 leading-[140%] tracking-[0%] font-[Geist] space-x-6">
+                <div className="flex text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -515,9 +518,9 @@ const SignupForm = () => {
                         "email"
                       )}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-gray opacity-20"
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="email">Via Email Address</label>
+                    <label htmlFor="email" className="ml-1">Via Email Address</label>
                   </div>
                   <div className="flex items-center">
                     <input
@@ -529,9 +532,9 @@ const SignupForm = () => {
                         "phone"
                       )}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-gray opacity-20"
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="phone">Via Phone Number</label>
+                    <label htmlFor="phone" className="ml-1">Via Phone Number</label>
                   </div>
                   <div className="flex items-center">
                     <input
@@ -541,9 +544,9 @@ const SignupForm = () => {
                       value="sms"
                       checked={formData.preferredCommunication.includes("sms")}
                       onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-gray opacity-20"
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="sms">Via SMS Text</label>
+                    <label htmlFor="sms" className="ml-1">Via SMS Text</label>
                   </div>
                 </div>
               </div>
@@ -551,7 +554,7 @@ const SignupForm = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6"
+                className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
               >
                 Sign Up
               </button>

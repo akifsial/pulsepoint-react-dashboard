@@ -40,8 +40,8 @@ const PopularCommunity = () => {
           containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
         />
 
-        <div className="bg-white rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
-          <h4 className="mb-2">Popular Communities</h4>
+        <div className="bg-white  rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
+          <h3 className="mb-2 font-[Space Grotesk]">Popular Communities</h3>
           {popularCommunity.map((community, idx) => (
             <div
               key={idx}
