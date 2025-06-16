@@ -21,7 +21,7 @@ export const PrimaryButton: React.FC<PrimaryBtnProps> = ({
   const textElement = <span className={btnTextClass}>{btnText}</span>;
 
   const content = (
-    <div className="flex items-center gap-x-2 justify-center">
+    <div className="flex items-center gap-x-1 justify-center">
       {imgPosition === "left" ? (
         <>
           {imageElement}
@@ -37,12 +37,10 @@ export const PrimaryButton: React.FC<PrimaryBtnProps> = ({
   );
 
   if (linkTo) {
-    return (  
+    return (
       <Link
         to={linkTo}
-        className={`rounded-lg cursor-pointer ${
-          disabled ? "opacity-50 pointer-events-none" : ""
-        } ${btnClass}`}
+        className={`rounded-[20px] cursor-pointer ${disabled ? "opacity-50 pointer-events-none" : ""} ${btnClass}`}
       >
         {content}
       </Link>
@@ -51,9 +49,7 @@ export const PrimaryButton: React.FC<PrimaryBtnProps> = ({
 
   return (
     <button
-      className={`rounded-lg cursor-pointer w-full ${
-        disabled ? "opacity-50 cursor-not-allowed" : ""
-      } ${btnClass}`}
+      className={`rounded-[20px] cursor-pointer h-[36px] px-[10px] py-[8px] ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${btnClass}`}
       onClick={onClick}
       disabled={disabled}
     >

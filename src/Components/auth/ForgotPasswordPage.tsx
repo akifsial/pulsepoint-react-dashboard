@@ -43,15 +43,15 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <OnBoardingLayout logoParentClass="absolute top-38 right-0 left-0 flex justify-center">
-      <div className="flex flex-col justify-center items-start min-h-screen">
+    <OnBoardingLayout logoParentClass="absolute top-36 right-0 left-0 flex justify-center">
+      <div className="flex flex-col justify-center p-6 items-start min-h-screen">
         {/* Heading */}
-        <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-4">
+        <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-1">
           Forgot Password?
         </h2>
 
         {/* Content */}
-        <p className="font-[Geist] font-normal text-[16px] leading-[150%] tracking-[0%] text-[#252525CC] mb-6">
+        <p className="font-[Geist] font-normal text-[16px] leading-[150%] tracking-[0%] text-[#252525CC] mb-4">
           Enter your email address and we'll send you an email with a link to
           reset your password.
         </p>
