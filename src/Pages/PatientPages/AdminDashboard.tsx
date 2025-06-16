@@ -16,8 +16,10 @@ import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard: React.FC = () => {
+  const navigate=useNavigate(); 
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   type dataTypes = {
     id?: number;
@@ -40,7 +42,10 @@ const AdminDashboard: React.FC = () => {
       cell: ({ row }: any) => {
         const { first_name, last_name, email } = row.original;
         return (
-          <div className="flex items-center gap-3">
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => navigate("/patient/hospital-profile")}
+          >
             <img
               src={dummyImage}
               alt={`${first_name} ${last_name}`}
