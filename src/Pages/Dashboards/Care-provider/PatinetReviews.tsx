@@ -1,19 +1,21 @@
-import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
+import React from "react";
+import SelectCommonBox from "@components/Dashboard-components/SelectCommonBox";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
-import React from "react";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import SelectCommonBox from "@components/Dashboard-components/SelectCommonBox";
-import { v4 as uuid } from "uuid";
+import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import PatientReviewsCard from "@components/Dashboard-components/Cards/PatientReviewsCard";
+import { v4 as uuid } from "uuid";
 
 const PatinetReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
-  const [filterValue, setFilterValue] = React.useState("");
+  const [filterValue, setFilterValue] = React.useState("flagged"); 
+
   const statusOptions = [
-    { id: uuid, label: "All Flagged", value: "flagged" },
-    { id: uuid, label: "None", value: "none" },
+    { id: uuid(), label: "All Flagged", value: "flagged" },
+    { id: uuid(), label: "None", value: "none" },
   ];
+
   return (
     <div>
       <h2 className="mb-4">Patient Reviews</h2>
@@ -21,33 +23,27 @@ const PatinetReviews: React.FC = () => {
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">View and respond to feedback</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <div className="relative">
-              <div className="flex items gap-4 ">
-                <div className="flex items-center gap-2">
-                  <p className="text-[#252525] font-medium text-sm">
-                    Show Reviews
-                  </p>
-                  <SelectCommonBox
-                    value={filterValue}
-                    onChange={(val) => setFilterValue(val)}
-                    options={statusOptions}
-                    className="w-full md:w-[200px] h-[40px] text-sm"
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <p className="text-[#252525] font-medium text-sm">
-                    Filter by
-                  </p>
-                  <PrimaryButton
-                    btnText="Ratings"
-                    showImg={true}
-                    imgClass="w-[24px] h-[24px] object-cover"
-                    img={filterIcon}
-                    imgPosition="left"
-                    btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                    onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                  />
-                </div>
+            <div className="relative flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-[#252525] font-medium text-sm">Show Reviews</p>
+                <SelectCommonBox
+                  value={filterValue}
+                  onChange={(val) => setFilterValue(val)}
+                  options={statusOptions}
+                  className="w-full md:w-[200px] h-[40px] text-sm"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <p className="text-[#252525] font-medium text-sm">Filter by</p>
+                <PrimaryButton
+                  btnText="Ratings"
+                  showImg={true}
+                  imgClass="w-[24px] h-[24px] object-cover"
+                  img={filterIcon}
+                  imgPosition="left"
+                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
+                />
               </div>
               <AnimatePresence>
                 {showRatingDropdown && (
@@ -63,12 +59,11 @@ const PatinetReviews: React.FC = () => {
                 )}
               </AnimatePresence>
             </div>
-
           </div>
         </div>
-          <div>
-            <PatientReviewsCard/>
-          </div>
+        <div>
+          <PatientReviewsCard filterValue={filterValue} />
+        </div>
       </div>
     </div>
   );

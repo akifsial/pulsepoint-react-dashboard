@@ -60,16 +60,14 @@ const PopularCommunity = () => {
         onSubmit={handleCommunitySubmit} // Handle the form submission
       />
       <div className="w-[292px]">
-        <div>
-          <CommonInput
-            placeholder="Search Communities "
-            showImg={true}
-            imgSrc={searchCommunity}
-            imgLeft={true}
-            inputClassName="text-sm"
-            containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
-          />
-        </div>
+        <CommonInput
+          placeholder="Search Communities "
+          showImg={true}
+          imgSrc={searchCommunity}
+          imgLeft={true}
+          inputClassName="text-sm"
+          containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
+        />
         <div className="bg-white rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
           <h4 className="mb-2">Popular Communities</h4>
           {popularCommunity.map((community, idx) => (
@@ -88,7 +86,7 @@ const PopularCommunity = () => {
         </div>
 
         <PrimaryButton
-          btnText="Create Community" 
+          btnText="Create Community"
           showImg={true}
           img={addCommunity}
           imgClass="w-[19px] h-[19px] object-cover"
@@ -99,18 +97,18 @@ const PopularCommunity = () => {
       </div>
 
       {step === 1 && (
-        <Model setIsOpen={closeModal}>
-          <CommunityStep1 onNext={() => setStep(2)} onClose={closeModal} />
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community1 onNext={() => setStep(2)} onClose={closeModal} />
         </Model>
       )}
       {step === 2 && (
-        <Model setIsOpen={closeModal}>
-          <CommunityStep2 onNext={() => setStep(3)} onBack={() => setStep(1)} />
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community2 onNext={() => setStep(3)} onBack={() => setStep(1)} />
         </Model>
       )}
       {step === 3 && (
-        <Model setIsOpen={closeModal}>
-          <CommunityStep3 onBack={() => setStep(2)} onClose={closeModal} />
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community3 onBack={() => setStep(2)} onClose={closeModal} />
         </Model>
       )}
     </>
