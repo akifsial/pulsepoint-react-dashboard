@@ -2,13 +2,13 @@ import React from "react";
 import InputField from "@components/InputField";
 import TextField from "./TextField";
 
-const CommunityStep1 = ({ onNext, onClose }) => {
+const Community1 = ({ onNext, onClose }) => {
   return (
     <>
       <div className="text-center max-w-[435px] mx-auto mb-2.5 font-normal text-base">
-        <h3 className="text-[25px] font-bold leading-8.5 font-[Space Grotesk]">
+        <h2 className="text-[25px] font-bold leading-8.5 font-[Space Grotesk]">
           Tell us about your community
-        </h3>
+        </h2>
         <p>
           A name and description help people understand what your community is all about.
         </p>
@@ -36,7 +36,7 @@ const CommunityStep1 = ({ onNext, onClose }) => {
       <button
         type="submit"
         onClick={onNext}
-        className="w-48 bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+        className="cursor-pointer w-48 bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
       >
         Next
       </button>
@@ -44,4 +44,4 @@ const CommunityStep1 = ({ onNext, onClose }) => {
   );
 };
 
-export default CommunityStep1;
+export default Community1;

@@ -10,7 +10,6 @@ import Model from "@components/Model/Model";
 const Router: React.FC = () => {
   return (
     <Routes>
-      
       {/* Public Routes */}
       {websitePublicRoutes.map(({ path, element }) => (
         <Route key={path} path={path} element={element} />
@@ -19,7 +18,6 @@ const Router: React.FC = () => {
       {/* Dashboard Routes */}
       {DashboardRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
-          
           {children?.map((child) => (
             <Route
               key={child.path || "index"}
@@ -27,11 +25,27 @@ const Router: React.FC = () => {
               element={child.element}
               index={child.path === "" ? true : undefined}
             />
-            
           ))}
         </Route>
       ))}
 
+<<<<<<< HEAD
+=======
+      {/* Patient Routes */}
+      {PatientRoutes.map(({ path, element, children }) => (
+        <Route key={path} path={path} element={element}>
+          {children?.map((child) => (
+            <Route
+              key={child.path || "index"}
+              path={child.path}
+              element={child.element}
+              index={child.path === "" ? true : undefined}
+            />
+          ))}
+        </Route>
+      ))}
+
+>>>>>>> f98fcb2264ec488c105451068fdf9813fc21fb39
       {/* Admin Routes */}
       {AdminRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
@@ -45,6 +59,7 @@ const Router: React.FC = () => {
           ))}
         </Route>
       ))}
+<<<<<<< HEAD
       {PatientRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
           {children?.map((child) => (
@@ -58,6 +73,8 @@ const Router: React.FC = () => {
         </Route>
       ))}
       {/* </Route> */}
+=======
+>>>>>>> f98fcb2264ec488c105451068fdf9813fc21fb39
 
       {/* 404 Not Found */}
       <Route path="*" element={<NotFoundPage />} />
