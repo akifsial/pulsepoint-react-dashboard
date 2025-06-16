@@ -290,35 +290,35 @@ const AdminPatientReviews: React.FC = () => {
   );
 
   // Render the Review Form View
-  const renderFormView = () => (
-    <div className="mb-10">
-      <h2
-        className="
-          font-space-grotesk
-          font-bold
-          text-heading
-          leading-8
-          tracking-normal
-          text-brand-ink
-          align-middle
-          mb-4
-        "
-      >
-        Leave A Review
-      </h2>
+const renderFormView = () => (
+  <div className="mb-10 w-full h-[474px] p-[20px_23px_20px_23px] gap-[25px] rounded-[10px]">
+    <h2
+      className="
+        font-space-grotesk
+        font-bold
+        text-heading
+        leading-8
+        tracking-normal
+        text-brand-ink
+        align-middle
+        mb-4
+      "
+    >
+      Leave A Review
+    </h2>
 
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <ReviewForm
-          currentReview={{
-            rating: currentEditingReview?.numericRating || 0,
-            comment: currentEditingReview?.reviews || ''
-          }}
-          onSave={handleSaveReview}
-          onCancel={handleCancelEdit}
-        />
-      </div>
+    <div className="mt-6 bg-white rounded-[10px] px-4 py-6 mb-6 gap-[25px]">
+      <ReviewForm
+        currentReview={{
+          rating: currentEditingReview?.numericRating || 0,
+          comment: currentEditingReview?.reviews || ''
+        }}
+        onSave={handleSaveReview}
+        onCancel={handleCancelEdit}
+      />
     </div>
-  );
+  </div>
+);
 
   // Main render - conditionally show table or form
   return (
