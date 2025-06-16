@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import ContactInformationCard from "@components/contact-information-card";
-import RatingsReviewsSection from "@components/ratings-reviews-section";
+import RatingsReviewsSection from "@components/Review/ratings-reviews-section";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import HospitalProfileCard from "@components/hospital-profile-card";
 import PlusIcon from "@assets/media/svgs/patient-db-svgs/add-circle.svg";
