@@ -4,12 +4,15 @@ import RatingsReviewsSection from "@components/ratings-reviews-section";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import HospitalProfileCard from "@components/hospital-profile-card";
 import PlusIcon from "@assets/media/svgs/patient-db-svgs/add-circle.svg";
+import { useNavigate } from "react-router-dom";
 
 const HospitalProfile = () => {
-  const handleGoBack = () => {
-    // In a real app, this would use router navigation or history.back()
-    console.log("Navigate back to previous page");
-  };
+const navigate = useNavigate();
+
+const handleGoBack = () => {
+  navigate(-1); // Go back to the previous page in browser history
+};
+
 
   const handleAddReview = () => {
     // In a real app, this would open a review form modal or navigate to review page
