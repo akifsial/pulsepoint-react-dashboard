@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
-import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
@@ -10,9 +8,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
-import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
+import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
+import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
+import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -31,9 +30,9 @@ const CareProviderDashboard: React.FC = () => {
     location?: string;
   };
 
-  const columns = [
+  const columns: TanDataTableColumn<dataTypes>[] = [
     {
-      accessor: "userData",
+      accessor: "first_name",
       header: "Provider’s Name",
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
@@ -152,40 +151,39 @@ const CareProviderDashboard: React.FC = () => {
   const handleTabClick = (tab: "all" | "saved") => {
     setActiveTab(tab);
   };
+  const [searchText, setSearchText] = React.useState<string>("");
 
   return (
     <div className="mb-10">
-      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
-        <StatsCommonCards
-          count={40}
-          title={
-            <>
-              Total Care <br />
-              Providers Listing
-            </>
-          }
-          cardImg={userSearch}
-          imgBg="#EEE0FF"
-          borderBg="#9747FF"
-        />
-        <StatsCommonCards
-          count={25}
-          title="Total Reviews Written"
-          cardImg={WriteReview}
-          imgBg="#D8F6D4"
-          borderBg="#52C343"
-        />
-        <StatsCommonCards
-          count={4.6}
-          title="Average Rating Given"
-          cardImg={ThumbsUp}
-          imgBg="#FFE8CF"
-          borderBg="#F98A17"
-        />
-      </div>
+      <h2
+        className="
+      font-space-grotesk
+      font-bold
+      text-heading
+      leading-8
+      tracking-normal
+      text-brand-ink
+      align-middle
+    "
+      >
+        Care Provider Listing
+      </h2>
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Care Providers</h3>
+          {/* searchbar */}
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
+            <CommonInput
+              placeholder="Search with Provider name , zip code"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              showImg={true}
+              imgSrc={searchIcon}
+              imgLeft={true}
+              inputClassName="text-sm"
+              containerClassName="w-full max-w-sm"
+            />
+          </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
@@ -241,6 +239,7 @@ const CareProviderDashboard: React.FC = () => {
               paddingRight: "10px",
               paddingBottom: "18px",
               paddingLeft: "10px",
+              cursor: "pointer",
             }}
           >
             <p
@@ -266,6 +265,7 @@ const CareProviderDashboard: React.FC = () => {
               paddingRight: "10px",
               paddingBottom: "18px",
               paddingLeft: "10px",
+              cursor: "pointer",
             }}
           >
             <p
@@ -277,7 +277,7 @@ const CareProviderDashboard: React.FC = () => {
             </p>
           </div>
         </div>
-        
+
         <div>
           {activeTab === "all" ? (
             <TanDataTable<dataTypes>
