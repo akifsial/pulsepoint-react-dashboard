@@ -1,10 +1,13 @@
 import React from 'react'
 
-const CommunityTopics = ({title, text1 ,text2 ,text3,text4 ,text5}) => {
+const CommunityTopics = ({title, text1 ,text2 ,text3,text4 ,text5 ,asterisk}) => {
   return (
     <>
     <div className='text-base'>
-        <h6 className='font-medium  mb-2'>{title}</h6>
+        <h6 className='font-medium  mb-2'>{title}   {asterisk && (
+            <span className="text-red-500 font-medium text-[16px] leading-[140%] tracking-normal font-geist relative top-[-1px]">*
+            </span>
+          )}</h6>
         <div className="flex  font-normal text-[#1A1A1A] gap-[11px] mb-5 flex-wrap">
             <div className='py-1.5  px-4 text-white bg-[#28A2FF] rounded-[20px]'><p>{text1}</p></div>
             <div className='py-1.5 px-4  bg-[#F4F4F4] rounded-[20px] hover:bg-[#DDF0FF]'><p>{text2}</p></div>

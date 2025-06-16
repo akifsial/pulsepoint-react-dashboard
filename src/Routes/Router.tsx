@@ -44,7 +44,6 @@ const Router: React.FC = () => {
           ))}
         </Route>
       ))}
-
       {/* 404 Not Found */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

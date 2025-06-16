@@ -9,11 +9,10 @@ import community3 from "@assets/media/svgs/dashboard-svgs/community3.svg";
 import community4 from "@assets/media/svgs/dashboard-svgs/community4.svg";
 import community5 from "@assets/media/svgs/dashboard-svgs/community5.svg";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
-
 import Model from "@components/Model/Model";
-import CommunityStep1 from "./Community1";
-import CommunityStep2 from "./Community2";
-import CommunityStep3 from "./Community3";
+import Community1 from "./Community1";
+import Community2 from "./Community2";
+import Community3 from "./Community3";
 
 const PopularCommunity = () => {
   const [step, setStep] = useState(0);
@@ -30,18 +29,17 @@ const PopularCommunity = () => {
 
   return (
     <>
-      <div className="sm:w-[292px] py-5 md:py-0">
+      <div className="w-[292px]">
         <CommonInput
-          placeholder="Search Communities"
-          showImg
+          placeholder="Search Communities "
+          showImg={true}
           imgSrc={searchCommunity}
-          imgLeft
+          imgLeft={true}
           inputClassName="text-sm"
           containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
         />
-
-        <div className="bg-white  rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
-          <h3 className="mb-2 font-[Space Grotesk]">Popular Communities</h3>
+        <div className="bg-white rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
+          <h4 className="mb-2">Popular Communities</h4>
           {popularCommunity.map((community, idx) => (
             <div
               key={idx}
@@ -59,28 +57,28 @@ const PopularCommunity = () => {
 
         <PrimaryButton
           btnText="Create Community"
-          showImg
-          imgClass="w-[24px] h-[24px] object-cover"
+          showImg={true}
           img={addCommunity}
+          imgClass="w-[19px] h-[19px] object-cover"
           imgPosition="left"
-          btnClass="border border-[#000] px-4 w-full py-[10px] rounded-[10px] text-[#252525] font-semibold"
+          btnClass="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center "
           onClick={() => setStep(1)}
         />
       </div>
 
       {step === 1 && (
-        <Model setIsOpen={closeModal}>
-          <CommunityStep1 onNext={() => setStep(2)} onClose={closeModal} />
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community1 onNext={() => setStep(2)} onClose={closeModal} />
         </Model>
       )}
       {step === 2 && (
-        <Model setIsOpen={closeModal}>
-          <CommunityStep2 onNext={() => setStep(3)} onBack={() => setStep(1)} />
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community2 onNext={() => setStep(3)} onBack={() => setStep(1)} />
         </Model>
       )}
       {step === 3 && (
-        <Model setIsOpen={closeModal}>
-          <CommunityStep3 onBack={() => setStep(2)} onClose={closeModal} />
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community3 onBack={() => setStep(2)} onClose={closeModal} />
         </Model>
       )}
     </>

@@ -1,11 +1,11 @@
 import React from "react";
 import DragMedia from "./DragMedia";
 
-const CommunityStep2 = ({ onNext, onBack }) => {
+const Community2 = ({ onNext, onBack }) => {
   return (
     <>
       <div className="text-center max-w-[501px] mx-auto mb-2.5 font-normal text-base">
-        <h3 className="text-[25px] font-bold leading-8.5 font-[Space Grotesk]">Style your community</h3>
+        <h2 className="text-[25px] font-bold leading-8.5 font-[Space Grotesk]">Style your community</h2>
         <p>
           Adding visual flair will catch new members attention and help establish your community’s culture! You can update this at any time.
         </p>
@@ -45,4 +45,4 @@ const CommunityStep2 = ({ onNext, onBack }) => {
   );
 };
 
-export default CommunityStep2;
+export default Community2;

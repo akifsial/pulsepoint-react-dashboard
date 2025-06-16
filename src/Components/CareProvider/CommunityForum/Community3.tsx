@@ -1,13 +1,13 @@
 import React from "react";
 import CommunityTopics from "./CommunityTopics";
 
-const CommunityStep3 = ({ onBack, onClose }) => {
+const Community3 = ({ onBack, onClose }) => {
   return (
     <>
       <div className="text-center max-w-[496px] mx-auto mb-2.5 font-normal text-base">
-        <h3 className="text-[25px] font-bold leading-8.5 font-[Space Grotesk]">
+        <h2 className="text-[25px] font-bold leading-8.5 font-[Space Grotesk]">
           Add topics
-        </h3>
+        </h2>
         <p>
           Add up to 3 topics to help interested redditors find your community
         </p>
@@ -60,4 +60,4 @@ const CommunityStep3 = ({ onBack, onClose }) => {
   );
 };
 
-export default CommunityStep3;
+export default Community3;
