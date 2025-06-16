@@ -8,12 +8,14 @@ import { PrimaryButton } from "@components/Shared-components/Buttons/Common-butt
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
 import { useNavigate } from "react-router-dom";
 import Community from "../Community";
+import OurFeed from "../OurFeed";
 
 const BackFeed = ({setOpenBackFeed}) => {
   const navigate=useNavigate()
   return (
     <>
-      <div className="flex items-center mb-4.5 gap-2.5">
+      <div className="mb-[25px]">
+        <div className="flex items-center mb-4.5 gap-2.5">
         <img src={backArrow} alt="backArrow" className="cursor-pointer" onClick={()=>setOpenBackFeed(false)} />
         <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
           Back to Feed
@@ -100,6 +102,8 @@ const BackFeed = ({setOpenBackFeed}) => {
           </div>
         </div>
       </div>
+      </div>
+      <OurFeed />
     </>
   );
 };
