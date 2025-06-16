@@ -5,7 +5,7 @@ import PopularCommunity from './PopularCommunity'
 const Community = () => {
   return (
     <>
-    <div className="flex items-start gap-3">
+    <div className="block sm:flex sm:items-start sm:gap-6">
       <CommunityFeed />
     <PopularCommunity/>
     </div>

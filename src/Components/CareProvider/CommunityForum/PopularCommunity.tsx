@@ -1,5 +1,7 @@
+import React, { useState } from "react";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import React, { useState } from "react"; 
+import { PrimaryButton }, { useState } from "@components/Shared-components/Buttons/Common-button/CommonButton"; 
+
 import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
 import community1 from "@assets/media/svgs/dashboard-svgs/community1.svg";
 import community2 from "@assets/media/svgs/dashboard-svgs/community2.svg";
@@ -7,7 +9,11 @@ import community3 from "@assets/media/svgs/dashboard-svgs/community3.svg";
 import community4 from "@assets/media/svgs/dashboard-svgs/community4.svg";
 import community5 from "@assets/media/svgs/dashboard-svgs/community5.svg";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+
+import Model from "@components/Model/Model";
+import CommunityStep1 from "./Community1";
+import CommunityStep2 from "./Community2";
+import CommunityStep3 from "./Community3";
 import CommunityModal from "@components/CommunityModal";
 
 
@@ -75,6 +81,7 @@ const PopularCommunity = () => {
             </div>
           ))}
         </div>
+
         <PrimaryButton
           btnText="Create Community" 
           showImg={true}
@@ -85,6 +92,22 @@ const PopularCommunity = () => {
           onClick={() => setIsModalOpen(true)} // This triggers modal opening
         />
       </div>
+
+      {step === 1 && (
+        <Model setIsOpen={closeModal}>
+          <CommunityStep1 onNext={() => setStep(2)} onClose={closeModal} />
+        </Model>
+      )}
+      {step === 2 && (
+        <Model setIsOpen={closeModal}>
+          <CommunityStep2 onNext={() => setStep(3)} onBack={() => setStep(1)} />
+        </Model>
+      )}
+      {step === 3 && (
+        <Model setIsOpen={closeModal}>
+          <CommunityStep3 onBack={() => setStep(2)} onClose={closeModal} />
+        </Model>
+      )}
     </>
   );
 };
