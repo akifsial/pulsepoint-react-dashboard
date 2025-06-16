@@ -32,13 +32,8 @@ const Router: React.FC = () => {
         </Route>
       ))}
 
-<<<<<<< HEAD
-      {/* Patient Routes */}
-      {PatientRoutes.map(({ path, element, children }) => (
-=======
       {/* Admin Routes */}
       {AdminRoutes.map(({ path, element, children }) => (
->>>>>>> 3115d50804294e1fce64e3c7044061630c554c0f
         <Route key={path} path={path} element={element}>
           {children?.map((child) => (
             <Route
@@ -50,9 +45,7 @@ const Router: React.FC = () => {
           ))}
         </Route>
       ))}
-<<<<<<< HEAD
-=======
-      {AdminRoutes.map(({ path, element, children }) => (
+      {PatientRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
           {children?.map((child) => (
             <Route
@@ -65,7 +58,6 @@ const Router: React.FC = () => {
         </Route>
       ))}
       {/* </Route> */}
->>>>>>> 99e13563676f97569130b23351a98067b181c820
 
       {/* 404 Not Found */}
       <Route path="*" element={<NotFoundPage />} />
