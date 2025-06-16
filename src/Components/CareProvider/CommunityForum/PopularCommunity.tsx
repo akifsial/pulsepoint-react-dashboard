@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import { PrimaryButton }, { useState } from "@components/Shared-components/Buttons/Common-button/CommonButton"; 
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton"; 
 
 import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
 import community1 from "@assets/media/svgs/dashboard-svgs/community1.svg";
@@ -18,7 +18,8 @@ import CommunityModal from "@components/CommunityModal";
 
 
 const PopularCommunity = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const [step, setStep] = useState(1); // Step state to manage the current step
   const popularCommunity = [
     {
       icon: community1,
@@ -41,17 +42,21 @@ const PopularCommunity = () => {
       title: "Patient Rights & Safety",
     },
   ];
-    // Handle the form submission logic for community creation
+
+  // Handle the form submission logic for community creation
   const handleCommunitySubmit = async (data: any) => {
     console.log("Community Data Submitted", data);
     // Handle the actual community creation logic here
   };
+
+  const closeModal = () => setIsModalOpen(false); // Close the modal
+
   return (
     <>
       {/* Modal */}
       <CommunityModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)} // Close the modal
+        onClose={closeModal} // Close the modal
         onSubmit={handleCommunitySubmit} // Handle the form submission
       />
       <div className="w-[292px]">

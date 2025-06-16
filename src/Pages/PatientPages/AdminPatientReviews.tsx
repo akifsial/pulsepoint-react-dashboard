@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
@@ -10,6 +10,7 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import ReviewForm from "@components/ReviewForm";
 
 // Provider clinic images (you can replace these with actual clinic logos)
 // import mayoClinicLogo from "@assets/media/images/dashboard-images/mayo-clinic.png";
@@ -253,8 +254,8 @@ const AdminPatientReviews: React.FC = () => {
             )}
           />
         </div>
-      </div>
     </div>
+      </div>
   );
 };
 
