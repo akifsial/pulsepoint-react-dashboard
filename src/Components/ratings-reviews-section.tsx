@@ -143,12 +143,20 @@ export default function RatingsReviewsSection({
       content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
       createdAt: new Date()
     },
+       {
+      id: 6,
+      authorName: "Patricia M.",
+      authorTitle: "Dash Private Villa Project Investor",
+      rating: 5.0,
+      content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
+      createdAt: new Date()
+    },
   ];
 
   const displayReviews = reviews.length > 0 ? reviews : sampleReviews;
 
   return (
-    <div className="bg-gray-50 p-6">
+    <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-xl font-semibold text-gray-900">Ratings & Reviews</h2>
@@ -161,7 +169,7 @@ export default function RatingsReviewsSection({
       </div>
 
       {/* Reviews grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {displayReviews.map((review) => (
           <ReviewCard key={review.id} review={review} />
         ))}

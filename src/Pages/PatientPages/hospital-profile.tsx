@@ -63,7 +63,7 @@ const HospitalProfile = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Hospital Profile and Contact Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
           <HospitalProfileCard />
           <ContactInformationCard />
         </div>
