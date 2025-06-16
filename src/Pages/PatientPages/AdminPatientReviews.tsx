@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
@@ -10,15 +10,15 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
-
-// Provider clinic images (you can replace these with actual clinic logos)
-// import mayoClinicLogo from "@assets/media/images/dashboard-images/mayo-clinic.png";
-// import clevelandClinicLogo from "@assets/media/images/dashboard-images/cleveland-clinic.png";
-// import johnsHopkinsLogo from "@assets/media/images/dashboard-images/johns-hopkins.png";
+import ReviewForm from "@components/Review/ReviewForm";
 
 const AdminPatientReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [searchText, setSearchText] = React.useState<string>("");
+  
+  // State for managing the review form page
+  const [currentView, setCurrentView] = React.useState<'table' | 'form'>('table');
+  const [currentEditingReview, setCurrentEditingReview] = React.useState<ReviewDataTypes | null>(null);
 
   type ReviewDataTypes = {
     id?: number;
@@ -26,9 +26,36 @@ const AdminPatientReviews: React.FC = () => {
     provider_email?: string;
     date?: string;
     rating?: number | string | React.ReactNode;
+    numericRating?: number;
     reviews?: string;
     location?: string;
     provider_logo?: string;
+  };
+
+  // Handler functions for the review form
+  const handleEditReview = (row: ReviewDataTypes) => {
+    setCurrentEditingReview(row);
+    setCurrentView('form');
+  };
+
+  const handleSaveReview = (updatedReview: { rating: number; comment: string }) => {
+    if (currentEditingReview) {
+      // Here you would typically update your data source (API call, state update, etc.)
+      console.log("Saving review for provider:", currentEditingReview.provider_name);
+      console.log("Updated review:", updatedReview);
+      
+      // You can update the reviewsData here or make an API call
+      // For now, we'll just log it and go back to table view
+      
+      // Go back to table view
+      setCurrentView('table');
+      setCurrentEditingReview(null);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setCurrentView('table');
+    setCurrentEditingReview(null);
   };
 
   const columns: TanDataTableColumn<ReviewDataTypes>[] = [
@@ -104,8 +131,8 @@ const AdminPatientReviews: React.FC = () => {
       provider_name: "Mayo Clinic",
       provider_email: "contact@mayoclinic.org",
       date: "9/4/12",
-      // provider_logo: mayoClinicLogo,
       rating: <RatingStars value={5} isDisabled={true} />,
+      numericRating: 5,
       reviews: "Staff was caring and responsive, though the wait time could be improved.",
       location: "📍200 1st St SW, Rochester",
     },
@@ -114,8 +141,8 @@ const AdminPatientReviews: React.FC = () => {
       provider_name: "Cleveland Clinic",
       provider_email: "info@clevelandclinic.com",
       date: "5/7/16",
-      // provider_logo: clevelandClinicLogo,
       rating: <RatingStars value={4} isDisabled={true} />,
+      numericRating: 4,
       reviews: "Excellent support for my mother with dementia. Highly recommended.",
       location: "📍9500 Euclid Ave, Cleveland",
     },
@@ -124,8 +151,8 @@ const AdminPatientReviews: React.FC = () => {
       provider_name: "Johns Hopkins Hospital",
       provider_email: "support@hopkinshospital.org",
       date: "10/6/13",
-      // provider_logo: johnsHopkinsLogo,
       rating: <RatingStars value={4} isDisabled={true} />,
+      numericRating: 4,
       reviews: "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
       location: "📍1800 Orleans St, Baltimore",
     },
@@ -136,6 +163,7 @@ const AdminPatientReviews: React.FC = () => {
       date: "2/11/12",
       provider_logo: dummyImage,
       rating: <RatingStars value={2} isDisabled={true} />,
+      numericRating: 2,
       reviews: "Great amenities and staff. Rooms were spacious and bright.",
       location: "📍55 Fruit St, Boston",
     },
@@ -146,6 +174,7 @@ const AdminPatientReviews: React.FC = () => {
       date: "3/4/16",
       provider_logo: dummyImage,
       rating: <RatingStars value={1} isDisabled={true} />,
+      numericRating: 1,
       reviews: "Compassionate end-of-life care. They made a difficult time easier.",
       location: "📍8700 Beverly Blvd, LA",
     },
@@ -156,6 +185,7 @@ const AdminPatientReviews: React.FC = () => {
       date: "8/15/14",
       provider_logo: dummyImage,
       rating: <RatingStars value={1} isDisabled={true} />,
+      numericRating: 1,
       reviews: "The food quality was inconsistent, but the overall experience was positive.",
       location: "📍1 Gustave L. Levy Pl, NY",
     },
@@ -166,6 +196,7 @@ const AdminPatientReviews: React.FC = () => {
       date: "11/22/15",
       provider_logo: dummyImage,
       rating: <RatingStars value={0} isDisabled={true} />,
+      numericRating: 0,
       reviews: "They offered a variety of activities that kept my father engaged.",
       location: "📍757 Westwood Plaza, LA",
     },
@@ -175,7 +206,8 @@ const AdminPatientReviews: React.FC = () => {
     console.log("Selected row:", row);
   };
 
-  return (
+  // Render the Reviews Table View
+  const renderTableView = () => (
     <div className="mb-10">
       <h2
         className="
@@ -247,7 +279,7 @@ const AdminPatientReviews: React.FC = () => {
             className="my-custom-class"
             actions={(row) => (
               <DropdownActions
-                onEdit={() => console.log("Edit Review", row.id)}
+                onEdit={() => handleEditReview(row)}
                 onDelete={() => console.log("Delete Review", row.id)}
               />
             )}
@@ -255,6 +287,44 @@ const AdminPatientReviews: React.FC = () => {
         </div>
       </div>
     </div>
+  );
+
+  // Render the Review Form View
+const renderFormView = () => (
+  <div className="mb-10 w-full h-[474px] p-[20px_23px_20px_23px] gap-[25px] rounded-[10px]">
+    <h2
+      className="
+        font-space-grotesk
+        font-bold
+        text-heading
+        leading-8
+        tracking-normal
+        text-brand-ink
+        align-middle
+        mb-4
+      "
+    >
+      Leave A Review
+    </h2>
+
+    <div className="mt-6 bg-white rounded-[10px] px-4 py-6 mb-6 gap-[25px]">
+      <ReviewForm
+        currentReview={{
+          rating: currentEditingReview?.numericRating || 0,
+          comment: currentEditingReview?.reviews || ''
+        }}
+        onSave={handleSaveReview}
+        onCancel={handleCancelEdit}
+      />
+    </div>
+  </div>
+);
+
+  // Main render - conditionally show table or form
+  return (
+    <>
+      {currentView === 'table' ? renderTableView() : renderFormView()}
+    </>
   );
 };
 

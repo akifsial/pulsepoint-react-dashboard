@@ -1,5 +1,7 @@
+import  { useState } from "react";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import React, { useState } from "react"; 
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton"; 
+
 import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
 import community1 from "@assets/media/svgs/dashboard-svgs/community1.svg";
 import community2 from "@assets/media/svgs/dashboard-svgs/community2.svg";
@@ -7,12 +9,17 @@ import community3 from "@assets/media/svgs/dashboard-svgs/community3.svg";
 import community4 from "@assets/media/svgs/dashboard-svgs/community4.svg";
 import community5 from "@assets/media/svgs/dashboard-svgs/community5.svg";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+
+import Model from "@components/Model/Model";
+import CommunityStep1 from "./Community1";
+import CommunityStep2 from "./Community2";
+import CommunityStep3 from "./Community3";
 import CommunityModal from "@components/CommunityModal";
 
 
 const PopularCommunity = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const [step, setStep] = useState(1); // Step state to manage the current step
   const popularCommunity = [
     {
       icon: community1,
@@ -35,30 +42,32 @@ const PopularCommunity = () => {
       title: "Patient Rights & Safety",
     },
   ];
-    // Handle the form submission logic for community creation
+
+  // Handle the form submission logic for community creation
   const handleCommunitySubmit = async (data: any) => {
     console.log("Community Data Submitted", data);
     // Handle the actual community creation logic here
   };
+
+  const closeModal = () => setIsModalOpen(false); // Close the modal
+
   return (
     <>
       {/* Modal */}
       <CommunityModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)} // Close the modal
+        onClose={closeModal} // Close the modal
         onSubmit={handleCommunitySubmit} // Handle the form submission
       />
       <div className="w-[292px]">
-        <div>
-          <CommonInput
-            placeholder="Search Communities "
-            showImg={true}
-            imgSrc={searchCommunity}
-            imgLeft={true}
-            inputClassName="text-sm"
-            containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
-          />
-        </div>
+        <CommonInput
+          placeholder="Search Communities "
+          showImg={true}
+          imgSrc={searchCommunity}
+          imgLeft={true}
+          inputClassName="text-sm"
+          containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
+        />
         <div className="bg-white rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
           <h4 className="mb-2">Popular Communities</h4>
           {popularCommunity.map((community, idx) => (
@@ -75,8 +84,9 @@ const PopularCommunity = () => {
             </div>
           ))}
         </div>
+
         <PrimaryButton
-          btnText="Create Community" 
+          btnText="Create Community"
           showImg={true}
           img={addCommunity}
           imgClass="w-[19px] h-[19px] object-cover"
@@ -85,6 +95,22 @@ const PopularCommunity = () => {
           onClick={() => setIsModalOpen(true)} // This triggers modal opening
         />
       </div>
+
+      {step === 1 && (
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community1 onNext={() => setStep(2)} onClose={closeModal} />
+        </Model>
+      )}
+      {step === 2 && (
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community2 onNext={() => setStep(3)} onBack={() => setStep(1)} />
+        </Model>
+      )}
+      {step === 3 && (
+        <Model className="max-w-[596px]" setIsOpen={closeModal}>
+          <Community3 onBack={() => setStep(2)} onClose={closeModal} />
+        </Model>
+      )}
     </>
   );
 };
