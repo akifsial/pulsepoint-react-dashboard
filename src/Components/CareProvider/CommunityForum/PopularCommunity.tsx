@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton"; 
 
 import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
 import community1 from "@assets/media/svgs/dashboard-svgs/community1.svg";
@@ -9,26 +9,56 @@ import community3 from "@assets/media/svgs/dashboard-svgs/community3.svg";
 import community4 from "@assets/media/svgs/dashboard-svgs/community4.svg";
 import community5 from "@assets/media/svgs/dashboard-svgs/community5.svg";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
+
 import Model from "@components/Model/Model";
-import Community1 from "./Community1";
-import Community2 from "./Community2";
-import Community3 from "./Community3";
+import CommunityStep1 from "./Community1";
+import CommunityStep2 from "./Community2";
+import CommunityStep3 from "./Community3";
+import CommunityModal from "@components/CommunityModal";
+
 
 const PopularCommunity = () => {
-  const [step, setStep] = useState(0);
-
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const [step, setStep] = useState(1); // Step state to manage the current step
   const popularCommunity = [
-    { icon: community1, title: "Hospital Stay Reviews" },
-    { icon: community2, title: "Facility Finder Help" },
-    { icon: community3, title: "Assisted Living Insights" },
-    { icon: community4, title: "End-of-Life Planning" },
-    { icon: community5, title: "Patient Rights & Safety" },
+    {
+      icon: community1,
+      title: "Hospital Stay Reviews",
+    },
+    {
+      icon: community2,
+      title: "Facility Finder Help",
+    },
+    {
+      icon: community3,
+      title: "Assisted Living Insights",
+    },
+    {
+      icon: community4,
+      title: "End-of-Life Planning",
+    },
+    {
+      icon: community5,
+      title: "Patient Rights & Safety",
+    },
   ];
 
-  const closeModal = () => setStep(0);
+  // Handle the form submission logic for community creation
+  const handleCommunitySubmit = async (data: any) => {
+    console.log("Community Data Submitted", data);
+    // Handle the actual community creation logic here
+  };
+
+  const closeModal = () => setIsModalOpen(false); // Close the modal
 
   return (
     <>
+      {/* Modal */}
+      <CommunityModal
+        isOpen={isModalOpen}
+        onClose={closeModal} // Close the modal
+        onSubmit={handleCommunitySubmit} // Handle the form submission
+      />
       <div className="w-[292px]">
         <CommonInput
           placeholder="Search Communities "
@@ -62,7 +92,7 @@ const PopularCommunity = () => {
           imgClass="w-[19px] h-[19px] object-cover"
           imgPosition="left"
           btnClass="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center "
-          onClick={() => setStep(1)}
+          onClick={() => setIsModalOpen(true)} // This triggers modal opening
         />
       </div>
 
