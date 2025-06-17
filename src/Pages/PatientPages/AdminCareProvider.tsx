@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
@@ -141,12 +140,6 @@ const CareProviderDashboard: React.FC = () => {
     console.log("Selected row:", row);
   };
 
-  const renderActions = (row: dataTypes) => (
-    <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>
-      Edit
-    </button>
-  );
-
   const handleTabClick = (tab: "all" | "saved") => {
     setActiveTab(tab);
   };
@@ -275,15 +268,7 @@ const CareProviderDashboard: React.FC = () => {
               data={data}
               showCheckbox={false}
               onRowSelect={handleRowSelect}
-              showActions={true}
               className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  onView={() => console.log("View", row.id)}
-                  onEdit={() => console.log("Edit", row.id)}
-                  onDelete={() => console.log("Delete", row.id)}
-                />
-              )}
             />
           ) : (
             <TanDataTable<dataTypes>
@@ -291,15 +276,7 @@ const CareProviderDashboard: React.FC = () => {
               data={data.slice(0, 3)}
               showCheckbox={false}
               onRowSelect={handleRowSelect}
-              showActions={true}
               className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  onView={() => console.log("View", row.id)}
-                  onEdit={() => console.log("Edit", row.id)}
-                  onDelete={() => console.log("Delete", row.id)}
-                />
-              )}
             />
           )}
         </div>
