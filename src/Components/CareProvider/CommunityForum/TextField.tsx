@@ -10,7 +10,7 @@ const TextField = ({
 }) => {
   return (
     <>
-      <div className="flex items-center gap-1 mb-1">
+      <div className="flex items-center mb-2.5">
         <label
           htmlFor={id}
           className="block text-[16px] font-medium text-black leading-[140%] tracking-[0%] font-[Geist]"
@@ -25,7 +25,7 @@ const TextField = ({
         name={id}
         placeholder={placeholder}
         rows={row}
-        className={`w-full bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] text-[16px] font-medium text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-[#25252580] focus:outline-none ${className}`}
+        className={`w-full h-[50px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] py-2.5 font-normal text-[16px] leading-[140%] text-[#1A1A1A] mb-1 focus:outline-none placeholder:text-sm placeholder:font-medium ${className}`}
       />
     </>
   );

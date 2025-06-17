@@ -41,7 +41,7 @@ const Community3 = ({ onBack, onClose }) => {
         />
       </div>
 
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2.5 pt-[25px]">
         <button
           type="button"
           onClick={onBack}
