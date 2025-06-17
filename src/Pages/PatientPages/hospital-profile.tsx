@@ -7,12 +7,11 @@ import PlusIcon from "@assets/media/svgs/patient-db-svgs/add-circle.svg";
 import { useNavigate } from "react-router-dom";
 
 const HospitalProfile = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const handleGoBack = () => {
-  navigate(-1); // Go back to the previous page in browser history
-};
-
+  const handleGoBack = () => {
+    navigate(-1); // Go back to the previous page in browser history
+  };
 
   const handleAddReview = () => {
     // In a real app, this would open a review form modal or navigate to review page
@@ -26,7 +25,9 @@ const handleGoBack = () => {
   return (
     <div className="min-h-screen bg-medical-bg">
       {/* Header */}
-      <header className="py-4 bg-transparent">
+      {/* <header className="py-4 bg-transparent"> */}
+      <header className={`bg-transparent rounded-lg px-4 py-6 sm:px-6 fixed top-20 transition-all duration-300 lg:left-67 lg:right-4 left-0 right-0
+      `}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Left: Back Arrow + Hospital Name */}
