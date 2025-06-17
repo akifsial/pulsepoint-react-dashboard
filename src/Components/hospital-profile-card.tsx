@@ -2,6 +2,7 @@ import { Bookmark } from "lucide-react";
 import Tick from "@assets/media/svgs/patient-db-svgs/tick-circle.svg";
 import ProfilePic from "@assets/media/svgs/patient-db-svgs/hospital-prof-img.svg";
 import { useState } from "react";
+import HospitalHeader from "./HospitalHeader";
 
 interface HospitalProfileCardProps {
   name: string;
@@ -35,23 +36,12 @@ export default function HospitalProfileCard({
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        {/* left: avatar + headings */}
-        <div className="flex items-center gap-4">
-          <img
-            src={ProfilePic} /* dynamic hospital image */
-            alt={`${name} building`}
-            className="w-14 h-14 rounded-full object-cover"
-          />
-
-          <div className="leading-tight">
-            <h2 className="font-space font-bold text-[20px] leading-[32px] text-[#181D27] align-middle [leading-trim:cap] [text-edge:cap]">
-              Johns Hopkins Hospital
-            </h2>
-            <p className="font-geist font-normal text-[12px] leading-[100%] text-[#252525] align-middle [leading-trim:cap] [text-edge:cap]">
-              support@hopkinshospital.org
-            </p>
-          </div>
-        </div>
+        {/* Left: Use HospitalHeader Component */}
+        <HospitalHeader
+          name="Johns Hopkins Hospital"
+          imageUrl={ProfilePic}
+          email="support@hopkinshospital.org"
+        />
 
         {/* right: bookmark button */}
         <button

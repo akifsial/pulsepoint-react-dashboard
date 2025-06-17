@@ -64,14 +64,14 @@ const Toast: React.FC<ToastProps> = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="bg-white rounded-[10px] p-6 max-w-sm w-full mx-4 shadow-2xl relative"
+              className="bg-white rounded-[10px] p-6 max-w-md w-full mx-4 shadow-2xl relative"
               onClick={(e) => e.stopPropagation()} // Prevent the toast container from closing when clicked
             >
               {/* Close Button */}
               {showCloseButton && (
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
+                  className="absolute top-4 right-4 p-1 hover:bg-gray-100 rounded-full transition-colors"
                   aria-label="Close toast"
                 >
                   <CloseIcon />
@@ -82,16 +82,7 @@ const Toast: React.FC<ToastProps> = ({
               <div className="text-center">
                 {/* Icon */}
                 <div className="flex justify-center mb-4">
-                  {type === 'success' && <SuccessIcon className="w-12 h-12" />}
-                  {type === 'error' && (
-                    <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white text-xl">!</div>
-                  )}
-                  {type === 'warning' && (
-                    <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xl">⚠</div>
-                  )}
-                  {type === 'info' && (
-                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl">i</div>
-                  )}
+                <SuccessIcon className="w-12 h-12" />
                 </div>
 
                 {/* Title */}

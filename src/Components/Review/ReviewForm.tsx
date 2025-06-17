@@ -3,7 +3,8 @@ import RatingStars from "@components/Shared-components/RatingStars";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import TextField from "@components/CareProvider/CommunityForum/TextField";
 import Toast from "@components/Toast/Toast";
-// Alternative: import { useToast } from "./ToastContext"; // If using context
+import HospitalHeader from "@components/HospitalHeader";
+import ProfilePic from "@assets/media/svgs/patient-db-svgs/hospital-prof-img.svg";
 
 interface ReviewFormProps {
   currentReview: {
@@ -21,10 +22,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 }) => {
   const [rating, setRating] = useState(currentReview.rating);
   const [comment, setComment] = useState(currentReview.comment);
-  
+
   // Toast state
   const [showToast, setShowToast] = useState(false);
-  
+
   // Alternative if using context:
   // const { showToast: showContextToast } = useToast();
 
@@ -44,7 +45,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 
     // Save the review
     onSave({ rating, comment });
-    
+
     // Show success toast
     setShowToast(true);
   };
@@ -65,9 +66,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 
   return (
     <>
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md h-[350px]">
         <div className="max-w-2xl mx-auto">
           <div className="space-y-6">
+            <HospitalHeader
+              name="Johns Hopkins Hospital"
+              imageUrl={ProfilePic}
+              email="support@hopkinshospital.org"
+            />
             <div>
               <label className="block text-gray-700 font-medium mb-3">
                 Add A Rating
