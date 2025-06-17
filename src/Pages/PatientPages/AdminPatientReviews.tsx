@@ -247,7 +247,7 @@ const AdminPatientReviews: React.FC = () => {
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
-                  imgPosition="left"
+                  imgPosition="right"
                   btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />

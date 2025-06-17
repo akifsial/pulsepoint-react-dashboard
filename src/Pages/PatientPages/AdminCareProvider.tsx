@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
@@ -193,18 +192,9 @@ const CareProviderDashboard: React.FC = () => {
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
-                  imgPosition="left"
+                  imgPosition="right"
                   btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                />
-                <PrimaryButton
-                  btnText="View All Listing"
-                  btnTextClass="text-[#FFFFFF] text-sm font-semibold"
-                  showImg={true}
-                  imgClass="w-[14px] h-[13px] object-cover"
-                  img={ForwardArrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px] bg-[#000000]"
                 />
               </div>
               <AnimatePresence>
