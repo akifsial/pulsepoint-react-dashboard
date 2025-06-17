@@ -55,7 +55,7 @@ const Toast: React.FC<ToastProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-opacity-10 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/40  flex justify-center items-center z-50"
             onClick={onClose} // Close when clicking outside of the toast
           >
             {/* Toast Container */}
@@ -64,7 +64,7 @@ const Toast: React.FC<ToastProps> = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="bg-white rounded-[10px] p-6 max-w-md w-full mx-4 shadow-2xl relative"
+              className="bg-white p-7.5 rounded-[10px] relative w-full  mx-4 max-w-[516px]"
               onClick={(e) => e.stopPropagation()} // Prevent the toast container from closing when clicked
             >
               {/* Close Button */}

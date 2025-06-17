@@ -16,7 +16,7 @@ import Community2 from "./Community2";
 import Community3 from "./Community3";
 
 const PopularCommunity = () => {
-  const [step, setStep] = useState(""); // Track which community step modal is active
+  const [step, setStep] = useState<number | "">(""); // Track which community step modal is active
 
   const popularCommunity = [
     { icon: community1, title: "Hospital Stay Reviews" },

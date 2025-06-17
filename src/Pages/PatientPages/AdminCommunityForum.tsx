@@ -14,6 +14,7 @@ import PopularIcon from "@assets/media/svgs/patient-db-svgs/popular-icon.svg";
 import flag from "@assets/media/svgs/dashboard-svgs/flag.svg";
 import PostCard, { PostData, ButtonData } from "../../Components/PostCard";
 import PopularCommunity from "@components/CareProvider/CommunityForum/PopularCommunity";
+import PostActionsMenu from "@components/PostActionsMenu";
 const postList: PostData[] = [
   {
     userImage: userProfile,
@@ -49,7 +50,23 @@ const buttons: ButtonData[] = [
 
 const AdminCommunityForum: React.FC = () => {
   const [selectedButton, setSelectedButton] = useState<string>("Home"); // Default is 'Home'
+  const [activePostActions, setActivePostActions] = useState<number | null>(null);
+  const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
+  const [flaggedPost, setFlaggedPost] = useState<any>(null);
   
+  const togglePostActions = (index: number) => {
+    setActivePostActions(activePostActions === index ? null : index);
+  };
+
+  const handleFlagPost = (post: any) => {
+    setFlaggedPost(post);
+    setIsFlagModalOpen(true); // You can open a modal here to handle the flag
+  };
+
+  const handleSavePost = (post: any) => {
+    alert(`Saved post: ${post.title}`); // Handle the save logic here
+  };
+
   return (
     <div className="flex gap-6 w-full">
       {/* Left side - Main content */}
@@ -61,6 +78,40 @@ const AdminCommunityForum: React.FC = () => {
         }}
       >
         <h2 className="mb-4">Your Feed</h2>
+        {postList.map((post, index) => (
+          <div key={index} className="post">
+            {/* 3 Dots Menu */}
+            <button
+              onClick={() => togglePostActions(index)}
+              className="cursor-pointer"
+            >
+              {/* Your 3 dots icon or SVG */}
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g opacity="0.8">
+                  <circle cx="13.16" cy="5.45" r="1.07" stroke="#252525" strokeWidth="2.14" />
+                  <circle cx="13.16" cy="12.94" r="1.07" stroke="#252525" strokeWidth="2.14" />
+                  <circle cx="13.16" cy="20.43" r="1.07" stroke="#252525" strokeWidth="2.14" />
+                </g>
+              </svg>
+            </button>
+
+            {/* Post Actions Menu */}
+            {activePostActions === index && (
+              <PostActionsMenu
+                onFlagPost={() => handleFlagPost(post)}
+                onSavePost={() => handleSavePost(post)}
+                showSave={true} // You can control this based on requirements
+              />
+            )}
+
+            {/* Post content */}
+            <div className="text-sm text-[#252525] mb-7">
+              <h3 className="mb-2 font-[Space Grotesk] text-xl">{post.title}</h3>
+              <p>{post.desc} <span className="text-[#868686]">Read more..</span></p>
+            </div>
+          </div>
+        ))}
+
         <div className="flex gap-1">
           <PrimaryButton
             btnText="Home"
