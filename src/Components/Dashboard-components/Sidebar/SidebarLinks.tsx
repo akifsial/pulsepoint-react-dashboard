@@ -155,5 +155,25 @@ export const AdminSidebarLinks: SidebarLink[] = [
   },
 ];
 
-
+export const ProfileSidebarLinks: SidebarLink[] = [
+  {
+    label: "Profile",
+    path: "/profile",
+    icon: {
+      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Profile2",
+    path: "/profile2",
+    icon: {
+      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  
+];
 
