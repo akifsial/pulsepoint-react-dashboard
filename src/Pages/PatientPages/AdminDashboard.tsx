@@ -191,7 +191,7 @@ const AdminDashboard: React.FC = () => {
         />
         <ReviewCard
           backgroundImage={Patientdbimg}
-  onReviewClick={handleReviewClick}
+          onReviewClick={handleReviewClick}
         />
       </div>
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
