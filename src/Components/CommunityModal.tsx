@@ -67,7 +67,7 @@ const CommunityModal: React.FC<CommunityModalProps> = ({
         <div className="relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors duration-200 rounded-full"
+            className="absolute top-0 right-0 p-2 text-gray-400 transition-colors duration-200 rounded-full"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
