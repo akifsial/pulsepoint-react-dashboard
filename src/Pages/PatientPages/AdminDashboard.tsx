@@ -12,14 +12,15 @@ import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
-// import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.svg";
+import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import { useNavigate } from "react-router-dom";
+import ReviewCard from "@components/ReviewCard";
 
 const AdminDashboard: React.FC = () => {
-  const navigate=useNavigate(); 
+  const navigate = useNavigate();
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   type dataTypes = {
     id?: number;
@@ -154,6 +155,11 @@ const AdminDashboard: React.FC = () => {
   );
   const [searchText, setSearchText] = React.useState<string>("");
 
+  const handleReviewClick = () => {
+    // Implement your review click logic here
+    console.log("Review button clicked");
+  };
+
   return (
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
@@ -183,9 +189,10 @@ const AdminDashboard: React.FC = () => {
           imgBg="#FFE8CF"
           borderBg="#F98A17"
         />
-        {/* <StatsCommonCards
-          imageSrc={Patientdbimg}  
-        /> */}
+        <ReviewCard
+          backgroundImage={Patientdbimg}
+  onReviewClick={handleReviewClick}
+        />
       </div>
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
@@ -213,7 +220,7 @@ const AdminDashboard: React.FC = () => {
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="right"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium" 
+                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
                 <PrimaryButton
