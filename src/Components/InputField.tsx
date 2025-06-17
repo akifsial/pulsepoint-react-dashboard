@@ -41,7 +41,7 @@ const InputField: React.FC<InputFieldProps> = ({
         <div className="flex">
           <label
             htmlFor={id}
-            className="block mb-1 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
+            className="block mb-2.5 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
           >
             {label}
           </label>

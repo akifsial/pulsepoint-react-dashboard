@@ -25,7 +25,7 @@ const Community2 = ({ onNext, onBack }) => {
         onChange={(e) => console.log("Selected file:", e.target.files[0])}
       />
 
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2.5 pt-1.5">
         <button
           type="button"
           onClick={onBack}
