@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import RatingStars from "@components/Shared-components/RatingStars";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import TextField from "@components/CareProvider/CommunityForum/TextField";
+import Toast from "@components/Toast/Toast";
+// Alternative: import { useToast } from "./ToastContext"; // If using context
 
 interface ReviewFormProps {
   currentReview: {
@@ -9,7 +11,7 @@ interface ReviewFormProps {
     comment: string;
   };
   onSave: (updatedReview: { rating: number; comment: string }) => void;
-  onCancel?: () => void; // Optional cancel handler
+  onCancel?: () => void;
 }
 
 const ReviewForm: React.FC<ReviewFormProps> = ({
@@ -19,9 +21,32 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 }) => {
   const [rating, setRating] = useState(currentReview.rating);
   const [comment, setComment] = useState(currentReview.comment);
+  
+  // Toast state
+  const [showToast, setShowToast] = useState(false);
+  
+  // Alternative if using context:
+  // const { showToast: showContextToast } = useToast();
 
   const handleSave = () => {
+    // Validate form before saving
+    if (rating === 0) {
+      // You could show an error toast here
+      alert("Please select a rating");
+      return;
+    }
+
+    if (!comment.trim()) {
+      // You could show an error toast here
+      alert("Please add a comment");
+      return;
+    }
+
+    // Save the review
     onSave({ rating, comment });
+    
+    // Show success toast
+    setShowToast(true);
   };
 
   const handleCancel = () => {
@@ -34,35 +59,55 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
     }
   };
 
-  return (
-    <div className="w-full max-w-md">
-      <div className="max-w-2xl mx-auto">
-        <div className="space-y-6">
-          <div>
-            <label className="block text-gray-700 font-medium mb-3">
-              Add A Rating
-            </label>
-            <RatingStars value={rating} onChange={setRating} />
-          </div>
+  const handleToastClose = () => {
+    setShowToast(false);
+  };
 
-          <div className="mb-4">
-            <TextField
-              label="Add A Comment"
-              id="comment"
-              placeholder="Enter your comment here..."
-              row={4}
-              value={comment}
-              onChange={(e) => setComment(e.target.value)} // Ensure proper controlled input handling
-            />
+  return (
+    <>
+      <div className="w-full max-w-md">
+        <div className="max-w-2xl mx-auto">
+          <div className="space-y-6">
+            <div>
+              <label className="block text-gray-700 font-medium mb-3">
+                Add A Rating
+              </label>
+              <RatingStars value={rating} onChange={setRating} />
+            </div>
+
+            <div className="mb-4">
+              <TextField
+                label="Add A Comment"
+                id="comment"
+                placeholder="Enter your comment here..."
+                row={4}
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+
+            <div className="flex gap-4">
+              <PrimaryButton
+                btnText="Post A Comment"
+                showImg={false}
+                btnClass="border-1 w-[252px] h-[46px] !rounded-[10px] px-4 py-[10px] text-white font-semibold leading-[33px] gap-[10px] flex items-center justify-center bg-[#28A2FF] hover:bg-[#2196F3] transition-colors"
+                onClick={handleSave}
+              />
+            </div>
           </div>
-          <PrimaryButton
-            btnText="Post A Comment"
-            showImg={true}
-            btnClass="border-1 w-[252px] h-[46px] !rounded-[10px] px-4 py-[10px] text-white font-semibold leading-[33px] gap-[10px] flex items-center justify-center bg-[#28A2FF]"
-          />
         </div>
       </div>
-    </div>
+
+      {/* Toast Component */}
+      <Toast
+        isVisible={showToast}
+        title="Review Added Successfully"
+        message="You have successfully posted your review"
+        type="success"
+        onClose={handleToastClose}
+        showCloseButton={true}
+      />
+    </>
   );
 };
 

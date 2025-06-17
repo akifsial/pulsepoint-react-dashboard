@@ -11,6 +11,7 @@ import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 import ReviewForm from "@components/Review/ReviewForm";
+import Toast from "@components/Toast/Toast";
 
 const AdminPatientReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -19,6 +20,9 @@ const AdminPatientReviews: React.FC = () => {
   // State for managing the review form page
   const [currentView, setCurrentView] = React.useState<'table' | 'form'>('table');
   const [currentEditingReview, setCurrentEditingReview] = React.useState<ReviewDataTypes | null>(null);
+  
+  // Add toast state
+  const [showSuccessToast, setShowSuccessToast] = React.useState(false);
 
   type ReviewDataTypes = {
     id?: number;
@@ -38,6 +42,7 @@ const AdminPatientReviews: React.FC = () => {
     setCurrentView('form');
   };
 
+  // Updated handleSaveReview function with toast
   const handleSaveReview = (updatedReview: { rating: number; comment: string }) => {
     if (currentEditingReview) {
       // Here you would typically update your data source (API call, state update, etc.)
@@ -45,17 +50,32 @@ const AdminPatientReviews: React.FC = () => {
       console.log("Updated review:", updatedReview);
       
       // You can update the reviewsData here or make an API call
-      // For now, we'll just log it and go back to table view
+      // For now, we'll just log it and show success toast
       
-      // Go back to table view
-      setCurrentView('table');
-      setCurrentEditingReview(null);
+      // Show success toast
+      setShowSuccessToast(true);
+      
+      // Go back to table view after a short delay to show the toast
+      setTimeout(() => {
+        setCurrentView('table');
+        setCurrentEditingReview(null);
+      }, 1500);
     }
   };
 
   const handleCancelEdit = () => {
     setCurrentView('table');
     setCurrentEditingReview(null);
+  };
+
+  // Add toast close handler
+  const handleToastClose = () => {
+    setShowSuccessToast(false);
+    // Ensure we go back to table view when toast is closed
+    if (currentView === 'form') {
+      setCurrentView('table');
+      setCurrentEditingReview(null);
+    }
   };
 
   const columns: TanDataTableColumn<ReviewDataTypes>[] = [
@@ -290,40 +310,51 @@ const AdminPatientReviews: React.FC = () => {
   );
 
   // Render the Review Form View
-const renderFormView = () => (
-  <div className="mb-10 w-full h-[474px] p-[20px_23px_20px_23px] gap-[25px] rounded-[10px]">
-    <h2
-      className="
-        font-space-grotesk
-        font-bold
-        text-heading
-        leading-8
-        tracking-normal
-        text-brand-ink
-        align-middle
-        mb-4
-      "
-    >
-      Leave A Review
-    </h2>
+  const renderFormView = () => (
+    <div className="mb-10 w-full h-[474px] p-[20px_23px_20px_23px] gap-[25px] rounded-[10px]">
+      <h2
+        className="
+          font-space-grotesk
+          font-bold
+          text-heading
+          leading-8
+          tracking-normal
+          text-brand-ink
+          align-middle
+          mb-4
+        "
+      >
+        Leave A Review
+      </h2>
 
-    <div className="mt-6 bg-white rounded-[10px] px-4 py-6 mb-6 gap-[25px]">
-      <ReviewForm
-        currentReview={{
-          rating: currentEditingReview?.numericRating || 0,
-          comment: currentEditingReview?.reviews || ''
-        }}
-        onSave={handleSaveReview}
-        onCancel={handleCancelEdit}
-      />
+      <div className="mt-6 bg-white rounded-[10px] px-4 py-6 mb-6 gap-[25px]">
+        <ReviewForm
+          currentReview={{
+            rating: currentEditingReview?.numericRating || 0,
+            comment: currentEditingReview?.reviews || ''
+          }}
+          onSave={handleSaveReview}
+          onCancel={handleCancelEdit}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
 
-  // Main render - conditionally show table or form
+  // Main render - conditionally show table or form with toast
   return (
     <>
       {currentView === 'table' ? renderTableView() : renderFormView()}
+      
+      {/* Global Success Toast */}
+      <Toast
+        isVisible={showSuccessToast}
+        title="Review Added Successfully"
+        message="You have successfully changed password"
+        type="success"
+        duration={3000}
+        onClose={handleToastClose}
+        showCloseButton={true}
+      />
     </>
   );
 };
