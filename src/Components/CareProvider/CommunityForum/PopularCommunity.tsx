@@ -11,10 +11,10 @@ import community5 from "@assets/media/svgs/dashboard-svgs/community5.svg";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
 
 import Model from "@components/Model/Model";
-import CommunityStep1 from "./Community1";
-import CommunityStep2 from "./Community2";
-import CommunityStep3 from "./Community3";
 import CommunityModal from "@components/CommunityModal";
+import Community3 from "./Community3";
+import Community2 from "./Community2";
+import Community1 from "./Community1";
 
 
 const PopularCommunity = () => {
