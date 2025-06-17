@@ -45,6 +45,19 @@ const Router: React.FC = () => {
           ))}
         </Route>
       ))}
+      {/* Admin Routes */}
+      {AdminRoutes.map(({ path, element, children }) => (
+        <Route key={path} path={path} element={element}>
+          {children?.map((child) => (
+            <Route
+              key={child.path || "index"}
+              path={child.path}
+              element={child.element}
+              index={child.path === "" ? true : undefined}
+            />
+          ))}
+        </Route>
+      ))}
       {/* 404 Not Found */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
