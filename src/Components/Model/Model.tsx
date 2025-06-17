@@ -1,4 +1,3 @@
-import React from "react";
 import closeArrow from "@assets/media/svgs/dashboard-svgs/close-circle.svg";
 
 const Model = ({ setIsOpen, children,className="" }) => {

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import userProfile from "@assets/media/svgs/dashboard-svgs/userProfile.svg";
-import postImage from "@assets/media/images/dashboard-images/postImage.png";
 import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
 import share from "@assets/media/svgs/dashboard-svgs/share.svg";
