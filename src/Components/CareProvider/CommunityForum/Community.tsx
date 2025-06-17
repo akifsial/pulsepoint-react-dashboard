@@ -16,7 +16,7 @@ const Community = () => {
         <BackFeed setOpenBackFeed={setOpenBackFeed} />
       ) : (
         <div className="block sm:flex sm:items-start sm:gap-6">
-          <div>
+          <div className="">
             <h2 className="text-xl font-semibold mb-3.5 text-[#252525] font-[Space Grotesk]">
               Your Feed
             </h2>
