@@ -25,7 +25,7 @@ const postList = [
     detail:
       "Work on something and want to share it? Showoff Saturdays are you! Make a new post on Saturday and tag it [Showoff Saturday] and watch the view rise.",
   },
-   {
+  {
     userImage: userProfile,
     userIcon: userProfile,
     userName: "Cody Fisher",
@@ -146,18 +146,17 @@ const CommunityFeed = () => {
 
             <div className="flex gap-2.5 mb-2.5">
               {buttons
-  .filter((btn) => btn.btnText !== "Flag")
-  .map((btn, idx) => (
-    <button
-      key={idx}
-      className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center"
-    >
-      <img src={btn.btnIcon} alt="icon" />
-      {btn.btnText}
-      {btn.downarrow && <img src={btn.downarrow} alt="" />}
-    </button>
-))}
-
+                .filter((btn) => btn.btnText !== "Flag")
+                .map((btn, idx) => (
+                  <button
+                    key={idx}
+                    className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center"
+                  >
+                    <img src={btn.btnIcon} alt="icon" />
+                    {btn.btnText}
+                    {btn.downarrow && <img src={btn.downarrow} alt="" />}
+                  </button>
+                ))}
             </div>
 
             <input
@@ -167,12 +166,11 @@ const CommunityFeed = () => {
               style={{ borderColor: "#D3D3D3" }}
             />
             <div className="flex items-start gap-3 mb-3">
-              
-                <img
-                  src={post.userIcon}
-                  className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200 flex-none"
-                  alt="userIcon"
-                />
+              <img
+                src={post.userIcon}
+                className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200 flex-none"
+                alt="userIcon"
+              />
               <div className="flex flex-col mb-1 text-[#252525] leading-tight font-normal">
                 <p className="font-semibold">{post.userName}</p>
                 <span className="text-[12px] text-gray-500 leading-tight mb-1.5">
@@ -180,22 +178,24 @@ const CommunityFeed = () => {
                 </span>
                 <p className="text-sm text-gray-700 mb-2.5">{post.detail}</p>
                 <div className="flex gap-2.5 mb-2.5">
-              {buttons.map((btn, idx) => (
-                <button
-                  key={idx}
-                  className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1 py-1 min-w-[78px] justify-center"
-                >
-                  <img src={btn.btnIcon} alt="icon" />
-                  {btn.btnText}
-                  {btn.downarrow && <img src={btn.downarrow} alt="" />}
-                </button>
-              ))}
-            </div>
-            <span className="text-[#007AB2] text-sm">-View 2 replies</span>
+                  {buttons.map((btn, idx) => (
+                    <button
+                      key={idx}
+                      className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1 py-1 min-w-[78px] justify-center"
+                    >
+                      <img src={btn.btnIcon} alt="icon" />
+                      {btn.btnText}
+                      {btn.downarrow && <img src={btn.downarrow} alt="" />}
+                    </button>
+                  ))}
+                </div>
+                <span className="text-[#007AB2] text-sm">-View 2 replies</span>
               </div>
             </div>
-            
-              <p className="text-[#007AB2] font-medium text-sm">Show 5 more Comments</p>
+
+            <p className="text-[#007AB2] font-medium text-sm">
+              Show 5 more Comments
+            </p>
             {activePostActions === index && (
               <div className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50">
                 <button

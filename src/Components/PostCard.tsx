@@ -3,6 +3,15 @@ import Flagwhite from "@assets/media/svgs/dashboard-svgs/flag4.svg";
 import Flagblue from "@assets/media/svgs/dashboard-svgs/flag3.svg";
 import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
+// import userProfile from "@assets/media/svgs/dashboard-svgs/userProfile.svg";
+// import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
+// import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
+// import share from "@assets/media/svgs/dashboard-svgs/share.svg";
+// import comment from "@assets/media/svgs/dashboard-svgs/comment.svg";
+import SubmitReport from "./CareProvider/CommunityForum/SubmitReport";
+import Model from "./Model/Model";
+import FlagPost from "./CareProvider/CommunityForum/FlagPost";
+
 
 // Define the interface for post data
 export interface PostData {
@@ -29,8 +38,10 @@ interface PostCardProps {
   buttons: ButtonData[];
   showComments?: boolean; // Optional prop to control comment display
   showFullPost?: boolean; // Optional prop to control full post display
-  onFlagPost?: (post: PostData) => void; // Callback for flag post action
   onSavePost?: (post: PostData) => void; // Callback for save post action
+  // Pass components as props to avoid import issues
+  FlagPostComponent?: React.ComponentType<{onSubmit: () => void}>;
+  ModalComponent?: React.ComponentType<{children: React.ReactNode, setIsOpen: (open: boolean) => void, className?: string}>;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ 
@@ -38,20 +49,30 @@ const PostCard: React.FC<PostCardProps> = ({
   buttons, 
   showComments = true, 
   showFullPost = true,
-  onFlagPost,
-  onSavePost
+  onSavePost,
+  FlagPostComponent,
+  ModalComponent
 }) => {
   const [activePostActions, setActivePostActions] = useState(false);
+  const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("home");
+  const [showSubmitReport, setShowSubmitReport] = useState(false);
+  const [flaggedPost, setFlaggedPost] = useState(null);
 
   const togglePostActions = () => {
     setActivePostActions(!activePostActions);
   };
 
   const handleFlagPost = () => {
-    if (onFlagPost) {
-      onFlagPost(post);
-    }
+    console.log('Flag post clicked!'); // Debug log
+    setIsFlagModalOpen(true);
     setActivePostActions(false);
+  };
+
+  const handleSubmitReport = () => {
+    setIsFlagModalOpen(false);
+    // You can add additional logic here for after report submission
+    console.log('Report submitted for post:', post.title);
   };
 
   const handleSavePost = () => {
@@ -254,6 +275,21 @@ const PostCard: React.FC<PostCardProps> = ({
           </div>
         )}
       </div>
+
+       {isFlagModalOpen && (
+        <Model className="max-w-[618px]" setIsOpen={setIsFlagModalOpen}>
+          <FlagPost onSubmit={() => setShowSubmitReport(true)} />
+        </Model>
+      )}
+
+      {showSubmitReport && (
+        <Model
+          className="max-w-[516px]"
+          setIsOpen={() => setShowSubmitReport(false)}
+        >
+          <SubmitReport />
+        </Model>
+      )}
     </div>
   );
 };
