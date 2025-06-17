@@ -45,21 +45,12 @@ const HospitalProfile = () => {
             <PrimaryButton
               btnText="Add A Review"
               showImg
-              img={
-                <span className="flex items-center justify-center w-[19px] h-[19px] rounded-full bg-white">
-                  <img src={PlusIcon} alt="add" className="w-[11px] h-[11px]" />
-                </span>
-              }
+              img={PlusIcon} 
               imgClass="w-[19px] h-[19px]"
               imgPosition="left"
-              btnClass="
-          flex items-center justify-center gap-[4px]
-          h-[36px] px-4
-          rounded-md bg-[#252525] text-white
-          text-sm font-semibold
-        "
+              btnClass="flex items-center justify-center gap-[4px] h-[36px] px-4 rounded-md bg-[#252525] text-white text-sm font-semibold"
               onClick={() => setIsModalOpen(true)}
-            />
+            /> 
           </div>
         </div>
       </header>
