@@ -4,8 +4,9 @@ import { websitePublicRoutes } from "./WebsiteRoutes";
 import { PatientRoutes } from "./PatientRoutes";
 import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
-import CreateCommunity from "@components/CareProvider/CommunityForum/CreatCommunity";
-import Model from "@components/Model/Model";
+import ProfileDetailPage from "../Pages/ProfilePage/ProfileDetailPage"
+import ManagePasswordPage from "../Pages/ProfilePage/GetFeaturePage"
+import GetFeaturePage from "../Pages/ProfilePage/GetFeaturePage"
 
 const Router: React.FC = () => {
   return (
@@ -25,8 +26,10 @@ const Router: React.FC = () => {
               element={child.element}
               index={child.path === "" ? true : undefined}
             />
+            
           ))}
         </Route>
+        
       ))}
 
       {/* Patient Routes */}
@@ -59,6 +62,9 @@ const Router: React.FC = () => {
 
       {/* 404 Not Found */}
       <Route path="*" element={<NotFoundPage />} />
+      <Route path="detail" element={<ProfileDetailPage/>}/>
+      <Route path="manage" element={<ManagePasswordPage/>}/>
+      <Route path="feature" element={<GetFeaturePage/>}/>
     </Routes>
   );
 };

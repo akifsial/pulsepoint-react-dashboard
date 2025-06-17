@@ -31,7 +31,7 @@ const PopularCommunity = () => {
   return (
     <>
       {/* Sidebar */}
-      <div className="w-[292px]">
+      <div className="max-w-[292px]">
         <CommonInput
           placeholder="Search Communities "
           showImg={true}
@@ -66,7 +66,7 @@ const PopularCommunity = () => {
           imgClass="w-[19px] h-[19px] object-cover"
           imgPosition="left"
           btnClass="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
-          onClick={() => setStep(1)} // ✅ Opens Community1 modal
+          onClick={() => setStep(1)} 
         />
       </div>
 
