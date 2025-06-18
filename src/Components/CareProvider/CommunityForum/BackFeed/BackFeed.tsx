@@ -19,7 +19,7 @@ const BackFeed = ({ setOpenBackFeed }) => {
 
   const handleAddCommunityClick = () => {
     // Reopen same page
-    setJoined(false); // Optional: you can reset state
+    setJoined(false); 
   };
 
   return (

@@ -1,6 +1,30 @@
-import React, { useState } from "react"; // Import useState for state management
+import React, { useState } from "react";
+import { Search, Clock } from 'lucide-react';
+// Import your actual image
 import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
-import Model from "./Model/Model";
+
+// Your existing Model component (simplified for demo)
+const Model = ({ setIsOpen, children, className = "" }) => {
+  return (
+    <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+      <div className={`bg-white p-7.5 rounded-[10px] relative w-full mx-4 ${className}`}>
+        <button
+          onClick={() => setIsOpen(false)}
+          className="absolute right-[18px] top-[18px]"
+          aria-label="Close"
+        >
+          <span className="w-7 h-7 cursor-pointer text-gray-500 hover:text-gray-700 text-xl">×</span>
+        </button>
+        <div>{children}</div>
+      </div>
+    </div>
+  );
+};
+
+interface RecentSearch {
+  id: string;
+  text: string;
+}
 
 interface ReviewCardProps {
   backgroundImage?: string;
@@ -15,11 +39,30 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   buttonText = "Write a Review",
   onReviewClick,
 }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // New state for dropdown visibility
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  
+  const recentSearches: RecentSearch[] = [
+    { id: '1', text: 'Johns Hopkins Hospital' },
+    { id: '2', text: 'Dr. Amanda Reyes – Green Valley Rehab Center' },
+    { id: '3', text: 'Search all providers near 10001' },
+    { id: '4', text: 'St. Luke\'s Long-Term Care – 30303' }
+  ];
+
   const handleReviewClick = () => {
     console.log("Button clicked!");
-    setIsDropdownOpen(!isDropdownOpen); // Toggling dropdown visibility
+    setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const handleClear = () => {
+    console.log('Clear recent searches');
+  };
+
+  const handleSearchItemClick = (searchText: string) => {
+    setSearchValue(searchText);
+    console.log('Selected search:', searchText);
+  };
+
   return (
     <div
       className="relative w-[340px] h-[142px] rounded-[10px] bg-cover bg-center"
@@ -35,37 +78,61 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
         {/* Button - positioned at bottom right */}
         <div className="flex justify-start">
           <button
-            onClick={handleReviewClick} // Attach the toggle function
+            onClick={handleReviewClick}
             className="w-[120px] h-[32px] rounded-[8px] bg-[#28A2FF] hover:bg-[#1e8ae6] transition-colors text-white font-bold text-[10px] leading-[12px] tracking-[0%] font-sans flex justify-center items-center gap-[4px] shadow-sm"
           >
             {buttonText}
           </button>
         </div>
       </div>
-      {/* Dropdown menu - conditionally rendered */}
+
+      {/* Provider Search Modal */}
       {isDropdownOpen && (
-        <Model>
-          {" "}
-          {/* <div className="absolute top-[50px] left-0 w-[100%] bg-white shadow-lg rounded-[10px] p-4"> */}
-          <div className="absolute bg-white p-7.5 rounded-[10px] text-center justify-center shadow-lg max-w-[435px] mx-auto">
-            <div className="max-h-[200px] overflow-auto">
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Johns Hopkins Hospital</span>
-                  <span>⏱</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Dr. Amanda Reyes – Green Valley Rehab Center</span>
-                  <span>⏱</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Search all providers near 10001</span>
-                  <span>⏱</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>St. Luke’s Long-Term Care – 30303</span>
-                  <span>⏱</span>
-                </div>
+        <Model setIsOpen={setIsDropdownOpen} className="max-w-[500px]">
+          <div className="pt-4">
+            {/* Search Input */}
+            <div className="mb-6">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search with Provider name"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-base"
+                  autoFocus
+                />
+              </div>
+            </div>
+
+            {/* Recents Section */}
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-gray-600 font-medium text-base">Recents</h3>
+                <button
+                  onClick={handleClear}
+                  className="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors"
+                >
+                  Clear
+                </button>
+              </div>
+
+              {/* Recent Searches List */}
+              <div className="space-y-1 max-h-[250px] overflow-y-auto">
+                {recentSearches.map((search) => (
+                  <div
+                    key={search.id}
+                    onClick={() => handleSearchItemClick(search.text)}
+                    className="flex items-center justify-between p-3 hover:bg-gray-50 cursor-pointer rounded-md transition-colors"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <Clock className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                      <span className="text-gray-700 text-sm leading-relaxed">
+                        {search.text}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -86,7 +153,7 @@ const AppReviewCard: React.FC = () => {
     <div className="bg-gray-100 flex items-center justify-center">
       <ReviewCard
         onReviewClick={handleReviewClick}
-        backgroundImage={Patientdbimg}
+        backgroundImage={Patientdbimg} // Use your actual imported image here
       />
     </div>
   );

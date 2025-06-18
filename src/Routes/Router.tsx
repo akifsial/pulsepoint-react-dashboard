@@ -4,8 +4,8 @@ import { websitePublicRoutes } from "./WebsiteRoutes";
 import { PatientRoutes } from "./PatientRoutes";
 import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
-import CreateCommunity from "@components/CareProvider/CommunityForum/CreatCommunity";
-import Model from "@components/Model/Model";
+// import CreateCommunity from "@components/CareProvider/CommunityForum/CreatCommunity";
+// import Model from "@components/Model/Model";
 
 const Router: React.FC = () => {
   return (
