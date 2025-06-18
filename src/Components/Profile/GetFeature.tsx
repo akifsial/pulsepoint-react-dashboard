@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import featureBg from "../../assets/media/images/dashboard-images/featureBg.png"
 import ProfileCards from './ProfileCards'
-
+import BillingCheckout from './BillingCheckout'
 const GetFeature = () => {
-
+ const [billingCheck, setBillingCheck] = useState(false)
  const points = [
     {
       title: "Appear at the Top of Search Results",
@@ -29,7 +29,10 @@ const GetFeature = () => {
 
   return (
     <>
-     <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
+    {billingCheck?
+    (<BillingCheckout/>):( 
+    <>
+    <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
        Feature My Facility
       </h2>
    
@@ -53,7 +56,7 @@ const GetFeature = () => {
   <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
        Feature My Facility
       </h4>
-<ProfileCards/>
+<ProfileCards onUpgrade={setBillingCheck}/>
 <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
       💡 Advantages of Feature Plans?
       </h4>
@@ -74,7 +77,10 @@ const GetFeature = () => {
         ))}
       </ul>
     </div>
-
+    </>
+)
+  }
+    
 
     </>
   )
