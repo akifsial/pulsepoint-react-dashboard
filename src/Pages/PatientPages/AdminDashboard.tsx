@@ -375,7 +375,7 @@ const AdminDashboard: React.FC = () => {
             className="my-custom-class"
             actions={(row) => (
               <DropdownActions
-                onView={() => console.log("View", row.id)}
+                // onView={() => console.log("View", row.id)}
                 onEdit={() => console.log("Edit", row.id)}
                 onDelete={() => console.log("Delete", row.id)}
               />
