@@ -4,49 +4,48 @@ import ChangePhoto from "./ChangePhoto";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
- 
+
 import Methew from "../../assets/media/svgs/dashboard-svgs/methew.svg";
 import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
 import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
 import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";
 import Global from "../../assets/media/svgs/dashboard-svgs/globalField.svg";
- 
- import { GoPerson } from "react-icons/go";
+
+import { GoPerson } from "react-icons/go";
 // Separate option sets
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
   { value: "Private", label: "Private" },
   { value: "Government", label: "Government" },
-  { value: "Other", label: "Other" },
 ];
- 
+
 const stateOptions = [
   { value: "Punjab", label: "Punjab" },
   { value: "Sindh", label: "Sindh" },
   { value: "Balochistan", label: "Balochistan" },
   { value: "KPK", label: "Khyber Pakhtunkhwa" },
 ];
- 
+
 const cityOptions = [
   { value: "Lahore", label: "Lahore" },
   { value: "Karachi", label: "Karachi" },
   { value: "Quetta", label: "Quetta" },
   { value: "Peshawar", label: "Peshawar" },
 ];
- 
+
 const ProfileDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [organization, setOrganization] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
- 
+
   return (
     <>
       <div>
         <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
           Edit Profile Details
         </h2>
- 
+
         <div className="overflow-y-auto rounded-[10px] bg-white p-10 h-[601px]">
           {/* Top Section */}
           <div className="flex items-center justify-between mb-9">
@@ -61,7 +60,7 @@ const ProfileDetail = () => {
                 </span>
               </div>
             </div>
- 
+
             <PrimaryButton
               btnText="Change Photo"
               showImg={false}
@@ -72,11 +71,11 @@ const ProfileDetail = () => {
               onClick={() => setIsModalOpen(true)}
             />
           </div>
- 
+
           <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
             Add Personal Information
           </h4>
- 
+
           <form>
             <div className="flex flex-wrap items-center gap-x-4">
               <InputField
@@ -85,10 +84,10 @@ const ProfileDetail = () => {
                 name="name"
                 type="text"
                 fieldName="w-[49%]"
-                icon={GoPerson }
+                icon={GoPerson}
                 placeholder="e.g., Sunrise Rehabilitation Center"
               />
- 
+
               <SelectField
                 label="Organization Type"
                 id="organization"
@@ -97,7 +96,7 @@ const ProfileDetail = () => {
                 options={organizationOptions}
                 selectName="w-[49%]"
               />
- 
+
               <InputField
                 label="Phone:"
                 id="tel"
@@ -107,7 +106,7 @@ const ProfileDetail = () => {
                 iconUrl={Call}
                 placeholder="097-765-7654"
               />
- 
+
               <InputField
                 label="Email:"
                 id="email"
@@ -118,7 +117,7 @@ const ProfileDetail = () => {
                 placeholder="contact@organization.org"
               />
             </div>
- 
+
             <InputField
               label="Website:"
               id="website"
@@ -128,22 +127,25 @@ const ProfileDetail = () => {
               placeholder="https://www.topseniorspot.org"
               className="w-full"
             />
- 
+
             <div className="mb-6 text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
               <p className="mb-2.5">Additional Details:</p>
               <div className="text-sm font-normal text-[#252525] py-4 px-[15px] rounded-lg border border-[#2525251A] bg-[#FBFCFD]">
                 <p>
                   Sunrise Hills Nursing Home is a full-service assisted living
-                  facility specializing in post-acute rehabilitation and long-term senior care. Our mission is to provide compassionate, person-centered services in a comfortable, home-like setting.
+                  facility specializing in post-acute rehabilitation and
+                  long-term senior care. Our mission is to provide
+                  compassionate, person-centered services in a comfortable,
+                  home-like setting.
                 </p>
               </div>
             </div>
- 
+
             {/* Location Info */}
             <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
               Location Information
             </h4>
- 
+
             <div className="flex items-center gap-4">
               <SelectField
                 label="State"
@@ -153,7 +155,7 @@ const ProfileDetail = () => {
                 options={stateOptions}
                 selectName="w-[32%]"
               />
- 
+
               <SelectField
                 label="City"
                 id="city"
@@ -162,7 +164,7 @@ const ProfileDetail = () => {
                 options={cityOptions}
                 selectName="w-[32%]"
               />
- 
+
               <InputField
                 label="Zip Code:"
                 id="zip"
@@ -172,22 +174,22 @@ const ProfileDetail = () => {
                 fieldName="w-[32%]"
               />
             </div>
-             <InputField
-                label="Address:"
-                id="addres"
-                name="text"
-                type="text"
-                placeholder="123 main Street,Springfield,1L 62704"
-              />
-              <PrimaryButton
-                btnText="Save Changes"
-                      showImg={false}
-                      btnClass="w-[30%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
-                   />
+            <InputField
+              label="Address:"
+              id="addres"
+              name="text"
+              type="text"
+              placeholder="123 main Street,Springfield,1L 62704"
+            />
+            <PrimaryButton
+              btnText="Save Changes"
+              showImg={false}
+              btnClass="w-[30%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+            />
           </form>
         </div>
       </div>
- 
+
       {/* Change Photo Modal */}
       {isModalOpen && (
         <Model setIsOpen={setIsModalOpen} className="max-w-[488px]">
@@ -197,6 +199,5 @@ const ProfileDetail = () => {
     </>
   );
 };
- 
+
 export default ProfileDetail;
- 
