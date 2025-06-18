@@ -52,11 +52,11 @@ const ProfileCards = () => {
             className={`w-[33%] max-w-sm flex flex-col justify-between rounded-[10px] p-5 ${
               isHighlighted
                 ? "bg-[#023552] text-white"
-                : "bg-white text-black border border-gray-200"
+                : "bg-white text-[#252525] border border-gray-200"
             }`}
           >
             <div>
-              <h3 className="text-xl font-semibold mb-4">{plan.title}</h3>
+              <h3 className="text-lg font-semibold mb-3">{plan.title}</h3>
 
               <div
                 className={`text-3xl font-bold mb-4 inline-block px-4 py-[9px] rounded-[5px] ${
@@ -65,12 +65,12 @@ const ProfileCards = () => {
                     : "bg-[#EAF6FF] text-[#007AB2]"
                 }`}
               >
-                {plan.price}
+<h2>                {plan.price}</h2>
               </div>
 
               <ul className="space-y-3 mb-6">
                 {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-1.5">
+                  <li key={idx} className="flex font-normal items-center gap-1.5">
                     <img src={tickGreen} alt="tick" />
                     <span>{feature}</span>
                   </li>

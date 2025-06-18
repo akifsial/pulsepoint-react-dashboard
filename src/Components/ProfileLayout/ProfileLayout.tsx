@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
@@ -7,6 +8,18 @@ import {
   AdminSidebarLinks,
   PatientSidebarLinks,
   sidebarLinks as CareProviderSidebarLinks,
+  ProfileSidebarLinks,
+} from "@components/Dashboard-components/Sidebar/SidebarLinks";
+=======
+import { useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+>>>>>>> 43384e7c1a36bd4d89fe65748da3a78e29ec0211
+
+import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
+import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
+import ProfileSidebar from "@components/Dashboard-components/Sidebar/ProfileSidebar";
+import {
+  AdminSidebarLinks,
   ProfileSidebarLinks,
 } from "@components/Dashboard-components/Sidebar/SidebarLinks";
 
@@ -48,6 +61,7 @@ const ProfileLayout = () => {
 
   return (
     <div className="dashboard flex min-h-screen">
+      {/* Main Sidebar */}
       <Sidebar
         sidebarData={PatientSidebarLinks}
         isOpen={isSidebarOpen}
@@ -62,13 +76,14 @@ const ProfileLayout = () => {
         />
       )}
 
-      <div className={`flex flex-col flex-1 px-4 pt-3 ml-0 ${mainMargin}`}>
+      {/* Main Content Area */}
+      <div className={`flex flex-col flex-1 px-4 pt-3 ml-0  ${mainMargin}`}>
         <DashboardHeader
           showProfileSidebar={showProfileSidebar}
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
         />
-        <main className="mt-28">
+        <main className="mt-24">
           <Outlet />
         </main>
       </div>

@@ -14,8 +14,17 @@ import patients from "@assets/media/svgs/patient.svg";
 import pactive from "@assets/media/svgs/patient-active.svg";
 import reports from "@assets/media/svgs/reports.svg";
 import ractive from "@assets/media/svgs/reports-active.svg";
+<<<<<<< HEAD
 import provideIcon from "@assets/media/svgs/provide.svg";
 import provideactive from "@assets/media/svgs/provide-active.svg"
+=======
+import profile from "@assets/media/svgs/dashboard-svgs/profile.svg";
+import profileActive from "@assets/media/svgs/dashboard-svgs/profileActive.svg";
+import manage from "@assets/media/svgs/dashboard-svgs/manage.svg";
+import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg";
+import feature from "@assets/media/svgs/dashboard-svgs/feature.svg";
+import featureActive from "@assets/media/svgs/dashboard-svgs/featureActive.svg";
+>>>>>>> 43384e7c1a36bd4d89fe65748da3a78e29ec0211
 import type { ReactNode } from "react";
 
 type SidebarIconSet = {
@@ -52,6 +61,15 @@ export const sidebarLinks: SidebarLink[] = [
   {
     label: "Community Forum",
     path: "/care-provider/community-form",
+    icon: {
+      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Notification",
+    path: "/care-provider/notification",
     icon: {
       default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
@@ -158,26 +176,26 @@ export const ProfileSidebarLinks: SidebarLink[] = [
     label: "Profile",
     path: "/profile",
     icon: {
-      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={profileActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   {
     label: "Manage Password",
     path: "/manage-password",
     icon: {
-      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
     },},
   {
     label: "Get Featured",
     path: "/feature",
     icon: {
-      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   
