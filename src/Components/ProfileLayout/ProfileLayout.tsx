@@ -8,41 +8,31 @@ import {
   AdminSidebarLinks,
   PatientSidebarLinks,
   ProfileSidebarLinks,
+  sidebarLinks,
 } from "@components/Dashboard-components/Sidebar/SidebarLinks";
 
 const ProfileLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sdData, setSdData] = useState([]);
   const location = useLocation();
-  const prevPathRef = useRef(null); // Ref to store previous pathname
-
-  // Store current path as previous before updating
   useEffect(() => {
-    prevPathRef.current = location.pathname;
-  }, [location.pathname]);
-
-  // Log previous path
-  useEffect(() => {
-    const prevPath = prevPathRef.current;
-    console.log("Previous Path:", prevPath);
-
-    if (prevPath?.includes("/admin")) {
+    if (location.pathname === "/admin") {
       setSdData(AdminSidebarLinks);
-      console.log("Using AdminLinks (prevPath)");
-    } else if (prevPath?.includes("/patient")) {
+      console.log("Using AdminLinks");
+    } else if (location.pathname === "/patient") {
       setSdData(PatientSidebarLinks);
-      console.log("Using PatientLinks (prevPath)");
-    } else if (prevPath?.includes("/care-provider")) {
-      setSdData(CareProviderSidebarLinks);
-      console.log("Using CareProviderSidebarLinks (prevPath)");
+      console.log("Using PatientLinks ");
+    } else if (location.pathname === "/care-provider") {
+      setSdData(sidebarLinks);
+      console.log("Using CareProviderSidebarLinks");
     } else {
       setSdData([]);
-      console.warn("No matching sidebar links for prevPath:", prevPath);
+      console.warn("No matching sidebar links for ");
     }
-  }, []);
+  }, [location.pathname]);
 
-  const showProfileSidebar = ["/profile", "/manage-password", "/feature"].some(path =>
-    location.pathname.startsWith(path)
+  const showProfileSidebar = ["/profile", "/manage-password", "/feature"].some(
+    (path) => location.pathname.startsWith(path)
   );
   const mainMargin = showProfileSidebar ? "lg:ml-[357px]" : "lg:ml-[89px]";
 
@@ -50,7 +40,7 @@ const ProfileLayout = () => {
     <div className="dashboard flex min-h-screen">
       {/* Main Sidebar */}
       <Sidebar
-        sidebarData={PatientSidebarLinks}
+        sidebarData={sdData}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
       />
