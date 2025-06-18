@@ -1,19 +1,5 @@
-<<<<<<< HEAD
-import { useEffect, useRef, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
-import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
-import ProfileSidebar from "@components/Dashboard-components/Sidebar/ProfileSidebar";
-import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
-import {
-  AdminSidebarLinks,
-  PatientSidebarLinks,
-  sidebarLinks as CareProviderSidebarLinks,
-  ProfileSidebarLinks,
-} from "@components/Dashboard-components/Sidebar/SidebarLinks";
-=======
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
->>>>>>> 43384e7c1a36bd4d89fe65748da3a78e29ec0211
 
 import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
 import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
