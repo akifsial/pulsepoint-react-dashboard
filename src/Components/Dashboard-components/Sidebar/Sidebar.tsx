@@ -5,7 +5,9 @@ import miniLogo from "@assets/media/svgs/mini-logo.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import searchIcon from "@assets/media/svgs/dashboard-svgs/search.svg";
 import { SidebarLink } from "./SidebarLinks";
-
+import Chatbot from "../../../assets/media/svgs/chatbot.svg";
+import AiIcon from "../../../assets/media/svgs/ai-icon.svg";
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 interface SidebarProps {
   sidebarData: SidebarLink[];
   isOpen: boolean;
@@ -16,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
-  const iconOnlyRoutes = ["/profile","/manage-password","/feature"];
+  const iconOnlyRoutes = ["/profile", "/manage-password", "/feature"];
   const showOnlyIcons = iconOnlyRoutes.some((route) =>
     location.pathname.startsWith(route)
   );
@@ -92,11 +94,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
           className={`
          p-4 min-h-screen w-68
          lg:translate-x-0 
+         flex flex-col justify-between
         fixed top-0 left-0 z-50 transform transition-transform duration-500
         ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
       `}
         >
-          <div className="space-y-2 mt-3 h-screen">
+          <div className="space-y-2 mt-3 ">
             <div
               className="mb-7 max-w-[250px] mx-auto cursor-pointer"
               onClick={() => navigate("/")}
@@ -146,6 +149,29 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 </NavLink>
               );
             })}
+          </div>
+          <div
+            className="rounded-[10px] p-4 text-center"
+            style={{
+              background:
+                " radial-gradient(96.35% 86.93% at 72.06% 38.43%, #023552 0%, #28A2FF 100%)",
+            }}
+          >
+            <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
+           <div className="text-white text-sm font-normal mb-2">
+             <strong className="text-[17px] font-bold">Unlock Premium Insights</strong>
+            <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
+            </div>
+            <PrimaryButton
+             btnText="AI Chatbot"
+                  showImg={true}
+                  imgClass="w-[20px] h-[20px] object-cover"
+                  img={AiIcon}
+                  imgPosition="left"
+                  btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
+                  onClick={() => navigate("/feature")}
+            />
+           
           </div>
         </aside>
       )}

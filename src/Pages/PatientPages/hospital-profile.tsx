@@ -26,9 +26,8 @@ const handleGoBack = () => {
   return (
     <div className="min-h-screen bg-medical-bg">
       {/* Header */}
-      <header className="py-4 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+      <header className="max-w-7xl py-7 mx-auto  sm:px-6 lg:px-8 flex justify-between items-center fixed top-20 right-0 left-[290px]" style={{background:"linear-gradient(107.76deg, #f4f7ff -2.99%, #ddeff7 64.85%, #d6e0f9 113.61%)"}}>
+        
             {/* Left: Back Arrow + Hospital Name */}
             <div className="flex items-center space-x-2">
               <ArrowLeft
@@ -59,12 +58,11 @@ const handleGoBack = () => {
         "
               onClick={() => setIsModalOpen(true)}
             />
-          </div>
-        </div>
+        
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
         {/* Hospital Profile and Contact Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
           <HospitalProfileCard />
