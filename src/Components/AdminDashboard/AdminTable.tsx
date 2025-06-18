@@ -1,5 +1,5 @@
-import React from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import React from "react";
 
 
 const CareProviderDashboard: React.FC = () => {

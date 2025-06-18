@@ -1,4 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import Flagwhite from "@assets/media/svgs/dashboard-svgs/flag4.svg";
+import Flagblue from "@assets/media/svgs/dashboard-svgs/flag3.svg";
+import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
+import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
+// import userProfile from "@assets/media/svgs/dashboard-svgs/userProfile.svg";
+// import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
+// import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
+// import share from "@assets/media/svgs/dashboard-svgs/share.svg";
+// import comment from "@assets/media/svgs/dashboard-svgs/comment.svg";
+import SubmitReport from "./CareProvider/CommunityForum/SubmitReport";
+import Model from "./Model/Model";
+import FlagPost from "./CareProvider/CommunityForum/FlagPost";
+
 
 // Define the interface for post data
 export interface PostData {
@@ -25,17 +38,53 @@ interface PostCardProps {
   buttons: ButtonData[];
   showComments?: boolean; // Optional prop to control comment display
   showFullPost?: boolean; // Optional prop to control full post display
+  onSavePost?: (post: PostData) => void; // Callback for save post action
+  // Pass components as props to avoid import issues
+  FlagPostComponent?: React.ComponentType<{onSubmit: () => void}>;
+  ModalComponent?: React.ComponentType<{children: React.ReactNode, setIsOpen: (open: boolean) => void, className?: string}>;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ 
   post, 
   buttons, 
   showComments = true, 
-  showFullPost = true 
+  showFullPost = true,
+  onSavePost,
+  FlagPostComponent,
+  ModalComponent
 }) => {
+  const [activePostActions, setActivePostActions] = useState(false);
+  const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("home");
+  const [showSubmitReport, setShowSubmitReport] = useState(false);
+  const [flaggedPost, setFlaggedPost] = useState(null);
+
+  const togglePostActions = () => {
+    setActivePostActions(!activePostActions);
+  };
+
+  const handleFlagPost = () => {
+    console.log('Flag post clicked!'); // Debug log
+    setIsFlagModalOpen(true);
+    setActivePostActions(false);
+  };
+
+  const handleSubmitReport = () => {
+    setIsFlagModalOpen(false);
+    // You can add additional logic here for after report submission
+    console.log('Report submitted for post:', post.title);
+  };
+
+  const handleSavePost = () => {
+    if (onSavePost) {
+      onSavePost(post);
+    }
+    setActivePostActions(false);
+  };
+
   return (
-    <div className="post mb-6">
-      <div className="post_content bg-white rounded-[10px] p-4">
+    <div className="post mb-6 relative">
+      <div className="post_content bg-white rounded-[10px] p-4 relative">
         {/* Post Header */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
@@ -56,7 +105,11 @@ const PostCard: React.FC<PostCardProps> = ({
               </span>
             </div>
           </div>
-          <div>
+          <button
+            className="cursor-pointer relative z-20"
+            onClick={togglePostActions}
+            aria-label="Toggle post actions"
+          >
             <svg
               width="26"
               height="26"
@@ -65,30 +118,30 @@ const PostCard: React.FC<PostCardProps> = ({
               xmlns="http://www.w3.org/2000/svg"
             >
               <g opacity="0.8">
-                <path
-                  d="M13.1599 14.0063C13.7508 14.0063 14.2299 13.5273 14.2299 12.9363C14.2299 12.3453 13.7508 11.8662 13.1599 11.8662C12.5689 11.8662 12.0898 12.3453 12.0898 12.9363C12.0898 13.5273 12.5689 14.0063 13.1599 14.0063Z"
+                <circle
+                  cx="13.16"
+                  cy="5.45"
+                  r="1.07"
                   stroke="#252525"
                   strokeWidth="2.14"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
                 />
-                <path
-                  d="M13.1599 6.51605C13.7508 6.51605 14.2299 6.03698 14.2299 5.44602C14.2299 4.85505 13.7508 4.37598 13.1599 4.37598C12.5689 4.37598 12.0898 4.85505 12.0898 5.44602C12.0898 6.03698 12.5689 6.51605 13.1599 6.51605Z"
+                <circle
+                  cx="13.16"
+                  cy="12.94"
+                  r="1.07"
                   stroke="#252525"
                   strokeWidth="2.14"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
                 />
-                <path
-                  d="M13.1599 21.4966C13.7508 21.4966 14.2299 21.0175 14.2299 20.4266C14.2299 19.8356 13.7508 19.3565 13.1599 19.3565C12.5689 19.3565 12.0898 19.8356 12.0898 20.4266C12.0898 21.0175 12.5689 21.4966 13.1599 21.4966Z"
+                <circle
+                  cx="13.16"
+                  cy="20.43"
+                  r="1.07"
                   stroke="#252525"
                   strokeWidth="2.14"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
                 />
               </g>
             </svg>
-          </div>
+          </button>
         </div>
 
         {/* Post Content */}
@@ -190,7 +243,53 @@ const PostCard: React.FC<PostCardProps> = ({
             </div>
           </>
         )}
+
+        {/* 3-Dot Menu Dropdown */}
+        {activePostActions && (
+          <div className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50">
+            <button
+              onClick={handleFlagPost}
+              className="group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2 mb-0.5"
+            >
+              <span className="inline-block group-hover:hidden">
+                <img src={Flagwhite} alt="Flagwhite" />
+              </span>
+              <span className="hidden group-hover:inline-block">
+                <img src={Flagblue} alt="Flagblue" />
+              </span>
+              Flag Post
+            </button>
+
+            <button
+              onClick={handleSavePost}
+              className="group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
+            >
+              <span className="inline-block group-hover:hidden">
+                <img src={Save} alt="Save" />
+              </span>
+              <span className="hidden group-hover:inline-block">
+                <img src={SaveBlue} alt="SaveBlue" />
+              </span>
+              Save Post
+            </button>
+          </div>
+        )}
       </div>
+
+       {isFlagModalOpen && (
+        <Model className="max-w-[618px]" setIsOpen={setIsFlagModalOpen}>
+          <FlagPost onSubmit={() => setShowSubmitReport(true)} />
+        </Model>
+      )}
+
+      {showSubmitReport && (
+        <Model
+          className="max-w-[516px]"
+          setIsOpen={() => setShowSubmitReport(false)}
+        >
+          <SubmitReport />
+        </Model>
+      )}
     </div>
   );
 };

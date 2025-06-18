@@ -21,7 +21,7 @@ const Community1 = ({ onNext, onClose }) => {
         name="name"
         type="text"
         placeholder="Enter Name"
-        className="w-full h-[50px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] font-medium text-[16px] leading-[140%] text-[#1A1A1A] mb-3 focus:outline-none"
+        className="w-full h-[50px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] text-[16px] leading-[140%] text-sm text-[#1A1A1A] mb-1 focus:outline-none placeholder:text-sm placeholder:font-medium"
       />
 
       <TextField
@@ -30,7 +30,7 @@ const Community1 = ({ onNext, onClose }) => {
         id="msg"
         placeholder="Enter description"
         row={3}
-        className="h-[110px] mb-6"
+        className="h-[110px] mb-6 text-sm"
       />
 
       <button

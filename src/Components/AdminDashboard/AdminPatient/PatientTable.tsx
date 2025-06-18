@@ -20,15 +20,18 @@ const CareProviderDashboard: React.FC = () => {
   type dataTypes = {
     id?: number;
     first_name?: string;
-    last_name?: string;
+    // last_name?: string;
     date?: string;
     email?: string;
     image?: string;
-    rating?: number | string | React.ReactNode;
+    // rating?: number | string | React.ReactNode;
     reviews?: string;
-    specialization?: string;
-    location?: string;
+    lastdate?: string;
+    status?: string;
+    // specialization?: string;
+    // location?: string;
   };
+
 
   const columns: TanDataTableColumn<dataTypes>[] = [
     {
@@ -36,17 +39,17 @@ const CareProviderDashboard: React.FC = () => {
       header: "Provider’s Name",
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
-        const { first_name, last_name, email } = row.original;
+        const { first_name,  email } = row.original;
         return (
           <div className="flex items-center gap-3">
             <img
               src={dummyImage}
-              alt={`${first_name} ${last_name}`}
+              alt={`${first_name} `}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
-                {first_name} {last_name}
+                {first_name} 
               </span>
               <span className="text-xs text-gray-500 leading-tight">
                 {email}
@@ -58,83 +61,121 @@ const CareProviderDashboard: React.FC = () => {
     },
     {
       accessor: "date",
-      header: "Date",
-      showSort: true,
-      cell: (info: any) => <i>{info.getValue()}</i>,
-    },
-    {
-      accessor: "rating",
-      header: "Rating",
+      header: "Registered Date",
       showSort: true,
     },
     {
-      accessor: "specialization",
-      header: "Specialization",
+      accessor: "reviews",
+      header: "Reviews",
       showSort: true,
     },
     {
-      accessor: "location",
-      header: "Location",
+      accessor: "lastdate",
+      header: "Last Visit Date",
       showSort: true,
+    },
+    {
+      accessor: "status",
+      header: "Status",
+      showSort: true,
+      cell: ({ row }: { row: { original: dataTypes } }) => {
+        const status = row.original.status?.toLowerCase();
+        const statusStyles = {
+          active: "text-[#067647] border-[1.5px] border-[#079455]",
+          inactive: "text-[#C22E00] border-[1.5px] border-[#C22E00]",
+        };
+
+        return (
+          <span
+            className={`text-xs font-medium px-3 py-1 rounded-full ${
+              statusStyles[status as "active" | "inactive"] ||
+              "bg-gray-200 text-gray-700"
+            }`}
+          >
+            {status?.charAt(0).toUpperCase() + status?.slice(1)}
+          </span>
+        );
+      },
     },
   ];
 
   const data: dataTypes[] = [
     {
       id: 1,
-      first_name: "Alice",
-      last_name: "Border",
+      first_name: "Savannah Nguyen",
       date: "9/04/12",
-      email: "alice.border@example.com",
-      // image: "/images/dashboard-images/alice.svg",
+      reviews:
+        "Staff was caring and responsive, though the wait time could be improved.",
+      lastdate: "9/4/12",
+      email: "nevaeh.simmons@gmail.com",
       image: alice,
-      rating: <RatingStars value={5} isDisabled={true} />,
-      specialization: "Elderly care",
-      location: "📍200 1st St SW, Rochester",
+      status: "Active",
     },
     {
       id: 2,
-      first_name: "Michael",
-      last_name: "Schofield",
-      date: "9/04/16",
-      email: "michael.schofield@example.com",
+      first_name: "Kristin Watson",
+      date: "5/7/16",
+      email: "alma.lawson@example.com",
+      reviews:
+        "“Excellent support for my mother with  dementia. Highly recommended.”",
+      lastdate: "9/4/12",
       image: "/images/michael.png",
-      rating: <RatingStars value={3} isDisabled={true} />,
-      specialization: "Post-surgical rehab",
-      location: "📍190 E Bannock St, Boise, ID 83712",
+      status: "Inactive",
     },
     {
       id: 3,
-      first_name: "Sarah",
-      last_name: "Johnson",
-      date: "10/04/19",
-      email: "sarah.johnson@example.com",
-      image: "/images/sarah.png",
-      rating: <RatingStars value={4} isDisabled={true} />,
-      specialization: "Harmony Memory Care",
-      location: "📍T9500 Euclid Ave, Cleveland,",
+      first_name: "Brooklyn Simmons",
+      date: "10/6/13",
+      email: "deanna.curtis@example.com",
+      reviews:
+        "“Facilities are clean and staff is friendly.  A bit pricey, but worth it.",
+      lastdate: "9/4/12",
+      image: "/images/michael.png",
+      status: "Active",
     },
     {
       id: 4,
-      first_name: "John",
-      last_name: "Doe",
-      date: "12/04/22",
-      email: "john.doe@example.com",
-      image: "/images/john.png",
-      rating: <RatingStars value={5} isDisabled={true} />,
-      specialization: "Fitness  services.",
-      location: "📍1468 Madison Ave, NY 10029",
+      first_name: "Arlene McCoy",
+      date: "2/11/12",
+      email: "tanya.hill@example.com",
+      reviews:
+        "“Great amenities and staff. Rooms were  spacious and bright.”",
+      lastdate: "9/4/12",
+      image: "/images/michael.png",
+      status: "Inactive",
     },
     {
       id: 5,
-      first_name: "Emily",
-      last_name: "Davis",
-      date: "15/04/23",
-      email: "emily.davis@example.com",
-      image: "/images/emily.png",
-      rating: <RatingStars value={2} isDisabled={true} />,
-      specialization: "Rehabilitation Center",
-      location: "📍8900 N Kendall Dr, Miami, FL 33176",
+      first_name: "Eleanor Pena",
+      date: "3/4/16",
+      email: "michelle.rivera@example.com",
+      reviews:
+        "“Compassionate end-of-life care. They  made a difficult time easier.",
+      lastdate: "9/4/12",
+      image: "/images/michael.png",
+      status: "Active",
+    },
+    {
+      id: 6,
+      first_name: "Jenny Wilson",
+      date: "8/15/14",
+      email: "michelle.rivera@example.com",
+      reviews:
+        "“The food quality was inconsistent, but  the overall experience was positive.”",
+      lastdate: "9/4/12",
+      image: "/images/michael.png",
+      status: "Active",
+    },
+    {
+      id: 7,
+      first_name: "Ralph Edwards",
+      date: "11/22/15",
+      email: "dolores.chambers@example.com",
+      reviews:
+        "“They offered a variety of activities that kept my father engaged. ",
+      lastdate: "9/4/12",
+      image: "/images/michael.png",
+      status: "Active",
     },
   ];
 
@@ -166,11 +207,11 @@ const CareProviderDashboard: React.FC = () => {
       align-middle
     "
       >
-        Care Provider Listing
+        Patients List
       </h2>
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Care Providers</h3>
+          <h3 className="md:mb-0 mb-3">Patients’ Details</h3>
           {/* searchbar */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
             <CommonInput
@@ -224,7 +265,7 @@ const CareProviderDashboard: React.FC = () => {
           </div>
         </div>
         <div className="mb-4 flex">
-          <div
+          {/* <div
             className={`tab ${
               activeTab === "all"
                 ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]"
@@ -275,9 +316,8 @@ const CareProviderDashboard: React.FC = () => {
             >
               Saved Care Providers
             </p>
-          </div>
+          </div> */}
         </div>
-
         <div>
           {activeTab === "all" ? (
             <TanDataTable<dataTypes>
@@ -319,4 +359,3 @@ const CareProviderDashboard: React.FC = () => {
 };
 
 export default CareProviderDashboard;
-

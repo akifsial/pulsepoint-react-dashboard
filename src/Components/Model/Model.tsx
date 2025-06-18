@@ -1,10 +1,9 @@
-import React from "react";
 import closeArrow from "@assets/media/svgs/dashboard-svgs/close-circle.svg";
 
-const Model = ({ setIsOpen, children, className="" }) => {
+const Model = ({ setIsOpen, children,className="" }) => {
   return (
     <div className="fixed inset-0 bg-black/40  flex justify-center items-center z-50">
-      <div className={`bg-white p-7.5 rounded-[10px] relative w-full mx-4 ${className}`}>
+      <div className={`bg-white p-7.5 rounded-[10px] relative w-full  mx-4 ${className}`}>
         <button
           onClick={() => setIsOpen(false)}
           className="absolute right-[18px] top-[18px]"

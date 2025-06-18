@@ -14,6 +14,8 @@ import patients from "@assets/media/svgs/patient.svg";
 import pactive from "@assets/media/svgs/patient-active.svg";
 import reports from "@assets/media/svgs/reports.svg";
 import ractive from "@assets/media/svgs/reports-active.svg";
+import provideIcon from "@assets/media/svgs/provide.svg";
+import provideactive from "@assets/media/svgs/provide-active.svg"
 import type { ReactNode } from "react";
 
 type SidebarIconSet = {
@@ -118,7 +120,8 @@ export const AdminSidebarLinks: SidebarLink[] = [
     label: "Care Providers Control",
     path: "/admin/care-providers",
     icon: {
-    
+       default: <img src={provideIcon} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={provideactive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   {
