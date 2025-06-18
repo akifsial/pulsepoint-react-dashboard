@@ -1,19 +1,6 @@
-// import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
-import React from "react";
-// import contacts from "@assets/media/svgs/dashboard-svgs/contacts.svg";
-// import stars from "@assets/media/svgs/dashboard-svgs/stars.svg";
-// import flags from "@assets/media/svgs/dashboard-svgs/flag.svg";
-// import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
-import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
-// import RatingStars from "@components/Shared-components/RatingStars";
-// import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-// import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActivityCard";
+import React from "react";
+
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -21,27 +8,26 @@ const CareProviderDashboard: React.FC = () => {
     id?: number;
     first_name?: string;
     last_name?: string;
+    Replies?:string;
+    Users?:string;
     date?: string;
-    email?: string;
-    image?: string;
-    rating?: any;
-    reviews?: string;
+    LastActive?: string;
   };
 
   const columns = [
     {
+      accessor: "id",
+      header: "Id",
+      showSort: true,
+    },
+    {
       accessor: "userData",
-      header: "Topic Name",
+      header: "Topic Names",
       showSort: true,
       cell: ({ row }: any) => {
         const { first_name, last_name, email } = row.original;
         return (
           <div className="flex items-center gap-3">
-            {/* <img
-              src={dummyImage}
-              alt={`${first_name} ${last_name}`}
-              className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
-            /> */}
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
                 {first_name} {last_name}
@@ -56,36 +42,49 @@ const CareProviderDashboard: React.FC = () => {
     },
     {
       accessor: "Replies",
-    //   header: "Date",
-    //   showSort: true,
-    //   cell: (info: any) => <i>{info.getValue()}</i>,
+      header: "Replies",
+      showSort: true,
     },
     {
       accessor: "Users",
-    //   header: "Rating",
-    //   showSort: true,
+      header: "Users",
+      showSort: true,
     },
     {
-      accessor: "Last Active",
-    //   header: "Reviews",
-    //   showSort: true,
+      accessor: "LastActive",
+      header: "Last Active",
+      showSort: true,
     },
   ];
 
   const data: dataTypes[] = [
     {
-      id: 1,
+      id: "01",
       first_name: "Best Hospitals for Post-Surgery Rehab?",
-    //   last_name: "Border",
-    //   rating: <RatingStars value={5} isDisabled={true} />,
-    //   reviews: "Great service!",
+      Replies: "100",
+      Users: "45k",
+      LastActive: "1h ago",
     },
     {
-      id: 2,
+      id: "02",
       first_name: "Signs of Quality in Nursing Homes",
-    //   last_name: "Schofield",
-    //   rating: <RatingStars value={3} isDisabled={true} />,
-    //   reviews: "Very satisfied with the care provided.",
+      Replies: "73",
+      Users: "1.0M",
+      LastActive: "1h ago",
+    },
+    {
+      id: "03",
+      first_name: "Home Health vs. Hospice-Whats'Right",
+      Replies: "56",
+      Users: "1.0k",
+      LastActive: "2h ago",
+    },
+    {
+      id: "04",
+      first_name: "Hidden Costs in Long-Term Care Facilities",
+      Replies: "67",
+      Users: "55k",
+      LastActive: "3h ago",
     },
   ];
 
@@ -98,120 +97,20 @@ const CareProviderDashboard: React.FC = () => {
   );
   return (
     <div className="mb-10">
-      {/* <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
-        <StatsCommonCards
-          count={128}
-          title="Total Patient Reviews"
-          cardImg={contacts}
-          imgBg="#EEE0FF"
-          borderBg="#9747FF"
-        />
-        <StatsCommonCards
-          count={10}
-          title="Unread Messages or Questions"
-          cardImg={stars}
-          imgBg="#D8F6D4"
-          borderBg="#52C343"
-        />
-        <StatsCommonCards
-          count={10}
-          title="Flagged Reviews"
-          cardImg={flags}
-          imgBg="#FFE8CF"
-          borderBg="#F98A17"
-        />
-        <StatsCommonCards
-          count={87}
-          title="Profile Views This Month"
-          cardImg={userSearch}
-          imgBg="#E2F0F6"
-          borderBg="#007AB2"
-        />
-      </div> */}
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Recent Reviews</h3>
-          <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium text-sm">Filter by</p>
-            <div className="relative">
-              <div className="flex items gap-4 ">
-                <PrimaryButton
-                  btnText="Ratigs"
-                  showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={filterIcon}
-                  imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                />
-                <PrimaryButton
-                  btnText="View All Reviews"
-                  btnTextClass="text-[#FFFFFF] text-sm font-semibold"
-                  showImg={true}
-                  imgClass="w-[14px] h-[13px] object-cover"
-                  img={ForwardArrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px] bg-[#000000]"
-                />
-              </div>
-              <AnimatePresence>
-                {showRatingDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-[60px] w-50 z-50"
-                  >
-                    <RatingFilterDropdown />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
+        <div className="mb-3 flex md:flex-row flex-col md:items-center md:justify-between">
+          <h4>Trending Topics in Communities</h4>
         </div>
         <div>
           <TanDataTable<dataTypes>
             columns={columns}
             data={data}
-            showCheckbox={false}
+            showCheckbox={true}
             onRowSelect={handleRowSelect}
-            actions={renderActions}
-            showActions={true}
             className="my-custom-class"
-            actions={(row) => (
-              <DropdownActions
-                onView={() => console.log("View", row.id)}
-                onEdit={() => console.log("Edit", row.id)}
-                onDelete={() => console.log("Delete", row.id)}
-              />
-            )}
           />
         </div>
       </div>
-      {/* <div className="bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <div>
-          <div className="flex md:flex-row flex-col md:items-center md:justify-between mb-4">
-            <h3 className="mb-3 md:mb-0">Community Forum Activity</h3>
-            <div className="flex items-center gap-3">
-              <p className="text-[#252525] font-medium text-sm">Filter by</p>
-              <PrimaryButton
-                btnText="Today"
-                showImg={true}
-                imgClass="w-[24px] h-[24px] object-cover"
-                img={filterIcon}
-                imgPosition="left"
-                btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                // onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-              />
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2  grid-cols-1 gap-[13px]">
-            <ForumActivityCard />
-            <ForumActivityCard />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

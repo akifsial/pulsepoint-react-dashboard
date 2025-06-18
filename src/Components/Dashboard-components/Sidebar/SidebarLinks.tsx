@@ -12,10 +12,10 @@ import reviewActive from "@assets/media/svgs/dashboard-svgs/review-active.svg";
 import communityActive from "@assets/media/svgs/dashboard-svgs/Community-active.svg";
 import patients from "@assets/media/svgs/patient.svg";
 import pactive from "@assets/media/svgs/patient-active.svg";
-import care from "@assets/media/svgs/care.svg";
-import cactive from "@assets/media/svgs/care-active.svg"
 import reports from "@assets/media/svgs/reports.svg";
 import ractive from "@assets/media/svgs/reports-active.svg";
+import provideIcon from "@assets/media/svgs/provide.svg";
+import provideactive from "@assets/media/svgs/provide-active.svg"
 import type { ReactNode } from "react";
 
 type SidebarIconSet = {
@@ -113,7 +113,6 @@ export const AdminSidebarLinks: SidebarLink[] = [
     path: "/admin/patients-management",
     icon: {
       default: <img src={patients} alt="Dashboard" className="w-5 h-5" />,
-      // hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={pactive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
@@ -121,9 +120,8 @@ export const AdminSidebarLinks: SidebarLink[] = [
     label: "Care Providers Control",
     path: "/admin/care-providers",
     icon: {
-      default: <img src={care} alt="Dashboard" className="w-5 h-5" />,
-      // hover: <img src={reviewHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={cactive} alt="Dashboard" className="w-5 h-5" />,
+       default: <img src={provideIcon} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={provideactive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   {

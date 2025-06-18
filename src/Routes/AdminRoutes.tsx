@@ -3,8 +3,9 @@ import AdminCareProvidersControl from "@pages/AdminDashboardPages/AdminCareProvi
 import AdminForumModeration from "@pages/AdminDashboardPages/AdminForumModeration";
 import AdminPatientsManagement from "@pages/AdminDashboardPages/AdminPatientsManagement";
 import AdminReportsandAnalytics from "@pages/AdminDashboardPages/AdminReportsandAnalytics";
-import AdminReviews from "@pages/AdminDashboardPages/AdminReviews";
+// import AdminReviews from "@pages/AdminDashboardPages/AdminReviews";
 import AdminDashboard from "@pages/AdminDashboardPages/AdminDashboard";
+import AdminReviews from "@pages/AdminDashboardPages/AdminReviews";
 
 
 export const AdminRoutes = [

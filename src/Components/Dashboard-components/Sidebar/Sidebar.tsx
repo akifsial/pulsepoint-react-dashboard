@@ -88,6 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
           </div>
+          
         </aside>
       ) : (
         <aside
