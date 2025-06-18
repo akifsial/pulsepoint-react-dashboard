@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Send } from "lucide-react";
+import ChatbotSearchbar from "./ChatbotSearchBar";
 
 interface Facility {
   name: string;
@@ -34,6 +34,10 @@ const NursingHomeReviews: React.FC = () => {
       handleInputSubmit();
     }
   };
+
+  function handleAskAI(question: string): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <div className="w-full max-w-screen mx-auto bg-white rounded-lg p-8 shadow-sm">
@@ -107,24 +111,8 @@ const NursingHomeReviews: React.FC = () => {
             </p>
           </div>
         </div>
-
-        {/* Input field */}
-        <div className="flex items-center bg-white rounded-full px-4 py-3 shadow-sm border border-gray-200">
-          <input
-            type="text"
-            placeholder="Ask AI for its suggestions..."
-            value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="flex-1 outline-none text-gray-600 text-sm bg-transparent"
-          />
-          <button
-            onClick={handleInputSubmit}
-            className="ml-3 bg-blue-500 hover:bg-blue-600 rounded-full p-2 transition-colors"
-          >
-            <Send className="w-4 h-4 text-white" />
-          </button>
-        </div>
+        <ChatbotSearchbar onAskAI={handleAskAI} 
+        />
       </div>
     </div>
   );
