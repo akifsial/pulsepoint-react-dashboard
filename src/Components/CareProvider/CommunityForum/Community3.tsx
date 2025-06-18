@@ -1,5 +1,6 @@
 import React from "react";
 import CommunityTopics from "./CommunityTopics";
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 
 const Community3 = ({ onBack, onClose }) => {
   return (
@@ -42,19 +43,17 @@ const Community3 = ({ onBack, onClose }) => {
       </div>
 
       <div className="flex items-center gap-2.5 pt-[25px]">
-        <button
-          type="button"
+        <PrimaryButton
+          btnText="Back"
           onClick={onBack}
-          className="cursor-pointer w-48 bg-[#E4E4E4] border border-[#AFAFAF] text-[#252525] py-[13px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
-        >
-          Back
-        </button>
-        <button
-          type="submit"
-          className="cursor-pointer w-48 bg-black text-white py-[13.5px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
-        >
-          Create Community
-        </button>
+          showImg={false}
+          btnClass="flex items-center justify-center h-[46px] w-[192px] cursor-pointer w-48 bg-[#E4E4E4] border border-[#AFAFAF] text-[#252525] py-[13px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+        />
+        <PrimaryButton
+          btnText=" Create Community"
+          showImg={false}
+          btnClass="flex items-center justify-center h-[46px] cursor-pointer w-[192px] bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+        />
       </div>
     </>
   );

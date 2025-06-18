@@ -37,5 +37,5 @@
       "@src/*": ["src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "src/Components/AdminDashboard/Reports/ReportCharts/VisitorChart.tsx"]
 }

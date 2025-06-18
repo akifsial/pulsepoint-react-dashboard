@@ -28,8 +28,8 @@ const TanDataTable = <T extends object>({
     ...(showCheckbox
       ? [
           columnHelper.display({
-            id: "select",
-            header: () => <input type="checkbox" />,
+            id:"select",
+            header:() => <input type="checkbox" />,
             cell: ({ row }) => (
               <input
                 type="checkbox"
@@ -86,7 +86,7 @@ const TanDataTable = <T extends object>({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className={`p-3 font-medium text-[#252525] ${
+                    className={`px-4 py-4 whitespace-nowrap font-medium text-[#252525] ${
                       header.column.getCanSort()
                         ? "cursor-pointer select-none"
                         : ""
@@ -121,7 +121,7 @@ const TanDataTable = <T extends object>({
                 style={{ borderBottom: "1px solid #2525251a" }}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-3">
+                  <td key={cell.id} className="px-4 py-2 ">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

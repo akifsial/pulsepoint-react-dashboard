@@ -6,13 +6,11 @@ import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
 
 import Methew from "../../assets/media/svgs/dashboard-svgs/methew.svg";
-import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
-import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
-import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";
-import Global from "../../assets/media/svgs/dashboard-svgs/globalField.svg";
-
 import { GoPerson } from "react-icons/go";
-// Separate option sets
+import { IoCallOutline } from "react-icons/io5";
+import { IoMailOutline } from "react-icons/io5";
+import { CiGlobe } from "react-icons/ci";
+
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
   { value: "Private", label: "Private" },
@@ -41,14 +39,15 @@ const ProfileDetail = () => {
 
   return (
     <>
-      <div>
-        <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
+      <div className=" ">
+        {/* <h2 className=" text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
           Edit Profile Details
-        </h2>
+        </h2> */}
 
-        <div className="overflow-y-auto rounded-[10px] bg-white p-10 h-[601px]">
-          {/* Top Section */}
-          <div className="flex items-center justify-between mb-9">
+        <div className="rounded-[10px] bg-white p-10 pb-0  mb-4">
+          <div className="overflow-y-auto h-[628px]">
+        
+          <div className=" flex items-center justify-between mb-7">
             <div className="flex items-center gap-3">
               <img src={Methew} alt="Methew" />
               <div className="">
@@ -103,7 +102,7 @@ const ProfileDetail = () => {
                 name="tel"
                 type="tel"
                 fieldName="w-[49%]"
-                iconUrl={Call}
+                icon={IoCallOutline}
                 placeholder="097-765-7654"
               />
 
@@ -113,7 +112,7 @@ const ProfileDetail = () => {
                 name="email"
                 type="email"
                 fieldName="w-[49%]"
-                iconUrl={Sms}
+                icon={IoMailOutline}
                 placeholder="contact@organization.org"
               />
             </div>
@@ -123,20 +122,17 @@ const ProfileDetail = () => {
               id="website"
               name="web"
               type="text"
-              iconUrl={Global}
+              icon={CiGlobe}
               placeholder="https://www.topseniorspot.org"
-              className="w-full"
+              onChange={(e) => setWebsite(e.target.value)}
+              fieldName="w-full"
             />
 
             <div className="mb-6 text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
               <p className="mb-2.5">Additional Details:</p>
               <div className="text-sm font-normal text-[#252525] py-4 px-[15px] rounded-lg border border-[#2525251A] bg-[#FBFCFD]">
                 <p>
-                  Sunrise Hills Nursing Home is a full-service assisted living
-                  facility specializing in post-acute rehabilitation and
-                  long-term senior care. Our mission is to provide
-                  compassionate, person-centered services in a comfortable,
-                  home-like setting.
+                  Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. Our mission is to provide compassionate, person-centered services in a comfortable, home-like setting.Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. 
                 </p>
               </div>
             </div>
@@ -184,9 +180,10 @@ const ProfileDetail = () => {
             <PrimaryButton
               btnText="Save Changes"
               showImg={false}
-              btnClass="w-[30%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+              btnClass="w-[25%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
             />
           </form>
+        </div>
         </div>
       </div>
 

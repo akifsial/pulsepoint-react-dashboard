@@ -18,7 +18,7 @@ useEffect(() => {
   return (
     <aside
     className={`
-    fixed top-0 z-50 w-[268px] min-h-screen bg-white shadow-lg p-4
+    fixed top-0 z-50 w-[268px] min-h-screen bg-[#F5FBFF] shadow-lg p-4
     transition-all duration-300 ease-in-out
 
     // Small screens

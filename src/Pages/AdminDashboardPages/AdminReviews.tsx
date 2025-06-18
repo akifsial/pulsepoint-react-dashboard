@@ -1,10 +1,11 @@
+import Reviews from '@components/AdminDashboard/Reviews/Reviews'
 import React from 'react'
 
 const AdminReviews = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <Reviews/>
+    </>
   )
 }
 

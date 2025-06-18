@@ -12,10 +12,17 @@ import reviewActive from "@assets/media/svgs/dashboard-svgs/review-active.svg";
 import communityActive from "@assets/media/svgs/dashboard-svgs/Community-active.svg";
 import patients from "@assets/media/svgs/patient.svg";
 import pactive from "@assets/media/svgs/patient-active.svg";
-import care from "@assets/media/svgs/care.svg";
-import cactive from "@assets/media/svgs/care-active.svg"
 import reports from "@assets/media/svgs/reports.svg";
 import ractive from "@assets/media/svgs/reports-active.svg";
+import provideIcon from "@assets/media/svgs/provide.svg";
+import provideactive from "@assets/media/svgs/provide-active.svg"
+import profile from "@assets/media/svgs/dashboard-svgs/profile.svg"
+import profileActive from "@assets/media/svgs/dashboard-svgs/profileActive.svg"
+import manage from "@assets/media/svgs/dashboard-svgs/manage.svg"
+import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg"
+import feature from "@assets/media/svgs/dashboard-svgs/feature.svg"
+import featureActive from "@assets/media/svgs/dashboard-svgs/featureActive.svg"
+
 import type { ReactNode } from "react";
 
 type SidebarIconSet = {
@@ -52,6 +59,15 @@ export const sidebarLinks: SidebarLink[] = [
   {
     label: "Community Forum",
     path: "/care-provider/community-form",
+    icon: {
+      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Notification",
+    path: "/care-provider/notification",
     icon: {
       default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
@@ -113,7 +129,6 @@ export const AdminSidebarLinks: SidebarLink[] = [
     path: "/admin/patients-management",
     icon: {
       default: <img src={patients} alt="Dashboard" className="w-5 h-5" />,
-      // hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={pactive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
@@ -121,9 +136,8 @@ export const AdminSidebarLinks: SidebarLink[] = [
     label: "Care Providers Control",
     path: "/admin/care-providers",
     icon: {
-      default: <img src={care} alt="Dashboard" className="w-5 h-5" />,
-      // hover: <img src={reviewHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={cactive} alt="Dashboard" className="w-5 h-5" />,
+       default: <img src={provideIcon} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={provideactive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   {
@@ -160,26 +174,26 @@ export const ProfileSidebarLinks: SidebarLink[] = [
     label: "Profile",
     path: "/profile",
     icon: {
-      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={profileActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   {
     label: "Manage Password",
     path: "/manage-password",
     icon: {
-      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
     },},
   {
     label: "Get Featured",
     path: "/feature",
     icon: {
-      default: <img src={dashboardIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={dashboardHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   

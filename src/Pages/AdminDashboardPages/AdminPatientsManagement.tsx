@@ -1,10 +1,11 @@
 import React from 'react'
+import AdminPatient from '@components/AdminDashboard/AdminPatient/AdminPatient'
 
 const AdminPatientsManagement = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <AdminPatient/>
+    </>
   )
 }
 

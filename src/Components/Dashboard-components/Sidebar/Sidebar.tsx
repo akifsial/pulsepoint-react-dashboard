@@ -95,6 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               className="w-[70px] h-[50px] object-cover mt-[320px]"
             />
           </div>
+          
         </aside>
       ) : (
         <aside
