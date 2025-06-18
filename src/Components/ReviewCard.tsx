@@ -21,7 +21,7 @@ const handleReviewClick = () => {
 };
   return (
     <div
-      className="relative w-[340px] h-[142px] rounded-[10px] bg-cover bg-center overflow-hidden" // Increased width to 340px
+      className="relative w-[340px] h-[142px] rounded-[10px] bg-cover bg-center"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* Content container with flex column layout */}
@@ -67,8 +67,8 @@ const handleReviewClick = () => {
         </div>
       )}
 
-      <div className="absolute inset-0 bg-opacity-10 rounded-[10px]"></div>
-    </div>
+<div className="absolute inset-0 bg-black/10 rounded-[10px] pointer-events-none z-0" />    
+</div>
   );
 };
 
