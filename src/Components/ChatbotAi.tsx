@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import {
-  Sparkles,
-} from "lucide-react";
 import { PrimaryButton } from "./Shared-components/Buttons/Common-button/CommonButton";
+import AI from "@assets/media/svgs/patient-db-svgs/AI.png";
 
 const ChatbotAi: React.FC = () => {
   const [question, setQuestion] = useState("");
@@ -23,20 +21,24 @@ const ChatbotAi: React.FC = () => {
       <div className="flex flex-col gap-8 h-screen justify-center items-center">
         {/* Header Section */}
         <div className="text-center">
-          <h1 className="font-grotesk font-bold text-[25px] leading-custom text-customGray text-center mb-2">
+          <h2 className="font-grotesk font-bold text-[25px] leading-custom text-customGray text-center mb-2">
             Top Senior Spot - Ask a Question
-          </h1>
+          </h2>
 
-          <p className="font-geist font-medium text-base leading-capHeight text-customGray text-center">
+          <h6 className="font-geist font-medium text-base leading-capHeight text-customGray text-center">
             Have a question about care providers? Get answers and advice from
             patients, caregivers, and experts.
-          </p>
+          </h6>
         </div>
 
         {/* Search Input Section */}
         <div className="relative">
           <div className="flex items-center bg-white border border-[#007AB2] rounded-full w-[831px] h-[60px] px-[20px] py-[10px]">
-            <Sparkles className="w-5 h-5 text-gray-400 mr-3" />
+            <img
+              src={AI}
+              alt="AI Icon"
+              className="w-[16px] h-[19px] mr-4"
+            />
             <input
               type="text"
               placeholder="Ask AI for its suggestions..."
