@@ -31,7 +31,7 @@ const ProfileLayout = () => {
       console.log("Using AdminLinks (prevPath)");
     } else if (prevPath?.includes("/patient")) {
       setSdData(PatientSidebarLinks);
-      console.log("Using PatientSidebarLinks (prevPath)");
+      console.log("Using PatientLinks (prevPath)");
     } else if (prevPath?.includes("/care-provider")) {
       setSdData(CareProviderSidebarLinks);
       console.log("Using CareProviderSidebarLinks (prevPath)");
