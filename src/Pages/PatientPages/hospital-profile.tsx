@@ -13,10 +13,6 @@ const HospitalProfile = () => {
     navigate(-1); // Go back to the previous page in browser history
   };
 
-  const handleAddReview = () => {
-    // In a real app, this would open a review form modal or navigate to review page
-    console.log("Open add review modal/page");
-  };
 
   function setIsModalOpen(arg0: boolean): void {
     throw new Error("Function not implemented.");
@@ -59,8 +55,8 @@ const HospitalProfile = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Hospital Profile and Contact Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
-          <HospitalProfileCard />
-          <ContactInformationCard />
+          <HospitalProfileCard name={""} imageUrl={""} email={""} specialty={""} description={""} />
+          <ContactInformationCard address={""} phone={""} weekdayHours={""} weekendHours={""} />
         </div>
 
         {/* Ratings and Reviews Section */}

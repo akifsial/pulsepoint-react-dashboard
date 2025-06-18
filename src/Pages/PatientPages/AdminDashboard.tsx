@@ -18,10 +18,45 @@ import CommonInput from "@components/Shared-components/Inputs/Common-Input/Commo
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import { useNavigate } from "react-router-dom";
 import ReviewCard from "@components/ReviewCard";
+import { Search, Clock } from 'lucide-react';
+
+// Import or define your Modal component
+const Model = ({ setIsOpen, children, className = "" }) => {
+  return (
+    <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+      <div className={`bg-white p-7.5 rounded-[10px] relative w-full mx-4 ${className}`}>
+        <button
+          onClick={() => setIsOpen(false)}
+          className="absolute right-[18px] top-[18px]"
+          aria-label="Close"
+        >
+          <span className="w-7 h-7 cursor-pointer text-gray-500 hover:text-gray-700 text-xl">×</span>
+        </button>
+        <div>{children}</div>
+      </div>
+    </div>
+  );
+};
+
+interface RecentSearch {
+  id: string;
+  text: string;
+}
 
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
+  const [searchText, setSearchText] = React.useState<string>("");
+  const [isSearchDropdownOpen, setIsSearchDropdownOpen] = React.useState(false);
+
+  // Recent searches data
+  const recentSearches: RecentSearch[] = [
+    { id: '1', text: 'Johns Hopkins Hospital' },
+    { id: '2', text: 'Dr. Amanda Reyes – Green Valley Rehab Center' },
+    { id: '3', text: 'Search all providers near 10001' },
+    { id: '4', text: 'St. Luke\'s Long-Term Care – 30303' }
+  ];
+
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -38,7 +73,7 @@ const AdminDashboard: React.FC = () => {
   const columns = [
     {
       accessor: "userData",
-      header: "Provider’s Name",
+      header: "Provider's Name",
       showSort: true,
       cell: ({ row }: any) => {
         const { first_name, last_name, email } = row.original;
@@ -94,7 +129,6 @@ const AdminDashboard: React.FC = () => {
       last_name: "Border",
       date: "9/04/12",
       email: "alice.border@example.com",
-      // image: "/images/dashboard-images/alice.svg",
       image: alice,
       rating: <RatingStars value={5} isDisabled={true} />,
       specialization: "Elderly care",
@@ -146,19 +180,47 @@ const AdminDashboard: React.FC = () => {
     },
   ];
 
-  const handleRowSelect = (row: Person) => {
+  const handleRowSelect = (row: any) => {
     console.log("Selected row:", row);
   };
 
-  const renderActions = (row: Person) => (
-    <button onClick={() => alert(`Edit ${row.name}`)}>Edit</button>
-  );
-  const [searchText, setSearchText] = React.useState<string>("");
-
   const handleReviewClick = () => {
-    // Implement your review click logic here
     console.log("Review button clicked");
   };
+
+  // Search dropdown handlers
+  const handleSearchFocus = () => {
+    setIsSearchDropdownOpen(true);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleClearRecentSearches = () => {
+    console.log('Clear recent searches');
+  };
+
+  const handleSearchItemClick = (searchValue: string) => {
+    setSearchText(searchValue);
+    setIsSearchDropdownOpen(false);
+    console.log('Selected search:', searchValue);
+  };
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isSearchDropdownOpen && !target.closest('.search-dropdown-container')) {
+        setIsSearchDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSearchDropdownOpen]);
 
   return (
     <div className="mb-10">
@@ -194,22 +256,77 @@ const AdminDashboard: React.FC = () => {
           onReviewClick={handleReviewClick}
         />
       </div>
+      
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Care Providers</h3>
-          {/* searchbar */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
-            <CommonInput
-              placeholder="Search with Provider name , zip code"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              showImg={true}
-              imgSrc={searchIcon}
-              imgLeft={true}
-              inputClassName="text-sm"
-              containerClassName="w-full max-w-sm"
-            />
+          
+          {/* Updated searchbar with dropdown */}
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5 relative">
+            <div className="w-full max-w-sm relative search-dropdown-container">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search with Provider name, zip code"
+                  value={searchText}
+                  onChange={handleSearchChange}
+                  onFocus={handleSearchFocus}
+                  className="w-full pl-10 pr-4 py-3 text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
+                />
+              </div>
+              
+              {/* Search Dropdown - positioned below input */}
+              {isSearchDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
+                  {/* Search Input in Dropdown */}
+                  <div className="p-4 border-b border-gray-100">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchText}
+                        onChange={handleSearchChange}
+                        className="w-full pl-10 pr-4 py-3 text-gray-700 placeholder-gray-400 border border-blue-500 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
+                        autoFocus
+                      />
+                    </div>
+                  </div>
+
+                  {/* Recents Section */}
+                  <div className="p-2">
+                    <div className="flex items-center justify-between mb-0">
+                      <h3 className="text-gray-600 font-medium text-base">Recents</h3>
+                      <button
+                        onClick={handleClearRecentSearches}
+                        className="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors"
+                      >
+                        Clear
+                      </button>
+                    </div>
+
+                    {/* Recent Searches List */}
+                    <div className="space-y-0.5 max-h-[250px] overflow-y-auto">
+                      {recentSearches.map((search) => (
+                        <div
+                          key={search.id}
+                          onClick={() => handleSearchItemClick(search.text)}
+                          className="flex items-center p-2 hover:bg-gray-50 cursor-pointer rounded-md transition-colors"
+                        >
+                          <Clock className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3" />
+                          <span className="text-gray-700 text-sm leading-relaxed">
+                            {search.text}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
@@ -249,6 +366,7 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
         </div>
+        
         <div>
           <TanDataTable<dataTypes>
             columns={columns}
@@ -267,6 +385,8 @@ const AdminDashboard: React.FC = () => {
           />
         </div>
       </div>
+
+
     </div>
   );
 };
