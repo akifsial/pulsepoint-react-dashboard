@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
@@ -6,6 +6,7 @@ import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
 import ProfileSidebar from "@components/Dashboard-components/Sidebar/ProfileSidebar";
 import {
   AdminSidebarLinks,
+  PatientSidebarLinks,
   ProfileSidebarLinks,
 } from "@components/Dashboard-components/Sidebar/SidebarLinks";
 
