@@ -12,14 +12,14 @@ interface Props {
   setSidebarOpen: (val: boolean) => void;
 }
 
-const DashboardHeader: React.FC<Props> = ({ sidebarOpen, setSidebarOpen }) => {
+const DashboardHeader: React.FC<Props> = ({showProfileSidebar, sidebarOpen, setSidebarOpen }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchText, setSearchText] = useState("");
 
   return (
     <header
-      className={`bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed top-5 z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4
+      className={`${showProfileSidebar&& "lg:ml-[80px]"} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed top-5 z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4
   `}
     >
       <div className="flex items-center justify-between w-full">

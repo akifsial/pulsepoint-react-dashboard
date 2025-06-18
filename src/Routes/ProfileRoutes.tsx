@@ -1,18 +1,16 @@
-import PatientLayout from '@layouts/PatientLayout';
-import ProfileLayout from '@layouts/ProfileLayout';
+
+import ProfileLayout from '@components/ProfileLayout/ProfileLayout';
 import GetFeaturePage from '@pages/ProfilePage/GetFeaturePage';
 import ManagePasswordPage from '@pages/ProfilePage/ManagePasswordPage';
 import ProfileDetailPage from '@pages/ProfilePage/ProfileDetailPage';
-import React from 'react'
-
 export const ProfileRoutes = [
   {
-    path: "/profile", 
+    path: "",
     element: <ProfileLayout />,
     children: [
-      { path: "detail", element: <ProfileDetailPage /> },
-      { path: "manage", element: <ManagePasswordPage/> },
-      { path: "feature", element: <GetFeaturePage /> },
-    ],
+      { path: "/profile", element: <ProfileDetailPage /> },
+      { path: "/manage-password", element: <ManagePasswordPage /> },
+      { path: "/feature", element: <GetFeaturePage /> },
+    ]
   },
 ];
