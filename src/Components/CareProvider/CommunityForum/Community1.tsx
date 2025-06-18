@@ -1,6 +1,7 @@
 import React from "react";
 import InputField from "@components/InputField";
 import TextField from "./TextField";
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 
 const Community1 = ({ onNext, onClose }) => {
   return (
@@ -10,7 +11,8 @@ const Community1 = ({ onNext, onClose }) => {
           Tell us about your community
         </h2>
         <p>
-          A name and description help people understand what your community is all about.
+          A name and description help people understand what your community is
+          all about.
         </p>
       </div>
 
@@ -33,13 +35,12 @@ const Community1 = ({ onNext, onClose }) => {
         className="h-[110px] mb-6 text-sm"
       />
 
-      <button
-        type="submit"
+      <PrimaryButton
+        btnText="Next"
         onClick={onNext}
-        className="cursor-pointer w-48 bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
-      >
-        Next
-      </button>
+        showImg={false}
+        btnClass="flex items-center justify-center h-[46px] cursor-pointer w-full bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+      />
     </>
   );
 };

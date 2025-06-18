@@ -7,20 +7,28 @@ import notification from "@assets/media/svgs/dashboard-svgs/notification.svg";
 import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
 import dropDownArrow from "@assets/media/svgs/dashboard-svgs/arrow-down.svg";
 import ProfileDropdown from "../Dropdowns/ProfileDropdown";
+import { useNavigate } from "react-router-dom";
+import NotficationBar from "./NotificationBar";
+
 interface Props {
   sidebarOpen: boolean;
   setSidebarOpen: (val: boolean) => void;
+  showProfileSidebar?: boolean;
 }
 
-const DashboardHeader: React.FC<Props> = ({showProfileSidebar, sidebarOpen, setSidebarOpen }) => {
+const DashboardHeader: React.FC<Props> = ({
+  showProfileSidebar,
+  sidebarOpen,
+  setSidebarOpen,
+}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
 
   return (
     <header
-      className={`${showProfileSidebar&& "lg:ml-[80px]"} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed top-5 z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4
-  `}
+      className={`${showProfileSidebar && "lg:ml-[80px]"} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed top-5 z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
     >
       <div className="flex items-center justify-between w-full">
         <div className="min-w-fit">
@@ -40,7 +48,7 @@ const DashboardHeader: React.FC<Props> = ({showProfileSidebar, sidebarOpen, setS
           />
         </div>
 
-        <div className="flex items-center gap-5 min-w-fit">
+        <div className="flex items-center gap-5 min-w-fit relative">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 rounded-full hover:bg-gray-100 block lg:hidden"
@@ -48,8 +56,9 @@ const DashboardHeader: React.FC<Props> = ({showProfileSidebar, sidebarOpen, setS
             <MdMenu size={24} />
           </button>
 
+          {/* 🔔 Notification Bell */}
           <div
-            onClick={() => setShowNotifications(!showNotifications)}
+            onClick={() => setShowNotifications((prev) => !prev)}
             className="hidden lg:block cursor-pointer relative"
           >
             <img
@@ -57,10 +66,10 @@ const DashboardHeader: React.FC<Props> = ({showProfileSidebar, sidebarOpen, setS
               alt="Notification"
               className="w-[34px] h-[34px]"
             />
-            {/* Example dot */}
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
           </div>
 
+          {/* 👤 User Menu */}
           <div
             onClick={() => setShowMenu(!showMenu)}
             className="flex items-center gap-2 cursor-pointer"
@@ -79,8 +88,9 @@ const DashboardHeader: React.FC<Props> = ({showProfileSidebar, sidebarOpen, setS
         </div>
       </div>
 
+      {/* 👇 Profile Dropdown */}
       <AnimatePresence>
-        {showNotifications && (
+        {showMenu && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -92,16 +102,18 @@ const DashboardHeader: React.FC<Props> = ({showProfileSidebar, sidebarOpen, setS
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* 👇 Notification Dropdown */}
       <AnimatePresence>
-        {showMenu && (
+        {showNotifications && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="absolute right-0 top-[75px] w-55 bg-white border border-gray-200 shadow-xl px-2 rounded-xl py-4 z-50"
+            className="absolute right-39 top-[75px] w-[370px] z-50"
           >
-            <ProfileDropdown />
+            <NotficationBar />
           </motion.div>
         )}
       </AnimatePresence>

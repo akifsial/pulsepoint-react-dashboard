@@ -2,8 +2,9 @@ import React from "react";
 import CommunityTopics from "./CommunityTopics";
 import DragMedia from "./DragMedia";
 import TextField from "./TextField";
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 
-const FlagPost = ({onSubmit}) => {
+const FlagPost = ({ onSubmit }) => {
   return (
     <>
       <div className="text-center mb-2.5 font-normal text-base">
@@ -38,18 +39,16 @@ const FlagPost = ({onSubmit}) => {
         required
         asterisk
         imgType
-        
         className="p-4"
         onChange={(e) => console.log("Selected file:", e.target.files[0])}
       />
 
-      <button
-      onClick={onSubmit}
-          type="submit"
-          className="cursor-pointer w-full bg-[#28A2FF] text-white py-[13.5px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
-        >
-          Submit Report
-        </button>
+      <PrimaryButton
+        btnText="Submit Report"
+        onClick={onSubmit}
+        showImg={false}
+        btnClass="flex items-center justify-center h-[46px] cursor-pointer w-full bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+      />
     </>
   );
 };
