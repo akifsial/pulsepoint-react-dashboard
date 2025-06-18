@@ -60,7 +60,7 @@
 //       aria-modal="true"
 //     >
 //       <div
-//         className="modal-content bg-white rounded-xl shadow-2xl w-full max-w-xl min-h-[450px] mx-4 p-6 space-y-6"
+//         className="modal-content  rounded-xl shadow-2xl w-full max-w-xl min-h-[450px] mx-4 p-6 space-y-6"
 //         onClick={(e) => e.stopPropagation()}
 //       >
 //         {/* Modal Header */}

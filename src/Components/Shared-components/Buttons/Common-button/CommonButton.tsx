@@ -1,13 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { PrimaryBtnProps } from "./types";
-
 interface ExtendedBtnProps extends PrimaryBtnProps {
   suffixImg?: string;
   suffixImgAlt?: string;
   suffixImgClass?: string;
 }
-
 export const PrimaryButton: React.FC<ExtendedBtnProps> = ({
   btnText,
   btnTextClass = "",
@@ -33,7 +31,7 @@ export const PrimaryButton: React.FC<ExtendedBtnProps> = ({
   ) : null;
 
   const textElement = <span className={btnTextClass}>{btnText}</span>;
-
+ 
   const content = (
     <div className="flex items-center gap-x-2 justify-center">
       {imgPosition === "left" && prefixImage}
@@ -41,7 +39,7 @@ export const PrimaryButton: React.FC<ExtendedBtnProps> = ({
       {suffixImage}
     </div>
   );
-
+ 
   if (linkTo) {
     return (
       <Link
@@ -52,7 +50,7 @@ export const PrimaryButton: React.FC<ExtendedBtnProps> = ({
       </Link>
     );
   }
-
+ 
   return (
     <button
       className={`rounded-[20px] cursor-pointer h-[36px] px-[10px] py-[8px] ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${btnClass}`}

@@ -385,9 +385,10 @@ const ForumTable: React.FC = () => {
               className="my-custom-class"
               actions={(row) => (
                 <DropdownActions
-                  onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit Detail", row.id)}
-                  onDelete={() => console.log("Delete Provider", row.id)}
+                  onView={() => console.log("View Details", row.id)}
+                  onEdit={() => console.log("Approve Post", row.id)}
+                  onFlag={() => console.log("Flag Post", row.id)}
+                  onDelete={() => console.log("Delete ", row.id)}
                   variant="simple"
                 />
               )}

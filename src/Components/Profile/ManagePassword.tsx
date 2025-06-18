@@ -3,7 +3,7 @@ import { PrimaryButton } from "@components/Shared-components/Buttons/Common-butt
 import React, { useState } from "react";
 import backArrow from "../../assets/media/svgs/dashboard-svgs/arrow-left.svg";
 
-const ManagePassword = () => {
+const ManagePassword = ({ onBack }) => {
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -12,7 +12,6 @@ const ManagePassword = () => {
     <>
      <div
         className="flex items-center mb-6 gap-2.5 cursor-pointer"
-        
       >
         <img src={backArrow} alt="backArrow" />
         <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk]">
