@@ -28,7 +28,8 @@ const DashboardHeader: React.FC<Props> = ({
 
   return (
     <header
-      className={`${showProfileSidebar && "lg:ml-[80px]"} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed top-5 z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
+      className={`${showProfileSidebar&& "lg:ml-[80px]"} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed  z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4
+  `}
     >
       <div className="flex items-center justify-between w-full">
         <div className="min-w-fit">
