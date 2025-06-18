@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import {
   Sparkles,
-  MessageSquare,
-  Star,
-  ThumbsUp,
-  HandHeart,
-  Shield,
-  Bed,
-  DollarSign,
-  Users,
 } from "lucide-react";
 import { PrimaryButton } from "./Shared-components/Buttons/Common-button/CommonButton";
 
@@ -76,39 +68,39 @@ const ChatbotAi: React.FC = () => {
         {/* Category Buttons Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <PrimaryButton
-            btnText="🏥 Care Provider"
+            btnText="🏥 Care Provider reviews"
             btnTextClass="text-sm font-semibold"
-            btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px]"
+            btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
           />
           <PrimaryButton
             btnText="📋 Medical Ratings"
             btnTextClass="text-sm font-semibold"
-            btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px]"
+            btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
           />
           <PrimaryButton
             btnText="🧓 Patient feedback"
             btnTextClass="text-sm font-semibold"
-            btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px]"
+            btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
           />
           <PrimaryButton
-            btnText="AI Support"
+            btnText="🤖 AI Support"
             btnTextClass="text-sm font-semibold"
-            btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px]"
+            btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
           />
           <PrimaryButton
-            btnText="📋 Rehab Care"
+            btnText="🛏️ Rehab Care"
             btnTextClass="text-sm font-semibold"
-            btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px]"
+            btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
           />
           <PrimaryButton
-            btnText="Insurance Acceptance"
+            btnText="💰 Insurance Acceptance"
             btnTextClass="text-sm font-semibold"
-            btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px]"
+            btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
           />
           <PrimaryButton
-            btnText="Nursing Home Advice"
+            btnText="🧾 Nursing Home Advice"
             btnTextClass="text-sm font-semibold"
-            btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px]"
+            btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
           />
         </div>
       </div>
