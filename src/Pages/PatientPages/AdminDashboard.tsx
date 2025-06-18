@@ -14,8 +14,6 @@ import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import { useNavigate } from "react-router-dom";
 import ReviewCard from "@components/ReviewCard";
 import { Search, Clock } from 'lucide-react';
