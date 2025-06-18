@@ -21,11 +21,8 @@ const HospitalProfile = () => {
   return (
     <div className="min-h-screen bg-medical-bg">
       {/* Header */}
-      {/* <header className="py-4 bg-transparent"> */}
-      <header className={`bg-transparent rounded-lg px-4 py-6 sm:px-6 fixed top-20 transition-all duration-300 lg:left-67 lg:right-4 left-0 right-0
-      `}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+      <header className="max-w-7xl py-7 mx-auto  sm:px-6 lg:px-8 flex justify-between items-center fixed top-20 right-0 left-[290px]" style={{background:"linear-gradient(107.76deg, #f4f7ff -2.99%, #ddeff7 64.85%, #d6e0f9 113.61%)"}}>
+        
             {/* Left: Back Arrow + Hospital Name */}
             <div className="flex items-center space-x-2">
               <ArrowLeft
@@ -46,13 +43,13 @@ const HospitalProfile = () => {
               imgPosition="left"
               btnClass="flex items-center justify-center gap-[4px] h-[36px] px-4 rounded-md bg-[#252525] text-white text-sm font-semibold"
               onClick={() => setIsModalOpen(true)}
-            /> 
-          </div>
-        </div>
-      </header>
+            />
+          </header>
+        
+       
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
         {/* Hospital Profile and Contact Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
           <HospitalProfileCard name={""} imageUrl={""} email={""} specialty={""} description={""} />
@@ -62,7 +59,7 @@ const HospitalProfile = () => {
         {/* Ratings and Reviews Section */}
         <RatingsReviewsSection />
       </main>
-    </div>
+   </div>
   );
 };
 

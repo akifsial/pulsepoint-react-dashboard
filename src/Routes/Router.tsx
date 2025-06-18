@@ -30,7 +30,7 @@ const Router: React.FC = () => {
         
       ))}
 
-       {ProfileRoutes.map(({ path, element, children }) => (
+       {/* {ProfileRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
           {children?.map((child) => (
             <Route
@@ -43,7 +43,7 @@ const Router: React.FC = () => {
           ))}
         </Route>
         
-      ))}
+      ))} */}
 
       {/* Patient Routes */}
       {PatientRoutes.map(({ path, element, children }) => (
