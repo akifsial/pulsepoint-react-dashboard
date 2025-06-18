@@ -7,6 +7,7 @@ import defaultLogout from "@assets/media/svgs/dashboard-svgs/login.svg";
 import defaultLogoutHover from "@assets/media/svgs/dashboard-svgs/login-hover.svg";
 import defaultSettings from "@assets/media/svgs/dashboard-svgs/setting.svg";
 import defaultSettingsHover from "@assets/media/svgs/dashboard-svgs/setting-hover.svg";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileDropdownProps {
   userIcon?: string;
@@ -26,7 +27,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   logoutIconHover = defaultLogoutHover,
 }) => {
   const [hovered, setHovered] = useState<string | null>(null);
-
+const navigate=useNavigate()
   return (
     <div >
       <div className="border-b border-[#E9EAEB] pb-2 mb-1">
@@ -35,6 +36,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           className="flex items-center gap-3 w-full mb-2 text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("user")}
           onMouseLeave={() => setHovered(null)}
+          onClick={()=>navigate("/profile")}
         >
           <img
             src={hovered === "user" ? userIconHover : userIcon}
