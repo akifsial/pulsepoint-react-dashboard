@@ -1,6 +1,5 @@
 import DragMedia from '@components/CareProvider/CommunityForum/DragMedia'
 import React from 'react'
- 
 const ChangePhoto = () => {
   return (
     <>
@@ -28,5 +27,4 @@ const ChangePhoto = () => {
     </>
   )
 }
- 
 export default ChangePhoto

@@ -30,6 +30,21 @@ const Router: React.FC = () => {
         
       ))}
 
+       {ProfileRoutes.map(({ path, element, children }) => (
+        <Route key={path} path={path} element={element}>
+          {children?.map((child) => (
+            <Route
+              key={child.path || "index"}
+              path={child.path}
+              element={child.element}
+              index={child.path === "" ? true : undefined}
+            />
+            
+          ))}
+        </Route>
+        
+      ))}
+
       {/* Patient Routes */}
       {PatientRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
@@ -70,6 +85,7 @@ const Router: React.FC = () => {
         </Route>
       ))}
       {/* 404 Not Found */}
+      
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

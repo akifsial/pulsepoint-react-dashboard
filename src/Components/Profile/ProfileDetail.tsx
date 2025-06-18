@@ -11,12 +11,12 @@ import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
 import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";
 import Global from "../../assets/media/svgs/dashboard-svgs/globalField.svg";
 
-import { GoPerson } from "react-icons/go";
 // Separate option sets
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
   { value: "Private", label: "Private" },
   { value: "Government", label: "Government" },
+  { value: "Other", label: "Other" },
 ];
 
 const stateOptions = [
@@ -84,7 +84,7 @@ const ProfileDetail = () => {
                 name="name"
                 type="text"
                 fieldName="w-[49%]"
-                icon={GoPerson}
+                iconUrl={inputUser}
                 placeholder="e.g., Sunrise Rehabilitation Center"
               />
 
@@ -133,10 +133,7 @@ const ProfileDetail = () => {
               <div className="text-sm font-normal text-[#252525] py-4 px-[15px] rounded-lg border border-[#2525251A] bg-[#FBFCFD]">
                 <p>
                   Sunrise Hills Nursing Home is a full-service assisted living
-                  facility specializing in post-acute rehabilitation and
-                  long-term senior care. Our mission is to provide
-                  compassionate, person-centered services in a comfortable,
-                  home-like setting.
+                  facility specializing in post-acute rehabilitation and long-term senior care. Our mission is to provide compassionate, person-centered services in a comfortable, home-like setting.
                 </p>
               </div>
             </div>
@@ -174,18 +171,18 @@ const ProfileDetail = () => {
                 fieldName="w-[32%]"
               />
             </div>
-            <InputField
-              label="Address:"
-              id="addres"
-              name="text"
-              type="text"
-              placeholder="123 main Street,Springfield,1L 62704"
-            />
-            <PrimaryButton
-              btnText="Save Changes"
-              showImg={false}
-              btnClass="w-[30%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
-            />
+             <InputField
+                label="Address:"
+                id="addres"
+                name="text"
+                type="text"
+                placeholder="123 main Street,Springfield,1L 62704"
+              />
+              <PrimaryButton 
+                btnText="Save Changes"
+                      showImg={false}
+                      btnClass="w-[30%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                   />
           </form>
         </div>
       </div>
