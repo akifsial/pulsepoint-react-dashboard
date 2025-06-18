@@ -40,7 +40,7 @@ const plans = [
   },
 ];
 
-const ProfileCards = () => {
+const ProfileCards = ({ onUpgrade }) => {
   return (
     <div className="flex gap-2 justify-between mb-6">
       {plans.map((plan, index) => {
@@ -82,6 +82,7 @@ const ProfileCards = () => {
               btnText="Upgrade Now"
               showImg={true}
               img={isHighlighted ? crown : crownWhite}
+              onClick={() => onUpgrade(true)}
               btnClass={`w-full h-[46px] !rounded-[10px] px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2.5 flex items-center justify-center ${
                 isHighlighted
                   ? "bg-[#F8C01A] border border-[#F8C01A] text-[#252525]"

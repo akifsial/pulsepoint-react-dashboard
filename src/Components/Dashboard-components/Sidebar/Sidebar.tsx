@@ -7,6 +7,7 @@ import searchIcon from "@assets/media/svgs/dashboard-svgs/search.svg";
 import { SidebarLink } from "./SidebarLinks";
 import Chatbot from "../../../assets/media/svgs/chatbot.svg";
 import AiIcon from "../../../assets/media/svgs/ai-icon.svg";
+import ChatbotIcon from "@assets/media/svgs/chatbot-icon.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 interface SidebarProps {
   sidebarData: SidebarLink[];
@@ -87,6 +88,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 </NavLink>
               );
             })}
+            {/* Add the ChatbotIcon image*/}
+            <img
+              src={ChatbotIcon}
+              alt="chatbot"
+              className="w-[70px] h-[50px] object-cover mt-[320px]"
+            />
           </div>
           
         </aside>
@@ -159,20 +166,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
             }}
           >
             <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
-           <div className="text-white text-sm font-normal mb-2">
-             <strong className="text-[17px] font-bold">Unlock Premium Insights</strong>
-            <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
+            <div className="text-white text-sm font-normal mb-2">
+              <strong className="text-[17px] font-bold">
+                Unlock Premium Insights
+              </strong>
+              <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
             </div>
             <PrimaryButton
-             btnText="AI Chatbot"
-                  showImg={true}
-                  imgClass="w-[20px] h-[20px] object-cover"
-                  img={AiIcon}
-                  imgPosition="left"
-                  btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
-                  onClick={() => navigate("/feature")}
+              btnText="AI Chatbot"
+              showImg={true}
+              imgClass="w-[20px] h-[20px] object-cover"
+              img={AiIcon}
+              imgPosition="left"
+              btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
+              onClick={() => navigate("/feature")}
             />
-           
           </div>
         </aside>
       )}

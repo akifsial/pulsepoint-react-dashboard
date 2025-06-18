@@ -7,17 +7,12 @@ import PlusIcon from "@assets/media/svgs/patient-db-svgs/add-circle.svg";
 import { useNavigate } from "react-router-dom";
 
 const HospitalProfile = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const handleGoBack = () => {
-  navigate(-1); // Go back to the previous page in browser history
-};
-
-
-  const handleAddReview = () => {
-    // In a real app, this would open a review form modal or navigate to review page
-    console.log("Open add review modal/page");
+  const handleGoBack = () => {
+    navigate(-1); // Go back to the previous page in browser history
   };
+
 
   function setIsModalOpen(arg0: boolean): void {
     throw new Error("Function not implemented.");
@@ -43,36 +38,28 @@ const handleGoBack = () => {
             <PrimaryButton
               btnText="Add A Review"
               showImg
-              img={
-                <span className="flex items-center justify-center w-[19px] h-[19px] rounded-full bg-white">
-                  <img src={PlusIcon} alt="add" className="w-[11px] h-[11px]" />
-                </span>
-              }
+              img={PlusIcon} 
               imgClass="w-[19px] h-[19px]"
               imgPosition="left"
-              btnClass="
-          flex items-center justify-center gap-[4px]
-          h-[36px] px-4
-          rounded-md bg-[#252525] text-white
-          text-sm font-semibold
-        "
+              btnClass="flex items-center justify-center gap-[4px] h-[36px] px-4 rounded-md bg-[#252525] text-white text-sm font-semibold"
               onClick={() => setIsModalOpen(true)}
             />
+          </header>
         
-      </header>
+       
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
         {/* Hospital Profile and Contact Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
-          <HospitalProfileCard />
-          <ContactInformationCard />
+          <HospitalProfileCard name={""} imageUrl={""} email={""} specialty={""} description={""} />
+          <ContactInformationCard address={""} phone={""} weekdayHours={""} weekendHours={""} />
         </div>
 
         {/* Ratings and Reviews Section */}
         <RatingsReviewsSection />
       </main>
-    </div>
+   </div>
   );
 };
 

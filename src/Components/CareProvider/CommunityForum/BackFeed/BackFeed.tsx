@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import backArrow from "../../../../assets/media/svgs/dashboard-svgs/arrow-left.svg";
 import communityBg from "../../../../assets/media/images/dashboard-images/community-bg.png";
 import topSenior from "../../../../assets/media/images/dashboard-images/topSernior.jpg";
@@ -6,7 +6,6 @@ import Calender from "../../../../assets/media/svgs/dashboard-svgs/calendar.svg"
 import Global from "../../../../assets/media/svgs/dashboard-svgs/global.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
-import { useNavigate } from "react-router-dom";
 import OurFeed from "../OurFeed";
 import Model from "@components/Model/Model";
 import CreatePost from "./CreatePost"
@@ -14,7 +13,6 @@ import CreatePost from "./CreatePost"
 const BackFeed = ({ setOpenBackFeed }) => {
   const [joined, setJoined] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
-  const navigate = useNavigate();
 
   const handleJoinClick = () => {
     setJoined(true);
