@@ -1,5 +1,5 @@
+import ProfileDetail from '@components/Profile/ProfileDetail'
 import React from 'react'
-import ProfileDetail from '../../Components/Profile/ProfileDetail'
 
 const ProfileDetailPage = () => {
   return (

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Default icons
 import defaultUser from "@assets/media/svgs/dashboard-svgs/user.svg";
@@ -26,15 +27,17 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   logoutIconHover = defaultLogoutHover,
 }) => {
   const [hovered, setHovered] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   return (
-    <div >
+    <div>
       <div className="border-b border-[#E9EAEB] pb-2 mb-1">
-        
+        {/* My Profile */}
         <div
           className="flex items-center gap-3 w-full mb-2 text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("user")}
           onMouseLeave={() => setHovered(null)}
+          onClick={() => navigate("/profile/detail")}
         >
           <img
             src={hovered === "user" ? userIconHover : userIcon}
@@ -44,10 +47,12 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           <span className="font-medium text-[#252525]">My Profile</span>
         </div>
 
+        {/* Settings → /profile/manage */}
         <div
           className="flex items-center gap-3 w-full text-left py-2 mb-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("settings")}
           onMouseLeave={() => setHovered(null)}
+          onClick={() => navigate("/profile/manage")}
         >
           <img
             src={hovered === "settings" ? settingsIconHover : settingsIcon}
@@ -58,10 +63,12 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         </div>
       </div>
 
+      {/* Logout → /profile/feature */}
       <button
         onMouseEnter={() => setHovered("logout")}
         onMouseLeave={() => setHovered(null)}
-        className="flex items-center  gap-3 w-full text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors mt-1.5 cursor-pointer text-[#235969]"
+        onClick={() => navigate("/profile/feature")}
+        className="flex items-center gap-3 w-full text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors mt-1.5 cursor-pointer text-[#235969]"
       >
         <img
           src={hovered === "logout" ? logoutIconHover : logoutIcon}

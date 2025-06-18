@@ -23,11 +23,12 @@ const SelectField: React.FC<SelectFieldProps> = ({
   options,
   asterisk,
   gray,
+  selectName,
   errorMessage,
   ...rest
 }) => {
   return (
-    <div className="w-full mb-4">
+    <div className={` mb-4 ${selectName}`}>
       {label && (
         <div className="flex">
           <label

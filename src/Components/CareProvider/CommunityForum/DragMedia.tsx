@@ -2,7 +2,7 @@ import React from "react";
 import Drop from "../../../assets/media/svgs/dashboard-svgs/drop.svg";
 
 const DragMedia = ({
-  label = "Upload File",
+  label = "",
   required = false,
   onChange,
   asterisk,
