@@ -1,15 +1,16 @@
 import React from "react";
-// import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
+import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import userImage from "@assets/media/svgs/dashboard-svgs/userImage.svg";
 import userReview from "@assets/media/svgs/dashboard-svgs/userReview.svg";
 import flag from "@assets/media/svgs/dashboard-svgs/flag2.svg";
 import RatingStars from "@components/Shared-components/RatingStars";
+import close from "@assets/media/svgs/dashboard-svgs/close-circle.svg"
 
-interface PatientReviewsCardProps {
+interface ClientReviewsProps {
   filterValue: string;
 }
 
-const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) => {
+const ClientReviews: React.FC<ClientReviewsProps> = ({ filterValue }) => {
   const sliders = [
     {
       image: userImage,
@@ -18,8 +19,9 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
       flagIcon: flag,
       review: "5.0",
       userIcon: userReview,
+      img1: close,
       sliderDesc:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available.",
+        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available.I could finally breathe knowing that she was in good hands",
       flagged: "Flagged",
       comment: "Thank you so much for your honest feedback.😊🙏",
     },
@@ -28,17 +30,19 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
       userName: "John D.",
       userHour: "10 hours ago",
       flagIcon: flag,
-      review: "4.5",
+      review: "5.0",
       userIcon: userReview,
+      img1: close,
       sliderDesc:
-        "The facility was clean, and staff was attentive. My only complaint is the food quality.",
+        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available.I could finally breathe knowing that she was in good hands",
       flagged: "Flagged",
     },
   ];
 
   return (
     <>
-      {sliders.map((item, index) => (
+     <div className="flex gap-5">
+       {sliders.map((item, index) => (
         <div key={index} className="bg-[#FAFAFA] rounded-[8px] p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-[10px]">
@@ -47,18 +51,15 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
                 alt="User"
                 className="w-[50px] h-[50px] object-cover rounded-full"
               />
-              <div>
+              <div className="flex gap-2.5">
                 <p className="text-[#252525] text-[16px] font-bold mb-0.5">{item.userName}</p>
                 <p className="text-[#252525] text-[16px]">{item.userHour}</p>
               </div>
             </div>
-
-            {filterValue === "flagged" && (
-              <div className="border border-[#D3D3D3] rounded-[10px] px-2 py-3 flex items-center gap-2">
-                <img src={item.flagIcon} alt="flag" className="w-[24px] h-[24px]" />
-                <p className="text-[16px] text-[#252525]">{item.flagged}</p>
-              </div>
-            )}
+            <div className="border rounded-[5px] p-2">
+              <span>Deleted Review</span>
+              <img src={item.img1} alt="" />
+            </div>
           </div>
 
           <div className="flex items-center gap-2 mb-2">
@@ -67,10 +68,10 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
           </div>
 
           <div>
-            <p className="text-[16px] text-[#252525] mb-4">“{item.sliderDesc}”</p>
+            <p className="text-[16px] text-[#252525] ">“{item.sliderDesc}”</p>
           </div>
 
-          <div
+          {/* <div
             className="flex items-center gap-4 px-4 py-2.5 rounded-[5px]"
             style={item.comment ? { backgroundColor: "#EEF2F5" } : {}}
           >
@@ -90,11 +91,12 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
                 style={{ borderColor: "#D3D3D3" }}
               />
             )}
-          </div>
+          </div> */}
         </div>
       ))}
+     </div>
     </>
   );
 };
 
-export default PatientReviewsCard;
+export default ClientReviews;
