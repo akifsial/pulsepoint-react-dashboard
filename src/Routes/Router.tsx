@@ -4,8 +4,6 @@ import { websitePublicRoutes } from "./WebsiteRoutes";
 import { PatientRoutes } from "./PatientRoutes";
 import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
-import CreateCommunity from "@components/CareProvider/CommunityForum/CreatCommunity";
-import Model from "@components/Model/Model";
 import { ProfileRoutes } from "./ProfileRoutes";
 
 const Router: React.FC = () => {
@@ -26,8 +24,10 @@ const Router: React.FC = () => {
               element={child.element}
               index={child.path === "" ? true : undefined}
             />
+            
           ))}
         </Route>
+        
       ))}
 
       {/* Patient Routes */}

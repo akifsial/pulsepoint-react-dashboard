@@ -10,7 +10,7 @@ const ProfileLayout = () => {
   const [profileSidebarOpen, setProfileSidebarOpen] = useState(false);
   const location = useLocation();
 
-  const showProfileSidebar = ["/profile", "/profile2"].some(path =>
+  const showProfileSidebar = ["/profile", "/manage-password","/feature"].some(path =>
   location.pathname.startsWith(path)
 );
   const mainMargin = showProfileSidebar ? "lg:ml-[357px]" : "lg:ml-[89px]";

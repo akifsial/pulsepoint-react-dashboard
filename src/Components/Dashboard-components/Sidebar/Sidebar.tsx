@@ -16,7 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
-  const iconOnlyRoutes = ["/profile"];
+  const iconOnlyRoutes = ["/profile","/manage-password","/feature"];
   const showOnlyIcons = iconOnlyRoutes.some((route) =>
     location.pathname.startsWith(route)
   );
