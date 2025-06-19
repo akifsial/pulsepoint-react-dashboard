@@ -18,7 +18,7 @@ const AdminLayout = () => {
           noticationLink="/patient/notification"
           routeProfile="/admin/profile"
         />
-        <main className="mt-28">
+        <main className="mt-28 overflow-hidden">
           <Outlet />
         </main>
       </div>

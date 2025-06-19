@@ -164,7 +164,7 @@ const UserTable: React.FC = () => {
      
       <div className=" bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className=" flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="mb-3">Added Patients</h3>
+          <h3 className="mb-3 font-space-grotesk">Added Patients</h3>
         </div>
         <div>
           {activeTab === "all" ? (

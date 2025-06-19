@@ -279,8 +279,8 @@ const CareProviderDashboard: React.FC = () => {
               actions={(row) => (
                 <DropdownActions
                   onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit", row.id)}
-                  onDelete={() => console.log("Delete", row.id)}
+                  onEdit={() => console.log("Edit Details", row.id)}
+                  onDelete={() => console.log("Delete Provider", row.id)}
                 />
               )}
             />

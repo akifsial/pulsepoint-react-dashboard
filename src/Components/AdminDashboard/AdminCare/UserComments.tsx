@@ -110,7 +110,7 @@ const  UserComments: React.FC = () => {
     <div className="mb-10">
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Comments on Posts</h3>
+          <h3 className="md:mb-0 mb-3 font-space-grotesk">Comments on Posts</h3>
         </div>
         <div>
           {activeTab === "all" ? (

@@ -16,7 +16,9 @@ import DeletePost from "./DeletePost";
 
 const ForumTable: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = useState(false);
-  const [selectedCommunity, setSelectedCommunity] = useState<dataTypes | null>(null);
+  const [selectedCommunity, setSelectedCommunity] = useState<dataTypes | null>(
+    null
+  );
   const [searchText, setSearchText] = useState<string>("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -125,7 +127,8 @@ const ForumTable: React.FC = () => {
         return (
           <span
             className={`text-xs font-medium px-3 py-1 rounded-full ${
-              statusStyles[status as keyof typeof statusStyles] || "bg-gray-200 text-gray-700"
+              statusStyles[status as keyof typeof statusStyles] ||
+              "bg-gray-200 text-gray-700"
             }`}
           >
             {status?.charAt(0).toUpperCase() + status?.slice(1)}
@@ -145,7 +148,7 @@ const ForumTable: React.FC = () => {
       content: "“Feeling anxious lately...”",
       type: "Post",
       date: "9/4/12",
-      status: "Pending"
+      status: "Pending",
     },
     {
       id: 2,
@@ -156,7 +159,7 @@ const ForumTable: React.FC = () => {
       content: "“Here are 5 daily tips...”",
       type: "Comment",
       date: "5/7/16",
-      status: "Approved"
+      status: "Approved",
     },
     {
       id: 3,
@@ -167,7 +170,7 @@ const ForumTable: React.FC = () => {
       content: "“Is turmeric helpful?”",
       type: "Comment",
       date: "10/6/13",
-      status: "Flagged"
+      status: "Flagged",
     },
     {
       id: 4,
@@ -178,7 +181,7 @@ const ForumTable: React.FC = () => {
       content: "“Mindfulness exercises that work.”",
       type: "Post",
       date: "2/11/12",
-      status: "Pending"
+      status: "Pending",
     },
     {
       id: 5,
@@ -189,7 +192,7 @@ const ForumTable: React.FC = () => {
       content: "“Mindfulness exercises that work.”",
       type: "Report",
       date: "3/4/16",
-      status: "Pending"
+      status: "Pending",
     },
     {
       id: 6,
@@ -200,7 +203,7 @@ const ForumTable: React.FC = () => {
       content: "“The benefits of journaling.”",
       type: "Save",
       date: "16/5/24",
-      status: "Approved"
+      status: "Approved",
     },
     {
       id: 7,
@@ -211,7 +214,7 @@ const ForumTable: React.FC = () => {
       content: "“Finding support and community.”",
       type: "Like",
       date: "11/2/25",
-      status: "Approved"
+      status: "Approved",
     },
   ];
 
@@ -236,7 +239,7 @@ const ForumTable: React.FC = () => {
             <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
               <h3 className="mb-3 md:mb-0">Patients’ Details</h3>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center">
                 <CommonInput
                   placeholder="Search by name, zip"
                   value={searchText}
@@ -248,13 +251,15 @@ const ForumTable: React.FC = () => {
                   btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
-                <span className="text-sm font-medium w-full text-center">Filter By</span>
+                <span className="text-sm font-medium w-full text-center">
+                  Filter By
+                </span>
                 <PrimaryButton
                   btnText="Ratings"
                   img={filterIcon}
                   showImg={true}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] px-[20px] pb-[18px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
               </div>
@@ -265,7 +270,7 @@ const ForumTable: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-[60px] z-50"
+                    className="absolute right-5 top-[62%] z-50"
                   >
                     <RatingFilterDropdown />
                   </motion.div>
@@ -273,7 +278,8 @@ const ForumTable: React.FC = () => {
               </AnimatePresence>
             </div>
 
-            <TanDataTable<dataTypes>
+            <div>
+              <TanDataTable<dataTypes>
               columns={columns}
               data={data}
               showCheckbox={true}
@@ -282,25 +288,24 @@ const ForumTable: React.FC = () => {
               actions={(row) => (
                 <DropdownActions
                   onView={() => setSelectedCommunity(row)}
-                  onEdit={() => console.log("Approve Post", row.id)}
+                  onApprove={() => console.log("Approve Post", row.id)}
                   onFlag={() => console.log("Flag Post", row.id)}
                   onDelete={() => setShowDeleteModal(true)}
                   variant="simple"
                 />
               )}
             />
+            </div>
           </div>
-      
 
-      {showDeleteModal && (
-        <Model setIsOpen={setShowDeleteModal} className="max-w-[488px]">
-          <DeletePost />
-        </Model>
+          {showDeleteModal && (
+            <Model setIsOpen={setShowDeleteModal} className="max-w-[488px]">
+              <DeletePost />
+            </Model>
+          )}
+        </>
       )}
-      </>
-      )}
-      </div>
-    
+    </div>
   );
 };
 
