@@ -1,16 +1,36 @@
 
+import CareProfileLayout from '@components/ProfileLayout/CareProfileLayout';
+import PatientProfileLayout from '@components/ProfileLayout/PatientProfileLayout';
 import ProfileLayout from '@components/ProfileLayout/ProfileLayout';
 import GetFeaturePage from '@pages/ProfilePage/GetFeaturePage';
 import ManagePasswordPage from '@pages/ProfilePage/ManagePasswordPage';
 import ProfileDetailPage from '@pages/ProfilePage/ProfileDetailPage';
 export const ProfileRoutes = [
   {
-    path: "",
+    path: "/admin",
     element: <ProfileLayout />,
     children: [
-      { path: "/profile", element: <ProfileDetailPage /> },
-      { path: "/manage-password", element: <ManagePasswordPage /> },
-      { path: "/feature", element: <GetFeaturePage /> },
+      { path: "profile", element: <ProfileDetailPage /> },
+      { path: "manage-password", element: <ManagePasswordPage /> },
+      { path: "feature", element: <GetFeaturePage /> },
+    ]
+  },
+  {
+    path: "/care-provider",
+    element: <CareProfileLayout />,
+    children: [
+      { path: "profile", element: <ProfileDetailPage /> },
+      { path: "manage-password", element: <ManagePasswordPage /> },
+      { path: "feature", element: <GetFeaturePage /> },
+    ]
+  },
+  {
+    path: "/patient",
+    element: <PatientProfileLayout />,
+    children: [
+      { path: "profile", element: <ProfileDetailPage /> },
+      { path: "manage-password", element: <ManagePasswordPage /> },
+      { path: "feature", element: <GetFeaturePage /> },
     ]
   },
 ];

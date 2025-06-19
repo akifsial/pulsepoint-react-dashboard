@@ -9,6 +9,7 @@ import Chatbot from "../../../assets/media/svgs/chatbot.svg";
 import AiIcon from "../../../assets/media/svgs/ai-icon.svg";
 import ChatbotIcon from "@assets/media/svgs/chatbot-icon.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+
 interface SidebarProps {
   sidebarData: SidebarLink[];
   isOpen: boolean;
@@ -19,7 +20,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
-  const iconOnlyRoutes = ["/profile", "/manage-password", "/feature"];
+  const AIShow = location.pathname.startsWith("/patient");
+
+  const iconOnlyRoutes = [
+    "/admin/profile",
+    "/admin/feature",
+    "/admin/manage-password",
+    "/patient/profile",
+    "/patient/manage-password",
+    "/patient/feature",
+    "/care-provider/profile",
+    "/care-provider/manage-password",
+    "/care-provider/feature",
+  ];
+
   const showOnlyIcons = iconOnlyRoutes.some((route) =>
     location.pathname.startsWith(route)
   );
@@ -33,11 +47,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
       {showOnlyIcons ? (
         <aside
           className={`
-         p-4 min-h-screen w-[89px]
-         lg:translate-x-0 
-        fixed top-0 left-0 z-50 transform transition-transform duration-500
-        ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
-      `}
+            p-4 min-h-screen w-[89px]
+            lg:translate-x-0 
+            fixed top-0 left-0 z-50 transform transition-transform duration-500
+            ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
+          `}
         >
           <div className="space-y-2 mt-3 h-screen">
             <div
@@ -95,17 +109,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               className="w-[70px] h-[50px] object-cover mt-[320px]"
             />
           </div>
-          
         </aside>
       ) : (
         <aside
           className={`
-         p-4 min-h-screen w-68
-         lg:translate-x-0 
-         flex flex-col justify-between
-        fixed top-0 left-0 z-50 transform transition-transform duration-500
-        ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
-      `}
+            p-4 min-h-screen w-68
+            lg:translate-x-0 
+            flex flex-col justify-between
+            fixed top-0 left-0 z-50 transform transition-transform duration-500
+            ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
+          `}
         >
           <div className="space-y-2 mt-3 ">
             <div
@@ -158,30 +171,32 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
           </div>
-          <div
-            className="rounded-[10px] p-4 text-center"
-            style={{
-              background:
-                " radial-gradient(96.35% 86.93% at 72.06% 38.43%, #023552 0%, #28A2FF 100%)",
-            }}
-          >
-            <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
-            <div className="text-white text-sm font-normal mb-2">
-              <strong className="text-[17px] font-bold">
-                Unlock Premium Insights
-              </strong>
-              <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
+          {AIShow && (
+            <div
+              className="rounded-[10px] p-4 text-center"
+              style={{
+                background:
+                  " radial-gradient(96.35% 86.93% at 72.06% 38.43%, #023552 0%, #28A2FF 100%)",
+              }}
+            >
+              <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
+              <div className="text-white text-sm font-normal mb-2">
+                <strong className="text-[17px] font-bold">
+                  Unlock Premium Insights
+                </strong>
+                <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
+              </div>
+              <PrimaryButton
+                btnText="AI Chatbot"
+                showImg={true}
+                imgClass="w-[20px] h-[20px] object-cover"
+                img={AiIcon}
+                imgPosition="left"
+                btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
+                onClick={() => navigate("/feature")}
+              />
             </div>
-            <PrimaryButton
-              btnText="AI Chatbot"
-              showImg={true}
-              imgClass="w-[20px] h-[20px] object-cover"
-              img={AiIcon}
-              imgPosition="left"
-              btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
-              onClick={() => navigate("/feature")}
-            />
-          </div>
+          )}
         </aside>
       )}
     </>

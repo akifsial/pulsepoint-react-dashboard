@@ -6,32 +6,33 @@ import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
 import ProfileSidebar from "@components/Dashboard-components/Sidebar/ProfileSidebar";
 import {
   AdminSidebarLinks,
+  CareProfileSidebarLinks,
   PatientSidebarLinks,
   ProfileSidebarLinks,
   sidebarLinks,
 } from "@components/Dashboard-components/Sidebar/SidebarLinks";
 
-const ProfileLayout = () => {
+const CareProfileLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sdData, setSdData] = useState([]);
   const location = useLocation();
-  useEffect(() => {
-    if (location.pathname === "/admin") {
-      setSdData(AdminSidebarLinks);
-      console.log("Using AdminLinks");
-    } else if (location.pathname === "/patient") {
-      setSdData(PatientSidebarLinks);
-      console.log("Using PatientLinks ");
-    } else if (location.pathname === "/care-provider") {
-      setSdData(sidebarLinks);
-      console.log("Using CareProviderSidebarLinks");
-    } else {
-      setSdData([]);
-      console.warn("No matching sidebar links for ");
-    }
-  }, [location.pathname]);
+//   useEffect(() => {
+//     if (location.pathname === "/admin") {
+//       setSdData(AdminSidebarLinks);
+//       console.log("Using AdminLinks");
+//     } else if (location.pathname === "/patient") {
+//       setSdData(PatientSidebarLinks);
+//       console.log("Using PatientLinks ");
+//     } else if (location.pathname === "/care-provider") {
+//       setSdData(sidebarLinks);
+//       console.log("Using CareProviderSidebarLinks");
+//     } else {
+//       setSdData([]);
+//       console.warn("No matching sidebar links for ");
+//     }
+//   }, [location.pathname]);
 
-  const showProfileSidebar = ["/admin/profile", "/admin/manage-password", "/admin/feature"].some(
+  const showProfileSidebar = ["/care-provider/profile", "/care-provider/manage-password", "/care-provider/feature"].some(
     (path) => location.pathname.startsWith(path)
   );
   const mainMargin = showProfileSidebar ? "lg:ml-[357px]" : "lg:ml-[89px]";
@@ -40,14 +41,14 @@ const ProfileLayout = () => {
     <div className="dashboard flex min-h-screen">
       {/* Main Sidebar */}
       <Sidebar
-        sidebarData={AdminSidebarLinks}
+        sidebarData={sidebarLinks}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
       />
 
       {showProfileSidebar && (
         <ProfileSidebar
-          sidebarData={ProfileSidebarLinks}
+          sidebarData={CareProfileSidebarLinks}
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
         />
@@ -59,7 +60,7 @@ const ProfileLayout = () => {
           showProfileSidebar={showProfileSidebar}
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
-          routeProfile="/admin/profile"
+           routeProfile="/admin/profile"
         />
         <main className="mt-24">
           <Outlet />
@@ -69,4 +70,4 @@ const ProfileLayout = () => {
   );
 };
 
-export default ProfileLayout;
+export default CareProfileLayout;
