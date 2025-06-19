@@ -14,6 +14,10 @@ import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/Rat
 import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActivityCard";
+import patient1 from "@assets/media/images/dashboard-images/patient1.png";
+import patient2 from "@assets/media/images/dashboard-images/patient2.png";
+import patient3 from "@assets/media/images/dashboard-images/patient3.png";
+import patient4 from "@assets/media/images/dashboard-images/patient4.png";
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -38,7 +42,7 @@ const CareProviderDashboard: React.FC = () => {
         return (
           <div className="flex items-center gap-3">
             <img
-              src={dummyImage}
+              src={`${image}`}
               alt={`${first_name} ${last_name}`}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
@@ -79,7 +83,7 @@ const CareProviderDashboard: React.FC = () => {
     last_name: "Richards",
     date: "9/4/12",
     email: "tim.jennings@example.com",
-    image: "/images/alice.png",
+    image: "/images/patient1.png",
     rating: <RatingStars value={5} isDisabled={true} />,
     reviews: "Staff was caring and responsive, though the wait time could be improved.",
   },
@@ -89,7 +93,7 @@ const CareProviderDashboard: React.FC = () => {
     last_name: "Russell",
     date: "5/7/16",
     email: "alma.lawson@example.com",
-    image: "/images/michael.png",
+    image: "/images/patient1.png",
     rating: <RatingStars value={4} isDisabled={true} />,
     reviews: "Excellent support for my mother with dementia. Highly recommended.",
   },
@@ -99,7 +103,7 @@ const CareProviderDashboard: React.FC = () => {
     last_name: "Jones",
     date: "10/6/13",
     email: "kenzi.lawson@example.com",
-    image: "/images/michael.png",
+    image: "/images/patient1.png",
     rating: <RatingStars value={4} isDisabled={true} />,
     reviews: "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
   },
@@ -109,7 +113,7 @@ const CareProviderDashboard: React.FC = () => {
     last_name: "Lane",
     date: "2/11/12",
     email: "dolores.chambers@example.com",
-    image: "/images/michael.png",
+    image: "/images/patient1.png",
     rating: <RatingStars value={3} isDisabled={true} />,
     reviews: "Great amenities and staff. Rooms were spacious and bright.",
   },
