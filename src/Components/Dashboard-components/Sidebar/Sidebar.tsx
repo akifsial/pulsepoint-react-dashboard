@@ -32,6 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
     "/care-provider/profile",
     "/care-provider/manage-password",
     "/care-provider/feature",
+    "/patient/chatbot"
   ];
 
   const showOnlyIcons = iconOnlyRoutes.some((route) =>

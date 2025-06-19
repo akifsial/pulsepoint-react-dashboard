@@ -7,6 +7,7 @@ import EditReviewPage from "@pages/PatientPages/EditReviewPage"; // Add this imp
 import HospitalProfile from "@pages/PatientPages/HospitalProfile";
 import ChatBot from "@pages/PatientPages/ChatBotPage";
 import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
+import ChatBotPage from "@pages/PatientPages/ChatBotPage";
 export const PatientRoutes = [
   {
     path: "/patient", 
@@ -20,6 +21,7 @@ export const PatientRoutes = [
       { path: "hospital-profile", element: <HospitalProfile /> },
       { path: "chatbot", element: <ChatBot /> },
       { path: "notification", element: <NotificationPage /> },
+       { path: "chatbot", element: <ChatBotPage /> },
     ],
   },
 ];
