@@ -64,7 +64,7 @@ const CommunityFeed = () => {
 
   return (
     <div
-      className="w-[813px] h-[661px] overflow-y-auto transition-colors duration-300"
+      className=" h-[661px] overflow-y-auto transition-colors duration-300"
       style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
     >
       {/* Optional Tab Switch UI */}
