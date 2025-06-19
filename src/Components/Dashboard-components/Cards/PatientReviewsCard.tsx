@@ -18,9 +18,9 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
       flagIcon: flag,
       review: "5.0",
       userIcon: userReview,
-      sliderDesc:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available.",
-      flagged: "Flagged",
+       sliderDesc:
+        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
+     flagged: "Flagged",
       comment: "Thank you so much for your honest feedback.😊🙏",
     },
     {
@@ -31,7 +31,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
       review: "4.5",
       userIcon: userReview,
       sliderDesc:
-        "The facility was clean, and staff was attentive. My only complaint is the food quality.",
+        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
       flagged: "Flagged",
     },
     {
@@ -42,8 +42,8 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
       review: "4.5",
       userIcon: userReview,
       sliderDesc:
-        "The facility was clean, and staff was attentive. My only complaint is the food quality.",
-      flagged: "Flagged",
+        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
+     flagged: "Flagged",
     },
   ];
 
@@ -52,32 +52,31 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
       {sliders.map((item, index) => (
         <div key={index} className="bg-[#FAFAFA] rounded-[8px] p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center gap-[10px] text-[#252525] text-[16px]">
               <img
                 src={item.image}
                 alt="User"
                 className="w-[50px] h-[50px] object-cover rounded-full"
               />
-              <div>
-                <p className="text-[#252525] text-[16px] font-bold mb-0.5">{item.userName}</p>
-                <p className="text-[#252525] text-[16px]">{item.userHour}</p>
-              </div>
+              
+                <p className=" font-bold mb-0.5">{item.userName}</p>
+                <span className="text-[13px]">{item.userHour}</span>
             </div>
 
             {filterValue === "flagged" && (
-              <div className="border border-[#D3D3D3] rounded-[10px] px-2 py-3 flex items-center gap-2">
+              <div className="border  border-[#D3D3D3] rounded-[10px] px-[7px] py-[9.5px] flex items-center gap-2">
                 <img src={item.flagIcon} alt="flag" className="w-[24px] h-[24px]" />
                 <p className="text-[16px] text-[#252525]">{item.flagged}</p>
               </div>
             )}
           </div>
 
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-0.5 mb-2">
             <RatingStars value={item.review} isDisabled={true} />
             <p className="text-[16px] text-[#252525]">({item.review})</p>
           </div>
 
-          <div>
+          <div className="">
             <p className="text-[16px] text-[#252525] mb-4">“{item.sliderDesc}”</p>
           </div>
 

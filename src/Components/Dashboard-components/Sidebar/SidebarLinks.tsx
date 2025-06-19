@@ -245,15 +245,15 @@ export const PatientProfileSidebarLinks: SidebarLink[] = [
       hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
     },},
-  {
-    label: "Get Featured",
-    path: "/patient/feature",
-    icon: {
-      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
-    },
-  },
+  // {
+  //   label: "Get Featured",
+  //   path: "/patient/feature",
+  //   icon: {
+  //     default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+  //     hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+  //     active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+  //   },
+  // },
   
 ];
 

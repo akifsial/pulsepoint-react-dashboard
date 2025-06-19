@@ -10,13 +10,14 @@ import BackFeed from "./BackFeed/BackFeed";
 const Community = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [openBackFeed, setOpenBackFeed] = useState(false);
+
   return (
     <>
       {openBackFeed ? (
         <BackFeed setOpenBackFeed={setOpenBackFeed} />
       ) : (
         <div className="w-full block justify-between sm:flex sm:items-start sm:gap-6">
-          <div className="flex-1  ">
+          <div className="flex-1">
             <h2 className="text-xl font-semibold mb-3.5 text-[#252525] font-[Space Grotesk]">
               Your Feed
             </h2>
@@ -33,7 +34,7 @@ const Community = () => {
                 Home
               </button>
               <button
-                onClick={() => setOpenBackFeed(true)}
+                onClick={() => setActiveTab("Popular")}
                 className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
                   activeTab === "Popular"
                     ? "bg-[#28A2FF] text-white"
@@ -47,11 +48,12 @@ const Community = () => {
                 Popular
               </button>
             </div>
-            <CommunityFeed />
-          </div>
-          <div  className="flex-shrink-0 w-[292px]">
 
-          <PopularCommunity />
+            <CommunityFeed setOpenBackFeed={setOpenBackFeed} />
+          </div>
+
+          <div className="flex-shrink-0 w-[292px]">
+            <PopularCommunity />
           </div>
         </div>
       )}

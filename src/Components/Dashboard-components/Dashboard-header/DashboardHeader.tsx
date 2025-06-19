@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MdMenu } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import searchIcon from "@assets/media/svgs/dashboard-svgs/search.svg";
 import notification from "@assets/media/svgs/dashboard-svgs/notification.svg";
 import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
 import dropDownArrow from "@assets/media/svgs/dashboard-svgs/arrow-down.svg";
 import ProfileDropdown from "../Dropdowns/ProfileDropdown";
 import NotficationBar from "./NotificationBar";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Search, Clock } from "lucide-react";
 
 interface Props {
   sidebarOpen: boolean;
@@ -16,6 +15,11 @@ interface Props {
   showProfileSidebar?: boolean;
   noticationLink?: string;
   routeProfile?: string;
+}
+
+interface RecentSearch {
+  id: string;
+  text: string;
 }
 
 const DashboardHeader: React.FC<Props> = ({
@@ -28,11 +32,18 @@ const DashboardHeader: React.FC<Props> = ({
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [isSearchDropdownOpen, setIsSearchDropdownOpen] = useState(false);
 
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  const recentSearches: RecentSearch[] = [
+    { id: "1", text: "John Davis - Patient ID #10293" },
+    { id: "2", text: "Review flagged for ABC Nursing Home" },
+    { id: "3", text: "Jane Smith - Discharged April 2024" },
+    { id: "4", text: "Fall prevention rehab feedback" },
+  ];
 
   useEffect(() => {
     setShowMenu(false);
@@ -41,24 +52,38 @@ const DashboardHeader: React.FC<Props> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
       if (
         profileMenuRef.current &&
-        !profileMenuRef.current.contains(event.target as Node)
+        !profileMenuRef.current.contains(target)
       ) {
         setShowMenu(false);
       }
-
       if (
         notificationRef.current &&
-        !notificationRef.current.contains(event.target as Node)
+        !notificationRef.current.contains(target)
       ) {
         setShowNotifications(false);
+      }
+      if (!target.closest(".provider-search-dropdown")) {
+        setIsSearchDropdownOpen(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleClearRecentSearches = () => {
+    console.log("Clear recent searches");
+    setIsSearchDropdownOpen(false);
+  };
+
+  const handleSearchItemClick = (text: string) => {
+    setSearchText(text);
+    setIsSearchDropdownOpen(false);
+    console.log("Selected:", text);
+  };
 
   return (
     <header
@@ -69,30 +94,81 @@ const DashboardHeader: React.FC<Props> = ({
           <h2 className="">👋 Welcome Back!</h2>
         </div>
 
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
-          <CommonInput
-            placeholder="Search by reviewer name, condition, or keywords"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            showImg={true}
-            imgSrc={searchIcon}
-            imgLeft={true}
-            inputClassName="text-sm"
-            containerClassName="w-full max-w-md"
-          />
-        </div>
-
-        <div className="flex items-center gap-5 min-w-fit relative">
+        {/* Right Section */}
+        <div className="flex items-center gap-4 min-w-fit relative">
+          {/* Mobile menu button */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 rounded-full hover:bg-gray-100 block lg:hidden"
           >
             <MdMenu size={24} />
           </button>
+ {/* Search Bar */}
+          <div className="relative provider-search-dropdown w-[300px] transition-all duration-300">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search by reviewer name, condition, or keywords"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onFocus={() => setIsSearchDropdownOpen(true)}
+                className={`transition-all duration-300 pl-10 pr-4 py-3 text-sm text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white ${
+                  isSearchDropdownOpen ? "w-[300px]" : "w-[300px]"
+                }`}
+              />
+            </div>
 
+            {isSearchDropdownOpen && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
+                {searchText && (
+                  <div className="p-4 border-b border-gray-100">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 text-sm text-gray-700 border border-blue-500 rounded-lg outline-none focus:ring-1 focus:ring-blue-500"
+                        autoFocus
+                      />
+                    </div>
+                  </div>
+                )}
+                <div className="py-2 px-[15px]">
+                  <div className="flex items-center justify-between mb-0">
+                    <h3 className="text-gray-500 font-medium text-sm">Recents</h3>
+                    <button
+                      onClick={handleClearRecentSearches}
+                      className="text-gray-500 hover:text-red-500 font-medium text-sm transition-colors"
+                    >
+                      Clear
+                    </button>
+                  </div>
+                  <div className="space-y-0.5 max-h-[250px] overflow-y-auto">
+                    {recentSearches.map((item) => (
+                      <div
+                        key={item.id}
+                        onClick={() => handleSearchItemClick(item.text)}
+                        className="flex items-center py-[9px] hover:bg-gray-50 cursor-pointer rounded-md transition-colors"
+                      >
+                        <Clock className="w-4 h-4 text-gray-400 mr-3" />
+                        <span className="text-gray-700 text-sm">
+                          {item.text}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          {/* Notification Icon */}
           <div
             onClick={() => setShowNotifications((prev) => !prev)}
             className="hidden lg:block cursor-pointer relative"
+            ref={notificationRef}
           >
             <img
               src={notification}
@@ -102,6 +178,9 @@ const DashboardHeader: React.FC<Props> = ({
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
           </div>
 
+         
+
+          {/* Profile */}
           <div
             onClick={() => setShowMenu(!showMenu)}
             className="flex items-center gap-2 cursor-pointer"
@@ -120,6 +199,7 @@ const DashboardHeader: React.FC<Props> = ({
         </div>
       </div>
 
+      {/* Dropdowns */}
       <AnimatePresence>
         {showMenu && (
           <motion.div
@@ -135,11 +215,9 @@ const DashboardHeader: React.FC<Props> = ({
         )}
       </AnimatePresence>
 
-      
       <AnimatePresence>
         {showNotifications && (
           <motion.div
-            ref={notificationRef}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

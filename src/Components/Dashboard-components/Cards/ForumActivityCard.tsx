@@ -5,7 +5,7 @@ import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.
 
 const ForumActivityCard: React.FC = () => {
   return (
-    <div className="bg-[#FAFAFA] rounded-lg px-4 py-4">
+    <div className="bg-[#FAFAFA] rounded-lg p-5">
       <div className="flex items-center gap-3 mb-[14px]">
         <img
           src={dummyImage}
@@ -21,7 +21,7 @@ const ForumActivityCard: React.FC = () => {
           </p>
         </div>
       </div>
-      <div className="mb-3">
+      <div className="mb-3.5">
         <p className="text-[16px] text-[#252525] font-semibold">
           Q: How do I know if a rehab center is right for my dad?”
         </p>
@@ -41,14 +41,14 @@ const ForumActivityCard: React.FC = () => {
         </div>
       </div>
       <PrimaryButton
-        btnText="View Discussion"
-        btnTextClass="text-[#FFFFFF] text-sm font-semibold"
-        showImg={true}
-        imgClass="w-[14px] h-[13px] object-cover"
-        img={ForwardArrow}
-        imgPosition="right"
-        btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px] bg-[#000000]"
-      />
+                  btnText="View Discussion"
+                  btnTextClass="text-[#FFFFFF] text-sm font-semibold"
+                  showImg={true}
+                  imgClass="w-[14px] h-[13px]"
+                  img={ForwardArrow}
+                  imgPosition="right"
+                  btnClass="border border-[#252525] px-4 py-3 md:w-[159px] h-[46px] w-full rounded-lg bg-[#000000]"
+                />
     </div>
   );
 };
