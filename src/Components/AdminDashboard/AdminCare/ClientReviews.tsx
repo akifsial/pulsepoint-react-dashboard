@@ -45,15 +45,15 @@ const ClientReviews: React.FC<ClientReviewsProps> = ({ filterValue }) => {
        {sliders.map((item, index) => (
         <div key={index} className="bg-[#FAFAFA] rounded-[8px] p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center gap-[18px]">
               <img
                 src={item.image}
                 alt="User"
                 className="w-[50px] h-[50px] object-cover rounded-full"
               />
-              <div className="flex gap-2.5">
-                <p className="text-[#252525] text-[16px] font-bold mb-0.5">{item.userName}</p>
-                <p className="text-[#252525] text-[16px]">{item.userHour}</p>
+              <div className="flex gap-2.5 text-[#252525] text-[16px]">
+                <p className=" font-bold mb-0.5">{item.userName}</p>
+                <p className="">{item.userHour}</p>
               </div>
             </div>
             <div className="border rounded-[5px] p-2">

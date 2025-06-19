@@ -59,7 +59,7 @@ const PopularCommunity = () => {
           ))}
         </div>
 
-         <PrimaryButton
+        <PrimaryButton
           btnText="Create Community"
           showImg={true}
           img={addCommunity}
@@ -67,7 +67,7 @@ const PopularCommunity = () => {
           imgPosition="left"
           btnClass="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
           onClick={() => setStep(1)} 
-        /> 
+        />
       </div>
 
       {/* Step-based Modal Views */}

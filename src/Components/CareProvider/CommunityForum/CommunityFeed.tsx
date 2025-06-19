@@ -8,7 +8,7 @@ import Flagwhite from "@assets/media/svgs/dashboard-svgs/flag4.svg";
 import Flagblue from "@assets/media/svgs/dashboard-svgs/flag3.svg";
 import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
-import postImage from "../../../assets/media/images/dashboard-images/postImage.png"
+import postImage from "../../../assets/media/images/dashboard-images/postImage.png";
 import Model from "@components/Model/Model";
 import FlagPost from "./FlagPost";
 import SubmitReport from "./SubmitReport";
@@ -46,10 +46,10 @@ const buttons = [
   { btnText: "32k", btnIcon: arrowUp, downarrow: arrowDowm },
   { btnText: "2.2k", btnIcon: comment },
   { btnText: "Share", btnIcon: share },
-  { btnText: "Flag", btnIcon: share },
+  { btnText: "Flag", btnIcon: Flagwhite },
 ];
 
-const CommunityFeed = () => {
+const CommunityFeed = ({ setOpenBackFeed }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [activePostActions, setActivePostActions] = useState(null);
   const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
@@ -87,7 +87,10 @@ const CommunityFeed = () => {
                   <span className="absolute bottom-2 right-0 w-2 h-2 bg-[#52C343] rounded-full shadow-[0_0_0_2px_white]" />
                 </div>
                 <div className="flex flex-col">
-                  <p className="font-semibold mb-1 text-[#252525] leading-tight">
+                  <p
+                    className="font-semibold mb-1 text-[#252525] leading-tight cursor-pointer"
+                    onClick={() => setOpenBackFeed(true)}
+                  >
                     {post.userName}
                   </p>
                   <span className="text-sm text-gray-500 leading-tight">
