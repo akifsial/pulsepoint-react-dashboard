@@ -6,6 +6,7 @@ import AdminReportsandAnalytics from "@pages/AdminDashboardPages/AdminReportsand
 // import AdminReviews from "@pages/AdminDashboardPages/AdminReviews";
 import AdminDashboard from "@pages/AdminDashboardPages/AdminDashboard";
 import AdminReviews from "@pages/AdminDashboardPages/AdminReviews";
+import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
 
 
 export const AdminRoutes = [
@@ -19,6 +20,7 @@ export const AdminRoutes = [
       { path: "reviews", element: <AdminReviews/> },
       { path: "forum-moderation", element: <AdminForumModeration/> },
       { path: "reports", element: <AdminReportsandAnalytics/> },
+      { path: "notification", element: <NotificationPage /> },
     ],
   },
 ];

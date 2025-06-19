@@ -65,15 +65,15 @@ export const sidebarLinks: SidebarLink[] = [
       active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
-  {
-    label: "Notification",
-    path: "/care-provider/notification",
-    icon: {
-      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
-    },
-  },
+  // {
+  //   label: "Notification",
+  //   path: "/care-provider/notification",
+  //   icon: {
+  //     default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
+  //     hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+  //     active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+  //   },
+  // },
 ];
 
 export const PatientSidebarLinks: SidebarLink[] = [

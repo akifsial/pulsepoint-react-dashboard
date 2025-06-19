@@ -15,6 +15,7 @@ const AdminLayout = () => {
         <DashboardHeader
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
+          noticationLink="/patient/notification"
         />
         <main className="mt-28">
           <Outlet />

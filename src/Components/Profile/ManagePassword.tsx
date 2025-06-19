@@ -2,16 +2,19 @@ import InputField from "@components/InputField";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import React, { useState } from "react";
 import backArrow from "../../assets/media/svgs/dashboard-svgs/arrow-left.svg";
+import { useNavigate } from "react-router-dom";;
 
-const ManagePassword = ({ onBack }) => {
+const ManagePassword = () => {
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
+  
+    const Navigate = useNavigate();
   return (
     <>
      <div
-        className="flex items-center mb-6 gap-2.5 cursor-pointer"
+        className="flex items-center mb-6 gap-2.5 cursor-pointer" onClick={() => Navigate("/profile")}
       >
         <img src={backArrow} alt="backArrow" />
         <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk]">
