@@ -1,15 +1,3 @@
-// import React from 'react'
-
-// const AgeGroupGraph = () => {
-//   return (
-//     <div>
-      
-//     </div>
-//   )
-// }
-
-// export default AgeGroupGraph
-
 import React from "react";
 import Chart from "react-apexcharts";
 

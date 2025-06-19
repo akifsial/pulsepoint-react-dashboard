@@ -1,4 +1,6 @@
 
+import AddFeatureDetail from '@components/Profile/AddFeatureDetail';
+import AdminProfileDetail from '@components/Profile/AdminProfileDetail';
 import CareProfileLayout from '@components/ProfileLayout/CareProfileLayout';
 import PatientProfileLayout from '@components/ProfileLayout/PatientProfileLayout';
 import ProfileLayout from '@components/ProfileLayout/ProfileLayout';
@@ -10,9 +12,9 @@ export const ProfileRoutes = [
     path: "/admin",
     element: <ProfileLayout />,
     children: [
-      { path: "profile", element: <ProfileDetailPage /> },
+      { path: "profile", element: <AdminProfileDetail /> },
       { path: "manage-password", element: <ManagePasswordPage /> },
-      { path: "feature", element: <GetFeaturePage /> },
+      { path: "feature", element: <AddFeatureDetail /> },
     ]
   },
   {

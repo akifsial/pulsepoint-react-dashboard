@@ -194,3 +194,5 @@ const ProfileDetail = ({ onChangePassword }) => {
 };
 
 export default ProfileDetail;
+
+

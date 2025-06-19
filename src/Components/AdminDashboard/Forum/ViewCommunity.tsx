@@ -13,6 +13,7 @@ import Flagwhite from "@assets/media/svgs/dashboard-svgs/flag4.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import Model from "@components/Model/Model";
 import DeleteReview from "./DeleteReview";
+import { useNavigate } from "react-router-dom";
 
 const postList = [
   {
@@ -40,11 +41,10 @@ const ViewCommunity = ({ community, onBack }) => {
     { btnText: "2.2k", btnIcon: comment },
     { btnText: "Share", btnIcon: share },
   ];
-
   return (
     <>
-      <div className="mb-[25px]">
-        <div className="flex items-center mb-4.5 gap-2.5">
+      <div className="mb-[25px]" >
+        <div className="flex items-center mb-4.5 gap-2.5 " >
           <img src={backArrow} alt="backArrow" className="cursor-pointer" />
           <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
             Back to Feed

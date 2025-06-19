@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
@@ -240,17 +239,16 @@ const ForumTable: React.FC = () => {
               <h3 className="mb-3 md:mb-0">Patients’ Details</h3>
 
               <div className="flex items-center">
-                <CommonInput
-                  placeholder="Search by name, zip"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={filterIcon}
-                  imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                />
+                 <CommonInput
+              placeholder="Search by Name, Email, or ID"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              showImg={true}
+              imgSrc={searchIcon}
+              imgLeft={true}
+              inputClassName="text-sm"
+              containerClassName="rounded-[10px]"
+            />
                 <span className="text-sm font-medium w-full text-center">
                   Filter By
                 </span>
@@ -261,21 +259,9 @@ const ForumTable: React.FC = () => {
                   imgPosition="left"
                   btnClass="border border-[#252525] px-[20px] pb-[18px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
+                  
                 />
               </div>
-              <AnimatePresence>
-                {showRatingDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute right-5 top-[62%] z-50"
-                  >
-                    <RatingFilterDropdown />
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
 
             <div>

@@ -121,7 +121,7 @@ const TanDataTable = <T extends object>({
                 style={{ borderBottom: "1px solid #2525251a" }}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-5 py-5 ">
+                  <td key={cell.id} className="px-2 py-5 ">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
