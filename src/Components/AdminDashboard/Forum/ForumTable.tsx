@@ -3,8 +3,8 @@ import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/T
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
+// import { AnimatePresence, motion } from "framer-motion";
+// import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
