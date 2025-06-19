@@ -8,12 +8,14 @@ import Flagwhite from "@assets/media/svgs/dashboard-svgs/flag4.svg";
 import Flagblue from "@assets/media/svgs/dashboard-svgs/flag3.svg";
 import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
+import postImage from "../../../assets/media/images/dashboard-images/postImage.png"
 import Model from "@components/Model/Model";
 import FlagPost from "./FlagPost";
 import SubmitReport from "./SubmitReport";
 
 const postList = [
   {
+    postImage: postImage,
     userImage: userProfile,
     userIcon: userProfile,
     userName: "Cody Fisher",
@@ -26,6 +28,7 @@ const postList = [
       "Work on something and want to share it? Showoff Saturdays are you! Make a new post on Saturday and tag it [Showoff Saturday] and watch the view rise.",
   },
   {
+    postImage: postImage,
     userImage: userProfile,
     userIcon: userProfile,
     userName: "Cody Fisher",
@@ -61,7 +64,7 @@ const CommunityFeed = () => {
 
   return (
     <div
-      className="max-w-[813px] h-[661px] overflow-y-auto transition-colors duration-300"
+      className="w-[813px] h-[661px] overflow-y-auto transition-colors duration-300"
       style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
     >
       {/* Optional Tab Switch UI */}

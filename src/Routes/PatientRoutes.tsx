@@ -6,7 +6,7 @@ import AdminPatientReviews from "@pages/PatientPages/AdminPatientReviews";
 import EditReviewPage from "@pages/PatientPages/EditReviewPage"; // Add this import
 import HospitalProfile from "@pages/PatientPages/HospitalProfile";
 import ChatBot from "@pages/PatientPages/ChatBotPage";
-import NursingHomeReviews from "@components/NursingHomeReview";
+import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
 export const PatientRoutes = [
   {
     path: "/patient", 
@@ -19,7 +19,7 @@ export const PatientRoutes = [
       { path: "community-forum", element: <AdminCommunityForum /> },
       { path: "hospital-profile", element: <HospitalProfile /> },
       { path: "chatbot", element: <ChatBot /> },
-      { path: "nursing-home", element: <NursingHomeReviews /> },
+      { path: "notification", element: <NotificationPage /> },
     ],
   },
 ];

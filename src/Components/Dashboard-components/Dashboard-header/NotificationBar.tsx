@@ -6,7 +6,7 @@ import NewCode from "../../../assets/media/svgs/dashboard-svgs/newcode.svg";
 import Msg from "../../../assets/media/svgs/dashboard-svgs/msg.svg";
 import Hill from "../../../assets/media/svgs/dashboard-svgs/hill.svg";
 
-const NotficationBar = () => {
+const NotficationBar = ({noticationLink}) => {
   const notifications = [
     {
       icon: Like,
@@ -52,7 +52,7 @@ const NotficationBar = () => {
         </div>
 
       <div className="text-[#006EFF] font-medium text-[15px] bg-[#FAFAFA] border-t border-t-[#D5D7DA] flex justify-center items-center gap-2 p-[13px] rounded-b-xl rounded-bl-xl">
-        <Link to="/care-provider/notification">View All Messages</Link>
+        <Link to={noticationLink} >View All Messages</Link>
         <IoArrowForward size={18} color="#006EFF" />
       </div>
     </div>

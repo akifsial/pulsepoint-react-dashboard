@@ -1,9 +1,10 @@
-// import React from "react";
-import featureBg from "../../assets/media/images/dashboard-images/featureBg.png";
-import ProfileCards from "./ProfileCards";
-
+import React, { useState } from 'react'
+import featureBg from "../../assets/media/images/dashboard-images/featureBg.png"
+import ProfileCards from './ProfileCards'
+import BillingCheckout from './BillingCheckout'
 const GetFeature = () => {
-  const points = [
+ const [billingCheck, setBillingCheck] = useState(false)
+ const points = [
     {
       title: "Appear at the Top of Search Results",
       description:
@@ -28,8 +29,11 @@ const GetFeature = () => {
 
   return (
     <>
-      <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-5">
-        Feature My Facility
+    {billingCheck?
+    (<BillingCheckout/>):( 
+    <>
+    <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
+       Feature My Facility
       </h2>
 
       <div
@@ -52,29 +56,32 @@ const GetFeature = () => {
       <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-3">
         Feature My Facility
       </h4>
-      <ProfileCards />
-      <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
-        💡 Advantages of Feature Plans?
+<ProfileCards onUpgrade={setBillingCheck}/>
+<h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
+      💡 Advantages of Feature Plans?
       </h4>
-      <div className="rounded-[10px] py-2.5 px-5 bg-white mb-5">
-        <ul className="space-y-5">
-          {points.map((point, idx) => (
-            <li
-              key={idx}
-              className="flex items-center gap-3 relative pl-5 mb-3 before:content-[''] before:absolute before:left-0 before:top-1.5 before:w-[7px] before:h-[7px] before:rounded-full before:bg-[#28A2FF]"
-            >
-              <div className="">
-                <p>
-                  <b> {point.title}</b>
-                </p>
-                <p className="text-sm text-gray-700 mt-1">
-                  {point.description}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+     <div className="rounded-[10px] py-2.5 px-5 bg-white mb-5">
+      <ul className="space-y-5">
+        {points.map((point, idx) => (
+          <li
+            key={idx}
+            className="flex items-center gap-3 relative pl-5 mb-3 before:content-[''] before:absolute before:left-0 before:top-1.5 before:w-[7px] before:h-[7px] before:rounded-full before:bg-[#28A2FF]"
+          >
+            <div className=''>
+              <p>
+               <b> {point.title}</b>
+              </p>
+              <p className="text-sm text-gray-700 mt-1">{point.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+    </>
+)
+  }
+    
+
     </>
   );
 };
