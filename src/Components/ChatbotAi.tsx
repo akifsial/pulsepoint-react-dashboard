@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { PrimaryButton } from "./Shared-components/Buttons/Common-button/CommonButton";
-import AI from "@assets/media/svgs/patient-db-svgs/AI.png";
 import ChatbotSearchbar from "./ChatbotSearchBar";
 
 const ChatbotAi: React.FC = () => {
@@ -33,7 +32,7 @@ const ChatbotAi: React.FC = () => {
         </div>
 
         {/* Search Input Section */}
-                <ChatbotSearchbar onAskAI={handleAskAI} />
+         <ChatbotSearchbar onAskAI={handleAskAI} />
 
         {/* Notice Text */}
         <div className="font-geist font-medium text-base leading-relaxed text-customGray text-center">

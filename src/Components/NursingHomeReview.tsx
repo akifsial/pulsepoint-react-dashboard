@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ChatbotSearchbar from "./ChatbotSearchBar";
+import MsgIcon from "@assets/media/svgs/patient-db-svgs/chat-send-icon.png";
 
 interface Facility {
   name: string;
