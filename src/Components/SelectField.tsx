@@ -27,8 +27,11 @@ const SelectField: React.FC<SelectFieldProps> = ({
   errorMessage,
   ...rest
 }) => {
+  // Automatically select the first option if no value is provided
+  const currentValue = value || (options.length > 0 ? options[0].value : "");
+
   return (
-    <div className={` mb-4 ${selectName}`}>
+    <div className={`mb-4 ${selectName}`}>
       {label && (
         <div className="flex">
           <label
@@ -41,29 +44,20 @@ const SelectField: React.FC<SelectFieldProps> = ({
             <span className="text-red-500 font-medium text-[16px] leading-[140%] tracking-normal font-geist relative top-[-1px]">
               *
             </span>
-          )}{" "}
+          )}
         </div>
       )}
+
       <div className="relative">
-        {/* <select
-          id={id}
-          value={value}
-          onChange={onChange}
-          className={`py-3 px-4 border border-[#252525B2] rounded-[8px] bg-[#FBFCFD] w-full h-[50px] ${
-            gray ? "bg-gray-100" : ""
-          } appearance-none`}
-          {...rest}
-        > */}
         <select
           id={id}
-          value={value}
+          value={currentValue}
           onChange={onChange}
-          className={`w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] flex justify-between items-center font-[Geist] text-[16px] font-normal text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-gray-500 focus:outline-none ${
+          className={`w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-gray-500 focus:outline-none ${
             gray ? "bg-gray-100" : ""
           } appearance-none`}
           {...rest}
         >
-          <option value="">Select {label}</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -71,12 +65,11 @@ const SelectField: React.FC<SelectFieldProps> = ({
           ))}
         </select>
 
-        {/* Custom dropdown icon */}
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black">
-          {/* Render the custom icon (React Icon) */}
           <IoIosArrowDown />
         </div>
       </div>
+
       {errorMessage && (
         <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
       )}

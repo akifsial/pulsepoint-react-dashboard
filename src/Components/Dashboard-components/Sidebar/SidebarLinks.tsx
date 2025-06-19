@@ -245,9 +245,48 @@ export const PatientProfileSidebarLinks: SidebarLink[] = [
       hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
     },},
+  // {
+  //   label: "Get Featured",
+  //   path: "/patient/feature",
+  //   icon: {
+  //     default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+  //     hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+  //     active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+  //   },
+  // },
+  
+];
+
+export const PatientProfileLayoutSidebarLinks: SidebarLink[] = [
   {
-    label: "Get Featured",
-    path: "/patient/feature",
+    label: "Senior Care Platform Design",
+    path: "/patient/Senior-Care-Platform-Design",
+    icon: {
+      default: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={profileActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Nursing home in 90210.",
+    path: "/patient/Nursing-home-in-90210",
+    icon: {
+      default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
+    },},
+  {
+    label: "How are facilities rated?",
+    path: "/patient/How-are-facilities-rated?",
+    icon: {
+      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+    {
+    label: "Our AI Healthcare Guide",
+    path: "/patient/Our-AI-Healthcare-Guide",
     icon: {
       default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
@@ -256,4 +295,3 @@ export const PatientProfileSidebarLinks: SidebarLink[] = [
   },
   
 ];
-

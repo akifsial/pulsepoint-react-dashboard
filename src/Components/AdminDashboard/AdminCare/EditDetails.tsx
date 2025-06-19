@@ -102,6 +102,7 @@ const EditDetails = ({goBack}) => {
                 options={organizationOptions}
                 selectName="w-[49%]"
               />
+              
  
               <InputField
                 label="Phone:"

@@ -153,7 +153,7 @@ const AppReviewCard: React.FC = () => {
     <div className="bg-gray-100 flex items-center justify-center">
       <ReviewCard
         onReviewClick={handleReviewClick}
-        backgroundImage={Patientdbimg} // Use your actual imported image here
+        backgroundImage={Patientdbimg} 
       />
     </div>
   );

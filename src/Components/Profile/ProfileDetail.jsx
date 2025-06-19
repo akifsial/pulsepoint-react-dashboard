@@ -19,21 +19,21 @@ const organizationOptions = [
 ];
 
 const stateOptions = [
-  { value: "Punjab", label: "Punjab" },
+  { value: "United State", label: "United State" },
   { value: "Sindh", label: "Sindh" },
   { value: "Balochistan", label: "Balochistan" },
   { value: "KPK", label: "Khyber Pakhtunkhwa" },
 ];
 
 const cityOptions = [
-  { value: "Lahore", label: "Lahore" },
+  { value: "Austin", label: "Austin" },
   { value: "Karachi", label: "Karachi" },
   { value: "Quetta", label: "Quetta" },
   { value: "Peshawar", label: "Peshawar" },
 ];
 
 const ProfileDetail = ({ onChangePassword }) => {
-     const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("home");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [organization, setOrganization] = useState("");
   const [state, setState] = useState("");
@@ -42,15 +42,6 @@ const ProfileDetail = ({ onChangePassword }) => {
   return (
     <>
       <div>
-        <div className="flex justify-end mb-4">
-          <button
-            onClick={onChangePassword}
-            className="text-[#28A2FF] underline text-sm font-semibold"
-          >
-            Change Password
-          </button>
-        </div>
-
         <div className="overflow-y-auto rounded-[10px] bg-white p-10 h-[601px]">
           <div className="flex items-center justify-between mb-9">
             <div className="flex items-center gap-3">
@@ -103,7 +94,7 @@ const ProfileDetail = ({ onChangePassword }) => {
                 type="tel"
                 fieldName="w-[49%]"
                 iconUrl={Call}
-                placeholder="097-765-7654"
+                placeholder="(123) 456-7890]"
               />
               <InputField
                 label="Email:"
@@ -123,15 +114,14 @@ const ProfileDetail = ({ onChangePassword }) => {
               type="text"
               iconUrl={Global}
               placeholder="https://www.topseniorspot.org"
-              className="w-full"
+              className="w-full w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
             />
 
             <div className="mb-6 text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
               <p className="mb-2.5">Additional Details:</p>
               <div className="text-sm font-normal text-[#252525] py-4 px-[15px] rounded-lg border border-[#2525251A] bg-[#FBFCFD]">
                 <p>
-                  Sunrise Hills Nursing Home is a full-service assisted living
-                  facility specializing in post-acute rehabilitation and long-term senior care.
+                  Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. Our mission is to provide compassionate, person-centered services in a comfortable, home-like setting.Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. 
                 </p>
               </div>
             </div>
@@ -175,10 +165,10 @@ const ProfileDetail = ({ onChangePassword }) => {
               placeholder="123 main Street, Springfield, IL 62704"
             />
 
-            <PrimaryButton 
+            <PrimaryButton
               btnText="Save Changes"
               showImg={false}
-              btnClass="w-[30%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+              btnClass="w-[25%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
             />
           </form>
         </div>
