@@ -104,14 +104,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
             {/* Add the ChatbotIcon image*/}
-            <Link to="/patient/chatbot" aria-label="Open chatbot">
+          </div>
+          <Link to="/patient/chatbot" aria-label="Open chatbot">
+            <div>
+              {" "}
               <img
                 src={ChatbotIcon}
-                alt="Chatbot"
-                className="w-[70px] h-[50px] object-cover mt-[320px] cursor-pointer"
+                alt="chatbot"
+                className="w-[70px] h-[50px] object-cover cursor-pointer"
               />
-            </Link>
-          </div>
+            </div>
+          </Link>
         </aside>
       ) : (
         <aside
