@@ -49,7 +49,8 @@ const buttons: ButtonData[] = [
 
 const AdminCommunityForum: React.FC = () => {
   const [selectedButton, setSelectedButton] = useState<string>("Home"); // Default is 'Home'
-  
+  const [showBackFeed, setShowBackFeed] = useState<boolean>(false); // Add this line
+
   return (
     <div className="flex gap-6 w-full">
       {/* Left side - Main content */}

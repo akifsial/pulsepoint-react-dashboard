@@ -16,7 +16,7 @@ import Community2 from "./Community2";
 import Community3 from "./Community3";
 
 const PopularCommunity = () => {
-  const [step, setStep] = useState<number | "">(""); // Track which community step modal is active
+  const [step, setStep] = useState<number | "">(""); 
 
   const popularCommunity = [
     { icon: community1, title: "Hospital Stay Reviews" },
@@ -26,12 +26,12 @@ const PopularCommunity = () => {
     { icon: community5, title: "Patient Rights & Safety" },
   ];
 
-  const closeModal = () => setStep(""); // Resets modal step
+  const closeModal = () => setStep(""); 
 
   return (
     <>
       {/* Sidebar */}
-      <div className="w-[292px]">
+      <div className="max-w-[292px]">
         <CommonInput
           placeholder="Search Communities "
           showImg={true}
@@ -59,15 +59,15 @@ const PopularCommunity = () => {
           ))}
         </div>
 
-        <PrimaryButton
+        {/* <PrimaryButton
           btnText="Create Community"
           showImg={true}
           img={addCommunity}
           imgClass="w-[19px] h-[19px] object-cover"
           imgPosition="left"
           btnClass="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
-          onClick={() => setStep(1)} // ✅ Opens Community1 modal
-        />
+          onClick={() => setStep(1)} 
+        /> */}
       </div>
 
       {/* Step-based Modal Views */}

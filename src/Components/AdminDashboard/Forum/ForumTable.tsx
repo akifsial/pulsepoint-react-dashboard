@@ -10,10 +10,15 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import ViewCommunity from "./ViewCommunity";
+import Model from "@components/Model/Model";
+import DeletePost from "./DeletePost";
 
 const ForumTable: React.FC = () => {
-  const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
-  const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
+  const [showRatingDropdown, setShowRatingDropdown] = useState(false);
+  const [selectedCommunity, setSelectedCommunity] = useState<dataTypes | null>(null);
+  const [searchText, setSearchText] = useState<string>("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   type dataTypes = {
     id?: number;
@@ -31,7 +36,7 @@ const ForumTable: React.FC = () => {
     rating?: number | string | React.ReactNode;
     email?: string;
     image?: string;
-    actions?: string
+    actions?: string;
   };
 
   const columns: TanDataTableColumn<dataTypes>[] = [
@@ -44,13 +49,13 @@ const ForumTable: React.FC = () => {
       accessor: "first_name",
       header: "Community Name",
       showSort: true,
-      cell: ({ row }: { row: { original: dataTypes } }) => {
-        const { first_name} = row.original;
+      cell: ({ row }) => {
+        const { first_name } = row.original;
         return (
           <div className="flex items-center gap-3">
             <img
               src={dummyImage}
-              alt={`${first_name} `}
+              alt={`${first_name}`}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
             <div className="flex flex-col">
@@ -66,23 +71,23 @@ const ForumTable: React.FC = () => {
       accessor: "first_name1",
       header: "Posted By",
       showSort: true,
-      cell: ({ row }: { row: { original: dataTypes } }) => {
+      cell: ({ row }) => {
         const { first_name1, second_name, email } = row.original;
         return (
           <div className="flex items-center gap-3">
             <img
               src={dummyImage}
-              alt={`${first_name1} `}
+              alt={`${first_name1}`}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
                 {first_name1}
               </span>
-              <span className="text-xs text-gray-500 font-regular leading-tight">
+              <span className="text-xs text-gray-500 leading-tight">
                 {second_name}
               </span>
-              <span className="text-xs text-gray-500 font-regular leading-tight">
+              <span className="text-xs text-gray-500 leading-tight">
                 {email}
               </span>
             </div>
@@ -105,11 +110,11 @@ const ForumTable: React.FC = () => {
       header: "Date Posted",
       showSort: true,
     },
-     {
+    {
       accessor: "status",
       header: "Status",
       showSort: true,
-      cell: ({ row }: { row: { original: dataTypes } }) => {
+      cell: ({ row }) => {
         const status = row.original.status?.toLowerCase();
         const statusStyles = {
           pending: "text-[#067647] border-[1.5px] border-[#079455]",
@@ -119,13 +124,12 @@ const ForumTable: React.FC = () => {
 
         return (
           <span
-  className={`text-xs font-medium px-3 py-1 rounded-full ${
-    statusStyles[status as keyof typeof statusStyles] || "bg-gray-200 text-gray-700"
-  }`}
->
-  {status?.charAt(0).toUpperCase() + status?.slice(1)}
-</span>
-
+            className={`text-xs font-medium px-3 py-1 rounded-full ${
+              statusStyles[status as keyof typeof statusStyles] || "bg-gray-200 text-gray-700"
+            }`}
+          >
+            {status?.charAt(0).toUpperCase() + status?.slice(1)}
+          </span>
         );
       },
     },
@@ -138,7 +142,6 @@ const ForumTable: React.FC = () => {
       first_name: "Alzheimer’s Support",
       first_name1: "Savannah Nguyen",
       second_name: "(Patient)",
-      image: dummyImage,
       content: "“Feeling anxious lately...”",
       type: "Post",
       date: "9/4/12",
@@ -150,7 +153,6 @@ const ForumTable: React.FC = () => {
       first_name: "Stroke Rehab Tips",
       first_name1: "Kristin Watson",
       second_name: "(Patient)",
-      image: dummyImage,
       content: "“Here are 5 daily tips...”",
       type: "Comment",
       date: "5/7/16",
@@ -162,7 +164,6 @@ const ForumTable: React.FC = () => {
       first_name: "Family Caregivers",
       first_name1: "Brooklyn Simmons",
       second_name: "(Patient)",
-      image: dummyImage,
       content: "“Is turmeric helpful?”",
       type: "Comment",
       date: "10/6/13",
@@ -174,7 +175,6 @@ const ForumTable: React.FC = () => {
       first_name: "Memory Boosting",
       first_name1: "Arlene McCoy",
       second_name: "(Patient)",
-      image: dummyImage,
       content: "“Mindfulness exercises that work.”",
       type: "Post",
       date: "2/11/12",
@@ -186,7 +186,6 @@ const ForumTable: React.FC = () => {
       first_name: "Eleanor Pena",
       first_name1: "Eleanor Pena",
       email: "michelle.rivera@example.com",
-      image: dummyImage,
       content: "“Mindfulness exercises that work.”",
       type: "Report",
       date: "3/4/16",
@@ -198,7 +197,6 @@ const ForumTable: React.FC = () => {
       first_name: "Jenny Wilson",
       first_name1: "Jenny Wilson",
       email: "curtis.weaver@example.com",
-      image: dummyImage,
       content: "“The benefits of journaling.”",
       type: "Save",
       date: "16/5/24",
@@ -210,7 +208,6 @@ const ForumTable: React.FC = () => {
       first_name: "Ralph Edwards",
       first_name1: "Ralph Edwards",
       email: "dolores.chambers@example.com",
-      image: dummyImage,
       content: "“Finding support and community.”",
       type: "Like",
       date: "11/2/25",
@@ -222,69 +219,41 @@ const ForumTable: React.FC = () => {
     console.log("Selected row:", row);
   };
 
-  // const renderActions = (row: dataTypes) => (
-  //   <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>
-  //     Edit
-  //   </button>
-  // );
-
-  const handleTabClick = (tab: "all" | "saved") => {
-    setActiveTab(tab);
-  };
-  const [searchText, setSearchText] = React.useState<string>("");
-
   return (
     <div className="mb-10">
-      <h2
-        className="
-      font-space-grotesk
-      font-bold
-      text-heading
-      leading-8
-      tracking-normal
-      text-brand-ink
-      align-middle
-    "
-      >
-        Forum Moderation
-      </h2>
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Patients’ Details</h3>
-          {/* searchbar */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
-            <CommonInput
-              placeholder="Search with Provider name , zip code"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              showImg={true}
-              imgSrc={searchIcon}
-              imgLeft={true}
-              inputClassName="text-sm"
-              containerClassName="w-full max-w-sm"
-            />
-          </div>
-          <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium text-sm">Filter by</p>
-            <div className="relative">
-              <div className="flex items gap-4">
-                <PrimaryButton
-                  btnText="Ratigs"
+      {selectedCommunity ? (
+        <ViewCommunity
+          community={selectedCommunity}
+          onBack={() => setSelectedCommunity(null)}
+        />
+      ) : (
+        <>
+          <h2 className="font-space-grotesk font-bold text-heading leading-8 text-brand-ink">
+            Forum Moderation
+          </h2>
+
+          <div className="mt-6 bg-white rounded-[10px] px-4 py-6">
+            <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between max-w-[1060px]">
+              <h3 className="mb-3 md:mb-0">Patients’ Details</h3>
+              <div className="flex items-center ">
+                <CommonInput
+                  placeholder="Search by name, zip"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
                   showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={filterIcon}
-                  imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
+                  imgSrc={searchIcon}
+                  imgLeft={true}
+                  inputClassName="text-sm"
+                  containerClassName="w-full max-w-sm"
                 />
+                <span className="text-sm font-medium w-full text-center">Filter By</span>
                 <PrimaryButton
-                  btnText="View All Listing"
-                  btnTextClass="text-[#FFFFFF] text-sm font-semibold"
+                  btnText="Ratings"
+                  img={filterIcon}
                   showImg={true}
-                  imgClass="w-[14px] h-[13px] object-cover"
-                  img={ForwardArrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px] bg-[#000000]"
+                  imgPosition="left"
+                  btnClass="border border-[#252525] rounded-[10px] text-[#252525] text-sm font-medium"
+                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
               </div>
               <AnimatePresence>
@@ -294,53 +263,39 @@ const ForumTable: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-[60px] w-50 z-50"
+                    className="absolute left-0 top-[60px] z-50"
                   >
                     <RatingFilterDropdown />
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
+
+            <TanDataTable<dataTypes>
+              columns={columns}
+              data={data}
+              showCheckbox={true}
+              onRowSelect={handleRowSelect}
+              showActions={true}
+              actions={(row) => (
+                <DropdownActions
+                  onView={() => setSelectedCommunity(row)}
+                  onEdit={() => console.log("Approve Post", row.id)}
+                  onFlag={() => console.log("Flag Post", row.id)}
+                  onDelete={() => setShowDeleteModal(true)}
+                  variant="simple"
+                />
+              )}
+            />
           </div>
-        </div>
-        <div>
-          {activeTab === "all" ? (
-              <TanDataTable<dataTypes>
-                columns={columns}
-                data={data}
-                showCheckbox={true}
-                onRowSelect={handleRowSelect}
-                showActions={true}
-                actions={(row) => (
-                  <DropdownActions
-                    onView={() => console.log("View Detail", row.id)}
-                    onEdit={() => console.log("Approve Post", row.id)}
-                    onFlag={() => console.log("Flag Post", row.id)}
-                    onDelete={() => console.log("Delete Post", row.id)}
-                    variant="simple"
-                  />
-                )}
-              />
-            ) : (
-              <TanDataTable<dataTypes>
-                columns={columns}
-                data={data.slice(0, 3)}
-                showCheckbox={true}
-                onRowSelect={handleRowSelect}
-                showActions={true}
-                actions={(row) => (
-                  <DropdownActions
-                    onView={() => console.log("View Detail", row.id)}
-                    onEdit={() => console.log("Approve Post", row.id)}
-                    onFlag={() => console.log("Flag Post", row.id)}
-                    onDelete={() => console.log("Delete Post", row.id)}
-                    variant="simple"
-                  />
-                )}
-              />
-            )}
-        </div>
-      </div>
+        </>
+      )}
+
+      {showDeleteModal && (
+        <Model setIsOpen={setShowDeleteModal} className="max-w-[488px]">
+          <DeletePost />
+        </Model>
+      )}
     </div>
   );
 };

@@ -36,9 +36,9 @@ export interface ButtonData {
 interface PostCardProps {
   post: PostData;
   buttons: ButtonData[];
-  showComments?: boolean; // Optional prop to control comment display
-  showFullPost?: boolean; // Optional prop to control full post display
-  onSavePost?: (post: PostData) => void; // Callback for save post action
+  showComments?: boolean;
+  showFullPost?: boolean;
+  onSavePost?: (post: PostData) => void; 
   // Pass components as props to avoid import issues
   FlagPostComponent?: React.ComponentType<{onSubmit: () => void}>;
   ModalComponent?: React.ComponentType<{children: React.ReactNode, setIsOpen: (open: boolean) => void, className?: string}>;
@@ -64,7 +64,7 @@ const PostCard: React.FC<PostCardProps> = ({
   };
 
   const handleFlagPost = () => {
-    console.log('Flag post clicked!'); // Debug log
+    console.log('Flag post clicked!');
     setIsFlagModalOpen(true);
     setActivePostActions(false);
   };

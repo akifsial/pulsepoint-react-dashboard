@@ -4,7 +4,8 @@ import AdminDashboard from "@pages/PatientPages/AdminDashboard";
 import AdminCareProvider from "@pages/PatientPages/AdminCareProvider";
 import AdminPatientReviews from "@pages/PatientPages/AdminPatientReviews";
 import EditReviewPage from "@pages/PatientPages/EditReviewPage"; // Add this import
-import HospitalProfile from "@pages/PatientPages/hospital-profile";
+import HospitalProfile from "@pages/PatientPages/HospitalProfile";
+import ChatBot from "@pages/PatientPages/ChatBotPage";
 export const PatientRoutes = [
   {
     path: "/patient", 
@@ -16,6 +17,7 @@ export const PatientRoutes = [
       { path: "patient-reviews/edit", element: <EditReviewPage /> }, // Add this line
       { path: "community-forum", element: <AdminCommunityForum /> },
       { path: "hospital-profile", element: <HospitalProfile /> },
+      { path: "chatbot", element: <ChatBot /> },
     ],
   },
 ];

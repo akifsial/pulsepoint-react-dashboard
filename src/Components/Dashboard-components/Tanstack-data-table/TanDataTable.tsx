@@ -28,8 +28,8 @@ const TanDataTable = <T extends object>({
     ...(showCheckbox
       ? [
           columnHelper.display({
-            id: "select",
-            header: () => <input type="checkbox" />,
+            id:"select",
+            header:() => <input type="checkbox" />,
             cell: ({ row }) => (
               <input
                 type="checkbox"

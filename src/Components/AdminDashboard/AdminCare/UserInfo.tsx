@@ -9,11 +9,11 @@ import exports from "@assets/media/svgs/export.svg";
 import whitearrow from "@assets/media/svgs/whitearrow.svg";
 import edit from "@assets/media/svgs/edit.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import EditDetails from "@components/AdminDashboard/AdminCare/EditDetails"; 
+import EditDetails from "@components/AdminDashboard/AdminCare/EditDetails";
 import UserCommunity from "./UserCommunity";
 import UserComments from "./UserComments";
 import UserFlagged from "./UserFlagged";
-import leftarrow from "@assets/media/svgs/leftarrow.svg"
+import leftarrow from "@assets/media/svgs/leftarrow.svg";
 
 const infoItems = [
   { label: "Name:", value: "Dr. Emily Carter" },
@@ -50,7 +50,7 @@ const UserInfo = () => {
       <div className="flex items-baseline gap-2">
         <img src={leftarrow} alt="" />
         <h2 className=" text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
-        Care Provider Details
+          Care Provider Details
         </h2>
       </div>
       <div className="p-5 bg-[#ffffff] rounded-lg mb-5">
@@ -137,9 +137,9 @@ const UserInfo = () => {
       </div>
       <ClientReviews />
       <UserTable />
-      <UserCommunity/>
-      <UserComments/>
-      <UserFlagged/>
+      <UserCommunity />
+      <UserComments />
+      <UserFlagged />
     </div>
   );
 };

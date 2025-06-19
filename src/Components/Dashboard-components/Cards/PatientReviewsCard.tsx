@@ -34,6 +34,17 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
         "The facility was clean, and staff was attentive. My only complaint is the food quality.",
       flagged: "Flagged",
     },
+    {
+      image: userImage,
+      userName: "John D.",
+      userHour: "10 hours ago",
+      flagIcon: flag,
+      review: "4.5",
+      userIcon: userReview,
+      sliderDesc:
+        "The facility was clean, and staff was attentive. My only complaint is the food quality.",
+      flagged: "Flagged",
+    },
   ];
 
   return (
