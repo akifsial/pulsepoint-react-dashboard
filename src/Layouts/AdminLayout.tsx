@@ -16,6 +16,7 @@ const AdminLayout = () => {
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
           noticationLink="/patient/notification"
+          routeProfile="/admin/profile"
         />
         <main className="mt-28">
           <Outlet />

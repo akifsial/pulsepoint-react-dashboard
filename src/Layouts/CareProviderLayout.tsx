@@ -16,6 +16,8 @@ const CareProviderLayout = () => {
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen} 
           noticationLink="/care-provider/notification"
+          setSidebarOpen={setIsSidebarOpen}
+          routeProfile="/care-provider/profile"
         />
         <main className="mt-28">
           <Outlet />

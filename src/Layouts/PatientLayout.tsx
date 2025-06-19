@@ -16,6 +16,8 @@ const PatientLayout = () => {
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen} 
           noticationLink="/patient/notification"
+          setSidebarOpen={setIsSidebarOpen}
+          routeProfile="/patient/profile"
         />
         
         <main className="mt-28">

@@ -21,6 +21,7 @@ const DashboardHeader: React.FC<Props> = ({
   sidebarOpen,
   setSidebarOpen,
   noticationLink,
+  routeProfile,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -100,7 +101,7 @@ const DashboardHeader: React.FC<Props> = ({
             transition={{ duration: 0.3 }}
             className="absolute right-0 top-[75px] w-55 bg-white border border-gray-200 shadow-xl px-2 rounded-xl py-4 z-50"
           >
-            <ProfileDropdown />
+            <ProfileDropdown routeProfile={routeProfile} />
           </motion.div>
         )}
       </AnimatePresence>

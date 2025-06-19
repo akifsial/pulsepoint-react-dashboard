@@ -72,49 +72,48 @@ const CareProviderDashboard: React.FC = () => {
     },
   ];
 
-  const data: dataTypes[] = [
-    {
-      id: 1,
-      first_name: "Ronald",
-      last_name: "Richards",
-      date: "9/4/12",
-      email: "tim.jennings@example.com",
-      image: "/images/alice.png",
-      rating: <RatingStars value={5} isDisabled={true} />,
-      reviews: "Staff was caring and responsive, though the wait time could be improved.",
-    },
-    {
-      id: 2,
-      first_name: "Dianne",
-      last_name: "Russell",
-      date: "5/7/16",
-      email: "alma.lawson@example.com",
-      image: "/images/michael.png",
-      rating: <RatingStars value={4} isDisabled={true} />,
-      reviews: "Excellent support for my mother with dementia. Highly recommended.",
-    },
-    
-     {
-      id: 3,
-      first_name: "Jacob",
-      last_name: "Jones",
-      date: "10/6/13",
-      email: "kenzi.lawson@example.com",
-      image: "/images/michael.png",
-      rating: <RatingStars value={4} isDisabled={true} />,
-      reviews: "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
-    },
-     {
-      id: 4,
-      first_name: "Devon",
-      last_name: "Lane",
-      date: "2/11/12",
-      email: "dolores.chambers@example.com",
-      image: "/images/michael.png",
-      rating: <RatingStars value={3} isDisabled={true} />,
-      reviews: "Great amenities and staff. Rooms were spacious and bright.",
-    },
-  ];
+ const data: dataTypes[] = [
+  {
+    id: 1,
+    first_name: "Ronald",
+    last_name: "Richards",
+    date: "9/4/12",
+    email: "tim.jennings@example.com",
+    image: "/images/alice.png",
+    rating: <RatingStars value={5} isDisabled={true} />,
+    reviews: "Staff was caring and responsive, though the wait time could be improved.",
+  },
+  {
+    id: 2,
+    first_name: "Dianne",
+    last_name: "Russell",
+    date: "5/7/16",
+    email: "alma.lawson@example.com",
+    image: "/images/michael.png",
+    rating: <RatingStars value={4} isDisabled={true} />,
+    reviews: "Excellent support for my mother with dementia. Highly recommended.",
+  },
+  {
+    id: 3,
+    first_name: "Jacob",
+    last_name: "Jones",
+    date: "10/6/13",
+    email: "kenzi.lawson@example.com",
+    image: "/images/michael.png",
+    rating: <RatingStars value={4} isDisabled={true} />,
+    reviews: "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
+  },
+  {
+    id: 4,
+    first_name: "Devon",
+    last_name: "Lane",
+    date: "2/11/12",
+    email: "dolores.chambers@example.com",
+    image: "/images/michael.png",
+    rating: <RatingStars value={3} isDisabled={true} />,
+    reviews: "Great amenities and staff. Rooms were spacious and bright.",
+  },
+];
 
   const handleRowSelect = (row: Person) => {
     console.log("Selected row:", row);
@@ -163,7 +162,7 @@ const CareProviderDashboard: React.FC = () => {
             <div className="relative">
               <div className="flex items gap-4 ">
                 <PrimaryButton
-                  btnText="Ratigs"
+                  btnText="ratings"
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}

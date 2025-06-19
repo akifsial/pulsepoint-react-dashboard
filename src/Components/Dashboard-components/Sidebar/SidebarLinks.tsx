@@ -172,7 +172,7 @@ export const AdminSidebarLinks: SidebarLink[] = [
 export const ProfileSidebarLinks: SidebarLink[] = [
   {
     label: "Profile",
-    path: "/profile",
+    path: "/admin/profile",
     icon: {
       default: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
@@ -181,7 +181,7 @@ export const ProfileSidebarLinks: SidebarLink[] = [
   },
   {
     label: "Manage Password",
-    path: "/manage-password",
+    path: "/admin/manage-password",
     icon: {
       default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
@@ -189,7 +189,65 @@ export const ProfileSidebarLinks: SidebarLink[] = [
     },},
   {
     label: "Get Featured",
-    path: "/feature",
+    path: "/admin/feature",
+    icon: {
+      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  
+];
+export const CareProfileSidebarLinks: SidebarLink[] = [
+  {
+    label: "Profile",
+    path: "/care-provider/profile",
+    icon: {
+      default: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={profileActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Manage Password",
+    path: "/care-provider/manage-password",
+    icon: {
+      default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
+    },},
+  {
+    label: "Get Featured",
+    path: "/care-provider/feature",
+    icon: {
+      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  
+];
+export const PatientProfileSidebarLinks: SidebarLink[] = [
+  {
+    label: "Profile",
+    path: "/patient/profile",
+    icon: {
+      default: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={profileActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  {
+    label: "Manage Password",
+    path: "/patient/manage-password",
+    icon: {
+      default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
+    },},
+  {
+    label: "Get Featured",
+    path: "/patient/feature",
     icon: {
       default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
