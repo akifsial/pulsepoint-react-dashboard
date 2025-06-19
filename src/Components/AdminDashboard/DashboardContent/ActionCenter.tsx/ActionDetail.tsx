@@ -30,11 +30,11 @@ const ActionDetail = () => {
     <div >
       {notifications.map((item, index) => (
         <div key={index} className="flex items-start justify-between mb-4">
-          <div className="flex items-start gap-3 text-[14px] font-normal font-giest leading-5 max-w-[300px] ">
+          <div className="flex items-start gap-3 text-[14px] font-normal font-giest leading-5 max-w-[292px] ">
             <img src={item.icon} alt="icon" className="w-5 relative top-1.5"/>
             <p>{item.text}</p>
           </div>
-          <span className="text-[14px] font-medium font-giest text-[#252525] rounded-[9px] bg-[#F4FAFF] p-2">{item.title}</span>
+          <span className="text-[12px] font-medium font-giest text-[#252525] rounded-[9px] bg-[#F4FAFF] p-2">{item.title}</span>
         </div>
       ))}
     </div>

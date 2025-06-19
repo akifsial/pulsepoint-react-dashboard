@@ -15,7 +15,7 @@ const AdminLayout = () => {
         <DashboardHeader
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
-          noticationLink="/patient/notification"
+          noticationLink="/admin/notification"
           routeProfile="/admin/profile"
         />
         <main className="mt-28 overflow-hidden">
