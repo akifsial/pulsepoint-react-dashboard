@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Model from "@components/Model/Model";
 import ChangePhoto from "./ChangePhoto";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
@@ -32,7 +32,7 @@ const cityOptions = [
   { value: "Peshawar", label: "Peshawar" },
 ];
 
-const ProfileDetail = ({ onChangePassword }) => {
+const PatientProfileDetail = ({ onChangePassword }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [organization, setOrganization] = useState("");
@@ -77,8 +77,9 @@ const ProfileDetail = ({ onChangePassword }) => {
                 type="text"
                 fieldName="w-[49%]"
                 iconUrl={inputUser}
-                placeholder="e.g., Sunrise Rehabilitation Center"
-              />
+                placeholder="e.g., Sunrise Rehabilitation Center" value={""} onChange={function (e: ChangeEvent<HTMLInputElement>): void {
+                  throw new Error("Function not implemented.");
+                } }              />
               <SelectField
                 label="Organization Type"
                 id="organization"
@@ -116,15 +117,6 @@ const ProfileDetail = ({ onChangePassword }) => {
               placeholder="https://www.topseniorspot.org"
               className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
             />
-
-            <div className="mb-6 text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
-              <p className="mb-2.5">Additional Details:</p>
-              <div className="text-sm font-normal text-[#252525] py-4 px-[15px] rounded-lg border border-[#2525251A] bg-[#FBFCFD]">
-                <p>
-                  Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. Our mission is to provide compassionate, person-centered services in a comfortable, home-like setting.Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. 
-                </p>
-              </div>
-            </div>
 
             <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
               Location Information
@@ -183,6 +175,4 @@ const ProfileDetail = ({ onChangePassword }) => {
   );
 };
 
-export default ProfileDetail;
-
-
+export default PatientProfileDetail;

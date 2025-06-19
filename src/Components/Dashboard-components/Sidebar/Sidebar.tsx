@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import SiteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
 import miniLogo from "@assets/media/svgs/mini-logo.svg";
@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
     "/care-provider/profile",
     "/care-provider/manage-password",
     "/care-provider/feature",
-    "/patient/chatbot"
+    "/patient/chatbot",
   ];
 
   const showOnlyIcons = iconOnlyRoutes.some((route) =>
@@ -66,7 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               />
             </div>
             {/* <div>
-              <div className="flex-1 flex md:hidden block">
+              <div className="flex-1 flex md:hidden">
                 <CommonInput
                   placeholder="Search here..."
                   value={searchText}
@@ -104,13 +104,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
             {/* Add the ChatbotIcon image*/}
-           
           </div>
-          <div> <img
-              src={ChatbotIcon}
-              alt="chatbot"
-              className="w-[70px] h-[50px] object-cover"
-            /></div>
+          <Link to="/patient/chatbot" aria-label="Open chatbot">
+            <div>
+              {" "}
+              <img
+                src={ChatbotIcon}
+                alt="chatbot"
+                className="w-[70px] h-[50px] object-cover cursor-pointer"
+              />
+            </div>
+          </Link>
         </aside>
       ) : (
         <aside
@@ -134,7 +138,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               />
             </div>
             <div>
-              <div className="flex-1 flex md:hidden block">
+              <div className="flex-1 flex md:hidden">
                 <CommonInput
                   placeholder="Search here..."
                   value={searchText}

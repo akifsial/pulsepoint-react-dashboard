@@ -42,7 +42,7 @@ const HospitalProfile = () => {
               imgClass="w-[19px] h-[19px]"
               imgPosition="left"
               btnClass="flex items-center justify-center gap-[4px] h-[36px] px-4 rounded-md bg-[#252525] text-white text-sm font-semibold"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => navigate("/patient/patient-reviews")}
             />
           </header>
         
