@@ -76,7 +76,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({ filterValue }) 
             <p className="text-[16px] text-[#252525]">({item.review})</p>
           </div>
 
-          <div className="w-[1000px]">
+          <div className="">
             <p className="text-[16px] text-[#252525] mb-4">“{item.sliderDesc}”</p>
           </div>
 

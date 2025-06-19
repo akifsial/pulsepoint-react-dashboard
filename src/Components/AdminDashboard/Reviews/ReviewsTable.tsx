@@ -230,32 +230,31 @@ const ReviewsTable: React.FC = () => {
               imgSrc={searchIcon}
               imgLeft={true}
               inputClassName="text-sm"
-              containerClassName="rounded-[10px] w-full"
+              containerClassName="rounded-[10px]"
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center  gap-3">
             <div className="flex items-center gap-2.5">
               <p className="text-[#252525] font-medium text-sm">Review Status:</p>
               <PrimaryButton
-                btnText="All Reviews"
-                showImg={true}
-                imgClass="w-[24px] h-[24px] object-cover"
-                img={filterIcon}
-                imgPosition="left"
-                btnClass="border border-[#252525] px-4 md:w-[127px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-              />
+                  btnText="All Reviews"
+                  showImg={true}
+                  imgClass="w-[24px] h-[24px] object-cover"
+                  img={filterIcon}
+                  imgPosition="left"
+                  btnClass="border border-[#252525] px-4 md:w-[157px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
+                />
             </div>
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
               <div className="flex items gap-4">
                 <PrimaryButton
-                  btnText="ratings"
+                  btnText="Ratings"
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] px-4 md:w-[101px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
               </div>

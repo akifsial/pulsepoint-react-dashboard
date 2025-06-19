@@ -250,22 +250,14 @@ const ForumTable: React.FC = () => {
                 <span className="text-sm font-medium w-full text-center">
                   Filter By
                 </span>
-                <PrimaryButton
+                 <PrimaryButton
                   btnText="Ratings"
+                  showImg={true}
+                  imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
-                  showImg={true}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] px-4 md:w-[110px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                  
-                />
-                <PrimaryButton
-                  btnText="View All Listing"
-                  btnTextClass="text-white text-sm font-semibold"
-                  showImg={true}
-                  img={forwardarrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 rounded-[10px] bg-black"
                 />
               </div>
             </div>
