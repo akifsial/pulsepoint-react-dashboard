@@ -7,7 +7,6 @@ import EditReviewPage from "@pages/PatientPages/EditReviewPage"; // Add this imp
 import HospitalProfile from "@pages/PatientPages/HospitalProfile";
 import ChatBot from "@pages/PatientPages/ChatBotPage";
 import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
-import ChatBotPage from "@pages/PatientPages/ChatBotPage";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 export const PatientRoutes = [
   {
@@ -20,7 +19,6 @@ export const PatientRoutes = [
       { path: "patient-reviews/edit", element: <EditReviewPage /> }, // Add this line
       { path: "community-forum", element: <AdminCommunityForum /> },
       { path: "hospital-profile", element: <HospitalProfile /> },
-      { path: "chatbot", element: <ChatBot /> },
       { path: "notification", element: <NotificationPage /> },
        { path: "chatbot", element: <ChatbotLayout /> },
     ],

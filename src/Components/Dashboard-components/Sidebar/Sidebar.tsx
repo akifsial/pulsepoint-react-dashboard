@@ -49,12 +49,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
         <aside
           className={`
             p-4 min-h-screen w-[89px]
-            lg:translate-x-0 
+            lg:translate-x-0 flex flex-col justify-between
             fixed top-0 left-0 z-50 transform transition-transform duration-500
             ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
           `}
         >
-          <div className="space-y-2 mt-3 h-screen">
+          <div className="space-y-2 mt-3">
             <div
               className="mb-7 max-w-[250px] mx-auto cursor-pointer"
               onClick={() => navigate("/")}
@@ -104,11 +104,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
             {/* Add the ChatbotIcon image*/}
-            {/* <img
-              src={ChatbotIcon}
-              alt="chatbot"
-              className="w-[70px] h-[50px] object-cover mt-[320px]"
-            /> */}
             <Link to="/patient/chatbot" aria-label="Open chatbot">
               <img
                 src={ChatbotIcon}

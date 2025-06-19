@@ -1,59 +1,44 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import SiteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
-import { SidebarLink } from "../Dashboard-components/Sidebar/SidebarLinks";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 interface SidebarProps {
-  sidebarData: SidebarLink[];
-    isOpen: boolean;
+  sidebarData: string[]; // Using string[] instead of SidebarLink[]
+  isOpen: boolean;
   onClose: () => void;
 }
 
-const ChatbotSidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
+const ChatbotSidebar: React.FC<SidebarProps> = ({
+  isOpen,
+  onClose,
+  sidebarData,
+}) => {
   const location = useLocation();
+  console.log("Current path:", location.pathname);
   const navigate = useNavigate();
-useEffect(() => {
+
+  useEffect(() => {
     onClose();
   }, [location.pathname]);
+
   return (
     <aside
-    className={`
-    fixed top-0 z-50 w-[268px] min-h-screen bg-[#F5FBFF] shadow-lg p-4
-    transition-all duration-300 ease-in-out
+      className={`
+        fixed top-0 z-50 w-[268px] min-h-screen bg-[#F5FBFF] shadow-lg p-4
+        transition-all duration-300 ease-in-out
 
-    // Small screens
-    ${isOpen ? "left-[89px]" : "-left-full"} 
-
-    // Large screens
-    lg:left-[89px] lg:block
-  `}
-
+        ${isOpen ? "left-[89px]" : "-left-full"}
+        lg:left-[89px] lg:block
+      `}
     >
-      <div className="space-y-2 mt-3 h-screen">
-        {sidebarData.map((link, index) => {
-          const isActive = location.pathname === link.path;
-          const [isHovered, setIsHovered] = useState(false);
-          let Icon = link.icon.default;
-          if (isActive && link.icon.active) Icon = link.icon.active;
-          else if (isHovered && link.icon.hover) Icon = link.icon.hover;
-
-          return (
-            <NavLink
-              to={link.path}
-              key={index}
-              className={`flex items-center gap-3 px-4 py-[10px] rounded-[10px] transition-all ${
-                isActive
-                  ? "bg-[#28A2FF] text-white"
-                  : "text-gray-700 hover:bg-[#daeffd]"
-              }`}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <span>{Icon}</span>
-              <span>{link.label}</span>
-            </NavLink>
-          );
-        })}
+      <div className="space-y-2 mt-3 h-screen overflow-y-auto">
+        {sidebarData.map((link, index) => (
+          <div
+            key={index}
+            className="p-3 rounded-md hover:bg-[#daeffd] cursor-pointer text-gray-800"
+          >
+            {link}
+          </div>
+        ))}
       </div>
     </aside>
   );
