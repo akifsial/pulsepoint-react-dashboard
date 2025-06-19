@@ -142,7 +142,7 @@ const CareProviderDashboard: React.FC = () => {
             <div className="relative">
               <div className="flex items gap-4 ">
                 <PrimaryButton
-                  btnText="Ratigs"
+                  btnText="ratings"
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}

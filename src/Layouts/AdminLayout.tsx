@@ -15,6 +15,7 @@ const AdminLayout = () => {
         <DashboardHeader
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
+          routeProfile="/admin/profile"
         />
         <main className="mt-28">
           <Outlet />

@@ -221,30 +221,47 @@ const ForumTable: React.FC = () => {
 
   return (
     <div className="mb-10">
-      {selectedCommunity ? (
-        <ViewCommunity
-          community={selectedCommunity}
-          onBack={() => setSelectedCommunity(null)}
-        />
-      ) : (
-        <>
-          <h2 className="font-space-grotesk font-bold text-heading leading-8 text-brand-ink">
-            Forum Moderation
-          </h2>
-
-          <div className="mt-6 bg-white rounded-[10px] px-4 py-6">
-            <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between max-w-[1060px]">
-              <h3 className="mb-3 md:mb-0">Patients’ Details</h3>
-              <div className="flex items-center ">
-                <CommonInput
-                  placeholder="Search by name, zip"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
+      <h2
+        className="
+      font-space-grotesk
+      font-bold
+      text-heading
+      leading-8
+      tracking-normal
+      text-brand-ink
+      align-middle
+    "
+      >
+        Forum Moderation
+      </h2>
+      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
+        <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
+          <h3 className="md:mb-0 mb-3">Patients’ Details</h3>
+          {/* searchbar */}
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
+            <CommonInput
+              placeholder="Search with Provider name , zip code"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              showImg={true}
+              imgSrc={searchIcon}
+              imgLeft={true}
+              inputClassName="text-sm"
+              containerClassName="w-full max-w-sm"
+            />
+          </div>
+          <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
+            <p className="text-[#252525] font-medium text-sm">Filter by</p>
+            <div className="relative">
+              <div className="flex items gap-4">
+                <PrimaryButton
+                  btnText="ratings"
                   showImg={true}
-                  imgSrc={searchIcon}
-                  imgLeft={true}
-                  inputClassName="text-sm"
-                  containerClassName="w-full max-w-sm"
+                  imgClass="w-[24px] h-[24px] object-cover"
+                  img={filterIcon}
+                  imgPosition="left"
+                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
                 <span className="text-sm font-medium w-full text-center">Filter By</span>
                 <PrimaryButton
@@ -288,14 +305,15 @@ const ForumTable: React.FC = () => {
               )}
             />
           </div>
-        </>
-      )}
+      
 
       {showDeleteModal && (
         <Model setIsOpen={setShowDeleteModal} className="max-w-[488px]">
           <DeletePost />
         </Model>
       )}
+    </div>
+    </div>
     </div>
   );
 };

@@ -15,6 +15,7 @@ const PatientLayout = () => {
         <DashboardHeader
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
+          routeProfile="/patient/profile"
         />
         <main className="mt-28">
           <Outlet />
