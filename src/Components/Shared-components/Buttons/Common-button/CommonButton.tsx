@@ -33,7 +33,7 @@ export const PrimaryButton: React.FC<ExtendedBtnProps> = ({
   const textElement = <span className={btnTextClass}>{btnText}</span>;
  
   const content = (
-    <div className="flex items-center gap-x-2 justify-center">
+    <div className="flex items-center gap-x-1.5 justify-center">
       {imgPosition === "left" && prefixImage}
       {textElement}
       {suffixImage}

@@ -246,42 +246,42 @@ const CareProviderDashboard: React.FC = () => {
                 </div>
               </div>
             </div>
-
             {activeTab === "all" ? (
-              <TanDataTable<dataTypes>
-                columns={columns}
-                data={data}
-                showCheckbox={true}
-                onRowSelect={handleRowSelect}
-                showActions={true}
-                actions={(row) => (
-                  <DropdownActions
-                    onView={() => console.log("View Detail", row.id)}
-                    onEdit={() => console.log("Approve Post", row.id)}
-                    onFlag={() => console.log("Flag Post", row.id)}
-                    onDelete={() => console.log("Delete Post", row.id)}
-                    variant="simple"
-                  />
-                )}
-              />
-            ) : (
-              <TanDataTable<dataTypes>
-                columns={columns}
-                data={data.slice(0, 3)}
-                showCheckbox={true}
-                onRowSelect={handleRowSelect}
-                showActions={true}
-                actions={(row) => (
-                  <DropdownActions
-                    onView={() => console.log("View Detail", row.id)}
-                    onEdit={() => console.log("Approve Post", row.id)}
-                    onFlag={() => console.log("Flag Post", row.id)}
-                    onDelete={() => console.log("Delete Post", row.id)}
-                    variant="simple"
-                  />
-                )}
-              />
-            )}
+            <TanDataTable<dataTypes>
+              columns={columns}
+              data={data}
+              showCheckbox={false}
+              onRowSelect={handleRowSelect}
+              showActions={true}
+              className="my-custom-class"
+              actions={(row) => (
+                <DropdownActions
+                  onView={() => console.log("View Detail", row.id)}
+                  onEdit={() => console.log("Edit Detail", row.id)}
+                  onDelete={() => console.log("Delete Provider", row.id)}
+                  variant="simple"
+                />
+              )}
+            />
+          ) : (
+            <TanDataTable<dataTypes>
+              columns={columns}
+              data={data.slice(0, 3)}
+              showCheckbox={false}
+              onRowSelect={handleRowSelect}
+              showActions={true}
+              className="my-custom-class"
+              actions={(row) => (
+                <DropdownActions
+                  onView={() => console.log("View Details", row.id)}
+                  onEdit={() => console.log("Approve Post", row.id)}
+                  onFlag={() => console.log("Flag Post", row.id)}
+                  onDelete={() => console.log("Delete Post", row.id)}
+                  variant="simple"
+                />
+              )}
+            />
+          )}
           </>
         )}
       </div>
