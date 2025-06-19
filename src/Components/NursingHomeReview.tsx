@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChatbotSearchbar from "./ChatbotSearchBar";
-import MsgIcon from "@assets/media/svgs/patient-db-svgs/chat-send-icon.png";
+import MsgIcon from "@assets/media/svgs/patient-db-svgs/chat-send-icon.png"; // New icon
 
 interface Facility {
   name: string;
@@ -123,9 +123,9 @@ const NursingHomeReviews: React.FC = () => {
             </p>
           </div>
         </div>
-        
-        {/* Chatbot Searchbar */}
-        <ChatbotSearchbar onAskAI={handleAskAI} />
+
+        {/* Chatbot Searchbar with custom icon */}
+        <ChatbotSearchbar onAskAI={handleAskAI} iconSrc={MsgIcon} />
       </div>
     </div>
   );

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import AI from "@assets/media/svgs/patient-db-svgs/AI.png";
-import ChatIcon from "@assets/media/svgs/patient-db-svgs/chatbot-msg-icon.png";
+import ChatIcon from "@assets/media/svgs/patient-db-svgs/chatbot-msg-icon.png"; 
 
 interface ChatbotSearchbarProps {
   onAskAI: (question: string) => void;
+  iconSrc?: string;
 }
 
-const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({ onAskAI }) => {
+const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({ onAskAI, iconSrc }) => {
   const [question, setQuestion] = useState("");
 
   const handleAskAI = () => {
@@ -29,9 +30,9 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({ onAskAI }) => {
           />
           <button
             onClick={handleAskAI}
-            className=" text-white rounded-full mr-0 transition-colors"
+            className="text-white rounded-full mr-0 transition-colors"
           >
-            <img src={ChatIcon} alt="Send" className="w-[43px] h-[43px]" />
+            <img src={iconSrc || ChatIcon} alt="Send" className="w-[43px] h-[43px]" />
           </button>
         </div>
       </div>
