@@ -223,7 +223,7 @@ const ForumTable: React.FC = () => {
       {selectedCommunity ? (
         <ViewCommunity
           community={selectedCommunity}
-          onBack={() => setSelectedCommunity(null)}
+          goBack={ setSelectedCommunity}
         />
       ) : (
         <>
@@ -249,14 +249,14 @@ const ForumTable: React.FC = () => {
                 <span className="text-sm font-medium w-full text-center">
                   Filter By
                 </span>
-                <PrimaryButton
-                  btnText="Ratings"
-                  img={filterIcon}
+                 <PrimaryButton
+                  btnText="ratings"
                   showImg={true}
+                  imgClass="w-[24px] h-[24px] object-cover"
+                  img={filterIcon}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] px-4  w-full py-[10px] h-[44px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                  
                 />
               </div>
             </div>

@@ -14,6 +14,7 @@ import UserCommunity from "./UserCommunity";
 import UserComments from "./UserComments";
 import UserFlagged from "./UserFlagged";
 import leftarrow from "@assets/media/svgs/leftarrow.svg";
+import { useNavigate } from "react-router-dom";
 
 const infoItems = [
   { label: "Name:", value: "Dr. Emily Carter" },
@@ -36,19 +37,20 @@ const arrayinfo = [
   { label: "Zip Code:", value: "80202" },
 ];
 
-const UserInfo = () => {
+const UserInfo = ({goBack}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showEditPage, setShowEditPage] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate=useNavigate
 
   if (showEditPage) {
-    return <EditDetails goBack={() => setShowEditPage(false)} />;
+    return <EditDetails goBack={setShowEditPage} />;
   }
 
   return (
     <div>
       <div className="flex items-baseline gap-2">
-        <img src={leftarrow} alt="" />
+        <img src={leftarrow} alt="" className="cursor-pointer" onClick={()=>goBack(false)}/>
         <h2 className=" text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
           Care Provider Details
         </h2>
