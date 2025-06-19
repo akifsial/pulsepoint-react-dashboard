@@ -11,8 +11,9 @@ import {
   ProfileSidebarLinks,
   sidebarLinks,
 } from "@components/Dashboard-components/Sidebar/SidebarLinks";
+import ChatbotSidebar from "@components/ChatbotSidebar";
 
-const PatientProfileLayout = () => {
+const ChatbotLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   
@@ -32,7 +33,7 @@ const PatientProfileLayout = () => {
       />
 
       {showProfileSidebar&&showProfileSidebar && (
-        <ProfileSidebar
+        <ChatbotSidebar
           sidebarData={PatientProfileSidebarLinks}
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
@@ -55,4 +56,4 @@ const PatientProfileLayout = () => {
   );
 };
 
-export default PatientProfileLayout;
+export default ChatbotLayout;
