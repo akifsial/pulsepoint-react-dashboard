@@ -15,6 +15,7 @@ import {
 const PatientProfileLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
+  
 
   const showProfileSidebar = ["/patient/profile", "/patient/manage-password", "/patient/feature"].some(
     (path) => location.pathname.startsWith(path)

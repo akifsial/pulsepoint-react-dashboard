@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
+// import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
-import RatingStars from "@components/Shared-components/RatingStars";
+// import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
+import exports from "@assets/media/svgs/export.svg"
+import whitearrow from "@assets/media/svgs/whitearrow.svg"
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 
@@ -235,18 +237,19 @@ const CareProviderDashboard: React.FC = () => {
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] h-[44px]  rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
-                <PrimaryButton
-                  btnText="View All Listing"
-                  btnTextClass="text-[#FFFFFF] text-sm font-semibold"
-                  showImg={true}
-                  imgClass="w-[14px] h-[13px] object-cover"
-                  img={ForwardArrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px] bg-[#000000]"
-                />
+                 <PrimaryButton
+                btnText="Export Table"
+                showImg={true}
+                img={exports}
+                imgClass="w-4 h-4"
+                suffixImg={whitearrow}
+                suffixImgClass="w-4 h-4"
+                onClick={() => setIsOpen(!isOpen)}
+                btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
+              />
               </div>
               <AnimatePresence>
                 {showRatingDropdown && (
@@ -276,8 +279,8 @@ const CareProviderDashboard: React.FC = () => {
               actions={(row) => (
                 <DropdownActions
                   onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit", row.id)}
-                  onDelete={() => console.log("Delete", row.id)}
+                  onEdit={() => console.log("Edit Details", row.id)}
+                  onDelete={() => console.log("Delete Provider", row.id)}
                 />
               )}
             />

@@ -7,9 +7,10 @@ import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
 import Methew from "@assets/media/svgs/dashboard-svgs/userImage.svg";
 import { GoPerson } from "react-icons/go";
-import { IoCallOutline } from "react-icons/io5";
-import { IoMailOutline } from "react-icons/io5";
-import { CiGlobe } from "react-icons/ci";
+import leftarrow from "@assets/media/svgs/leftarrow.svg"
+// import { IoCallOutline } from "react-icons/io5";
+// import { IoMailOutline } from "react-icons/io5";
+// import { CiGlobe } from "react-icons/ci";
  
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
@@ -39,12 +40,15 @@ const EditDetails = () => {
  
   return (
     <>
-      <div className=" ">
+      <div>
+         <div className="flex items-baseline gap-2">
+        <img src={leftarrow} alt="" />
         <h2 className=" text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
          Edit Care Provider Details
         </h2>
+      </div>
  
-        <div className="rounded-[10px] min-h-[606px] overflow-hidden bg-white p-10 pb-0  mb-4">
+        <div className="rounded-[10px] bg-white p-10 pb-0  mb-4">
           <div className="overflow-y-auto h-[628px]">
        
           <div className=" flex items-center justify-between mb-7">

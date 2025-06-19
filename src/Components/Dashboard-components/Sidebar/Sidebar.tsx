@@ -9,6 +9,7 @@ import Chatbot from "../../../assets/media/svgs/chatbot.svg";
 import AiIcon from "../../../assets/media/svgs/ai-icon.svg";
 import ChatbotIcon from "@assets/media/svgs/chatbot-icon.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+
 interface SidebarProps {
   sidebarData: SidebarLink[];
   isOpen: boolean;
@@ -19,7 +20,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
-  const AIShow=location.pathname.startsWith("/patient")
+  const AIShow = location.pathname.startsWith("/patient");
+
   const iconOnlyRoutes = [
     "/admin/profile",
     "/admin/feature",
@@ -30,7 +32,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
     "/care-provider/profile",
     "/care-provider/manage-password",
     "/care-provider/feature",
+    "/patient/chatbot"
   ];
+
   const showOnlyIcons = iconOnlyRoutes.some((route) =>
     location.pathname.startsWith(route)
   );
@@ -44,13 +48,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
       {showOnlyIcons ? (
         <aside
           className={`
-         p-4 min-h-screen w-[89px]
-         lg:translate-x-0 
-        fixed top-0 left-0 z-50 transform transition-transform duration-500
-        ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
-      `}
+            p-4 min-h-screen w-[89px]
+            lg:translate-x-0 flex flex-col justify-between
+            fixed top-0 left-0 z-50 transform transition-transform duration-500
+            ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
+          `}
         >
-          <div className="space-y-2 mt-3 h-screen">
+          <div className="space-y-2 mt-3">
             <div
               className="mb-7 max-w-[250px] mx-auto cursor-pointer"
               onClick={() => navigate("/")}
@@ -61,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 className="w-[64px] h-[58px] object-cover"
               />
             </div>
-            <div>
+            {/* <div>
               <div className="flex-1 flex md:hidden block">
                 <CommonInput
                   placeholder="Search here..."
@@ -74,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                   containerClassName="w-full max-w-sm overflow-hidden"
                 />
               </div>
-            </div>
+            </div> */}
             {sidebarData.map((link, index) => {
               const isActive = location.pathname === link.path;
 
@@ -100,22 +104,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
             {/* Add the ChatbotIcon image*/}
-            <img
+           
+          </div>
+          <div> <img
               src={ChatbotIcon}
               alt="chatbot"
-              className="w-[70px] h-[50px] object-cover mt-[320px]"
-            />
-          </div>
+              className="w-[70px] h-[50px] object-cover"
+            /></div>
         </aside>
       ) : (
         <aside
           className={`
-         p-4 min-h-screen w-68
-         lg:translate-x-0 
-         flex flex-col justify-between
-        fixed top-0 left-0 z-50 transform transition-transform duration-500
-        ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
-      `}
+            p-4 min-h-screen w-68
+            lg:translate-x-0 
+            flex flex-col justify-between
+            fixed top-0 left-0 z-50 transform transition-transform duration-500
+            ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
+          `}
         >
           <div className="space-y-2 mt-3 ">
             <div
@@ -168,31 +173,32 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
           </div>
-          {AIShow &&   <div
-            className="rounded-[10px] p-4 text-center"
-            style={{
-              background:
-                " radial-gradient(96.35% 86.93% at 72.06% 38.43%, #023552 0%, #28A2FF 100%)",
-            }}
-          >
-            <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
-            <div className="text-white text-sm font-normal mb-2">
-              <strong className="text-[17px] font-bold">
-                Unlock Premium Insights
-              </strong>
-              <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
+          {AIShow && (
+            <div
+              className="rounded-[10px] p-4 text-center"
+              style={{
+                background:
+                  " radial-gradient(96.35% 86.93% at 72.06% 38.43%, #023552 0%, #28A2FF 100%)",
+              }}
+            >
+              <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
+              <div className="text-white text-sm font-normal mb-2">
+                <strong className="text-[17px] font-bold">
+                  Unlock Premium Insights
+                </strong>
+                <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
+              </div>
+              <PrimaryButton
+                btnText="AI Chatbot"
+                showImg={true}
+                imgClass="w-[20px] h-[20px] object-cover"
+                img={AiIcon}
+                imgPosition="left"
+                btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
+                onClick={() => navigate("/patient/feature")}
+              />
             </div>
-            <PrimaryButton
-              btnText="AI Chatbot"
-              showImg={true}
-              imgClass="w-[20px] h-[20px] object-cover"
-              img={AiIcon}
-              imgPosition="left"
-              btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
-              onClick={() => navigate("/feature")}
-            />
-          </div>}
-        
+          )}
         </aside>
       )}
     </>
