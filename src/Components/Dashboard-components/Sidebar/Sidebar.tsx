@@ -18,7 +18,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
-  const iconOnlyRoutes = ["/profile", "/manage-password", "/feature"];
+  const AIShow=location.pathname.startsWith("/patient")
+  const iconOnlyRoutes = [
+    "/admin/profile",
+    "/admin/feature",
+    "/admin/manage-password",
+    "/patient/profile",
+    "/patient/manage-password",
+    "/patient/feature",
+    "/care-provider/profile",
+    "/care-provider/manage-password",
+    "/care-provider/feature",
+  ];
   const showOnlyIcons = iconOnlyRoutes.some((route) =>
     location.pathname.startsWith(route)
   );
@@ -88,7 +99,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
           </div>
-          
         </aside>
       ) : (
         <aside
@@ -151,7 +161,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
           </div>
-          <div
+          {AIShow &&   <div
             className="rounded-[10px] p-4 text-center"
             style={{
               background:
@@ -159,21 +169,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
             }}
           >
             <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
-           <div className="text-white text-sm font-normal mb-2">
-             <strong className="text-[17px] font-bold">Unlock Premium Insights</strong>
-            <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
+            <div className="text-white text-sm font-normal mb-2">
+              <strong className="text-[17px] font-bold">
+                Unlock Premium Insights
+              </strong>
+              <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
             </div>
             <PrimaryButton
-             btnText="AI Chatbot"
-                  showImg={true}
-                  imgClass="w-[20px] h-[20px] object-cover"
-                  img={AiIcon}
-                  imgPosition="left"
-                  btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
-                  onClick={() => navigate("/feature")}
+              btnText="AI Chatbot"
+              showImg={true}
+              imgClass="w-[20px] h-[20px] object-cover"
+              img={AiIcon}
+              imgPosition="left"
+              btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
+              onClick={() => navigate("/feature")}
             />
-           
-          </div>
+          </div>}
+        
         </aside>
       )}
     </>

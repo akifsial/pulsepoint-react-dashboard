@@ -15,6 +15,7 @@ const CareProviderLayout = () => {
         <DashboardHeader
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
+          routeProfile="/care-provider/profile"
         />
         <main className="mt-28">
           <Outlet />
