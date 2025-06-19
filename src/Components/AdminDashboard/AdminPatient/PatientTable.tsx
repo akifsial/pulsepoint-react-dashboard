@@ -264,60 +264,6 @@ const CareProviderDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="mb-4 flex">
-          {/* <div
-            className={`tab ${
-              activeTab === "all"
-                ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]"
-                : "bg-white"
-            } `}
-            onClick={() => handleTabClick("all")}
-            style={{
-              width: "213px",
-              height: "47px",
-              gap: "10px",
-              paddingTop: "18px",
-              paddingRight: "10px",
-              paddingBottom: "18px",
-              paddingLeft: "10px",
-              cursor: "pointer",
-            }}
-          >
-            <p
-              className={`font-medium text-sm ${
-                activeTab === "all" ? "text-[#007AB2]" : "text-[#252525CC]"
-              }`}
-            >
-              All Care Providers
-            </p>
-          </div>
-          <div
-            className={`tab ${
-              activeTab === "saved"
-                ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]"
-                : "bg-white"
-            } `}
-            onClick={() => handleTabClick("saved")}
-            style={{
-              width: "213px",
-              height: "47px",
-              gap: "10px",
-              paddingTop: "18px",
-              paddingRight: "10px",
-              paddingBottom: "18px",
-              paddingLeft: "10px",
-              cursor: "pointer",
-            }}
-          >
-            <p
-              className={`font-medium text-sm ${
-                activeTab === "saved" ? "text-[#007AB2]" : "text-[#252525CC]"
-              }`}
-            >
-              Saved Care Providers
-            </p>
-          </div> */}
-        </div>
         <div>
           {activeTab === "all" ? (
             <TanDataTable<dataTypes>
@@ -329,7 +275,7 @@ const CareProviderDashboard: React.FC = () => {
               className="my-custom-class"
               actions={(row) => (
                 <DropdownActions
-                  onView={() => console.log("View", row.id)}
+                  onView={() => console.log("View Detail", row.id)}
                   onEdit={() => console.log("Edit", row.id)}
                   onDelete={() => console.log("Delete", row.id)}
                 />
@@ -345,7 +291,7 @@ const CareProviderDashboard: React.FC = () => {
               className="my-custom-class"
               actions={(row) => (
                 <DropdownActions
-                  onView={() => console.log("View", row.id)}
+                  onView={() => console.log("View Detail", row.id)}
                   onEdit={() => console.log("Edit", row.id)}
                   onDelete={() => console.log("Delete", row.id)}
                 />
