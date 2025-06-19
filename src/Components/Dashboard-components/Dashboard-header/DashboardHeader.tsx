@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MdMenu } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
@@ -7,13 +7,15 @@ import notification from "@assets/media/svgs/dashboard-svgs/notification.svg";
 import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
 import dropDownArrow from "@assets/media/svgs/dashboard-svgs/arrow-down.svg";
 import ProfileDropdown from "../Dropdowns/ProfileDropdown";
-import { useNavigate } from "react-router-dom";
 import NotficationBar from "./NotificationBar";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface Props {
   sidebarOpen: boolean;
   setSidebarOpen: (val: boolean) => void;
   showProfileSidebar?: boolean;
+  noticationLink?: string;
+  routeProfile?: string;
 }
 
 const DashboardHeader: React.FC<Props> = ({
@@ -27,11 +29,40 @@ const DashboardHeader: React.FC<Props> = ({
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setShowMenu(false);
+    setShowNotifications(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target as Node)
+      ) {
+        setShowNotifications(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header
-      className={`${showProfileSidebar&& "lg:ml-[80px]"} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed  z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4
-  `}
+      className={`${showProfileSidebar ? "lg:ml-[80px]" : ""} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
     >
       <div className="flex items-center justify-between w-full">
         <div className="min-w-fit">
@@ -59,7 +90,6 @@ const DashboardHeader: React.FC<Props> = ({
             <MdMenu size={24} />
           </button>
 
-          {/* 🔔 Notification Bell */}
           <div
             onClick={() => setShowNotifications((prev) => !prev)}
             className="hidden lg:block cursor-pointer relative"
@@ -72,7 +102,6 @@ const DashboardHeader: React.FC<Props> = ({
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
           </div>
 
-          {/* 👤 User Menu */}
           <div
             onClick={() => setShowMenu(!showMenu)}
             className="flex items-center gap-2 cursor-pointer"
@@ -91,10 +120,10 @@ const DashboardHeader: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* 👇 Profile Dropdown */}
       <AnimatePresence>
         {showMenu && (
           <motion.div
+            ref={profileMenuRef}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -106,10 +135,11 @@ const DashboardHeader: React.FC<Props> = ({
         )}
       </AnimatePresence>
 
-      {/* 👇 Notification Dropdown */}
+      
       <AnimatePresence>
         {showNotifications && (
           <motion.div
+            ref={notificationRef}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

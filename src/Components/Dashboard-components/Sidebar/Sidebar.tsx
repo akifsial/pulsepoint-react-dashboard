@@ -65,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 className="w-[64px] h-[58px] object-cover"
               />
             </div>
-            <div>
+            {/* <div>
               <div className="flex-1 flex md:hidden block">
                 <CommonInput
                   placeholder="Search here..."
@@ -78,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                   containerClassName="w-full max-w-sm overflow-hidden"
                 />
               </div>
-            </div>
+            </div> */}
             {sidebarData.map((link, index) => {
               const isActive = location.pathname === link.path;
 
