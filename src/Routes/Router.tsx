@@ -5,6 +5,7 @@ import { PatientRoutes } from "./PatientRoutes";
 import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
 import { ProfileRoutes } from "./ProfileRoutes";
+import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 
 const Router: React.FC = () => {
   return (
@@ -98,7 +99,7 @@ const Router: React.FC = () => {
         </Route>
       ))}
       {/* 404 Not Found */}
-      
+        {/* <Route path="/patient/chatbot" element={ <ChatbotLayout /> }/> */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
