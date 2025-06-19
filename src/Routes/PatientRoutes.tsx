@@ -8,6 +8,7 @@ import HospitalProfile from "@pages/PatientPages/HospitalProfile";
 import ChatBot from "@pages/PatientPages/ChatBotPage";
 import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
+import NursingHomeReviews from "@components/NursingHomeReview";
 export const PatientRoutes = [
   {
     path: "/patient", 
@@ -21,6 +22,7 @@ export const PatientRoutes = [
       { path: "hospital-profile", element: <HospitalProfile /> },
       { path: "notification", element: <NotificationPage /> },
        { path: "chatbot", element: <ChatbotLayout /> },
+       { path: "nursing-home", element: <NursingHomeReviews /> },
     ],
   },
 ];
