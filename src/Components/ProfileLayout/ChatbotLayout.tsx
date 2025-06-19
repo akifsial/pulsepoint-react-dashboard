@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
 import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
-import ProfileSidebar from "@components/Dashboard-components/Sidebar/ProfileSidebar";
 import {
   PatientSidebarLinks,
 } from "@components/Dashboard-components/Sidebar/SidebarLinks";
 import ChatbotSidebar from "@components/ChatbotSidebar";
 import ChatbotAi from "@components/ChatbotAi";
-import { log } from "console";
 
 // Chatbot-specific links
 const chatbotSidebarLinks = [
@@ -47,7 +44,7 @@ const ChatbotLayout = () => {
       <div className={`relative lg:ml-16 ml-0 flex flex-col flex-1 px-4 pt-3 `}>
         <div className="absolute -top-[116px]">
           <DashboardHeader
-          showProfileSidebar="/patient/profile"
+          showProfileSidebar={true}
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
         />

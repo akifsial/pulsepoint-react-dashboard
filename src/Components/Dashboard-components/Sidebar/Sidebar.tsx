@@ -66,7 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               />
             </div>
             <div>
-              <div className="flex-1 flex md:hidden block">
+              <div className="flex-1 flex md:hidden">
                 <CommonInput
                   placeholder="Search here..."
                   value={searchText}
@@ -138,7 +138,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               />
             </div>
             <div>
-              <div className="flex-1 flex md:hidden block">
+              <div className="flex-1 flex md:hidden">
                 <CommonInput
                   placeholder="Search here..."
                   value={searchText}
