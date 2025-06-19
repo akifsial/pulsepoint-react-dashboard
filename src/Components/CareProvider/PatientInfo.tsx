@@ -1,15 +1,15 @@
 import React from 'react';
 import backArrow from "../../assets/media/svgs/dashboard-svgs/arrow-left.svg";
 import User from "../AdminDashboard/AdminCare/User";
-import Methew from "../../assets/media/svgs/dashboard-svgs/methew.svg"
+import Profile from "../../assets/media/svgs/dashboard-svgs/Avatar.svg"
 
 const infoItems = [
-  { label: "Name:", value: "Dr. Emily Carter" },
-  { label: "Provider ID:", value: "CP-20419" },
-  { label: "Specialty:", value: "Pulmonology" },
-  { label: "Organization:", value: "Summit Health Network" },
-  { label: "Assigned Patients:", value: "126" },
-  { label: "Last Login:", value: "May 15, 2025, 3:22 PM" },
+  { label: "Care Need:", value: "Short-Term Nursing Stay" },
+  { label: "Age: ", value: "67" },
+  { label: "Gender:", value: "Male" },
+  { label: "Phone Number:", value: "(916) 555-8923" },
+  { label: "Location:", value: "4001 J St, Sacramento, CA 95819" },
+  { label: "Preferred Communication Method", value: "Email, SMS, Phone" },
 ];
 
 const PatientInfo = ({ setShowPatientInfo }) => {
@@ -21,18 +21,18 @@ const PatientInfo = ({ setShowPatientInfo }) => {
       >
         <img src={backArrow} alt="backArrow" />
         <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
-          Back to Community
+          Patient’s Profile
         </h2>
       </div>
     <div className='bg-white pt-5 pb-8 px-6 rounded-[10px]'>
-            <div className="flex items-center gap-6.5 mb-6">
-              <img src={Methew} alt="Methew" />
+            <div className="flex items-center gap-6 mb-6">
+              <img src={Profile} alt="Methew" className='rounded-full' />
               <div className="mr-2">
-                <h4 className="font-bold mb-1 text-[#252525] text-xl leading-tight">
-                  Methew Thompson
+                <h4 className="font-bold text-[#252525] text-xl leading-tight">
+                 Ronald Richards
                 </h4>
-                <span className="text-base text-[#181D27]/50 leading-tight">
-                  (Discharged Patient)
+                <span className="text-[12px] text-[#181D27]/50 leading-tight">
+                 support@hopkinshospital.org
                 </span>
               </div>
               

@@ -14,7 +14,7 @@ import PatientInfo from "@components/CareProvider/PatientInfo";
 const BackFeed = ({ setOpenBackFeed }) => {
   const [joined, setJoined] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
-  const [showPatientInfo, setShowPatientInfo] = useState(false); // Toggle for PatientInfo
+  const [showPatientInfo, setShowPatientInfo] = useState(false);
 
   const handleJoinClick = () => setJoined(true);
   const handleAddCommunityClick = () => setJoined(false);
@@ -23,8 +23,9 @@ const BackFeed = ({ setOpenBackFeed }) => {
     <>
       {!showPatientInfo ? (
         <div className="mb-[25px]">
+          {/* Fixed header */}
           <div
-            className="flex items-center mb-4.5 gap-2.5 cursor-pointer"
+            className="flex items-center gap-2.5 cursor-pointer px-5 py-4 bg-transparent sticky top-0 z-10"
             onClick={() => setOpenBackFeed(false)}
           >
             <img src={backArrow} alt="backArrow" />
@@ -33,8 +34,22 @@ const BackFeed = ({ setOpenBackFeed }) => {
             </h2>
           </div>
 
-          <div>
-            <div className="rounded-xl bg-white mb-[25px] overflow-hidden">
+          {/* Scrollable content area */}
+          <div
+            className="h-[603px] overflow-y-scroll pr-2"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+          >
+            {/* Hide scrollbar in WebKit browsers */}
+            <style jsx>{`
+              ::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+
+            <div className="rounded-xl bg-white mb-[14px]">
               <div
                 className="h-[147px] relative"
                 style={{
@@ -75,20 +90,24 @@ const BackFeed = ({ setOpenBackFeed }) => {
                     </div>
                   </div>
                   <p>
-                    Welcome to r/Doctor — A community for all who hold or are pursuing
-                    the title of Doctor, whether in science, technology, engineering,
-                    mathematics.
+                    Welcome to r/Doctor — A community for all who hold or are
+                    pursuing the title of Doctor, whether in science,
+                    technology, engineering, mathematics.
                   </p>
                 </div>
 
                 <div className="pl-10 border-l border-l-black">
                   <div className="flex items-center mb-4">
                     <div className="pr-6">
-                      <p><b>67K</b></p>
+                      <p>
+                        <b>67K</b>
+                      </p>
                       <p>Members</p>
                     </div>
                     <div className="pl-6 border-l border-black/20">
-                      <p><b>20K</b></p>
+                      <p>
+                        <b>20K</b>
+                      </p>
                       <p className="flex items-center gap-1">
                         <span className="w-2 h-2 bg-[#52C343] rounded-full"></span>
                         Online
