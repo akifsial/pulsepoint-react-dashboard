@@ -14,7 +14,7 @@ const ManagePassword = () => {
   return (
     <>
      <div
-        className="flex items-center mb-6 gap-2.5 cursor-pointer" onClick={() => Navigate("/profile")}
+        className="flex items-center mb-6 gap-2.5 cursor-pointer" onClick={() => Navigate(-1)}
       >
         <img src={backArrow} alt="backArrow" />
         <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk]">

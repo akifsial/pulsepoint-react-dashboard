@@ -32,20 +32,20 @@ const PatinetReviews: React.FC = () => {
               value={filterValue}
               onChange={(val) => setFilterValue(val)}
               options={statusOptions}
-              className="w-full md:w-[200px] h-[40px] text-sm"
+              className="w-full md:w-[125px] h-[44px] text-sm"
             />
           </div>
           <div className="flex items-center gap-2">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
-            <PrimaryButton
-              btnText="Ratings"
-              showImg={true}
-              imgClass="w-[24px] h-[24px] object-cover"
-              img={filterIcon}
-              imgPosition="left"
-              btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-              onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-            />
+             <PrimaryButton
+                btnText="Ratings"
+                showImg={true}
+                imgClass="w-[24px] h-[24px] object-cover"
+                img={filterIcon}
+                imgPosition="left"
+                btnClass="border border-[#252525] px-4 md:w-[101px] h-[46px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
+               
+              />
           </div>
 
           {/* Dropdown */}

@@ -98,6 +98,7 @@ const EditDetails = () => {
                 options={organizationOptions}
                 selectName="w-[49%]"
               />
+              
  
               <InputField
                 label="Phone:"
