@@ -172,32 +172,31 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               );
             })}
           </div>
-          {AIShow && (
-            <div
-              className="rounded-[10px] p-4 text-center"
-              style={{
-                background:
-                  " radial-gradient(96.35% 86.93% at 72.06% 38.43%, #023552 0%, #28A2FF 100%)",
-              }}
-            >
-              <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
-              <div className="text-white text-sm font-normal mb-2">
-                <strong className="text-[17px] font-bold">
-                  Unlock Premium Insights
-                </strong>
-                <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
-              </div>
-              <PrimaryButton
-                btnText="AI Chatbot"
-                showImg={true}
-                imgClass="w-[20px] h-[20px] object-cover"
-                img={AiIcon}
-                imgPosition="left"
-                btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
-                onClick={() => navigate("/feature")}
-              />
+          {AIShow &&   <div
+            className="rounded-[10px] p-4 text-center"
+            style={{
+              background:
+                " radial-gradient(96.35% 86.93% at 72.06% 38.43%, #023552 0%, #28A2FF 100%)",
+            }}
+          >
+            <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
+            <div className="text-white text-sm font-normal mb-2">
+              <strong className="text-[17px] font-bold">
+                Unlock Premium Insights
+              </strong>
+              <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
             </div>
-          )}
+            <PrimaryButton
+              btnText="AI Chatbot"
+              showImg={true}
+              imgClass="w-[20px] h-[20px] object-cover"
+              img={AiIcon}
+              imgPosition="left"
+              btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
+              onClick={() => navigate("/patient/feature")}
+            />
+          </div>}
+        
         </aside>
       )}
     </>

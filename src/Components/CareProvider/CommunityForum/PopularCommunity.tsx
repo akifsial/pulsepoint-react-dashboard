@@ -31,7 +31,7 @@ const PopularCommunity = () => {
   return (
     <>
       {/* Sidebar */}
-      <div className="max-w-[292px]">
+      <div>
         <CommonInput
           placeholder="Search Communities "
           showImg={true}

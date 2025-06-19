@@ -1,8 +1,21 @@
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import React from "react";
-
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import React, { useRef, useState } from "react";
+import downarrow from "@assets/media/svgs/downarrow.svg"
+import client from "@assets/media/images/client.png"
+import whitearrow from "@assets/media/svgs/whitearrow.svg"
+import edit from "@assets/media/svgs/edit.svg"
+import exports from "@assets/media/svgs/export.svg";
+// import EditDetails from "../AdminCare/EditDetails";
 
 const ReportTable: React.FC = () => {
+   const [isOpen, setIsOpen] = useState(false);
+  const [showEditPage, setShowEditPage] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // if (showEditPage) {
+  //   return <EditDetails goBack={() => setShowEditPage(false)} />;
+  // }
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   type dataTypes = {
     id?: string
@@ -113,17 +126,6 @@ const ReportTable: React.FC = () => {
       status: "Under review",
       date: "9/4/12"
     }, 
-    {
-      id: "1",
-      post: "CM-1224",
-      users: "Savannah Nguyen",
-      user: "Patient",
-      type: "Discussion",
-      community: "Dementia Support",
-      flagged: "Yes",
-      status: "Under review",
-      date: "9/4/12"
-    }, 
   ];
 
   const handleRowSelect = (row: Person) => {
@@ -134,10 +136,40 @@ const ReportTable: React.FC = () => {
     <button onClick={() => alert(`Edit ${row.name}`)}>Edit</button>
   );
   return (
+    
     <div className="mb-10">
+
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <div className="mb-3 flex md:flex-row flex-col md:items-center md:justify-between">
+        {/* <div className="mb-3 flex md:flex-row flex-col md:items-center md:justify-between">
           <h4>Trending Topics in Communities</h4>
+        </div> */}
+        <div className="flex items-center justify-between mb-7">
+          <div className="flex items-center gap-4">
+            <h3>Community Engagement</h3>
+          </div>
+
+          <div className="flex items-center gap-3.5 pt-1.5">
+           
+
+            <div className="border border-[#252525] rounded-[5px] flex items-center justify-center gap-2.5 py-3 px-4">
+            <span className="font-medium text-[14px] text-[rgba(37, 37, 37, 0.6)]">
+              Last 7 Days
+            </span>
+            <span>
+              <img src={downarrow} alt="" />
+            </span>
+          </div>
+            <PrimaryButton
+                btnText="Export Table"
+                showImg={true}
+                img={exports}
+                imgClass="w-4 h-4"
+                suffixImg={whitearrow}
+                suffixImgClass="w-4 h-4"
+                onClick={() => setIsOpen(!isOpen)}
+                btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
+              />
+          </div>
         </div>
         <div>
           <TanDataTable<dataTypes>

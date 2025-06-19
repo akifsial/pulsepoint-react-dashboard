@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
+// import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
+import whitearrow from "@assets/media/svgs/whitearrow.svg";
+import exports from "@assets/media/svgs/export.svg";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
-import UserInfo from "./UserInfo"; // import your UserInfo component
+import UserInfo from "./UserInfo";
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = useState(false);
@@ -183,10 +185,16 @@ const CareProviderDashboard: React.FC = () => {
 
   return (
     <div className="mb-10">
-      <h2 className="font-space-grotesk font-bold text-heading leading-8 tracking-normal text-brand-ink">
-        Care Provider Listing
-      </h2>
-      <div className={`mt-6 rounded-[10px] px-4 py-6 mb-6 ${selectedUser ? "" : "bg-white"}`}>
+      {!selectedUser && (
+        <h2 className="font-space-grotesk font-bold text-heading leading-8 tracking-normal text-brand-ink">
+          Care Provider Listing
+        </h2>
+      )}
+      <div
+        className={` mt-6 rounded-[10px] px-4 py-6 mb-6 ${
+          selectedUser ? "" : "bg-white"
+        }`}
+      >
         {selectedUser ? (
           <UserInfo user={selectedUser} onBack={() => setSelectedUser(null)} />
         ) : (
@@ -217,17 +225,18 @@ const CareProviderDashboard: React.FC = () => {
                       imgClass="w-[24px] h-[24px] object-cover"
                       img={filterIcon}
                       imgPosition="left"
-                      btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                      btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] h-[44px] rounded-[10px] text-[#252525] text-sm font-medium"
                       onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                     />
                     <PrimaryButton
-                      btnText="View All Listing"
-                      btnTextClass="text-white text-sm font-semibold"
+                      btnText="Export Table"
                       showImg={true}
-                      imgClass="w-[14px] h-[13px] object-cover"
-                      img={ForwardArrow}
-                      imgPosition="right"
-                      btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px] bg-black"
+                      img={exports}
+                      imgClass="w-4 h-4"
+                      suffixImg={whitearrow}
+                      suffixImgClass="w-4 h-4"
+                      onClick={() => setIsOpen(!isOpen)}
+                      btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
                     />
                   </div>
                   <AnimatePresence>
@@ -246,42 +255,43 @@ const CareProviderDashboard: React.FC = () => {
                 </div>
               </div>
             </div>
+
             {activeTab === "all" ? (
-            <TanDataTable<dataTypes>
-              columns={columns}
-              data={data}
-              showCheckbox={false}
-              onRowSelect={handleRowSelect}
-              showActions={true}
-              className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit Detail", row.id)}
-                  onDelete={() => console.log("Delete Provider", row.id)}
-                  variant="simple"
-                />
-              )}
-            />
-          ) : (
-            <TanDataTable<dataTypes>
-              columns={columns}
-              data={data.slice(0, 3)}
-              showCheckbox={false}
-              onRowSelect={handleRowSelect}
-              showActions={true}
-              className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  onView={() => console.log("View Details", row.id)}
-                  onEdit={() => console.log("Approve Post", row.id)}
-                  onFlag={() => console.log("Flag Post", row.id)}
-                  onDelete={() => console.log("Delete Post", row.id)}
-                  variant="simple"
-                />
-              )}
-            />
-          )}
+              <TanDataTable<dataTypes>
+                columns={columns}
+                data={data}
+                showCheckbox={false}
+                onRowSelect={handleRowSelect}
+                showActions={true}
+                className="my-custom-class"
+                actions={(row) => (
+                  <DropdownActions
+                    onView={() => console.log("View Detail", row.id)}
+                    onEdit={() => console.log("Edit Detail", row.id)}
+                    onDelete={() => console.log("Delete Provider", row.id)}
+                    variant="simple"
+                  />
+                )}
+              />
+            ) : (
+              <TanDataTable<dataTypes>
+                columns={columns}
+                data={data.slice(0, 3)}
+                showCheckbox={false}
+                onRowSelect={handleRowSelect}
+                showActions={true}
+                className="my-custom-class"
+                actions={(row) => (
+                  <DropdownActions
+                    onView={() => console.log("View Details", row.id)}
+                    onEdit={() => console.log("Approve Post", row.id)}
+                    onFlag={() => console.log("Flag Post", row.id)}
+                    onDelete={() => console.log("Delete Post", row.id)}
+                    variant="simple"
+                  />
+                )}
+              />
+            )}
           </>
         )}
       </div>

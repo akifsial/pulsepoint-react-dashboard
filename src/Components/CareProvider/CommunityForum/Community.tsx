@@ -15,8 +15,8 @@ const Community = () => {
       {openBackFeed ? (
         <BackFeed setOpenBackFeed={setOpenBackFeed} />
       ) : (
-        <div className="block sm:flex sm:items-start sm:gap-6">
-          <div className="">
+        <div className="w-full block justify-between sm:flex sm:items-start sm:gap-6">
+          <div className="flex-1  ">
             <h2 className="text-xl font-semibold mb-3.5 text-[#252525] font-[Space Grotesk]">
               Your Feed
             </h2>
@@ -49,7 +49,10 @@ const Community = () => {
             </div>
             <CommunityFeed />
           </div>
+          <div  className="flex-shrink-0 w-[292px]">
+
           <PopularCommunity />
+          </div>
         </div>
       )}
     </>
