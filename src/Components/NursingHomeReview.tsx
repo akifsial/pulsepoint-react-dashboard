@@ -65,7 +65,7 @@ const NursingHomeReviews: React.FC = () => {
         {/* User confirmation */}
         <div className="flex justify-end">
           <div className="bg-[#E7EFF3] rounded-[30px] p-[20px] shadow-sm w-[197px] h-[50px] flex items-center gap-[10px]">
-            <p className="text-[#252525] text-[14px] font-normal leading-[24px] tracking-[0.2px]">
+            <p className="text-[#252525] text-[14px] font-semibold leading-[120%] tracking-[0.2px]">
               Yes, please! Zip: 75001
             </p>
           </div>
@@ -79,7 +79,7 @@ const NursingHomeReviews: React.FC = () => {
               Here are top-rated facilities near 75001:
             </p>
 
-            <div className="space-y-[25px]">
+            <div className="space-y-[10px]">
               {/* Facilities Label */}
               <p className="text-[#252525] text-[14px] font-bold leading-[24px] tracking-[0.2px]">
                 Facilities near me:
@@ -88,9 +88,20 @@ const NursingHomeReviews: React.FC = () => {
               {/* List of Facilities */}
               {facilities.map((facility, index) => (
                 <div key={index} className="flex items-center">
-                  <span className="text-[#252525] text-[14px] font-bold leading-[24px] tracking-[0.2px]">
-                    {index + 1}: {facility.name} —
+                  {/* Facility Index */}
+                  <span className="text-[#252525] text-[16px] font-bold leading-[24px] tracking-[0.2px] mr-2">
+                    {index + 1}:
                   </span>
+
+                  {/* Facility Name */}
+                  <span className="text-[#333333] text-[14px] font-medium leading-[22px] tracking-[0.2px]">
+                    {facility.name}
+                  </span>
+
+                  {/* Separator */}
+                  <span className="text-[#252525] text-[14px] ml-2">—</span>
+
+                  {/* Rating */}
                   <div className="flex items-center ml-2">
                     <span className="text-yellow-500 text-[14px]">⭐</span>
                     <span className="text-[#252525] text-[14px] ml-1">
@@ -111,8 +122,9 @@ const NursingHomeReviews: React.FC = () => {
             </p>
           </div>
         </div>
-        <ChatbotSearchbar onAskAI={handleAskAI} 
-        />
+        
+        {/* Chatbot Searchbar */}
+        <ChatbotSearchbar onAskAI={handleAskAI} />
       </div>
     </div>
   );
