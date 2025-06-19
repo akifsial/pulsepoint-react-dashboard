@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
 import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
-import {
-  PatientSidebarLinks,
-} from "@components/Dashboard-components/Sidebar/SidebarLinks";
+import { PatientSidebarLinks } from "@components/Dashboard-components/Sidebar/SidebarLinks";
 import ChatbotSidebar from "@components/ChatbotSidebar";
 import ChatbotAi from "@components/ChatbotAi";
+import NursingHomeReview from "@components/NursingHomeReview"; 
 
 // Chatbot-specific links
 const chatbotSidebarLinks = [
@@ -18,10 +16,12 @@ const chatbotSidebarLinks = [
 
 const ChatbotLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("");
 
-
-  // const mainMargin = showProfileSidebar ? "lg:ml-[357px]" : "lg:ml-[89px]";
+  // Function to handle tab clicks
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
 
   return (
     <div className="dashboard flex min-h-screen">
@@ -32,25 +32,36 @@ const ChatbotLayout = () => {
         onClose={() => setIsSidebarOpen(false)}
       />
 
-      {/* {showProfileSidebar && ( */}
-        <ChatbotSidebar
-          sidebarData={chatbotSidebarLinks}
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-        />
-      {/* )} */}
+      {/* Chatbot Sidebar */}
+      <ChatbotSidebar
+        sidebarData={chatbotSidebarLinks}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        onTabClick={handleTabClick} 
+      />
 
       {/* Main Content Area */}
-      <div className={`relative lg:ml-16 ml-0 flex flex-col flex-1 px-4 pt-3 `}>
+      <div className={`relative lg:ml-16 ml-0 flex flex-col flex-1 px-4 pt-3`}>
         <div className="absolute -top-[116px]">
           <DashboardHeader
-          showProfileSidebar={true}
-          sidebarOpen={isSidebarOpen}
-          setSidebarOpen={setIsSidebarOpen}
-        />
+            showProfileSidebar={true}
+            sidebarOpen={isSidebarOpen}
+            setSidebarOpen={setIsSidebarOpen}
+          />
         </div>
         <main>
-          <ChatbotAi />
+          {/* Render the active component based on the selected tab */}
+          {activeTab === "Nursing home in 90210." ? (
+            <NursingHomeReview />
+          ) : activeTab === "Senior Care Platform Design" ? (
+            <div>Senior Care Platform Design Content</div>
+          ) : activeTab === "How are facilities rated?" ? (
+            <div>Facility Rating Content</div>
+          ) : activeTab === "Our AI Healthcare Guide" ? (
+            <div>AI Healthcare Guide Content</div> 
+          ) : (
+            <ChatbotAi /> 
+          )}
         </main>
       </div>
     </div>
