@@ -183,10 +183,12 @@ const CareProviderDashboard: React.FC = () => {
 
   return (
     <div className="mb-10">
+      {!selectedUser && (
       <h2 className="font-space-grotesk font-bold text-heading leading-8 tracking-normal text-brand-ink">
         Care Provider Listing
       </h2>
-      <div className={`mt-6 rounded-[10px] px-4 py-6 mb-6 ${selectedUser ? "" : "bg-white"}`}>
+    )}
+      <div className={` mt-6 rounded-[10px] px-4 py-6 mb-6 ${selectedUser ? "" : "bg-white"}`}>
         {selectedUser ? (
           <UserInfo user={selectedUser} onBack={() => setSelectedUser(null)} />
         ) : (
@@ -246,6 +248,7 @@ const CareProviderDashboard: React.FC = () => {
                 </div>
               </div>
             </div>
+
             {activeTab === "all" ? (
             <TanDataTable<dataTypes>
               columns={columns}
