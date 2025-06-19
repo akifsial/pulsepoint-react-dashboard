@@ -33,9 +33,9 @@ const postList = [
   },
 ];
 
-const ViewCommunity = ({ community, onBack }) => {
+const ViewCommunity = ({ community, goBack }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
+  const navigate=useNavigate
   const buttons = [
     { btnText: "32k", btnIcon: arrowUp, downarrow: arrowDowm },
     { btnText: "2.2k", btnIcon: comment },
@@ -45,7 +45,7 @@ const ViewCommunity = ({ community, onBack }) => {
     <>
       <div className="mb-[25px]" >
         <div className="flex items-center mb-4.5 gap-2.5 " >
-          <img src={backArrow} alt="backArrow" className="cursor-pointer" />
+          <img src={backArrow} alt="backArrow" className="cursor-pointer" onClick={()=>goBack(false)}/>
           <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
             Back to Feed
           </h2>

@@ -8,9 +8,8 @@ import SelectField from "@components/SelectField";
 import Methew from "@assets/media/svgs/dashboard-svgs/userImage.svg";
 import { GoPerson } from "react-icons/go";
 import leftarrow from "@assets/media/svgs/leftarrow.svg"
-// import { IoCallOutline } from "react-icons/io5";
-// import { IoMailOutline } from "react-icons/io5";
-// import { CiGlobe } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
+
  
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
@@ -32,17 +31,18 @@ const cityOptions = [
   { value: "Peshawar", label: "Peshawar" },
 ];
  
-const EditDetails = () => {
+const EditDetails = ({goBack}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [organization, setOrganization] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
+  const navigate=useNavigate()
  
   return (
     <>
       <div>
          <div className="flex items-baseline gap-2">
-        <img src={leftarrow} alt="" />
+        <img src={leftarrow} alt="" className="cursor-pointer" onClick={()=>goBack(false)}/>
         <h2 className=" text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
          Edit Care Provider Details
         </h2>

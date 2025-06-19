@@ -226,7 +226,7 @@ const ForumTable: React.FC = () => {
       {selectedCommunity ? (
         <ViewCommunity
           community={selectedCommunity}
-          onBack={() => setSelectedCommunity(null)}
+          goBack={ setSelectedCommunity}
         />
       ) : (
         <>

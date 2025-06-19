@@ -17,9 +17,8 @@ import UserInfo from "./UserInfo";
 const CareProviderDashboard: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showRatingDropdown, setShowRatingDropdown] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<dataTypes | null>(null);
+  const [selectedUser, setSelectedUser] = useState<dataTypes | false>(false);
   const [searchText, setSearchText] = useState<string>("");
-  //   const [searchText, setSearchText] = useState<string>("");
   const [isExportOpen, setIsExportOpen] = useState(false);
 
   
@@ -200,7 +199,7 @@ const CareProviderDashboard: React.FC = () => {
         }`}
       >
         {selectedUser ? (
-          <UserInfo user={selectedUser} onBack={() => setSelectedUser(null)} />
+          <UserInfo user={selectedUser} goBack={setSelectedUser} />
         ) : (
           <>
             <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
