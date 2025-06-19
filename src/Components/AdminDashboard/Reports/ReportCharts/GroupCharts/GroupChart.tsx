@@ -1,6 +1,8 @@
 import React from 'react'
 import AgeGroupChart from './AgeGroupChart'
 import InsuranceChart from './InsuranceChart'
+// import AgeGroupChart from './AgeGroupChart'
+// import InsuranceChart from './InsuranceChart'
 
 const GroupChart = () => {
   return (

@@ -15,10 +15,14 @@ import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-da
 import UserInfo from "./UserInfo";
 
 const CareProviderDashboard: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [showRatingDropdown, setShowRatingDropdown] = useState(false);
-  const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
   const [selectedUser, setSelectedUser] = useState<dataTypes | null>(null);
   const [searchText, setSearchText] = useState<string>("");
+  //   const [searchText, setSearchText] = useState<string>("");
+  const [isExportOpen, setIsExportOpen] = useState(false);
+
+  
 
   type dataTypes = {
     id?: number;
@@ -203,60 +207,76 @@ const CareProviderDashboard: React.FC = () => {
               <h3 className="md:mb-0 mb-3">Care Providers</h3>
 
               <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
-                <CommonInput
-                  placeholder="Search with Provider name , zip code"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  showImg={true}
-                  imgSrc={searchIcon}
-                  imgLeft={true}
-                  inputClassName="text-sm"
-                  containerClassName="w-full max-w-sm"
-                />
+                 <CommonInput
+              placeholder="Search by Name, Email, or ID"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              showImg={true}
+              imgSrc={searchIcon}
+              imgLeft={true}
+              inputClassName="text-sm"
+              containerClassName="rounded-[10px]"
+            />
               </div>
 
               <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-                <p className="text-[#252525] font-medium text-sm">Filter by</p>
-                <div className="relative">
-                  <div className="flex items gap-4">
-                    <PrimaryButton
-                      btnText="ratings"
-                      showImg={true}
-                      imgClass="w-[24px] h-[24px] object-cover"
-                      img={filterIcon}
-                      imgPosition="left"
-                      btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] h-[44px] rounded-[10px] text-[#252525] text-sm font-medium"
-                      onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                    />
-                    <PrimaryButton
-                      btnText="Export Table"
-                      showImg={true}
-                      img={exports}
-                      imgClass="w-4 h-4"
-                      suffixImg={whitearrow}
-                      suffixImgClass="w-4 h-4"
-                      onClick={() => setIsOpen(!isOpen)}
-                      btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
-                    />
-                  </div>
-                  <AnimatePresence>
-                    {showRatingDropdown && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute left-0 top-[60px] w-50 z-50"
-                      >
-                        <RatingFilterDropdown />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+            <p className="text-[#252525] font-medium text-sm">Filter by</p>
+            <div className="relative">
+              <div className="relative">
+              <div className="flex items gap-4">
+                <PrimaryButton
+                  btnText="ratings"
+                  showImg={true}
+                  imgClass="w-[24px] h-[24px] object-cover"
+                  img={filterIcon}
+                  imgPosition="left"
+                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] h-[44px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
+                />
+                <PrimaryButton
+                  btnText="Export Table"
+                  showImg={true}
+                  img={exports}
+                  imgClass="w-4 h-4"
+                  suffixImg={whitearrow}
+                  suffixImgClass="w-4 h-4"
+                  onClick={() => setIsExportOpen(!isExportOpen)}
+                  btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
+                />
               </div>
+              <AnimatePresence>
+                {showRatingDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute left-0 top-[60px] w-50 z-50"
+                  >
+                    <RatingFilterDropdown />
+                  </motion.div>
+                )}
+                {isExportOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute top-[60px] left-[120px] bg-white  shadow-md rounded-lg p-4 z-50"
+                  >
+                    <div className="flex flex-col gap-2 w-full">
+                      <button className="text-sm text-black  mb-2.5">Export as CSV</button>
+                      <button className="text-sm text-black ">Export AS Pdf</button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            </div>
+          </div>
             </div>
 
-            {activeTab === "all" ? (
+            {/* {activeTab === "all" ? (
               <TanDataTable<dataTypes>
                 columns={columns}
                 data={data}
@@ -291,7 +311,24 @@ const CareProviderDashboard: React.FC = () => {
                   />
                 )}
               />
-            )}
+            )} */}
+             <div>
+              <TanDataTable<dataTypes>
+              columns={columns}
+              data={data}
+              showCheckbox={true}
+              onRowSelect={handleRowSelect}
+              showActions={true}
+              actions={(row) => (
+                <DropdownActions
+                  onView={() => setSelectedCommunity(row)}
+                  onEdit={() => console.log("Edit Detail", row.id)}
+                  onDelete={() => setShowDeleteModal(true)}
+                  variant="simple"
+                />
+              )}
+            />
+            </div>
           </>
         )}
       </div>

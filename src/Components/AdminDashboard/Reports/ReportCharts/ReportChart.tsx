@@ -1,6 +1,6 @@
 import TopReview from "@components/AdminDashboard/DashboardContent/ActionCenter.tsx/TopReview";
 import React from "react";
-import GraphChart from "./GraphChart";
+import GraphChart from "./GroupCharts/GraphChart";
 import GroupChart from "./GroupCharts/GroupChart";
 // import { Group } from "lucide-react";
 

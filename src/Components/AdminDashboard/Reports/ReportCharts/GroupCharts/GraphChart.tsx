@@ -1,6 +1,6 @@
 import React from "react";
-import VisitorChart from "./VisitorChart";
-import downarrow from "../../../../assets/media/svgs/downarrow.svg";
+import VisitorChart from "../VisitorChart";
+import downarrow from "@assets/media/svgs/downarrow.svg"
 
 const GraphChart = () => {
   return (

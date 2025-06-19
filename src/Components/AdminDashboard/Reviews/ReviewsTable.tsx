@@ -94,11 +94,10 @@ const ReviewsTable: React.FC = () => {
       header: "Reviews",
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => (
-  <div className="w-[225px] whitespace-normal break-words text-sm text-gray-700">
-    {row.original.reviews}
-  </div>
-)
-
+        <div className="w-[225px] whitespace-normal break-words text-sm text-gray-700">
+          {row.original.reviews}
+        </div>
+      ),
     },
   ];
 
@@ -224,17 +223,29 @@ const ReviewsTable: React.FC = () => {
           {/* searchbar */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
             <CommonInput
-              placeholder="Search with Provider name , zip code"
+              placeholder="Search by Reviewer Name, Email, Review ID, or Provider Name"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               showImg={true}
               imgSrc={searchIcon}
               imgLeft={true}
               inputClassName="text-sm"
-              containerClassName="w-full max-w-sm"
+              containerClassName="rounded-[10px] w-full"
             />
           </div>
-          <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
+          <div className="flex md:flex-row flex-col md:items-center  gap-3">
+            <div className="flex items-center gap-2.5">
+              <p className="text-[#252525] font-medium text-sm">Review Status:</p>
+              <PrimaryButton
+                btnText="All Reviews"
+                showImg={true}
+                imgClass="w-[24px] h-[24px] object-cover"
+                img={filterIcon}
+                imgPosition="left"
+                btnClass="border border-[#252525] px-4 md:w-[127px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                onClick={() => setShowRatingDropdown(!showRatingDropdown)}
+              />
+            </div>
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
               <div className="flex items gap-4">
@@ -246,15 +257,6 @@ const ReviewsTable: React.FC = () => {
                   imgPosition="left"
                   btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                />
-                <PrimaryButton
-                  btnText="View All Listing"
-                  btnTextClass="text-[#FFFFFF] text-sm font-semibold"
-                  showImg={true}
-                  imgClass="w-[14px] h-[13px] object-cover"
-                  img={ForwardArrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px] bg-[#000000]"
                 />
               </div>
               <AnimatePresence>

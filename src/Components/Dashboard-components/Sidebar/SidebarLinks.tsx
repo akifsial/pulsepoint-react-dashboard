@@ -171,7 +171,7 @@ export const AdminSidebarLinks: SidebarLink[] = [
 
 export const ProfileSidebarLinks: SidebarLink[] = [
   {
-    label: "Profile",
+    label: "Profile Details",
     path: "/admin/profile",
     icon: {
       default: <img src={profile} alt="Dashboard" className="w-5 h-5" />,
@@ -188,7 +188,7 @@ export const ProfileSidebarLinks: SidebarLink[] = [
       active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
     },},
   {
-    label: "Get Featured",
+    label: "Add Features",
     path: "/admin/feature",
     icon: {
       default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,

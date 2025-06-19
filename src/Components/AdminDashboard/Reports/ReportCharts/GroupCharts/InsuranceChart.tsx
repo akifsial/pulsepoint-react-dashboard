@@ -1,6 +1,6 @@
 import React from "react";
 import downarrow from "../../../../../assets/media/svgs/downarrow.svg";
-import InsuranceGraph from "./InsuranceGraph";
+import InsuranceGraph from "../InsuranceGraph";
 import AgeDetail from "./AgeDetail/AgeDetail";
 
 const InsuranceChart = () => {
@@ -21,7 +21,6 @@ const InsuranceChart = () => {
           </div>
         </div>
       </div>
-      {/* <InsuranceGraph/> */}
       <div className="flex gap-10 items-center justify-between">
           <InsuranceGraph />
           <AgeDetail/>

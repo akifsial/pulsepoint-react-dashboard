@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
@@ -236,17 +235,20 @@ const ForumTable: React.FC = () => {
             <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
               <h3 className="mb-3 md:mb-0">Patients’ Details</h3>
 
-              <div className="flex items-center gap-4">
-                <CommonInput
-                  placeholder="Search by name, zip"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  showImg={true}
-                  imgSrc={searchIcon}
-                  imgLeft={true}
-                  inputClassName="text-sm"
-                  containerClassName="w-full max-w-sm"
-                />
+              <div className="flex items-center">
+                 <CommonInput
+              placeholder="Search by Name, Email, or ID"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              showImg={true}
+              imgSrc={searchIcon}
+              imgLeft={true}
+              inputClassName="text-sm"
+              containerClassName="rounded-[10px]"
+            />
+                <span className="text-sm font-medium w-full text-center">
+                  Filter By
+                </span>
                 <PrimaryButton
                   btnText="Ratings"
                   img={filterIcon}
@@ -254,30 +256,9 @@ const ForumTable: React.FC = () => {
                   imgPosition="left"
                   btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                />
-                <PrimaryButton
-                  btnText="View All Listing"
-                  btnTextClass="text-white text-sm font-semibold"
-                  showImg={true}
-                  img={ForwardArrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 rounded-[10px] bg-black"
+                  
                 />
               </div>
-
-              <AnimatePresence>
-                {showRatingDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-[60px] z-50"
-                  >
-                    <RatingFilterDropdown />
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
 
             <TanDataTable<dataTypes>

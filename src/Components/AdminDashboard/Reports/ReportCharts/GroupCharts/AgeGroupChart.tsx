@@ -1,10 +1,11 @@
 import React from 'react'
-import downarrow from "../../../../../assets/media/svgs/downarrow.svg"
+import downarrow from "@assets/media/svgs/downarrow.svg"
 import AgeGroupGraph from './AgeGroupGraph'
+// import AgeGroupGraph from '../../AgeGroupGraph'
 
 const AgeGroupChart = () => {
   return (
-    <div className="bg-white p-5 rounded-[10px] w-1/2 min-h-[328px]">
+    <div className="bg-white p-5 rounded-[10px] w-1/2 h-[328px]">
        <div className="flex justify-between items-center">
         <h4 className="text-xl text-[#181D27] mb-3.5 font-bold">
           Most Visited Age Groups
@@ -20,7 +21,6 @@ const AgeGroupChart = () => {
           </div>
         </div>
       </div>
-      
       <AgeGroupGraph/>
     </div>
   )
