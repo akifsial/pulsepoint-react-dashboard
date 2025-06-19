@@ -86,7 +86,7 @@ const TanDataTable = <T extends object>({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className={`px-4 py-4 whitespace-nowrap font-medium text-[#252525] ${
+                    className={`px-4 py-4 font-medium text-[#252525] ${
                       header.column.getCanSort()
                         ? "cursor-pointer select-none"
                         : ""

@@ -189,7 +189,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               img={AiIcon}
               imgPosition="left"
               btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
-              onClick={() => navigate("/feature")}
+              onClick={() => navigate("/patient/feature")}
             />
           </div>}
         
