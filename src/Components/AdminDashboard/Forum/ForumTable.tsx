@@ -3,8 +3,8 @@ import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/T
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
+// import { AnimatePresence, motion } from "framer-motion";
+// import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
@@ -12,6 +12,7 @@ import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-da
 import ViewCommunity from "./ViewCommunity";
 import Model from "@components/Model/Model";
 import DeletePost from "./DeletePost";
+import forwardarrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg"
 
 const ForumTable: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = useState(false);
@@ -250,12 +251,12 @@ const ForumTable: React.FC = () => {
                   Filter By
                 </span>
                  <PrimaryButton
-                  btnText="ratings"
+                  btnText="Ratings"
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4  w-full py-[10px] h-[44px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] px-4 md:w-[110px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
               </div>
