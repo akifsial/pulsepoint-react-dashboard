@@ -7,6 +7,7 @@ import NotFoundPage from "@pages/NotFoundPage";
 import { ProfileRoutes } from "./ProfileRoutes";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 import { useEffect } from "react";
+import HomePage from "@pages/Website/HomePage";
 
 const Router: React.FC = () => {
   return (
@@ -103,7 +104,7 @@ const Router: React.FC = () => {
         </Route>
       ))}
       {/* 404 Not Found */}
-        {/* <Route path="/patient/chatbot" element={ <ChatbotLayout /> }/> */}
+        <Route path="/home" element={ <HomePage /> }/>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
     </>
