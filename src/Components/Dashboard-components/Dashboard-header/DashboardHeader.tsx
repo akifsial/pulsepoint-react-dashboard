@@ -15,6 +15,7 @@ interface Props {
   showProfileSidebar?: boolean;
   noticationLink?: string;
   routeProfile?: string;
+  routeSetting?: string;
 }
 
 interface RecentSearch {
@@ -28,6 +29,7 @@ const DashboardHeader: React.FC<Props> = ({
   setSidebarOpen,
   noticationLink,
   routeProfile,
+  routeSetting
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -89,22 +91,22 @@ const DashboardHeader: React.FC<Props> = ({
     <header
       className={`${showProfileSidebar ? "lg:ml-[80px]" : ""} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
     >
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-start sm:items-center justify-between gap-2 w-full flex-col sm:flex-row">
         <div className="min-w-fit">
           <h2 className="">👋 Welcome Back!</h2>
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-4 min-w-fit relative">
+        <div className="flex items-center gap-2 min-w-fit relative">
           {/* Mobile menu button */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 rounded-full hover:bg-gray-100 block lg:hidden"
+            className=" rounded-full hover:bg-gray-100 block lg:hidden"
           >
-            <MdMenu size={24} />
+            <MdMenu size={20} />
           </button>
  {/* Search Bar */}
-          <div className="relative provider-search-dropdown w-[300px] transition-all duration-300">
+          <div className="hidden lg:block relative provider-search-dropdown w-[300px] transition-all duration-300">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
@@ -167,13 +169,13 @@ const DashboardHeader: React.FC<Props> = ({
           {/* Notification Icon */}
           <div
             onClick={() => setShowNotifications((prev) => !prev)}
-            className="hidden lg:block cursor-pointer relative"
+            className=" cursor-pointer relative"
             ref={notificationRef}
           >
             <img
               src={notification}
               alt="Notification"
-              className="w-[34px] h-[34px]"
+              className="w-[20px] h-[20px] lg:w-[34px] lg:h-[34px]"
             />
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
           </div>
@@ -188,7 +190,7 @@ const DashboardHeader: React.FC<Props> = ({
             <img
               src={userFallbackImg}
               alt="User"
-              className="w-[46px] h-[46px] rounded-full object-cover"
+              className="w-[30px] h-[30px] lg:w-[46px] lg:h-[46px] rounded-full object-cover"
             />
             <div className="hidden lg:flex flex-col">
               <p className="font-semibold text-sm">Mathew</p>
@@ -210,7 +212,7 @@ const DashboardHeader: React.FC<Props> = ({
             transition={{ duration: 0.3 }}
             className="absolute right-0 top-[75px] w-55 bg-white border border-gray-200 shadow-xl px-2 rounded-xl py-4 z-50"
           >
-            <ProfileDropdown routeProfile={routeProfile} />
+            <ProfileDropdown routeSetting={routeSetting} routeProfile={routeProfile} />
           </motion.div>
         )}
       </AnimatePresence>

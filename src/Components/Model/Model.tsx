@@ -1,4 +1,4 @@
-import closeArrow from "../../assets/media/svgs/dashboard-svgs/closeIcon.svg";
+import closeArrow from "@assets/media/svgs/dashboard-svgs/close-circle.svg";
 
 const Model = ({ setIsOpen, children,className="" }) => {
   return (
@@ -9,7 +9,7 @@ const Model = ({ setIsOpen, children,className="" }) => {
           className="absolute right-[18px] top-[18px]"
           aria-label="Close"
         >
-          <img src={closeArrow} alt="Close" className="w-7 h-7 cursor-pointer" style={{ filter: 'invert(0.9)' }} />
+          <img src={closeArrow} alt="Close" className="w-7 h-7 cursor-pointer" />
         </button>
 
         <div>{children}</div>

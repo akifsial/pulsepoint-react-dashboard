@@ -25,7 +25,8 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   settingsIconHover = defaultSettingsHover,
   logoutIcon = defaultLogout,
   logoutIconHover = defaultLogoutHover,
-  routeProfile
+  routeProfile,
+  routeSetting
 }) => {
   const [hovered, setHovered] = useState<string | null>(null);
 const navigate=useNavigate()
@@ -51,6 +52,7 @@ const navigate=useNavigate()
           className="flex items-center gap-3 w-full text-left py-2 mb-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("settings")}
           onMouseLeave={() => setHovered(null)}
+          onClick={()=>navigate(routeSetting)}
         >
           <img
             src={hovered === "settings" ? settingsIconHover : settingsIcon}

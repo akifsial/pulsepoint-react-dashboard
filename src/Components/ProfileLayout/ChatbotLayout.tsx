@@ -47,6 +47,8 @@ const ChatbotLayout = () => {
             showProfileSidebar={true}
             sidebarOpen={isSidebarOpen}
             setSidebarOpen={setIsSidebarOpen}
+            noticationLink="/patient/notification"
+            routeSetting="/patient/manage-password"
           />
         </div>
         <main>
