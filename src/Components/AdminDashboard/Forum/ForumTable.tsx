@@ -256,7 +256,7 @@ const ForumTable: React.FC = () => {
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[110px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] px-4  h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
               </div>
