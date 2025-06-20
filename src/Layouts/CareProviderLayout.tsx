@@ -18,6 +18,7 @@ const CareProviderLayout = () => {
           noticationLink="/care-provider/notification"
           setSidebarOpen={setIsSidebarOpen}
           routeProfile="/care-provider/profile"
+          routeSetting="/care-provider/manage-password"
         />
         <main className="mt-28">
           <Outlet />

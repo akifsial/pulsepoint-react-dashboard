@@ -17,8 +17,8 @@ const hideHeader=location.pathname.startsWith("/patient/chatbot")
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen} 
           noticationLink="/patient/notification"
-          setSidebarOpen={setIsSidebarOpen}
           routeProfile="/patient/profile"
+          routeSetting="/patient/manage-password"
         />}
         
         <main className="mt-28">

@@ -36,7 +36,7 @@ const content = (
   <div className="flex items-center gap-x-1.5 justify-center">
     {imgPosition === "left" && prefixImage}
     {textElement}
-    {imgPosition === "right" && prefixImage} {/* ✅ ADD THIS */}
+    {imgPosition === "right" && prefixImage}
     {suffixImage}
   </div>
 );

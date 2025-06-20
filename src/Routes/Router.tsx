@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { DashboardRoutes } from "./DashboardRoutes";
 import { websitePublicRoutes } from "./WebsiteRoutes";
 import { PatientRoutes } from "./PatientRoutes";
@@ -6,9 +6,13 @@ import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
 import { ProfileRoutes } from "./ProfileRoutes";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
+import { useEffect } from "react";
 
 const Router: React.FC = () => {
   return (
+    <>
+    <ScrollToTop />
+    
     <Routes>
       {/* Public Routes */}
       {websitePublicRoutes.map(({ path, element }) => (
@@ -102,7 +106,14 @@ const Router: React.FC = () => {
         {/* <Route path="/patient/chatbot" element={ <ChatbotLayout /> }/> */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    </>
   );
 };
 
 export default Router;
+export const ScrollToTop=()=>{
+  const {pathname}=useLocation()
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[pathname])
+}
