@@ -6,18 +6,25 @@ import { IoLockClosedOutline } from "react-icons/io5";
 import OnBoardingLayout from "./OnBoradingLayout";
 import SocialLoginSection from "../SocialLoginSection"; // Import the new component
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { ApiLogin } from "@src/api/AuthApi/AuthApi";
+import Toast from "@components/Toast/Toast";
+import { useForm } from "react-hook-form";
+import Spinner from "@components/Loaders/Spinner";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [formData, setFormData] = useState({
     usernameOrEmail: "",
     password: "",
     rememberMe: false,
   });
 
-  const [errors, setErrors] = useState({
-    usernameOrEmail: "",
-    password: "",
-  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -28,41 +35,29 @@ const LoginPage = () => {
     }));
   };
 
-  // const validateForm = () => {
-  //   const newErrors: any = {
-  //     usernameOrEmail: "",
-  //     password: "",
-  //   };
-
-  //   if (!formData.usernameOrEmail)
-  //     newErrors.usernameOrEmail = "Email or Username is required.";
-  //   if (!formData.password) newErrors.password = "Password is required.";
-
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (validateForm()) {
-  //     console.log("Login Submitted", formData);
-  //   }
-  // };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Simulate form submission
-    console.log("Login Submitted", formData);
-
-    // Navigate to the dashboard after successful login
-    navigate("/patient/dashboard"); // Use navigate to redirect
-  };
   const navigate = useNavigate();
 
   function handleSocialLogin(provider: string): void {
     throw new Error("Function not implemented.");
   }
+
+  const { mutateAsync: loginMutation, isPending: isLoginLoading } = useMutation(
+    {
+      mutationFn: ({ data }) => ApiLogin(data),
+
+      onSuccess: async () => {
+        toast.success("Login Successful");
+        navigate("/care-provider");
+      },
+      onError: (error) => {
+        toast.error("Login Failed");
+      },
+    }
+  );
+
+  const LoginSubmit = async (data) => {
+    await loginMutation({ data });
+  };
 
   return (
     <OnBoardingLayout logoParentClass="absolute top-14 right-0 left-0 flex justify-center">
@@ -73,25 +68,29 @@ const LoginPage = () => {
         <p className="text-[16px] font-normal leading-[150%] tracking-[0%] text-[#252525CC] font-geist mb-4">
           Join to explore and share care insights.
         </p>
-        <form onSubmit={handleSubmit} className="space-y-6 w-full items-center">
+        <form
+          onSubmit={handleSubmit(LoginSubmit)}
+          className="space-y-6 w-full items-center"
+        >
           {/* Email or Username Input */}
           <InputField
             label="Email or Username"
             asterisk={true}
             icon={IoPersonOutline}
-            id="usernameOrEmail"
-            name="usernameOrEmail"
             type="text"
-            value={formData.usernameOrEmail}
             onChange={handleChange}
-            errorMessage={errors.usernameOrEmail}
             placeholder="e.g. john"
+            register={register}
+            registerName="email"
+            errors={errors}
+            validation={{
+              required: "Email is required",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Enter a valid email",
+              },
+            }}
           />
-          {errors.usernameOrEmail && (
-            <p className="mt-1 text-sm text-red-600">
-              {errors.usernameOrEmail}
-            </p>
-          )}
 
           {/* Password Input */}
           <InputField
@@ -101,14 +100,16 @@ const LoginPage = () => {
             id="password"
             name="password"
             type="password"
-            value={formData.password}
+            // value={formData.password}
             onChange={handleChange}
-            errorMessage={errors.password}
             placeholder="***************"
+            register={register}
+            registerName="password"
+            errors={errors}
+            validation={{
+              required: "Password is required",
+            }}
           />
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-          )}
 
           {/* Remember Me & Forgot Password */}
           <div className="flex items-center justify-between">
@@ -142,9 +143,9 @@ const LoginPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors cursor-pointer mb-1"
+            className="w-full bg-[#28A2FF] flex justify-center text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors cursor-pointer mb-1"
           >
-            Login
+            <span>{isLoginLoading ? <Spinner /> : "Login"}</span>
           </button>
           {/* calling component for Social icons */}
           <SocialLoginSection

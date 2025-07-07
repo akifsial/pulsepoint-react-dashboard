@@ -25,6 +25,8 @@ const SelectField: React.FC<SelectFieldProps> = ({
   gray,
   selectName,
   errorMessage,
+  registerName,
+  register,
   ...rest
 }) => {
   // Automatically select the first option if no value is provided
@@ -51,8 +53,9 @@ const SelectField: React.FC<SelectFieldProps> = ({
       <div className="relative">
         <select
           id={id}
-          value={currentValue}
-          onChange={onChange}
+          // value={currentValue}
+          // onChange={onChange}
+          {...(registerName && register(registerName))}
           className={`w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-gray-500 focus:outline-none ${
             gray ? "bg-gray-100" : ""
           } appearance-none`}

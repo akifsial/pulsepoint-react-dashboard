@@ -1,45 +1,42 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "../InputField";
 import OnBoardingLayout from "./OnBoradingLayout";
 import { IoMailOutline } from "react-icons/io5";
+import { useForm } from "react-hook-form";
+import { ApiForgot } from "@src/api/AuthApi/AuthApi";
+import toast from "react-hot-toast";
+import Spinner from "@components/Loaders/Spinner";
+import { useMutation } from "@tanstack/react-query";
 
 const ForgotPasswordPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const [errors, setErrors] = useState({
-    email: "",
-  });
+  const navigate = useNavigate();
 
   // Handle form input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   // Validate the form
-  const validateForm = () => {
-    const newErrors: any = {
-      email: "",
-    };
 
-    if (!formData.email) newErrors.email = "Email Address is required.";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const { mutateAsync: forgotMutation, isPending: isForgotPending } =
+    useMutation({
+      mutationFn: ({ data }) => ApiForgot(data),
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      // Simulate form submission (password reset link sent)
-      console.log("Password reset link sent to:", formData.email);
-    }
+      onSuccess: async () => {
+        navigate("/otp-verify");
+        toast.success("OTP Sent Successfully");
+      },
+      onError: (error) => {
+        toast.error("Something Went Wrong");
+      },
+    });
+
+  const ForgotSubmit = async (data) => {
+    await forgotMutation({ data });
   };
 
   return (
@@ -57,33 +54,37 @@ const ForgotPasswordPage = () => {
         </p>
 
         {/* Email Address Input Field */}
-        <form onSubmit={handleSubmit} className="space-y-6 w-full">
+        <form
+          onSubmit={handleSubmit(ForgotSubmit)}
+          className="space-y-6 w-full"
+        >
           <InputField
             label="Email Address"
             asterisk={true}
             id="email"
             name="email"
             type="email"
-            value={formData.email}
             icon={IoMailOutline}
-            onChange={handleChange}
-            errorMessage={errors.email}
             placeholder="contact@organization.org"
+            register={register}
+            registerName="email"
+            errors={errors}
+            validation={{
+              required: "Email is required",
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "Enter a valid email",
+              },
+            }}
           />
 
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-          )}
-
           {/* Update Password Button */}
-          <Link to="/reset-password">
           <button
             type="submit"
             className="w-full max-w-[570px] h-[46px] bg-[#28A2FF] text-white rounded-[10px] px-[10px] flex items-center justify-center gap-[10px] font-[Inter] font-semibold text-[14px] leading-[24px] tracking-[0%] transition-colors cursor-pointer"
           >
-            Update Password
+            {isForgotPending ? <Spinner /> : "Update Password"}
           </button>
-          </Link>
 
           {/* Back to Login Link */}
           <div className="mt-4 flex justify-center">

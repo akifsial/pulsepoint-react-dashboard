@@ -3,61 +3,42 @@ import React, { useState } from "react";
 import InputField from "../InputField";
 import OnBoardingLayout from "./OnBoradingLayout";
 import { IoLockClosedOutline } from "react-icons/io5";
+import { ApiResetPassword } from "@src/api/AuthApi/AuthApi";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import Spinner from "@components/Loaders/Spinner";
 
 const ResetPasswordPage = () => {
-  const [formData, setFormData] = useState({
-    createPassword: "",
-    confirmPassword: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
 
-  const [errors, setErrors] = useState({
-    createPassword: "",
-    confirmPassword: "",
-  });
+  const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const { mutateAsync: resetMutation, isPending: isResetLoading } = useMutation(
+    {
+      mutationFn: ({ data }) => ApiResetPassword(data),
 
-    // Clear errors when user starts typing
-    if (errors[name as keyof typeof errors]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
+      onSuccess: async () => {
+        toast.success("Password Reset Successfully");
+        navigate("/login");
+      },
+      onError: (error) => {
+        toast.error("Reset Password Failed");
+      },
     }
-  };
+  );
 
-  const validateForm = () => {
-    const newErrors: any = {
-      createPassword: "",
-      confirmPassword: "",
+  const resetSubmit = async (data) => {
+    const pass = {
+      password: data?.createPassword,
     };
-
-    if (!formData.createPassword) {
-      newErrors.createPassword = "Password is required";
-    }
-
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Please confirm your password";
-    } else if (formData.createPassword !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-
-    setErrors(newErrors);
-    return Object.values(newErrors).every((error) => error === "");
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log("Password reset successful:", formData);
-      alert("Password updated successfully!");
-      window.location.href = "/password-reset-success";
-    }
+    await resetMutation({ data:pass });
   };
 
   return (
@@ -71,19 +52,22 @@ const ResetPasswordPage = () => {
           Enter your new password and reset your password{" "}
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6 w-full">
+        <form onSubmit={handleSubmit(resetSubmit)} className="space-y-6 w-full">
           <InputField
             label="Create a Password"
             asterisk={true}
             id="createPassword"
             name="createPassword"
             type="password"
-            value={formData.createPassword}
             icon={IoLockClosedOutline}
-            onChange={handleChange}
-            errorMessage={errors.createPassword}
             placeholder="***************"
             showPasswordToggle={true}
+            register={register}
+            registerName="createPassword"
+            errors={errors}
+            validation={{
+              required: "Password is required",
+            }}
           />
 
           <InputField
@@ -92,19 +76,22 @@ const ResetPasswordPage = () => {
             id="confirmPassword"
             name="confirmPassword"
             type="password"
-            value={formData.confirmPassword}
             icon={IoLockClosedOutline}
-            onChange={handleChange}
-            errorMessage={errors.confirmPassword}
             placeholder="***************"
             showPasswordToggle={true}
+            register={register}
+            registerName="confirmPassword"
+            errors={errors}
+            validation={{
+              required: "Confirm Password is required",
+            }}
           />
 
           <button
             type="submit"
             className="w-full h-[46px] bg-[#28A2FF] text-white rounded-[10px] px-[10px] flex items-center justify-center gap-[10px] font-[Inter] font-semibold text-[14px] leading-[24px] tracking-[0%] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer"
           >
-            Update Password
+            {isResetLoading ? <Spinner /> : "Update Password"}
           </button>
         </form>
       </div>
