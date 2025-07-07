@@ -10,12 +10,7 @@ export const ApiLogin = async (data) => {
     return response.data.payload.records;
   } catch (error) {
     throw new error();
-  }**TOP SENIOR PROJECT**
-- Design OTP Screen
-- Forgot, OTP Verify & Reset Password Api Consume
-- Login Api Consume
-- Signup Api Consume
-- Create Button Component
+  }
 };
 
 export const ApiForgot = async (data) => {
