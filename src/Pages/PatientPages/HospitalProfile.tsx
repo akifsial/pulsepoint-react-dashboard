@@ -4,16 +4,22 @@ import RatingsReviewsSection from "@components/Review/RatingsReviewsSection";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import HospitalProfileCard from "@components/hospital-profile-card";
 import PlusIcon from "@assets/media/svgs/patient-db-svgs/add-circle.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import FeedbackForm from "./FeedbackForm";
+import { useCareProviderSingle } from "@src/hooks/useDashboard";
 const HospitalProfile = () => {
   const navigate = useNavigate();
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const { id } = useParams();
+
   const handleGoBack = () => {
     navigate(-1);
   };
 
+  const { data } = useCareProviderSingle(id);
+
+  console.log("Asasasdasdasdasd",data)
   return (
     <>
       {feedbackOpen ? (
@@ -35,7 +41,7 @@ const HospitalProfile = () => {
                 onClick={handleGoBack}
               />
               <h1 className="font-space font-bold text-[25px] leading-[32px] text-[#181D27] align-middle [leading-trim:cap] [text-edge:cap]">
-                Johns Hopkins Hospital
+                {data?.payload?.last_name ? data?.payload?.first_name : "Anonymus"}{data?.payload?.last_name}
               </h1>
             </div>
 
@@ -69,7 +75,7 @@ const HospitalProfile = () => {
                 weekendHours={""}
               />
             </div>
-            <RatingsReviewsSection />
+            <RatingsReviewsSection data={data} />
           </main>
         </div>
       )}

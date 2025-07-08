@@ -38,7 +38,7 @@ function ReviewCard({ review }: { review: Review }) {
       {/* Rating stars at top */}
       <div className="flex items-center gap-2 mb-4">
         <StarRating rating={review.rating} />
-        <span className="text-sm font-medium text-gray-900">({review.rating.toFixed(1)})</span>
+        {/* <span className="text-sm font-medium text-gray-900">({review.rating.toFixed(1)})</span> */}
       </div>
       
       {/* Review content */}
@@ -48,8 +48,8 @@ function ReviewCard({ review }: { review: Review }) {
       
       {/* Author info */}
       <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
-          {review.authorAvatar ? (
+        {/* <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+          {review?.authorAvatar ? (
             <img 
               src={review.authorAvatar} 
               alt={review.authorName}
@@ -66,7 +66,7 @@ function ReviewCard({ review }: { review: Review }) {
           {review.authorTitle && (
             <p className="text-xs text-gray-500">{review.authorTitle}</p>
           )}
-        </div>
+        </div> */}
         
         {/* Quote mark */}
         <div className="ml-auto">
@@ -98,7 +98,8 @@ export interface RatingsReviewsSectionProps {
 export default function RatingsReviewsSection({ 
   rating = 4.2, 
   reviewCount = 37, 
-  reviews = [] 
+  reviews = [] ,
+  data,
 }: RatingsReviewsSectionProps) {
   
   // Sample data if no reviews provided
@@ -153,6 +154,7 @@ export default function RatingsReviewsSection({
     },
   ];
 
+  console.log("%%%%%",data?.reviews_to_careprovider)
   const displayReviews = reviews.length > 0 ? reviews : sampleReviews;
 
   return (
@@ -170,7 +172,7 @@ export default function RatingsReviewsSection({
 
       {/* Reviews grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {displayReviews.map((review) => (
+        {data?.reviews_to_careprovider?.map((review) => (
           <ReviewCard key={review.id} review={review} />
         ))}
       </div>

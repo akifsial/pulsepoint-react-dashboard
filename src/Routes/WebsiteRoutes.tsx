@@ -6,14 +6,16 @@ import LoginPage from "@components/auth/LoginPage";
 import ForgotPasswordPage from "@components/auth/ForgotPasswordPage"; // Import ForgotPasswordPage
 import ResetPasswordPage from "@components/auth/ResetPasswordPage";
 import PasswordResetSuccessPage from "@components/auth/PasswordResetSuccessPage";
+import OTPPage from "@components/auth/OTPPage";
 
 export const websitePublicRoutes = [
   { path: "/", element: <HomePage /> },
   { path: "/about-us", element: <AboutUs /> },
-  { path: "/signup", element: <SignupForm /> },
+  { path: "/signup", element:  <SignupForm /> },
   { path: "/account-created", element: <AccountCreatedPage /> },
   { path: "/login", element: <LoginPage /> },
   { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  { path: "/otp-verify", element: <OTPPage /> },
   { path: "/reset-password", element: <ResetPasswordPage /> },
   { path: "/password-reset-success", element: <PasswordResetSuccessPage /> },
 ];

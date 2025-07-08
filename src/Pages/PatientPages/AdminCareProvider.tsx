@@ -10,10 +10,10 @@ import alice from "@assets/media/images/dashboard-images/alice.svg";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
-import { useNavigate } from "react-router-dom";  
+import { useNavigate } from "react-router-dom";
 
 const CareProviderDashboard: React.FC = () => {
-    const navigate = useNavigate();  
+  const navigate = useNavigate();
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
 
@@ -36,12 +36,13 @@ const CareProviderDashboard: React.FC = () => {
       header: "Provider’s Name",
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
-        const { first_name, last_name, email } = row.original;
+        const { id, first_name, last_name, email } = row.original;
         return (
-          <div className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate("/patient/hospital-profile")} 
-            >
-              <img
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => navigate(`/patient/hospital-profile`)}
+          >
+            <img
               src={dummyImage}
               alt={`${first_name} ${last_name}`}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"

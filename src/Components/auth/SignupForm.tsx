@@ -4,13 +4,18 @@ import InputField from "../InputField";
 import SelectField from "../SelectField";
 import OnBoardingLayout from "./OnBoradingLayout";
 import { Link, useNavigate } from "react-router-dom";
-import SocialLoginSection from "../SocialLoginSection"; 
+import SocialLoginSection from "../SocialLoginSection";
 import {
   IoPersonOutline,
   IoCallOutline,
   IoMailOutline,
   IoLocationSharp,
 } from "react-icons/io5";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { ApiRegister } from "@src/api/AuthApi/AuthApi";
+import Spinner from "@components/Loaders/Spinner";
 
 interface FormData {
   firstName: string;
@@ -51,24 +56,30 @@ const SignupForm = () => {
     preferredCommunication: [],
   });
 
-  const [errors, setErrors] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    age: "",
-    gender: "",
-    maritalStatus: "",
-    insuranceType: "",
-    password: "",
-    confirmPassword: "",
-    zipCode: "",
-    city: "",
-    state: "",
-    streetAddress: "",
-    preferredCommunication: [],
-    careNeeds: "",
-  });
+  // const [errors, setErrors] = useState<FormData>({
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   phone: "",
+  //   age: "",
+  //   gender: "",
+  //   maritalStatus: "",
+  //   insuranceType: "",
+  //   password: "",
+  //   confirmPassword: "",
+  //   zipCode: "",
+  //   city: "",
+  //   state: "",
+  //   streetAddress: "",
+  //   preferredCommunication: [],
+  //   careNeeds: "",
+  // });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const navigate = useNavigate(); // Hook to navigate
   // select data population
@@ -101,16 +112,12 @@ const SignupForm = () => {
     { value: "houston", label: "Houston" },
     { value: "miami", label: "Miami" },
   ];
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const [preferredMethod, setPreferredMethod] = useState("");
+  // Handler to update state on radio change
+  const handleMethodChange = (e) => {
+    setPreferredMethod(e.target.value);
   };
+
   // handle checkbox changes
   const handleCommunicationChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -118,6 +125,7 @@ const SignupForm = () => {
     const { value, checked } = e.target;
     setFormData((prev) => {
       let updatedPreferredCommunication = [...prev.preferredCommunication];
+      console.log("____________________", updatedPreferredCommunication);
       if (checked) {
         updatedPreferredCommunication.push(value);
       } else {
@@ -129,86 +137,55 @@ const SignupForm = () => {
     });
   };
 
-  // const validateForm = () => {
-  //   const newErrors: FormData = {
-  //     firstName: "",
-  //     lastName: "",
-  //     email: "",
-  //     phone: "",
-  //     age: "",
-  //     gender: "",
-  //     maritalStatus: "",
-  //     insuranceType: "",
-  //     password: "",
-  //     confirmPassword: "",
-  //     zipCode: "",
-  //     city: "",
-  //     state: "",
-  //     streetAddress: "",
-  //     preferredCommunication: "",
-  //   };
+  const { mutateAsync: registerMutation, isPending: isRegisterPending } =
+    useMutation({
+      mutationFn: ({ data }) => ApiRegister(data),
 
-  //   if (!formData.firstName) newErrors.firstName = "First name is required.";
-  //   if (!formData.lastName) newErrors.lastName = "Last name is required.";
-  //   if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Valid email is required.";
-  //   if (!formData.phone || formData.phone.length < 10) newErrors.phone = "Valid phone number is required.";
-  //   if (!formData.age) newErrors.age = "Age is required.";
-  //   if (!formData.gender) newErrors.gender = "Gender is required.";
-  //   if (!formData.maritalStatus) newErrors.maritalStatus = "Marital status is required.";
-  //   if (!formData.insuranceType) newErrors.insuranceType = "Insurance type is required.";
-  //   if (!formData.password || formData.password.length < 8) newErrors.password = "Password must be at least 8 characters.";
-  //   if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords must match.";
-  //   if (!formData.zipCode) newErrors.zipCode = "Zip code is required.";
-  //   if (!formData.city) newErrors.city = "City is required.";
-  //   if (!formData.state) newErrors.state = "State is required.";
-  //   if (!formData.streetAddress) newErrors.streetAddress = "Street address is required.";
-  //   if (formData.preferredCommunication.length === 0) {
-  //     newErrors.preferredCommunication = "Please select at least one communication method.";
-  //   }
+      onSuccess: async () => {
+        toast.success("Care Provider Created Successfully");
+        navigate("/login");
+      },
+      onError: (error) => {
+        toast.error("Failed to Create Care Provider");
+      },
+    });
 
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
-
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (validateForm()) {
-  //     console.log("Form Submitted", formData);
-  //     navigate("/account-created");
-  //     setFormData({
-  //       firstName: "",
-  //       lastName: "",
-  //       email: "",
-  //       phone: "",
-  //       age: "",
-  //       gender: "",
-  //       maritalStatus: "",
-  //       insuranceType: "",
-  //       careNeeds: "",
-  //       password: "",
-  //       confirmPassword: "",
-  //       zipCode: "",
-  //       city: "",
-  //       state: "",
-  //       streetAddress: "",
-  //       preferredCommunication: "",
-  //     });
-  //   }
-  // };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate("/account-created");  
+  const RegisterSubmit = async (data) => {
+    const registerData = {
+      // for care_provider
+      organization_name: "Joe Hospital",
+      email: data.email,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      number: data.number,
+      password: data.password,
+      gender: data.gender,
+      insuranceType: data.insuranceType,
+      care_needs: data.careNeeds,
+      age: data.age,
+      role_type: "CARE_PROVIDER",
+      postal_code: data.postal_code,
+      specialization: "Neuro Specialization",
+      city: data.city,
+      provider_type_id: 1,
+      state: data.state,
+      address: data.streetAddress,
+      website_url: "yeah.com",
+      working_hours: "Uk Bargingham Street ",
+      marital_status: data.maritalStatus,
+      communication_method_id: preferredMethod,
+    };
+    await registerMutation({ data: registerData });
   };
-  function handleSocialLogin(): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <>
       <OnBoardingLayout>
         <div className="min-h-screen max-h-screen flex flex-col">
-          <form onSubmit={handleSubmit} className="space-y-6 overflow-y-auto ">
+          <form
+            onSubmit={handleSubmit(RegisterSubmit)}
+            className="space-y-6 overflow-y-auto "
+          >
             <div className="px-4 py-6">
               <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
                 Sign Up
@@ -226,16 +203,14 @@ const SignupForm = () => {
                     id="firstName"
                     name="firstName"
                     type="text"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    errorMessage={errors.firstName}
                     placeholder="Enter your first name"
+                    register={register}
+                    registerName="firstName"
+                    errors={errors}
+                    validation={{
+                      required: "First Name is required",
+                    }}
                   />
-                  {errors.firstName && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.firstName}
-                    </p>
-                  )}
                 </div>
                 <div>
                   <InputField
@@ -245,16 +220,14 @@ const SignupForm = () => {
                     id="lastName"
                     name="lastName"
                     type="text"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    errorMessage={errors.firstName}
                     placeholder="Enter your last name"
+                    register={register}
+                    registerName="lastName"
+                    errors={errors}
+                    validation={{
+                      required: "Last Name is required",
+                    }}
                   />
-                  {errors.lastName && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.lastName}
-                    </p>
-                  )}
                 </div>
               </div>
 
@@ -268,10 +241,17 @@ const SignupForm = () => {
                     id="email"
                     name="email"
                     type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    errorMessage={errors.firstName}
                     placeholder="e.g. username@mail.com"
+                    register={register}
+                    registerName="email"
+                    errors={errors}
+                    validation={{
+                      required: "Email is required",
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: "Enter a valid email",
+                      },
+                    }}
                   />
                   {errors.email && (
                     <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -282,17 +262,17 @@ const SignupForm = () => {
                     label="Phone Number"
                     asterisk={true}
                     icon={IoCallOutline}
-                    id="phone"
-                    name="phone"
+                    id="number"
+                    name="number"
                     type="number"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    errorMessage={errors.firstName}
                     placeholder="e.g., +1 800 555 1234"
+                    register={register}
+                    registerName="number"
+                    errors={errors}
+                    validation={{
+                      required: "Phone is required",
+                    }}
                   />
-                  {errors.phone && (
-                    <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
-                  )}
                 </div>
               </div>
 
@@ -305,14 +285,14 @@ const SignupForm = () => {
                     id="age"
                     name="age"
                     type="number"
-                    value={formData.age}
-                    onChange={handleChange}
-                    errorMessage={errors.age}
                     placeholder="Enter your age"
+                    register={register}
+                    registerName="age"
+                    errors={errors}
+                    validation={{
+                      required: "Age is required",
+                    }}
                   />
-                  {errors.age && (
-                    <p className="mt-1 text-sm text-red-600">{errors.age}</p>
-                  )}
                 </div>
                 <div>
                   <SelectField
@@ -320,15 +300,14 @@ const SignupForm = () => {
                     id="gender"
                     name="gender"
                     asterisk={true}
-                    value={formData.gender}
-                    onChange={handleChange}
                     options={genderOptions}
-                    errorMessage={errors.gender}
+                    register={register}
+                    registerName="gender"
+                    errors={errors}
+                    validation={{
+                      required: "Gender is required",
+                    }}
                   />
-
-                  {errors.gender && (
-                    <p className="mt-1 text-sm text-red-600">{errors.gender}</p>
-                  )}
                 </div>
               </div>
 
@@ -340,16 +319,14 @@ const SignupForm = () => {
                     id="maritalStatus"
                     name="maritalStatus"
                     asterisk={true}
-                    value={formData.maritalStatus}
-                    onChange={handleChange}
                     options={maritalStatusOptions}
-                    errorMessage={errors.maritalStatus}
+                    register={register}
+                    registerName="maritalStatus"
+                    errors={errors}
+                    validation={{
+                      required: "Martial Status is required",
+                    }}
                   />
-                  {errors.maritalStatus && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.maritalStatus}
-                    </p>
-                  )}
                 </div>
                 <div>
                   <SelectField
@@ -357,35 +334,33 @@ const SignupForm = () => {
                     id="insuranceType"
                     name="insuranceType"
                     asterisk={true}
-                    value={formData.insuranceType}
-                    onChange={handleChange}
                     options={insuranceTypeOptions}
-                    errorMessage={errors.insuranceType}
+                    register={register}
+                    registerName="insuranceType"
+                    errors={errors}
+                    validation={{
+                      required: "Insurance Type is required",
+                    }}
                   />
-                  {errors.insuranceType && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.insuranceType}
-                    </p>
-                  )}
                 </div>
               </div>
 
               {/* care needs */}
               <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
-                  <InputField
-                    label="Care Needs (Optional)"
-                    id="careNeeds"
-                    name="careNeeds"
-                    type="text"
-                    value={formData.careNeeds}
-                    onChange={handleChange}
-                    errorMessage={errors.careNeeds}
-                    placeholder="Enter your care need"
-                  />
-                  {errors.careNeeds && (
-                    <p className="mt-1 text-sm text-red-600">{errors.careNeeds}</p>
-                  )}
-                </div>
+                <InputField
+                  label="Care Needs (Optional)"
+                  id="careNeeds"
+                  name="careNeeds"
+                  type="text"
+                  placeholder="Enter your care need"
+                  register={register}
+                  registerName="careNeeds"
+                  errors={errors}
+                  validation={{
+                    required: "Care Needs is required",
+                  }}
+                />
+              </div>
 
               {/* zip code and city */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -393,20 +368,18 @@ const SignupForm = () => {
                   <InputField
                     label="Zip Code"
                     asterisk={true}
-                    id="zipCode"
-                    name="zipCode"
+                    id="postal_code"
+                    name="postal_code"
                     type="text"
-                    value={formData.zipCode}
-                    onChange={handleChange}
-                    errorMessage={errors.zipCode}
                     placeholder="Enter your zip code"
                     icon={IoLocationSharp}
+                    register={register}
+                    registerName="postal_code"
+                    errors={errors}
+                    validation={{
+                      required: "Zip Code is required",
+                    }}
                   />
-                  {errors.zipCode && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.zipCode}
-                    </p>
-                  )}
                 </div>
                 <div>
                   <SelectField
@@ -414,14 +387,14 @@ const SignupForm = () => {
                     id="city"
                     name="city"
                     asterisk={true}
-                    value={formData.city}
-                    onChange={handleChange}
                     options={cityOptions}
-                    errorMessage={errors.city}
+                    register={register}
+                    registerName="city"
+                    errors={errors}
+                    validation={{
+                      required: "City is required",
+                    }}
                   />
-                  {errors.city && (
-                    <p className="mt-1 text-sm text-red-600">{errors.city}</p>
-                  )}
                 </div>
               </div>
 
@@ -434,15 +407,15 @@ const SignupForm = () => {
                     id="state"
                     name="state"
                     type="text"
-                    value={formData.state}
-                    onChange={handleChange}
-                    errorMessage={errors.state}
                     placeholder="e.g., California"
                     icon={IoLocationSharp}
+                    register={register}
+                    registerName="state"
+                    errors={errors}
+                    validation={{
+                      required: "State is required",
+                    }}
                   />
-                  {errors.state && (
-                    <p className="mt-1 text-sm text-red-600">{errors.state}</p>
-                  )}
                 </div>
                 <div>
                   <InputField
@@ -450,17 +423,15 @@ const SignupForm = () => {
                     id="streetAddress"
                     name="streetAddress"
                     type="text"
-                    value={formData.streetAddress}
-                    onChange={handleChange}
-                    errorMessage={errors.streetAddress}
                     placeholder="e.g., 123 Main Street"
                     icon={IoLocationSharp}
+                    register={register}
+                    registerName="streetAddress"
+                    errors={errors}
+                    validation={{
+                      required: "Address is required",
+                    }}
                   />
-                  {errors.streetAddress && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.streetAddress}
-                    </p>
-                  )}
                 </div>
               </div>
 
@@ -473,16 +444,14 @@ const SignupForm = () => {
                     id="password"
                     name="password"
                     type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    errorMessage={errors.password}
                     placeholder="Enter your password"
+                    register={register}
+                    registerName="password"
+                    errors={errors}
+                    validation={{
+                      required: "Password is required",
+                    }}
                   />
-                  {errors.password && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.password}
-                    </p>
-                  )}
                 </div>
                 <div>
                   <InputField
@@ -491,19 +460,17 @@ const SignupForm = () => {
                     id="confirmPassword"
                     name="confirmPassword"
                     type="password"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    errorMessage={errors.confirmPassword}
                     placeholder="Confirm your password"
+                    register={register}
+                    registerName="confirmPassword"
+                    errors={errors}
+                    validation={{
+                      required: "Confirm Password is required",
+                    }}
                   />
-                  {errors.confirmPassword && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.confirmPassword}
-                    </p>
-                  )}
                 </div>
               </div>
-              <div className="space-y-4">
+              {/* <div className="space-y-4">
                 <p className="text-md font-semibold">
                   Preferred Communication Method
                 </p>
@@ -520,7 +487,9 @@ const SignupForm = () => {
                       onChange={handleCommunicationChange}
                       className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="email" className="ml-1">Via Email Address</label>
+                    <label htmlFor="email" className="ml-1">
+                      Via Email Address
+                    </label>
                   </div>
                   <div className="flex items-center">
                     <input
@@ -534,7 +503,9 @@ const SignupForm = () => {
                       onChange={handleCommunicationChange}
                       className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="phone" className="ml-1">Via Phone Number</label>
+                    <label htmlFor="phone" className="ml-1">
+                      Via Phone Number
+                    </label>
                   </div>
                   <div className="flex items-center">
                     <input
@@ -546,7 +517,59 @@ const SignupForm = () => {
                       onChange={handleCommunicationChange}
                       className="mr-2 scale-150 border-[#FFFFFF] align-middle"
                     />
-                    <label htmlFor="sms" className="ml-1">Via SMS Text</label>
+                    <label htmlFor="sms" className="ml-1">
+                      Via SMS Text
+                    </label>
+                  </div>
+                </div>
+              </div> */}
+
+              <div className="space-y-4">
+                <p className="text-md font-semibold">
+                  Preferred Communication Method
+                </p>
+                <div className="flex text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      id="1"
+                      name="preferredCommunication"
+                      value="1"
+                      checked={preferredMethod === "1"}
+                      onChange={handleMethodChange}
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                    />
+                    <label htmlFor="1" className="ml-1">
+                      Via Email Address
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      id="2"
+                      name="preferredCommunication"
+                      value="2"
+                      checked={preferredMethod === "2"}
+                      onChange={handleMethodChange}
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                    />
+                    <label htmlFor="2" className="ml-1">
+                      Via Phone Number
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      id="3"
+                      name="preferredCommunication"
+                      value="3"
+                      checked={preferredMethod === "3"}
+                      onChange={handleMethodChange}
+                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                    />
+                    <label htmlFor="3" className="ml-1">
+                      Via SMS Text
+                    </label>
                   </div>
                 </div>
               </div>
@@ -554,14 +577,14 @@ const SignupForm = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
+                className="w-full flex justify-center bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
               >
-                Sign Up
+                {isRegisterPending ? <Spinner /> : "Sign Up"}
               </button>
               {/* calling component for Social icons */}
               <SocialLoginSection
                 action="login"
-                handleSocialLogin={handleSocialLogin}
+                // handleSocialLogin={handleSocialLogin}
               />
               {/* "Don't have an account yet?" Section */}
               <div className="flex justify-center mt-6">

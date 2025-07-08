@@ -22,12 +22,17 @@ const InputField: React.FC<InputFieldProps> = ({
   id = "",
   type = "text",
   placeholder = "",
-  value,
+  // value,
   onChange,
   icon: IconComponent,
   gray,
   asterisk,
   fieldName,
+  register,
+  registerName,
+  validation,
+  defaultValidation,
+  errors,
   ...rest
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -45,9 +50,7 @@ const InputField: React.FC<InputFieldProps> = ({
           >
             {label}
           </label>
-          {asterisk && (
-            <span className="text-red-500 ml-1">*</span>
-          )}
+          {asterisk && <span className="text-red-500 ml-1">*</span>}
         </div>
       )}
       <div className="relative">
@@ -55,28 +58,38 @@ const InputField: React.FC<InputFieldProps> = ({
           id={id}
           type={isPassword && showPassword ? "text" : type}
           placeholder={placeholder}
-          value={value}
-          onChange={onChange}
+          {...(register && registerName
+            ? register(registerName, validation || defaultValidation)
+            : {})}
           className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
           {...rest}
         />
 
         {IconComponent && !isPassword && (
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
+          <div className="absolute right-3 top-[50%] transform -translate-y-1/2 cursor-pointer">
             <IconComponent size={18} color="#25252580" />
           </div>
         )}
 
         {isPassword && (
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
+          <div className="absolute right-3 top-[50%] transform -translate-y-1/2 cursor-pointer">
             {showPassword ? (
               <IoEyeOutline size={18} onClick={handleToggle} color="#292D32" />
             ) : (
-              <IoEyeOffOutline size={18} onClick={handleToggle} color="#292D32" />
+              <IoEyeOffOutline
+                size={18}
+                onClick={handleToggle}
+                color="#292D32"
+              />
             )}
           </div>
         )}
       </div>
+      {errors?.[registerName] && (
+        <p className="text-sm text-red-500 mt-1">
+          {errors[registerName]?.message as string}
+        </p>
+      )}
     </div>
   );
 };

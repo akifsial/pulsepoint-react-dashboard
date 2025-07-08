@@ -19,7 +19,7 @@ export const PatientRoutes = [
       { path: "patient-reviews", element: <AdminPatientReviews /> },
       { path: "patient-reviews/edit", element: <EditReviewPage /> }, // Add this line
       { path: "community-forum", element: <AdminCommunityForum /> },
-      { path: "hospital-profile", element: <HospitalProfile /> },
+      { path: "hospital-profile/:id", element: <HospitalProfile /> },
       { path: "notification", element: <NotificationPage /> },
        { path: "chatbot", element: <ChatbotLayout /> },
        { path: "nursing-home", element: <NursingHomeReviews /> },

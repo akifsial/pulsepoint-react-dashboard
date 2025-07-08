@@ -8,6 +8,7 @@ import ProfileDropdown from "../Dropdowns/ProfileDropdown";
 import NotficationBar from "./NotificationBar";
 import { useLocation } from "react-router-dom";
 import { Search, Clock } from "lucide-react";
+import { useMeApi } from "@src/hooks/useUsers";
 
 interface Props {
   sidebarOpen: boolean;
@@ -29,7 +30,7 @@ const DashboardHeader: React.FC<Props> = ({
   setSidebarOpen,
   noticationLink,
   routeProfile,
-  routeSetting
+  routeSetting,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -39,6 +40,8 @@ const DashboardHeader: React.FC<Props> = ({
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+
+  const { data } = useMeApi();
 
   const recentSearches: RecentSearch[] = [
     { id: "1", text: "John Davis - Patient ID #10293" },
@@ -55,10 +58,7 @@ const DashboardHeader: React.FC<Props> = ({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-      if (
-        profileMenuRef.current &&
-        !profileMenuRef.current.contains(target)
-      ) {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(target)) {
         setShowMenu(false);
       }
       if (
@@ -89,7 +89,9 @@ const DashboardHeader: React.FC<Props> = ({
 
   return (
     <header
-      className={`${showProfileSidebar ? "lg:ml-[80px]" : ""} bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
+      className={`${
+        showProfileSidebar ? "lg:ml-[80px]" : ""
+      } bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
     >
       <div className="flex items-start sm:items-center justify-between gap-2 w-full flex-col sm:flex-row">
         <div className="min-w-fit">
@@ -105,7 +107,7 @@ const DashboardHeader: React.FC<Props> = ({
           >
             <MdMenu size={20} />
           </button>
- {/* Search Bar */}
+          {/* Search Bar */}
           <div className="hidden lg:block relative provider-search-dropdown w-[300px] transition-all duration-300">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -140,7 +142,9 @@ const DashboardHeader: React.FC<Props> = ({
                 )}
                 <div className="py-2 px-[15px]">
                   <div className="flex items-center justify-between mb-0">
-                    <h3 className="text-gray-500 font-medium text-sm">Recents</h3>
+                    <h3 className="text-gray-500 font-medium text-sm">
+                      Recents
+                    </h3>
                     <button
                       onClick={handleClearRecentSearches}
                       className="text-gray-500 hover:text-red-500 font-medium text-sm transition-colors"
@@ -180,8 +184,6 @@ const DashboardHeader: React.FC<Props> = ({
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
           </div>
 
-         
-
           {/* Profile */}
           <div
             onClick={() => setShowMenu(!showMenu)}
@@ -193,7 +195,7 @@ const DashboardHeader: React.FC<Props> = ({
               className="w-[30px] h-[30px] lg:w-[46px] lg:h-[46px] rounded-full object-cover"
             />
             <div className="hidden lg:flex flex-col">
-              <p className="font-semibold text-sm">Mathew</p>
+              <p className="font-semibold text-sm">{data?.first_name}</p>
               <p className="text-xs text-gray-500">Profile</p>
             </div>
             <img src={dropDownArrow} alt="Arrow" className="w-4 h-4" />
@@ -212,7 +214,10 @@ const DashboardHeader: React.FC<Props> = ({
             transition={{ duration: 0.3 }}
             className="absolute right-0 top-[75px] w-55 bg-white border border-gray-200 shadow-xl px-2 rounded-xl py-4 z-50"
           >
-            <ProfileDropdown routeSetting={routeSetting} routeProfile={routeProfile} />
+            <ProfileDropdown
+              routeSetting={routeSetting}
+              routeProfile={routeProfile}
+            />
           </motion.div>
         )}
       </AnimatePresence>
