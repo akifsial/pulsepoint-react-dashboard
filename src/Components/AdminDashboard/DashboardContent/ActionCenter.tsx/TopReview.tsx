@@ -1,5 +1,5 @@
 import React from 'react'
-import ChartComponent from "../../../AdminDashboard/ChartComponent/Chart.jsx"
+import ChartComponent from "@components/AdminDashboard/ChartComponent/Chart.jsx"
 
 const TopReview = () => {
   return (

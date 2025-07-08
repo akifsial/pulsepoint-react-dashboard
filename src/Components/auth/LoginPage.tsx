@@ -25,7 +25,6 @@ const LoginPage = () => {
     rememberMe: false,
   });
 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
 

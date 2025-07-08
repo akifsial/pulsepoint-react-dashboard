@@ -11,7 +11,7 @@ import OTPPage from "@components/auth/OTPPage";
 export const websitePublicRoutes = [
   { path: "/", element: <HomePage /> },
   { path: "/about-us", element: <AboutUs /> },
-  { path: "/signup", element: <SignupForm /> },
+  { path: "/signup", element:  <SignupForm /> },
   { path: "/account-created", element: <AccountCreatedPage /> },
   { path: "/login", element: <LoginPage /> },
   { path: "/forgot-password", element: <ForgotPasswordPage /> },

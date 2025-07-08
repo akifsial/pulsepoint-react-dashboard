@@ -27,6 +27,7 @@ const ResetPasswordPage = () => {
       onSuccess: async () => {
         toast.success("Password Reset Successfully");
         navigate("/login");
+        localStorage.clear()
       },
       onError: (error) => {
         toast.error("Reset Password Failed");

@@ -6,13 +6,14 @@ import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
 import { ProfileRoutes } from "./ProfileRoutes";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
+import {ProtectedRoutes, PublicProtectRoute} from "./ProtectedRoutes";
 
 const Router: React.FC = () => {
   return (
     <Routes>
       {/* Public Routes */}
       {websitePublicRoutes.map(({ path, element }) => (
-        <Route key={path} path={path} element={element} />
+        <Route key={path} path={path} element={<PublicProtectRoute>{element}</PublicProtectRoute>} />
       ))}
 
       {/* Dashboard Routes */}
@@ -22,29 +23,12 @@ const Router: React.FC = () => {
             <Route
               key={child.path || "index"}
               path={child.path}
-              element={child.element}
+              element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
               index={child.path === "" ? true : undefined}
             />
-            
           ))}
         </Route>
-        
       ))}
-
-       {/* {ProfileRoutes.map(({ path, element, children }) => (
-        <Route key={path} path={path} element={element}>
-          {children?.map((child) => (
-            <Route
-              key={child.path || "index"}
-              path={child.path}
-              element={child.element}
-              index={child.path === "" ? true : undefined}
-            />
-            
-          ))}
-        </Route>
-        
-      ))} */}
 
       {/* Patient Routes */}
       {PatientRoutes.map(({ path, element, children }) => (
@@ -53,14 +37,14 @@ const Router: React.FC = () => {
             <Route
               key={child.path || "index"}
               path={child.path}
-              element={child.element}
+              element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
               index={child.path === "" ? true : undefined}
             />
           ))}
         </Route>
       ))}
       {/* Admin Routes */}
-      {AdminRoutes.map(({ path, element, children }) => (
+      {/* {AdminRoutes.map(({ path, element, children }) => (
         <Route key={path} path={path} element={element}>
           {children?.map((child) => (
             <Route
@@ -71,7 +55,7 @@ const Router: React.FC = () => {
             />
           ))}
         </Route>
-      ))}
+      ))} */}
 
       {/* Admin Routes */}
       {AdminRoutes.map(({ path, element, children }) => (
@@ -80,14 +64,26 @@ const Router: React.FC = () => {
             <Route
               key={child.path || "index"}
               path={child.path}
-              element={child.element}
+              element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
+              // element={
+              //   child.isProtected ? (
+              //     <ProtectedRoutes>{child.element}</ProtectedRoutes>
+              //   ) : (
+              //     child.element
+              //   )
+              // }
               index={child.path === "" ? true : undefined}
             />
           ))}
         </Route>
       ))}
+
       {ProfileRoutes.map(({ path, element, children }) => (
-        <Route key={path} path={path} element={element}>
+        <Route
+          key={path}
+          path={path}
+          element={<ProtectedRoutes>{element}</ProtectedRoutes>}
+        >
           {children?.map((child) => (
             <Route
               key={child.path || "index"}
@@ -99,7 +95,7 @@ const Router: React.FC = () => {
         </Route>
       ))}
       {/* 404 Not Found */}
-        {/* <Route path="/patient/chatbot" element={ <ChatbotLayout /> }/> */}
+      {/* <Route path="/patient/chatbot" element={ <ChatbotLayout /> }/> */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

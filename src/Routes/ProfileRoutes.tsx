@@ -1,14 +1,14 @@
-
-import AddFeatureDetail from '@components/Profile/AddFeatureDetail';
-import AdminProfileDetail from '@components/Profile/AdminProfileDetail';
-import PatientProfile from '@components/Profile/PatientProfile';
-import CareProfileLayout from '@components/ProfileLayout/CareProfileLayout';
-import PatientProfileLayout from '@components/ProfileLayout/PatientProfileLayout';
-import ProfileLayout from '@components/ProfileLayout/ProfileLayout';
-import GetFeaturePage from '@pages/ProfilePage/GetFeaturePage';
-import ManagePasswordPage from '@pages/ProfilePage/ManagePasswordPage';
-import PatientProfileDetailPage from '@pages/ProfilePage/PatientProfileDetailPage';
-import ProfileDetailPage from '@pages/ProfilePage/ProfileDetailPage';
+import AddFeatureDetail from "@components/Profile/AddFeatureDetail";
+import AdminProfileDetail from "@components/Profile/AdminProfileDetail";
+import PatientProfile from "@components/Profile/PatientProfile";
+import CareProfileLayout from "@components/ProfileLayout/CareProfileLayout";
+import PatientProfileLayout from "@components/ProfileLayout/PatientProfileLayout";
+import ProfileLayout from "@components/ProfileLayout/ProfileLayout";
+import GetFeaturePage from "@pages/ProfilePage/GetFeaturePage";
+import ManagePasswordPage from "@pages/ProfilePage/ManagePasswordPage";
+import PatientProfileDetailPage from "@pages/ProfilePage/PatientProfileDetailPage";
+import ProfileDetailPage from "@pages/ProfilePage/ProfileDetailPage";
+import ProtectedRoutes from "./ProtectedRoutes";
 export const ProfileRoutes = [
   {
     path: "/admin",
@@ -17,16 +17,31 @@ export const ProfileRoutes = [
       { path: "profile", element: <AdminProfileDetail /> },
       { path: "manage-password", element: <ManagePasswordPage /> },
       { path: "feature", element: <AddFeatureDetail /> },
-    ]
+    ],
   },
   {
     path: "/care-provider",
     element: <CareProfileLayout />,
     children: [
-      { path: "profile", element: <ProfileDetailPage /> },
-      { path: "manage-password", element: <ManagePasswordPage /> },
-      { path: "feature", element: <GetFeaturePage /> },
-    ]
+      {
+        path: "profile",
+        element: (
+            <ProfileDetailPage />
+        ),
+      },
+      {
+        path: "manage-password",
+        element: (
+            <ManagePasswordPage />
+        ),
+      },
+      {
+        path: "feature",
+        element: (
+            <GetFeaturePage />
+        ),
+      },
+    ],
   },
   {
     path: "/patient",
@@ -35,6 +50,6 @@ export const ProfileRoutes = [
       { path: "profile", element: <PatientProfile /> },
       { path: "manage-password", element: <ManagePasswordPage /> },
       { path: "feature", element: <GetFeaturePage /> },
-    ]
+    ],
   },
 ];

@@ -6,7 +6,10 @@ export const ApiLogin = async (data) => {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/login`;
 
     const response = await axios.post(BASE_URL, data);
-
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify(response?.data?.payload?.user)
+    );
     return response.data.payload.records;
   } catch (error) {
     throw new error();
