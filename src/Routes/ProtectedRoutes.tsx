@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const ProtectedRoutes: React.FC = ({ children }) => {
+export const ProtectedRoutes: React.FC = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const isAuthenticate = localStorage.getItem("userInfo");
   const navigate = useNavigate();
 
