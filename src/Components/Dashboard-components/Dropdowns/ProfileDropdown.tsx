@@ -26,19 +26,24 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   logoutIcon = defaultLogout,
   logoutIconHover = defaultLogoutHover,
   routeProfile,
-  routeSetting
+  routeSetting,
 }) => {
   const [hovered, setHovered] = useState<string | null>(null);
-const navigate=useNavigate()
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   return (
-    <div >
+    <div>
       <div className="border-b border-[#E9EAEB] pb-2 mb-1">
-        
         <div
           className="flex items-center gap-3 w-full mb-2 text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("user")}
           onMouseLeave={() => setHovered(null)}
-          onClick={()=>navigate(routeProfile)}
+          onClick={() => navigate(routeProfile)}
         >
           <img
             src={hovered === "user" ? userIconHover : userIcon}
@@ -52,7 +57,7 @@ const navigate=useNavigate()
           className="flex items-center gap-3 w-full text-left py-2 mb-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("settings")}
           onMouseLeave={() => setHovered(null)}
-          onClick={()=>navigate(routeSetting)}
+          onClick={() => navigate(routeSetting)}
         >
           <img
             src={hovered === "settings" ? settingsIconHover : settingsIcon}
@@ -66,6 +71,7 @@ const navigate=useNavigate()
       <button
         onMouseEnter={() => setHovered("logout")}
         onMouseLeave={() => setHovered(null)}
+        onClick={handleLogout}
         className="flex items-center  gap-3 w-full text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors mt-1.5 cursor-pointer text-[#235969]"
       >
         <img

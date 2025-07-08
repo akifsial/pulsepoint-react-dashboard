@@ -16,19 +16,25 @@ import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.j
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import { useNavigate } from "react-router-dom";
 import ReviewCard from "@components/ReviewCard";
-import { Search, Clock } from 'lucide-react';
+import dayjs from "dayjs";
+import { Search, Clock } from "lucide-react";
+import { useCareProviders, useStatsApi } from "@src/hooks/useDashboard";
 
 // Import or define your Modal component
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-      <div className={`bg-white p-7.5 rounded-[10px] relative w-full mx-4 ${className}`}>
+      <div
+        className={`bg-white p-7.5 rounded-[10px] relative w-full mx-4 ${className}`}
+      >
         <button
           onClick={() => setIsOpen(false)}
           className="absolute right-[18px] top-[18px]"
           aria-label="Close"
         >
-          <span className="w-7 h-7 cursor-pointer text-gray-500 hover:text-gray-700 text-xl">×</span>
+          <span className="w-7 h-7 cursor-pointer text-gray-500 hover:text-gray-700 text-xl">
+            ×
+          </span>
         </button>
         <div>{children}</div>
       </div>
@@ -46,13 +52,20 @@ const AdminDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [searchText, setSearchText] = React.useState<string>("");
   const [isSearchDropdownOpen, setIsSearchDropdownOpen] = React.useState(false);
+  // Apis
+  const { data: StatsData } = useStatsApi();
+  const { data: CareProvidersData } = useCareProviders();
+  console.log(
+    "CareProvidersDataCareProvidersDataCareProvidersData",
+    CareProvidersData?.records
+  );
 
   // Recent searches data
   const recentSearches: RecentSearch[] = [
-    { id: '1', text: 'Johns Hopkins Hospital' },
-    { id: '2', text: 'Dr. Amanda Reyes – Green Valley Rehab Center' },
-    { id: '3', text: 'Search all providers near 10001' },
-    { id: '4', text: 'St. Luke\'s Long-Term Care – 30303' }
+    { id: "1", text: "Johns Hopkins Hospital" },
+    { id: "2", text: "Dr. Amanda Reyes – Green Valley Rehab Center" },
+    { id: "3", text: "Search all providers near 10001" },
+    { id: "4", text: "St. Luke's Long-Term Care – 30303" },
   ];
 
   type dataTypes = {
@@ -74,11 +87,12 @@ const AdminDashboard: React.FC = () => {
       header: "Provider's Name",
       showSort: true,
       cell: ({ row }: any) => {
-        const { first_name, last_name, email } = row.original;
+        const { id,first_name, last_name, email } = row.original;
         return (
           <div
             className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate("/patient/hospital-profile")}
+            onClick={() => navigate(`/patient/hospital-profile/${id}`)}
+            // onClick={() => navigate("/patient/hospital-profile")}
           >
             <img
               src={dummyImage}
@@ -101,12 +115,19 @@ const AdminDashboard: React.FC = () => {
       accessor: "date",
       header: "Date",
       showSort: true,
-      cell: (info: any) => <i>{info.getValue()}</i>,
+      cell: (info) => {
+        const row = info.row.original;
+        return <div>{dayjs(row?.created_at).format("DD-MM-YY") ?? "N/A"}</div>;
+      },
     },
     {
       accessor: "rating",
       header: "Rating",
       showSort: true,
+      cell: (info) => {
+        const row = info.row.original;
+        return <div>{row?.reviews_to_careprovider?.[0]?.rating ?? "N/A"}</div>;
+      },
     },
     {
       accessor: "specialization",
@@ -196,27 +217,30 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleClearRecentSearches = () => {
-    console.log('Clear recent searches');
+    console.log("Clear recent searches");
   };
 
   const handleSearchItemClick = (searchValue: string) => {
     setSearchText(searchValue);
     setIsSearchDropdownOpen(false);
-    console.log('Selected search:', searchValue);
+    console.log("Selected search:", searchValue);
   };
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (isSearchDropdownOpen && !target.closest('.search-dropdown-container')) {
+      if (
+        isSearchDropdownOpen &&
+        !target.closest(".search-dropdown-container")
+      ) {
         setIsSearchDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSearchDropdownOpen]);
 
@@ -224,7 +248,7 @@ const AdminDashboard: React.FC = () => {
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
         <StatsCommonCards
-          count={40}
+          count={StatsData?.totalProviders ? StatsData?.totalProviders : 0}
           title={
             <>
               Total Care <br />
@@ -236,14 +260,18 @@ const AdminDashboard: React.FC = () => {
           borderBg="#9747FF"
         />
         <StatsCommonCards
-          count={25}
+          count={
+            StatsData?.totalReviewsWritten ? StatsData?.totalReviewsWritten : 0
+          }
           title="Total Reviews Written"
           cardImg={WriteReview}
           imgBg="#D8F6D4"
           borderBg="#52C343"
         />
         <StatsCommonCards
-          count={4.6}
+          count={
+            StatsData?.averageRatingGiven ? StatsData?.averageRatingGiven : 0
+          }
           title="Average Rating Given"
           cardImg={ThumbsUp}
           imgBg="#FFE8CF"
@@ -254,11 +282,11 @@ const AdminDashboard: React.FC = () => {
           onReviewClick={handleReviewClick}
         />
       </div>
-      
+
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Care Providers</h3>
-          
+
           {/* Updated searchbar with dropdown */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5 relative">
             <div className="w-full max-w-sm relative search-dropdown-container">
@@ -273,7 +301,7 @@ const AdminDashboard: React.FC = () => {
                   className="w-full pl-10 pr-4 py-3 text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
                 />
               </div>
-              
+
               {/* Search Dropdown - positioned below input */}
               {isSearchDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
@@ -295,7 +323,9 @@ const AdminDashboard: React.FC = () => {
                   {/* Recents Section */}
                   <div className="p-2">
                     <div className="flex items-center justify-between mb-0">
-                      <h3 className="text-gray-600 font-medium text-base">Recents</h3>
+                      <h3 className="text-gray-600 font-medium text-base">
+                        Recents
+                      </h3>
                       <button
                         onClick={handleClearRecentSearches}
                         className="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors"
@@ -335,7 +365,7 @@ const AdminDashboard: React.FC = () => {
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="right"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium" 
+                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
                 <PrimaryButton
@@ -364,11 +394,11 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
         <div>
           <TanDataTable<dataTypes>
             columns={columns}
-            data={data}
+            data={CareProvidersData}
             showCheckbox={false}
             onRowSelect={handleRowSelect}
             showActions={true}
@@ -383,8 +413,6 @@ const AdminDashboard: React.FC = () => {
           />
         </div>
       </div>
-
-
     </div>
   );
 };

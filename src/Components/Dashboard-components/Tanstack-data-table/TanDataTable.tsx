@@ -28,8 +28,8 @@ const TanDataTable = <T extends object>({
     ...(showCheckbox
       ? [
           columnHelper.display({
-            id:"select",
-            header:() => <input type="checkbox" />,
+            id: "select",
+            header: () => <input type="checkbox" />,
             cell: ({ row }) => (
               <input
                 type="checkbox"
@@ -41,7 +41,7 @@ const TanDataTable = <T extends object>({
         ]
       : []),
 
-    ...columns.map((col) =>
+    ...columns?.map((col) =>
       columnHelper.accessor((row) => row[col.accessor], {
         id: col.accessor as string,
         header: () => col.header,
@@ -64,7 +64,8 @@ const TanDataTable = <T extends object>({
       : []),
   ];
   const table = useReactTable({
-    data,
+    // data,
+    data: data ?? [], // fallback to empty array if undefined
     columns: baseColumns,
     state: {
       sorting,
@@ -114,13 +115,13 @@ const TanDataTable = <T extends object>({
             ))}
           </thead>
           <tbody>
-            {table.getRowModel().rows.map((row, idx) => (
+            {table?.getRowModel()?.rows?.map((row, idx) => (
               <tr
                 key={row.id}
                 className="bg-white hover:bg-[var(--primary-color-hover-light)] transition-colors duration-200"
                 style={{ borderBottom: "1px solid #2525251a" }}
               >
-                {row.getVisibleCells().map((cell) => (
+                {row?.getVisibleCells()?.map((cell) => (
                   <td key={cell.id} className="px-2 py-5 ">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
