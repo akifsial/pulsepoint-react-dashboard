@@ -22,7 +22,6 @@
 //   variant?: "default" | "simple";
 // }
 
-
 // const DropdownActions: React.FC<DropdownActionsProps> = ({
 //   onEdit,
 //   onDelete,
@@ -214,7 +213,9 @@ const DropdownActions: React.FC<DropdownActionsProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const getClassName = (type: "view" | "edit" | "flag" | "delete" | "approve" | "edit") => {
+  const getClassName = (
+    type: "view" | "edit" | "flag" | "delete" | "approve" | "edit"
+  ) => {
     const base = `w-full px-4 py-2 flex items-center gap-2 text-sm`;
     const hover =
       variant === "simple"
@@ -243,7 +244,7 @@ const DropdownActions: React.FC<DropdownActionsProps> = ({
       case "flag":
         return "Flag Post";
       case "delete":
-        return "Delete Post";
+        return "Delete";
       default:
         return label;
     }
@@ -336,9 +337,7 @@ const DropdownActions: React.FC<DropdownActionsProps> = ({
                 }}
                 className={getClassName("delete")}
               >
-                {variant === "default" && (
-                  <MdDelete className="text-red-600" />
-                )}
+                {variant === "default" && <MdDelete className="text-red-600" />}
                 {getLabel("delete")}
               </button>
             )}

@@ -1,5 +1,5 @@
 import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
-import React from "react";
+import React, { useState } from "react";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
@@ -19,7 +19,16 @@ import ReviewCard from "@components/ReviewCard";
 import dayjs from "dayjs";
 import { Search, Clock } from "lucide-react";
 import { useCareProviders, useStatsApi } from "@src/hooks/useDashboard";
-
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  ApiCareProviderStatusUpdate,
+  ApiGetCareProviders,
+} from "@src/api/ApiDashboard";
+import DeleteModal from "@src/components/Model/DeleteModal";
+import { apiDeleteCareProvider } from "@src/api/ApiDashboard";
+import EditModal from "@src/components/Model/ActiveInactiveModal";
+import ActiveInactiveModal from "@src/components/Model/ActiveInactiveModal";
+import toast from "react-hot-toast";
 // Import or define your Modal component
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
@@ -52,13 +61,28 @@ const AdminDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [searchText, setSearchText] = React.useState<string>("");
   const [isSearchDropdownOpen, setIsSearchDropdownOpen] = React.useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [status, setStatus] = useState();
+  const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
+  const queryClient = useQueryClient();
+  const [rating, setRating] = useState();
   // Apis
   const { data: StatsData } = useStatsApi();
-  const { data: CareProvidersData } = useCareProviders();
-  console.log(
-    "CareProvidersDataCareProvidersDataCareProvidersData",
-    CareProvidersData?.records
+  // const { data: CareProvidersData } = useCareProviders();
+  const { data: CareProvidersData, isFetching } = useCareProviders(
+    searchText,
+    rating
   );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  // const { data: CareProvidersData, refetch } = useQuery({
+  //   queryKey: ["careProviders", value],
+  //   queryFn: () => ApiGetCareProviders(value),
+  // });
 
   // Recent searches data
   const recentSearches: RecentSearch[] = [
@@ -87,7 +111,8 @@ const AdminDashboard: React.FC = () => {
       header: "Provider's Name",
       showSort: true,
       cell: ({ row }: any) => {
-        const { id,first_name, last_name, email } = row.original;
+        const { id, organization_name, first_name, last_name, email } =
+          row.original;
         return (
           <div
             className="flex items-center gap-3 cursor-pointer"
@@ -101,7 +126,7 @@ const AdminDashboard: React.FC = () => {
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
-                {first_name} {last_name}
+                {organization_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
                 {email}
@@ -212,10 +237,6 @@ const AdminDashboard: React.FC = () => {
     setIsSearchDropdownOpen(true);
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
-
   const handleClearRecentSearches = () => {
     console.log("Clear recent searches");
   };
@@ -243,6 +264,64 @@ const AdminDashboard: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSearchDropdownOpen]);
+
+  const { mutateAsync: deleteMutation, isPending: deleteMutationLoading } =
+    useMutation({
+      mutationFn: () => apiDeleteCareProvider(selectedRowId),
+      onSuccess: async () => {
+        queryClient.invalidateQueries(["useCareProviders"]); // refetch list
+        setIsDeleteModalOpen(false);
+
+        // queryClient.invalidateQueries(["detailersFranchise"]);
+      },
+      onError: (error) => {
+        console.error("Error deleting user:", error);
+      },
+    });
+
+  const handleDelete = async () => {
+    if (selectedRowId !== null) {
+      await deleteMutation(selectedRowId);
+    }
+  };
+
+  const { mutateAsync: updateStatusMutation, isLoading: updateStatusPending } =
+    useMutation({
+      mutationFn: ({ data }) =>
+        ApiCareProviderStatusUpdate(data, selectedRowId),
+
+      // onMutate: () => setLoadingId(currentId),
+      onSuccess: async () => {
+        queryClient.invalidateQueries(["useCareProviders"]); // refetch list
+        toast.success("Status Update Successfully");
+        setIsEditModalOpen(false);
+      },
+      onError: (error) => {
+        console.error("Error updating user:", error);
+      },
+    });
+
+  console.log("statusyyyyy", status);
+  // console.log("status",status)
+  // const handleUpdateStatus = () => {
+  //   const data = {
+  //     status: status === "ACTIVE" ? "INACTIVE" : "ACTIVE", //
+  //   };
+
+  //   // updateMutation.mutate({ currentId, formData });
+  //   updateStatusMutation({ data });
+  // };
+
+  const handleUpdateStatus = (stst) => {
+    // console.log("%%%%%%%%%%%%",id)
+    const newStatus = stst === "ACTIVE" ? "INACTIVE" : "ACTIVE";
+
+    const data = {
+      status: newStatus,
+    };
+
+    updateStatusMutation({ data });
+  };
 
   return (
     <div className="mb-10">
@@ -308,6 +387,7 @@ const AdminDashboard: React.FC = () => {
                   {/* Search Input in Dropdown */}
                   <div className="p-4 border-b border-gray-100">
                     <div className="relative">
+                      {/* asdasdasd */}
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                       <input
                         type="text"
@@ -360,7 +440,7 @@ const AdminDashboard: React.FC = () => {
             <div className="relative">
               <div className="flex items gap-4 ">
                 <PrimaryButton
-                  btnText="ratings"
+                  btnText="Ratings"
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
@@ -387,7 +467,7 @@ const AdminDashboard: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute left-0 top-[60px] w-50 z-50"
                   >
-                    <RatingFilterDropdown />
+                    <RatingFilterDropdown setRating={setRating} />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -397,8 +477,8 @@ const AdminDashboard: React.FC = () => {
 
         <div>
           <TanDataTable<dataTypes>
-            columns={columns}
-            data={CareProvidersData}
+            columns={columns ?? []}
+            data={CareProvidersData ?? []}
             showCheckbox={false}
             onRowSelect={handleRowSelect}
             showActions={true}
@@ -406,11 +486,43 @@ const AdminDashboard: React.FC = () => {
             actions={(row) => (
               <DropdownActions
                 // onView={() => console.log("View", row.id)}
-                onEdit={() => console.log("Edit", row.id)}
-                onDelete={() => console.log("Delete", row.id)}
+                onEdit={() => {
+                  setIsEditModalOpen(true);
+                  setSelectedRowId(row.id);
+                }}
+                // onDelete={() => console.log("Delete", row.id)}
+                onDelete={() => {
+                  setSelectedRowId(row.id);
+                  setIsDeleteModalOpen(true);
+                }}
               />
             )}
           />
+
+          <DeleteModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => {
+              setIsDeleteModalOpen(false);
+              setSelectedRowId(null);
+            }}
+            onDelete={handleDelete}
+            loading={deleteMutationLoading}
+          />
+
+          {isEditModalOpen ? (
+            <ActiveInactiveModal
+              onClose={() => {
+                setIsEditModalOpen(false);
+                setSelectedRowId(null);
+              }}
+              onEdit={handleUpdateStatus}
+              loading={updateStatusPending}
+              selectedRowId={selectedRowId}
+              setStatus={setStatus}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

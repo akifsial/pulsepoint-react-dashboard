@@ -19,11 +19,10 @@ const HospitalProfile = () => {
 
   const { data } = useCareProviderSingle(id);
 
-  console.log("Asasasdasdasdasd",data)
   return (
     <>
       {feedbackOpen ? (
-        <FeedbackForm />
+        <FeedbackForm setFeedbackOpen={setFeedbackOpen} />
       ) : (
         <div className="h-[661px] overflow-y-auto transition-colors duration-300 bg-medical-bg">
           {/* Header */}
@@ -41,7 +40,8 @@ const HospitalProfile = () => {
                 onClick={handleGoBack}
               />
               <h1 className="font-space font-bold text-[25px] leading-[32px] text-[#181D27] align-middle [leading-trim:cap] [text-edge:cap]">
-                {data?.payload?.last_name ? data?.payload?.first_name : "Anonymus"}{data?.payload?.last_name}
+                {data?.first_name ? data?.first_name : "Anonymus"}{" "}
+                {data?.last_name}
               </h1>
             </div>
 
@@ -67,15 +67,17 @@ const HospitalProfile = () => {
                 email={""}
                 specialty={""}
                 description={""}
+                id={id}
               />
               <ContactInformationCard
                 address={""}
                 phone={""}
                 weekdayHours={""}
                 weekendHours={""}
+                id={id}
               />
             </div>
-            <RatingsReviewsSection data={data} />
+            <RatingsReviewsSection id={id} />
           </main>
         </div>
       )}

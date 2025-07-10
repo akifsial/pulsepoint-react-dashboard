@@ -7,6 +7,7 @@ const TextField = ({
   placeholder,
   row = 3,
   className = "",
+  onChange
 }) => {
   return (
     <>
@@ -26,6 +27,7 @@ const TextField = ({
         placeholder={placeholder}
         rows={row}
         className={`w-full h-[50px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] py-2.5 font-normal text-[16px] leading-[140%] text-[#1A1A1A] mb-1 focus:outline-none placeholder:text-sm placeholder:font-medium ${className}`}
+        onChange={onChange}
       />
     </>
   );

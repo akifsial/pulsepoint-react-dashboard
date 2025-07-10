@@ -2,12 +2,21 @@ import React, { useState } from "react";
 import { FaFaceGrinStars } from "react-icons/fa6";
 import TextField from "@components/CareProvider/CommunityForum/TextField";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Model from "@components/Model/Model";
+import { useMutation } from "@tanstack/react-query";
+import { ApiCreateFeedback } from "@src/api/ApiDashboard";
+import toast from "react-hot-toast";
+import Spinner from "@components/Loaders/Spinner";
 
-const FeedbackForm = () => {
+const FeedbackForm = ({setFeedbackOpen}) => {
+  const { id } = useParams();
+
   const [currentStep, setCurrentStep] = useState(0);
   const [showThankYou, setShowThankYou] = useState(false);
+  const [responses, setResponses] = useState({ care_provider_id: id });
+
+
   const navigate = useNavigate();
 
   const surveySections = [
@@ -26,7 +35,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "responsiveness",
+          name: "responsiveness_of_staff",
         },
         {
           label: "b. Competence and Professionalism of Staff",
@@ -40,7 +49,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "competence",
+          name: "competence_and_professionalism_of_staff",
         },
         {
           label: "c. Quality and Effectiveness of Treatment/Care",
@@ -54,7 +63,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "effectiveness",
+          name: "quality_and_effectiveness_of_treatment_care",
         },
       ],
     },
@@ -73,7 +82,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "clarity",
+          name: "clarity_of_information",
         },
         {
           label: "b. Respect and Dignity",
@@ -86,7 +95,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "respect",
+          name: "respect_and_dignity",
         },
         {
           label: "c. Involvement in Care Decisions",
@@ -94,7 +103,7 @@ const FeedbackForm = () => {
             "Were you involved and kept informed about your care or treatment?",
           options: ["Yes", "No"],
           type: "radio",
-          name: "involvement",
+          name: "involvement_in_care_decisions",
         },
       ],
     },
@@ -113,7 +122,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "cleanliness",
+          name: "cleanliness_and_hygiene",
         },
         {
           label: "b. Safety and Comfort",
@@ -127,7 +136,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "safety",
+          name: "safety_and_comfort",
         },
       ],
     },
@@ -145,7 +154,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "compassion",
+          name: "staff_attitude_and_compassion",
         },
         {
           label: "b. Environment and Privacy",
@@ -159,7 +168,7 @@ const FeedbackForm = () => {
             "5 - Excellent",
           ],
           type: "radio",
-          name: "privacy",
+          name: "environment_and_privacy",
         },
       ],
     },
@@ -171,20 +180,20 @@ const FeedbackForm = () => {
           description: "",
           options: ["Yes", "No"],
           type: "radio",
-          name: "recommend",
+          name: "overall_satisfaction",
         },
         {
           label: "b. Likelihood of Returning or Using Again",
           description: "",
           options: [
-            "Very Unlikely",
-            "Unlikely",
-            "Neutral",
-            "Likely",
-            "Very Likely",
+            "1 - Very Unlikely",
+            "2 - Unlikely",
+            "3 - Neutral",
+            "4 - Likely",
+            "5 - Very Likely",
           ],
           type: "radio",
-          name: "return",
+          name: "likelihood_of_returning_or_using_again",
         },
       ],
     },
@@ -212,11 +221,30 @@ const FeedbackForm = () => {
     e.preventDefault();
     setShowThankYou(true);
     setTimeout(() => {
-      navigate("/patient/patient-reviews");
+      // navigate("/patient/patient-reviews");
     }, 2000); // 2 seconds delay
   };
 
   const currentSection = surveySections[currentStep];
+
+  const { mutateAsync: feedbackMutation, isPending: isFeedbackPending } =
+    useMutation({
+      mutationFn: () => ApiCreateFeedback(responses),
+
+      onSuccess: async () => {
+        console.log("asdasdasdasdasdasdasdasdasdasd")
+        toast.success("Review Added Successfully");
+        setFeedbackOpen(false)
+        // navigate(`/patient/hospital-profile/${id}`);
+      },
+      onError: (error) => {
+        toast.error("Error While Adding Review");
+      },
+    });
+
+  const handleReview = async () => {
+    await feedbackMutation();
+  };
 
   return (
     <>
@@ -266,30 +294,67 @@ const FeedbackForm = () => {
                       id="comment"
                       placeholder="Enter your comment here..."
                       row={5}
+                      onChange={(e) =>
+                        setResponses((prev) => ({
+                          ...prev,
+                          content: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
               ) : (
-                currentSection.questions.map((q, qIdx) => (
+                currentSection?.questions.map((q, qIdx) => (
                   <div key={qIdx} className="text-sm  mb-6">
                     <div className="mb-3">
-                      <strong className="text-[16px] font-medium mb-1">{q.label}</strong>
+                      <strong className="text-[16px] font-medium mb-1">
+                        {q.label}
+                      </strong>
                       {q.description && (
                         <p className="text-gray-600">{q.description}</p>
                       )}
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                      {q.options.map((option, optIdx) => (
-                        <label key={optIdx} className="flex items-center gap-2">
-                          <input
-                            type={q.type}
-                            name={q.name}
-                            value={option}
-                            className="form-radio"
-                          />
-                          {option}
-                        </label>
-                      ))}
+                      {q.options.map((option, optIdx) => {
+                        // const value =
+                        //   q.type === "radio" && option.includes("-")
+                        //     ? option.split(" ")[0]
+                        //     : option; // For Yes/No
+                        const value =
+                          option.toLowerCase() === "yes"
+                            ? true
+                            : option.toLowerCase() === "no"
+                            ? false
+                            : option.includes("-")
+                            ? Number(option.split(" ")[0])
+                            : option;
+
+                        console.log("valoue", value);
+
+                        return (
+                          <label
+                            key={optIdx}
+                            className="flex items-center gap-2"
+                          >
+                            <input
+                              type={q.type}
+                              name={q.name}
+                              // value={option}
+                              value={value}
+                              className="form-radio"
+                              checked={responses[q.name] === value}
+                              
+                              onChange={(e) =>
+                                setResponses((prev) => ({
+                                  ...prev,
+                                  [q.name]: value,
+                                }))
+                              }
+                            />
+                            {option}
+                          </label>
+                        );
+                      })}
                     </div>
                   </div>
                 ))
@@ -326,18 +391,18 @@ const FeedbackForm = () => {
 
               // />
               <PrimaryButton
-                btnText="Post A Review"
+                btnText={`${isFeedbackPending ? "Posting..." : "Post A Review" }`}
                 showImg={false}
                 btnClass="border-1 w-[200px] h-[46px] !rounded-[10px] px-4 py-[10px] text-white font-semibold leading-[33px] gap-[10px] flex items-center justify-center bg-[#28A2FF] hover:bg-[#2196F3] transition-colors"
-                onClick={ReviewHandle}
+                onClick={handleReview}
               />
             )}
           </div>
-          {showThankYou && (
+          {/* {showThankYou && (
             <div className="text-sm">
               <p>Thank you for your valuable feedback!</p>
             </div>
-          )}
+          )} */}
         </form>
       </div>
     </>
