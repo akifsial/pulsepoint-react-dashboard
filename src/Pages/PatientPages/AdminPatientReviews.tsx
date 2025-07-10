@@ -12,15 +12,21 @@ import CommonInput from "@components/Shared-components/Inputs/Common-Input/Commo
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 import ReviewForm from "@components/Review/ReviewForm";
 import Toast from "@components/Toast/Toast";
+import { useApiMyReviews } from "@src/hooks/useMyReviews";
+import dayjs from "dayjs";
 
 const AdminPatientReviews: React.FC = () => {
+  const { data } = useApiMyReviews();
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [searchText, setSearchText] = React.useState<string>("");
-  
+
   // State for managing the review form page
-  const [currentView, setCurrentView] = React.useState<'table' | 'form'>('table');
-  const [currentEditingReview, setCurrentEditingReview] = React.useState<ReviewDataTypes | null>(null);
-  
+  const [currentView, setCurrentView] = React.useState<"table" | "form">(
+    "table"
+  );
+  const [currentEditingReview, setCurrentEditingReview] =
+    React.useState<ReviewDataTypes | null>(null);
+
   // Add toast state
   const [showSuccessToast, setShowSuccessToast] = React.useState(false);
 
@@ -39,32 +45,38 @@ const AdminPatientReviews: React.FC = () => {
   // Handler functions for the review form
   const handleEditReview = (row: ReviewDataTypes) => {
     setCurrentEditingReview(row);
-    setCurrentView('form');
+    setCurrentView("form");
   };
 
   // Updated handleSaveReview function with toast
-  const handleSaveReview = (updatedReview: { rating: number; comment: string }) => {
+  const handleSaveReview = (updatedReview: {
+    rating: number;
+    comment: string;
+  }) => {
     if (currentEditingReview) {
       // Here you would typically update your data source (API call, state update, etc.)
-      console.log("Saving review for provider:", currentEditingReview.provider_name);
+      console.log(
+        "Saving review for provider:",
+        currentEditingReview.provider_name
+      );
       console.log("Updated review:", updatedReview);
-      
+
       // You can update the reviewsData here or make an API call
       // For now, we'll just log it and show success toast
-      
+
       // Show success toast
       setShowSuccessToast(true);
-      
+
       // Go back to table view after a short delay to show the toast
       setTimeout(() => {
-        setCurrentView('table');
+        setCurrentView("table");
         setCurrentEditingReview(null);
       }, 1500);
     }
   };
 
   const handleCancelEdit = () => {
-    setCurrentView('table');
+    setCurrentView("table");
     setCurrentEditingReview(null);
   };
 
@@ -72,8 +84,8 @@ const AdminPatientReviews: React.FC = () => {
   const handleToastClose = () => {
     setShowSuccessToast(false);
     // Ensure we go back to table view when toast is closed
-    if (currentView === 'form') {
-      setCurrentView('table');
+    if (currentView === "form") {
+      setCurrentView("table");
       setCurrentEditingReview(null);
     }
   };
@@ -84,7 +96,8 @@ const AdminPatientReviews: React.FC = () => {
       header: "Provider's Name",
       showSort: true,
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-        const { provider_name, provider_email, provider_logo } = row.original;
+        const { provider_name, care_provider, provider_email, provider_logo } =
+          row.original;
         return (
           <div className="flex items-center gap-3">
             <img
@@ -94,10 +107,10 @@ const AdminPatientReviews: React.FC = () => {
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
-                {provider_name}
+                {care_provider?.organization_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
-                {provider_email}
+                {care_provider?.email}
               </span>
             </div>
           </div>
@@ -108,7 +121,9 @@ const AdminPatientReviews: React.FC = () => {
       accessor: "date",
       header: "Date",
       showSort: true,
-      cell: (info: any) => <i>{info.getValue()}</i>,
+      cell: (row) => (
+        <i>{dayjs(row?.original?.created_at).format("DD-MMMM-YYYY")}</i>
+      ),
     },
     {
       accessor: "rating",
@@ -116,32 +131,42 @@ const AdminPatientReviews: React.FC = () => {
       showSort: true,
     },
     {
-      accessor: "reviews",
-      header: "Reviews",
+      accessor: "content",
+      header: "Content",
       showSort: false,
-      cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-        const { reviews } = row.original;
-        return (
-          <div className="max-w-xs">
-            <span className="text-sm text-[#252525] line-clamp-2">
-              "{reviews}"
-            </span>
-          </div>
-        );
-      },
+      // cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
+      //   const { reviews } = row.original;
+      //   return (
+      //     <div className="max-w-xs">
+      //       <span className="text-sm text-[#252525] line-clamp-2">
+      //         "{reviews}"
+      //       </span>
+      //     </div>
+      //   );
+      // },
     },
     {
-      accessor: "location",
+      accessor: "address",
       header: "Location",
       showSort: true,
+      // cell: (row) => <i>{row?.original?.care_provider?.address}</i>,
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-        const { location } = row.original;
+        const { care_provider } = row.original;
         return (
-          <div className="flex items-center">
-            <span className="text-sm text-[#252525]">{location}</span>
+          <div className="flex items-center gap-3">
+            {care_provider?.address}
           </div>
         );
       },
+
+      // cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
+      //   const { location } = row.original.;
+      //   return (
+      //     <div className="flex items-center">
+      //       <span className="text-sm text-[#252525]">{row?.original}</span>
+      //     </div>
+      //   );
+      // },
     },
   ];
 
@@ -153,7 +178,8 @@ const AdminPatientReviews: React.FC = () => {
       date: "9/4/12",
       rating: <RatingStars value={5} isDisabled={true} />,
       numericRating: 5,
-      reviews: "Staff was caring and responsive, though the wait time could be improved.",
+      reviews:
+        "Staff was caring and responsive, though the wait time could be improved.",
       location: "📍200 1st St SW, Rochester",
     },
     {
@@ -163,7 +189,8 @@ const AdminPatientReviews: React.FC = () => {
       date: "5/7/16",
       rating: <RatingStars value={4} isDisabled={true} />,
       numericRating: 4,
-      reviews: "Excellent support for my mother with dementia. Highly recommended.",
+      reviews:
+        "Excellent support for my mother with dementia. Highly recommended.",
       location: "📍9500 Euclid Ave, Cleveland",
     },
     {
@@ -173,7 +200,8 @@ const AdminPatientReviews: React.FC = () => {
       date: "10/6/13",
       rating: <RatingStars value={4} isDisabled={true} />,
       numericRating: 4,
-      reviews: "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
+      reviews:
+        "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
       location: "📍1800 Orleans St, Baltimore",
     },
     {
@@ -195,7 +223,8 @@ const AdminPatientReviews: React.FC = () => {
       provider_logo: dummyImage,
       rating: <RatingStars value={1} isDisabled={true} />,
       numericRating: 1,
-      reviews: "Compassionate end-of-life care. They made a difficult time easier.",
+      reviews:
+        "Compassionate end-of-life care. They made a difficult time easier.",
       location: "📍8700 Beverly Blvd, LA",
     },
     {
@@ -206,7 +235,8 @@ const AdminPatientReviews: React.FC = () => {
       provider_logo: dummyImage,
       rating: <RatingStars value={1} isDisabled={true} />,
       numericRating: 1,
-      reviews: "The food quality was inconsistent, but the overall experience was positive.",
+      reviews:
+        "The food quality was inconsistent, but the overall experience was positive.",
       location: "📍1 Gustave L. Levy Pl, NY",
     },
     {
@@ -217,7 +247,8 @@ const AdminPatientReviews: React.FC = () => {
       provider_logo: dummyImage,
       rating: <RatingStars value={0} isDisabled={true} />,
       numericRating: 0,
-      reviews: "They offered a variety of activities that kept my father engaged.",
+      reviews:
+        "They offered a variety of activities that kept my father engaged.",
       location: "📍757 Westwood Plaza, LA",
     },
   ];
@@ -291,8 +322,8 @@ const AdminPatientReviews: React.FC = () => {
 
         <div>
           <TanDataTable<ReviewDataTypes>
-            columns={columns}
-            data={reviewsData}
+            columns={columns ?? []}
+            data={data ?? []}
             showCheckbox={false}
             onRowSelect={handleRowSelect}
             showActions={true}
@@ -301,6 +332,7 @@ const AdminPatientReviews: React.FC = () => {
               <DropdownActions
                 onEdit={() => handleEditReview(row)}
                 onDelete={() => console.log("Delete Review", row.id)}
+                variant="reviews"
               />
             )}
           />
@@ -331,7 +363,7 @@ const AdminPatientReviews: React.FC = () => {
         <ReviewForm
           currentReview={{
             rating: currentEditingReview?.numericRating || 0,
-            comment: currentEditingReview?.reviews || ''
+            comment: currentEditingReview?.reviews || "",
           }}
           onSave={handleSaveReview}
           onCancel={handleCancelEdit}
@@ -343,8 +375,8 @@ const AdminPatientReviews: React.FC = () => {
   // Main render - conditionally show table or form with toast
   return (
     <>
-      {currentView === 'table' ? renderTableView() : renderFormView()}
-      
+      {currentView === "table" ? renderTableView() : renderFormView()}
+
       {/* Global Success Toast */}
       <Toast
         isVisible={showSuccessToast}

@@ -1,3 +1,4 @@
+import { useCareProviderSingle } from "@src/hooks/useDashboard";
 import { MapPin, Phone, Clock } from "lucide-react";
 
 export interface ContactInformationCardProps {
@@ -14,28 +15,32 @@ export default function ContactInformationCard({
   weekdayHours,
   weekendHours,
   city = "Your City",
+  id,
 }: ContactInformationCardProps) {
+  const { data } = useCareProviderSingle(id);
+
   return (
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Contact Information</h3>
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        Contact Information
+      </h3>
 
-{/* Location */}
-<div className="mb-4">
-  <label className="text-sm text-gray-500 flex items-center gap-1 mb-1">
-    Location:
-  </label>
-  <p className="text-sm text-gray-900">4001 J St, Sacramento, CA 95819</p>
-</div>
+      {/* Location */}
+      <div className="mb-4">
+        <label className="text-sm text-gray-500 flex items-center gap-1 mb-1">
+          Location:
+        </label>
+        <p className="text-sm text-gray-900">{data?.address}</p>
+      </div>
 
- {/* Phone */}
-<div className="mb-4">
-  <label className="text-sm text-gray-500 flex items-center gap-1 mb-1">
-    <Phone className="h-3 w-3" />
-    Phone Number:
-  </label>
-  <p className="text-sm text-gray-900">(916) 555-8923</p>
-</div>
-
+      {/* Phone */}
+      <div className="mb-4">
+        <label className="text-sm text-gray-500 flex items-center gap-1 mb-1">
+          <Phone className="h-3 w-3" />
+          Phone Number:
+        </label>
+        <p className="text-sm text-gray-900">{data?.number}</p>
+      </div>
 
       {/* Working Hours */}
       <div className="mb-6">
@@ -45,7 +50,7 @@ export default function ContactInformationCard({
         </label>
         <div className="space-y-1">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700">Mon - Fri | 09:00AM -12:00AM</span>
+            <span className="text-gray-700">{data?.working_hours}</span>
             <span className="text-gray-900">{weekdayHours}</span>
           </div>
           <div className="flex justify-between text-sm">

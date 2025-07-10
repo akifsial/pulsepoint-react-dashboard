@@ -11,12 +11,21 @@ import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 import { useNavigate } from "react-router-dom";
+import { useCareProviders } from "@src/hooks/useDashboard";
+import dayjs from "dayjs";
+import { useAllSavedCareProviders } from "@src/hooks/useUsers";
 
 const CareProviderDashboard: React.FC = () => {
+  const { data: CareProvidersData } = useCareProviders();
+  const { data: AllSavedCareProviders } = useAllSavedCareProviders();
+
+  console.log("XXAAXAXAXAX", AllSavedCareProviders);
   const navigate = useNavigate();
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
+  const [searchText, setSearchText] = React.useState<string>("");
 
+  console.log("Search ..... ",searchText)
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -63,10 +72,12 @@ const CareProviderDashboard: React.FC = () => {
       accessor: "date",
       header: "Date",
       showSort: true,
-      cell: (info: any) => <i>{info.getValue()}</i>,
+      cell: ({ row }) => (
+        <i>{dayjs(row?.original?.created_at).format("DD-MMMM-YYYY")}</i>
+      ),
     },
     {
-      accessor: "rating",
+      accessor: "total_rating",
       header: "Rating",
       showSort: true,
     },
@@ -76,7 +87,7 @@ const CareProviderDashboard: React.FC = () => {
       showSort: true,
     },
     {
-      accessor: "location",
+      accessor: "address",
       header: "Location",
       showSort: true,
     },
@@ -148,8 +159,7 @@ const CareProviderDashboard: React.FC = () => {
   const handleTabClick = (tab: "all" | "saved") => {
     setActiveTab(tab);
   };
-  const [searchText, setSearchText] = React.useState<string>("");
-
+  
   return (
     <div className="mb-10">
       <h2
@@ -270,15 +280,15 @@ const CareProviderDashboard: React.FC = () => {
           {activeTab === "all" ? (
             <TanDataTable<dataTypes>
               columns={columns}
-              data={data}
+              data={CareProvidersData}
               showCheckbox={false}
               onRowSelect={handleRowSelect}
               className="my-custom-class"
             />
           ) : (
             <TanDataTable<dataTypes>
-              columns={columns}
-              data={data.slice(0, 3)}
+              columns={columns ?? []}
+              data={AllSavedCareProviders ?? []}
               showCheckbox={false}
               onRowSelect={handleRowSelect}
               className="my-custom-class"
