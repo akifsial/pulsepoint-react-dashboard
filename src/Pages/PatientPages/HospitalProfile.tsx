@@ -27,7 +27,7 @@ const HospitalProfile = () => {
         <div className="h-[661px] overflow-y-auto transition-colors duration-300 bg-medical-bg">
           {/* Header */}
           <header
-            className="max-w-7xl py-7 mx-auto  sm:px-6 lg:px-8 flex justify-between items-center fixed top-20 right-0 left-[290px]"
+            className="md:max-w-7xl max-w-full py-7 mx-auto  sm:px-6 px-8 flex flex-wrap justify-between items-center md:justify-between md:gap-0 gap-3 items-center relative "
             style={{
               background:
                 "linear-gradient(107.76deg, #f4f7ff -2.99%, #ddeff7 64.85%, #d6e0f9 113.61%)",
@@ -52,7 +52,7 @@ const HospitalProfile = () => {
               img={PlusIcon}
               imgClass="w-[19px] h-[19px]"
               imgPosition="left"
-              btnClass="flex items-center justify-center gap-[4px] h-[36px] px-4 rounded-md bg-[#252525] text-white text-sm font-semibold"
+              btnClass="flex sm:w-fit w-full items-center justify-center gap-[4px] h-[36px] px-4 rounded-md bg-[#252525] text-white text-sm font-semibold"
               onClick={() => setFeedbackOpen(true)}
             />
           </header>

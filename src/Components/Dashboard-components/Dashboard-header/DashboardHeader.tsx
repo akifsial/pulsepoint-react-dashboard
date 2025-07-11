@@ -91,7 +91,7 @@ const DashboardHeader: React.FC<Props> = ({
     <header
       className={`${
         showProfileSidebar ? "lg:ml-[80px]" : ""
-      } bg-white rounded-lg px-4 py-[14px] sm:px-6 fixed z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
+      } bg-white rounded-lg px-4 py-[14px] sm:px-6  z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
     >
       <div className="flex items-start sm:items-center justify-between gap-2 w-full flex-col sm:flex-row">
         <div className="min-w-fit">

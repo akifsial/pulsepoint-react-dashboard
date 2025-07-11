@@ -438,7 +438,7 @@ const AdminDashboard: React.FC = () => {
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
-              <div className="flex items gap-4 ">
+              <div className="flex items flex-wrap gap-4 ">
                 <PrimaryButton
                   btnText="Ratings"
                   showImg={true}
@@ -506,7 +506,7 @@ const AdminDashboard: React.FC = () => {
               setSelectedRowId(null);
             }}
             onDelete={handleDelete}
-            loading={deleteMutationLoading}
+            // loading={deleteMutationLoading}
           />
 
           {isEditModalOpen ? (

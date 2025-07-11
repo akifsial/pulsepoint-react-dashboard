@@ -74,7 +74,7 @@ export default function HospitalProfileCard({
   return (
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center flex-wrap justify-between mb-6">
         {/* Left: Use HospitalHeader Component */}
         <HospitalHeader
           name="Johns Hopkins Hospital"
@@ -88,7 +88,7 @@ export default function HospitalProfileCard({
           type="button"
           onClick={handleBookmarkToggle}
           aria-label={isBookmarked ? "Remove bookmark" : "Bookmark hospital"}
-          className="w-10 h-10 grid cursor-pointer place-items-center rounded-full border border-gray-300
+          className="w-10 h-10 mt-3 sm:mt-0 grid cursor-pointer place-items-center rounded-full border border-gray-300
                hover:bg-gray-100 transition-colors"
         >
           <Bookmark

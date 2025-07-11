@@ -4,6 +4,8 @@ import { PrimaryButton } from "@components/Shared-components/Buttons/Common-butt
 import TextField from "@components/CareProvider/CommunityForum/TextField";
 import HospitalHeader from "@components/HospitalHeader";
 import ProfilePic from "@assets/media/svgs/patient-db-svgs/hospital-prof-img.svg";
+import FeedbackForm from "@pages/PatientPages/EditFeedbackForm";
+import EditFeedbackForm from "@pages/PatientPages/EditFeedbackForm";
 
 interface ReviewFormProps {
   currentReview: {
@@ -44,7 +46,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 
   return (
     <div className="w-full max-w-md h-[350px]">
-      <div className="max-w-2xl mx-auto">
+      {/* <div className="max-w-2xl mx-auto">
         <div className="space-y-6">
           <HospitalHeader
             name="Johns Hopkins Hospital"
@@ -78,7 +80,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             />
           </div>
         </div>
-      </div>
+      </div> */}
+      {/* <EditFeedbackForm/> */}
     </div>
   );
 };

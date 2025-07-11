@@ -14,6 +14,7 @@ interface InputFieldProps {
   errorMessage?: string;
   fieldName?: string;
   iconUrl?: string;
+  disabled?: boolean
   [rest: string]: any;
 }
 
@@ -33,6 +34,7 @@ const InputField: React.FC<InputFieldProps> = ({
   validation,
   defaultValidation,
   errors,
+  disabled,
   ...rest
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -57,6 +59,7 @@ const InputField: React.FC<InputFieldProps> = ({
         <input
           id={id}
           type={isPassword && showPassword ? "text" : type}
+          disabled={disabled}
           placeholder={placeholder}
           {...(register && registerName
             ? register(registerName, validation || defaultValidation)
