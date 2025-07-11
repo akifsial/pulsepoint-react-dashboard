@@ -84,3 +84,22 @@ export const ApiResetPassword = async (data) => {
     throw new Error(error?.response?.data?.message || "Password reset failed");
   }
 };
+
+export const ApiChangePassword = async (data) => {
+  console.log("pogo", data);
+
+  try {
+    const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/change-password`;
+    const token=JSON.parse(localStorage.getItem("token"))
+    const response = await axios.post(BASE_URL, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data?.payload?.records;
+  } catch (error) {
+    // ✅ Proper error throwing
+    throw new Error(error?.response?.data?.message || "Password reset failed");
+  }
+};

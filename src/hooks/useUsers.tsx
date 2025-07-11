@@ -10,10 +10,10 @@ export const useMeApi = (params = {}) => {
   });
 };
 
-export const useAllSavedCareProviders = () => {
+export const useAllSavedCareProviders = (search:string,rating:number) => {
   return useQuery({
-    queryKey: ["useAllSavedCareProviders"], // this enables caching per set of params
-    queryFn: () => ApiAllSavedCareProviders(),
+    queryKey: ["useAllSavedCareProviders",search,rating], // this enables caching per set of params
+    queryFn: () => ApiAllSavedCareProviders(search,rating),
     refetchOnWindowFocus: false,
   });
 };

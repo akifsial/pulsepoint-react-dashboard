@@ -21,6 +21,7 @@ export const PrimaryButton: React.FC<ExtendedBtnProps> = ({
   linkTo,
   imgPosition = "left",
   disabled = false,
+  type = ""
 }) => {
   const prefixImage = showImg && img ? (
     <img src={img} className={imgClass} alt={imgalt} />
@@ -58,6 +59,7 @@ const content = (
       className={`rounded-[20px] cursor-pointer h-[36px] px-[10px] py-[8px] ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${btnClass}`}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {content}
     </button>

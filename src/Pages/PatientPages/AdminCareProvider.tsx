@@ -16,16 +16,16 @@ import dayjs from "dayjs";
 import { useAllSavedCareProviders } from "@src/hooks/useUsers";
 
 const CareProviderDashboard: React.FC = () => {
-  const { data: CareProvidersData } = useCareProviders();
-  const { data: AllSavedCareProviders } = useAllSavedCareProviders();
 
-  console.log("XXAAXAXAXAX", AllSavedCareProviders);
+
   const navigate = useNavigate();
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
   const [searchText, setSearchText] = React.useState<string>("");
+  const [rating, setRating] = useState();
+  const { data: CareProvidersData } = useCareProviders(searchText,rating);
+  const { data: AllSavedCareProviders } = useAllSavedCareProviders(searchText,rating);
 
-  console.log("Search ..... ",searchText)
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -45,11 +45,12 @@ const CareProviderDashboard: React.FC = () => {
       header: "Provider’s Name",
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
-        const { id, first_name, last_name, email } = row.original;
+        const { id, organization_name, first_name, last_name, email } =
+          row.original;
         return (
           <div
             className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate(`/patient/hospital-profile`)}
+            onClick={() => navigate(`/patient/hospital-profile/${id}`)}
           >
             <img
               src={dummyImage}
@@ -58,7 +59,7 @@ const CareProviderDashboard: React.FC = () => {
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
-                {first_name} {last_name}
+                {organization_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
                 {email}
@@ -159,7 +160,8 @@ const CareProviderDashboard: React.FC = () => {
   const handleTabClick = (tab: "all" | "saved") => {
     setActiveTab(tab);
   };
-  
+
+
   return (
     <div className="mb-10">
       <h2
@@ -214,7 +216,7 @@ const CareProviderDashboard: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute left-0 top-[60px] w-50 z-50"
                   >
-                    <RatingFilterDropdown />
+                    <RatingFilterDropdown setRating={setRating} />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -279,8 +281,8 @@ const CareProviderDashboard: React.FC = () => {
         <div>
           {activeTab === "all" ? (
             <TanDataTable<dataTypes>
-              columns={columns}
-              data={CareProvidersData}
+              columns={columns ?? []}
+              data={CareProvidersData ?? []}
               showCheckbox={false}
               onRowSelect={handleRowSelect}
               className="my-custom-class"

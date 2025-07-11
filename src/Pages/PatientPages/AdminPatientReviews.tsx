@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
@@ -14,11 +14,19 @@ import ReviewForm from "@components/Review/ReviewForm";
 import Toast from "@components/Toast/Toast";
 import { useApiMyReviews } from "@src/hooks/useMyReviews";
 import dayjs from "dayjs";
+import DeleteModal from "@src/components/Model/DeleteModal";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiDeleteMyReviews } from "@src/api/ApiMyReviews";
 
 const AdminPatientReviews: React.FC = () => {
-  const { data } = useApiMyReviews();
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [searchText, setSearchText] = React.useState<string>("");
+  const [rating, setRating] = useState();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
+
+  const { data } = useApiMyReviews(searchText, rating);
+  const queryClient = useQueryClient();
 
   // State for managing the review form page
   const [currentView, setCurrentView] = React.useState<"table" | "form">(
@@ -47,6 +55,28 @@ const AdminPatientReviews: React.FC = () => {
     setCurrentEditingReview(row);
     setCurrentView("form");
   };
+
+  const { mutateAsync: deleteMutation, isPending: deleteMutationLoading } =
+    useMutation({
+      mutationFn: () => apiDeleteMyReviews(selectedRowId),
+      onSuccess: async () => {
+        queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
+        setIsDeleteModalOpen(false);
+
+        // queryClient.invalidateQueries(["detailersFranchise"]);
+      },
+      onError: (error) => {
+        console.error("Error deleting user:", error);
+      },
+    });
+
+  const handleDelete = async () => {
+    if (selectedRowId !== null) {
+      await deleteMutation(selectedRowId);
+    }
+  };
+
+  console.log("ASDasdasDASDASDASd",selectedRowId)
 
   // Updated handleSaveReview function with toast
   const handleSaveReview = (updatedReview: {
@@ -312,7 +342,7 @@ const AdminPatientReviews: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute left-0 top-[60px] w-50 z-50"
                   >
-                    <RatingFilterDropdown />
+                    <RatingFilterDropdown setRating={setRating} />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -331,10 +361,24 @@ const AdminPatientReviews: React.FC = () => {
             actions={(row) => (
               <DropdownActions
                 onEdit={() => handleEditReview(row)}
-                onDelete={() => console.log("Delete Review", row.id)}
                 variant="reviews"
+                onDelete={() => {
+                  setSelectedRowId(row.id);
+                  setIsDeleteModalOpen(true);
+                  
+                }}
               />
             )}
+          />
+
+          <DeleteModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => {
+              setIsDeleteModalOpen(false);
+              setSelectedRowId(null);
+            }}
+            onDelete={handleDelete}
+            // loading={deleteMutationLoading}
           />
         </div>
       </div>
