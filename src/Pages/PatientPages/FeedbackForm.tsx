@@ -329,7 +329,6 @@ const FeedbackForm = ({setFeedbackOpen}) => {
                             ? Number(option.split(" ")[0])
                             : option;
 
-                        console.log("valoue", value);
 
                         return (
                           <label

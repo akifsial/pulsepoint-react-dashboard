@@ -25,7 +25,7 @@ const EditReviewPage: React.FC = () => {
   // If no review data is passed, redirect back to reviews page
   React.useEffect(() => {
     if (!state?.reviewData) {
-      navigate('/patient/patient-reviews'); // Updated path
+      // navigate('/patient/patient-reviews'); // Updated path
     }
   }, [state, navigate]);
 
