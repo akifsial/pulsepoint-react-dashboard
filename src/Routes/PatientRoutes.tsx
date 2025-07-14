@@ -9,6 +9,7 @@ import ChatBot from "@pages/PatientPages/ChatBotPage";
 import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 import NursingHomeReviews from "@components/NursingHomeReview";
+import EditFeedbackForm from "@pages/PatientPages/EditFeedbackForm";
 export const PatientRoutes = [
   {
     path: "/patient", 
@@ -17,7 +18,9 @@ export const PatientRoutes = [
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "care-provider", element: <AdminCareProvider/> },
       { path: "patient-reviews", element: <AdminPatientReviews /> },
-      { path: "patient-reviews/edit", element: <EditReviewPage /> }, // Add this line
+      // { path: "patient-reviews/edit", element: <EditReviewPage /> }, // Add this line
+      { path: "patient-feedback/edit/:id", element: <EditFeedbackForm /> }, // Add this line
+
       { path: "community-forum", element: <AdminCommunityForum /> },
       { path: "hospital-profile/:id", element: <HospitalProfile /> },
       { path: "notification", element: <NotificationPage /> },

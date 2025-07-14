@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaFaceGrinStars } from "react-icons/fa6";
 import TextField from "@components/CareProvider/CommunityForum/TextField";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
@@ -8,14 +8,19 @@ import { useMutation } from "@tanstack/react-query";
 import { ApiCreateFeedback } from "@src/api/ApiDashboard";
 import toast from "react-hot-toast";
 import Spinner from "@components/Loaders/Spinner";
+import { useApiMySingleReviews } from "@src/hooks/useMyReviews";
+import { ApiUpdateReview } from "@src/api/ApiMyReviews";
 
 const EditFeedbackForm = ({ setFeedbackOpen }) => {
   const { id } = useParams();
+  const { data } = useApiMySingleReviews(id);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [showThankYou, setShowThankYou] = useState(false);
-  const [responses, setResponses] = useState({ care_provider_id: id });
-
+  const [responses, setResponses] = useState({
+    care_provider_id: data?.care_provider_id,
+  });
+  console.log("RRRRRRRRRR", responses);
   const navigate = useNavigate();
 
   const surveySections = [
@@ -201,6 +206,7 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
       isCommentSection: true,
     },
   ];
+  // Api
 
   const totalSteps = surveySections.length;
 
@@ -228,22 +234,45 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
 
   const { mutateAsync: feedbackMutation, isPending: isFeedbackPending } =
     useMutation({
-      mutationFn: () => ApiCreateFeedback(responses),
+      mutationFn: () => ApiUpdateReview(responses, id),
 
       onSuccess: async () => {
-        console.log("asdasdasdasdasdasdasdasdasdasd");
-        toast.success("Review Added Successfully");
+        toast.success("Review Updated Successfully");
         setFeedbackOpen(false);
         // navigate(`/patient/hospital-profile/${id}`);
       },
       onError: (error) => {
-        toast.error("Error While Adding Review");
+        toast.error("Error While Updating Review");
       },
     });
 
   const handleReview = async () => {
     await feedbackMutation();
   };
+
+  // useEffect(() => {
+  //   if (data?.feedback) {
+  //     setResponses(data.feedback);
+  //   }
+  // }, [data?.feedback]);
+
+  //   useEffect(() => {
+  //   setResponses((prev) => ({
+  //     ...prev,
+  //     data?.feedback,
+  //     care_id: 4,
+  //   }));
+  // }, [data?.feedback]);
+
+  useEffect(() => {
+    setResponses((prev) => ({
+      ...(data?.feedback || {}), // safely spread feedback if it exists
+      care_provider_id: data?.care_provider_id,
+      content: data?.content,
+    }));
+  }, [data?.feedback]);
+
+  console.log("responseee", data);
 
   return (
     <>
@@ -288,11 +317,22 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
                     feedback:
                   </strong>
                   <div className="mb-4 w-full max-w-sm">
-                    <TextField
+                    {/* <TextField
                       label="Add A Comment"
                       id="comment"
                       placeholder="Enter your comment here..."
+                      value={data?.content}
                       row={5}
+                      onChange={(e) =>
+                        setResponses((prev) => ({
+                          ...prev,
+                          content: e.target.value,
+                        }))
+                      }
+                    /> */}
+                    <TextField
+                      label="Add A Comment"
+                      value={responses.content || ""}
                       onChange={(e) =>
                         setResponses((prev) => ({
                           ...prev,
@@ -303,59 +343,65 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
                   </div>
                 </div>
               ) : (
-                currentSection?.questions.map((q, qIdx) => (
-                  <div key={qIdx} className="text-sm  mb-6">
-                    <div className="mb-3">
-                      <strong className="text-[16px] font-medium mb-1">
-                        {q.label}
-                      </strong>
-                      {q.description && (
-                        <p className="text-gray-600">{q.description}</p>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                      {q.options.map((option, optIdx) => {
-                        // const value =
-                        //   q.type === "radio" && option.includes("-")
-                        //     ? option.split(" ")[0]
-                        //     : option; // For Yes/No
-                        const value =
-                          option.toLowerCase() === "yes"
-                            ? true
-                            : option.toLowerCase() === "no"
-                            ? false
-                            : option.includes("-")
-                            ? Number(option.split(" ")[0])
-                            : option;
+                currentSection?.questions.map((q, qIdx) => {
+                  // console.log("^^^^^6",data?.feedback.filter((feed)=>(feed==q)))
+                  // console.log("++__",Object.keys(data?.feedback).filter((feed) => feed == q))
+                  // const feedbackExists = data?.feedback?.hasOwnProperty(q.name);
+                  // const feedbackValue = data?.feedback?.[q.name];
+                  // const keyExists = q.name in data?.feedback;
+                  // const feedbackKey = Object.keys(data?.feedback || {}).find(
+                  //   (key) => key === q.name
+                  // );
 
-                        console.log("valoue", value);
+                  return (
+                    <div key={qIdx} className="text-sm  mb-6">
+                      <div className="mb-3">
+                        <strong className="text-[16px] font-medium mb-1">
+                          {q.label}
+                        </strong>
+                        {q.description && (
+                          <p className="text-gray-600">{q.description}</p>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                        {q.options.map((option, optIdx) => {
+                          const value =
+                            option.toLowerCase() === "yes"
+                              ? true
+                              : option.toLowerCase() === "no"
+                              ? false
+                              : option.includes("-")
+                              ? Number(option.split(" ")[0])
+                              : option;
 
-                        return (
-                          <label
-                            key={optIdx}
-                            className="flex items-center gap-2"
-                          >
-                            <input
-                              type={q.type}
-                              name={q.name}
-                              // value={option}
-                              value={value}
-                              className="form-radio"
-                              checked={responses[q.name] === value}
-                              onChange={(e) =>
-                                setResponses((prev) => ({
-                                  ...prev,
-                                  [q.name]: value,
-                                }))
-                              }
-                            />
-                            {option}
-                          </label>
-                        );
-                      })}
+                          return (
+                            <label
+                              key={optIdx}
+                              className="flex items-center gap-2"
+                            >
+                              <input
+                                type={q.type}
+                                name={q.name}
+                                // value={option}
+                                value={value}
+                                className="form-radio"
+                                checked={responses[q.name] == value}
+                                onChange={(e) =>
+                                  setResponses((prev) => ({
+                                    ...prev,
+                                    [q.name]: value,
+                                    // care_id: 4, // ✅ add this line
+                                  }))
+                                }
+                              />
+                              {option}
+                            </label>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </div>

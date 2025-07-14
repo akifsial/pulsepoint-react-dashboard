@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import DeleteModal from "@src/components/Model/DeleteModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiDeleteMyReviews } from "@src/api/ApiMyReviews";
+import { useNavigate } from "react-router-dom";
 
 const AdminPatientReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -27,7 +28,7 @@ const AdminPatientReviews: React.FC = () => {
 
   const { data } = useApiMyReviews(searchText, rating);
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   // State for managing the review form page
   const [currentView, setCurrentView] = React.useState<"table" | "form">(
     "table"
@@ -51,9 +52,11 @@ const AdminPatientReviews: React.FC = () => {
   };
 
   // Handler functions for the review form
-  const handleEditReview = (row: ReviewDataTypes) => {
-    setCurrentEditingReview(row);
-    setCurrentView("form");
+  const handleEditReview = (id: number | string) => {
+    // setCurrentEditingReview(row);
+    // setCurrentView("form");
+    console.log("rrrrrrrrroooowwwwwwww",id)
+    navigate(`/patient/patient-feedback/edit/${id}`);
   };
 
   const { mutateAsync: deleteMutation, isPending: deleteMutationLoading } =
@@ -76,7 +79,7 @@ const AdminPatientReviews: React.FC = () => {
     }
   };
 
-  console.log("ASDasdasDASDASDASd",selectedRowId)
+  console.log("ASDasdasDASDASDASd", selectedRowId);
 
   // Updated handleSaveReview function with toast
   const handleSaveReview = (updatedReview: {
@@ -360,16 +363,16 @@ const AdminPatientReviews: React.FC = () => {
             className="my-custom-class"
             actions={(row) => (
               <DropdownActions
-                onEdit={() => handleEditReview(row)}
+                onEdit={() => handleEditReview(row?.feedback?.review_id)}
                 variant="reviews"
                 onDelete={() => {
                   setSelectedRowId(row.id);
                   setIsDeleteModalOpen(true);
-                  
                 }}
               />
             )}
           />
+
 
           <DeleteModal
             isOpen={isDeleteModalOpen}

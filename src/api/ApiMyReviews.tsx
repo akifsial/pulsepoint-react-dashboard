@@ -17,14 +17,14 @@ export const ApiMyReviews = async (search: string, rating: number) => {
   return response?.data?.payload?.records;
 };
 
-
-export const apiDeleteMyReviews = async (id:number) => {
+export const apiDeleteMyReviews = async (id: number) => {
   //   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}v1/user/customers?page=${page}&limit=${5}`;
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback/${id}`;
 
   // const token = JSON.parse(localStorage.getItem("token"));
-  const token: string | null = JSON.parse(localStorage.getItem("token") || "null");
-
+  const token: string | null = JSON.parse(
+    localStorage.getItem("token") || "null"
+  );
 
   const response = await axios.delete(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
@@ -32,4 +32,32 @@ export const apiDeleteMyReviews = async (id:number) => {
   });
 
   return response.data.payload;
+};
+
+export const ApiMySingleReviews = async (id: number) => {
+  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback/${id}`;
+
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const response = await axios.get(BASE_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response?.data?.payload;
+};
+
+export const ApiUpdateReview = async (data, id: number) => {
+  try {
+    let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback`;
+
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    const response = await axios.post(BASE_URL, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response?.data?.payload;
+  } catch (error) {
+    throw error
+  }
 };
