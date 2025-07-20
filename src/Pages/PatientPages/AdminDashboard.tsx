@@ -30,6 +30,7 @@ import EditModal from "@src/components/Model/ActiveInactiveModal";
 import ActiveInactiveModal from "@src/components/Model/ActiveInactiveModal";
 import toast from "react-hot-toast";
 // Import or define your Modal component
+import { X } from "lucide-react";
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
@@ -42,7 +43,7 @@ const Model = ({ setIsOpen, children, className = "" }) => {
           aria-label="Close"
         >
           <span className="w-7 h-7 cursor-pointer text-gray-500 hover:text-gray-700 text-xl">
-            ×
+            <X />
           </span>
         </button>
         <div>{children}</div>

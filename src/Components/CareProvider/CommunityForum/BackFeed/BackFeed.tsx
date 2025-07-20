@@ -11,6 +11,7 @@ import Model from "@components/Model/Model";
 import CreatePost from "./CreatePost";
 import PatientInfo from "@components/CareProvider/PatientInfo";
 
+
 const BackFeed = ({ setOpenBackFeed }) => {
   const [joined, setJoined] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
@@ -18,6 +19,9 @@ const BackFeed = ({ setOpenBackFeed }) => {
 
   const handleJoinClick = () => setJoined(true);
   const handleAddCommunityClick = () => setJoined(false);
+
+
+
 
   return (
     <>

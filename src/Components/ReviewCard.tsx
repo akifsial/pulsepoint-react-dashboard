@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Search, Clock } from 'lucide-react';
+import { X } from "lucide-react";
 // Import your actual image
 import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
 
@@ -13,7 +14,7 @@ const Model = ({ setIsOpen, children, className = "" }) => {
           className="absolute right-[18px] top-[18px]"
           aria-label="Close"
         >
-          <span className="w-7 h-7 cursor-pointer text-gray-500 hover:text-gray-700 text-xl">×</span>
+          <span className="w-7 h-7 cursor-pointer text-gray-500 hover:text-gray-700 text-xl"><X /></span>
         </button>
         <div>{children}</div>
       </div>

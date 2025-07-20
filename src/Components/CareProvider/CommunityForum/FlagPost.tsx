@@ -1,10 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import CommunityTopics from "./CommunityTopics";
 import DragMedia from "./DragMedia";
 import TextField from "./TextField";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { ApiReportPost } from "@src/api/ApiCommunityForum";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import PrimaryInput from "@components/PrimaryInput";
+import { PrimaryButton } from "@components/Buttons/PrimaryButton";
 
-const FlagPost = ({ onSubmit }) => {
+const FlagPost = ({ onSubmit, post_id, community_id }) => {
+  console.log("🛑 Received in FlagPost:", { post_id, community_id });
+  const [reportReasonId, setReportReasonId] = useState(null);
+  const [comment, setComment] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [file, setFile] = useState()
+
+  const {
+    mutateAsync: ReportPostMutation,
+    // isPending: savedCareProvidersPending,
+  } = useMutation({
+    mutationFn: (formData) => ApiReportPost(formData),
+
+    onSuccess: async () => {
+      toast.success("Report Successfully");
+      // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+    },
+    onError: (error) => {
+      toast.error("Something Went Wrong");
+    },
+  });
+
+  const handleReportSubmit = async (data) => {
+
+    const formData = new FormData()
+    formData.append("post_id", post_id)
+    formData.append("coomunity_id", community_id)
+    formData.append("report_reason_id", reportReasonId);
+    formData.append("comment", data.comments);
+
+    if (file) {
+      formData.append("image_url", file);
+    }
+    // formData.append("")
+
+
+    await ReportPostMutation(formData);
+  };
+
   return (
     <>
       <div className="text-center mb-2.5 font-normal text-base">
@@ -16,39 +64,64 @@ const FlagPost = ({ onSubmit }) => {
           shortly.
         </p>
       </div>
-      <CommunityTopics
-        asterisk
-        title={"Select a reason for flagging"}
-        text1={"Spam or advertising"}
-        text2={"Harassment or bullying"}
-        text3={"Misinformation"}
-        text4={"Off-topic or irrelevent"}
-        text5={"Hate speech or abusive content"}
-      />
-      <TextField
-        label="Additional Comments (optional):"
-        asterisk
-        id="msg"
-        placeholder="Enter description"
-        row={2}
-        className="h-[90px] mb-6"
-      />
+      <form onSubmit={handleSubmit(handleReportSubmit)}>
 
-      <DragMedia
-        label="Upload Image (optional):"
-        required
-        asterisk
-        imgType
-        className="p-4"
-        onChange={(e) => console.log("Selected file:", e.target.files[0])}
-      />
+        <CommunityTopics
+          // asterisk
+          title={"Select a reason for flagging"}
+          options={[
+            { id: 1, text: "Spam or advertising" },
+            { id: 2, text: "Harassment or bullying" },
+            { id: 3, text: "Misinformation" },
+            { id: 4, text: "Off-topic or irrelevant" },
+            { id: 5, text: "Hate speech or abusive content" },
+          ]}
+          onSelect={(id) => setReportReasonId(id)}
+        />
 
-      <PrimaryButton
-        btnText="Submit Report"
-        onClick={onSubmit}
-        showImg={false}
-        btnClass="flex items-center justify-center h-[46px] cursor-pointer w-full bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
-      />
+        {/* <TextField
+          label="Additional Comments (optional):"
+          asterisk
+          id="msg"
+          placeholder="Enter description"
+          row={2}
+          className="h-[90px] mb-6"
+          onChange={(e) => setComment(e.target.value)}
+          
+        /> */}
+
+        <PrimaryInput
+          label="Additional Comments (optional):"
+          register={register}
+          registerName="comments"
+          placeholder="Enter comments"
+          inputClass=" !bg-[#FBFCFD] !h-[90px] mb-3 border border-[#2525251A] "
+
+        />
+
+        <DragMedia
+          label="Upload Image (optional):"
+          required
+          imgType
+          className="p-4"
+          file={file}
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+
+        <PrimaryButton
+          btnText="Submit Report"
+          // onClick={async () => {
+          //   await handleReportSubmit();
+          //   onSubmit(); // opens next modal
+          // }}
+          type="submit"
+          showImg={false}
+          btnClass="flex items-center justify-center h-[46px] cursor-pointer w-full bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+        />
+
+      </form>
+
+
     </>
   );
 };

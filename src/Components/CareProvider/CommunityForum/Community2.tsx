@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import DragMedia from "./DragMedia";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 
-const Community2 = ({ onNext, onBack }) => {
+const Community2 = ({ onNext, onBack,img1, setImg1, img2, setImg2 }) => {
+
+
   return (
     <>
       <div className="text-center max-w-[501px] mx-auto mb-2.5 font-normal text-base">
@@ -19,14 +21,18 @@ const Community2 = ({ onNext, onBack }) => {
         label="Add Banner Image"
         required
         asterisk
-        onChange={(e) => console.log("Selected file:", e.target.files[0])}
+        id="banner-file"
+        file={img1}
+        onChange={(e) => setImg1(e.target.files[0])}
       />
 
       <DragMedia
         label="Add Profile Icon Image"
         required
         asterisk
-        onChange={(e) => console.log("Selected file:", e.target.files[0])}
+        id="profile-file"
+        file={img2}
+        onChange={(e) => setImg2(e.target.files[0])}
       />
 
       <div className="flex items-center gap-2.5 pt-1.5">
@@ -38,8 +44,8 @@ const Community2 = ({ onNext, onBack }) => {
         />
         <PrimaryButton
           btnText="Next"
-          onClick={onNext}
           showImg={false}
+          onClick={onNext}
           btnClass="flex items-center justify-center h-[46px] cursor-pointer w-[192px] bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
         />
       </div>
