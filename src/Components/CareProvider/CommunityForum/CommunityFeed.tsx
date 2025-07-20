@@ -12,6 +12,7 @@ import postImage from "../../../assets/media/images/dashboard-images/postImage.p
 import Model from "@components/Model/Model";
 import FlagPost from "./FlagPost";
 import SubmitReport from "./SubmitReport";
+import ShareModal from "@components/ShareModal";
 import { useGetPostComments } from "@src/hooks/useCommunity";
 import { ApiPostComment } from "@src/api/ApiCommunityForum";
 import { Send } from "lucide-react";
@@ -72,7 +73,7 @@ const Comments = [
     likes: "13.6k",
     postComments: "4.4K"
   },
-   {
+  {
     id: 3,
     post_id: 1,
     commenterName: "Dante",
@@ -82,7 +83,7 @@ const Comments = [
     likes: "11.8k",
     postComments: "42.4K"
   },
-   {
+  {
     id: 2,
     post_id: 1,
     commenterName: "Henry",
@@ -92,7 +93,7 @@ const Comments = [
     likes: "18.6k",
     postComments: "14.4K"
   },
-   {
+  {
     id: 2,
     post_id: 1,
     commenterName: "Zade",
@@ -102,7 +103,7 @@ const Comments = [
     likes: "17.6k",
     postComments: "23.4K"
   },
-   {
+  {
     id: 2,
     post_id: 1,
     commenterName: "Groover",
@@ -135,7 +136,8 @@ const CommunityFeed = ({ setOpenBackFeed }) => {
   const [comment, setComment] = useState("");
   const [postId, setPostId] = useState()
   const [showMoreComments, setShowMoreComments] = useState({});
-  console.log("showchaa",showMoreComments)
+  console.log("showchaa", showMoreComments)
+  const [shareModal, setShareModal] = useState(false);
 
   const { data } = useGetPostComments()
 
@@ -281,12 +283,15 @@ const CommunityFeed = ({ setOpenBackFeed }) => {
                 </button>
 
                 {/* Share Button */}
-                <button className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
+                <button
+                  onClick={() => setShareModal(true)}
+                  className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1 py-1 min-w-[78px] justify-center"
+                >
                   <img src={share} alt="Share" />
                   Share
                 </button>
               </div>
-
+              {shareModal && <ShareModal onClose={() => setShareModal(false)} />}
             </div>
             {openComments === post.id && (
               <div>
