@@ -14,9 +14,13 @@ import Model from "@components/Model/Model";
 import Community1 from "./Community1";
 import Community2 from "./Community2";
 import Community3 from "./Community3";
+import { usePopularCommunities } from "@src/hooks/useCommunity";
 
 const PopularCommunity = () => {
-  const [step, setStep] = useState<number | "">(""); 
+  const [step, setStep] = useState<number | "">("");
+
+  const { data } = usePopularCommunities()
+
 
   const popularCommunity = [
     { icon: community1, title: "Hospital Stay Reviews" },
@@ -26,7 +30,7 @@ const PopularCommunity = () => {
     { icon: community5, title: "Patient Rights & Safety" },
   ];
 
-  const closeModal = () => setStep(""); 
+  const closeModal = () => setStep("");
 
   return (
     <>
@@ -66,7 +70,7 @@ const PopularCommunity = () => {
           imgClass="w-[19px] h-[19px] object-cover"
           imgPosition="left"
           btnClass="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
-          onClick={() => setStep(1)} 
+          onClick={() => setStep(1)}
         />
       </div>
 

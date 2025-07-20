@@ -9,17 +9,17 @@ export const ProtectedRoutes: React.FC = ({
   const isAuthenticate = localStorage.getItem("userInfo");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuthenticate) {
-      navigate("/login");
-    }
-  }, [navigate, isAuthenticate]);
+  // useEffect(() => {
+  //   if (!isAuthenticate) {
+  //     navigate("/login");
+  //   }
+  // }, [navigate, isAuthenticate]);
 
-  if (!isAuthenticate) {
-    {
-      return navigate("/login");
-    }
-  }
+  // if (!isAuthenticate) {
+  //   {
+  //     return navigate("/login");
+  //   }
+  // }
 
   return children;
 };

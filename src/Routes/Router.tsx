@@ -6,7 +6,7 @@ import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
 import { ProfileRoutes } from "./ProfileRoutes";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
-import {ProtectedRoutes, PublicProtectRoute} from "./ProtectedRoutes";
+import { ProtectedRoutes, PublicProtectRoute } from "./ProtectedRoutes";
 
 const Router: React.FC = () => {
   return (
@@ -23,6 +23,8 @@ const Router: React.FC = () => {
             <Route
               key={child.path || "index"}
               path={child.path}
+              // element={
+              // <ProtectedRoutes>{child.element}</ProtectedRoutes>}
               element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
               index={child.path === "" ? true : undefined}
             />
@@ -37,7 +39,9 @@ const Router: React.FC = () => {
             <Route
               key={child.path || "index"}
               path={child.path}
-              element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
+              // element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
+              element={child.element}
+
               index={child.path === "" ? true : undefined}
             />
           ))}
@@ -82,7 +86,9 @@ const Router: React.FC = () => {
         <Route
           key={path}
           path={path}
-          element={<ProtectedRoutes>{element}</ProtectedRoutes>}
+          // element={<ProtectedRoutes>{element}</ProtectedRoutes>}
+          element={element}
+
         >
           {children?.map((child) => (
             <Route

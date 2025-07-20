@@ -15,6 +15,8 @@ import SubmitReport from "./SubmitReport";
 
 const postList = [
   {
+    id: 1,
+    community_id: 1,
     postImage: postImage,
     userImage: userProfile,
     userIcon: userProfile,
@@ -28,6 +30,8 @@ const postList = [
       "Work on something and want to share it? Showoff Saturdays are you! Make a new post on Saturday and tag it [Showoff Saturday] and watch the view rise.",
   },
   {
+    id: 2,
+    community_id: 2,
     postImage: postImage,
     userImage: userProfile,
     userIcon: userProfile,
@@ -206,10 +210,15 @@ const CommunityFeed = ({ setOpenBackFeed }) => {
               <div className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50">
                 <button
                   onClick={() => {
-                    setFlaggedPost(post);
+                    setFlaggedPost({
+                      ...post,
+                      post_id: post.id,
+                      community_id: post.community_id,
+                    });
                     setIsFlagModalOpen(true);
                     setShowSubmitReport(false);
                   }}
+
                   className="group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2 mb-0.5"
                 >
                   <span className="inline-block group-hover:hidden">
@@ -238,12 +247,16 @@ const CommunityFeed = ({ setOpenBackFeed }) => {
           </div>
         </div>
       ))}
-
       {isFlagModalOpen && (
         <Model className="max-w-[618px]" setIsOpen={setIsFlagModalOpen}>
-          <FlagPost onSubmit={() => setShowSubmitReport(true)} />
+          <FlagPost
+            post_id={flaggedPost?.post_id}
+            community_id={flaggedPost?.community_id}
+            onSubmit={() => setShowSubmitReport(true)}
+          />
         </Model>
       )}
+
 
       {showSubmitReport && (
         <Model
