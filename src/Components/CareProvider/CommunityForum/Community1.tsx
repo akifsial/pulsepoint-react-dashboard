@@ -4,12 +4,12 @@ import TextField from "./TextField";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { useForm } from "react-hook-form";
 
-const Community1 = ({ onNext, onClose }) => {
-  const[name, setName] = useState("")
-  const[description, setDescription] = useState("")
+const Community1 = ({
+  onNext,
+  onClose,
+  setName,
+  setDescription, }) => {
 
-  console.log("description: ", description)
-  console.log("communityName: ", communityName)
 
   const {
     register,
@@ -47,7 +47,7 @@ const Community1 = ({ onNext, onClose }) => {
         placeholder="Enter Name"
         {...register("name", { required: "Name is required" })}
         className="w-full mb-1 h-[50px] mb-5 bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
-        onChange={(e) => setCommunityName(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
       />
 
       <label

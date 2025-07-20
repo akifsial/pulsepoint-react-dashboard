@@ -15,9 +15,25 @@ import Community1 from "./Community1";
 import Community2 from "./Community2";
 import Community3 from "./Community3";
 import { usePopularCommunities } from "@src/hooks/useCommunity";
+import { useMutation } from "@tanstack/react-query";
+import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
+import toast from "react-hot-toast";
 
 const PopularCommunity = () => {
   const [step, setStep] = useState<number | "">("");
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [img1, setImg1] = useState(null);
+  const [img2, setImg2] = useState(null);
+  const [selectedTopicId1, setSelectedTopicId1] = useState()
+  const [selectedTopicId2, setSelectedTopicId2] = useState()
+  const [selectedTopicId3, setSelectedTopicId3] = useState()
+  const [selectedTopicId4, setSelectedTopicId4] = useState()
+
+
+  console.log("~~~~~~~~~~~~~~~~~~~~", selectedTopicId4)
+
 
   const { data } = usePopularCommunities()
 
@@ -31,6 +47,51 @@ const PopularCommunity = () => {
   ];
 
   const closeModal = () => setStep("");
+
+  const {
+    mutateAsync: CommunityCreateMutation,
+    isPending: savedCareProvidersPending,
+  } = useMutation({
+    mutationFn: (data) => ApiCreateCommunity(data),
+
+    onSuccess: async () => {
+      toast.success("Community Create Successfully");
+      // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+    },
+    onError: (error) => {
+      toast.error("Something Went Wrong");
+    },
+  });
+
+  const handleCommunityCreate = async (data) => {
+
+    const formData = new FormData()
+    formData.append("title", name)
+    formData.append("description", description)
+    formData.append("banner_image", img1)
+    formData.append("profile_icon_image", img2)
+    if (selectedTopicId1) {
+
+      formData.append("topic_ids[]", selectedTopicId1)
+    }
+    if (selectedTopicId2) {
+
+      formData.append("topic_ids[]", selectedTopicId2)
+    }
+    if (selectedTopicId3) {
+
+      formData.append("topic_ids[]", selectedTopicId3)
+    }
+
+    if (selectedTopicId4) {
+
+      formData.append("topic_ids[]", selectedTopicId4)
+    }
+
+
+    await CommunityCreateMutation(formData);
+  };
+
 
   return (
     <>
@@ -77,19 +138,22 @@ const PopularCommunity = () => {
       {/* Step-based Modal Views */}
       {step === 1 && (
         <Model className="max-w-[596px]" setIsOpen={closeModal}>
-          <Community1 onNext={() => setStep(2)} onClose={closeModal} />
+          <Community1 onNext={() => setStep(2)} onClose={closeModal}
+            setName={setName}
+            setDescription={setDescription} />
         </Model>
       )}
 
       {step === 2 && (
         <Model className="max-w-[596px]" setIsOpen={closeModal}>
-          <Community2 onNext={() => setStep(3)} onBack={() => setStep(1)} />
+          <Community2 onNext={() => setStep(3)} onBack={() => setStep(1)} img1={img1} setImg1={setImg1} img2={img2} setImg2={setImg2} />
+
         </Model>
       )}
 
       {step === 3 && (
         <Model className="max-w-[596px]" setIsOpen={closeModal}>
-          <Community3 onBack={() => setStep(2)} onClose={closeModal} />
+          <Community3 handleCommunityCreate={handleCommunityCreate} onBack={() => {setStep(2); setSelectedTopicId1(null); setSelectedTopicId2(null); setSelectedTopicId3(null); setSelectedTopicId4(null);  }} onClose={closeModal} name={name} description={description} img1={img1} img2={img2} setSelectedTopicId1={setSelectedTopicId1} setSelectedTopicId2={setSelectedTopicId2} setSelectedTopicId3={setSelectedTopicId3} setSelectedTopicId4={setSelectedTopicId4} />
         </Model>
       )}
     </>

@@ -5,12 +5,17 @@ const CommunityTopics = ({
   asterisk,
   options = [],
   onSelect,
+  setSelectedTopicId
+
 }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const handleSelect = (id) => {
     setSelectedId(id);
     if (onSelect) onSelect(id);
+    
+    setSelectedTopicId(id) // topic id set
+
   };
 
   return (
