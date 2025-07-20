@@ -42,3 +42,35 @@ export const ApiCreateCommunity = async (data) => {
 
     return response.data.payload;
 };
+
+
+export const ApiGetPostComments = async () => {
+
+    const BASE_URL = `${import.meta.env.VITE_APP_API_URL}/community/post`;
+    // const token = JSON.parse(localStorage.getItem("token"));
+    const token: string | null = JSON.parse(localStorage.getItem("token") || "null");
+
+
+    const response = await axios.get(BASE_URL, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data.payload;
+};
+
+
+export const ApiPostComment = async (data) => {
+
+    console.log("Comment----",data)
+
+    const BASE_URL = `${import.meta.env.VITE_APP_API_URL}/community/post/comment`;
+    // const token = JSON.parse(localStorage.getItem("token"));
+    const token: string | null = JSON.parse(localStorage.getItem("token") || "null");
+
+
+    const response = await axios.post(BASE_URL, data, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data.payload;
+};
