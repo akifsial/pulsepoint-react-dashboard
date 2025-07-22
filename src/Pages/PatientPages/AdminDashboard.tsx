@@ -1,5 +1,5 @@
 import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
@@ -105,6 +105,8 @@ const AdminDashboard: React.FC = () => {
     specialization?: string;
     location?: string;
   };
+
+  const dropdownRef = useRef<HTMLDivElement>(null); // Make sure it's declared at the top
 
   const columns = [
     {
@@ -324,6 +326,27 @@ const AdminDashboard: React.FC = () => {
     updateStatusMutation({ data });
   };
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowRatingDropdown(false); // close dropdown if clicked outside
+      }
+    }
+
+    if (showRatingDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showRatingDropdown]);
+
   return (
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
@@ -386,9 +409,8 @@ const AdminDashboard: React.FC = () => {
               {isSearchDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
                   {/* Search Input in Dropdown */}
-                  <div className="p-4 border-b border-gray-100">
+                  {/* <div className="p-4 border-b border-gray-100">
                     <div className="relative">
-                      {/* asdasdasd */}
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                       <input
                         type="text"
@@ -399,7 +421,7 @@ const AdminDashboard: React.FC = () => {
                         autoFocus
                       />
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Recents Section */}
                   <div className="p-2">
@@ -438,27 +460,32 @@ const AdminDashboard: React.FC = () => {
 
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
-            <div className="relative">
-              <div className="flex items flex-wrap gap-4 ">
+            <div className="relative" ref={dropdownRef}>
+              <div className="flex items-center flex-wrap gap-4">
                 <PrimaryButton
                   btnText="Ratings"
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="right"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] px-4 rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
-                <PrimaryButton
-                  btnText="View All Listing"
-                  btnTextClass="text-[#FFFFFF] text-sm font-semibold"
-                  showImg={true}
-                  imgClass="w-[14px] h-[13px] object-cover"
-                  img={ForwardArrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 md:w-[180px] w-full rounded-[10px] bg-[#000000]"
-                />
+                <button
+                  onClick={() => navigate("/patient/care-provider")}
+                  className="border border-[#252525] px-4 py-3 cursor-pointer md:w-[180px] w-full rounded-[10px] bg-[#000000] flex items-center justify-center gap-2"
+                >
+                  <span className="text-[#FFFFFF] text-sm font-semibold">
+                    View All Listing
+                  </span>
+                  <img
+                    src={ForwardArrow}
+                    alt="arrow"
+                    className="w-[14px] h-[13px] object-cover"
+                  />
+                </button>
               </div>
+
               <AnimatePresence>
                 {showRatingDropdown && (
                   <motion.div

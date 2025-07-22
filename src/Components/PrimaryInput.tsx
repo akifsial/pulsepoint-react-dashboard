@@ -23,7 +23,7 @@ const PrimaryInput: React.FC<CommonInputsProps> = ({
   eyeIcon = false,
   label,
   disabled = false,
-  onChange
+  onChange,
   // passwordShow,
   // setPasswordShow
 }) => {
@@ -46,24 +46,42 @@ const PrimaryInput: React.FC<CommonInputsProps> = ({
         ) : (
           ""
         )}
-        <input
-          type={
-            eyeIcon && passwordShow
-              ? "text"
-              : eyeIcon && passwordShow == false
-              ? "password"
-              : type
-          }
-          placeholder={placeholder}
-          {...(register && registerName
-            ? register(registerName, validation || { required: "This field is required" })
-            : {})}
-          className={`w-full rounded-xl bg-white pr-[50px] placeholder:text-[12px] shadow_bg placeholder:text-[var(--text-muted)] py-[14px] outline-none ${
-            showImg ? "pl-10" : "pl-3"
-          } pr-3 ${inputClass} text-[14px]`}
-          disabled={disabled}
-          // onChange={onChange}
-        />
+        {type === "textarea" ? (
+          <textarea
+            placeholder={placeholder}
+            {...(register && registerName
+              ? register(
+                  registerName,
+                  validation || { required: "This field is required" }
+                )
+              : {})}
+            className={`w-full rounded-xl bg-white placeholder:text-[12px] shadow_bg placeholder:text-[var(--text-muted)] outline-none resize-none ${
+              showImg ? "pl-10" : "pl-3"
+            } pr-3 ${inputClass} text-[14px]`}
+            disabled={disabled}
+          />
+        ) : (
+          <input
+            type={
+              eyeIcon && passwordShow
+                ? "text"
+                : eyeIcon && passwordShow == false
+                ? "password"
+                : type
+            }
+            placeholder={placeholder}
+            {...(register && registerName
+              ? register(
+                  registerName,
+                  validation || { required: "This field is required" }
+                )
+              : {})}
+            className={`w-full rounded-xl bg-white pr-[50px] placeholder:text-[12px] shadow_bg placeholder:text-[var(--text-muted)] py-[14px] outline-none ${
+              showImg ? "pl-10" : "pl-3"
+            } pr-3 ${inputClass} text-[14px]`}
+            disabled={disabled}
+          />
+        )}
 
         {eyeIcon ? (
           passwordShow ? (

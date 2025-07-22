@@ -56,7 +56,7 @@ const content = (
  
   return (
     <button
-      className={`rounded-[20px] cursor-pointer h-[36px] px-[10px] py-[8px] ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${btnClass}`}
+      className={`rounded-[20px] cursor-pointer h-[36px] ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${btnClass}`}
       onClick={onClick}
       disabled={disabled}
       type={type}

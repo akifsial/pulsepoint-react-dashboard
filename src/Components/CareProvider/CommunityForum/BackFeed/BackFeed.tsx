@@ -126,7 +126,7 @@ const BackFeed = ({ setOpenBackFeed }) => {
                       img={addCommunity}
                       imgClass="w-[19px] h-[19px] object-cover"
                       imgPosition="left"
-                      btnClass="border-1 border-[#000] w-[130px] h-[46px] !rounded-[10px] px-4 py-[10px] text-sm text-[#252525] font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                      btnClass="border-1 border-[#000] w-fit h-[46px] !rounded-[10px] px-4 py-[10px] text-sm text-[#252525] font-semibold leading-[33px] gap-2 flex items-center justify-center"
                       onClick={() => setShowCreatePostModal(true)}
                     />
 
@@ -134,7 +134,7 @@ const BackFeed = ({ setOpenBackFeed }) => {
                       <PrimaryButton
                         btnText="Join Community"
                         showImg={false}
-                        btnClass="w-[131px] h-[46px] !rounded-[10px] bg-[#007AB2] px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                        btnClass="w-fit h-[46px] !rounded-[10px] bg-[#007AB2] px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center"
                         onClick={handleJoinClick}
                       />
                     ) : (

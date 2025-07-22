@@ -3,7 +3,7 @@ import InputField from "../../../InputField";
 import DragMedia from "../DragMedia";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
+import { ApiCreateCommunity, ApiCreatePostCommunity } from "@src/api/ApiCommunityForum";
 import { useForm } from "react-hook-form";
 
 const CreatePost = ({ setIsOpen }) => {
@@ -19,7 +19,7 @@ const CreatePost = ({ setIsOpen }) => {
     mutateAsync: CreatePostMutation,
     isPending: creatPostIsPending,
   } = useMutation({
-    mutationFn: (data) => ApiCreateCommunity(data),
+    mutationFn: (data) => ApiCreatePostCommunity(data),
     onSuccess: async () => {
       toast.success("Post Created Successfully");
     },
@@ -31,7 +31,9 @@ const CreatePost = ({ setIsOpen }) => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("title", data.title);
-    formData.append("description", data.description);
+    formData.append("content", data.description);
+    formData.append("community_id", 9);
+
     if (imageFile) formData.append("image", imageFile);
 
     await CreatePostMutation(formData);

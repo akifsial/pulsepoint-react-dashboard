@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
@@ -16,15 +16,16 @@ import dayjs from "dayjs";
 import { useAllSavedCareProviders } from "@src/hooks/useUsers";
 
 const CareProviderDashboard: React.FC = () => {
-
-
   const navigate = useNavigate();
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
   const [searchText, setSearchText] = React.useState<string>("");
   const [rating, setRating] = useState();
-  const { data: CareProvidersData } = useCareProviders(searchText,rating);
-  const { data: AllSavedCareProviders } = useAllSavedCareProviders(searchText,rating);
+  const { data: CareProvidersData } = useCareProviders(searchText, rating);
+  const { data: AllSavedCareProviders } = useAllSavedCareProviders(
+    searchText,
+    rating
+  );
 
   type dataTypes = {
     id?: number;
@@ -161,6 +162,28 @@ const CareProviderDashboard: React.FC = () => {
     setActiveTab(tab);
   };
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowRatingDropdown(false); // close dropdown
+      }
+    }
+
+    if (showRatingDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showRatingDropdown]);
 
   return (
     <div className="mb-10">
@@ -189,24 +212,25 @@ const CareProviderDashboard: React.FC = () => {
               showImg={true}
               imgSrc={searchIcon}
               imgLeft={true}
-              inputClassName="text-sm"
-              containerClassName="w-full max-w-sm"
+              inputClassName="text-sm "
+              containerClassName="w-full border-gray-200 rounded-lg py-3 max-w-sm"
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
-            <div className="relative">
-              <div className="flex items gap-4">
-                <PrimaryButton
-                  btnText="ratings"
-                  showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={filterIcon}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full pb-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
-                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setShowRatingDropdown(!showRatingDropdown)}
+                className="border border-[#252525] px-4 md:w-[101px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5"
+              >
+                <span>Ratings</span>
+                <img
+                  src={filterIcon}
+                  alt="filter icon"
+                  className="w-[24px] h-[24px] object-cover"
                 />
-              </div>
+              </button>
+
               <AnimatePresence>
                 {showRatingDropdown && (
                   <motion.div
@@ -214,8 +238,9 @@ const CareProviderDashboard: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-[60px] w-50 z-50"
+                    className="absolute md:left-[-100px] top-[50px] w-50 z-50"
                   >
+                    {/* 👇 This must be inside ref wrapper */}
                     <RatingFilterDropdown setRating={setRating} />
                   </motion.div>
                 )}

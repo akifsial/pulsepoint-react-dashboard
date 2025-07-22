@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export const ApiMyReviews = async (search: string, rating: number) => {
-  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?organization_name
-=${search}`;
+  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback`;
 
   if (rating) {
     BASE_URL += `&rating=${rating}`;
@@ -58,6 +57,30 @@ export const ApiUpdateReview = async (data, id: number) => {
 
     return response?.data?.payload;
   } catch (error) {
-    throw error
+    throw error;
+  }
+};
+
+export const ApiFlagReview = async (feedbackId) => {
+  console.log("feedbackIdfeedbackIdfeedbackId", feedbackId);
+  try {
+    let BASE_URL = `${
+      import.meta.env.VITE_APP_API_URL
+    }feedback/flag/${feedbackId}`;
+
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    // const response = await axios.post(BASE_URL, {
+    //   headers: { Authorization: `Bearer ${token}` },
+    // });
+    const response = await axios.post(BASE_URL, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response?.data?.payload;
+  } catch (error) {
+    throw error;
   }
 };

@@ -55,6 +55,7 @@ const Community1 = ({
         className="block mb-2.5 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
       >
         Add a Description
+        {<span className="text-red-500 ml-1">*</span>}
       </label>
 
       <textarea

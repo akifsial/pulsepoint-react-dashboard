@@ -19,7 +19,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose }) => {
 
   const modalContent = (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0000003d] bg-opacity-50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0000001A]  bg-opacity-50"
       onClick={onClose}
     >
       <div
@@ -27,20 +27,17 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
+          {/* Title */}
+          <h2 className="text-xl font-semibold mb-6">Share this design</h2>
 
-        {/* Title */}
-        <h2 className="text-xl font-semibold mb-6">Share this design</h2>
-
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="cursor-pointer mb-7 text-gray-400 hover:text-gray-600 text-xl"
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="cursor-pointer mb-7 text-gray-400 hover:text-gray-600 text-xl"
           >
-          <X />
-        </button>
-
-
-          </div>
+            <X />
+          </button>
+        </div>
         {/* Social Icons */}
         <div className="flex justify-between items-center mb-6 px-4">
           <IconButton
@@ -112,9 +109,7 @@ const IconButton = ({
     <button
       onClick={onClick}
       className={`w-12 h-12 cursor-pointer rounded-full flex items-center justify-center transition ${
-        active
-          ? "border-2 border-[#007AB2]"
-          : "bg-white border border-gray-200"
+        active ? "border-2 border-[#007AB2]" : "bg-white border border-gray-200"
       }`}
     >
       <span className="text-gray-600 text-lg">{icon}</span>

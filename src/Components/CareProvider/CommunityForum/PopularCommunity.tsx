@@ -15,9 +15,10 @@ import Community1 from "./Community1";
 import Community2 from "./Community2";
 import Community3 from "./Community3";
 import { usePopularCommunities } from "@src/hooks/useCommunity";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
+import PopularCommunitySkeleton from "@components/Loaders/PopularCommunityLoader";
 
 const PopularCommunity = () => {
   const [step, setStep] = useState<number | "">("");
@@ -26,17 +27,15 @@ const PopularCommunity = () => {
   const [description, setDescription] = useState("");
   const [img1, setImg1] = useState(null);
   const [img2, setImg2] = useState(null);
-  const [selectedTopicId1, setSelectedTopicId1] = useState()
-  const [selectedTopicId2, setSelectedTopicId2] = useState()
-  const [selectedTopicId3, setSelectedTopicId3] = useState()
-  const [selectedTopicId4, setSelectedTopicId4] = useState()
+  const [selectedTopicId1, setSelectedTopicId1] = useState();
+  const [selectedTopicId2, setSelectedTopicId2] = useState();
+  const [selectedTopicId3, setSelectedTopicId3] = useState();
+  const [selectedTopicId4, setSelectedTopicId4] = useState();
+  const [searchCommunity, setSearchCommunity] = useState("");
 
+  const { data, isPending } = usePopularCommunities(searchCommunity);
 
-  console.log("~~~~~~~~~~~~~~~~~~~~", selectedTopicId4)
-
-
-  const { data } = usePopularCommunities()
-
+  console.log("$$$$$$$$$", data);
 
   const popularCommunity = [
     { icon: community1, title: "Hospital Stay Reviews" },
@@ -48,6 +47,8 @@ const PopularCommunity = () => {
 
   const closeModal = () => setStep("");
 
+  const queryClient=useQueryClient()
+
   const {
     mutateAsync: CommunityCreateMutation,
     isPending: savedCareProvidersPending,
@@ -56,7 +57,8 @@ const PopularCommunity = () => {
 
     onSuccess: async () => {
       toast.success("Community Create Successfully");
-      // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+      closeModal();
+      queryClient.invalidateQueries(["useGetCommunityPost"]); // refetch list
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
@@ -64,34 +66,27 @@ const PopularCommunity = () => {
   });
 
   const handleCommunityCreate = async (data) => {
-
-    const formData = new FormData()
-    formData.append("title", name)
-    formData.append("description", description)
-    formData.append("banner_image", img1)
-    formData.append("profile_icon_image", img2)
+    const formData = new FormData();
+    formData.append("title", name);
+    formData.append("description", description);
+    formData.append("banner_image", img1);
+    formData.append("profile_icon_image", img2);
     if (selectedTopicId1) {
-
-      formData.append("topic_ids[]", selectedTopicId1)
+      formData.append("topic_ids[]", selectedTopicId1);
     }
     if (selectedTopicId2) {
-
-      formData.append("topic_ids[]", selectedTopicId2)
+      formData.append("topic_ids[]", selectedTopicId2);
     }
     if (selectedTopicId3) {
-
-      formData.append("topic_ids[]", selectedTopicId3)
+      formData.append("topic_ids[]", selectedTopicId3);
     }
 
     if (selectedTopicId4) {
-
-      formData.append("topic_ids[]", selectedTopicId4)
+      formData.append("topic_ids[]", selectedTopicId4);
     }
-
 
     await CommunityCreateMutation(formData);
   };
-
 
   return (
     <>
@@ -100,26 +95,31 @@ const PopularCommunity = () => {
         <CommonInput
           placeholder="Search Communities "
           showImg={true}
-          imgSrc={searchCommunity}
-          imgLeft={true}
+          // imgSrc={searchCommunity}
+          // imgLeft={true}
           inputClassName="text-base"
           containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
           imgClassName="w-5 h-5"
+          onChange={(e) => setSearchCommunity(e.target.value)}
         />
 
         <div className="bg-white rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
           <h4 className="mb-1.5">Popular Communities</h4>
-          {popularCommunity.map((community, idx) => (
+
+          {isPending ? <PopularCommunitySkeleton /> : ""}
+          {data?.records?.map((community, idx) => (
             <div
               key={idx}
               className="flex items-center gap-3.5 py-[13px] border-b border-b-[#E6E6E6] last:border-b-0"
             >
               <img
-                src={community.icon}
+                src={`${import.meta.env.VITE_APP_API_IMG_URL}${
+                  community?.profile_icon_image
+                }`}
                 alt={community.title}
-                className="rounded-full h-[37px] w-[37px]"
+                className="rounded-full object-cover h-[37px] w-[37px]"
               />
-              <p className="font-semibold">{community.title}</p>
+              <p className="font-semibold">{community?.title}</p>
             </div>
           ))}
         </div>
@@ -138,22 +138,53 @@ const PopularCommunity = () => {
       {/* Step-based Modal Views */}
       {step === 1 && (
         <Model className="max-w-[596px]" setIsOpen={closeModal}>
-          <Community1 onNext={() => setStep(2)} onClose={closeModal}
+          <Community1
+            onNext={() => {
+              if (!name) return toast.error("Name is Required");
+              if (!description) return toast.error("Description is Required");
+              setStep(2);
+            }}
+            onClose={closeModal}
             setName={setName}
-            setDescription={setDescription} />
+            setDescription={setDescription}
+          />
         </Model>
       )}
 
       {step === 2 && (
         <Model className="max-w-[596px]" setIsOpen={closeModal}>
-          <Community2 onNext={() => setStep(3)} onBack={() => setStep(1)} img1={img1} setImg1={setImg1} img2={img2} setImg2={setImg2} />
-
+          <Community2
+            onNext={() => setStep(3)}
+            onBack={() => setStep(1)}
+            img1={img1}
+            setImg1={setImg1}
+            img2={img2}
+            setImg2={setImg2}
+          />
         </Model>
       )}
 
       {step === 3 && (
         <Model className="max-w-[596px]" setIsOpen={closeModal}>
-          <Community3 handleCommunityCreate={handleCommunityCreate} onBack={() => {setStep(2); setSelectedTopicId1(null); setSelectedTopicId2(null); setSelectedTopicId3(null); setSelectedTopicId4(null);  }} onClose={closeModal} name={name} description={description} img1={img1} img2={img2} setSelectedTopicId1={setSelectedTopicId1} setSelectedTopicId2={setSelectedTopicId2} setSelectedTopicId3={setSelectedTopicId3} setSelectedTopicId4={setSelectedTopicId4} />
+          <Community3
+            handleCommunityCreate={handleCommunityCreate}
+            onBack={() => {
+              setStep(2);
+              setSelectedTopicId1(null);
+              setSelectedTopicId2(null);
+              setSelectedTopicId3(null);
+              setSelectedTopicId4(null);
+            }}
+            onClose={closeModal}
+            name={name}
+            description={description}
+            img1={img1}
+            img2={img2}
+            setSelectedTopicId1={setSelectedTopicId1}
+            setSelectedTopicId2={setSelectedTopicId2}
+            setSelectedTopicId3={setSelectedTopicId3}
+            setSelectedTopicId4={setSelectedTopicId4}
+          />
         </Model>
       )}
     </>

@@ -10,11 +10,13 @@ import BackFeed from "./BackFeed/BackFeed";
 const Community = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [openBackFeed, setOpenBackFeed] = useState(false);
+  const [postIdFeed, setPostIdFeed] = useState()
+  console.log("setPostIdFeed : ", postIdFeed)
 
   return (
     <>
       {openBackFeed ? (
-        <BackFeed setOpenBackFeed={setOpenBackFeed} />
+        <BackFeed setOpenBackFeed={setOpenBackFeed}  setPostIdFeed={setPostIdFeed} />
       ) : (
         <div className="w-full block justify-between sm:flex sm:items-start sm:gap-6">
           <div className="flex-1">
@@ -24,7 +26,7 @@ const Community = () => {
             <div className="flex gap-[5px] mb-6">
               <button
                 onClick={() => setActiveTab("home")}
-                className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
+                className={`flex items-center cursor-pointer gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
                   activeTab === "home"
                     ? "bg-[#28A2FF] text-white"
                     : "bg-[#D9E7EE] text-[#252525]"
@@ -35,7 +37,7 @@ const Community = () => {
               </button>
               <button
                 onClick={() => setActiveTab("Popular")}
-                className={`flex items-center gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
+                className={`flex items-center cursor-pointer gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
                   activeTab === "Popular"
                     ? "bg-[#28A2FF] text-white"
                     : "bg-[#D9E7EE] text-[#252525]"
@@ -49,7 +51,7 @@ const Community = () => {
               </button>
             </div>
 
-            <CommunityFeed setOpenBackFeed={setOpenBackFeed} />
+            <CommunityFeed setOpenBackFeed={setOpenBackFeed} setPostIdFeed={setPostIdFeed} />
           </div>
 
           <div className="flex-shrink-0 w-[292px]">

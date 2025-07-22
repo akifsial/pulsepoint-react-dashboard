@@ -114,7 +114,7 @@ const TanDataTable = <T extends object>({
               </tr>
             ))}
           </thead>
-          <tbody>
+          {/* <tbody>
             {table?.getRowModel()?.rows?.map((row, idx) => (
               <tr
                 key={row.id}
@@ -128,6 +128,36 @@ const TanDataTable = <T extends object>({
                 ))}
               </tr>
             ))}
+          </tbody> */}
+
+          <tbody>
+            {table.getRowModel().rows.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={baseColumns.length}
+                  className="text-center py-6 text-gray-500"
+                >
+                  No Data Found
+                </td>
+              </tr>
+            ) : (
+              table.getRowModel().rows.map((row) => (
+                <tr
+                  key={row.id}
+                  className="bg-white hover:bg-[var(--primary-color-hover-light)] transition-colors duration-200"
+                  style={{ borderBottom: "1px solid #2525251a" }}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="px-2 py-5">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

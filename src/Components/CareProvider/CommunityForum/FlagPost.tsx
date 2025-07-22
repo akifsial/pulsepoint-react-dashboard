@@ -8,18 +8,20 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import PrimaryInput from "@components/PrimaryInput";
 import { PrimaryButton } from "@components/Buttons/PrimaryButton";
+import { useGetReportsPost } from "@src/hooks/useCommunity";
 
 const FlagPost = ({ onSubmit, post_id, community_id }) => {
   console.log("🛑 Received in FlagPost:", { post_id, community_id });
   const [reportReasonId, setReportReasonId] = useState(null);
   const [comment, setComment] = useState("");
+  const { data } = useGetReportsPost();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [file, setFile] = useState()
+  const [file, setFile] = useState();
 
   const {
     mutateAsync: ReportPostMutation,
@@ -37,10 +39,9 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
   });
 
   const handleReportSubmit = async (data) => {
-
-    const formData = new FormData()
-    formData.append("post_id", post_id)
-    formData.append("coomunity_id", community_id)
+    const formData = new FormData();
+    formData.append("post_id", post_id);
+    formData.append("community_id", community_id);
     formData.append("report_reason_id", reportReasonId);
     formData.append("comment", data.comments);
 
@@ -48,7 +49,6 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
       formData.append("image_url", file);
     }
     // formData.append("")
-
 
     await ReportPostMutation(formData);
   };
@@ -65,17 +65,20 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
         </p>
       </div>
       <form onSubmit={handleSubmit(handleReportSubmit)}>
-
         <CommunityTopics
           // asterisk
           title={"Select a reason for flagging"}
-          options={[
-            { id: 1, text: "Spam or advertising" },
-            { id: 2, text: "Harassment or bullying" },
-            { id: 3, text: "Misinformation" },
-            { id: 4, text: "Off-topic or irrelevant" },
-            { id: 5, text: "Hate speech or abusive content" },
-          ]}
+          // options={[
+          //   { id: 1, text: "Spam or advertising" },
+          //   { id: 2, text: "Harassment or bullying" },
+          //   { id: 3, text: "Misinformation" },
+          //   { id: 4, text: "Off-topic or irrelevant" },
+          //   { id: 5, text: "Hate speech or abusive content" },
+          // ]}
+          options={data?.records?.map((item, index) => ({
+            id: item.id , // Fallback if item.id is missing
+            text: item.name, // Adjust based on your API keys
+          }))}
           onSelect={(id) => setReportReasonId(id)}
         />
 
@@ -94,9 +97,9 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
           label="Additional Comments (optional):"
           register={register}
           registerName="comments"
-          placeholder="Enter comments"
-          inputClass=" !bg-[#FBFCFD] !h-[90px] mb-3 border border-[#2525251A] "
-
+          placeholder="Enter description"
+          type="textarea"
+          inputClass="!bg-[#FBFCFD] !h-[90px] !pt-3 !pb-0 mb-3 border border-[#2525251A]"
         />
 
         <DragMedia
@@ -109,7 +112,7 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
         />
 
         <PrimaryButton
-          btnText="Submit Report"
+          btnText="Flag Review"
           // onClick={async () => {
           //   await handleReportSubmit();
           //   onSubmit(); // opens next modal
@@ -118,10 +121,7 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
           showImg={false}
           btnClass="flex items-center justify-center h-[46px] cursor-pointer w-full bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
         />
-
       </form>
-
-
     </>
   );
 };

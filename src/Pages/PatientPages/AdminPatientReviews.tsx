@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
@@ -25,7 +25,7 @@ const AdminPatientReviews: React.FC = () => {
   const [rating, setRating] = useState();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
-
+  
   const { data } = useApiMyReviews(searchText, rating);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -51,11 +51,34 @@ const AdminPatientReviews: React.FC = () => {
     provider_logo?: string;
   };
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowRatingDropdown(false);
+      }
+    }
+
+    if (showRatingDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showRatingDropdown]);
+
   // Handler functions for the review form
   const handleEditReview = (id: number | string) => {
     // setCurrentEditingReview(row);
     // setCurrentView("form");
-    console.log("rrrrrrrrroooowwwwwwww",id)
+    console.log("rrrrrrrrroooowwwwwwww", id);
     navigate(`/patient/patient-feedback/edit/${id}`);
   };
 
@@ -319,23 +342,26 @@ const AdminPatientReviews: React.FC = () => {
               imgSrc={searchIcon}
               imgLeft={true}
               inputClassName="text-sm"
-              containerClassName="w-full max-w-sm"
+              containerClassName="w-full border-gray-200 rounded-lg py-3 max-w-sm"
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter By</p>
-            <div className="relative">
+            <div className="relative" ref={dropdownRef}>
               <div className="flex items gap-4">
-                <PrimaryButton
-                  btnText="Ratings"
-                  showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={filterIcon}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                <button
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                />
+                  className="border border-[#252525] px-4 md:w-[101px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5"
+                >
+                  <span>Ratings</span>
+                  <img
+                    src={filterIcon}
+                    alt="filter icon"
+                    className="w-[24px] h-[24px] object-cover"
+                  />
+                </button>
               </div>
+
               <AnimatePresence>
                 {showRatingDropdown && (
                   <motion.div
@@ -343,7 +369,7 @@ const AdminPatientReviews: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-[60px] w-50 z-50"
+                    className="absolute md:left-[-100px] top-[50px] w-50 z-50"
                   >
                     <RatingFilterDropdown setRating={setRating} />
                   </motion.div>
@@ -372,7 +398,6 @@ const AdminPatientReviews: React.FC = () => {
               />
             )}
           />
-
 
           <DeleteModal
             isOpen={isDeleteModalOpen}

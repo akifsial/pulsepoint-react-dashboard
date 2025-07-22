@@ -242,7 +242,7 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
         // navigate(`/patient/hospital-profile/${id}`);
       },
       onError: (error) => {
-        toast.error("Error While Updating Review");
+        // toast.error("Error While Updating Review");
       },
     });
 
