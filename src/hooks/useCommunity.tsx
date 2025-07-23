@@ -6,6 +6,7 @@ import {
   ApiGellAllCommunity,
   ApiPostReports,
   ApiParentCommentReply,
+  ApiGetCommunityPostSaved,
 } from "@src/api/ApiCommunityForum";
 import { useQuery } from "@tanstack/react-query";
 
@@ -22,6 +23,15 @@ export const useGetCommunityPost = () => {
   return useQuery({
     queryKey: ["useGetCommunityPost"],
     queryFn: () => ApiGetCommunityPost(),
+    // enabled: !!search, // only fetch when search is not empty
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useGetCommunityPostSaved = () => {
+  return useQuery({
+    queryKey: ["useGetCommunityPostSaved"],
+    queryFn: () => ApiGetCommunityPostSaved(),
     // enabled: !!search, // only fetch when search is not empty
     refetchOnWindowFocus: false,
   });

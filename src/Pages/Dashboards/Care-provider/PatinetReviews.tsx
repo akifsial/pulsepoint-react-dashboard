@@ -9,12 +9,43 @@ import { v4 as uuid } from "uuid";
 
 const PatinetReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
-  const [filterValue, setFilterValue] = React.useState("flagged"); 
+  const [filterValue, setFilterValue] = React.useState(""); 
 
   const statusOptions = [
-    { id: uuid(), label: "All Flagged", value: "flagged" },
-    { id: uuid(), label: "None", value: "none" },
+    { id: uuid(), label: "All Flagged", value: "1" },
+    { id: uuid(), label: "None", value: "0" },
   ];
+
+  console.log(filterValue,"______+++++++++++++")
+
+  
+  // const {
+  //   mutateAsync: savedCareProvidersMutation,
+  //   isPending: savedCareProvidersPending,
+  // } = useMutation({
+  //   mutationFn: () => ApiSavedCareProviders({ care_provider_id: data?.id }),
+
+  //   onSuccess: async () => {
+  //     toast.success("Care Provider Saved Successfully");
+  //     queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+  //   },
+  //   onError: (error) => {
+  //     toast.error("Something Went Wrong");
+  //   },
+  // });
+
+  // const handleBookmarkToggle = async () => {
+  //   setIsBookmarked(!isBookmarked);
+
+  //   if (data?.is_saved_care_provider == true) {
+  //     // handleSaved()
+  //     setSavedModal(true);
+  //     return;
+  //   }
+
+  //   await savedCareProvidersMutation();
+  // };
+
 
   return (
    <div>

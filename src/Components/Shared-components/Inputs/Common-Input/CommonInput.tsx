@@ -16,7 +16,7 @@ const CommonInput: React.FC<CommonInputProps> = ({
 }) => {
   return (
     <div
-      className={`flex items-center border border-black/80 rounded-[md] px-3 py-2 bg-white gap-2 ${containerClassName}`}
+      className={`flex bg-black items-center border border-black/80 rounded-[md] px-3 py-2 bg-white gap-2 ${containerClassName}`}
     >
       {showImg && imgLeft && imgSrc && (
         <img src={imgSrc} alt="icon" className={`w-4 h-4  ${imgClassName}`} />

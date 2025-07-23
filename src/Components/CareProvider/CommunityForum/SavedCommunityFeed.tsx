@@ -28,7 +28,7 @@ import {
 } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import arrowUpTrans from "@assets/media/svgs/dashboard-svgs/arrowUp.svg";
-import { useGetCommunityPost } from "@src/hooks/useCommunity";
+import { useGetCommunityPost, useGetCommunityPostSaved } from "@src/hooks/useCommunity";
 import { useGetSingleUser } from "@src/hooks/useCommunity";
 import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
 
@@ -147,7 +147,7 @@ const buttons = [
   { btnText: "Flag", btnIcon: Flagwhite },
 ];
 
-const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
+const SavedCommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [activePostActions, setActivePostActions] = useState(null);
   const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
@@ -164,9 +164,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
   const [parentCommentReplyValue, setParentCommentReplyValue] = useState("");
   const [shareModal, setShareModal] = useState(false);
   const [parentCommentReplyId, setParentCommentReplyId] = useState([]);
-  console.log("setParentCommentReplyIdasadasas", parentCommentReplyId);
-  const { data: postData, isPending: PostsPending } = useGetCommunityPost();
-  console.log("#############", postData);
+  const { data: postData, isPending: PostsPending } = useGetCommunityPostSaved();
   const [replyId, setReplyId] = useState();
   const myId = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -369,11 +367,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
     },
   });
 
-  const handleParentCommentReply = async (
-    postId,
-    parentCommentId,
-    id
-  ) => {
+  const handleParentCommentReply = async (postId, parentCommentId, id) => {
     console.log("X_________X", id);
     if (id) {
       setReplyId(id);
@@ -1048,4 +1042,4 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
   );
 };
 
-export default CommunityFeed;
+export default SavedCommunityFeed;

@@ -68,13 +68,25 @@ const AdminDashboard: React.FC = () => {
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
   const queryClient = useQueryClient();
   const [rating, setRating] = useState();
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
+
   // Apis
   const { data: StatsData } = useStatsApi();
   // const { data: CareProvidersData } = useCareProviders();
   const { data: CareProvidersData, isFetching } = useCareProviders(
-    searchText,
+    debouncedSearchText,
     rating
   );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 500); 
+
+    return () => {
+      clearTimeout(handler); 
+    };
+  }, [searchText]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -154,7 +166,7 @@ const AdminDashboard: React.FC = () => {
       showSort: true,
       cell: (info) => {
         const row = info.row.original;
-        return <div>{row?.reviews_to_careprovider?.[0]?.rating ?? "N/A"}</div>;
+        return <div>{row?.total_rating ?? "N/A"}</div>;
       },
     },
     {
@@ -245,6 +257,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleSearchItemClick = (searchValue: string) => {
+    
     setSearchText(searchValue);
     setIsSearchDropdownOpen(false);
     console.log("Selected search:", searchValue);
@@ -386,7 +399,7 @@ const AdminDashboard: React.FC = () => {
         />
       </div>
 
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
+      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] h-[400px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Care Providers</h3>
 

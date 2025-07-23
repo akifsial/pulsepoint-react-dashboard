@@ -112,7 +112,7 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
         />
 
         <PrimaryButton
-          btnText="Flag Review"
+          btnText="Report Post"
           // onClick={async () => {
           //   await handleReportSubmit();
           //   onSubmit(); // opens next modal

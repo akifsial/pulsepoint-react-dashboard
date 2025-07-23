@@ -70,6 +70,21 @@ export const ApiGetCommunityPost = async () => {
   return response.data.payload;
 };
 
+
+export const ApiGetCommunityPostSaved = async () => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/save`;
+  // const token = JSON.parse(localStorage.getItem("token"));
+  const token: string | null = JSON.parse(
+    localStorage.getItem("token") || "null"
+  );
+
+  const response = await axios.get(BASE_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.payload;
+};
+
 export const ApiGetSingleUser = async () => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/${2}`;
   // const token = JSON.parse(localStorage.getItem("token"));
@@ -140,8 +155,6 @@ export const ApiPostReports = async () => {
 };
 
 export const ApiParentCommentReply = async (data) => {
-  console.log("Comment----", data);
-
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}comment`;
   // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
@@ -155,9 +168,25 @@ export const ApiParentCommentReply = async (data) => {
   return response.data.payload;
 };
 
-export const ApiLikeComment = async (commentId,data) => {
-  console.log("DATA-------------------------------------------------DATA",commentId)
-  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}comment/like/${commentId}`;
+export const ApiLikeComment = async (commentId, data) => {
+  const BASE_URL = `${
+    import.meta.env.VITE_APP_API_URL
+  }comment/like/${commentId}`;
+  // const token = JSON.parse(localStorage.getItem("token"));
+  const token: string | null = JSON.parse(
+    localStorage.getItem("token") || "null"
+  );
+
+  const response = await axios.post(BASE_URL, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.payload;
+};
+
+export const ApiReplyOnReview = async (data) => {
+  // console.log("Dataaaaa/",commentId)
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback/reply`;
   // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"

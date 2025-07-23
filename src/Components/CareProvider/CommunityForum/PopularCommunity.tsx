@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 
@@ -32,8 +32,9 @@ const PopularCommunity = () => {
   const [selectedTopicId3, setSelectedTopicId3] = useState();
   const [selectedTopicId4, setSelectedTopicId4] = useState();
   const [searchCommunity, setSearchCommunity] = useState("");
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchCommunity);
 
-  const { data, isPending } = usePopularCommunities(searchCommunity);
+  const { data, isPending } = usePopularCommunities(debouncedSearchText);
 
   console.log("$$$$$$$$$", data);
 
@@ -47,7 +48,7 @@ const PopularCommunity = () => {
 
   const closeModal = () => setStep("");
 
-  const queryClient=useQueryClient()
+  const queryClient = useQueryClient();
 
   const {
     mutateAsync: CommunityCreateMutation,
@@ -87,6 +88,16 @@ const PopularCommunity = () => {
 
     await CommunityCreateMutation(formData);
   };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchCommunity);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchCommunity]);
 
   return (
     <>
@@ -130,7 +141,7 @@ const PopularCommunity = () => {
           img={addCommunity}
           imgClass="w-[19px] h-[19px] object-cover"
           imgPosition="left"
-          btnClass="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
+          btnClass="border-1 mb-5 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
           onClick={() => setStep(1)}
         />
       </div>

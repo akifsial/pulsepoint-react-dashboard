@@ -1,10 +1,17 @@
 import axios from "axios";
 
-export const ApiMyReviews = async (search: string, rating: number) => {
-  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback`;
+export const ApiMyReviews = async (
+  search: string,
+  rating: number,
+  filterValue
+) => {
+  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?organization_name=${search}`;
 
   if (rating) {
     BASE_URL += `&rating=${rating}`;
+  }
+  if (filterValue) {
+    BASE_URL += `&is_flagged=${filterValue}`;
   }
 
   const token = JSON.parse(localStorage.getItem("token"));

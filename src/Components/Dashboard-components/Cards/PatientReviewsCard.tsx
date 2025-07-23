@@ -8,8 +8,13 @@ import { useApiMyReviews } from "@src/hooks/useMyReviews";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiFlagReview } from "@src/api/ApiMyReviews";
-import { Flag } from "lucide-react";
+import { Flag, Send } from "lucide-react";
 import FlagModal from "@components/Model/FlagModal";
+import { ApiReplyOnReview } from "@src/api/ApiCommunityForum";
+import InputField from "@components/InputField";
+import PrimaryInput from "@components/PrimaryInput";
+import { useForm } from "react-hook-form";
+import { PrimaryButton } from "@components/Buttons/PrimaryButton";
 
 interface PatientReviewsCardProps {
   filterValue: string;
@@ -55,12 +60,14 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
     },
   ];
 
-  const [flagModalOpen,setFlagModalOpen]=useState(true)
+  const { register, handleSubmit } = useForm();
 
-  const { data } = useApiMyReviews();
-  console.log("____________", data);
+  const [flagModalOpen, setFlagModalOpen] = useState(true);
+  const [reviewReplyValue, setReviewReplyValue] = useState("");
 
-  const queryClient=useQueryClient()
+  const { data } = useApiMyReviews("","",filterValue);
+
+  const queryClient = useQueryClient();
 
   const {
     mutateAsync: flagReviewMutation,
@@ -77,9 +84,33 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
     },
   });
 
-  const handleFlagReview = async (feedbackId,reviewFlag) => {
-
+  const handleFlagReview = async (feedbackId, reviewFlag) => {
     await flagReviewMutation(feedbackId);
+  };
+  // ___________________
+
+  const {
+    mutateAsync: ReviewReplyMutation,
+    // isPending: savedCareProvidersPending,
+  } = useMutation({
+    mutationFn: (data) => ApiReplyOnReview(data),
+
+    onSuccess: async () => {
+      toast.success("Reply Added Successfully");
+      setReviewReplyValue("");
+      queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
+    },
+    onError: (error) => {
+      // toast.error("Something Went Wrong");
+    },
+  });
+
+  const handleReviewReply = async (reviewId, reviewFlag) => {
+    const data = {
+      review_id: reviewId,
+      content: reviewReplyValue,
+    };
+    await ReviewReplyMutation(data);
   };
 
   return (
@@ -102,9 +133,10 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
               <span className="text-[13px]">{item.userHour}</span>
             </div>
 
-            {filterValue === "flagged" && (
               <div
-                onClick={()=>handleFlagReview(item?.feedback?.id,item?.review_flag)}
+                onClick={() =>
+                  handleFlagReview(item?.feedback?.id, item?.review_flag)
+                }
                 className="border  border-[#D3D3D3] rounded-[10px] px-[7px] py-[9.5px] flex items-center gap-2"
               >
                 {item?.review_flag.length > 0 ? (
@@ -114,19 +146,28 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
                 )}
                 <p className="text-[16px] text-[#252525]">{item.flagged}</p>
               </div>
-            )}
           </div>
           {/* <FlagModal onDelete={()=>handleFlagReview(item?.feedback?.id,item?.review_flag)} isOpen={true} /> */}
-
 
           <div className="flex items-center gap-0.5 mb-2">
             <RatingStars value={item.review} isDisabled={true} />
             <p className="text-[16px] text-[#252525]">({item.rating})</p>
           </div>
 
-          <div className="">
-            <p className="text-[16px] text-[#252525] mb-4">“{item.content}”</p>
-          </div>
+          <p className="text-[16px] text-[#252525] mb-4">“{item.content}”</p>
+
+          {item?.replies?.map((reply) => (
+            <div className="bg-[#E4F1F9] flex items-center gap-5 p-[10px]">
+              <img
+                src={`${import.meta.env.VITE_APP_API_IMG_URL}${
+                  item.care_provider.image
+                }`}
+                alt=""
+                className="w-[43px] h-[43px] object-cover rounded-full"
+              />
+              <p className="text-[16px] text-[#252525] ">{reply?.content}</p>
+            </div>
+          ))}
 
           <div
             className="flex items-center gap-4 px-4 py-2.5 rounded-[5px]"
@@ -143,12 +184,19 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
             {item.comment ? (
               <p>{item.comment}</p>
             ) : (
-              <input
-                type="text"
-                placeholder="Add a reply"
-                className="w-full bg-white outline-0 border-[1px] rounded-[5px] p-2.5 text-sm"
-                style={{ borderColor: "#D3D3D3" }}
-              />
+              <div className="relative w-full">
+                <input
+                  placeholder="Add a reply"
+                  value={reviewReplyValue}
+                  className="w-full border border-[#D3D3D3] bg-white outline-0 border-[1px] rounded-[5px] !p-2.5  text-sm"
+                  onChange={(e) => setReviewReplyValue(e.target.value)}
+                />
+                <div className="absolute top-[20%] cursor right-2">
+                  <button onClick={() => handleReviewReply(item?.feedback?.id)}>
+                    <Send />
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>

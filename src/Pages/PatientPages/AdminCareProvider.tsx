@@ -21,12 +21,12 @@ const CareProviderDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
   const [searchText, setSearchText] = React.useState<string>("");
   const [rating, setRating] = useState();
-  const { data: CareProvidersData } = useCareProviders(searchText, rating);
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
+  const { data: CareProvidersData } = useCareProviders(debouncedSearchText, rating);
   const { data: AllSavedCareProviders } = useAllSavedCareProviders(
-    searchText,
+    debouncedSearchText,
     rating
   );
-
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -185,6 +185,16 @@ const CareProviderDashboard: React.FC = () => {
     };
   }, [showRatingDropdown]);
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchText]);
+
   return (
     <div className="mb-10">
       <h2
@@ -200,7 +210,7 @@ const CareProviderDashboard: React.FC = () => {
       >
         Care Provider Listing
       </h2>
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
+      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] h-[450px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Care Providers</h3>
           {/* searchbar */}

@@ -25,8 +25,9 @@ const AdminPatientReviews: React.FC = () => {
   const [rating, setRating] = useState();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
-  
-  const { data } = useApiMyReviews(searchText, rating);
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
+
+  const { data } = useApiMyReviews(debouncedSearchText, rating);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   // State for managing the review form page
@@ -313,6 +314,16 @@ const AdminPatientReviews: React.FC = () => {
     console.log("Selected row:", row);
   };
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchText]);
+
   // Render the Reviews Table View
   const renderTableView = () => (
     <div className="mb-10">
@@ -329,7 +340,7 @@ const AdminPatientReviews: React.FC = () => {
       >
         My Reviews
       </h2>
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
+      <div className="mt-6 bg-[#FFFFFF] h-[400px] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Given Reviews</h3>
           {/* searchbar */}

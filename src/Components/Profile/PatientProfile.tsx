@@ -161,7 +161,7 @@ const PatientProfile = ({ onChangePassword }) => {
                   Change Photo
                 </label>
                 <PrimaryButton
-                  btnText={`${updatePatientProfileLoader ? <Spinner/> : "Save Changes"}`}
+                  btnText={`${updatePatientProfileLoader ? "Loading..." : "Save Changes"}`}
                   showImg={false}
                   btnClass=" w-[159px] h-[46px] !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
                   type="submit"

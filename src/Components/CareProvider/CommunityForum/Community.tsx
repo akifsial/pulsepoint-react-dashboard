@@ -6,17 +6,21 @@ import Whitepopular from "@assets/media/svgs/dashboard-svgs/popularWhite.svg";
 import home from "@assets/media/svgs/dashboard-svgs/home.svg";
 import popular from "@assets/media/svgs/dashboard-svgs/popular.svg";
 import BackFeed from "./BackFeed/BackFeed";
+import Saved from "@assets/media/svgs/export.svg";
+import SavedCommunityFeed from "./SavedCommunityFeed";
 
 const Community = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [openBackFeed, setOpenBackFeed] = useState(false);
-  const [postIdFeed, setPostIdFeed] = useState()
-  console.log("setPostIdFeed : ", postIdFeed)
+  const [postIdFeed, setPostIdFeed] = useState();
 
   return (
     <>
       {openBackFeed ? (
-        <BackFeed setOpenBackFeed={setOpenBackFeed}  setPostIdFeed={setPostIdFeed} />
+        <BackFeed
+          setOpenBackFeed={setOpenBackFeed}
+          setPostIdFeed={setPostIdFeed}
+        />
       ) : (
         <div className="w-full block justify-between sm:flex sm:items-start sm:gap-6">
           <div className="flex-1">
@@ -49,9 +53,29 @@ const Community = () => {
                 />
                 Popular
               </button>
+              <button
+                onClick={() => setActiveTab("Saved")}
+                className={`flex items-center cursor-pointer gap-2 px-4 py-[7px] rounded-[20px] transition-all ${
+                  activeTab === "Saved"
+                    ? "bg-[#28A2FF] text-white"
+                    : "bg-[#D9E7EE] text-[#252525]"
+                }`}
+              >
+                <img
+                  src={activeTab === "Saved" ? Saved : Saved}
+                  alt="Popular"
+                />
+                Save Posts
+              </button>
             </div>
-
-            <CommunityFeed setOpenBackFeed={setOpenBackFeed} setPostIdFeed={setPostIdFeed} />
+            {activeTab == "home" || activeTab == "Popular" ? (
+              <CommunityFeed
+                setOpenBackFeed={setOpenBackFeed}
+                setPostIdFeed={setPostIdFeed}
+              />
+            ) : (
+              <SavedCommunityFeed />
+            )}
           </div>
 
           <div className="flex-shrink-0 w-[292px]">
