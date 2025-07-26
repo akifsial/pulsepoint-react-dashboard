@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useCareProviders } from "@src/hooks/useDashboard";
 import dayjs from "dayjs";
 import { useAllSavedCareProviders } from "@src/hooks/useUsers";
+import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 
 const CareProviderDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -22,11 +23,12 @@ const CareProviderDashboard: React.FC = () => {
   const [searchText, setSearchText] = React.useState<string>("");
   const [rating, setRating] = useState();
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
-  const { data: CareProvidersData } = useCareProviders(debouncedSearchText, rating);
-  const { data: AllSavedCareProviders } = useAllSavedCareProviders(
-    debouncedSearchText,
-    rating
-  );
+  const { data: CareProvidersData, isLoading: isLoadingCareProvidersData } =
+    useCareProviders(debouncedSearchText, rating);
+  const {
+    data: AllSavedCareProviders,
+    isLoading: isLoadingAllSavedCareProvider,
+  } = useAllSavedCareProviders(debouncedSearchText, rating);
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -315,16 +317,22 @@ const CareProviderDashboard: React.FC = () => {
 
         <div>
           {activeTab === "all" ? (
-            <TanDataTable<dataTypes>
-              columns={columns ?? []}
-              data={CareProvidersData ?? []}
-              showCheckbox={false}
-              onRowSelect={handleRowSelect}
-              className="my-custom-class"
-            />
+            isLoadingCareProvidersData ? (
+              <TableSkeletonLoader />
+            ) : (
+              <TanDataTable<dataTypes>
+                columns={columns}
+                data={CareProvidersData ?? []}
+                showCheckbox={false}
+                onRowSelect={handleRowSelect}
+                className="my-custom-class"
+              />
+            )
+          ) : isLoadingAllSavedCareProvider ? (
+            <TableSkeletonLoader />
           ) : (
             <TanDataTable<dataTypes>
-              columns={columns ?? []}
+              columns={columns}
               data={AllSavedCareProviders ?? []}
               showCheckbox={false}
               onRowSelect={handleRowSelect}

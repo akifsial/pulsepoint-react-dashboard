@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import InputField from "../../../InputField";
 import DragMedia from "../DragMedia";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { ApiCreateCommunity, ApiCreatePostCommunity } from "@src/api/ApiCommunityForum";
+import {
+  ApiCreateCommunity,
+  ApiCreatePostCommunity,
+} from "@src/api/ApiCommunityForum";
 import { useForm } from "react-hook-form";
+import Spinner from "@components/Loaders/Spinner";
 
 const CreatePost = ({ setIsOpen }) => {
   const [imageFile, setImageFile] = useState(null);
@@ -15,18 +19,16 @@ const CreatePost = ({ setIsOpen }) => {
     formState: { errors },
   } = useForm();
 
-  const {
-    mutateAsync: CreatePostMutation,
-    isPending: creatPostIsPending,
-  } = useMutation({
-    mutationFn: (data) => ApiCreatePostCommunity(data),
-    onSuccess: async () => {
-      toast.success("Post Created Successfully");
-    },
-    onError: () => {
-      toast.error("Something Went Wrong");
-    },
-  });
+  const { mutateAsync: CreatePostMutation, isPending: creatPostIsPending } =
+    useMutation({
+      mutationFn: (data) => ApiCreatePostCommunity(data),
+      onSuccess: async () => {
+        toast.success("Post Created Successfully");
+      },
+      onError: () => {
+        toast.error("Something Went Wrong");
+      },
+    });
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -84,12 +86,23 @@ const CreatePost = ({ setIsOpen }) => {
           onChange={(e) => setImageFile(e.target.files[0] || null)}
         />
 
-
         <button
           type="submit"
-          className="cursor-pointer w-full bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
+          disabled={creatPostIsPending}
+          className={`w-full flex items-center justify-center bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 ${
+            creatPostIsPending
+              ? "opacity-60 cursor-not-allowed"
+              : "hover:bg-[#007AB2]"
+          }`}
         >
-          Add Post in Community
+          {creatPostIsPending ? (
+            <span className="flex items-center gap-2">
+              <Spinner />
+              Creating...
+            </span>
+          ) : (
+            "Add Post in Community"
+          )}
         </button>
       </form>
     </>

@@ -114,7 +114,7 @@ const PopularCommunity = () => {
           onChange={(e) => setSearchCommunity(e.target.value)}
         />
 
-        <div className="bg-white rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
+        <div className="bg-white h-[50vh] overflow-y-auto rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
           <h4 className="mb-1.5">Popular Communities</h4>
 
           {isPending ? <PopularCommunitySkeleton /> : ""}
@@ -195,6 +195,7 @@ const PopularCommunity = () => {
             setSelectedTopicId2={setSelectedTopicId2}
             setSelectedTopicId3={setSelectedTopicId3}
             setSelectedTopicId4={setSelectedTopicId4}
+            isPending={savedCareProvidersPending}
           />
         </Model>
       )}

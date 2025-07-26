@@ -4,9 +4,18 @@ import { PrimaryButton } from "@components/Shared-components/Buttons/Common-butt
 import { useMutation } from "@tanstack/react-query";
 import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
+import Spinner from "@components/Loaders/Spinner";
 
-const Community3 = ({ onBack, onClose, handleCommunityCreate, setSelectedTopicId1, setSelectedTopicId2, setSelectedTopicId3,setSelectedTopicId4 }) => {
-
+const Community3 = ({
+  onBack,
+  onClose,
+  handleCommunityCreate,
+  setSelectedTopicId1,
+  setSelectedTopicId2,
+  setSelectedTopicId3,
+  setSelectedTopicId4,
+  isPending,
+}) => {
   return (
     <>
       <div className="text-center max-w-[496px] mx-auto mb-2.5 font-normal text-base">
@@ -23,7 +32,11 @@ const Community3 = ({ onBack, onClose, handleCommunityCreate, setSelectedTopicId
           text1={"Anime & Manga"}
           text2={"Cosplay"}
           text3={"Misinformation"}
-          options={[{ text: "Anime & Manga", id: 1 }, { text: "Cosplay", id: 2 }, { text: "Misinformation", id: 3 }]}
+          options={[
+            { text: "Anime & Manga", id: 1 },
+            { text: "Cosplay", id: 2 },
+            { text: "Misinformation", id: 3 },
+          ]}
           setSelectedTopicId={setSelectedTopicId1}
         />
         <CommunityTopics
@@ -31,9 +44,12 @@ const Community3 = ({ onBack, onClose, handleCommunityCreate, setSelectedTopicId
           text1={"Architecture"}
           text2={"Design"}
           text3={"Art"}
-          options={[{ text: "Architecture", id: 4 }, { text: "Design", id: 5 }, { text: "Art", id: 6 }]}
+          options={[
+            { text: "Architecture", id: 4 },
+            { text: "Design", id: 5 },
+            { text: "Art", id: 6 },
+          ]}
           setSelectedTopicId={setSelectedTopicId2}
-
         />
         <CommunityTopics
           title={"💵Business & Finance"}
@@ -42,16 +58,23 @@ const Community3 = ({ onBack, onClose, handleCommunityCreate, setSelectedTopicId
           text3={"Misinformation"}
           text4={"Off-topic or irrelevent"}
           text5={"Hate speech or abusive content"}
-          options={[{ text: "Spam or advertising", id: 7 }, { text: "Harassment or bullying", id: 8 }, { text: "Misinformation", id: 9 }]}
+          options={[
+            { text: "Spam or advertising", id: 7 },
+            { text: "Harassment or bullying", id: 8 },
+            { text: "Misinformation", id: 9 },
+          ]}
           setSelectedTopicId={setSelectedTopicId3}
-
         />
         <CommunityTopics
           title={"🧑‍🎨History"}
           text1={"Architecture"}
           text2={"Design"}
           text3={"Art"}
-          options={[{ text: "Architecture", id: 10 }, { text: "Design", id: 11 }, { text: "Art", id: 12 }]}
+          options={[
+            { text: "Architecture", id: 10 },
+            { text: "Design", id: 11 },
+            { text: "Art", id: 12 },
+          ]}
           setSelectedTopicId={setSelectedTopicId4}
         />
       </div>
@@ -64,10 +87,19 @@ const Community3 = ({ onBack, onClose, handleCommunityCreate, setSelectedTopicId
           btnClass="flex items-center justify-center h-[46px] w-[192px] cursor-pointer w-48 bg-[#E4E4E4] border border-[#AFAFAF] text-[#252525] py-[13px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
         />
         <PrimaryButton
-          btnText=" Create Community"
+          btnText={
+            isPending ? (
+              <span className="flex items-center gap-2">
+                <Spinner />
+              </span>
+            ) : (
+              "Create Community"
+            )
+          }
           showImg={false}
           btnClass="flex items-center justify-center h-[46px] cursor-pointer w-[192px] bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
           onClick={handleCommunityCreate}
+          disabled={isPending}
         />
       </div>
     </>

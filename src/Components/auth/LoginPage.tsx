@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // For navigation
+import { data, Link } from "react-router-dom"; // For navigation
 import InputField from "../InputField";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
@@ -43,9 +43,14 @@ const LoginPage = () => {
     {
       mutationFn: ({ data }) => ApiLogin(data),
 
-      onSuccess: async () => {
+      onSuccess: async (response) => {
+        console.log("NUTELA", response.user.role_type);
         toast.success("Login Successful");
-        navigate("/patient/dashboard");
+        if (response?.user?.role_type == "PATIENT") {
+          navigate("/patient/dashboard");
+        } else {
+          navigate("/care-provider");
+        }
       },
       onError: (error) => {
         toast.error("Login Failed");

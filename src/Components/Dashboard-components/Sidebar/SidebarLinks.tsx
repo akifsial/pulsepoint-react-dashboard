@@ -15,13 +15,13 @@ import pactive from "@assets/media/svgs/patient-active.svg";
 import reports from "@assets/media/svgs/reports.svg";
 import ractive from "@assets/media/svgs/reports-active.svg";
 import provideIcon from "@assets/media/svgs/provide.svg";
-import provideactive from "@assets/media/svgs/provide-active.svg"
-import profile from "@assets/media/svgs/dashboard-svgs/profile.svg"
-import profileActive from "@assets/media/svgs/dashboard-svgs/profileActive.svg"
-import manage from "@assets/media/svgs/dashboard-svgs/manage.svg"
-import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg"
-import feature from "@assets/media/svgs/dashboard-svgs/feature.svg"
-import featureActive from "@assets/media/svgs/dashboard-svgs/featureActive.svg"
+import provideactive from "@assets/media/svgs/provide-active.svg";
+import profile from "@assets/media/svgs/dashboard-svgs/profile.svg";
+import profileActive from "@assets/media/svgs/dashboard-svgs/profileActive.svg";
+import manage from "@assets/media/svgs/dashboard-svgs/manage.svg";
+import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg";
+import feature from "@assets/media/svgs/dashboard-svgs/feature.svg";
+import featureActive from "@assets/media/svgs/dashboard-svgs/featureActive.svg";
 
 import type { ReactNode } from "react";
 
@@ -86,7 +86,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
       active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
-   {
+  {
     label: "Care Providers",
     path: "/patient/care-provider",
     icon: {
@@ -113,6 +113,16 @@ export const PatientSidebarLinks: SidebarLink[] = [
       active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
+
+  {
+    label: "Communities",
+    path: "/patient/communities",
+    icon: {
+      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
 ];
 export const AdminSidebarLinks: SidebarLink[] = [
   {
@@ -124,7 +134,7 @@ export const AdminSidebarLinks: SidebarLink[] = [
       active: <img src={dashboardActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
-   {
+  {
     label: "Patients Management",
     path: "/admin/patients-management",
     icon: {
@@ -136,7 +146,7 @@ export const AdminSidebarLinks: SidebarLink[] = [
     label: "Care Providers Control",
     path: "/admin/care-providers",
     icon: {
-       default: <img src={provideIcon} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={provideIcon} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={provideactive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
@@ -186,7 +196,8 @@ export const ProfileSidebarLinks: SidebarLink[] = [
       default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
-    },},
+    },
+  },
   {
     label: "Add Features",
     path: "/admin/feature",
@@ -196,7 +207,6 @@ export const ProfileSidebarLinks: SidebarLink[] = [
       active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
-  
 ];
 export const CareProfileSidebarLinks: SidebarLink[] = [
   {
@@ -215,7 +225,8 @@ export const CareProfileSidebarLinks: SidebarLink[] = [
       default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
-    },},
+    },
+  },
   {
     label: "Get Featured",
     path: "/care-provider/feature",
@@ -225,7 +236,6 @@ export const CareProfileSidebarLinks: SidebarLink[] = [
       active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
-  
 ];
 export const PatientProfileSidebarLinks: SidebarLink[] = [
   {
@@ -244,7 +254,8 @@ export const PatientProfileSidebarLinks: SidebarLink[] = [
       default: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={manage} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={manageActive} alt="Dashboard" className="w-5 h-5" />,
-    },},
+    },
+  },
   {
     label: "Get Featured",
     path: "/patient/feature",
@@ -254,5 +265,4 @@ export const PatientProfileSidebarLinks: SidebarLink[] = [
       active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
-  
 ];

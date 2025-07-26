@@ -4,7 +4,7 @@ import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
 import { PatientSidebarLinks } from "@components/Dashboard-components/Sidebar/SidebarLinks";
 import ChatbotSidebar from "@components/ChatbotSidebar";
 import ChatbotAi from "@components/ChatbotAi";
-import NursingHomeReview from "@components/NursingHomeReview"; 
+import NursingHomeReview from "@components/NursingHomeReview";
 
 // Chatbot-specific links
 const chatbotSidebarLinks = [
@@ -17,6 +17,9 @@ const chatbotSidebarLinks = [
 const ChatbotLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("");
+  const [selectedConversationId, setSelectedConversationId] = useState();
+
+  console.log("OPOPOP", selectedConversationId);
 
   // Function to handle tab clicks
   const handleTabClick = (tab: string) => {
@@ -37,7 +40,8 @@ const ChatbotLayout = () => {
         sidebarData={chatbotSidebarLinks}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-        onTabClick={handleTabClick} 
+        onTabClick={handleTabClick}
+        setSelectedConversationId={setSelectedConversationId}
       />
 
       {/* Main Content Area */}
@@ -60,9 +64,9 @@ const ChatbotLayout = () => {
           ) : activeTab === "How are facilities rated?" ? (
             <div>Facility Rating Content</div>
           ) : activeTab === "Our AI Healthcare Guide" ? (
-            <div>AI Healthcare Guide Content</div> 
+            <div>AI Healthcare Guide Content</div>
           ) : (
-            <ChatbotAi /> 
+            <ChatbotAi selectedConversationId={selectedConversationId} />
           )}
         </main>
       </div>

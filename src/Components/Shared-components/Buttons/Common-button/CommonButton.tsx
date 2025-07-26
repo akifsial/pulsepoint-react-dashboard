@@ -21,45 +21,52 @@ export const PrimaryButton: React.FC<ExtendedBtnProps> = ({
   linkTo,
   imgPosition = "left",
   disabled = false,
-  type = ""
+  type = "",
 }) => {
-  const prefixImage = showImg && img ? (
-    <img src={img} className={imgClass} alt={imgalt} />
-  ) : null;
+  const prefixImage =
+    showImg && img ? <img src={img} className={imgClass} alt={imgalt} /> : null;
 
   const suffixImage = suffixImg ? (
     <img src={suffixImg} className={suffixImgClass} alt={suffixImgAlt} />
   ) : null;
 
-  const textElement = <span className={btnTextClass}>{btnText}</span>;
- 
-const content = (
-  <div className="flex items-center gap-x-1.5 justify-center">
-    {imgPosition === "left" && prefixImage}
-    {textElement}
-    {imgPosition === "right" && prefixImage}
-    {suffixImage}
-  </div>
-);
+  const textElement = (
+    <span className={btnTextClass}>
+      {typeof btnText === "string" ? btnText : <>{btnText}</>}
+    </span>
+  );
 
- 
+  const content = (
+    <div className="flex items-center gap-x-1.5 justify-center">
+      {imgPosition === "left" && prefixImage}
+      {textElement}
+      {imgPosition === "right" && prefixImage}
+      {suffixImage}
+    </div>
+  );
+
   if (linkTo) {
     return (
       <Link
         to={linkTo}
-        className={`rounded-[20px] cursor-pointer ${disabled ? "opacity-50 pointer-events-none" : ""} ${btnClass}`}
+        className={`rounded-[20px] cursor-pointer ${
+          disabled ? "opacity-50 pointer-events-none" : ""
+        } ${btnClass}`}
       >
         {content}
       </Link>
     );
   }
- 
+
   return (
     <button
-      className={`rounded-[20px] cursor-pointer h-[36px] ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${btnClass}`}
+      className={`rounded-[20px] cursor-pointer !p-0 h-[36px] ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      } ${btnClass}`}
       onClick={onClick}
       disabled={disabled}
       type={type}
+      value={btnText}
     >
       {content}
     </button>

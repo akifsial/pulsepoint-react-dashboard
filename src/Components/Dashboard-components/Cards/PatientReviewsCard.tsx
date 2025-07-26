@@ -1,20 +1,15 @@
 import React, { useState } from "react";
-// import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import userImage from "@assets/media/svgs/dashboard-svgs/userImage.svg";
 import userReview from "@assets/media/svgs/dashboard-svgs/userReview.svg";
 import flag from "@assets/media/svgs/dashboard-svgs/flag2.svg";
-import RatingStars from "@components/Shared-components/RatingStars";
 import { useApiMyReviews } from "@src/hooks/useMyReviews";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiFlagReview } from "@src/api/ApiMyReviews";
-import { Flag, Send } from "lucide-react";
-import FlagModal from "@components/Model/FlagModal";
+import { Flag, Star } from "lucide-react";
 import { ApiReplyOnReview } from "@src/api/ApiCommunityForum";
-import InputField from "@components/InputField";
-import PrimaryInput from "@components/PrimaryInput";
 import { useForm } from "react-hook-form";
-import { PrimaryButton } from "@components/Buttons/PrimaryButton";
+import dummyImage from "@assets/media/images/dashboard-images/userDummy.png"
 
 interface PatientReviewsCardProps {
   filterValue: string;
@@ -65,7 +60,8 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
   const [flagModalOpen, setFlagModalOpen] = useState(true);
   const [reviewReplyValue, setReviewReplyValue] = useState("");
 
-  const { data } = useApiMyReviews("","",filterValue);
+  const { data } = useApiMyReviews("", "", filterValue);
+
 
   const queryClient = useQueryClient();
 
@@ -113,6 +109,32 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
     await ReviewReplyMutation(data);
   };
 
+  function StarRating({
+    rating,
+    className = "",
+    avg_rating,
+  }: {
+    rating: number;
+    className?: string;
+  }) {
+    return (
+      <div className={`flex items-center gap-1 ${className}`.trim()}>
+        {[1, 2, 3, 4, 5].map((star) => {
+          return (
+            <Star
+              key={star}
+              className={`h-4 w-4 ${
+                star <= rating
+                  ? "text-yellow-400 fill-yellow-400"
+                  : "text-gray-300 fill-gray-300"
+              }`}
+            />
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <>
       {data?.map((item, index) => (
@@ -120,9 +142,9 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-[10px] text-[#252525] text-[16px]">
               <img
-                src={`${import.meta.env.VITE_APP_API_IMG_URL}${
+                src={ item?.patient?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${
                   item?.patient?.image
-                }`}
+                } ` : dummyImage  }
                 alt="User"
                 className="w-[50px] h-[50px] object-cover rounded-full"
               />
@@ -133,25 +155,29 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
               <span className="text-[13px]">{item.userHour}</span>
             </div>
 
-              <div
-                onClick={() =>
-                  handleFlagReview(item?.feedback?.id, item?.review_flag)
-                }
-                className="border  border-[#D3D3D3] rounded-[10px] px-[7px] py-[9.5px] flex items-center gap-2"
-              >
-                {item?.review_flag.length > 0 ? (
-                  <img src={flag} alt="flag" className="w-[24px] h-[24px]" />
-                ) : (
-                  <Flag />
-                )}
-                <p className="text-[16px] text-[#252525]">{item.flagged}</p>
-              </div>
+            <div
+              onClick={() =>
+                handleFlagReview(item?.feedback?.id, item?.review_flag)
+              }
+              className="border  border-[#D3D3D3] rounded-[10px] px-[7px] py-[9.5px] flex items-center gap-2"
+            >
+              {item?.review_flag.length > 0 ? (
+                <img src={flag} alt="flag" className="w-[24px] h-[24px]" />
+              ) : (
+                <Flag />
+              )}
+              <p className="text-[16px] text-[#252525]">{item.flagged}</p>
+            </div>
           </div>
           {/* <FlagModal onDelete={()=>handleFlagReview(item?.feedback?.id,item?.review_flag)} isOpen={true} /> */}
 
           <div className="flex items-center gap-0.5 mb-2">
-            <RatingStars value={item.review} isDisabled={true} />
-            <p className="text-[16px] text-[#252525]">({item.rating})</p>
+            {/* <RatingStars value={item.review} isDisabled={true} />xxx */}
+            <StarRating
+              rating={item?.rating}
+              // avg_rating={data?.ratingData?.avg_rating}
+            />
+            <p className="text-[16px] text-[#252525]"> ({item.rating})</p>
           </div>
 
           <p className="text-[16px] text-[#252525] mb-4">“{item.content}”</p>
@@ -173,30 +199,31 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
             className="flex items-center gap-4 px-4 py-2.5 rounded-[5px]"
             style={item.comment ? { backgroundColor: "#EEF2F5" } : {}}
           >
-            <img
+            {/* <img
               src={`${import.meta.env.VITE_APP_API_IMG_URL}${
                 item.care_provider.image
               }`}
               alt=""
               className="w-[43px] h-[43px] object-cover rounded-full"
-            />
+            /> */}
 
             {item.comment ? (
               <p>{item.comment}</p>
             ) : (
-              <div className="relative w-full">
-                <input
-                  placeholder="Add a reply"
-                  value={reviewReplyValue}
-                  className="w-full border border-[#D3D3D3] bg-white outline-0 border-[1px] rounded-[5px] !p-2.5  text-sm"
-                  onChange={(e) => setReviewReplyValue(e.target.value)}
-                />
-                <div className="absolute top-[20%] cursor right-2">
-                  <button onClick={() => handleReviewReply(item?.feedback?.id)}>
-                    <Send />
-                  </button>
-                </div>
-              </div>
+              // <div className="relative w-full">
+              //   <input
+              //     placeholder="Add a reply"
+              //     value={reviewReplyValue}
+              //     className="w-full border border-[#D3D3D3] bg-white outline-0 border-[1px] rounded-[5px] !p-2.5  text-sm"
+              //     onChange={(e) => setReviewReplyValue(e.target.value)}
+              //   />
+              //   <div className="absolute top-[20%] cursor right-2">
+              //     <button onClick={() => handleReviewReply(item?.feedback?.id)}>
+              //       <Send />
+              //     </button>
+              //   </div>
+              // </div>
+              ""
             )}
           </div>
         </div>

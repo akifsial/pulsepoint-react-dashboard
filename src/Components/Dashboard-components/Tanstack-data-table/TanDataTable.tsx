@@ -9,6 +9,8 @@ import {
   SortingState,
 } from "@tanstack/react-table";
 
+import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+
 import { TanDataTableProps } from "./types";
 
 const TanDataTable = <T extends object>({
@@ -18,6 +20,7 @@ const TanDataTable = <T extends object>({
   onRowSelect = () => {},
   actions = () => null,
   showActions = false,
+  isLoading = false,
 
   className = "",
 }: TanDataTableProps<T>) => {
@@ -74,6 +77,14 @@ const TanDataTable = <T extends object>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
+
+  {
+    isLoading ? (
+      <TableSkeletonLoader />
+    ) : (
+      <TanDataTable data={data} columns={columns} />
+    );
+  }
 
   return (
     <div

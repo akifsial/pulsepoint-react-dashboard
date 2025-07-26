@@ -52,7 +52,7 @@ const HospitalProfile = () => {
               img={PlusIcon}
               imgClass="w-[19px] h-[19px]"
               imgPosition="left"
-              btnClass="flex sm:w-fit w-full items-center justify-center gap-[4px] h-[36px] px-4 rounded-md bg-[#252525] text-white text-sm font-semibold"
+              btnClass="flex sm:w-fit w-full items-center justify-center gap-[4px] h-[36px] !px-4 rounded-md bg-[#252525] text-white text-sm font-semibold"
               onClick={() => setFeedbackOpen(true)}
             />
           </header>

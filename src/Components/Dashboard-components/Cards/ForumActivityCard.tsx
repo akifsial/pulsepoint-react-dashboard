@@ -32,13 +32,13 @@ const ForumActivityCard: React.FC = () => {
           alt="User"
           className="w-[43px] h-[43px] object-cover rounded-full"
         />
-        <div className="flex-1">
+        {/* <div className="flex-1">
           <input
             type="text"
             placeholder="Add a reply"
             className="border border-[#D3D3D3] rounded-[5px] w-full py-2 px-3 outline-none focus-none"
           />
-        </div>
+        </div> */}
       </div>
       <PrimaryButton
                   btnText="View Discussion"

@@ -31,6 +31,7 @@ import ActiveInactiveModal from "@src/components/Model/ActiveInactiveModal";
 import toast from "react-hot-toast";
 // Import or define your Modal component
 import { X } from "lucide-react";
+import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
@@ -70,10 +71,11 @@ const AdminDashboard: React.FC = () => {
   const [rating, setRating] = useState();
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
 
+
   // Apis
   const { data: StatsData } = useStatsApi();
   // const { data: CareProvidersData } = useCareProviders();
-  const { data: CareProvidersData, isFetching } = useCareProviders(
+  const { data: CareProvidersData, isFetching, isLoading:isLoadingCareProviderData } = useCareProviders(
     debouncedSearchText,
     rating
   );
@@ -301,7 +303,7 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const { mutateAsync: updateStatusMutation, isLoading: updateStatusPending } =
+  const { mutateAsync: updateStatusMutation, isPending: updateStatusPending } =
     useMutation({
       mutationFn: ({ data }) =>
         ApiCareProviderStatusUpdate(data, selectedRowId),
@@ -481,7 +483,7 @@ const AdminDashboard: React.FC = () => {
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="right"
-                  btnClass="border border-[#252525] px-4 rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border border-[#252525] !px-2.5 rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
                 <button
@@ -517,28 +519,17 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         <div>
-          <TanDataTable<dataTypes>
-            columns={columns ?? []}
-            data={CareProvidersData ?? []}
-            showCheckbox={false}
-            onRowSelect={handleRowSelect}
-            showActions={true}
-            className="my-custom-class"
-            actions={(row) => (
-              <DropdownActions
-                // onView={() => console.log("View", row.id)}
-                onEdit={() => {
-                  setIsEditModalOpen(true);
-                  setSelectedRowId(row.id);
-                }}
-                // onDelete={() => console.log("Delete", row.id)}
-                onDelete={() => {
-                  setSelectedRowId(row.id);
-                  setIsDeleteModalOpen(true);
-                }}
-              />
-            )}
-          />
+          {isLoadingCareProviderData ? (
+            <TableSkeletonLoader />
+          ) : (
+            <TanDataTable<dataTypes>
+              columns={columns ?? []}
+              data={CareProvidersData ?? []}
+              showCheckbox={false}
+              onRowSelect={handleRowSelect}
+              className="my-custom-class"
+            />
+          )}
 
           <DeleteModal
             isOpen={isDeleteModalOpen}

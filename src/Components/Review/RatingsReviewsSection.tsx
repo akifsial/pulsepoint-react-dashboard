@@ -135,65 +135,6 @@ export default function RatingsReviewsSection({
   id,
 }: RatingsReviewsSectionProps) {
   // Sample data if no reviews provided
-  const sampleReviews: Review[] = [
-    {
-      id: 1,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date(),
-    },
-    {
-      id: 2,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date(),
-    },
-    {
-      id: 3,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date(),
-    },
-    {
-      id: 4,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date(),
-    },
-    {
-      id: 5,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date(),
-    },
-    {
-      id: 6,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date(),
-    },
-  ];
-
-  const displayReviews = reviews.length > 0 ? reviews : sampleReviews;
-
   const { data } = useCareProviderSingle(id);
 
   return (

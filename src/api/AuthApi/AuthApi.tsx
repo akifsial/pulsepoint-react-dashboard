@@ -11,13 +11,28 @@ export const ApiLogin = async (data) => {
       "token",
       JSON.stringify(response?.data?.payload?.accessToken)
     );
+
+    console.log("reererer", response);
+
+    // if(response.status==200){
+    //   console.log(")))))))))))))))))))))))))")
+    // }
+
+    // if (response.status == 200) {
+    //   if (response.data.payload.user.role_type == "PATIENT") {
+    //     navigate("/patient/dashboard");
+    //   }else{
+    //     navigate("/care-provider")
+    //   }
+    // }
+
     localStorage.setItem(
       "userInfo",
       JSON.stringify(response?.data?.payload?.user)
     );
-    return response.data.payload.records;
+    return response.data.payload;
   } catch (error) {
-    throw new error();
+    throw error;
   }
 };
 
@@ -90,7 +105,7 @@ export const ApiChangePassword = async (data) => {
 
   try {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/change-password`;
-    const token=JSON.parse(localStorage.getItem("token"))
+    const token = JSON.parse(localStorage.getItem("token"));
     const response = await axios.post(BASE_URL, data, {
       headers: {
         Authorization: `Bearer ${token}`,

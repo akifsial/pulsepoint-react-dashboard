@@ -13,4 +13,5 @@ export type TanDataTableProps<T> = {
   actions?: (row: T) => React.ReactNode;
   showActions?: boolean;
   className?: string;
+  isLoading?: false;
 };

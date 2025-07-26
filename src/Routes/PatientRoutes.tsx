@@ -10,22 +10,25 @@ import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 import NursingHomeReviews from "@components/NursingHomeReview";
 import EditFeedbackForm from "@pages/PatientPages/EditFeedbackForm";
+import PatientAllCommunities from "@pages/PatientPages/PatientAllCommunities";
 export const PatientRoutes = [
   {
-    path: "/patient", 
+    path: "/patient",
     element: <PatientLayout />,
     children: [
       { path: "dashboard", element: <AdminDashboard /> },
-      { path: "care-provider", element: <AdminCareProvider/> },
+      { path: "care-provider", element: <AdminCareProvider /> },
       { path: "patient-reviews", element: <AdminPatientReviews /> },
       // { path: "patient-reviews/edit", element: <EditReviewPage /> }, // Add this line
       { path: "patient-feedback/edit/:id", element: <EditFeedbackForm /> }, // Add this line
 
       { path: "community-forum", element: <AdminCommunityForum /> },
+      { path: "communities", element: <PatientAllCommunities /> },
+
       { path: "hospital-profile/:id", element: <HospitalProfile /> },
       { path: "notification", element: <NotificationPage /> },
-       { path: "chatbot", element: <ChatbotLayout /> },
-       { path: "nursing-home", element: <NursingHomeReviews /> },
+      { path: "chatbot", element: <ChatbotLayout /> },
+      { path: "nursing-home", element: <NursingHomeReviews /> },
     ],
   },
 ];

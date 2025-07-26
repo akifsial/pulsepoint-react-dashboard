@@ -15,6 +15,7 @@ import FlagPost from "./FlagPost";
 import SubmitReport from "./SubmitReport";
 import ShareModal from "@components/ShareModal";
 import {
+  ApieSaveCreatePost,
   ApiLikeComment,
   ApiLikePost,
   ApiParentCommentReply,
@@ -234,7 +235,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
 
     onSuccess: async () => {
       queryClient.invalidateQueries(["useGetCommunityPost"]);
-      toast.success("Liked Successfully");
+      // toast.success("Liked Successfully");
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
@@ -369,11 +370,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
     },
   });
 
-  const handleParentCommentReply = async (
-    postId,
-    parentCommentId,
-    id
-  ) => {
+  const handleParentCommentReply = async (postId, parentCommentId, id) => {
     console.log("X_________X", id);
     if (id) {
       setReplyId(id);
@@ -422,7 +419,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
 
     onSuccess: async () => {
       queryClient.invalidateQueries(["useGetCommunityPost"]);
-      toast.success("Liked Successfully");
+      // toast.success("Liked Successfully");
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
@@ -447,8 +444,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
     //     const alreadyDislike = comment?.comment_likes.some(
     //   (item) => item.user_id == myId?.id
     // );
-
-    console.log("yessssssssssssssssss already liked", alreadyLiked);
 
     if (status === "like") {
       if (alreadyLiked[0]?.is_like) {
@@ -481,13 +476,37 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
 
   // MAIN CODE____________________________________
 
+  const { mutateAsync: savePostMutation, isPending: isLoadingSavePost } =
+    useMutation({
+      mutationFn: (data) => ApieSaveCreatePost(data),
+
+      onSuccess: async () => {
+        toast.success("Post Saved Successfully");
+        queryClient.invalidateQueries(["useGetCommunityPost"]);
+
+        setComment("");
+      },
+      onError: (error) => {
+        toast.error("Something Went Wrong");
+      },
+    });
+
+  const handleSavePost = async (postId) => {
+    const data = {
+      post_id: postId,
+    };
+    await savePostMutation(data);
+  };
+
   return (
     <div
       className=" h-[661px] overflow-y-auto transition-colors duration-300"
       style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
     >
       {PostsPending ? <FeedSkeleton /> : ""}
-      {postData?.records?.map((post, index) => (
+      {
+      postData?.records?.length==0 ? <div className="flex justify-center h-full mt-[50px]"><h2>Nothing here yet!</h2></div> : 
+      postData?.records?.map((post, index) => (
         <div key={index} className="post mb-6 relative last:m-0">
           <div className="post_content bg-white rounded-[10px] p-4 relative">
             <div className="flex justify-between items-center mb-5">
@@ -908,7 +927,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
                                         className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center"
                                       >
                                         <img src={commentIcon} alt="Comments" />
-                                        {post?.comment_count}xxxxxxxxxxxxxx
+                                        {post?.comment_count}
                                       </button>
                                     </div>
                                     {replyId == commentReply?.id ? (
@@ -1009,15 +1028,21 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
                 </button>
 
                 <button
-                  onClick={() => alert(`Saved post: ${post.title}`)}
+                  onClick={() => handleSavePost(post.id)}
                   className="group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
                 >
-                  <span className="inline-block group-hover:hidden">
-                    <img src={Save} alt="Save" />
-                  </span>
-                  <span className="hidden group-hover:inline-block">
-                    <img src={SaveBlue} alt="SaveBlue" />
-                  </span>
+                  {post?.savedPostUser==null ? (
+                    <span className="inline-block ">
+                      <img src={Save} alt="Save" />
+                    </span>
+                  ) : (
+                    <span className="">
+                      <img src={SaveBlue} alt="SaveBlue" />
+                    </span>
+                  )}
+                  {/* <span className="hidden group-hover:inline-block">
+                      <img src={SaveBlue} alt="SaveBlue" />
+                    </span> */}
                   Save Post
                 </button>
               </div>

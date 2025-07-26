@@ -5,7 +5,9 @@ export const ApiMyReviews = async (
   rating: number,
   filterValue
 ) => {
-  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?organization_name=${search}`;
+  let BASE_URL = `${
+    import.meta.env.VITE_APP_API_URL
+  }feedback?organization_name=${search}`;
 
   if (rating) {
     BASE_URL += `&rating=${rating}`;

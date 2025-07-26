@@ -64,7 +64,7 @@ const PatientProfile = ({ onChangePassword }) => {
   });
 
   const profileSubmit = async (data) => {
-    console.log("**********************",typeof(data.name))
+    console.log("**********************", typeof data.name);
     const formData = new FormData();
     formData.append("image", selectedImage);
     formData.append("name", data.name);
@@ -100,8 +100,7 @@ const PatientProfile = ({ onChangePassword }) => {
     }
   }, [meData, setValue]);
 
-
-  console.log("ssssss",singleUser?.image)
+  console.log("ssssss", singleUser?.image);
 
   return (
     <>
@@ -116,14 +115,16 @@ const PatientProfile = ({ onChangePassword }) => {
                     src={
                       selectedImage
                         ? URL.createObjectURL(selectedImage)
-                        : `${import.meta.env.VITE_APP_API_IMG_URL}${
-                            singleUser?.image
+                        : singleUser?.image
+                        ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                            singleUser.image
                           }`
+                        : fallbackImg
                     }
-                    // onError={(e) => {
-                    //   e.currentTarget.onerror = null; // Prevent infinite loop
-                    //   e.currentTarget.src = fallbackImg; // Set fallback image
-                    // }}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null; // Prevent infinite loop
+                      e.currentTarget.src = fallbackImg;
+                    }}
                     alt="Profile"
                     className="w-20 h-20 rounded-[15px] object-cover"
                     style={{ border: "1px solid rgba(0,0,0,10%)" }}
@@ -148,9 +149,11 @@ const PatientProfile = ({ onChangePassword }) => {
                   <h4 className="font-bold mb-1 text-[#252525] text-xl leading-tight">
                     {meData?.first_name} {meData?.last_name}
                   </h4>
-                  <span className="text-base font-medium text-[#181D27]/50 leading-tight">
-                    ({meData?.specialization})
-                  </span>
+                  {meData?.specialization && (
+                    <span className="text-base font-medium text-[#181D27]/50 leading-tight">
+                      ({meData.specialization})
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="flex gap-5">
@@ -161,7 +164,9 @@ const PatientProfile = ({ onChangePassword }) => {
                   Change Photo
                 </label>
                 <PrimaryButton
-                  btnText={`${updatePatientProfileLoader ? "Loading..." : "Save Changes"}`}
+                  btnText={`${
+                    updatePatientProfileLoader ? "Loading..." : "Save Changes"
+                  }`}
                   showImg={false}
                   btnClass=" w-[159px] h-[46px] !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
                   type="submit"
