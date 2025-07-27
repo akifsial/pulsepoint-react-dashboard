@@ -43,7 +43,7 @@ const SelectCommonBox: React.FC<SelectCommonBoxProps> = ({
           disabled={disabled}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`w-full appearance-none pr-10 pl-3 py-2 border rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent ${selectClassName} ${disabled ? "bg-gray-100 cursor-not-allowed" : ""}`}
+          className={`w-full cursor-pointer appearance-none pr-10 pl-3 py-2 border rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent ${selectClassName} ${disabled ? "bg-gray-100 cursor-not-allowed" : ""}`}
         >
           <option value="" disabled hidden>
             {placeholder}

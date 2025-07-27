@@ -19,7 +19,6 @@ const ChatbotLayout = () => {
   const [activeTab, setActiveTab] = useState("");
   const [selectedConversationId, setSelectedConversationId] = useState();
 
-  console.log("OPOPOP", selectedConversationId);
 
   // Function to handle tab clicks
   const handleTabClick = (tab: string) => {
@@ -66,7 +65,7 @@ const ChatbotLayout = () => {
           ) : activeTab === "Our AI Healthcare Guide" ? (
             <div>AI Healthcare Guide Content</div>
           ) : (
-            <ChatbotAi selectedConversationId={selectedConversationId} />
+            <ChatbotAi selectedConversationId={selectedConversationId} setSelectedConversationId={setSelectedConversationId} />
           )}
         </main>
       </div>

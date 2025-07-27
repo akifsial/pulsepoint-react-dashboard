@@ -1,5 +1,5 @@
 import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
-import React from "react";
+import React, { useEffect } from "react";
 import contacts from "@assets/media/svgs/dashboard-svgs/contacts.svg";
 import stars from "@assets/media/svgs/dashboard-svgs/stars.svg";
 import flags from "@assets/media/svgs/dashboard-svgs/flag.svg";
@@ -17,6 +17,29 @@ import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActiv
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowRatingDropdown(false);
+      }
+    };
+
+    if (showRatingDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showRatingDropdown]);
+
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -33,27 +56,26 @@ const CareProviderDashboard: React.FC = () => {
       accessor: "userData",
       header: "Patient’s Name",
       showSort: true,
-   cell: ({ row }: any) => {
-  const { first_name, last_name, email, image } = row.original;
-  return (
-    <div className="flex items-center gap-3">
-      <img
-        src={dummyImage}
-        alt={`${first_name} ${last_name}`}
-        className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
-      />
-      <div className="flex flex-col">
-        <span className="font-medium text-sm text-[#252525] leading-tight">
-          {first_name} {last_name}
-        </span>
-        <span className="text-xs text-gray-500 leading-tight">
-          {email}
-        </span>
-      </div>
-    </div>
-  );
-}
-
+      cell: ({ row }: any) => {
+        const { first_name, last_name, email, image } = row.original;
+        return (
+          <div className="flex items-center gap-3">
+            <img
+              src={dummyImage}
+              alt={`${first_name} ${last_name}`}
+              className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
+            />
+            <div className="flex flex-col">
+              <span className="font-medium text-sm text-[#252525] leading-tight">
+                {first_name} {last_name}
+              </span>
+              <span className="text-xs text-gray-500 leading-tight">
+                {email}
+              </span>
+            </div>
+          </div>
+        );
+      },
     },
     {
       accessor: "date",
@@ -73,48 +95,51 @@ const CareProviderDashboard: React.FC = () => {
     },
   ];
 
- const data: dataTypes[] = [
-  {
-    id: 1,
-    first_name: "Ronald",
-    last_name: "Richards",
-    date: "9/4/12",
-    email: "tim.jennings@example.com",
-    image: "/images/patient1.png",
-    rating: <RatingStars value={5} isDisabled={true} />,
-    reviews: "Staff was caring and responsive, though the wait time could be improved.",
-  },
-  {
-    id: 2,
-    first_name: "Dianne",
-    last_name: "Russell",
-    date: "5/7/16",
-    email: "alma.lawson@example.com",
-    image: "/images/patient1.png",
-    rating: <RatingStars value={4} isDisabled={true} />,
-    reviews: "Excellent support for my mother with dementia. Highly recommended.",
-  },
-  {
-    id: 3,
-    first_name: "Jacob",
-    last_name: "Jones",
-    date: "10/6/13",
-    email: "kenzi.lawson@example.com",
-    image: "/images/patient1.png",
-    rating: <RatingStars value={4} isDisabled={true} />,
-    reviews: "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
-  },
-  {
-    id: 4,
-    first_name: "Devon",
-    last_name: "Lane",
-    date: "2/11/12",
-    email: "dolores.chambers@example.com",
-    image: "/images/patient1.png",
-    rating: <RatingStars value={3} isDisabled={true} />,
-    reviews: "Great amenities and staff. Rooms were spacious and bright.",
-  },
-];
+  const data: dataTypes[] = [
+    {
+      id: 1,
+      first_name: "Ronald",
+      last_name: "Richards",
+      date: "9/4/12",
+      email: "tim.jennings@example.com",
+      image: "/images/patient1.png",
+      rating: <RatingStars value={5} isDisabled={true} />,
+      reviews:
+        "Staff was caring and responsive, though the wait time could be improved.",
+    },
+    {
+      id: 2,
+      first_name: "Dianne",
+      last_name: "Russell",
+      date: "5/7/16",
+      email: "alma.lawson@example.com",
+      image: "/images/patient1.png",
+      rating: <RatingStars value={4} isDisabled={true} />,
+      reviews:
+        "Excellent support for my mother with dementia. Highly recommended.",
+    },
+    {
+      id: 3,
+      first_name: "Jacob",
+      last_name: "Jones",
+      date: "10/6/13",
+      email: "kenzi.lawson@example.com",
+      image: "/images/patient1.png",
+      rating: <RatingStars value={4} isDisabled={true} />,
+      reviews:
+        "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
+    },
+    {
+      id: 4,
+      first_name: "Devon",
+      last_name: "Lane",
+      date: "2/11/12",
+      email: "dolores.chambers@example.com",
+      image: "/images/patient1.png",
+      rating: <RatingStars value={3} isDisabled={true} />,
+      reviews: "Great amenities and staff. Rooms were spacious and bright.",
+    },
+  ];
 
   const handleRowSelect = (row: Person) => {
     console.log("Selected row:", row);
@@ -184,6 +209,7 @@ const CareProviderDashboard: React.FC = () => {
               <AnimatePresence>
                 {showRatingDropdown && (
                   <motion.div
+                    ref={dropdownRef}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
@@ -229,7 +255,6 @@ const CareProviderDashboard: React.FC = () => {
                 img={filterIcon}
                 imgPosition="left"
                 btnClass="border border-[#252525] px-4 md:w-[91px] h-[46px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
-               
               />
             </div>
           </div>

@@ -2,11 +2,11 @@ import React from "react";
 import { v4 as uuid } from "uuid";
 const RatingFilterDropdown: React.FC = ({setRating}) => {
   const dropdownOptions = [
-    { id: uuid, name: "5 Star Rating", value: "5" },
-    { id: uuid, name: "4 Star Rating", value: "4" },
-    { id: uuid, name: "3 Star Rating", value: "3" },
-    { id: uuid, name: "2 Star Rating", value: "2" },
-    { id: uuid, name: "1 Star Rating", value: "1" },
+    { id: uuid(), name: "5 Star Rating", value: "5" },
+    { id: uuid(), name: "4 Star Rating", value: "4" },
+    { id: uuid(), name: "3 Star Rating", value: "3" },
+    { id: uuid(), name: "2 Star Rating", value: "2" },
+    { id: uuid(), name: "1 Star Rating", value: "1" },
   ];
   return (
     <div

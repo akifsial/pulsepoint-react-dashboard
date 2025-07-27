@@ -125,7 +125,7 @@ const DashboardHeader: React.FC<Props> = ({
 
             {isSearchDropdownOpen && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
-                {searchText && (
+                {/* {searchText && (
                   <div className="p-4 border-b border-gray-100">
                     <div className="relative">
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -139,7 +139,7 @@ const DashboardHeader: React.FC<Props> = ({
                       />
                     </div>
                   </div>
-                )}
+                )} */}
                 <div className="py-2 px-[15px]">
                   <div className="flex items-center justify-between mb-0">
                     <h3 className="text-gray-500 font-medium text-sm">
@@ -147,7 +147,7 @@ const DashboardHeader: React.FC<Props> = ({
                     </h3>
                     <button
                       onClick={handleClearRecentSearches}
-                      className="text-gray-500 hover:text-red-500 font-medium text-sm transition-colors"
+                      className="text-gray-500 cursor-pointer hover:text-red-500 font-medium text-sm transition-colors"
                     >
                       Clear
                     </button>

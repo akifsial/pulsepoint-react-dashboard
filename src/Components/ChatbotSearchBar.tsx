@@ -43,7 +43,7 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({
             className="flex-1 outline-none text-gray-700 placeholder-gray-400"
           />
           <button
-            onClick={handleChatPost}
+            onClick={() => handleChatPost()}
             className="text-white cursor-pointer rounded-full mr-0 transition-colors"
           >
             <img

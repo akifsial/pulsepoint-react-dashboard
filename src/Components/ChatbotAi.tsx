@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { PrimaryButton } from "./Shared-components/Buttons/Common-button/CommonButton";
 import ChatbotSearchbar from "./ChatbotSearchBar";
 import ReplyLoader from "./Loaders/ReplyLoader";
@@ -11,21 +11,38 @@ import { ApiChatPost } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import { useGetConversationChatSpecific } from "@src/hooks/useCommunity";
 
-const ChatbotAi: React.FC = ({ selectedConversationId }) => {
+const ChatbotAi: React.FC = ({
+  selectedConversationId,
+  setSelectedConversationId,
+}) => {
   const [question, setQuestion] = useState("");
   const [botAnswers, setBotAnswers] = useState([]);
   const [userAnswer, setUserAnswer] = useState([]);
   const [chatBotData, setChatBotData] = useState([]);
-  const [conversationId, setConversationId] = useState();
-  console.log("conco", conversationId);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setQuestion(""); // Clear input when chat changes
+  }, [selectedConversationId]);
+
+  // const [conversationId, setConversationId] = useState();
+  console.log("conco", selectedConversationId);
   const { data: conversationsData } = useGetConversationChatSpecific(
     selectedConversationId
   );
-  // }
 
+  console.log("SELECT", selectedConversationId);
   const queryClient = useQueryClient();
 
-  console.log("data2222", conversationsData);
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatBotData, conversationsData, selectedConversationId]);
 
   const handleAskAI = () => {
     // Handle AI suggestion functionality
@@ -44,7 +61,9 @@ const ChatbotAi: React.FC = ({ selectedConversationId }) => {
 
       onSuccess: async (data) => {
         // setConversationId()
-        setConversationId(data?.record?.conversation_id);
+        // selectedConversationId(data?.record?.conversation_id);
+        // console.log("LLLL",data?.record?.conversation_id)
+        setSelectedConversationId(data?.record?.conversation_id);
         setQuestion("");
         queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
 
@@ -59,19 +78,22 @@ const ChatbotAi: React.FC = ({ selectedConversationId }) => {
       },
     });
 
-  const handleChatPost = async () => {
+  const handleChatPost = async (customText) => {
+    const messageToSend = customText || question;
     setQuestion("");
     const data = {
-      content: question,
+      content: messageToSend,
       userIds: [],
       type: "chatbot",
-      // conversationId:6
+      conversationId: selectedConversationId,
     };
 
-    if (conversationId) {
-      data.conversationId = conversationId; // or = 6 if you were testing
+    if (selectedConversationId) {
+      data.conversationId = selectedConversationId;
     }
+
     await ChatPostMutation(data);
+    setQuestion("");
   };
 
   return (
@@ -91,7 +113,10 @@ const ChatbotAi: React.FC = ({ selectedConversationId }) => {
 
         {/* Search Input Section */}
 
-        <div className="h-[200px] text-black rounded-[18px] p-4 text-[16px] overflow-y-auto scroll">
+        <div
+          ref={chatContainerRef}
+          className="h-[200px] text-black rounded-[18px] p-4 chat-scroll text-[16px] overflow-y-auto scroll"
+        >
           {selectedConversationId
             ? conversationsData?.records?.map((conversation) => (
                 <>
@@ -135,50 +160,57 @@ const ChatbotAi: React.FC = ({ selectedConversationId }) => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <PrimaryButton
             btnText="🏥 Care Provider reviews"
-            btnTextClass="text-sm font-semibold"
+            btnTextClass="text-[12px] font-semibold"
             btnClass="border border-[#252525] !px-4 py-3 w-auto w-full rounded-[10px]"
-            onClick={(e) => {
-              setQuestion("");
-              setQuestion(e.target.value);
-            }}
+            // onClick={(e) => {
+            //   setQuestion("");
+            //   setQuestion(e.target.value);
+            // }}
+            onClick={() => handleChatPost("🏥 Care Provider reviews")}
           />
           <PrimaryButton
             btnText="📋 Medical Ratings"
             btnTextClass="text-sm font-semibold"
             btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
-            onClick={(e) => {
-              setQuestion("");
-              setQuestion(e.target.value);
-            }}
+            // onClick={(e) => {
+            //   setQuestion("");
+            //   setQuestion(e.target.value);
+            // }}
+            onClick={() => handleChatPost("📋 Medical Ratings")}
           />
           <PrimaryButton
             btnText="🧓 Patient feedback"
             btnTextClass="text-sm font-semibold"
             btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
+            onClick={() => handleChatPost("🧓 Patient feedback")}
           />
           <PrimaryButton
             btnText="🤖 AI Support"
             btnTextClass="text-sm font-semibold"
             btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
-            onClick={(e) => setQuestion(e.target.value)}
+            // onClick={(e) => setQuestion(e.target.value)}
+            onClick={() => handleChatPost("🤖 AI Support")}
           />
           <PrimaryButton
             btnText="🛏️ Rehab Care"
             btnTextClass="text-sm font-semibold"
             btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
-            onClick={(e) => setQuestion(e.target.value)}
+            // onClick={(e) => setQuestion(e.target.value)}
+            onClick={() => handleChatPost("🛏️ Rehab Care")}
           />
           <PrimaryButton
             btnText="💰 Insurance Acceptance"
             btnTextClass="text-sm font-semibold"
             btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
-            onClick={(e) => setQuestion(e.target.value)}
+            // onClick={(e) => setQuestion(e.target.value)}
+            onClick={() => handleChatPost("💰 Insurance Acceptance")}
           />
           <PrimaryButton
             btnText="🧾 Nursing Home Advice"
             btnTextClass="text-sm font-semibold"
             btnClass="border border-[#252525] px-4 py-3 w-auto w-full rounded-[10px]"
-            onClick={(e) => setQuestion(e.target.value)}
+            // onClick={(e) => setQuestion(e.target.value)}
+            onClick={() => handleChatPost("🧾 Nursing Home Advice")}
           />
         </div>
       </div>

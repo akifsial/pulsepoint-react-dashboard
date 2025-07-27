@@ -266,6 +266,23 @@
   background: transparent;
 }
 
+
+/* only chat scrollbar */
+
+.chat-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 3px;
+}
+
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
 /* html,
 body,
 #root {
