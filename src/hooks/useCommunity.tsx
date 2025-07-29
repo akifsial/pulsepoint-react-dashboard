@@ -7,6 +7,7 @@ import {
   ApiGetCommunityPostSaved,
   ApiGetAllConversation,
   ApiGetConversationChatSpecific,
+  ApiGetCommunityTopics,
 } from "@src/api/ApiCommunityForum";
 import { useQuery } from "@tanstack/react-query";
 
@@ -79,8 +80,16 @@ export const useGetAllConversations = () => {
 
 export const useGetConversationChatSpecific = (selectedConversationId) => {
   return useQuery({
-    queryKey: ["useGetConversationChatSpecific",selectedConversationId],
+    queryKey: ["useGetConversationChatSpecific", selectedConversationId],
     queryFn: () => ApiGetConversationChatSpecific(selectedConversationId),
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useGetAllCommunityTopics = () => {
+  return useQuery({
+    queryKey: ["useGetAllCommunityTopics"],
+    queryFn: () => ApiGetCommunityTopics(),
     refetchOnWindowFocus: false,
   });
 };

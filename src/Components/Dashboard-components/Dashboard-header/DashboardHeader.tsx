@@ -41,6 +41,8 @@ const DashboardHeader: React.FC<Props> = ({
   const notificationRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
+  
+
   const { data } = useMeApi();
 
   const recentSearches: RecentSearch[] = [
@@ -190,7 +192,7 @@ const DashboardHeader: React.FC<Props> = ({
             className="flex items-center gap-2 cursor-pointer"
           >
             <img
-              src={userFallbackImg}
+              src={`${import.meta.env.VITE_APP_API_IMG_URL}${data?.image}` }
               alt="User"
               className="w-[30px] h-[30px] lg:w-[46px] lg:h-[46px] rounded-full object-cover"
             />

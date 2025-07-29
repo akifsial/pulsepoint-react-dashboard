@@ -18,6 +18,7 @@ const ChatbotLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("");
   const [selectedConversationId, setSelectedConversationId] = useState();
+  const [chatBotData, setChatBotData] = useState([]);
 
 
   // Function to handle tab clicks
@@ -41,6 +42,8 @@ const ChatbotLayout = () => {
         onClose={() => setIsSidebarOpen(false)}
         onTabClick={handleTabClick}
         setSelectedConversationId={setSelectedConversationId}
+        chatBotData={chatBotData}
+        setChatBotData={setChatBotData}
       />
 
       {/* Main Content Area */}
@@ -65,7 +68,7 @@ const ChatbotLayout = () => {
           ) : activeTab === "Our AI Healthcare Guide" ? (
             <div>AI Healthcare Guide Content</div>
           ) : (
-            <ChatbotAi selectedConversationId={selectedConversationId} setSelectedConversationId={setSelectedConversationId} />
+            <ChatbotAi chatBotData={chatBotData} setChatBotData={setChatBotData} selectedConversationId={selectedConversationId} setSelectedConversationId={setSelectedConversationId} />
           )}
         </main>
       </div>

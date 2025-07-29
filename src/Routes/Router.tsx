@@ -18,6 +18,7 @@ const Router: React.FC = () => {
           path={path}
           element={<PublicProtectRoute>{element}</PublicProtectRoute>}
         />
+        // <Route key={path} path={path} element={<PublicProtectRoute>{element}</PublicProtectRoute>} />
       ))}
 
       {/* Dashboard Routes */}
@@ -45,6 +46,7 @@ const Router: React.FC = () => {
               path={child.path}
               // element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
               element={child.element}
+              // element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
               index={child.path === "" ? true : undefined}
             />
           ))}
@@ -91,6 +93,7 @@ const Router: React.FC = () => {
           path={path}
           // element={<ProtectedRoutes>{element}</ProtectedRoutes>}
           element={element}
+          // element={<ProtectedRoutes>{element}</ProtectedRoutes>}
         >
           {children?.map((child) => (
             <Route

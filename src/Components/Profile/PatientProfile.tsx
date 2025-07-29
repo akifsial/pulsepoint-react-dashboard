@@ -20,17 +20,29 @@ const organizationOptions = [
 ];
 
 const stateOptions = [
-  { value: "United State", label: "United State" },
-  { value: "Sindh", label: "Sindh" },
-  { value: "Balochistan", label: "Balochistan" },
-  { value: "KPK", label: "Khyber Pakhtunkhwa" },
+  { value: "California", label: "California" },          // USA – Tech & Hollywood hub
+  { value: "New York", label: "New York" },              // USA – NYC is world-famous
+  { value: "Texas", label: "Texas" },                    // USA – Known for size, oil, culture
+  { value: "Florida", label: "Florida" },                // USA – Famous for tourism & Miami
+  { value: "Bavaria", label: "Bavaria" },                // Germany – Munich & BMW
+  { value: "Île-de-France", label: "Île-de-France" },    // France – Includes Paris
+  { value: "Dubai", label: "Dubai" },                    // UAE – Luxury and architecture
+  { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, // Japan – Tokyo is iconic
+  { value: "Ontario", label: "Ontario" },                // Canada – Includes Toronto
+  { value: "Maharashtra", label: "Maharashtra" },        // India – Includes Mumbai
 ];
 
 const cityOptions = [
-  { value: "Austin", label: "Austin" },
-  { value: "Karachi", label: "Karachi" },
-  { value: "Quetta", label: "Quetta" },
-  { value: "Peshawar", label: "Peshawar" },
+  { value: "New York", label: "New York" },
+  { value: "London", label: "London" },
+  { value: "Paris", label: "Paris" },
+  { value: "Dubai", label: "Dubai" },
+  { value: "Singapore", label: "Singapore" },
+  { value: "Tokyo", label: "Tokyo" },
+  { value: "Hong Kong", label: "Hong Kong" },
+  { value: "Zurich", label: "Zurich" },
+  { value: "Los Angeles", label: "Los Angeles" },
+  { value: "Monaco", label: "Monaco" },
 ];
 
 const PatientProfile = ({ onChangePassword }) => {
@@ -67,7 +79,8 @@ const PatientProfile = ({ onChangePassword }) => {
     console.log("**********************", typeof data.name);
     const formData = new FormData();
     formData.append("image", selectedImage);
-    formData.append("name", data.name);
+    formData.append("first_name", data.first_name);
+    formData.append("last_name", data.last_name);
 
     formData.append("address", data.address);
     formData.append("age", data.age);
@@ -83,7 +96,9 @@ const PatientProfile = ({ onChangePassword }) => {
   useEffect(() => {
     if (meData) {
       setSingleUser(meData);
-      setValue("name", meData.name || "");
+      // setValue("name", meData.name || "");
+      setValue("first_name", meData.first_name || "");
+      setValue("last_name", meData.last_name || "");
       setValue("email", meData.email || "");
       setValue("number", meData.number || "");
       setValue("age", meData.age || "");
@@ -178,7 +193,7 @@ const PatientProfile = ({ onChangePassword }) => {
               Add Personal Information
             </h4>
             <div className="flex flex-wrap items-center gap-x-4">
-              <InputField
+              {/* <InputField
                 label="Full Name:"
                 id="name"
                 name="name"
@@ -188,7 +203,31 @@ const PatientProfile = ({ onChangePassword }) => {
                 placeholder="Methew Thompson"
                 register={register}
                 registerName={"name"}
+              /> */}
+
+              <InputField
+                label="First Name:"
+                id="first_name"
+                name="first_name"
+                type="text"
+                fieldName="w-[32%]"
+                iconUrl={""}
+                placeholder="John"
+                register={register}
+                registerName={"first_name"}
               />
+              <InputField
+                label="Last Name:"
+                id="last_name"
+                name="last_name"
+                type="text"
+                fieldName="w-[32%]"
+                iconUrl={""}
+                placeholder="Doe"
+                register={register}
+                registerName={"last_name"}
+              />
+
               <InputField
                 label="Email Address:"
                 id="email"

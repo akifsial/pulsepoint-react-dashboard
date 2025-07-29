@@ -260,3 +260,64 @@ export const ApiGetConversationChatSpecific = async (
 
   return response.data.payload;
 };
+
+export const ApiDeleteChat = async (selectedConversationId) => {
+  const BASE_URL = `${
+    import.meta.env.VITE_APP_API_URL
+  }chat/conversations/${selectedConversationId}`;
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const response = await axios.delete(BASE_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.payload;
+};
+
+export const ApiEditChatName = async (selectedConversationId) => {
+  const BASE_URL = `${
+    import.meta.env.VITE_APP_API_URL
+  }chat/conversations/${selectedConversationId}`;
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const response = await axios.delete(BASE_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.payload;
+};
+
+export const ApiGetCommunityTopics = async () => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/topics`;
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const response = await axios.get(BASE_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.payload;
+};
+
+export const ApiCreatePayment = async (data) => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}payment`;
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const response = await axios.post(BASE_URL, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.payload;
+};
+
+// export const ApiLikeComment = async (data, id) => {
+//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}comment/like/${id}`;
+//   const token: string | null = JSON.parse(
+//     localStorage.getItem("token") || "null"
+//   );
+
+//   const response = await axios.post(BASE_URL, data, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+
+//   return response.data.payload;
+// };

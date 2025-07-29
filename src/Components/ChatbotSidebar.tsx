@@ -3,6 +3,10 @@ import { useEffect, useState } from "react";
 import { useGetAllConversations } from "@src/hooks/useCommunity";
 import icon from "@assets/media/svgs/verticlDots.svg";
 import ChatbotSidebarOptions from "./Model/ChatbotSidebarOptions";
+import { ApiDeleteChat } from "@src/api/ApiCommunityForum";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { PrimaryButton } from "./Buttons/PrimaryButton";
 
 interface SidebarProps {
   sidebarData: string[];
@@ -17,12 +21,13 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
   sidebarData,
   onTabClick,
   setSelectedConversationId,
+  chatBotData,
+  setChatBotData,
 }) => {
   const location = useLocation();
   const [activeOptionsId, setActiveOptionsId] = useState();
 
   const { data, isLoading } = useGetAllConversations();
-  console.log("LOOP", data);
 
   // Close the sidebar when the location changes
   useEffect(() => {
@@ -41,7 +46,7 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
         transition-all duration-300 ease-in-out
         ${isOpen ? "left-[89px]" : "-left-full"} lg:left-[89px] lg:block`}
     >
-      <div className="space-y-2 mt-3 h-full overflow-y-auto">
+      <div className="space-y-2 flex flex-col mt-3 h-full overflow-y-auto">
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-gray-500 animate-pulse">
@@ -77,6 +82,8 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
                   <ChatbotSidebarOptions
                     conversationId={link?.id}
                     onClose={() => setActiveOptionsId(undefined)}
+                    linkId={link?.id}
+                    handleDeleteChat={() => handleDeleteChat(link?.id)}
                   />
                 )}
               </div>
@@ -85,6 +92,13 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
         ) : (
           <div className="text-center text-gray-500 mt-6">No chats found</div>
         )}
+        <div className=" flex items-end justify-center h-full">
+          <PrimaryButton
+            onClick={() => {setSelectedConversationId(""); setChatBotData([])}}
+            btnText="New Chat"
+            btnClass="text-white bg-black !rounded-[6px]"
+          />
+        </div>
       </div>
     </aside>
   );

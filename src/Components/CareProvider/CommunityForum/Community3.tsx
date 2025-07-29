@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import Spinner from "@components/Loaders/Spinner";
+import { useGetAllCommunityTopics } from "@src/hooks/useCommunity";
 
 const Community3 = ({
   onBack,
@@ -16,6 +17,17 @@ const Community3 = ({
   setSelectedTopicId4,
   isPending,
 }) => {
+  const { data } = useGetAllCommunityTopics();
+
+  console.log("ccccc", data?.records);
+
+  const artRecords = data?.records?.filter((dt) => {
+    const isArt = dt.category === "Art";
+    return isArt;
+  });
+
+  console.log("########", artRecords);
+
   return (
     <>
       <div className="text-center max-w-[496px] mx-auto mb-2.5 font-normal text-base">
@@ -27,56 +39,65 @@ const Community3 = ({
         </p>
       </div>
       <div className="h-[262px] overflow-y-auto pr-2">
+        {/* {
+          data?.records?.filter((dt)=>(
+            console.log("_______________",dt.category=="Art")
+          ))
+        } */}
+
+        {/* {
+          data?.records?.filter((dt)=>(dt?.categories=="Art")).map((art)=>(
+        
+          ))
+        } */}
         <CommunityTopics
           title={"🍣Anime & Cosplay"}
-          text1={"Anime & Manga"}
-          text2={"Cosplay"}
-          text3={"Misinformation"}
-          options={[
-            { text: "Anime & Manga", id: 1 },
-            { text: "Cosplay", id: 2 },
-            { text: "Misinformation", id: 3 },
-          ]}
+          options={data?.records
+            ?.filter((dt) => dt?.category == "Anime & Cosplay")
+            .map((dt) => ({ text: dt?.name, id: dt.id }))}
           setSelectedTopicId={setSelectedTopicId1}
         />
+
         <CommunityTopics
           title={"🧑‍🎨Art"}
-          text1={"Architecture"}
-          text2={"Design"}
-          text3={"Art"}
-          options={[
-            { text: "Architecture", id: 4 },
-            { text: "Design", id: 5 },
-            { text: "Art", id: 6 },
-          ]}
+          // text1={"Architecture"}
+          // text2={"Design"}
+          // text3={"Art"}
+          // options={[
+          //   { text: "Architecture", id: 4 },
+          //   { text: "Design", id: 5 },
+          //   { text: "Art", id: 6 },
+          // ]}
+          options={data?.records
+            ?.filter((dt) => dt?.category == "Art")
+            .map((dt) => ({ text: dt?.name, id: dt.id }))}
           setSelectedTopicId={setSelectedTopicId2}
         />
         <CommunityTopics
           title={"💵Business & Finance"}
-          text1={"Spam or advertising"}
-          text2={"Harassment or bullying"}
-          text3={"Misinformation"}
-          text4={"Off-topic or irrelevent"}
-          text5={"Hate speech or abusive content"}
-          options={[
-            { text: "Spam or advertising", id: 7 },
-            { text: "Harassment or bullying", id: 8 },
-            { text: "Misinformation", id: 9 },
-          ]}
+          // text1={"Spam or advertising"}
+          // text2={"Harassment or bullying"}
+          // text3={"Misinformation"}
+          // text4={"Off-topic or irrelevent"}
+          // text5={"Hate speech or abusive content"}
+          // options={[
+          //   { text: "Spam or advertising", id: 7 },
+          //   { text: "Harassment or bullying", id: 8 },
+          //   { text: "Misinformation", id: 9 },
+          // ]}
+          options={data?.records
+            ?.filter((dt) => dt?.category == "Business & Finance")
+            .map((dt) => ({ text: dt?.name, id: dt.id }))}
           setSelectedTopicId={setSelectedTopicId3}
         />
-        <CommunityTopics
+        {/* <CommunityTopics
           title={"🧑‍🎨History"}
-          text1={"Architecture"}
-          text2={"Design"}
-          text3={"Art"}
-          options={[
-            { text: "Architecture", id: 10 },
-            { text: "Design", id: 11 },
-            { text: "Art", id: 12 },
-          ]}
+         
+          options={data?.records
+            ?.filter((dt) => dt?.category == "History")
+            .map((dt) => ({ text: dt?.name, id: dt.id }))}
           setSelectedTopicId={setSelectedTopicId4}
-        />
+        /> */}
       </div>
 
       <div className="flex items-center gap-2.5 pt-[25px]">

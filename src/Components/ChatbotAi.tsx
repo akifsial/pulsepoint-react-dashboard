@@ -14,11 +14,13 @@ import { useGetConversationChatSpecific } from "@src/hooks/useCommunity";
 const ChatbotAi: React.FC = ({
   selectedConversationId,
   setSelectedConversationId,
+  chatBotData,
+  setChatBotData
 }) => {
   const [question, setQuestion] = useState("");
   const [botAnswers, setBotAnswers] = useState([]);
   const [userAnswer, setUserAnswer] = useState([]);
-  const [chatBotData, setChatBotData] = useState([]);
+  // const [chatBotData, setChatBotData] = useState([]);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,12 +28,11 @@ const ChatbotAi: React.FC = ({
   }, [selectedConversationId]);
 
   // const [conversationId, setConversationId] = useState();
-  console.log("conco", selectedConversationId);
   const { data: conversationsData } = useGetConversationChatSpecific(
     selectedConversationId
   );
 
-  console.log("SELECT", selectedConversationId);
+
   const queryClient = useQueryClient();
 
   const scrollToBottom = () => {
@@ -85,7 +86,7 @@ const ChatbotAi: React.FC = ({
       content: messageToSend,
       userIds: [],
       type: "chatbot",
-      conversationId: selectedConversationId,
+      // conversationId: selectedConversationId,
     };
 
     if (selectedConversationId) {
@@ -128,7 +129,7 @@ const ChatbotAi: React.FC = ({
                   <p>{conversation?.bot_reply?.content}</p>
                 </>
               ))
-            : chatBotData.map((bot) => (
+            : chatBotData?.map((bot) => (
                 <>
                   <div className="flex justify-end">
                     <p className="bg-[#E4E6E7] text-black p-2 mb-3 rounded-[10px] w-fit">

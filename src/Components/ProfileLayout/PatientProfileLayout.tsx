@@ -18,7 +18,7 @@ const PatientProfileLayout = () => {
   const location = useLocation();
   
 
-  const showProfileSidebar = ["/patient/profile", "/patient/manage-password", "/patient/feature"].some(
+  const showProfileSidebar = ["/patient/profile", "/patient/manage-password", "/patient/feature","/patient/payment-history"].some(
     (path) => location.pathname.startsWith(path)
   );
   const mainMargin = showProfileSidebar ? "lg:ml-[357px]" : "lg:ml-[89px]";

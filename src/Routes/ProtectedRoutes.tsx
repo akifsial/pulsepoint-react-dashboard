@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const ProtectedRoutes: React.FC = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  const isAuthenticate = localStorage.getItem("userInfo");
-  const navigate = useNavigate();
+// export const ProtectedRoutes: React.FC = ({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) => {
+//   const isAuthenticate = localStorage.getItem("userInfo");
+//   const navigate = useNavigate();
 
   // useEffect(() => {
   //   if (!isAuthenticate) {
@@ -20,6 +20,21 @@ export const ProtectedRoutes: React.FC = ({
   //     return navigate("/login");
   //   }
   // }
+export const ProtectedRoutes: React.FC = ({ children }) => {
+  const isAuthenticate = localStorage.getItem("userInfo");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticate) {
+      navigate("/login");
+    }
+  }, [navigate, isAuthenticate]);
+
+  if (!isAuthenticate) {
+    {
+      return navigate("/login");
+    }
+  }
 
   return children;
 };

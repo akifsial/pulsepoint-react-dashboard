@@ -7,6 +7,7 @@ import ForgotPasswordPage from "@components/auth/ForgotPasswordPage"; // Import 
 import ResetPasswordPage from "@components/auth/ResetPasswordPage";
 import PasswordResetSuccessPage from "@components/auth/PasswordResetSuccessPage";
 import OTPPage from "@components/auth/OTPPage";
+import StripeSuccessPage from "@components/auth/StripeSuccessPage";
 
 export const websitePublicRoutes = [
   { path: "/", element: <HomePage /> },
@@ -18,6 +19,7 @@ export const websitePublicRoutes = [
   { path: "/otp-verify", element: <OTPPage /> },
   { path: "/reset-password", element: <ResetPasswordPage /> },
   { path: "/password-reset-success", element: <PasswordResetSuccessPage /> },
+
 ];
 
 // export const websitePrivateRoutes = [

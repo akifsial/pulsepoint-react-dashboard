@@ -8,6 +8,7 @@ import defaultLogoutHover from "@assets/media/svgs/dashboard-svgs/login-hover.sv
 import defaultSettings from "@assets/media/svgs/dashboard-svgs/setting.svg";
 import defaultSettingsHover from "@assets/media/svgs/dashboard-svgs/setting-hover.svg";
 import { useNavigate } from "react-router-dom";
+import { useMeApi } from "@src/hooks/useUsers";
 
 interface ProfileDropdownProps {
   userIcon?: string;
@@ -35,6 +36,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     localStorage.clear();
     navigate("/login");
   };
+
 
   return (
     <div>

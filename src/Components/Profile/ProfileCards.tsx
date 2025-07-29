@@ -15,6 +15,7 @@ const plans = [
       "Insights dashboard (views, clicks, contacts)",
     ],
     highlighted: false,
+    slug: "STARTER",
   },
   {
     title: "Professional Plan",
@@ -26,6 +27,7 @@ const plans = [
       "Link to booking form or EHR system",
     ],
     highlighted: true,
+    slug: "PROFESSIONAL",
   },
   {
     title: "Enterprise Plan",
@@ -37,6 +39,7 @@ const plans = [
       "Multi-location support",
     ],
     highlighted: false,
+    slug: "ENTERPRISE",
   },
 ];
 
@@ -65,12 +68,15 @@ const ProfileCards = ({ onUpgrade }) => {
                     : "bg-[#EAF6FF] text-[#007AB2]"
                 }`}
               >
-<h2>                {plan.price}</h2>
+                <h2> {plan.price}</h2>
               </div>
 
               <ul className="space-y-3 mb-6">
                 {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex font-normal items-center gap-1.5">
+                  <li
+                    key={idx}
+                    className="flex font-normal items-center gap-1.5"
+                  >
                     <img src={tickGreen} alt="tick" />
                     <span>{feature}</span>
                   </li>
@@ -82,7 +88,7 @@ const ProfileCards = ({ onUpgrade }) => {
               btnText="Upgrade Now"
               showImg={true}
               img={isHighlighted ? crown : crownWhite}
-              onClick={() => onUpgrade(true)}
+              onClick={() => onUpgrade(plan?.slug)}
               btnClass={`w-full h-[46px] !rounded-[10px] px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2.5 flex items-center justify-center ${
                 isHighlighted
                   ? "bg-[#F8C01A] border border-[#F8C01A] text-[#252525]"

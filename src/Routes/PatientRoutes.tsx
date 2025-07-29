@@ -11,6 +11,8 @@ import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 import NursingHomeReviews from "@components/NursingHomeReview";
 import EditFeedbackForm from "@pages/PatientPages/EditFeedbackForm";
 import PatientAllCommunities from "@pages/PatientPages/PatientAllCommunities";
+import StripeSuccessPage from "@components/auth/StripeSuccessPage";
+import StripeCancelPage from "@components/auth/StripeCancelledPage";
 export const PatientRoutes = [
   {
     path: "/patient",
@@ -29,6 +31,16 @@ export const PatientRoutes = [
       { path: "notification", element: <NotificationPage /> },
       { path: "chatbot", element: <ChatbotLayout /> },
       { path: "nursing-home", element: <NursingHomeReviews /> },
+      // { path: "payment-history", element: <NursingHomeReviews /> },
+
     ],
+  },
+  {
+    path: "/success",
+    element: <StripeSuccessPage />,
+  },
+   {
+    path: "/cancel",
+    element: <StripeCancelPage />,
   },
 ];

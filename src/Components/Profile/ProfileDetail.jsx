@@ -17,19 +17,30 @@ const organizationOptions = [
   { value: "Government", label: "Government" },
   { value: "Other", label: "Other" },
 ];
-
 const stateOptions = [
-  { value: "United State", label: "United State" },
-  { value: "Sindh", label: "Sindh" },
-  { value: "Balochistan", label: "Balochistan" },
-  { value: "KPK", label: "Khyber Pakhtunkhwa" },
+  { value: "California", label: "California" }, // USA – Tech & Hollywood hub
+  { value: "New York", label: "New York" }, // USA – NYC is world-famous
+  { value: "Texas", label: "Texas" }, // USA – Known for size, oil, culture
+  { value: "Florida", label: "Florida" }, // USA – Famous for tourism & Miami
+  { value: "Bavaria", label: "Bavaria" }, // Germany – Munich & BMW
+  { value: "Île-de-France", label: "Île-de-France" }, // France – Includes Paris
+  { value: "Dubai", label: "Dubai" }, // UAE – Luxury and architecture
+  { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, // Japan – Tokyo is iconic
+  { value: "Ontario", label: "Ontario" }, // Canada – Includes Toronto
+  { value: "Maharashtra", label: "Maharashtra" }, // India – Includes Mumbai
 ];
 
 const cityOptions = [
-  { value: "Austin", label: "Austin" },
-  { value: "Karachi", label: "Karachi" },
-  { value: "Quetta", label: "Quetta" },
-  { value: "Peshawar", label: "Peshawar" },
+  { value: "New York", label: "New York" },
+  { value: "London", label: "London" },
+  { value: "Paris", label: "Paris" },
+  { value: "Dubai", label: "Dubai" },
+  { value: "Singapore", label: "Singapore" },
+  { value: "Tokyo", label: "Tokyo" },
+  { value: "Hong Kong", label: "Hong Kong" },
+  { value: "Zurich", label: "Zurich" },
+  { value: "Los Angeles", label: "Los Angeles" },
+  { value: "Monaco", label: "Monaco" },
 ];
 
 const ProfileDetail = ({ onChangePassword }) => {
@@ -121,7 +132,13 @@ const ProfileDetail = ({ onChangePassword }) => {
               <p className="mb-2.5">Additional Details:</p>
               <div className="text-sm font-normal text-[#252525] py-4 px-[15px] rounded-lg border border-[#2525251A] bg-[#FBFCFD]">
                 <p>
-                  Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. Our mission is to provide compassionate, person-centered services in a comfortable, home-like setting.Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. 
+                  Sunrise Hills Nursing Home is a full-service assisted living
+                  facility specializing in post-acute rehabilitation and
+                  long-term senior care. Our mission is to provide
+                  compassionate, person-centered services in a comfortable,
+                  home-like setting.Sunrise Hills Nursing Home is a full-service
+                  assisted living facility specializing in post-acute
+                  rehabilitation and long-term senior care.
                 </p>
               </div>
             </div>
@@ -184,5 +201,3 @@ const ProfileDetail = ({ onChangePassword }) => {
 };
 
 export default ProfileDetail;
-
-

@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import featureBg from "../../assets/media/images/dashboard-images/featureBg.png";
 import ProfileCards from "./ProfileCards";
 import BillingCheckout from "./BillingCheckout";
+import { useMutation } from "@tanstack/react-query";
+import { ApiCreatePayment } from "@src/api/ApiCommunityForum";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const GetFeature = () => {
   const [billingCheck, setBillingCheck] = useState(false);
+  const navigate=useNavigate()
   const points = [
     {
       title: "Appear at the Top of Search Results",
@@ -26,6 +31,30 @@ const GetFeature = () => {
         "Get more visibility, build trust, and attract the right patients by featuring your facility on our care provider network.",
     },
   ];
+
+
+
+  const { mutateAsync: paymentMutation, isPending: isPendingPaymentMutation } =
+    useMutation({
+      mutationFn: (data) => ApiCreatePayment(data),
+
+      onSuccess: async (data) => {
+        console.log("PLAAAN",data?.url)
+        // navigate(data?.url)
+        window.location.href = data?.url;
+      },
+      onError: (error) => {
+        toast.error("Something Went Wrong");
+      },
+    });
+
+  const handlePlan = async (plan) => {
+    console.log("PLANNANAN",plan)
+    const data = {
+      plan: plan,
+    };
+    await paymentMutation(data);
+  };
 
   return (
     <>
@@ -57,7 +86,7 @@ const GetFeature = () => {
           <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-3">
             Feature My Facility
           </h4>
-          <ProfileCards onUpgrade={setBillingCheck} />
+          <ProfileCards onUpgrade={handlePlan} />
           <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
             💡 Advantages of Feature Plans?
           </h4>

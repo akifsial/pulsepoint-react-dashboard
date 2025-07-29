@@ -826,7 +826,6 @@ const SavedCommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
                                                 )}
                                               </button>
                                             </div>
-                                            <h1>fucii</h1>
                                           </div>
                                         ) : (
                                           ""
