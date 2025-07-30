@@ -3,9 +3,7 @@ import AdminCommunityForum from "@pages/PatientPages/AdminCommunityForum";
 import AdminDashboard from "@pages/PatientPages/AdminDashboard";
 import AdminCareProvider from "@pages/PatientPages/AdminCareProvider";
 import AdminPatientReviews from "@pages/PatientPages/AdminPatientReviews";
-import EditReviewPage from "@pages/PatientPages/EditReviewPage"; // Add this import
 import HospitalProfile from "@pages/PatientPages/HospitalProfile";
-import ChatBot from "@pages/PatientPages/ChatBotPage";
 import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 import NursingHomeReviews from "@components/NursingHomeReview";
@@ -13,6 +11,7 @@ import EditFeedbackForm from "@pages/PatientPages/EditFeedbackForm";
 import PatientAllCommunities from "@pages/PatientPages/PatientAllCommunities";
 import StripeSuccessPage from "@components/auth/StripeSuccessPage";
 import StripeCancelPage from "@components/auth/StripeCancelledPage";
+import CommunityAccount from "@components/CareProvider/CommunityForum/CommunityAccount";
 export const PatientRoutes = [
   {
     path: "/patient",
@@ -31,15 +30,16 @@ export const PatientRoutes = [
       { path: "notification", element: <NotificationPage /> },
       { path: "chatbot", element: <ChatbotLayout /> },
       { path: "nursing-home", element: <NursingHomeReviews /> },
-      // { path: "payment-history", element: <NursingHomeReviews /> },
+      { path: "community-account/:id", element: <CommunityAccount /> },
 
+      // { path: "payment-history", element: <NursingHomeReviews /> },
     ],
   },
   {
     path: "/success",
     element: <StripeSuccessPage />,
   },
-   {
+  {
     path: "/cancel",
     element: <StripeCancelPage />,
   },

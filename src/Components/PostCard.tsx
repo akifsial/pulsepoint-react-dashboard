@@ -64,7 +64,6 @@ const PostCard: React.FC<PostCardProps> = ({
   };
 
   const handleFlagPost = () => {
-    console.log('Flag post clicked!');
     setIsFlagModalOpen(true);
     setActivePostActions(false);
   };
@@ -72,7 +71,6 @@ const PostCard: React.FC<PostCardProps> = ({
   const handleSubmitReport = () => {
     setIsFlagModalOpen(false);
     // You can add additional logic here for after report submission
-    console.log('Report submitted for post:', post.title);
   };
 
   const handleSavePost = () => {

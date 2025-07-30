@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
@@ -14,7 +13,7 @@ import alice from "@assets/media/images/dashboard-images/alice.svg";
 // import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 
-const  UserCommunity: React.FC = () => {
+const UserCommunity: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
 
@@ -26,7 +25,6 @@ const  UserCommunity: React.FC = () => {
     lastdate?: string;
     status?: string;
   };
-
 
   const columns: TanDataTableColumn<dataTypes>[] = [
     {
@@ -44,7 +42,7 @@ const  UserCommunity: React.FC = () => {
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
-                {first_name} 
+                {first_name}
               </span>
             </div>
           </div>
@@ -104,7 +102,7 @@ const  UserCommunity: React.FC = () => {
       status: "Inactive",
     },
     {
-     id: 3,
+      id: 3,
       first_name: "Anxiety & Stress Support",
       lastdate: "9/4/12",
       role: "Member",
@@ -113,9 +111,7 @@ const  UserCommunity: React.FC = () => {
     },
   ];
 
-  const handleRowSelect = (row: dataTypes) => {
-    console.log("Selected row:", row);
-  };
+  const handleRowSelect = (row: dataTypes) => {};
 
   const renderActions = (row: dataTypes) => (
     <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>
@@ -132,7 +128,9 @@ const  UserCommunity: React.FC = () => {
     <div className="mb-10">
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3 font-space-grotesk">Community Participation</h3>
+          <h3 className="md:mb-0 mb-3 font-space-grotesk">
+            Community Participation
+          </h3>
         </div>
         <div>
           {activeTab === "all" ? (
@@ -174,4 +172,4 @@ const  UserCommunity: React.FC = () => {
   );
 };
 
-export default  UserCommunity;
+export default UserCommunity;

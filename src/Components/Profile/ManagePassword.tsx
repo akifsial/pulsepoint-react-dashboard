@@ -38,6 +38,9 @@ const ManagePassword = () => {
   });
 
   const passwordChangeSubmit = async (data) => {
+    if(data.password !== data.new_password){
+      return toast.error("New Password & Confirm Password Not Matched")
+    }
     // const password={password:data?.pasword}
     await updatePatientProfile({ password: data?.password });
   };

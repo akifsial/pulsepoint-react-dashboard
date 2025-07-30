@@ -19,6 +19,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import PopularCommunitySkeleton from "@components/Loaders/PopularCommunityLoader";
+import { Link } from "react-router-dom";
 
 const PopularCommunity = () => {
   const [step, setStep] = useState<number | "">("");
@@ -32,11 +33,12 @@ const PopularCommunity = () => {
   const [selectedTopicId3, setSelectedTopicId3] = useState();
   const [selectedTopicId4, setSelectedTopicId4] = useState();
   const [searchCommunity, setSearchCommunity] = useState("");
-  const [debouncedSearchText, setDebouncedSearchText] = useState(searchCommunity);
+  const [debouncedSearchText, setDebouncedSearchText] =
+    useState(searchCommunity);
 
   const { data, isPending } = usePopularCommunities(debouncedSearchText);
 
-  console.log("$$$$$$$$$", data);
+  console.log("COMMUNITY", data);
 
   const popularCommunity = [
     { icon: community1, title: "Hospital Stay Reviews" },
@@ -130,7 +132,9 @@ const PopularCommunity = () => {
                 alt={community.title}
                 className="rounded-full object-cover h-[37px] w-[37px]"
               />
-              <p className="font-semibold">{community?.title}</p>
+              <Link to={`/patient/community-account/${community?.id}`}>
+                <p className="font-semibold">{community?.title}</p>
+              </Link>
             </div>
           ))}
         </div>

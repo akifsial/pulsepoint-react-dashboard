@@ -4,12 +4,15 @@ import ChangePhoto from "./ChangePhoto";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
-
+import { ApiUpdateUser } from "@src/api/ApiUsers";
 import Methew from "../../assets/media/svgs/dashboard-svgs/methew.svg";
 import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
 import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
 import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";
 import Global from "../../assets/media/svgs/dashboard-svgs/globalField.svg";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
@@ -43,12 +46,46 @@ const cityOptions = [
   { value: "Monaco", label: "Monaco" },
 ];
 
-const ProfileDetail = ({ onChangePassword }) => {
+const ProfileDetail1 = ({ onChangePassword }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [organization, setOrganization] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
+  const { register, handleSubmit } = useForm();
+
+  const userId=JSON.parse(localStorage.getItem("userInfo"))
+
+  // const queryClient = useQueryClient();
+
+  const {
+    mutateAsync: profileUpdateMutation,
+    isPending: isPendingProfileUpdateMutation,
+  } = useMutation({
+    mutationFn: (formData) => ApiUpdateUser(formData),
+
+    onSuccess: async () => {
+      toast.success("Profile Updated Successfully");
+    },
+    onError: (error) => {
+      toast.error("Something Went Wrong");
+    },
+  });
+
+  const handleProfileSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("tel", data.tel);
+    formData.append("address", data.address);
+    formData.append("city", data.city);
+    formData.append("state", data.state);
+    formData.append("zip", data.zip);
+    formData.append("organization", data.organization);
+    formData.append("web", data.web);
+    
+    await profileUpdateMutation(formData);
+  };
 
   return (
     <>
@@ -79,7 +116,7 @@ const ProfileDetail = ({ onChangePassword }) => {
             Add Personal Information
           </h4>
 
-          <form>
+          <form onSubmit={handleSubmit(handleProfileSubmit)}>
             <div className="flex flex-wrap items-center gap-x-4">
               <InputField
                 label="Name:"
@@ -88,6 +125,8 @@ const ProfileDetail = ({ onChangePassword }) => {
                 type="text"
                 fieldName="w-[49%]"
                 iconUrl={inputUser}
+                register={register}
+                registerName="name"
                 placeholder="e.g., Sunrise Rehabilitation Center"
               />
               <SelectField
@@ -97,6 +136,8 @@ const ProfileDetail = ({ onChangePassword }) => {
                 onChange={(e) => setOrganization(e.target.value)}
                 options={organizationOptions}
                 selectName="w-[49%]"
+                register={register}
+                registerName="organization"
               />
               <InputField
                 label="Phone:"
@@ -106,6 +147,8 @@ const ProfileDetail = ({ onChangePassword }) => {
                 fieldName="w-[49%]"
                 iconUrl={Call}
                 placeholder="(123) 456-7890]"
+                register={register}
+                registerName="tel"
               />
               <InputField
                 label="Email:"
@@ -115,6 +158,8 @@ const ProfileDetail = ({ onChangePassword }) => {
                 fieldName="w-[49%]"
                 iconUrl={Sms}
                 placeholder="contact@organization.org"
+                register={register}
+                registerName="email"
               />
             </div>
 
@@ -126,6 +171,8 @@ const ProfileDetail = ({ onChangePassword }) => {
               iconUrl={Global}
               placeholder="https://www.topseniorspot.org"
               className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
+              register={register}
+              registerName="web"
             />
 
             <div className="mb-6 text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
@@ -155,6 +202,8 @@ const ProfileDetail = ({ onChangePassword }) => {
                 onChange={(e) => setState(e.target.value)}
                 options={stateOptions}
                 selectName="w-[32%]"
+                register={register}
+                registerName="state"
               />
               <SelectField
                 label="City"
@@ -163,6 +212,8 @@ const ProfileDetail = ({ onChangePassword }) => {
                 onChange={(e) => setCity(e.target.value)}
                 options={cityOptions}
                 selectName="w-[32%]"
+                register={register}
+                registerName="city"
               />
               <InputField
                 label="Zip Code:"
@@ -171,15 +222,19 @@ const ProfileDetail = ({ onChangePassword }) => {
                 type="text"
                 placeholder="78701"
                 fieldName="w-[32%]"
+                register={register}
+                registerName="zip"
               />
             </div>
 
             <InputField
               label="Address:"
               id="address"
-              name="text"
+              name="address"
               type="text"
               placeholder="123 main Street, Springfield, IL 62704"
+              register={register}
+              registerName="address"
             />
 
             <PrimaryButton
@@ -200,4 +255,4 @@ const ProfileDetail = ({ onChangePassword }) => {
   );
 };
 
-export default ProfileDetail;
+export default ProfileDetail1;

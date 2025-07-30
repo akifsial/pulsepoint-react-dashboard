@@ -36,7 +36,6 @@ export const ApiGetCareProviders = async (search: string, rating: number) => {
 
 // export const ApiGetCareProviders = async (params:ProviderProps) => {
 
-//   console.log("rating,rating", params.rating);
 //   const BASE_URL = `${
 //     import.meta.env.VITE_APP_API_URL
 //   }user?role_type=CARE_PROVIDER`;

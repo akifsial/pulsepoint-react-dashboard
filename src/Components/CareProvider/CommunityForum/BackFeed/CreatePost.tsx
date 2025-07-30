@@ -10,7 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import Spinner from "@components/Loaders/Spinner";
 
-const CreatePost = ({ setIsOpen }) => {
+const CreatePost = ({ setIsOpen,communityId }) => {
   const [imageFile, setImageFile] = useState(null);
 
   const {
@@ -34,7 +34,7 @@ const CreatePost = ({ setIsOpen }) => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("content", data.description);
-    formData.append("community_id", 9);
+    formData.append("community_id", communityId);
 
     if (imageFile) formData.append("image", imageFile);
 
@@ -89,7 +89,7 @@ const CreatePost = ({ setIsOpen }) => {
         <button
           type="submit"
           disabled={creatPostIsPending}
-          className={`w-full flex items-center justify-center bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 ${
+          className={`w-full cursor-pointer flex items-center justify-center bg-[#28A2FF] text-white py-[13.3px] px-4 rounded-lg font-semibold text-sm transition-colors duration-300 ${
             creatPostIsPending
               ? "opacity-60 cursor-not-allowed"
               : "hover:bg-[#007AB2]"
@@ -98,7 +98,7 @@ const CreatePost = ({ setIsOpen }) => {
           {creatPostIsPending ? (
             <span className="flex items-center gap-2">
               <Spinner />
-              Creating...
+              
             </span>
           ) : (
             "Add Post in Community"

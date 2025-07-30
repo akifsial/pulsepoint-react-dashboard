@@ -71,7 +71,6 @@ export const ApiUpdateReview = async (data, id: number) => {
 };
 
 export const ApiFlagReview = async (feedbackId) => {
-  console.log("feedbackIdfeedbackIdfeedbackId", feedbackId);
   try {
     let BASE_URL = `${
       import.meta.env.VITE_APP_API_URL

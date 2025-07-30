@@ -37,8 +37,6 @@ export const ApiCreateCommunity = async (data) => {
 };
 
 export const ApiPostComment = async (data) => {
-  console.log("Comment----", data);
-
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/comment`;
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
@@ -303,6 +301,17 @@ export const ApiCreatePayment = async (data) => {
   const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.post(BASE_URL, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return response.data.payload;
+};
+
+export const ApiGetSpecificCommunity = async (id) => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/${id}`;
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const response = await axios.get(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

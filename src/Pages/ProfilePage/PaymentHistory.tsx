@@ -45,7 +45,6 @@ const PaymentHistoryPage = () => {
 
   
 const { data } = UseApiPaymentsHistory();
-console.log("LOOOOP", data);
 
   return (
     <div className="min-h-screen py-10 px-4">

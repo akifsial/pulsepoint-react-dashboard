@@ -30,7 +30,6 @@ export const CommentItem = ({
 }) => {
   const isReplyVisible = parentCommentReplyId.includes(comment.id);
 
-  console.log("MOMENTUM", comment);
 
   const toggleReplies = () => {
     if (isReplyVisible) {
@@ -88,6 +87,7 @@ export const CommentItem = ({
   //   await LikeMutation(data);
   // };
 
+  console.log("COMMENT",comment)
   return (
     <div className="ml-4 mt-3">
       {/*  */}
@@ -95,7 +95,7 @@ export const CommentItem = ({
       {/*  */}
       <div className="flex items-start gap-3 mb-3">
         <img
-          src={DummyUser}
+          src={comment?.user?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${comment?.user?.image}` : DummyUser}
           className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200"
           alt="userIcon"
         />
@@ -129,7 +129,7 @@ export const CommentItem = ({
                   </div>
                 )}
 
-                {comment?.like_count || 0}
+                {comment?.likeCount || 0}
               </button>
               <button
                 className="ps-2"

@@ -47,13 +47,11 @@ const ChatbotAi: React.FC = ({
 
   const handleAskAI = () => {
     // Handle AI suggestion functionality
-    console.log("Ask AI for suggestions");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log("Question submitted:", question);
   };
 
   const { mutateAsync: ChatPostMutation, isPending: isPendingChatPost } =
@@ -63,7 +61,6 @@ const ChatbotAi: React.FC = ({
       onSuccess: async (data) => {
         // setConversationId()
         // selectedConversationId(data?.record?.conversation_id);
-        // console.log("LLLL",data?.record?.conversation_id)
         setSelectedConversationId(data?.record?.conversation_id);
         setQuestion("");
         queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list

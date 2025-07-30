@@ -51,17 +51,14 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   ];
 
   const handleReviewClick = () => {
-    console.log("Button clicked!");
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleClear = () => {
-    console.log('Clear recent searches');
   };
 
   const handleSearchItemClick = (searchText: string) => {
     setSearchValue(searchText);
-    console.log('Selected search:', searchText);
   };
 
   return (
@@ -147,7 +144,6 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
 
 const AppReviewCard: React.FC = () => {
   const handleReviewClick = () => {
-    console.log("Review button clicked!");
   };
 
   return (

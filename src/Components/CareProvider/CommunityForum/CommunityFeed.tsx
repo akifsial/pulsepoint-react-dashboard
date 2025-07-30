@@ -34,7 +34,7 @@ import { useGetSingleUser } from "@src/hooks/useCommunity";
 import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
 import { CommentItem } from "./CommentBlock";
 
-const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
+const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed,data }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [activePostActions, setActivePostActions] = useState(null);
   const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
@@ -58,7 +58,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
   const [replyInput, setReplyInput] = useState("");
   const [IsCommentReply, setIsCommentReply] = useState();
   const [replyParentId, setReplyParentId] = useState();
-  console.log("PARENT REPLY ID", replyParentId);
+  console.log("DOOOOOOOOOOOOOOOATA", data?.data?.community_posts);
 
   const toggleComments = (post_id) => {
     setComment("");
@@ -322,7 +322,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
     await savePostMutation(data);
   };
 
-  console.log("comment", comment);
+  console.log("postData", postData);
 
   return (
     <div
@@ -342,7 +342,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <img
-                      src={DummyUser}
+                      src={post?.user?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${post?.user?.image}` : DummyUser }
                       className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200"
                       alt=""
                     />

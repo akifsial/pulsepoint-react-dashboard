@@ -77,7 +77,7 @@ const PatientProfileDetail = ({ onChangePassword }) => {
           </div>
 
           <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
-            Add Personal Informationxxxx
+            Add Personal Information
           </h4>
 
           <form>
