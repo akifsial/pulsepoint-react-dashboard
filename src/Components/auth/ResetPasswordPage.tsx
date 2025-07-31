@@ -37,7 +37,8 @@ const ResetPasswordPage = () => {
 
   const resetSubmit = async (data) => {
     const pass = {
-      password: data?.createPassword,
+      old_password:data.old_password,
+      new_password: data?.createPassword,
     };
     await resetMutation({ data:pass });
   };
@@ -58,13 +59,13 @@ const ResetPasswordPage = () => {
             label="Create a Password"
             asterisk={true}
             id="createPassword"
-            name="createPassword"
+            name="old_password"
             type="password"
             icon={IoLockClosedOutline}
             placeholder="***************"
             showPasswordToggle={true}
             register={register}
-            registerName="createPassword"
+            registerName="old_password"
             errors={errors}
             validation={{
               required: "Password is required",

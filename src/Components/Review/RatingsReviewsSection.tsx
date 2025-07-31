@@ -47,6 +47,7 @@ function StarRating({
  * Individual review card.
  */
 function ReviewCard({ review, data }: { review: Review }) {
+  console.log("REW", data);
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6">
       {/* Rating stars at top */}

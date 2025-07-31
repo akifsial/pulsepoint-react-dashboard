@@ -8,15 +8,15 @@ const Community1 = ({
   onNext,
   onClose,
   setName,
-  setDescription, }) => {
-
-
+  setDescription,
+  isPrivate,
+  setIsPrivate,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
 
   return (
     <>
@@ -29,8 +29,6 @@ const Community1 = ({
           all about.
         </p>
       </div>
-
-
 
       <div className="flex">
         <label
@@ -64,9 +62,25 @@ const Community1 = ({
         placeholder={"Enter description"}
         // rows={row}
         className={`w-full  h-[90px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] py-2.5 font-normal text-[16px] leading-[140%] text-[#1A1A1A] mb-1 focus:outline-none placeholder:text-sm placeholder:font-medium `}
-        onChange={(e) => (setDescription(e.target.value))}
-      // value={value}
+        onChange={(e) => setDescription(e.target.value)}
+        // value={value}
       />
+
+      <div className="flex items-center gap-2 mt-4">
+        <input
+          type="checkbox"
+          id="privateCheck"
+          checked={isPrivate}
+          onChange={(e) => setIsPrivate(e.target.checked)}
+          className="w-4 h-4 cursor-pointer"
+        />
+        <label
+          htmlFor="privateCheck"
+          className="text-sm text-black font-[Geist] cursor-pointer"
+        >
+          You want to keep this post private?
+        </label>
+      </div>
 
       <PrimaryButton
         btnText="Next"

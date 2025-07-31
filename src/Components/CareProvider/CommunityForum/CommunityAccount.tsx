@@ -17,12 +17,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiJoinCommunity } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import LeaveCommunityModal from "@components/Model/LeaveCommunityModal";
+import { useNavigate } from "react-router-dom";
+import Spinner from "@components/Loaders/Spinner";
 
 const CommunityAccount = ({ setOpenBackFeed }) => {
   const [joined, setJoined] = useState(false);
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
   const [showPatientInfo, setShowPatientInfo] = useState(false);
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState();
+  const navigate = useNavigate();
 
   const handleJoinClick = () => setJoined(true);
   const handleAddCommunityClick = () => setJoined(false);
@@ -65,7 +68,9 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
           {/* Fixed header */}
           <div
             className="flex items-center gap-2.5 cursor-pointer px-5 py-4 bg-transparent sticky top-0 z-10"
-            onClick={() => setOpenBackFeed(false)}
+            onClick={() => {
+              navigate("/patient/community-forum");
+            }}
           >
             <img src={backArrow} alt="backArrow" />
             <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
@@ -177,11 +182,34 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
                         }
                       />
                     ) : (
+                      // <PrimaryButton
+                      //   btnText="Join Community"
+                      //   showImg={false}
+                      //   btnClass="w-fit h-[46px] !rounded-[10px] bg-[#007AB2] !px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                      //   onClick={handleJoinCommunity}
+                      // />
+
                       <PrimaryButton
-                        btnText="Join Community"
+                        btnText={
+                          isPendingCommunityJoin ? (
+                            <div className="">
+                              <Spinner />
+                            </div>
+                          ) : (
+                            "Join Community"
+                          )
+                        }
                         showImg={false}
-                        btnClass="w-fit h-[46px] !rounded-[10px] bg-[#007AB2] !px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center"
-                        onClick={handleJoinCommunity}
+                        btnClass={`w-fit h-[46px] !rounded-[10px] ${
+                          isPendingCommunityJoin
+                            ? "bg-[#007AB2] cursor-not-allowed"
+                            : "bg-[#007AB2]"
+                        } !px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center`}
+                        onClick={
+                          !isPendingCommunityJoin
+                            ? handleJoinCommunity
+                            : undefined
+                        }
                       />
                     )}
                     <LeaveCommunityModal
@@ -194,7 +222,13 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
                 </div>
               </div>
             </div>
-            {data?.is_joined == true ? <OurFeed data={data}  /> : <h3 className="text-center mt-25">Joined Community to see posts</h3>}
+            {data?.is_joined == true ? (
+              <OurFeed data={data} />
+            ) : (
+              <h3 className="text-center mt-25">
+                Joined Community to see posts
+              </h3>
+            )}
           </div>
         </div>
       ) : (

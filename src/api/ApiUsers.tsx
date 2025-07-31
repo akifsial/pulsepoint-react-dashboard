@@ -31,7 +31,9 @@ export const ApiAllSavedCareProviders = async (
 };
 
 export const ApiUpdateUser = async (id: number, data) => {
-  const userId=JSON.parse(localStorage.getItem("userInfo").user.id)
+  const userId=JSON.parse(localStorage.getItem("userInfo"))?.id
+  console.log("sdasdasdasdasdasdasdasd",userId)
+  
   // console.log("usereserserseresr",userId)
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/${userId}`;
   const token = JSON.parse(localStorage.getItem("token"));

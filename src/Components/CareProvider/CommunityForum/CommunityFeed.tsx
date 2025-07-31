@@ -34,7 +34,7 @@ import { useGetSingleUser } from "@src/hooks/useCommunity";
 import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
 import { CommentItem } from "./CommentBlock";
 
-const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed,data }) => {
+const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [activePostActions, setActivePostActions] = useState(null);
   const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
@@ -342,7 +342,13 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed,data }) => {
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <img
-                      src={post?.user?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${post?.user?.image}` : DummyUser }
+                      src={
+                        post?.user?.image
+                          ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                              post?.user?.image
+                            }`
+                          : DummyUser
+                      }
                       className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200"
                       alt=""
                     />
@@ -359,8 +365,8 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed,data }) => {
                         }
                       }}
                     >
-                      {post?.user?.first_name}
-                      {post?.user?.last_name}
+                      {post?.user?.first_name}{" "}
+                      <span>{post?.user?.last_name}</span>
                     </p>
                     <span className="text-sm text-gray-500 leading-tight">
                       {post.userPost}

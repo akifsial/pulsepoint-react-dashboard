@@ -20,16 +20,16 @@ const organizationOptions = [
 ];
 
 const stateOptions = [
-  { value: "California", label: "California" },          // USA – Tech & Hollywood hub
-  { value: "New York", label: "New York" },              // USA – NYC is world-famous
-  { value: "Texas", label: "Texas" },                    // USA – Known for size, oil, culture
-  { value: "Florida", label: "Florida" },                // USA – Famous for tourism & Miami
-  { value: "Bavaria", label: "Bavaria" },                // Germany – Munich & BMW
-  { value: "Île-de-France", label: "Île-de-France" },    // France – Includes Paris
-  { value: "Dubai", label: "Dubai" },                    // UAE – Luxury and architecture
+  { value: "California", label: "California" }, // USA – Tech & Hollywood hub
+  { value: "New York", label: "New York" }, // USA – NYC is world-famous
+  { value: "Texas", label: "Texas" }, // USA – Known for size, oil, culture
+  { value: "Florida", label: "Florida" }, // USA – Famous for tourism & Miami
+  { value: "Bavaria", label: "Bavaria" }, // Germany – Munich & BMW
+  { value: "Île-de-France", label: "Île-de-France" }, // France – Includes Paris
+  { value: "Dubai", label: "Dubai" }, // UAE – Luxury and architecture
   { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, // Japan – Tokyo is iconic
-  { value: "Ontario", label: "Ontario" },                // Canada – Includes Toronto
-  { value: "Maharashtra", label: "Maharashtra" },        // India – Includes Mumbai
+  { value: "Ontario", label: "Ontario" }, // Canada – Includes Toronto
+  { value: "Maharashtra", label: "Maharashtra" }, // India – Includes Mumbai
 ];
 
 const cityOptions = [

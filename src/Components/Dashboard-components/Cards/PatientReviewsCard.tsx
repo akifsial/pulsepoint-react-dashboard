@@ -6,7 +6,7 @@ import { useApiMyReviews } from "@src/hooks/useMyReviews";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiFlagReview } from "@src/api/ApiMyReviews";
-import { Flag, Star } from "lucide-react";
+import { Flag, Send, Star } from "lucide-react";
 import { ApiReplyOnReview } from "@src/api/ApiCommunityForum";
 import { useForm } from "react-hook-form";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
@@ -239,20 +239,23 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
 
               {item.comment ? (
                 <p>{item.comment}</p>
+              ) : item?.replies?.length==0 ? (
+                <div className="relative w-full">
+                  <input
+                    placeholder="Add a reply"
+                    value={reviewReplyValue}
+                    className="w-full border border-[#D3D3D3] bg-white outline-0 border-[1px] rounded-[5px] !p-2.5  text-sm"
+                    onChange={(e) => setReviewReplyValue(e.target.value)}
+                  />
+                  <div className="absolute cursor-pointer top-[20%] cursor right-2">
+                    <button
+                      onClick={() => handleReviewReply(item?.feedback?.id)}
+                    >
+                      <Send />
+                    </button>
+                  </div>
+                </div>
               ) : (
-                // <div className="relative w-full">
-                //   <input
-                //     placeholder="Add a reply"
-                //     value={reviewReplyValue}
-                //     className="w-full border border-[#D3D3D3] bg-white outline-0 border-[1px] rounded-[5px] !p-2.5  text-sm"
-                //     onChange={(e) => setReviewReplyValue(e.target.value)}
-                //   />
-                //   <div className="absolute top-[20%] cursor right-2">
-                //     <button onClick={() => handleReviewReply(item?.feedback?.id)}>
-                //       <Send />
-                //     </button>
-                //   </div>
-                // </div>
                 ""
               )}
               <FlagModal

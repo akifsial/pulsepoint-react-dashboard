@@ -1291,8 +1291,8 @@ const SavedCommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
                         }
                       }}
                     >
-                      {post?.user?.first_name}
-                      {post?.user?.last_name}
+                      {post?.user?.first_name}{" "}
+                      <span>{post?.user?.last_name}</span>
                     </p>
                     <span className="text-sm text-gray-500 leading-tight">
                       {post.userPost}

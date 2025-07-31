@@ -6,25 +6,32 @@ import { PrimaryButton } from "@components/Shared-components/Buttons/Common-butt
 
 const plans = [
   {
-    title: "Starter Plan",
+    title: "Basic Plan",
     price: "$49/month",
     features: [
-      "Highlighted listing in search results",
-      "Featured badge on profile",
-      "Up to 5 photos",
-      "Insights dashboard (views, clicks, contacts)",
+      // "Highlighted listing in search results",
+      // "Featured badge on profile",
+      // "Up to 5 photos",
+      // "Insights dashboard (views, clicks, contacts)",
+      "Increased profile detail (more photos, description)",
+      "AI chatbot use",
     ],
     highlighted: false,
     slug: "STARTER",
   },
   {
-    title: "Professional Plan",
-    price: "$99/month",
+    title: "Premium Plan",
+    price: "$79/month",
     features: [
-      "Everything in Starter",
-      "Appear in featured sections (homepage, category pages)",
-      "Insights dashboard (views, clicks, contacts)",
-      "Link to booking form or EHR system",
+      "All Basic Plan features",
+      "Featured placement on homepage or category pages",
+      "Increased visibility and ranking across the platform",
+      "Increased profile detail (more photos, description)",
+      "AI chatbot use",
+      // "Everything in Starter",
+      // "Appear in featured sections (homepage, category pages)",
+      // "Insights dashboard (views, clicks, contacts)",
+      // "Link to booking form or EHR system",
     ],
     highlighted: true,
     slug: "PROFESSIONAL",
@@ -85,7 +92,7 @@ const ProfileCards = ({ onUpgrade }) => {
             </div>
 
             <PrimaryButton
-              btnText="Upgrade Now"
+              btnText="Subscribe Now"
               showImg={true}
               img={isHighlighted ? crown : crownWhite}
               onClick={() => onUpgrade(plan?.slug)}

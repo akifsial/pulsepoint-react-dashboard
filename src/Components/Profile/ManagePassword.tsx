@@ -42,7 +42,7 @@ const ManagePassword = () => {
       return toast.error("New Password & Confirm Password Not Matched")
     }
     // const password={password:data?.pasword}
-    await updatePatientProfile({ password: data?.password });
+    await updatePatientProfile({old_password:data.old_password, new_password: data?.new_password });
   };
 
   return (
@@ -86,7 +86,7 @@ const ManagePassword = () => {
             onChange={(e) => setPassword1(e.target.value)}
             asterisk={false}
             register={register}
-            registerName="password"
+            registerName="new_password"
             errors={errors}
             validation={{ required: "Password is required" }}
           />

@@ -32,6 +32,8 @@ const PopularCommunity = () => {
   const [selectedTopicId2, setSelectedTopicId2] = useState();
   const [selectedTopicId3, setSelectedTopicId3] = useState();
   const [selectedTopicId4, setSelectedTopicId4] = useState();
+  const [isPrivate, setIsPrivate] = useState(false);
+
   const [searchCommunity, setSearchCommunity] = useState("");
   const [debouncedSearchText, setDebouncedSearchText] =
     useState(searchCommunity);
@@ -74,6 +76,8 @@ const PopularCommunity = () => {
     formData.append("description", description);
     formData.append("banner_image", img1);
     formData.append("profile_icon_image", img2);
+    formData.append("type", isPrivate ? "PRIVATE" : "PUBLIC");
+
     if (selectedTopicId1) {
       formData.append("topic_ids[]", selectedTopicId1);
     }
@@ -162,6 +166,8 @@ const PopularCommunity = () => {
             onClose={closeModal}
             setName={setName}
             setDescription={setDescription}
+            isPrivate={isPrivate}
+            setIsPrivate={setIsPrivate}
           />
         </Model>
       )}
