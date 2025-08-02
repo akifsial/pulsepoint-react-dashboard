@@ -71,14 +71,15 @@ const PatientProfile = ({ onChangePassword }) => {
       queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
     },
     onError: (error) => {
-      toast.error("Something Went Wrong");
+      toast.error(error.response?.data?.message);
+      // console.log("ERRROR AGAY HA ", error?.message);
     },
   });
 
   const profileSubmit = async (data) => {
-    console.log("**********************", typeof data.name);
     const formData = new FormData();
     formData.append("image", selectedImage);
+    // formData.append("user_name", data.user_name);
     formData.append("first_name", data.first_name);
     formData.append("last_name", data.last_name);
 
@@ -97,6 +98,7 @@ const PatientProfile = ({ onChangePassword }) => {
     if (meData) {
       setSingleUser(meData);
       // setValue("name", meData.name || "");
+      setValue("user_name", meData.user_name || "");
       setValue("first_name", meData.first_name || "");
       setValue("last_name", meData.last_name || "");
       setValue("email", meData.email || "");
@@ -204,6 +206,19 @@ const PatientProfile = ({ onChangePassword }) => {
                 register={register}
                 registerName={"name"}
               /> */}
+
+              <InputField
+                disabled
+                label="User Name:"
+                id="user_name"
+                name="user_name"
+                type="text"
+                fieldName="w-[32%]"
+                iconUrl={""}
+                placeholder="@johndoe"
+                register={register}
+                registerName={"user_name"}
+              />
 
               <InputField
                 label="First Name:"

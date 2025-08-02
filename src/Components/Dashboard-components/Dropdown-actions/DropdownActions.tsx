@@ -27,6 +27,7 @@ const DropdownActions: React.FC<DropdownActionsProps> = ({
   onView,
   onApprove,
   onJoin,
+  
   variant = "default",
 }) => {
   const [open, setOpen] = useState(false);
@@ -73,7 +74,7 @@ const DropdownActions: React.FC<DropdownActionsProps> = ({
       case "view":
         return "View Details";
       case "edit":
-        return "Edit Details";
+        return "Edit";
       case "approve":
         return "Approve Post";
       case "flag":

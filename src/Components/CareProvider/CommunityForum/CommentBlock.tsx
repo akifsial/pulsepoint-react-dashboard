@@ -8,6 +8,8 @@ import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 // import arrowUpTrans from "@assets/arrowUpTrans.svg";
 import arrowUpTrans from "@assets/media/svgs/dashboard-svgs/arrowUp.svg";
 import dayjs from "dayjs";
+import { IoEllipsisHorizontal, IoEllipsisVerticalSharp } from "react-icons/io5";
+import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 // import { ApiLikeComment } from "@src/api/ApiCommunityForum";
 // import { useQueryClient } from "@tanstack/react-query";
 
@@ -30,7 +32,6 @@ export const CommentItem = ({
 }) => {
   const isReplyVisible = parentCommentReplyId.includes(comment.id);
 
-
   const toggleReplies = () => {
     if (isReplyVisible) {
       // Remove from state
@@ -41,53 +42,8 @@ export const CommentItem = ({
     }
   };
 
-  // --------------
 
-  // const queryClient=useQueryClient()
 
-  // const { mutateAsync: LikeMutation, isPending: LikeIsPending } = useMutation({
-  //   mutationFn: (data) => ApiLikeComment(data),
-
-  //   onSuccess: async () => {
-  //     queryClient.invalidateQueries(["useGetCommunityPost"]);
-  //     // toast.success("Liked Successfully");
-  //   },
-  //   onError: (error) => {
-  //     toast.error("Something Went Wrong");
-  //   },
-  // });
-
-  // const handleReaction = async (status, post) => {
-  //   let newStatus = "";
-
-  //   const alreadyLiked = post.userLike?.is_like === true;
-  //   const alreadyDisliked = post.userLike?.is_like === false;
-
-  //   if (status === "like") {
-  //     if (alreadyLiked) {
-  //       newStatus = ""; // remove like
-  //     } else {
-  //       newStatus = "like"; // set like
-  //     }
-  //   }
-
-  //   if (status === "dislike") {
-  //     if (alreadyDisliked) {
-  //       newStatus = ""; // remove dislike
-  //     } else {
-  //       newStatus = "dislike"; // set dislike
-  //     }
-  //   }
-
-  //   const data = {
-  //     type: newStatus,
-  //     post_id: post.id,
-  //   };
-
-  //   await LikeMutation(data);
-  // };
-
-  console.log("COMMENT",comment)
   return (
     <div className="ml-4 mt-3">
       {/*  */}
@@ -95,11 +51,15 @@ export const CommentItem = ({
       {/*  */}
       <div className="flex items-start gap-3 mb-3">
         <img
-          src={comment?.user?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${comment?.user?.image}` : DummyUser}
+          src={
+            comment?.user?.image
+              ? `${import.meta.env.VITE_APP_API_IMG_URL}${comment?.user?.image}`
+              : DummyUser
+          }
           className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200"
           alt="userIcon"
         />
-        <div className="flex flex-col text-[#252525] font-normal">
+        <div className="flex  flex-col text-[#252525] font-normal">
           <p className="font-semibold">
             {comment?.user?.first_name} {comment?.user?.last_name}
           </p>
@@ -166,10 +126,10 @@ export const CommentItem = ({
             <div className="relative mb-3">
               <input
                 type="text"
-                value={parentCommentReplyValue}
+                // value={parentCommentReplyValue}
                 onChange={(e) => setParentCommentReplyValue(e.target.value)}
                 placeholder="Reply..."
-                className="w-full bg-white outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
+                className="w-full bg-500-red outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
               />
               <button
                 disabled={!comment}
@@ -193,24 +153,35 @@ export const CommentItem = ({
           {isReplyVisible && comment?.replies?.length > 0 && (
             <div className="mt-2">
               {comment.replies.map((reply) => (
-                <CommentItem
-                  key={reply.id}
-                  comment={reply}
-                  myId={myId}
-                  postId={postId}
-                  LikeIsPending={LikeIsPending}
-                  PostsPending={PostsPending}
-                  handleCommentReaction={handleCommentReaction}
-                  parentCommentReplyId={parentCommentReplyId}
-                  handleParentComment={handleParentComment}
-                  parentCommentReplyValue={parentCommentReplyValue}
-                  setParentCommentReplyValue={setParentCommentReplyValue}
-                  handleParentCommentReply={handleParentCommentReply}
-                  IsCommentReply={IsCommentReply}
-                  setIsCommentReply={setIsCommentReply}
-                  replyId={replyId}
-                  setReplyParentId={setReplyParentId}
-                />
+                <div className="flex items-center gap-5">
+                  <CommentItem
+                    key={reply.id}
+                    comment={reply}
+                    myId={myId}
+                    postId={postId}
+                    LikeIsPending={LikeIsPending}
+                    PostsPending={PostsPending}
+                    handleCommentReaction={handleCommentReaction}
+                    parentCommentReplyId={parentCommentReplyId}
+                    handleParentComment={handleParentComment}
+                    parentCommentReplyValue={parentCommentReplyValue}
+                    setParentCommentReplyValue={setParentCommentReplyValue}
+                    handleParentCommentReply={handleParentCommentReply}
+                    IsCommentReply={IsCommentReply}
+                    setIsCommentReply={setIsCommentReply}
+                    replyId={replyId}
+                    setReplyParentId={setReplyParentId}
+                  />
+
+                  {/* <div className="bg-grey-500 mb-10 cursor-pointer">
+                    <DropdownActions
+                      // onView={() => console.log("View Detail")}
+                      // onEdit={() => console.log("Edit Detail")}
+                      onDelete={() => handleDelete(reply?.id)}
+                      variant="simple"
+                    />
+                  </div> */}
+                </div>
               ))}
             </div>
           )}

@@ -2,6 +2,7 @@
 import {
   ApiGetCareProviders,
   ApiGetCareProvidersSingle,
+  ApiGetRecentSearches,
   ApiStats,
 } from "@src/api/ApiDashboard";
 import { useQuery } from "@tanstack/react-query";
@@ -15,7 +16,6 @@ export const useStatsApi = () => {
 };
 
 export const useCareProviders = (search: string, rating: number) => {
-
   return useQuery({
     queryKey: ["useCareProviders", search, rating],
     queryFn: () => ApiGetCareProviders(search, rating),
@@ -24,13 +24,19 @@ export const useCareProviders = (search: string, rating: number) => {
   });
 };
 
-
-
 export const useCareProviderSingle = (id: number) => {
   return useQuery({
     queryKey: ["useCareProviderSingle", id], // cache by ID
     queryFn: () => ApiGetCareProvidersSingle(id),
     enabled: !!id, // only fetch if id exists
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useRecentSearches = () => {
+  return useQuery({
+    queryKey: ["useRecentSearches"], // cache by ID
+    queryFn: () => ApiGetRecentSearches(),
     refetchOnWindowFocus: false,
   });
 };

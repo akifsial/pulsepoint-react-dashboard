@@ -33,16 +33,24 @@ const ManagePassword = () => {
       queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
     },
     onError: (error) => {
-      toast.error("Something Went Wrong");
+      toast.error(
+        error?.message == "INCORRECT_OLD_PASSWORD"
+          ? "Incorrect Old Password"
+          : error?.message
+      );
+      // console.log("TAOST",error.message)
     },
   });
 
   const passwordChangeSubmit = async (data) => {
-    if(data.password !== data.new_password){
-      return toast.error("New Password & Confirm Password Not Matched")
+    if (data.confirm_new_password !== data.new_password) {
+      return toast.error("New Password & Confirm Password Not Matched");
     }
     // const password={password:data?.pasword}
-    await updatePatientProfile({old_password:data.old_password, new_password: data?.new_password });
+    await updatePatientProfile({
+      old_password: data.old_password,
+      new_password: data?.new_password,
+    });
   };
 
   return (
@@ -101,7 +109,7 @@ const ManagePassword = () => {
             asterisk={false}
             register={register}
             errors={errors}
-            registerName="new_password"
+            registerName="confirm_new_password"
             validation={{ required: "Confirm password is required" }}
           />
           <PrimaryButton

@@ -319,7 +319,9 @@ export const ApiGetSpecificCommunity = async (id) => {
 };
 
 export const ApiGetNotifications = async () => {
-  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/notifications?sort=desc`;
+  const BASE_URL = `${
+    import.meta.env.VITE_APP_API_URL
+  }user/notifications`;
   const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL, {
@@ -328,6 +330,20 @@ export const ApiGetNotifications = async () => {
 
   return response.data.payload;
 };
+
+export const ApiDeleteComment = async (commentId,post_id) => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}comment/${commentId}`;
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const response = await axios.delete(BASE_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+    data:post_id
+  });
+
+  return response.data.payload;
+};
+
+
 
 // export const ApiLikeComment = async (data, id) => {
 //   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}comment/like/${id}`;

@@ -218,7 +218,7 @@ const CareProviderDashboard: React.FC = () => {
           {/* searchbar */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
             <CommonInput
-              placeholder="Search with Provider name , zip code"
+              placeholder="Search with Provider name"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               showImg={true}

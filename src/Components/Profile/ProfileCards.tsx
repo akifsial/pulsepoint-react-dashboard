@@ -6,24 +6,26 @@ import { PrimaryButton } from "@components/Shared-components/Buttons/Common-butt
 
 const plans = [
   {
-    title: "Basic Plan",
-    price: "$49/month",
+    title: "Free Plan",
+    price: "$0/month",
     features: [
       // "Highlighted listing in search results",
       // "Featured badge on profile",
       // "Up to 5 photos",
       // "Insights dashboard (views, clicks, contacts)",
-      "Increased profile detail (more photos, description)",
-      "AI chatbot use",
+      // "Increased profile detail (more photos, description)",
+      // "AI chatbot use",
+       "All Premium Plan features",
+       "Users can interact with the chatbot up to *5 times per month free"
     ],
     highlighted: false,
-    slug: "STARTER",
+    slug: "FREE",
   },
   {
-    title: "Premium Plan",
-    price: "$79/month",
+    title: "Basic",
+    price: "$5.99/month",
     features: [
-      "All Basic Plan features",
+      // "All Basic Plan features",
       "Featured placement on homepage or category pages",
       "Increased visibility and ranking across the platform",
       "Increased profile detail (more photos, description)",
@@ -34,25 +36,25 @@ const plans = [
       // "Link to booking form or EHR system",
     ],
     highlighted: true,
-    slug: "PROFESSIONAL",
+    slug: "BASIC",
   },
-  {
-    title: "Enterprise Plan",
-    price: "$120/month",
-    features: [
-      "Everything in Professional",
-      "Priority support",
-      "Quarterly performance report & SEO audit",
-      "Multi-location support",
-    ],
-    highlighted: false,
-    slug: "ENTERPRISE",
-  },
+  // {
+  //   title: "Enterprise Plan",
+  //   price: "$120/month",
+  //   features: [
+  //     "Everything in Professional",
+  //     "Priority support",
+  //     "Quarterly performance report & SEO audit",
+  //     "Multi-location support",
+  //   ],
+  //   highlighted: false,
+  //   slug: "ENTERPRISE",
+  // },
 ];
 
 const ProfileCards = ({ onUpgrade }) => {
   return (
-    <div className="flex gap-2 justify-between mb-6">
+    <div className="flex gap-2 justify-center mb-6">
       {plans.map((plan, index) => {
         const isHighlighted = plan.highlighted;
 

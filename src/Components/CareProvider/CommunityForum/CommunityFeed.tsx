@@ -15,6 +15,7 @@ import FlagPost from "./FlagPost";
 import SubmitReport from "./SubmitReport";
 import ShareModal from "@components/ShareModal";
 import {
+  ApiDeleteComment,
   ApieSaveCreatePost,
   ApiLikeComment,
   ApiLikePost,
@@ -33,6 +34,7 @@ import { useGetCommunityPost } from "@src/hooks/useCommunity";
 import { useGetSingleUser } from "@src/hooks/useCommunity";
 import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
 import { CommentItem } from "./CommentBlock";
+import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 
 const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [activeTab, setActiveTab] = useState("home");
@@ -324,6 +326,28 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
   console.log("postData", postData);
 
+  const {
+    mutateAsync: deleteCommentMutation,
+    // isPending: savedCareProvidersPending,
+  } = useMutation({
+    mutationFn: (commentId,post_id) => ApiDeleteComment(commentId,post_id),
+
+    onSuccess: async () => {
+      toast.success("Comment Deleted Successfully");
+      queryClient.invalidateQueries(["useGetCommunityPost"]); // refetch list
+    },
+    onError: (error) => {
+      toast.error("Something Went Wrong");
+    },
+  });
+
+  const handleDeleteComment = async (commentId,postId) => {
+    const post_id={
+      post_id:postId
+    }
+    await deleteCommentMutation(commentId,post_id);
+  };
+
   return (
     <div
       className=" h-[661px] overflow-y-auto transition-colors duration-300"
@@ -517,26 +541,39 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                   {post?.comments
                     ?.slice(0, showMoreComments[post.id] ? undefined : 3)
                     .map((comment) => (
-                      <CommentItem
-                        key={comment.id}
-                        comment={comment}
-                        myId={myId}
-                        postId={post.id}
-                        LikeIsPending={LikeIsPending}
-                        PostsPending={PostsPending}
-                        handleCommentReaction={handleCommentReaction}
-                        parentCommentReplyId={parentCommentReplyId}
-                        handleParentComment={handleParentComment}
-                        parentCommentReplyValue={parentCommentReplyValue}
-                        setParentCommentReplyValue={setParentCommentReplyValue}
-                        handleParentCommentReply={handleParentCommentReply}
-                        IsCommentReply={IsCommentReply}
-                        setIsCommentReply={setIsCommentReply}
-                        replyId={replyId}
-                        setReplyParentId={setReplyParentId}
-                      />
-                    ))}
+                      <div className="flex items-center">
+                        <CommentItem
+                          key={comment.id}
+                          comment={comment}
+                          myId={myId}
+                          postId={post.id}
+                          LikeIsPending={LikeIsPending}
+                          PostsPending={PostsPending}
+                          handleCommentReaction={handleCommentReaction}
+                          parentCommentReplyId={parentCommentReplyId}
+                          handleParentComment={handleParentComment}
+                          parentCommentReplyValue={parentCommentReplyValue}
+                          setParentCommentReplyValue={
+                            setParentCommentReplyValue
+                          }
+                          handleParentCommentReply={handleParentCommentReply}
+                          IsCommentReply={IsCommentReply}
+                          setIsCommentReply={setIsCommentReply}
+                          replyId={replyId}
+                          setReplyParentId={setReplyParentId}
+                        />
 
+                        <div className="bg-grey-500 mb-20 cursor-pointer">
+                          <DropdownActions
+                            // onView={() => console.log("View Detail")}
+                            // onEdit={() => console.log("Edit Detail")}
+                            onDelete={() => handleDeleteComment(comment?.id,post?.id)}
+                            variant="simple"
+                          />
+                        </div>
+                        {/* </div> */}
+                      </div>
+                    ))}
                   {/* YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY */}
                 </div>
               )}

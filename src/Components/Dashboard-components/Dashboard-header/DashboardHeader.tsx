@@ -111,20 +111,7 @@ const DashboardHeader: React.FC<Props> = ({
           </button>
           {/* Search Bar */}
           <div className="hidden lg:block relative provider-search-dropdown w-[300px] transition-all duration-300">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search by reviewer name, condition, or keywords"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                onFocus={() => setIsSearchDropdownOpen(true)}
-                className={`transition-all duration-300 pl-10 pr-4 py-3 text-sm text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white ${
-                  isSearchDropdownOpen ? "w-[300px]" : "w-[300px]"
-                }`}
-              />
-            </div>
-
+          
             {isSearchDropdownOpen && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
                 {/* {searchText && (

@@ -18,10 +18,15 @@ import { useNavigate } from "react-router-dom";
 import ReviewCard from "@components/ReviewCard";
 import dayjs from "dayjs";
 import { Search, Clock } from "lucide-react";
-import { useCareProviders, useStatsApi } from "@src/hooks/useDashboard";
+import {
+  useCareProviders,
+  useRecentSearches,
+  useStatsApi,
+} from "@src/hooks/useDashboard";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ApiCareProviderStatusUpdate,
+  ApiDeleteRecentSearches,
   ApiGetCareProviders,
 } from "@src/api/ApiDashboard";
 import DeleteModal from "@src/components/Model/DeleteModal";
@@ -71,22 +76,22 @@ const AdminDashboard: React.FC = () => {
   const [rating, setRating] = useState();
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
 
-
   // Apis
   const { data: StatsData } = useStatsApi();
   // const { data: CareProvidersData } = useCareProviders();
-  const { data: CareProvidersData, isFetching, isLoading:isLoadingCareProviderData } = useCareProviders(
-    debouncedSearchText,
-    rating
-  );
+  const {
+    data: CareProvidersData,
+    isFetching,
+    isLoading: isLoadingCareProviderData,
+  } = useCareProviders(debouncedSearchText, rating);
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchText(searchText);
-    }, 500); 
+    }, 500);
 
     return () => {
-      clearTimeout(handler); 
+      clearTimeout(handler);
     };
   }, [searchText]);
 
@@ -241,6 +246,9 @@ const AdminDashboard: React.FC = () => {
     },
   ];
 
+  const { data: recentSearchesData } = useRecentSearches();
+  console.log("RECENT DSER", recentSearchesData);
+
   const handleRowSelect = (row: any) => {
     console.log("Selected row:", row);
   };
@@ -259,7 +267,6 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleSearchItemClick = (searchValue: string) => {
-    
     setSearchText(searchValue);
     setIsSearchDropdownOpen(false);
     console.log("Selected search:", searchValue);
@@ -362,6 +369,25 @@ const AdminDashboard: React.FC = () => {
     };
   }, [showRatingDropdown]);
 
+  const { mutateAsync: deleteSearchesAllMutation } = useMutation({
+    mutationFn: () => ApiDeleteRecentSearches(),
+
+    // onMutate: () => setLoadingId(currentId),
+    onSuccess: async () => {
+      queryClient.invalidateQueries(["useRecentSearches"]); // refetch list
+      toast.success("Delete All Searches Successfully");
+    },
+    onError: (error) => {
+      console.error("Error updating user:", error);
+    },
+  });
+
+  const handleDeleteSearches = (id) => {
+    // console.log("%%%%%%%%%%%%",id)
+
+    deleteSearchesAllMutation(id);
+  };
+
   return (
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
@@ -412,7 +438,7 @@ const AdminDashboard: React.FC = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Search with Provider name, zip code"
+                  placeholder="Search with Provider name"
                   value={searchText}
                   onChange={handleSearchChange}
                   onFocus={handleSearchFocus}
@@ -439,35 +465,49 @@ const AdminDashboard: React.FC = () => {
                   </div> */}
 
                   {/* Recents Section */}
-                  <div className="p-2">
-                    <div className="flex items-center justify-between mb-0">
-                      <h3 className="text-gray-600 font-medium text-base">
-                        Recents
-                      </h3>
-                      <button
-                        onClick={handleClearRecentSearches}
-                        className="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors"
-                      >
-                        Clear
-                      </button>
-                    </div>
 
-                    {/* Recent Searches List */}
-                    <div className="space-y-0.5 max-h-[250px] overflow-y-auto">
-                      {recentSearches.map((search) => (
-                        <div
-                          key={search.id}
-                          onClick={() => handleSearchItemClick(search.text)}
-                          className="flex items-center p-2 hover:bg-gray-50 cursor-pointer rounded-md transition-colors"
+                  {recentSearchesData?.length == 0 ? (
+                    ""
+                  ) : (
+                    <div className="p-2">
+                      <div className="flex items-center justify-between mb-0">
+                        <h3 className="text-gray-600 font-medium text-base">
+                          Recents
+                        </h3>
+                        <button
+                          onClick={() => handleDeleteSearches()}
+                          className="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors"
                         >
-                          <Clock className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3" />
-                          <span className="text-gray-700 text-sm leading-relaxed">
-                            {search.text}
-                          </span>
-                        </div>
-                      ))}
+                          Clear
+                        </button>
+                      </div>
+
+                      {/* Recent Searches List */}
+
+                      <div className="space-y-0.5 max-h-[250px] min-h-[50px] overflow-y-auto">
+                        {recentSearchesData.length == 0 ? (
+                          <div className="mt-3 flex justify-center">
+                            <p className="text-[14px]">No Searches Found</p>
+                          </div>
+                        ) : (
+                          recentSearchesData?.map((search) => (
+                            <div
+                              key={search.id}
+                              onClick={() =>
+                                handleSearchItemClick(search.keyword)
+                              }
+                              className="flex items-center p-2 hover:bg-gray-50 cursor-pointer rounded-md transition-colors"
+                            >
+                              <Clock className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3" />
+                              <span className="text-gray-700 text-sm leading-relaxed">
+                                {search.keyword}
+                              </span>
+                            </div>
+                          ))
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
             </div>

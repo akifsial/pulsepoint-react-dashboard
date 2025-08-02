@@ -146,7 +146,10 @@ const SignupForm = () => {
         navigate("/login");
       },
       onError: (error) => {
-        toast.error("Failed to Create Care Provider");
+        // toast.error("Failed to Create Care Provider");
+        toast.error(error?.response?.data?.message);
+        console.log("errrrrror",error)
+
       },
     });
 
@@ -197,6 +200,24 @@ const SignupForm = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
+                    label="User Name"
+                    asterisk={true}
+                    icon={IoPersonOutline}
+                    id="userName"
+                    name="userName"
+                    type="text"
+                    placeholder="Enter your user name"
+                    register={register}
+                    registerName="userName"
+                    errors={errors}
+                    validation={{
+                      required: "User Name is required",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <InputField
                     label="First Name"
                     asterisk={true}
                     icon={IoPersonOutline}
@@ -212,6 +233,10 @@ const SignupForm = () => {
                     }}
                   />
                 </div>
+              </div>
+
+              {/* Other Form Fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
                     label="Last Name"
@@ -229,10 +254,6 @@ const SignupForm = () => {
                     }}
                   />
                 </div>
-              </div>
-
-              {/* Other Form Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
                     label="Email Address"
@@ -257,6 +278,9 @@ const SignupForm = () => {
                     <p className="mt-1 text-sm text-red-600">{errors.email}</p>
                   )}
                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
                     label="Phone Number"
@@ -274,9 +298,7 @@ const SignupForm = () => {
                     }}
                   />
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
                     label="Age"
@@ -294,6 +316,10 @@ const SignupForm = () => {
                     }}
                   />
                 </div>
+              </div>
+
+              {/* Marital Status, and Insurance Type */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <SelectField
                     label="Gender"
@@ -309,10 +335,7 @@ const SignupForm = () => {
                     }}
                   />
                 </div>
-              </div>
 
-              {/* Marital Status, and Insurance Type */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <SelectField
                     label="Marital Status"
@@ -328,6 +351,10 @@ const SignupForm = () => {
                     }}
                   />
                 </div>
+              </div>
+
+              {/* care needs */}
+              <div className="grid grid-cols-1 md:grid-cols-1 ">
                 <div>
                   <SelectField
                     label="Insurance Type"
@@ -343,10 +370,7 @@ const SignupForm = () => {
                     }}
                   />
                 </div>
-              </div>
 
-              {/* care needs */}
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
                 <InputField
                   label="Care Needs (Optional)"
                   id="careNeeds"

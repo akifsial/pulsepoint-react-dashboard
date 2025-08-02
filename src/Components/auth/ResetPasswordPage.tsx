@@ -27,20 +27,21 @@ const ResetPasswordPage = () => {
       onSuccess: async () => {
         toast.success("Password Reset Successfully");
         navigate("/login");
-        localStorage.clear()
+        localStorage.clear();
       },
       onError: (error) => {
         toast.error("Reset Password Failed");
+        
       },
     }
   );
 
   const resetSubmit = async (data) => {
     const pass = {
-      old_password:data.old_password,
+      old_password: data.old_password,
       new_password: data?.createPassword,
     };
-    await resetMutation({ data:pass });
+    await resetMutation({ data: pass });
   };
 
   return (

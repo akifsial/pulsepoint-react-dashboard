@@ -10,17 +10,18 @@ import {
   PatientSidebarLinks,
   ProfileSidebarLinks,
   sidebarLinks,
-  
 } from "@components/Dashboard-components/Sidebar/SidebarLinks";
 
 const PatientProfileLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
-  
 
-  const showProfileSidebar = ["/patient/profile", "/patient/manage-password", "/patient/feature","/patient/payment-history"].some(
-    (path) => location.pathname.startsWith(path)
-  );
+  const showProfileSidebar = [
+    "/patient/profile",
+    "/patient/manage-password",
+    "/patient/feature",
+    "/patient/payment-history",
+  ].some((path) => location.pathname.startsWith(path));
   const mainMargin = showProfileSidebar ? "lg:ml-[357px]" : "lg:ml-[89px]";
 
   return (
@@ -32,7 +33,7 @@ const PatientProfileLayout = () => {
         onClose={() => setIsSidebarOpen(false)}
       />
 
-      {showProfileSidebar&&showProfileSidebar && (
+      {showProfileSidebar && showProfileSidebar && (
         <ProfileSidebar
           sidebarData={PatientProfileSidebarLinks}
           isOpen={isSidebarOpen}
