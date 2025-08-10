@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { data, Link } from "react-router-dom"; // For navigation
+import { data, Link, useLocation } from "react-router-dom"; // For navigation
 import InputField from "../InputField";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
@@ -12,6 +12,7 @@ import { ApiLogin } from "@src/api/AuthApi/AuthApi";
 import { useForm } from "react-hook-form";
 import Spinner from "@components/Loaders/Spinner";
 import toast from "react-hot-toast";
+import { connectSocket } from "@src/socket/socket";
 
 const LoginPage = () => {
   const {
@@ -24,6 +25,8 @@ const LoginPage = () => {
     password: "",
     rememberMe: false,
   });
+  const localtion = useLocation();
+  const pathname = location.pathname;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -47,14 +50,25 @@ const LoginPage = () => {
       onSuccess: async (response) => {
         console.log("NUTELA", response.user.role_type);
         toast.success("Login Successful");
+
+        const token = JSON.parse(localStorage.getItem("token"));
+
+        // const socket = connectSocket(token);
+        connectSocket(token);
+
+        // socket.on("connect", () => {
+        //   console.log("Socket connected ✅");
+        // });
+
         if (response?.user?.role_type == "PATIENT") {
           navigate("/patient/dashboard");
         } else {
           navigate("/care-provider");
         }
       },
-      onError: (error) => {
-        toast.error("Login Failed");
+      onError: (response) => {
+        // toast.error(error?.response?.data?.message);
+        console.log("eooeoeoeo", response);
       },
     }
   );
@@ -65,11 +79,11 @@ const LoginPage = () => {
 
   return (
     <OnBoardingLayout logoParentClass="absolute top-14 right-0 left-0 flex justify-center">
-      <div className="flex flex-col min-h-screen p-6 justify-center">
-        <h2 className="text-[35px] font-bold leading-[140%] tracking-[0%] text-[#1A1A1A] font-space-grotesk mb-2">
+      <div className="flex flex-col min-h-screen sm:mt-0 mt-[60px] p-2 sm:p-6 justify-center ">
+        <h2 className=" !text-[25px] sm:!text-[35px] font-bold leading-[140%] tracking-[0%] text-[#1A1A1A] font-space-grotesk mb-2">
           Login
         </h2>
-        <p className="text-[16px] font-normal leading-[150%] tracking-[0%] text-[#252525CC] font-geist mb-4">
+        <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] tracking-[0%] text-[#252525CC] font-geist mb-4">
           Join to explore and share care insights.
         </p>
         <form
@@ -78,7 +92,7 @@ const LoginPage = () => {
         >
           {/* Email or Username Input */}
           <InputField
-            label="Email or Username"
+            label="Email"
             asterisk={true}
             icon={IoPersonOutline}
             type="text"
@@ -116,7 +130,7 @@ const LoginPage = () => {
           />
 
           {/* Remember Me & Forgot Password */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center flex-wrap gap-5 justify-between">
             <div className="flex items-center">
               <input
                 type="checkbox"
@@ -160,12 +174,21 @@ const LoginPage = () => {
           <div className="flex justify-center">
             <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
               Don’t have an account yet?{" "}
-              <Link
-                to="/signup"
-                className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
-              >
-                Register now
-              </Link>
+              {pathname == "/patient/login" ? (
+                <Link
+                  to="/patient/signup"
+                  className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
+                >
+                  Register now
+                </Link>
+              ) : (
+                <Link
+                  to="/care-provider/signup"
+                  className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
+                >
+                  Register now
+                </Link>
+              )}
             </p>
           </div>
         </form>

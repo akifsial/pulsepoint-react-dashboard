@@ -1,7 +1,7 @@
-import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import ReviewForm from '@components/Review/ReviewForm';
-import { PrimaryButton } from '@components/Shared-components/Buttons/Common-button/CommonButton';
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import ReviewForm from "@components/Review/ReviewForm";
+import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 
 interface LocationState {
   reviewData: {
@@ -29,23 +29,24 @@ const EditReviewPage: React.FC = () => {
     }
   }, [state, navigate]);
 
-  const handleSaveReview = (updatedReview: { rating: number; comment: string }) => {
+  const handleSaveReview = (updatedReview: {
+    rating: number;
+    comment: string;
+  }) => {
     // Here you would typically make an API call to save the updated review
-    console.log("Saving updated review:", updatedReview);
-    console.log("Original review data:", state.reviewData);
-    
+
     // After successful save, navigate back to reviews page
     // You might want to show a success message here
-    navigate('/patient/patient-reviews', { 
-      state: { 
-        message: 'Review updated successfully!',
-        updatedReviewId: state.reviewData.id 
-      } 
+    navigate("/patient/patient-reviews", {
+      state: {
+        message: "Review updated successfully!",
+        updatedReviewId: state.reviewData.id,
+      },
     });
   };
 
   const handleCancel = () => {
-    navigate('/patient/patient-reviews');
+    navigate("/patient/patient-reviews");
   };
 
   if (!state?.reviewData) {
@@ -53,9 +54,9 @@ const EditReviewPage: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <p className="text-gray-600 mb-4">No review data found</p>
-          <PrimaryButton 
-            btnText="Back to Reviews" 
-            onClick={() => navigate('/patient/patient-reviews')}
+          <PrimaryButton
+            btnText="Back to Reviews"
+            onClick={() => navigate("/patient/patient-reviews")}
           />
         </div>
       </div>
@@ -90,7 +91,7 @@ const EditReviewPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex items-center gap-4">
             <img
-              src={reviewData.provider_logo || '/path/to/default-image.png'}
+              src={reviewData.provider_logo || "/path/to/default-image.png"}
               alt={reviewData.provider_name}
               className="w-16 h-16 rounded-full object-cover border border-gray-200"
             />
@@ -110,7 +111,7 @@ const EditReviewPage: React.FC = () => {
             <ReviewForm
               currentReview={{
                 rating: reviewData.numericRating || 0,
-                comment: reviewData.reviews || ''
+                comment: reviewData.reviews || "",
               }}
               onSave={handleSaveReview}
             />

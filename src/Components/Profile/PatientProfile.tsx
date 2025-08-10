@@ -3,7 +3,8 @@ import Model from "@components/Model/Model";
 import ChangePhoto from "./ChangePhoto";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import userProfile from "../../assets/media/svgs/dashboard-svgs/profile1.svg";
-import fallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
+// import fallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
+import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png"
 import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
 import { useMeApi } from "@src/hooks/useUsers";
@@ -54,7 +55,6 @@ const PatientProfile = ({ onChangePassword }) => {
   const { register, handleSubmit, setValue } = useForm();
   const [selectedImage, setSelectedImage] = useState("");
   const [singleUser, setSingleUser] = useState();
-  console.log("(((((9", selectedImage);
 
   const { data: meData } = useMeApi();
 
@@ -77,8 +77,10 @@ const PatientProfile = ({ onChangePassword }) => {
   });
 
   const profileSubmit = async (data) => {
+     if (updatePatientProfileLoader) return;
+     
     const formData = new FormData();
-    formData.append("image", selectedImage);
+    // formData.append("image", selectedImage);
     // formData.append("user_name", data.user_name);
     formData.append("first_name", data.first_name);
     formData.append("last_name", data.last_name);
@@ -91,6 +93,9 @@ const PatientProfile = ({ onChangePassword }) => {
     formData.append("number", data.number);
     formData.append("postal_code", data.postal_code);
     formData.append("state", data.state);
+    if(selectedImage) {
+      formData.append("image", selectedImage)
+    }
     await updatePatientProfile({ id: meData?.id, data: formData });
   };
 
@@ -117,14 +122,13 @@ const PatientProfile = ({ onChangePassword }) => {
     }
   }, [meData, setValue]);
 
-  console.log("ssssss", singleUser?.image);
 
   return (
     <>
       <div>
-        <div className="overflow-y-auto rounded-[10px] bg-white p-10 h-[601px]">
+        <div className="overflow-y-auto rounded-[10px] bg-white p-2 sm:p-10 h-[601px]">
           <form onSubmit={handleSubmit(profileSubmit)}>
-            <div className="flex items-center justify-between mb-9">
+            <div className="lg:flex lg:items-center lg:justify-between mb-9">
               <div className="flex items-center gap-3">
                 {/* <img src={userProfile} alt="Methew" /> */}
                 <div className="flex items-center flex-wrap gap-4 px-3 py-3 rounded-[15px]">
@@ -136,11 +140,11 @@ const PatientProfile = ({ onChangePassword }) => {
                         ? `${import.meta.env.VITE_APP_API_IMG_URL}${
                             singleUser.image
                           }`
-                        : fallbackImg
+                        : userFallbackImg
                     }
                     onError={(e) => {
                       e.currentTarget.onerror = null; // Prevent infinite loop
-                      e.currentTarget.src = fallbackImg;
+                      e.currentTarget.src = userFallbackImg;
                     }}
                     alt="Profile"
                     className="w-20 h-20 rounded-[15px] object-cover"
@@ -173,7 +177,7 @@ const PatientProfile = ({ onChangePassword }) => {
                   )}
                 </div>
               </div>
-              <div className="flex gap-5">
+              <div className="flex flex-wrap gap-5">
                 <label
                   className="border-1 cursor-pointer border-[#25252533] w-[159px] h-[46px] bg-[#F3F3F3] !rounded-[10px] px-4 py-[10px] text-base text-[#252525] font-medium leading-[33px] gap-2 flex items-center justify-center"
                   htmlFor="upload"
@@ -187,6 +191,7 @@ const PatientProfile = ({ onChangePassword }) => {
                   showImg={false}
                   btnClass=" w-[159px] h-[46px] !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
                   type="submit"
+                  disabled={updatePatientProfileLoader}
                 />
               </div>
             </div>
@@ -194,13 +199,13 @@ const PatientProfile = ({ onChangePassword }) => {
             <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
               Add Personal Information
             </h4>
-            <div className="flex flex-wrap items-center gap-x-4">
+            <div className="sm:flex sm:flex-wrap items-center gap-x-4">
               {/* <InputField
                 label="Full Name:"
                 id="name"
                 name="name"
                 type="text"
-                fieldName="w-[32%]"
+                fieldName="sm:w-[32%]"
                 iconUrl={""}
                 placeholder="Methew Thompson"
                 register={register}
@@ -213,7 +218,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 id="user_name"
                 name="user_name"
                 type="text"
-                fieldName="w-[32%]"
+                fieldName="sm:w-[32%] w-full"
                 iconUrl={""}
                 placeholder="@johndoe"
                 register={register}
@@ -225,7 +230,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 id="first_name"
                 name="first_name"
                 type="text"
-                fieldName="w-[32%]"
+                fieldName="sm:w-[32%] w-full"
                 iconUrl={""}
                 placeholder="John"
                 register={register}
@@ -236,7 +241,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 id="last_name"
                 name="last_name"
                 type="text"
-                fieldName="w-[32%]"
+                fieldName="sm:w-[32%] w-full"
                 iconUrl={""}
                 placeholder="Doe"
                 register={register}
@@ -248,7 +253,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 id="email"
                 name="email"
                 type="email"
-                fieldName="w-[32%]"
+                fieldName="sm:w-[32%] w-full"
                 iconUrl={""}
                 placeholder="methew@gmail.com"
                 register={register}
@@ -260,7 +265,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 id="number"
                 name="number"
                 type="tel"
-                fieldName="w-[32%]"
+                fieldName="sm:w-[32%] w-full"
                 iconUrl={""}
                 placeholder="+1***********"
                 register={register}
@@ -271,7 +276,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 id="age"
                 name="age"
                 type="age"
-                fieldName="w-[32%]"
+                fieldName="sm:w-[32%] w-full"
                 iconUrl={""}
                 placeholder="89"
                 register={register}
@@ -283,7 +288,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 value={Gender}
                 onChange={(e) => setGender(e.target.value)}
                 options={organizationOptions}
-                selectName="w-[32%]"
+                selectName="sm:sm:w-[32%] w-full"
                 register={register}
                 registerName={"gender"}
               />
@@ -293,14 +298,14 @@ const PatientProfile = ({ onChangePassword }) => {
               Add Location
             </h4>
 
-            <div className="flex items-center gap-4">
+            <div className="sm:flex  items-center gap-4">
               <SelectField
                 label="State"
                 id="state"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 options={stateOptions}
-                selectName="w-[32%]"
+                selectName="sm:w-[32%] w-full"
                 register={register}
                 registerName={"state"}
               />
@@ -311,7 +316,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 name="postal_code"
                 type="text"
                 placeholder="78701"
-                fieldName="w-[32%]"
+                fieldName="sm:w-[32%]"
                 register={register}
                 registerName={"postal_code"}
               />
@@ -321,7 +326,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 options={cityOptions}
-                selectName="w-[32%]"
+                selectName="sm:sm:w-[32%] w-full"
                 register={register}
                 registerName={"city"}
               />

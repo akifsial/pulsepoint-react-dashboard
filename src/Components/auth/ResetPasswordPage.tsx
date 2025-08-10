@@ -30,8 +30,8 @@ const ResetPasswordPage = () => {
         localStorage.clear();
       },
       onError: (error) => {
-        toast.error("Reset Password Failed");
-        
+        // toast.error("Invalid Token");
+        // console.log("EEERRROOORRR", error)
       },
     }
   );

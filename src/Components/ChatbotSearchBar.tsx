@@ -26,15 +26,12 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({
     }
   };
 
-  // console.log("bot.....", botAnswers);
-  // console.log("user...",userAnswer)
-
   
   return (
     <div className="flex items-center justify-center w-full">
       <div className="relative w-full ">
         <div className="flex items-center w-full bg-white border border-[#007AB2] rounded-full w-[831px] h-[60px] px-[20px] py-[10px]">
-          <img src={AI} alt="AI Icon" className="w-[16px] h-[19px] mr-4" />
+          <img  src={AI} alt="AI Icon" className="w-[16px] h-[19px] mr-4" />
           <input
             type="text"
             placeholder="Ask AI for its suggestions..."

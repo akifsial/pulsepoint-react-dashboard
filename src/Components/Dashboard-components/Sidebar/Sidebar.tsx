@@ -21,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const AIShow = location.pathname.startsWith("/patient");
-
+  const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
   const iconOnlyRoutes = [
     "/admin/profile",
     "/admin/feature",
@@ -33,7 +33,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
     "/care-provider/manage-password",
     "/care-provider/feature",
     "/patient/chatbot",
-    "/patient/payment-history"
+    "/care-provider/chatbot",
+    "/patient/payment-history",
   ];
 
   const showOnlyIcons = iconOnlyRoutes.some((route) =>
@@ -43,6 +44,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   useEffect(() => {
     onClose();
   }, [location.pathname]);
+
+  // const userRole=JSON.stringify(localStorage.getItem("userInfo")).role_type
 
   return (
     <>
@@ -58,7 +61,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
           <div className="space-y-2 mt-3">
             <div
               className="mb-7 max-w-[250px] mx-auto cursor-pointer"
-              onClick={() => navigate("/")}
+              onClick={
+                userRole == "PATIENT"
+                  ? () => navigate("/patient/dashboard")
+                  : () => navigate("/care-provider")
+              }
             >
               <img
                 src={miniLogo}
@@ -106,16 +113,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
             })}
             {/* Add the ChatbotIcon image*/}
           </div>
-          <Link to="/patient/chatbot" aria-label="Open chatbot">
-            <div>
-              {" "}
-              <img
-                src={ChatbotIcon}
-                alt="chatbot"
-                className="w-[70px] h-[50px] object-cover cursor-pointer"
-              />
-            </div>
-          </Link>
+          {}
+          {/* <Link to="/patient/chatbot" aria-label="Open chatbot"> */}
+          <div
+            onClick={
+              userRole == "PATIENT"
+                ? () => navigate("/patient/chatbot")
+                : () => navigate("/care-provider/chatbot")
+            }
+          >
+            {" "}
+            <img
+              src={ChatbotIcon}
+              alt="chatbot"
+              className="w-[70px] h-[50px] object-cover cursor-pointer"
+            />
+          </div>
+          {/* </Link> */}
         </aside>
       ) : (
         <aside
@@ -130,7 +144,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
           <div className="space-y-2 mt-3 ">
             <div
               className="mb-7 max-w-[250px] mx-auto cursor-pointer"
-              onClick={() => navigate("/")}
+              // onClick={() => navigate("/")}
+              onClick={
+                userRole == "PATIENT"
+                  ? () => navigate("/patient/dashboard")
+                  : () => navigate("/care-provider")
+              }
             >
               <img
                 src={SiteLogo}

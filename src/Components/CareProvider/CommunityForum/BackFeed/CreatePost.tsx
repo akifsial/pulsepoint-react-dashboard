@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import InputField from "../../../InputField";
 import DragMedia from "../DragMedia";
-import { useMutation } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
   ApiCreateCommunity,
@@ -9,8 +13,12 @@ import {
 } from "@src/api/ApiCommunityForum";
 import { useForm } from "react-hook-form";
 import Spinner from "@components/Loaders/Spinner";
-
-const CreatePost = ({ setIsOpen,communityId }) => {
+// import {
+//   QueryClient,
+//   useMutation,
+//   useQueryClient,
+// } from "@tanstack/react-query";
+const CreatePost = ({ setIsOpen, communityId }) => {
   const [imageFile, setImageFile] = useState(null);
 
   const {
@@ -19,11 +27,14 @@ const CreatePost = ({ setIsOpen,communityId }) => {
     formState: { errors },
   } = useForm();
 
+  const queryClient = useQueryClient();
+
   const { mutateAsync: CreatePostMutation, isPending: creatPostIsPending } =
     useMutation({
       mutationFn: (data) => ApiCreatePostCommunity(data),
       onSuccess: async () => {
         toast.success("Post Created Successfully");
+        queryClient.invalidateQueries(["useGetSpecificCommunity"]); // refetch list
       },
       onError: () => {
         toast.error("Something Went Wrong");
@@ -98,7 +109,6 @@ const CreatePost = ({ setIsOpen,communityId }) => {
           {creatPostIsPending ? (
             <span className="flex items-center gap-2">
               <Spinner />
-              
             </span>
           ) : (
             "Add Post in Community"

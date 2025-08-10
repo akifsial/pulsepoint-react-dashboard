@@ -11,7 +11,6 @@ export const ApiLogin = async (data) => {
       JSON.stringify(response?.data?.payload?.accessToken)
     );
 
-
     // if(response.status==200){
     // }
 
@@ -29,6 +28,8 @@ export const ApiLogin = async (data) => {
     );
     return response.data.payload;
   } catch (error) {
+    console.log("asdasdasd",error)
+    toast.error(error?.response?.data?.errors[0]?.message);
     throw error;
   }
 };
@@ -42,7 +43,10 @@ export const ApiForgot = async (data) => {
 
     return response.data.payload.records;
   } catch (error) {
+    console.log("forgot",error)
+    toast.error(error?.response?.data?.errors[0]?.message)
     throw new error();
+
   }
 };
 
@@ -52,10 +56,12 @@ export const ApiRegister = async (data) => {
 
     const response = await axios.post(BASE_URL, data);
     localStorage.setItem("id", response?.data?.payload?.id);
-
+    console.log("RESPONSE -- -- - - -",response)
     return response.data.payload.records;
+    
   } catch (error) {
-    throw new error();
+    toast.error(error?.response?.data?.errors[0]?.message);
+    throw error;
   }
 };
 
@@ -69,12 +75,10 @@ export const ApiVerifyOtp = async (data) => {
     localStorage.setItem("resetToken", response?.data?.payload?.resetToken);
 
     return response.data.payload.records;
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
 export const ApiResetPassword = async (data) => {
-
   const resetToken = localStorage.getItem("resetToken"); // no need to parse
   const id = localStorage.getItem("id");
 
@@ -90,12 +94,13 @@ export const ApiResetPassword = async (data) => {
     return response.data?.payload?.records;
   } catch (error) {
     // ✅ Proper error throwing
+    console.log("API EERRROORR", error)
+    toast.error(error?.response?.data?.errors[0]?.message)
     throw new Error(error?.response?.data?.message || "Password reset failed");
   }
 };
 
 export const ApiChangePassword = async (data) => {
-
   try {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/change-password`;
     const token = JSON.parse(localStorage.getItem("token"));
@@ -111,3 +116,7 @@ export const ApiChangePassword = async (data) => {
     throw new Error(error?.response?.data?.message || "Password reset failed");
   }
 };
+
+
+
+

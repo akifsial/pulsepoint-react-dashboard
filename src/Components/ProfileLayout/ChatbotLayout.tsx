@@ -48,7 +48,7 @@ const ChatbotLayout = () => {
 
       {/* Main Content Area */}
       <div className={`relative lg:ml-16 ml-0 flex flex-col flex-1 px-4 pt-3`}>
-        <div className="absolute -top-[116px]">
+        {/* <div className="absolute w-full pr-8 -top-[116px]">
           <DashboardHeader
             showProfileSidebar={true}
             sidebarOpen={isSidebarOpen}
@@ -56,7 +56,7 @@ const ChatbotLayout = () => {
             noticationLink="/patient/notification"
             routeSetting="/patient/manage-password"
           />
-        </div>
+        </div> */}
         <main>
           {/* Render the active component based on the selected tab */}
           {activeTab === "Nursing home in 90210." ? (

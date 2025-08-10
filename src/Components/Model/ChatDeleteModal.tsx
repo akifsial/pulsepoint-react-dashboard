@@ -33,6 +33,7 @@ const ChatDeleteModal: React.FC<ChatDeleteModalProps> = ({
           <button
             className="px-4 py-2 cursor-pointer bg-red-600 text-white rounded hover:bg-red-700 transition"
             onClick={onDelete}
+            disabled={loading}
           >
             {loading ? <Spinner /> : "Yes, Delete"}
           </button>

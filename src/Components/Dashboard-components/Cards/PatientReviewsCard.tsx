@@ -19,6 +19,7 @@ interface PatientReviewsCardProps {
 
 const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
   filterValue,
+  rating
 }) => {
   const sliders = [
     {
@@ -63,8 +64,9 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
   const [selectedFeedbackToFlag, setSelectedFeedbackToFlag] = useState(null);
   const [flagModalOpen, setFlagModalOpen] = useState(false);
   const [isFlagging, setIsFlagging] = useState(false);
+  console.log("ffffffffff",rating)
 
-  const { data, isLoading } = useApiMyReviews("", "", filterValue);
+  const { data, isLoading } = useApiMyReviews("", rating,filterValue);
 
   const queryClient = useQueryClient();
 
@@ -92,8 +94,8 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
   } = useMutation({
     mutationFn: (feedbackId) => ApiFlagReview(feedbackId),
 
-    onSuccess: async () => {
-      toast.success("Review Flagged Successfully");
+    onSuccess: async (data) => {
+      console.log("data aya ha ",data)
       queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
     },
     onError: (error) => {
@@ -239,7 +241,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
 
               {item.comment ? (
                 <p>{item.comment}</p>
-              ) : item?.replies?.length==0 ? (
+              ) : item?.replies?.length == 0 ? (
                 <div className="relative w-full">
                   <input
                     placeholder="Add a reply"
@@ -266,6 +268,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
                 }}
                 onDelete={confirmFlagReview}
                 loading={isFlagging}
+                data={item?.review_flag}
               />
             </div>
           </div>

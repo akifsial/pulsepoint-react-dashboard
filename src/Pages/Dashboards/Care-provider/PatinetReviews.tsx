@@ -12,10 +12,9 @@ const PatinetReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [filterValue, setFilterValue] = React.useState("");
   const dropdownRef = React.useRef<HTMLDivElement>(null);
-  const [rating, setRating] = React.useState();
+  const [rating, setRating] = React.useState("");
 
   // const { data, isLoading } = useApiMyReviews("", rating);
-  console.log("rating:", rating);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -39,11 +38,10 @@ const PatinetReviews: React.FC = () => {
   }, [showRatingDropdown]);
 
   const statusOptions = [
+    { id: uuid(), label: "All Reviews", value: "" },
     { id: uuid(), label: "All Flagged", value: "1" },
     { id: uuid(), label: "None", value: "0" },
   ];
-
-  console.log(filterValue, "______+++++++++++++");
 
   // const {
   //   mutateAsync: savedCareProvidersMutation,
@@ -72,6 +70,8 @@ const PatinetReviews: React.FC = () => {
   //   await savedCareProvidersMutation();
   // };
 
+  console.log("filtervalueee", filterValue);
+
   return (
     <div>
       <h2 className="mb-4">Patient Reviews</h2>
@@ -80,8 +80,8 @@ const PatinetReviews: React.FC = () => {
         <div className="mb-7 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">View and respond to feedback</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <div className="relative flex items-center gap-4">
-              <div className="flex items-center gap-2">
+            <div className="relative sm:flex items-center gap-4">
+              <div className="flex items-center gap-2 sm:mb-0 mb-5">
                 <p className="text-[#252525] font-medium text-sm">
                   Show Reviews
                 </p>
@@ -95,12 +95,12 @@ const PatinetReviews: React.FC = () => {
               <div className="flex items-center gap-2">
                 <p className="text-[#252525] font-medium text-sm">Filter by</p>
                 <PrimaryButton
-                  btnText="Ratings"
+                  btnText={` ${rating} Ratings`}
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] h-[46px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
+                  btnClass="border flex border-[#252525] px-4 md:w-[101px] h-[46px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
               </div>
@@ -117,7 +117,8 @@ const PatinetReviews: React.FC = () => {
                     className="absolute right-0 top-[60px] w-50 z-50"
                   >
                     <RatingFilterDropdown
-                    // setRating={setRating}
+                      setRating={setRating}
+                      setShowRatingDropdown={setShowRatingDropdown}
                     />
                   </motion.div>
                 )}
@@ -129,6 +130,7 @@ const PatinetReviews: React.FC = () => {
         <div className="h-[510px] overflow-y-auto pr-2">
           <PatientReviewsCard
             filterValue={filterValue}
+            rating={rating}
             // data={data}
             // isLoading={isLoading}
           />

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CommunityTopics from "./CommunityTopics";
+import { useNavigate } from "react-router-dom";
 import DragMedia from "./DragMedia";
 import TextField from "./TextField";
 import { ApiReportPost } from "@src/api/ApiCommunityForum";
@@ -26,15 +27,20 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
   const {
     mutateAsync: ReportPostMutation,
     // isPending: savedCareProvidersPending,
+    isPending: isReporting,
   } = useMutation({
-    mutationFn: (formData) => ApiReportPost(formData),
+    mutationFn: (formData: FormData) => ApiReportPost(formData),
 
     onSuccess: async () => {
       toast.success("Report Successfully");
       // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+      onSubmit();
+      window.location.reload();
     },
     onError: (error) => {
-      toast.error("Something Went Wrong");
+      console.error("xxxxxxxxxxxxxxxxxxxxxxxxx:", error);
+
+      // toast.error("Something Went Wrong");
     },
   });
 
@@ -51,6 +57,8 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
     // formData.append("")
 
     await ReportPostMutation(formData);
+      window.location.reload();
+
   };
 
   return (
@@ -64,25 +72,29 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
           shortly.
         </p>
       </div>
-      <form onSubmit={handleSubmit(handleReportSubmit)}>
-        <CommunityTopics
-          // asterisk
-          title={"Select a reason for flagging"}
-          // options={[
-          //   { id: 1, text: "Spam or advertising" },
-          //   { id: 2, text: "Harassment or bullying" },
-          //   { id: 3, text: "Misinformation" },
-          //   { id: 4, text: "Off-topic or irrelevant" },
-          //   { id: 5, text: "Hate speech or abusive content" },
-          // ]}
-          options={data?.records?.map((item, index) => ({
-            id: item.id , // Fallback if item.id is missing
-            text: item.name, // Adjust based on your API keys
-          }))}
-          onSelect={(id) => setReportReasonId(id)}
-        />
+      <div className="max-h-[400px] overflow-y-auto">
+        <form
+          onSubmit={handleSubmit(handleReportSubmit)}
+          className="overflow-y-auto"
+        >
+          <CommunityTopics
+            // asterisk
+            title={"Select a reason for flagging"}
+            // options={[
+            //   { id: 1, text: "Spam or advertising" },
+            //   { id: 2, text: "Harassment or bullying" },
+            //   { id: 3, text: "Misinformation" },
+            //   { id: 4, text: "Off-topic or irrelevant" },
+            //   { id: 5, text: "Hate speech or abusive content" },
+            // ]}
+            options={data?.records?.map((item, index) => ({
+              id: item.id, // Fallback if item.id is missing
+              text: item.name, // Adjust based on your API keys
+            }))}
+            onSelect={(id) => setReportReasonId(id)}
+          />
 
-        {/* <TextField
+          {/* <TextField
           label="Additional Comments (optional):"
           asterisk
           id="msg"
@@ -93,35 +105,37 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
           
         /> */}
 
-        <PrimaryInput
-          label="Additional Comments (optional):"
-          register={register}
-          registerName="comments"
-          placeholder="Enter description"
-          type="textarea"
-          inputClass="!bg-[#FBFCFD] !h-[90px] !pt-3 !pb-0 mb-3 border border-[#2525251A]"
-        />
+          <PrimaryInput
+            label="Additional Comments (optional):"
+            register={register}
+            registerName="comments"
+            placeholder="Enter description"
+            type="textarea"
+            inputClass="!bg-[#FBFCFD] !h-[90px] !pt-3 !pb-0 mb-3 border border-[#2525251A]"
+          />
 
-        <DragMedia
-          label="Upload Image (optional):"
-          required
-          imgType
-          className="p-4"
-          file={file}
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+          <DragMedia
+            label="Upload Image (optional):"
+            required
+            imgType
+            className="p-4"
+            file={file}
+            onChange={(e) => setFile(e.target.files[0])}
+          />
 
-        <PrimaryButton
-          btnText="Report Post"
-          // onClick={async () => {
-          //   await handleReportSubmit();
-          //   onSubmit(); // opens next modal
-          // }}
-          type="submit"
-          showImg={false}
-          btnClass="flex items-center justify-center h-[46px] cursor-pointer w-full bg-[#28A2FF]  text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 hover:bg-[#007AB2]"
-        />
-      </form>
+          <PrimaryButton
+            btnText={isReporting ? "Reporting..." : "Report Post"}
+            type="submit"
+            showImg={false}
+            disabled={isReporting}
+            btnClass={`flex items-center justify-center h-[46px] cursor-pointer w-full text-white py-5 px-4 rounded-lg font-semibold text-sm transition-colors duration-300 ${
+              isReporting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#28A2FF] hover:bg-[#007AB2]"
+            }`}
+          />
+        </form>
+      </div>
     </>
   );
 };

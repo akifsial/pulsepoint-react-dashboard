@@ -90,14 +90,18 @@ const TanDataTable = <T extends object>({
     <div
       className={`overflow-x-auto overflow-y-visible rounded-[4px] scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 ${className}`}
     >
-      <div className="relative md:w-full sm:w-143 w-[100px]">
-        <table className="md:w-full text-sm text-left">
+      <div className="w-full overflow-x-auto">
+        <table className="min-w-[600px] w-full text-sm text-left">
           <thead className="bg-[var(--primary-color)] text-[#252525]">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
+                    style={{
+                      width: columns.find((c) => c.accessor === header.id)
+                        ?.width,
+                    }}
                     className={`px-4 py-4 font-medium text-[#252525] ${
                       header.column.getCanSort()
                         ? "cursor-pointer select-none"
@@ -159,7 +163,15 @@ const TanDataTable = <T extends object>({
                   style={{ borderBottom: "1px solid #2525251a" }}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-2 py-5">
+                    <td
+                      key={cell.id}
+                      style={{
+                        width: columns.find(
+                          (c) => c.accessor === cell.column.id
+                        )?.width,
+                      }}
+                      className="px-2 py-5"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

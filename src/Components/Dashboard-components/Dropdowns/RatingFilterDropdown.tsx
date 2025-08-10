@@ -1,7 +1,9 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-const RatingFilterDropdown: React.FC = ({setRating}) => {
+const RatingFilterDropdown: React.FC = ({setRating,setShowRatingDropdown}) => {
   const dropdownOptions = [
+    { id: uuid(), name: "All Ratings", value: "" },
+
     { id: uuid(), name: "5 Star Rating", value: "5" },
     { id: uuid(), name: "4 Star Rating", value: "4" },
     { id: uuid(), name: "3 Star Rating", value: "3" },
@@ -16,7 +18,7 @@ const RatingFilterDropdown: React.FC = ({setRating}) => {
       {dropdownOptions.map((item: any) => {
         return (
           <div key={item.id}>
-            <button onClick={()=>(setRating(item.value))} className="w-full text-left px-4 py-3 hover:bg-[#E7F2F9] focus:outline-none cursor-pointer">
+            <button onClick={()=>{setRating(item.value); setShowRatingDropdown(false);}} className="w-full text-left px-4 py-3 hover:bg-[#E7F2F9] focus:outline-none cursor-pointer">
               <p className="text-[#252525] text-sm font-medium">{item.name}</p>
             </button>
           </div>

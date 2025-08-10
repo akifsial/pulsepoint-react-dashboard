@@ -961,7 +961,7 @@ import {
 } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import arrowUpTrans from "@assets/media/svgs/dashboard-svgs/arrowUp.svg";
-import { useGetCommunityPost } from "@src/hooks/useCommunity";
+import { useGetCommunityPost, useGetCommunityPostSaved } from "@src/hooks/useCommunity";
 import { useGetSingleUser } from "@src/hooks/useCommunity";
 import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
 import { CommentItem } from "./CommentBlock";
@@ -984,13 +984,17 @@ const SavedCommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
   const [parentCommentReplyValue, setParentCommentReplyValue] = useState("");
   const [shareModal, setShareModal] = useState(false);
   const [parentCommentReplyId, setParentCommentReplyId] = useState([]);
-  const { data: postData, isPending: PostsPending } = useGetCommunityPost();
+  // const { data: postData, isPending: PostsPending } = useGetCommunityPost();
+  
   const [replyId, setReplyId] = useState();
   const myId = JSON.parse(localStorage.getItem("userInfo"));
   const [replyInput, setReplyInput] = useState("");
   const [IsCommentReply, setIsCommentReply] = useState();
   const [replyParentId, setReplyParentId] = useState();
-  console.log("PARENT REPLY ID", replyParentId);
+
+  const { data: postData, isPending: PostsPending } = useGetCommunityPostSaved();
+
+
 
   const toggleComments = (post_id) => {
     setComment("");
@@ -1168,7 +1172,6 @@ const SavedCommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
   //   //     ? comment.userLike[0].is_like
   //   //     : null;
 
-  //   console.log("xxxxx", comment);
 
   //   if (status === "like") {
   //     if (comment?.userLike?.is_like==true ) {
@@ -1254,7 +1257,7 @@ const SavedCommunityFeed = ({ setOpenBackFeed, setPostIdFeed }) => {
     await savePostMutation(data);
   };
 
-  console.log("comment", comment);
+  
 
   return (
     <div

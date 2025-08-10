@@ -25,6 +25,7 @@ function StarRating({
   rating: number;
   className?: string;
 }) {
+  console.log("average rating", avg_rating);
   return (
     <div className={`flex items-center gap-1 ${className}`.trim()}>
       {[1, 2, 3, 4, 5].map((star) => {
@@ -47,73 +48,59 @@ function StarRating({
  * Individual review card.
  */
 function ReviewCard({ review, data }: { review: Review }) {
-  console.log("REW", data);
+  console.log("DATA", data);
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
-      {/* Rating stars at top */}
-      <div className="flex items-center gap-2 mb-4">
-        <StarRating
-          rating={review.rating}
-          avg_rating={data?.ratingData?.avg_rating}
-        />
-        {/* <span className="text-sm font-medium text-gray-900">({review.rating.toFixed(1)})</span> */}
-      </div>
-
-      {/* Review content */}
-      <p className="text-gray-700 text-sm leading-relaxed mb-4">
-        "{review.content}"
-      </p>
-
-      {/* Author info */}
-      <div className="flex items-center gap-3">
-        {/* Reviewer Details */}
-
-        {/* <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
-          {review?.authorAvatar ? (
-            <img 
-              src={review.authorAvatar} 
-              alt={review.authorName}
-              className="w-full h-full object-cover"
+    <>
+      {data?.reviews_to_careprovider?.map((single_review) => (
+        <div className="bg-white border border-gray-200 rounded-lg p-6">
+          {/* Rating stars at top */}
+          <div className="flex items-center gap-2 mb-4">
+            <StarRating
+              rating={review.rating}
+              avg_rating={data?.ratingData?.avg_rating}
             />
-          ) : (
-            <span className="text-white font-semibold text-lg">
-              {review.authorName.charAt(0).toUpperCase()}
-            </span>
-          )}
-        </div>
-        <div>
-          <h4 className="font-semibold text-gray-900 text-sm">{review.authorName}</h4>
-          {review.authorTitle && (
-            <p className="text-xs text-gray-500">{review.authorTitle}</p>
-          )}
-        </div> */}
-
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
-            <span className="text-white font-semibold text-lg">A</span>
           </div>
-          <div>
-            <h4 className="font-semibold text-gray-900 text-sm">
-              Alex Johnson
-            </h4>
-            <p className="text-xs text-gray-500">Product Manager</p>
+
+          {/* Review content */}
+          <p className="text-gray-700 text-sm leading-relaxed mb-4">
+            "{review.content}"
+          </p>
+
+          {/* Author info */}
+          <div className="flex items-center gap-3">
+            {/* Reviewer Details */}
+
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                <span className="text-white font-semibold text-lg">A</span>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 text-sm">
+                  {single_review?.patient?.first_name}{" "}
+                  {single_review?.patient?.last_name}
+                </h4>
+                <p className="text-xs text-gray-500">
+                  {single_review?.patient?.email}
+                </p>
+              </div>
+            </div>
+
+            {/* Reviewer Details */}
+
+            {/* Quote mark */}
+            <div className="ml-auto">
+              <svg
+                className="w-8 h-8 text-gray-300"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-10zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
+              </svg>
+            </div>
           </div>
         </div>
-
-        {/* Reviewer Details */}
-
-        {/* Quote mark */}
-        <div className="ml-auto">
-          <svg
-            className="w-8 h-8 text-gray-300"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-10zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
-          </svg>
-        </div>
-      </div>
-    </div>
+      ))}
+    </>
   );
 }
 
@@ -138,6 +125,8 @@ export default function RatingsReviewsSection({
   // Sample data if no reviews provided
   const { data } = useCareProviderSingle(id);
 
+  console.log("rola",rating)
+
   return (
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
       {/* Header */}
@@ -146,7 +135,10 @@ export default function RatingsReviewsSection({
           Ratings & Reviews
         </h2>
         <div className="flex items-center flex-wrap md:justify-between justify-center gap-2">
-          <StarRating rating={Math.round(rating)} />
+          <StarRating
+            rating={Math.round(rating)}
+            avg_rating={Math.round(rating)}
+          />
 
           <span className="font-semibold text-gray-900">
             {" "}

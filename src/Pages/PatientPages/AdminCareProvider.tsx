@@ -29,6 +29,7 @@ const CareProviderDashboard: React.FC = () => {
     data: AllSavedCareProviders,
     isLoading: isLoadingAllSavedCareProvider,
   } = useAllSavedCareProviders(debouncedSearchText, rating);
+
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -84,6 +85,10 @@ const CareProviderDashboard: React.FC = () => {
       accessor: "total_rating",
       header: "Rating",
       showSort: true,
+      cell: ({ getValue }) => {
+        const rating = getValue();
+        return rating ? rating : ""
+      },
     },
     {
       accessor: "specialization",
@@ -156,9 +161,7 @@ const CareProviderDashboard: React.FC = () => {
     },
   ];
 
-  const handleRowSelect = (row: dataTypes) => {
-    console.log("Selected row:", row);
-  };
+  const handleRowSelect = (row: dataTypes) => {};
 
   const handleTabClick = (tab: "all" | "saved") => {
     setActiveTab(tab);
@@ -233,13 +236,16 @@ const CareProviderDashboard: React.FC = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                className="border border-[#252525] px-4 md:w-[101px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5"
+                className={`border ${
+                  rating ? "ps-6" : ""
+                } border-[#252525] px-4 md:w-[110px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5`}
               >
-                <span>Ratings</span>
+                {rating ? rating : ""}
+                <span className=" pe-1 flex"> Ratings</span>
                 <img
                   src={filterIcon}
                   alt="filter icon"
-                  className="w-[24px] h-[24px] object-cover"
+                  className="w-[24px] h-[24px] pe-2 object-cover"
                 />
               </button>
 
@@ -253,7 +259,10 @@ const CareProviderDashboard: React.FC = () => {
                     className="absolute md:left-[-100px] top-[50px] w-50 z-50"
                   >
                     {/* 👇 This must be inside ref wrapper */}
-                    <RatingFilterDropdown setRating={setRating} />
+                    <RatingFilterDropdown
+                      setShowRatingDropdown={setShowRatingDropdown}
+                      setRating={setRating}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -320,13 +329,15 @@ const CareProviderDashboard: React.FC = () => {
             isLoadingCareProvidersData ? (
               <TableSkeletonLoader />
             ) : (
-              <TanDataTable<dataTypes>
-                columns={columns}
-                data={CareProvidersData ?? []}
-                showCheckbox={false}
-                onRowSelect={handleRowSelect}
-                className="my-custom-class"
-              />
+              <div className="overflow-x-auto">
+                <TanDataTable<dataTypes>
+                  columns={columns}
+                  data={CareProvidersData ?? []}
+                  showCheckbox={false}
+                  onRowSelect={handleRowSelect}
+                  className="my-custom-class"
+                />
+              </div>
             )
           ) : isLoadingAllSavedCareProvider ? (
             <TableSkeletonLoader />

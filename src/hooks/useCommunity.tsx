@@ -11,7 +11,8 @@ import {
   ApiGetSpecificCommunity,
   ApiGetNotifications,
 } from "@src/api/ApiCommunityForum";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { USE_GET_NOTIFICATIONS_PROPS } from "@types/apiTypes";
 
 export const usePopularCommunities = (search) => {
   return useQuery({
@@ -25,6 +26,23 @@ export const useGetCommunityPost = () => {
   return useQuery({
     queryKey: ["useGetCommunityPost"],
     queryFn: () => ApiGetCommunityPost(),
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useInfiniteCommunityPosts = () => {
+  return useInfiniteQuery({
+    queryKey: ["infiniteCommunityPosts"],
+    queryFn: ({ pageParam = 1 }) => ApiGetCommunityPost(pageParam),
+    getNextPageParam: (lastPage, allPages) => {
+      // console.log("All page",allPages)
+      // // Assuming the API response gives something like `hasMore` or `nextPage`
+      // if (lastPage.hasMore) {
+      //   return allPages.length + 1; // or return lastPage.nextPage;
+      // }
+      // return undefined;
+      return lastPage.records.length > 0 ? allPages.length + 1 : undefined;
+    },
     refetchOnWindowFocus: false,
   });
 };
@@ -56,10 +74,11 @@ export const useGetSingleUser = () => {
 export const useGetAllCommunities = (search) => {
   return useQuery({
     queryKey: ["useGetAllCommunities", search],
-    queryFn: ({ queryKey }) => {
-      const [, searchTerm] = queryKey; // Get the second item
-      return ApiGellAllCommunity(searchTerm);
-    },
+    // queryFn: ({ queryKey }) => {
+    //   const [, searchTerm] = queryKey; // Get the second item
+    //   return ApiGellAllCommunity(searchTerm);
+    // },
+    queryFn: () => ApiGellAllCommunity(search),
     refetchOnWindowFocus: false,
   });
 };
@@ -102,13 +121,37 @@ export const useGetSpecificCommunity = (id) => {
     queryFn: () => ApiGetSpecificCommunity(id),
     refetchOnWindowFocus: false,
     enabled: !!id,
+    staleTime: 0,
   });
 };
 
-export const useGetNotifications = () => {
+// export const useGetNotifications = () => {
+//   return useQuery({
+//     queryKey: ["useGetNotifications"],
+//     queryFn: () => ApiGetNotifications(),
+//     refetchOnWindowFocus: false,
+//   });
+// };
+
+// new use get notifications
+
+// export const useGetNotifications = ({ page = 1, limit = 5 }) => {
+//   return useQuery({
+//     queryKey: ["useGetNotifications", page], // add page to keep cache separate
+//     queryFn: () => ApiGetNotifications(page, limit),
+//     keepPreviousData: true,
+//     refetchOnWindowFocus: false,
+//   });
+// };
+
+export const useGetNotifications = ({
+  page = 1,
+  limit = 5,
+}: USE_GET_NOTIFICATIONS_PROPS = {}) => {
   return useQuery({
-    queryKey: ["useGetNotifications"],
-    queryFn: () => ApiGetNotifications(),
+    queryKey: ["useGetNotifications", page],
+    queryFn: () => ApiGetNotifications(page, limit),
+    keepPreviousData: true,
     refetchOnWindowFocus: false,
   });
 };

@@ -19,7 +19,7 @@ export const ApiGetCareProviders = async (search: string, rating: number) => {
     import.meta.env.VITE_APP_API_URL
   }user?role_type=CARE_PROVIDER`;
   if (search) {
-    BASE_URL += `&organization_name=${search}`;
+    BASE_URL += `&search=${search}`;
   }
   if (rating) {
     BASE_URL += `&total_rating=${rating}`;
@@ -36,19 +36,6 @@ export const ApiGetCareProviders = async (search: string, rating: number) => {
   return response?.data?.payload?.records;
 };
 
-// export const ApiGetCareProviders = async (params:ProviderProps) => {
-
-//   const BASE_URL = `${
-//     import.meta.env.VITE_APP_API_URL
-//   }user?role_type=CARE_PROVIDER`;
-//   const token = JSON.parse(localStorage.getItem("token"));
-
-//   const response = await axios.get(BASE_URL, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response?.data?.payload?.records;
-// };
 
 export const ApiGetCareProvidersSingle = async (id: number) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/${id}`;
@@ -127,7 +114,7 @@ export const ApiSavedCareProviders = async (id: number) => {
 
   return response.data.payload;
 };
-export const ApiGetRecentSearches = async (id: number) => {
+export const ApiGetRecentSearches = async () => {
   const userId = JSON.parse(localStorage.getItem("userInfo")).id;
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}recent-search/${userId}`;
   const token: string | null = JSON.parse(

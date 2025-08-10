@@ -19,7 +19,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import PopularCommunitySkeleton from "@components/Loaders/PopularCommunityLoader";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const PopularCommunity = () => {
   const [step, setStep] = useState<number | "">("");
@@ -38,9 +38,14 @@ const PopularCommunity = () => {
   const [debouncedSearchText, setDebouncedSearchText] =
     useState(searchCommunity);
 
-  const { data, isPending } = usePopularCommunities(debouncedSearchText);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo")).role_type;
 
-  console.log("COMMUNITY", data);
+  console.log("role_typerole_typerole_type", userInfo);
+
+  const { data, isPending,refetch } = usePopularCommunities(debouncedSearchText);
+
+
+  console.log("Get popular",data)
 
   const popularCommunity = [
     { icon: community1, title: "Hospital Stay Reviews" },
@@ -62,11 +67,17 @@ const PopularCommunity = () => {
 
     onSuccess: async () => {
       toast.success("Community Create Successfully");
+      queryClient.invalidateQueries(["useGetAllCommunities"]); // refetch list
+      setImg1(null)
+      setImg2(null)
+      setName("")
+      setDescription("")
       closeModal();
-      queryClient.invalidateQueries(["useGetCommunityPost"]); // refetch list
     },
     onError: (error) => {
-      toast.error("Something Went Wrong");
+      toast.error(error?.response?.data?.message);
+      console.log("eeeeeee",error)
+
     },
   });
 
@@ -105,6 +116,8 @@ const PopularCommunity = () => {
     };
   }, [searchCommunity]);
 
+  
+
   return (
     <>
       {/* Sidebar */}
@@ -123,24 +136,38 @@ const PopularCommunity = () => {
         <div className="bg-white h-[50vh] overflow-y-auto rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
           <h4 className="mb-1.5">Popular Communities</h4>
 
-          {isPending ? <PopularCommunitySkeleton /> : ""}
-          {data?.records?.map((community, idx) => (
-            <div
-              key={idx}
-              className="flex items-center gap-3.5 py-[13px] border-b border-b-[#E6E6E6] last:border-b-0"
-            >
-              <img
-                src={`${import.meta.env.VITE_APP_API_IMG_URL}${
-                  community?.profile_icon_image
-                }`}
-                alt={community.title}
-                className="rounded-full object-cover h-[37px] w-[37px]"
-              />
-              <Link to={`/patient/community-account/${community?.id}`}>
-                <p className="font-semibold">{community?.title}</p>
-              </Link>
-            </div>
-          ))}
+          {isPending ? (
+            <PopularCommunitySkeleton />
+          ) : data?.records && data.records.length > 0 ? (
+            data.records.map((community, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-3.5 py-[13px] border-b border-b-[#E6E6E6] last:border-b-0"
+              >
+                <img
+                  src={`${import.meta.env.VITE_APP_API_IMG_URL}${
+                    community?.profile_icon_image
+                  }`}
+                  alt={community.title}
+                  className="rounded-full object-cover h-[37px] w-[37px]"
+                />
+
+                {userInfo === "CARE_PROVIDER" ? (
+                  <Link
+                    to={`/care-provider/community-account/${community?.id}`}
+                  >
+                    <p className="font-semibold">{community?.title}</p>
+                  </Link>
+                ) : (
+                  <Link to={`/patient/community-account/${community?.id}`}>
+                    <p className="font-semibold">{community?.title}</p>
+                  </Link>
+                )}
+              </div>
+            ))
+          ) : (
+            <p className="text-center py-4 text-gray-500">No data found</p>
+          )}
         </div>
 
         <PrimaryButton

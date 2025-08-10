@@ -25,7 +25,6 @@ const ActiveInactiveModal: React.FC<EditModalProps> = ({
   selectedRowId
 }
   const {data}=useCareProviderSingle(selectedRowId)
-  // console.log(data,"lllloooo")
 
   const modalContent = (
     <div

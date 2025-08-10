@@ -1,3 +1,5 @@
+import CommunityAccount from "@components/CareProvider/CommunityForum/CommunityAccount";
+import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 import CareProviderLayout from "@layouts/CareProviderLayout";
 import CareProviderDashboard from "@pages/Dashboards/Care-provider/CareProviderDashboard";
 import CommunityForm from "@pages/Dashboards/Care-provider/CommunityForm";
@@ -13,6 +15,9 @@ export const DashboardRoutes = [
       { path: "patient-reviews", element: <PatinetReviews /> },
       { path: "community-form", element: <CommunityForm /> },
       { path: "notification", element: <NotificationPage /> },
+      // { path: "notification", element: <NotificationPage /> },
+      { path: "community-account/:id", element: <CommunityAccount /> },
+      { path: "chatbot", element: <ChatbotLayout /> },
     ],
   },
 ];

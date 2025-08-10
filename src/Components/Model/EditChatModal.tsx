@@ -4,17 +4,20 @@ import CommonInput from "@components/Shared-components/Inputs/Common-Input/Commo
 import React from "react";
 import ReactDOM from "react-dom";
 
-interface DeleteModalProps {
+interface EditChatModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onDelete: () => void;
+  onEdit: () => void;
+  loading: boolean;
+  setEditName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const EditChatModal: React.FC<DeleteModalProps> = ({
+const EditChatModal: React.FC<EditChatModalProps> = ({
   isOpen,
   onClose,
   onEdit,
   loading,
+  setEditName
 }) => {
   if (!isOpen) return null;
 
@@ -27,12 +30,9 @@ const EditChatModal: React.FC<DeleteModalProps> = ({
         className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* <h2 className="text-xl font-semibold mb-4 text-start">
-          Are you sure you want to EDIT this?
-        </h2> */}
         <CommonInput
           label="Enter Name"
-          // register={register}
+          onChange={(e) => setEditName(e.target.value)}
           registerName="comments"
           placeholder="Enter Title"
           type="input"
@@ -40,8 +40,9 @@ const EditChatModal: React.FC<DeleteModalProps> = ({
         />
         <div className="flex mt-5 justify-end gap-4">
           <button
-            className="px-4 py-2 cursor-pointer bg-blue-600 text-white rounded hover:bg-red-700 transition"
+            className="px-4 py-2 cursor-pointer bg-blue-600 text-white rounded hover:bg-blue-700 transition"
             onClick={onEdit}
+            disabled={loading}
           >
             {loading ? <Spinner /> : "Yes, Update"}
           </button>

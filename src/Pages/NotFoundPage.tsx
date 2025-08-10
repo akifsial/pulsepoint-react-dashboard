@@ -4,6 +4,7 @@ import notFoundAnimation from "@assets/animations/Not-found.json.json";
 import { Link } from "react-router-dom";
 
 const NotFoundPage:React.FC = () => {
+  const userRole=JSON.parse(localStorage.getItem("userInfo"))?.user_role
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center text-white text-center px-4"

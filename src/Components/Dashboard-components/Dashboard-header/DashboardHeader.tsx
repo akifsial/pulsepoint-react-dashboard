@@ -9,6 +9,7 @@ import NotficationBar from "./NotificationBar";
 import { useLocation } from "react-router-dom";
 import { Search, Clock } from "lucide-react";
 import { useMeApi } from "@src/hooks/useUsers";
+import dummyImage from "@assets/media/images/dashboard-images/userDummy.png"
 
 interface Props {
   sidebarOpen: boolean;
@@ -79,23 +80,21 @@ const DashboardHeader: React.FC<Props> = ({
   }, []);
 
   const handleClearRecentSearches = () => {
-    console.log("Clear recent searches");
     setIsSearchDropdownOpen(false);
   };
 
   const handleSearchItemClick = (text: string) => {
     setSearchText(text);
     setIsSearchDropdownOpen(false);
-    console.log("Selected:", text);
   };
 
   return (
     <header
       className={`${
-        showProfileSidebar ? "lg:ml-[80px]" : ""
+      showProfileSidebar ? "lg:ml-[80px]" : ""
       } bg-white rounded-lg px-4 py-[14px] sm:px-6  z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
     >
-      <div className="flex items-start sm:items-center justify-between gap-2 w-full flex-col sm:flex-row">
+      <div className="flex items-start sm:items-center justify-between gap-2 w-full flex-row">
         <div className="min-w-fit">
           <h2 className="">👋 Welcome Back!</h2>
         </div>
@@ -179,7 +178,7 @@ const DashboardHeader: React.FC<Props> = ({
             className="flex items-center gap-2 cursor-pointer"
           >
             <img
-              src={`${import.meta.env.VITE_APP_API_IMG_URL}${data?.image}` }
+              src={data?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${data?.image}` : dummyImage }
               alt="User"
               className="w-[30px] h-[30px] lg:w-[46px] lg:h-[46px] rounded-full object-cover"
             />

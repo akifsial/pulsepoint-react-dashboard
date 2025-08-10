@@ -2,7 +2,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export const ApiLogin = async (data) => {
-  console.log("Login data", data);
   try {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/login`;
 
@@ -35,7 +34,6 @@ export const ApiForgot = async (data) => {
 };
 
 export const ApiRegister = async (data) => {
-  console.log("juju", data);
   try {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/register`;
 
@@ -59,12 +57,10 @@ export const ApiVerifyOtp = async (data) => {
 
     return response.data.payload.records;
   } catch (error) {
-    console.log(error, "asdasdasd");
   }
 };
 
 export const ApiResetPassword = async (data) => {
-  console.log("pogo", data);
 
   const resetToken = localStorage.getItem("resetToken"); // no need to parse
   const id = localStorage.getItem("id");
@@ -86,7 +82,6 @@ export const ApiResetPassword = async (data) => {
 };
 
 export const ApiChangePassword = async (data) => {
-  console.log("pogo", data);
 
   try {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/change-password`;

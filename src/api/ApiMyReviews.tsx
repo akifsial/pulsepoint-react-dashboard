@@ -5,9 +5,7 @@ export const ApiMyReviews = async (
   rating: number,
   filterValue
 ) => {
-  let BASE_URL = `${
-    import.meta.env.VITE_APP_API_URL
-  }feedback?organization_name=${search}`;
+  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?search=${search}`;
 
   if (rating) {
     BASE_URL += `&rating=${rating}`;
@@ -26,6 +24,16 @@ export const ApiMyReviews = async (
 };
 
 export const apiDeleteMyReviews = async (id: number) => {
+  const userInfoString = JSON.parse(localStorage.getItem("userInfo")); // ← returns string
+
+  // if (userInfoString) {
+  //   const userInfo = JSON.parse(userInfoString); // ← convert string to object
+  //   const care_id = userInfo.id;
+  //   console.log("IDDDDD", care_id);
+
+  // }
+
+  const care_provider_id = { care_provider_id: userInfoString?.id };
   //   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}v1/user/customers?page=${page}&limit=${5}`;
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback/${id}`;
 
@@ -36,6 +44,7 @@ export const apiDeleteMyReviews = async (id: number) => {
 
   const response = await axios.delete(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
+    data: care_provider_id,
     // params: queryParams,
   });
 

@@ -8,9 +8,9 @@ interface DeleteModalProps {
   onDelete: () => void;
 }
 
-const FlagModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onDelete,loading }) => {
+const FlagModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onDelete,loading,data }) => {
   if (!isOpen) return null;
-
+  console.log("data-----",data)
   const modalContent = (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0000003d] bg-opacity-50" onClick={onClose}>
       <div
@@ -18,7 +18,7 @@ const FlagModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onDelete,loadi
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl font-semibold mb-4 text-start">
-          Are you sure you want to report this?
+           {data?.length ==0 ? "Do you want to report this? " : "Do you want to remove the flag?"} 
         </h2>
         <div className="flex justify-end gap-4">
           <button

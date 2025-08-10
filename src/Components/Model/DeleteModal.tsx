@@ -6,6 +6,7 @@ interface DeleteModalProps {
   isOpen: boolean;
   onClose: () => void;
   onDelete: () => void;
+  loading?: boolean; 
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onDelete,loading }) => {
@@ -24,6 +25,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onDelete,loa
           <button
             className="px-4 py-2 cursor-pointer bg-red-600 text-white rounded hover:bg-red-700 transition"
             onClick={onDelete}
+            disabled={loading}
           >
             {loading ? <Spinner/> : "Yes, Delete"} 
           </button>

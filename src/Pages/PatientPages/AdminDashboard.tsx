@@ -14,7 +14,7 @@ import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReviewCard from "@components/ReviewCard";
 import dayjs from "dayjs";
 import { Search, Clock } from "lucide-react";
@@ -37,6 +37,8 @@ import toast from "react-hot-toast";
 // Import or define your Modal component
 import { X } from "lucide-react";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import { useMeApi } from "@src/hooks/useUsers";
+import axios from "axios";
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
@@ -75,15 +77,72 @@ const AdminDashboard: React.FC = () => {
   const queryClient = useQueryClient();
   const [rating, setRating] = useState();
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
-
   // Apis
-  const { data: StatsData } = useStatsApi();
+  const { data: StatsData, isLoading } = useStatsApi();
   // const { data: CareProvidersData } = useCareProviders();
   const {
     data: CareProvidersData,
     isFetching,
     isLoading: isLoadingCareProviderData,
   } = useCareProviders(debouncedSearchText, rating);
+
+  // const [searchParams] = useSearchParams();
+  // const token = searchParams.get("token");
+
+  // const {data:meData}=useMeApi(token)
+
+  // useEffect(()=>(
+  //   localStorage.setItem("token",token)
+  //   // localStorage.setItem()
+  // ),[token])
+
+  const [searchParams] = useSearchParams();
+  const urlToken = searchParams.get("token"); // token from URL
+  const [token, setToken] = useState<string | null>(null); // token state
+
+  // Step 1: Save token from URL to localStorage (once)
+  useEffect(() => {
+    if (urlToken) {
+      // localStorage.setItem("token", urlToken);
+      localStorage.setItem(
+        "token",
+        JSON.stringify(urlToken)
+      );
+      ApiMe();
+
+      setToken(urlToken); // update state
+    } else {
+      // Step 2: If no URL token, get from localStorage
+      const savedToken = localStorage.getItem("token");
+      if (savedToken) {
+        setToken(savedToken);
+      }
+    }
+  }, [urlToken]);
+
+  const ApiMe = async () => {
+    const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/me`;
+    // const token = JSON.parse(localStorage.getItem("token"));
+
+    const response = await axios.get(BASE_URL, {
+      headers: { Authorization: `Bearer ${urlToken}` },
+    });
+
+    if(response?.status==200){
+      localStorage.setItem("userInfo",JSON.stringify(response?.data?.payload))
+    }
+
+
+    return response.data.payload;
+  };
+
+  // useEffect(()=>{
+  //   ApiMe()
+  // },[urlToken])
+
+  // Step 3: Use token only when it's available
+  // const { data: meData } = useMeApi(token); // `useMeApi` should have `enabled: !!token`
+
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -247,14 +306,11 @@ const AdminDashboard: React.FC = () => {
   ];
 
   const { data: recentSearchesData } = useRecentSearches();
-  console.log("RECENT DSER", recentSearchesData);
 
   const handleRowSelect = (row: any) => {
-    console.log("Selected row:", row);
   };
 
   const handleReviewClick = () => {
-    console.log("Review button clicked");
   };
 
   // Search dropdown handlers
@@ -263,14 +319,13 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleClearRecentSearches = () => {
-    console.log("Clear recent searches");
   };
 
   const handleSearchItemClick = (searchValue: string) => {
     setSearchText(searchValue);
     setIsSearchDropdownOpen(false);
-    console.log("Selected search:", searchValue);
   };
+
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
@@ -326,8 +381,6 @@ const AdminDashboard: React.FC = () => {
       },
     });
 
-  console.log("statusyyyyy", status);
-  // console.log("status",status)
   // const handleUpdateStatus = () => {
   //   const data = {
   //     status: status === "ACTIVE" ? "INACTIVE" : "ACTIVE", //
@@ -338,7 +391,6 @@ const AdminDashboard: React.FC = () => {
   // };
 
   const handleUpdateStatus = (stst) => {
-    // console.log("%%%%%%%%%%%%",id)
     const newStatus = stst === "ACTIVE" ? "INACTIVE" : "ACTIVE";
 
     const data = {
@@ -383,7 +435,6 @@ const AdminDashboard: React.FC = () => {
   });
 
   const handleDeleteSearches = (id) => {
-    // console.log("%%%%%%%%%%%%",id)
 
     deleteSearchesAllMutation(id);
   };
@@ -392,7 +443,7 @@ const AdminDashboard: React.FC = () => {
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
         <StatsCommonCards
-          count={StatsData?.totalProviders ? StatsData?.totalProviders : 0}
+          count={isLoading ? ( <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />) : StatsData?.totalProviders ? StatsData?.totalProviders : 0}
           title={
             <>
               Total Care <br />
@@ -405,7 +456,7 @@ const AdminDashboard: React.FC = () => {
         />
         <StatsCommonCards
           count={
-            StatsData?.totalReviewsWritten ? StatsData?.totalReviewsWritten : 0
+           isLoading ? ( <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />) : StatsData?.totalReviewsWritten ? StatsData?.totalReviewsWritten : 0
           }
           title="Total Reviews Written"
           cardImg={WriteReview}
@@ -414,7 +465,7 @@ const AdminDashboard: React.FC = () => {
         />
         <StatsCommonCards
           count={
-            StatsData?.averageRatingGiven ? StatsData?.averageRatingGiven : 0
+           isLoading ? ( <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />) : StatsData?.averageRatingGiven ? StatsData?.averageRatingGiven : 0
           }
           title="Average Rating Given"
           cardImg={ThumbsUp}
@@ -518,7 +569,7 @@ const AdminDashboard: React.FC = () => {
             <div className="relative" ref={dropdownRef}>
               <div className="flex items-center flex-wrap gap-4">
                 <PrimaryButton
-                  btnText="Ratings"
+                  btnText={` ${rating ? rating : ""} Ratings`}
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
@@ -550,7 +601,7 @@ const AdminDashboard: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute left-0 top-[60px] w-50 z-50"
                   >
-                    <RatingFilterDropdown setRating={setRating} />
+                    <RatingFilterDropdown setShowRatingDropdown={setShowRatingDropdown} setRating={setRating} />
                   </motion.div>
                 )}
               </AnimatePresence>

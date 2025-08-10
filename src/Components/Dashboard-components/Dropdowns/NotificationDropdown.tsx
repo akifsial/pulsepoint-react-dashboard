@@ -1,4 +1,3 @@
-import { useGetNotifications } from "@src/hooks/useCommunity";
 import React from "react";
 import { v4 as uuid } from "uuid";
 const NotificationDropdown: React.FC = () => {

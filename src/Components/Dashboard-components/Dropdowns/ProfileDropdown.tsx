@@ -9,6 +9,7 @@ import defaultSettings from "@assets/media/svgs/dashboard-svgs/setting.svg";
 import defaultSettingsHover from "@assets/media/svgs/dashboard-svgs/setting-hover.svg";
 import { useNavigate } from "react-router-dom";
 import { useMeApi } from "@src/hooks/useUsers";
+import { disconnectSocket } from "@src/socket/socket";
 
 interface ProfileDropdownProps {
   userIcon?: string;
@@ -31,12 +32,18 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
 }) => {
   const [hovered, setHovered] = useState<string | null>(null);
   const navigate = useNavigate();
+  const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
+    disconnectSocket();
 
+    localStorage.clear();
+    if (userRole == "PATIENT") {
+      navigate("/patient/login");
+    } else {
+      navigate("/care-provider/login");
+    }
+  };
 
   return (
     <div>
@@ -45,7 +52,11 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           className="flex items-center gap-3 w-full mb-2 text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("user")}
           onMouseLeave={() => setHovered(null)}
-          onClick={() => navigate(routeProfile)}
+          onClick={() =>
+            userRole == "CARE_PROVIDER"
+              ? navigate("/care-provider/profile")
+              : navigate("/patient/profile")
+          }
         >
           <img
             src={hovered === "user" ? userIconHover : userIcon}
@@ -59,7 +70,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           className="flex items-center gap-3 w-full text-left py-2 mb-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("settings")}
           onMouseLeave={() => setHovered(null)}
-          onClick={() => navigate(routeSetting)}
+          onClick={() => navigate("/patient/manage-password")}
         >
           <img
             src={hovered === "settings" ? settingsIconHover : settingsIcon}

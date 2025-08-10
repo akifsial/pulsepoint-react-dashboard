@@ -8,18 +8,28 @@ import ResetPasswordPage from "@components/auth/ResetPasswordPage";
 import PasswordResetSuccessPage from "@components/auth/PasswordResetSuccessPage";
 import OTPPage from "@components/auth/OTPPage";
 import StripeSuccessPage from "@components/auth/StripeSuccessPage";
+import PatientSignupForm from "@components/auth/PatientSignupForm";
+import Signup from "@components/auth/RegisterForm/RegisterForm";
+import RegisterForm from "@components/auth/RegisterForm/RegisterForm";
 
 export const websitePublicRoutes = [
-  { path: "/", element: <HomePage /> },
+  // { path: "/", element: <HomePage /> },
   { path: "/about-us", element: <AboutUs /> },
-  { path: "/signup", element:  <SignupForm /> },
+  { path: "/care-provider/signup", element: <SignupForm /> },
+  { path: "/patient/signup", element: <PatientSignupForm /> },
+
   { path: "/account-created", element: <AccountCreatedPage /> },
+  { path: "/care-provider/login", element: <LoginPage /> },
+  { path: "/patient/login", element: <LoginPage /> },
+
   { path: "/login", element: <LoginPage /> },
+  { path: "/signup", element: <RegisterForm /> },
+
+
   { path: "/forgot-password", element: <ForgotPasswordPage /> },
   { path: "/otp-verify", element: <OTPPage /> },
   { path: "/reset-password", element: <ResetPasswordPage /> },
   { path: "/password-reset-success", element: <PasswordResetSuccessPage /> },
-
 ];
 
 // export const websitePrivateRoutes = [

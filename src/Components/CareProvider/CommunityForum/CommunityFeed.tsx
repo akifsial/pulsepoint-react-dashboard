@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import userProfile from "@assets/media/svgs/dashboard-svgs/userProfile.svg";
 import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
@@ -60,7 +60,20 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [replyInput, setReplyInput] = useState("");
   const [IsCommentReply, setIsCommentReply] = useState();
   const [replyParentId, setReplyParentId] = useState();
-  console.log("DOOOOOOOOOOOOOOOATA", data?.data?.community_posts);
+  // const [activePostActions, setActivePostActions] = useState(null);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setActivePostActions(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const toggleComments = (post_id) => {
     setComment("");
@@ -307,7 +320,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
       mutationFn: (data) => ApieSaveCreatePost(data),
 
       onSuccess: async () => {
-        toast.success("Post Saved Successfully");
+        toast.success("Post Updated!");
         queryClient.invalidateQueries(["useGetCommunityPost"]);
 
         setComment("");
@@ -324,13 +337,11 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     await savePostMutation(data);
   };
 
-  console.log("postData", postData);
-
   const {
     mutateAsync: deleteCommentMutation,
     // isPending: savedCareProvidersPending,
   } = useMutation({
-    mutationFn: (commentId,post_id) => ApiDeleteComment(commentId,post_id),
+    mutationFn: (commentId, post_id) => ApiDeleteComment(commentId, post_id),
 
     onSuccess: async () => {
       toast.success("Comment Deleted Successfully");
@@ -341,17 +352,19 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     },
   });
 
-  const handleDeleteComment = async (commentId,postId) => {
-    const post_id={
-      post_id:postId
-    }
-    await deleteCommentMutation(commentId,post_id);
+  const handleDeleteComment = async (commentId, postId) => {
+    const post_id = {
+      post_id: postId,
+    };
+    await deleteCommentMutation(commentId, post_id);
   };
 
   return (
     <div
-      className=" h-[661px] overflow-y-auto transition-colors duration-300"
-      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      className={` transition-colors h-[400px] duration-300 ${
+        postData?.records?.length > 0 ? "h-[661px] overflow-y-auto" : ""
+      } `}
+      // style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
     >
       {PostsPending ? <FeedSkeleton /> : ""}
       {postData?.records?.length == 0 ? (
@@ -361,8 +374,8 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
       ) : (
         postData?.records?.map((post, index) => (
           <div key={index} className="post mb-6 relative last:m-0">
-            <div className="post_content bg-white rounded-[10px] p-4 relative">
-              <div className="flex justify-between items-center mb-5">
+            <div className="post_content bg-white rounded-[10px]  p-4 relative ">
+              <div className="flex justify-between items-center  mb-5">
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <img
@@ -376,7 +389,11 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                       className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200"
                       alt=""
                     />
-                    <span className="absolute bottom-2 right-0 w-2 h-2 bg-[#52C343] rounded-full shadow-[0_0_0_2px_white]" />
+                    {post?.user?.is_online ? (
+                      <span className="absolute bottom-2 right-0 w-2 h-2 bg-[#52C343] rounded-full shadow-[0_0_0_2px_white]" />
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="flex flex-col">
                     <p
@@ -389,8 +406,16 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                         }
                       }}
                     >
-                      {post?.user?.first_name}{" "}
-                      <span>{post?.user?.last_name}</span>
+                      {post?.user?.first_name ? post?.user?.first_name : ""}
+                      {post?.user?.last_name ? (
+                        <span>{post?.user?.last_name}</span>
+                      ) : (
+                        ""
+                      )}
+                      {/* <span>{post?.user?.last_name}</span> */}
+                      {post?.user?.organization_name
+                        ? post?.user?.organization_name
+                        : ""}{" "}
                     </p>
                     <span className="text-sm text-gray-500 leading-tight">
                       {post.userPost}
@@ -399,7 +424,11 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                 </div>
                 <button
                   className="cursor-pointer relative z-20"
-                  onClick={() => togglePostActions(index)}
+                  onClick={() =>
+                    setActivePostActions(
+                      activePostActions === index ? null : index
+                    )
+                  }
                   aria-label="Toggle post actions"
                 >
                   <svg
@@ -445,11 +474,12 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                 </p>
               </div>
 
-              <div className="mb-2.5">
+              <div className="mb-2.5 max-h-[500px]">
                 <img
                   src={`${import.meta.env.VITE_APP_API_IMG_URL}${post?.image}`}
                   alt=""
-                  className="rounded-md"
+                  loading="lazy"
+                  className="rounded-md w-full h-[400px] !object-fit"
                 />
               </div>
 
@@ -567,7 +597,9 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                           <DropdownActions
                             // onView={() => console.log("View Detail")}
                             // onEdit={() => console.log("Edit Detail")}
-                            onDelete={() => handleDeleteComment(comment?.id,post?.id)}
+                            onDelete={() =>
+                              handleDeleteComment(comment?.id, post?.id)
+                            }
                             variant="simple"
                           />
                         </div>
@@ -578,18 +610,30 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                 </div>
               )}
               {activePostActions === index && (
-                <div className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50">
+                <div
+                  ref={menuRef}
+                  className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50"
+                >
+                  {/* ✅ Flag Post Button */}
                   <button
+                    disabled={post?.post_report?.length > 0}
                     onClick={() => {
-                      setFlaggedPost({
-                        ...post,
-                        post_id: post.id,
-                        community_id: post.community_id,
-                      });
-                      setIsFlagModalOpen(true);
-                      setShowSubmitReport(false);
+                      if (post?.post_report?.length === 0) {
+                        setFlaggedPost({
+                          ...post,
+                          post_id: post.id,
+                          community_id: post.community_id,
+                        });
+                        setIsFlagModalOpen(true);
+                        setShowSubmitReport(false);
+                      }
                     }}
-                    className="group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2 mb-0.5"
+                    className={`group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 rounded-[5px] flex items-center gap-2 mb-0.5
+    ${
+      post?.post_report?.length > 0
+        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+        : "hover:bg-[#E7F2F9] cursor-pointer"
+    }`}
                   >
                     <span className="inline-block group-hover:hidden">
                       <img src={Flagwhite} alt="Flagwhite" />
@@ -597,26 +641,26 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     <span className="hidden group-hover:inline-block">
                       <img src={Flagblue} alt="Flagblue" />
                     </span>
-                    Flag Post
+                    {post?.post_report?.length > 0
+                      ? "Already Reported"
+                      : "Flag Post"}
                   </button>
 
+                  {/* ✅ Save / Unsave Post Button */}
                   <button
                     onClick={() => handleSavePost(post.id)}
-                    className="group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
+                    className="group cursor-pointer w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
                   >
                     {post?.savedPostUser == null ? (
-                      <span className="inline-block ">
+                      <span className="inline-block">
                         <img src={Save} alt="Save" />
                       </span>
                     ) : (
-                      <span className="">
+                      <span>
                         <img src={SaveBlue} alt="SaveBlue" />
                       </span>
                     )}
-                    {/* <span className="hidden group-hover:inline-block">
-                      <img src={SaveBlue} alt="SaveBlue" />
-                    </span> */}
-                    Save Post
+                    {post?.savedPostUser ? "Unsave Post" : "Save Post"}
                   </button>
                 </div>
               )}

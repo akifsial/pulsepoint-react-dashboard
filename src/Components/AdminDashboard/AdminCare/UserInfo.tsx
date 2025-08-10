@@ -92,7 +92,6 @@ const UserInfo = ({goBack}) => {
                   <button
                     onClick={() => {
                       setIsOpen(false);
-                      console.log("Export as CSV");
                     }}
                     className="block w-full rounded-[5px] text-left px-2.5 py-2.5 mb-1 hover:bg-[#DDEFF7] text-sm text-[#252525]"
                   >
@@ -101,7 +100,6 @@ const UserInfo = ({goBack}) => {
                   <button
                     onClick={() => {
                       setIsOpen(false);
-                      console.log("Export as PDF");
                     }}
                     className="block w-full rounded-[5px] text-left px-2.5 py-2.5 hover:bg-[#DDEFF7] text-sm text-[#252525]"
                   >

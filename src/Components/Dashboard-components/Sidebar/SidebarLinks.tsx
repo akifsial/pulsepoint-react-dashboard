@@ -1,7 +1,7 @@
 import dashboardIcon from "@assets/media/svgs/dashboard-svgs/Dashboard.svg";
 import UserIcon from "@assets/media/svgs/dashboard-svgs/user.svg";
 import userActive from "@assets/media/svgs/dashboard-svgs/user-active2.svg";
-import userHover from "@assets/media/svgs/dashboard-svgs/user-hover.svg";
+import BlueUser from "@assets/media/svgs/dashboard-svgs/blue.svg"
 import reviewIcon from "@assets/media/svgs/dashboard-svgs/Review.svg";
 import communityIcon from "@assets/media/svgs/dashboard-svgs/Community.svg";
 import dashboardHover from "@assets/media/svgs/dashboard-svgs/dashboard-hover.svg";
@@ -91,7 +91,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
     path: "/patient/care-provider",
     icon: {
       default: <img src={UserIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={userHover} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={BlueUser} alt="Dashboard" className="w-5 h-5" />,
       active: <img src={userActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
@@ -236,6 +236,15 @@ export const CareProfileSidebarLinks: SidebarLink[] = [
       active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
+  //   {
+  //   label: "Payment History",
+  //   path: "/care-provider/payment",
+  //   icon: {
+  //     default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+  //     hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+  //     active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+  //   },
+  // },
 ];
 export const PatientProfileSidebarLinks: SidebarLink[] = [
   {

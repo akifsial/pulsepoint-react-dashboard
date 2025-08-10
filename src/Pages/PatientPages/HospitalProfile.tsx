@@ -19,6 +19,8 @@ const HospitalProfile = () => {
 
   const { data } = useCareProviderSingle(id);
 
+  // console.log("asdasdasdasdasd",data)
+
   return (
     <>
       {feedbackOpen ? (
@@ -77,7 +79,7 @@ const HospitalProfile = () => {
                 id={id}
               />
             </div>
-            <RatingsReviewsSection id={id} />
+            <RatingsReviewsSection rating={data?.ratingData?.avg_rating} id={id} />
           </main>
         </div>
       )}

@@ -8,16 +8,31 @@ import { useGetNotifications } from "@src/hooks/useCommunity";
 
 const fallbackIcons = [NewMember, Progress, Resource, NewCode];
 
-const Notfication = () => {
+const Notification = () => {
   const [activeTab, setActiveTab] = useState<"notification" | "all">("notification");
 
-  const { data, isLoading } = useGetNotifications();
+  const [page, setPage] = useState(1); // current page for API
+  const [notifications, setNotifications] = useState([]); // accumulated notifications
+  const [totalPages, setTotalPages] = useState(1);
 
-  const allNotifications = data?.records || [];
+  const { data, isLoading } = useGetNotifications({ page, limit: 5 });
 
-  const newNotifications = allNotifications.slice(0, 4);
+  // Append new records whenever page changes
+  React.useEffect(() => {
+    if (data?.records) {
+      setNotifications((prev) => [...prev, ...data.records]);
+      setTotalPages(data.totalPages);
+    }
+  }, [data]);
 
-  const notificationsToShow = activeTab === "notification" ? newNotifications : allNotifications;
+  const handleShowMore = () => {
+    if (page < totalPages) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
+  const newNotifications = notifications.slice(0, 4);
+  const notificationsToShow = activeTab === "notification" ? newNotifications : notifications;
 
   return (
     <>
@@ -40,31 +55,45 @@ const Notfication = () => {
 
         {/* Content */}
         <div className="overflow-y-scroll h-[510px] pr-2">
-          {isLoading ? (
+          {isLoading && page === 1 ? (
             <p className="text-sm text-gray-500 text-center mt-10">Loading...</p>
           ) : notificationsToShow.length === 0 ? (
             <p className="text-sm text-gray-500 text-center mt-10">
               No notifications found.
             </p>
           ) : (
-            notificationsToShow.map((item, index) => (
-              <div
-                key={index}
-                className="relative py-3.5 flex items-center gap-2.5 font-medium leading-5.5 text-base mb-2.5 last:mb-0"
-              >
-                <img
-                  src={fallbackIcons[index % fallbackIcons.length]}
-                  alt="Icon"
-                  className="rounded-[5px] h-9 w-9 object-cover"
-                />
-                <p>
-                  {item.message}
-                  <span className="block text-xs text-[#252525]/40">
-                    {dayjs(item?.created_at).format("h:mm A")}
-                  </span>
-                </p>
-              </div>
-            ))
+            <>
+              {notificationsToShow.map((item, index) => (
+                <div
+                  key={item.id || index}
+                  className="relative py-3.5 flex items-center gap-2.5 font-medium leading-5.5 text-base mb-2.5 last:mb-0"
+                >
+                  <img
+                    src={fallbackIcons[index % fallbackIcons.length]}
+                    alt="Icon"
+                    className="rounded-[5px] h-9 w-9 object-cover"
+                  />
+                  <p>
+                    {item.message}
+                    <span className="block text-xs text-[#252525]/40">
+                      {dayjs(item?.created_at).format("h:mm A")}
+                    </span>
+                  </p>
+                </div>
+              ))}
+
+              {/* Show More Button */}
+              {activeTab === "all" && page < totalPages && (
+                <div className="text-center mt-4">
+                  <button
+                    onClick={handleShowMore}
+                    className="text-[#007AB2] cursor-pointer font-medium text-sm"
+                  >
+                    {isLoading ? "Loading..." : "Show More Notifications"}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -72,4 +101,4 @@ const Notfication = () => {
   );
 };
 
-export default Notfication;
+export default Notification;

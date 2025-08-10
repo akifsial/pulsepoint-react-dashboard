@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { PrimaryButton } from "./Shared-components/Buttons/Common-button/CommonButton";
 import ChatbotSearchbar from "./ChatbotSearchBar";
 import ReplyLoader from "./Loaders/ReplyLoader";
+import ReactMarkdown from "https://esm.sh/react-markdown@7";
+
 import {
   QueryClient,
   useMutation,
@@ -15,7 +17,7 @@ const ChatbotAi: React.FC = ({
   selectedConversationId,
   setSelectedConversationId,
   chatBotData,
-  setChatBotData
+  setChatBotData,
 }) => {
   const [question, setQuestion] = useState("");
   const [botAnswers, setBotAnswers] = useState([]);
@@ -31,7 +33,6 @@ const ChatbotAi: React.FC = ({
   const { data: conversationsData } = useGetConversationChatSpecific(
     selectedConversationId
   );
-
 
   const queryClient = useQueryClient();
 
@@ -72,7 +73,7 @@ const ChatbotAi: React.FC = ({
         // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
       },
       onError: (error) => {
-        toast.error("Something Went Wrong");
+        toast.error(error?.response?.data?.message);
       },
     });
 
@@ -113,17 +114,33 @@ const ChatbotAi: React.FC = ({
 
         <div
           ref={chatContainerRef}
-          className="h-[200px] text-black rounded-[18px] p-4 chat-scroll text-[16px] overflow-y-auto scroll"
+          className="h-[500px] text-black w-full rounded-[18px] p-4 chat-scroll text-[16px] overflow-y-auto scroll"
         >
           {selectedConversationId
             ? conversationsData?.records?.map((conversation) => (
                 <>
                   <div className="flex justify-end">
-                    <p className="bg-[#E4E6E7] text-black p-2 mb-3 rounded-[10px] w-fit">
+                    <p className="bg-[#E4E6E7] mt-5 text-black p-2 mb-5 rounded-[10px] w-fit">
+                      {/* <ReactMarkdown> */}
                       {conversation?.content}
+                      {/* </ReactMarkdown> */}
                     </p>
+
+                    {/* <p className="prose prose-sm prose-slate dark:prose-invert max-w-none">
+                        {conversation?.bot_reply?.content}
+                    </p> */}
                   </div>
-                  <p>{conversation?.bot_reply?.content}</p>
+                  <p className="prose prose-sm prose-slate dark:prose-invert max-w-none">
+                    <ReactMarkdown>
+                      {conversation?.bot_reply?.content}
+                    </ReactMarkdown>
+                  </p>
+
+                  {/* <p>
+                    <ReactMarkdown>
+                      {conversation?.bot_reply?.content}{" "}
+                    </ReactMarkdown>
+                  </p> */}
                 </>
               ))
             : chatBotData?.map((bot) => (

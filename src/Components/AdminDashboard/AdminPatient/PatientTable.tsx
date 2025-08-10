@@ -183,7 +183,6 @@ const CareProviderDashboard: React.FC = () => {
   ];
 
   const handleRowSelect = (row: dataTypes) => {
-    console.log("Selected row:", row);
   };
 
   const renderActions = (row: dataTypes) => (

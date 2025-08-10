@@ -19,14 +19,12 @@ const Community3 = ({
 }) => {
   const { data } = useGetAllCommunityTopics();
 
-  console.log("ccccc", data?.records);
 
   const artRecords = data?.records?.filter((dt) => {
     const isArt = dt.category === "Art";
     return isArt;
   });
 
-  console.log("########", artRecords);
 
   return (
     <>
@@ -41,7 +39,6 @@ const Community3 = ({
       <div className="h-[262px] overflow-y-auto pr-2">
         {/* {
           data?.records?.filter((dt)=>(
-            console.log("_______________",dt.category=="Art")
           ))
         } */}
 

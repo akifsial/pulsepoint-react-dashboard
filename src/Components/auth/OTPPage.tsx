@@ -69,7 +69,7 @@ const OTPPage: React.FC = () => {
 
           <PrimaryButton
             btnText={`${
-              otpVerifyLoading ? <Spinner /> : `Verify Code In ${timer}s`
+              otpVerifyLoading ? "Loading..." : `Verify Code In ${timer}s`
             }`}
             onClick={otpVerifySubmit}
             disabled={timer == 50 && true}

@@ -9,30 +9,30 @@ import { useNavigate } from "react-router-dom";
 //   const isAuthenticate = localStorage.getItem("userInfo");
 //   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!isAuthenticate) {
-  //     navigate("/login");
-  //   }
-  // }, [navigate, isAuthenticate]);
+// useEffect(() => {
+//   if (!isAuthenticate) {
+//     navigate("/login");
+//   }
+// }, [navigate, isAuthenticate]);
 
-  // if (!isAuthenticate) {
-  //   {
-  //     return navigate("/login");
-  //   }
-  // }
+// if (!isAuthenticate) {
+//   {
+//     return navigate("/login");
+//   }
+// }
 export const ProtectedRoutes: React.FC = ({ children }) => {
   const isAuthenticate = localStorage.getItem("userInfo");
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isAuthenticate) {
-      navigate("/login");
+      navigate("/patient/login");
     }
   }, [navigate, isAuthenticate]);
 
   if (!isAuthenticate) {
     {
-      return navigate("/login");
+      return navigate("/patient/login");
     }
   }
 

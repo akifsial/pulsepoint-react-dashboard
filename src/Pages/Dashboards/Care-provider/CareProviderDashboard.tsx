@@ -1,5 +1,5 @@
 import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import contacts from "@assets/media/svgs/dashboard-svgs/contacts.svg";
 import stars from "@assets/media/svgs/dashboard-svgs/stars.svg";
 import flags from "@assets/media/svgs/dashboard-svgs/flag.svg";
@@ -14,10 +14,14 @@ import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/Rat
 import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActivityCard";
+import { useApiMyReviews } from "@src/hooks/useMyReviews";
+import dayjs from "dayjs";
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
+  const [rating, setRating] = useState("");
+  const { data: CareproviderData } = useApiMyReviews("", rating);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -57,11 +61,13 @@ const CareProviderDashboard: React.FC = () => {
       header: "Patient’s Name",
       showSort: true,
       cell: ({ row }: any) => {
-        const { first_name, last_name, email, image } = row.original;
+        const {
+          patient: { first_name, last_name, email, image },
+        } = row.original;
         return (
           <div className="flex items-center gap-3">
             <img
-              src={dummyImage}
+              src={`${import.meta.env.VITE_APP_API_IMG_URL}${image}`}
               alt={`${first_name} ${last_name}`}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
@@ -78,10 +84,12 @@ const CareProviderDashboard: React.FC = () => {
       },
     },
     {
-      accessor: "date",
+      accessor: "updated_at",
       header: "Date",
       showSort: true,
-      cell: (info: any) => <i>{info.getValue()}</i>,
+      cell: (info: any) => (
+        <i>{dayjs(info.getValue()).format(" DD MMMM YY ")}</i>
+      ),
     },
     {
       accessor: "rating",
@@ -89,7 +97,7 @@ const CareProviderDashboard: React.FC = () => {
       showSort: true,
     },
     {
-      accessor: "reviews",
+      accessor: "content",
       header: "Reviews",
       showSort: true,
     },
@@ -152,28 +160,28 @@ const CareProviderDashboard: React.FC = () => {
     <div className="mb-10">
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
         <StatsCommonCards
-          count={128}
+          count={0}
           title="Total Patient Reviews"
           cardImg={contacts}
           imgBg="#EEE0FF"
           borderBg="#9747FF"
         />
         <StatsCommonCards
-          count={10}
+          count={0}
           title="Unread Messages or Questions"
           cardImg={stars}
           imgBg="#D8F6D4"
           borderBg="#52C343"
         />
         <StatsCommonCards
-          count={10}
+          count={0}
           title="Flagged Reviews"
           cardImg={flags}
           imgBg="#FFE8CF"
           borderBg="#F98A17"
         />
         <StatsCommonCards
-          count={87}
+          count={0}
           title="Profile Views This Month"
           cardImg={userSearch}
           imgBg="#E2F0F6"
@@ -188,7 +196,7 @@ const CareProviderDashboard: React.FC = () => {
             <div className="relative">
               <div className="flex items gap-4 ">
                 <PrimaryButton
-                  btnText="Ratings"
+                  btnText={` ${rating} Ratings`}
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
@@ -216,7 +224,10 @@ const CareProviderDashboard: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute left-0 top-[60px] w-50 z-50"
                   >
-                    <RatingFilterDropdown />
+                    <RatingFilterDropdown
+                      setRating={setRating}
+                      setShowRatingDropdown={setShowRatingDropdown}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -226,19 +237,19 @@ const CareProviderDashboard: React.FC = () => {
         <div>
           <TanDataTable<dataTypes>
             columns={columns}
-            data={data}
+            data={CareproviderData ?? ""}
             showCheckbox={false}
             onRowSelect={handleRowSelect}
             actions={renderActions}
-            showActions={true}
+            // showActions={true}
             className="my-custom-class"
-            actions={(row) => (
-              <DropdownActions
-                onView={() => console.log("View", row.id)}
-                onEdit={() => console.log("Edit", row.id)}
-                onDelete={() => console.log("Delete", row.id)}
-              />
-            )}
+            // actions={(row) => (
+            //   <DropdownActions
+            //     onView={() => console.log("View", row.id)}
+            //     onEdit={() => console.log("Edit", row.id)}
+            //     onDelete={() => console.log("Delete", row.id)}
+            //   />
+            // )}
           />
         </div>
       </div>

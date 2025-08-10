@@ -216,7 +216,6 @@ const ForumTable: React.FC = () => {
   ];
 
   const handleRowSelect = (row: dataTypes) => {
-    console.log("Selected row:", row);
   };
 
   return (

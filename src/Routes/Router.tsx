@@ -23,7 +23,11 @@ const Router: React.FC = () => {
 
       {/* Dashboard Routes */}
       {DashboardRoutes.map(({ path, element, children }) => (
-        <Route key={path} path={path} element={element}>
+        <Route
+          key={path}
+          path={path}
+          element={<ProtectedRoutes>{element}</ProtectedRoutes>}
+        >
           {children?.map((child) => (
             <Route
               key={child.path || "index"}
@@ -38,14 +42,18 @@ const Router: React.FC = () => {
       ))}
 
       {/* Patient Routes */}
-      {PatientRoutes.map(({ path, element, children }) => (
-        <Route key={path} path={path} element={element}>
+      {PatientRoutes?.map(({ path, element, children }) => (
+        <Route
+          key={path}
+          path={path}
+          element={<ProtectedRoutes>{element}</ProtectedRoutes>}
+        >
           {children?.map((child) => (
             <Route
               key={child.path || "index"}
               path={child.path}
-              // element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
-              element={child.element}
+              element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
+              // element={child.element}
               // element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
               index={child.path === "" ? true : undefined}
             />

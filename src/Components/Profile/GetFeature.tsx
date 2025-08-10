@@ -6,9 +6,19 @@ import { useMutation } from "@tanstack/react-query";
 import { ApiCreatePayment } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { ApiMe } from "@src/api/ApiUsers";
+import { useQuery } from "@tanstack/react-query";
+import SelectField from "@components/SelectField";
 const GetFeature = () => {
   const [billingCheck, setBillingCheck] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const [subscriptionTime, setSubscriptionTime] = useState("");
+  console.log("______", subscriptionTime);
+  const { data: user, isLoading: isUserLoading } = useQuery({
+    queryKey: ["me"],
+    queryFn: ApiMe,
+  });
+
   const points = [
     {
       title: "Appear at the Top of Search Results",
@@ -32,27 +42,36 @@ const GetFeature = () => {
     },
   ];
 
-
-
   const { mutateAsync: paymentMutation, isPending: isPendingPaymentMutation } =
     useMutation({
       mutationFn: (data) => ApiCreatePayment(data),
 
       onSuccess: async (data) => {
-        console.log("PLAAAN",data?.url)
         // navigate(data?.url)
-        window.location.href = data?.url;
+        console.log("dddddddd plaan", data);
+        if (data?.free_plan_active == true) {
+          return toast.success("Free Plan Subscribe Successfully")
+        } else {
+          window.location.href = data?.url;
+        }
       },
       onError: (error) => {
-        toast.error("Something Went Wrong");
+        console.log("eeeee", error?.response?.data?.message);
+        toast.error(error?.response?.data?.message);
       },
     });
-
   const handlePlan = async (plan) => {
-    console.log("PLANNANAN",plan)
-    const data = {
-      plan: plan,
-    };
+    let data;
+
+    if (plan == "FREE") {
+      data = {
+        plan: plan,
+      };
+    } else {
+      data = {
+        plan: subscriptionTime == "yearly" ? "BASIC_YEARLY" : plan,
+      };
+    }
     await paymentMutation(data);
   };
 
@@ -77,16 +96,43 @@ const GetFeature = () => {
               <h4 className="text-xl font-bold font-[Space Grotesk] mb-2">
                 💡 Why Feature Your Facility?
               </h4>
-              <p>
+              <p className="text-[14px] md:text-[16px]">
                 Get more visibility, build trust, and attract the right patients
                 by featuring your facility on our care provider network.
               </p>
             </div>
           </div>
-          <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-3">
-            Feature My Facility
-          </h4>
-          <ProfileCards onUpgrade={handlePlan} />
+          <div className="flex justify-between items-center mb-10 ">
+            <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-3">
+              Feature My Facility
+            </h4>
+
+            {/* <SelectField
+              // label="Organization Type"
+              id="organization"
+              // value={organization}
+              onChange={(e) => setSubscriptionTime(e.target.value)}
+              options={[
+                { value: "yearly", label: "Yearly Subscription" },
+                { value: "monthly", label: "Monthly Subscription" },
+              ]}
+              selectName="w-[49%]"
+            /> */}
+
+            <select
+              name="subscription"
+              className="w-[49%] border border-gray-300 rounded px-3 py-2 text-sm"
+              onChange={(e) => setSubscriptionTime(e.target.value)}
+            >
+              <option value="monthly">Monthly Subscription</option>
+              <option value="yearly">Yearly Subscription</option>
+            </select>
+          </div>
+          <ProfileCards
+            subscriptionTime={subscriptionTime}
+            onUpgrade={handlePlan}
+            user={user}
+          />
           <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
             💡 Advantages of Feature Plans?
           </h4>

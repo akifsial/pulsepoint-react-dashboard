@@ -259,11 +259,13 @@
 
 /* Hide scrollbar but keep scroll functionality */
 ::-webkit-scrollbar {
-  width: 0px;  
-  height: 0px; 
+  width: 5px;  
+  height: 5px; 
 }
 ::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: #28a2ffb9;
+  border-radius: 20px;
+
 }
 
 

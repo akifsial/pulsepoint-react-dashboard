@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import ChatDeleteModal from "./ChatDeleteModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ApiDeleteChat } from "@src/api/ApiCommunityForum";
+import { ApiDeleteChat, ApiEditChatName } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import Spinner from "@components/Loaders/Spinner";
 import EditChatModal from "./EditChatModal";
@@ -20,6 +20,7 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editName,setEditName]=useState("")
   const queryClient = useQueryClient();
 
   const { mutateAsync: DeleteChatMutation, isPending: IsPendingDeleteChat } =
@@ -37,16 +38,15 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
     });
 
   const handleDeleteChat = async () => {
-    console.log("USA");
     await DeleteChatMutation();
   };
 
   const { mutateAsync: EditChatMutation, isPending: IsPendingEditChat } =
     useMutation({
-      mutationFn: () => ApiDeleteChat(linkId),
+      mutationFn: (name) => ApiEditChatName(linkId,name),
 
       onSuccess: async () => {
-        toast.success("Chat Successfully Deleted");
+        toast.success("Chat Successfully Updated");
         setIsDeleteModalOpen(false);
         queryClient.invalidateQueries(["useGetAllConversations"]); // refetch list
       },
@@ -56,14 +56,16 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
     });
 
   const handleEditChatName = async () => {
-    console.log("USA");
-    await EditChatMutation();
+    const name={
+      name:editName
+    }
+    await EditChatMutation(name);
   };
 
   return (
     <>
       <div
-        ref={menuRef}
+        // ref={menuRef}
         className="absolute right-2 top-10 bg-white shadow-md rounded-md p-2 w-33 z-50"
       >
         <button
@@ -89,6 +91,8 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         onEdit={handleEditChatName}
+        setEditName={setEditName}
+        loading={IsPendingEditChat}
         // onDelete={}
       />
       {/* <Chat */}

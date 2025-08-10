@@ -28,10 +28,11 @@ const AdminPatientReviews: React.FC = () => {
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
 
-  const { data, isLoading : isLoadingUseApiMyReviews, isFetching } = useApiMyReviews(
-    debouncedSearchText,
-    rating
-  );
+  const {
+    data,
+    isLoading: isLoadingUseApiMyReviews,
+    isFetching,
+  } = useApiMyReviews(debouncedSearchText, rating);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   // State for managing the review form page
@@ -83,31 +84,24 @@ const AdminPatientReviews: React.FC = () => {
   const handleEditReview = (id: number | string) => {
     // setCurrentEditingReview(row);
     // setCurrentView("form");
-    console.log("rrrrrrrrroooowwwwwwww", id);
     navigate(`/patient/patient-feedback/edit/${id}`);
   };
 
-  const { mutateAsync: deleteMutation, isPending: deleteMutationLoading } =
-    useMutation({
-      mutationFn: () => apiDeleteMyReviews(selectedRowId),
-      onSuccess: async () => {
-        queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
-        setIsDeleteModalOpen(false);
-
-        // queryClient.invalidateQueries(["detailersFranchise"]);
-      },
-      onError: (error) => {
-        console.error("Error deleting user:", error);
-      },
-    });
+  const { mutateAsync: deleteMutation } = useMutation({
+    mutationFn: (id: number) => apiDeleteMyReviews(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["useApiMyReviews", debouncedSearchText, rating],
+      });
+      setIsDeleteModalOpen(false);
+    },
+  });
 
   const handleDelete = async () => {
     if (selectedRowId !== null) {
       await deleteMutation(selectedRowId);
     }
   };
-
-  console.log("ASDasdasDASDASDASd", selectedRowId);
 
   // Updated handleSaveReview function with toast
   const handleSaveReview = (updatedReview: {
@@ -116,11 +110,6 @@ const AdminPatientReviews: React.FC = () => {
   }) => {
     if (currentEditingReview) {
       // Here you would typically update your data source (API call, state update, etc.)
-      console.log(
-        "Saving review for provider:",
-        currentEditingReview.provider_name
-      );
-      console.log("Updated review:", updatedReview);
 
       // You can update the reviewsData here or make an API call
       // For now, we'll just log it and show success toast
@@ -156,6 +145,7 @@ const AdminPatientReviews: React.FC = () => {
       accessor: "provider_name",
       header: "Provider's Name",
       showSort: true,
+      width: "250px",
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
         const { provider_name, care_provider, provider_email, provider_logo } =
           row.original;
@@ -181,6 +171,7 @@ const AdminPatientReviews: React.FC = () => {
     {
       accessor: "date",
       header: "Date",
+      width: "200px",
       showSort: true,
       cell: (row) => (
         <i>{dayjs(row?.original?.created_at).format("DD-MMMM-YYYY")}</i>
@@ -189,11 +180,13 @@ const AdminPatientReviews: React.FC = () => {
     {
       accessor: "rating",
       header: "Rating",
+      width: "60px",
       showSort: true,
     },
     {
       accessor: "content",
       header: "Content",
+      width: "150px",
       showSort: false,
       // cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
       //   const { reviews } = row.original;
@@ -209,6 +202,7 @@ const AdminPatientReviews: React.FC = () => {
     {
       accessor: "address",
       header: "Location",
+      width: "180px",
       showSort: true,
       // cell: (row) => <i>{row?.original?.care_provider?.address}</i>,
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
@@ -314,9 +308,7 @@ const AdminPatientReviews: React.FC = () => {
     },
   ];
 
-  const handleRowSelect = (row: ReviewDataTypes) => {
-    console.log("Selected row:", row);
-  };
+  const handleRowSelect = (row: ReviewDataTypes) => {};
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -366,8 +358,9 @@ const AdminPatientReviews: React.FC = () => {
               <div className="flex items gap-4">
                 <button
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                  className="border border-[#252525] px-4 md:w-[101px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5"
+                  className={`border border-[#252525] px-4 md:w-[110px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5`}
                 >
+                  {rating ? rating : ""}
                   <span>Ratings</span>
                   <img
                     src={filterIcon}
@@ -386,7 +379,10 @@ const AdminPatientReviews: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute md:left-[-100px] top-[50px] w-50 z-50"
                   >
-                    <RatingFilterDropdown setRating={setRating} />
+                    <RatingFilterDropdown
+                      setShowRatingDropdown={setShowRatingDropdown}
+                      setRating={setRating}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -398,24 +394,26 @@ const AdminPatientReviews: React.FC = () => {
           {isLoadingUseApiMyReviews ? (
             <TableSkeletonLoader />
           ) : (
-            <TanDataTable<ReviewDataTypes>
-              columns={columns ?? []}
-              data={data ?? []}
-              showCheckbox={false}
-              onRowSelect={handleRowSelect}
-              showActions={true}
-              className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  onEdit={() => handleEditReview(row?.feedback?.review_id)}
-                  variant="reviews"
-                  onDelete={() => {
-                    setSelectedRowId(row.id);
-                    setIsDeleteModalOpen(true);
-                  }}
-                />
-              )}
-            />
+            <div className="overflow-x-auto">
+              <TanDataTable<ReviewDataTypes>
+                columns={columns ?? []}
+                data={data ?? []}
+                showCheckbox={false}
+                onRowSelect={handleRowSelect}
+                showActions={true}
+                className="my-custom-class"
+                actions={(row) => (
+                  <DropdownActions
+                    onEdit={() => handleEditReview(row?.feedback?.review_id)}
+                    variant="reviews"
+                    onDelete={() => {
+                      setSelectedRowId(row?.feedback?.review_id); // ✅ match what API expects
+                      setIsDeleteModalOpen(true);
+                    }}
+                  />
+                )}
+              />
+            </div>
           )}
 
           <DeleteModal

@@ -1,6 +1,7 @@
 import React from "react";
 import { BadgeCheck, XCircle } from "lucide-react";
 import { UseApiPaymentsHistory } from "@src/hooks/usePayments";
+import PaymentHistoryLoader from "@components/Loaders/PaymentHistoryLoader";
 
 type PaymentRecord = {
   id: string;
@@ -42,9 +43,7 @@ const formatAmount = (amount: number, currency: string) => {
 };
 
 const PaymentHistoryPage = () => {
-
-  
-const { data } = UseApiPaymentsHistory();
+  const { data, isLoading } = UseApiPaymentsHistory();
 
   return (
     <div className="min-h-screen py-10 px-4">
@@ -53,7 +52,9 @@ const { data } = UseApiPaymentsHistory();
           Payment History
         </h2>
 
-        {data?.records?.length === 0 ? (
+        {isLoading ? (
+         <PaymentHistoryLoader />
+        ) : data?.records?.length === 0 ? (
           <p className="text-center text-gray-500">No payments found.</p>
         ) : (
           <div className="space-y-4">
@@ -65,7 +66,7 @@ const { data } = UseApiPaymentsHistory();
                 <div>
                   <b className="text-md mb-2 text-gray-500">{payment.plan}</b>
                   <p className="text-green-500  font-semibold">
-                    ${(payment.amount)}
+                    ${payment.amount}
                   </p>
                   <p className="text-xs  text-red -400 mt-1">
                     Expired at : {formatDate(payment?.current_period_end)}

@@ -30,7 +30,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
   ...rest
 }) => {
   // Automatically select the first option if no value is provided
-  const currentValue = value || (options.length > 0 ? options[0].value : "");
+  const currentValue = value || (options?.length > 0 ? options[0].value : "");
 
   return (
     <div className={`mb-4 ${selectName}`}>
@@ -61,7 +61,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           } appearance-none`}
           {...rest}
         >
-          {options.map((option) => (
+          {options?.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>

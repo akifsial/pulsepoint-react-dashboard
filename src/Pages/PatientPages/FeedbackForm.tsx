@@ -9,13 +9,12 @@ import { ApiCreateFeedback } from "@src/api/ApiDashboard";
 import toast from "react-hot-toast";
 import Spinner from "@components/Loaders/Spinner";
 
-const FeedbackForm = ({setFeedbackOpen}) => {
+const FeedbackForm = ({ setFeedbackOpen }) => {
   const { id } = useParams();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [showThankYou, setShowThankYou] = useState(false);
   const [responses, setResponses] = useState({ care_provider_id: id });
-
 
   const navigate = useNavigate();
 
@@ -232,9 +231,8 @@ const FeedbackForm = ({setFeedbackOpen}) => {
       mutationFn: () => ApiCreateFeedback(responses),
 
       onSuccess: async () => {
-        console.log("asdasdasdasdasdasdasdasdasdasd")
         toast.success("Review Added Successfully");
-        setFeedbackOpen(false)
+        setFeedbackOpen(false);
         // navigate(`/patient/hospital-profile/${id}`);
       },
       onError: (error) => {
@@ -245,6 +243,10 @@ const FeedbackForm = ({setFeedbackOpen}) => {
   const handleReview = async () => {
     await feedbackMutation();
   };
+
+  const isCurrentStepValid = currentSection.isCommentSection
+    ? responses.content?.trim().length > 0 // comment must not be empty
+    : currentSection.questions.every((q) => responses.hasOwnProperty(q.name));
 
   return (
     <>
@@ -329,7 +331,6 @@ const FeedbackForm = ({setFeedbackOpen}) => {
                             ? Number(option.split(" ")[0])
                             : option;
 
-
                         return (
                           <label
                             key={optIdx}
@@ -342,7 +343,6 @@ const FeedbackForm = ({setFeedbackOpen}) => {
                               value={value}
                               className="form-radio"
                               checked={responses[q.name] === value}
-                              
                               onChange={(e) =>
                                 setResponses((prev) => ({
                                   ...prev,
@@ -377,22 +377,29 @@ const FeedbackForm = ({setFeedbackOpen}) => {
             {currentStep < totalSteps - 1 ? (
               <button
                 type="button"
-                className="cursor-pointer border-1 w-[100px] h-[46px] !rounded-[10px] px-4 py-[10px] text-white font-semibold leading-[33px] gap-[10px] flex items-center justify-center bg-[#28A2FF] hover:bg-[#2196F3] transition-colors"
                 onClick={handleNext}
+                disabled={!isCurrentStepValid}
+                className={`w-[100px] h-[46px] px-4 py-[10px] !rounded-[10px] font-semibold leading-[33px] flex items-center justify-center transition-colors gap-[10px] 
+      ${
+        !isCurrentStepValid
+          ? "bg-gray-300 cursor-not-allowed text-white"
+          : "bg-[#28A2FF] hover:bg-[#2196F3] text-white"
+      }`}
               >
                 Next
               </button>
             ) : (
-              // <PrimaryButton
-              //   btnText="Next"
-              //   btnClass="border-1 w-[100px] h-[46px] !rounded-[10px] px-4 py-[10px] text-white font-semibold leading-[33px] gap-[10px] flex items-center justify-center bg-[#28A2FF] hover:bg-[#2196F3] transition-colors"
-              //   onClick={handleNext}
-
-              // />
               <PrimaryButton
-                btnText={`${isFeedbackPending ? "Posting..." : "Post A Review" }`}
+                btnText={`${
+                  isFeedbackPending ? "Posting..." : "Post A Review"
+                }`}
                 showImg={false}
-                btnClass="border-1 w-[200px] h-[46px] !rounded-[10px] px-4 py-[10px] text-white font-semibold leading-[33px] gap-[10px] flex items-center justify-center bg-[#28A2FF] hover:bg-[#2196F3] transition-colors"
+                disabled={!isCurrentStepValid || isFeedbackPending}
+                btnClass={`border-1 w-[200px] h-[46px] !rounded-[10px] px-4 py-[10px] font-semibold leading-[33px] gap-[10px] flex items-center justify-center transition-colors ${
+                  !isCurrentStepValid || isFeedbackPending
+                    ? "bg-gray-300 text-white cursor-not-allowed"
+                    : "bg-[#28A2FF] hover:bg-[#2196F3] text-white"
+                }`}
                 onClick={handleReview}
               />
             )}

@@ -55,6 +55,8 @@ export default function HospitalProfileCard({
   });
 
   const handleBookmarkToggle = async () => {
+    if (savedCareProvidersPending) return;
+    
     setIsBookmarked(!isBookmarked);
 
     if (data?.is_saved_care_provider == true) {
@@ -84,7 +86,7 @@ export default function HospitalProfileCard({
         />
 
         {/* right: bookmark button */}
-        <button
+        {/* <button 
           type="button"
           onClick={handleBookmarkToggle}
           aria-label={isBookmarked ? "Remove bookmark" : "Bookmark hospital"}
@@ -98,7 +100,28 @@ export default function HospitalProfileCard({
                 : "text-gray-700"
             }`}
           />
-        </button>
+        </button> */}
+
+        <button 
+  type="button"
+  onClick={handleBookmarkToggle}
+  disabled={savedCareProvidersPending}
+  aria-label={isBookmarked ? "Remove bookmark" : "Bookmark hospital"}
+  className={`w-10 h-10 mt-3 sm:mt-0 grid cursor-pointer place-items-center rounded-full border border-gray-300
+    hover:bg-gray-100 transition-colors ${
+      savedCareProvidersPending ? "opacity-50 cursor-not-allowed" : ""
+    }`}
+>
+  <Bookmark
+    className={`w-4 h-4 ${
+      data?.is_saved_care_provider
+        ? "fill-current text-medical-blue"
+        : "text-gray-700"
+    }`}
+  />
+</button>
+
+
       </div>
       {savedModal && <SavedModal onSaved={handleSaved} onClose={()=>(setSavedModal(false))} isOpen={true} />}
       {/* About Section */}
@@ -106,12 +129,12 @@ export default function HospitalProfileCard({
         <h3 className="text-lg font-semibold text-gray-900 mb-3">About</h3>
         <div className="mb-3">
           <span className="text-sm text-gray-500 block mb-1">
-            Specialty / Type
+            {data?.specialization}
           </span>
           <p className="text-sm text-gray-900 font-medium">{specialty}</p>
         </div>
         <h4>
-          {data?.specialization} | {data?.address} | {data?.organization_name}
+           {data?.address} | {data?.organization_name}
         </h4>
         <p>
           Sunrise Hills Nursing Home is a full-service assisted living facility

@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
@@ -8,7 +5,7 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 
-const  UserFlagged: React.FC = () => {
+const UserFlagged: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
 
@@ -21,7 +18,6 @@ const  UserFlagged: React.FC = () => {
     reason?: string;
     image?: string;
   };
-
 
   const columns: TanDataTableColumn<dataTypes>[] = [
     {
@@ -44,7 +40,6 @@ const  UserFlagged: React.FC = () => {
       header: "Reason",
       showSort: true,
     },
-   
   ];
 
   const data: dataTypes[] = [
@@ -53,21 +48,18 @@ const  UserFlagged: React.FC = () => {
       community: "Asthma Wellness Group",
       post: "Tips for Spring Air Quality",
       date: "9/4/12",
-      reason: "misinformation"
+      reason: "misinformation",
     },
     {
       id: 2,
       community: "Asthma Wellness Group",
       post: "Tips for Spring Air Quality",
       date: "9/4/12",
-       reason: "Spam/Pormotion"
+      reason: "Spam/Pormotion",
     },
-    
   ];
 
-  const handleRowSelect = (row: dataTypes) => {
-    console.log("Selected row:", row);
-  };
+  const handleRowSelect = (row: dataTypes) => {};
 
   const renderActions = (row: dataTypes) => (
     <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>
@@ -126,4 +118,4 @@ const  UserFlagged: React.FC = () => {
   );
 };
 
-export default  UserFlagged;
+export default UserFlagged;

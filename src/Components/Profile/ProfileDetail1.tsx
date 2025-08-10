@@ -76,7 +76,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
       toast.success("Profile Updated Successfully");
     },
     onError: (error) => {
-      toast.error("Something Went Wrong");
+      // toast.error("Something Went Wrong");
     },
   });
 
@@ -88,10 +88,12 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     formData.append("address", data.address);
     formData.append("city", data.city);
     formData.append("state", data.state);
-    formData.append("postal_code", data.zip);
+    formData.append("postal_code", data);
     // formData.append("organization", data.organization);
     formData.append("website_url", data.web);
     formData.append("additional_details", data.additional_details);
+    formData.append("image",selectedImage);
+
 
     await profileUpdateMutation(formData);
   };
@@ -117,6 +119,12 @@ const ProfileDetail1 = ({ onChangePassword }) => {
       // setCity(meData.city || "");
     }
   }, [meData, setValue]);
+
+  console.log("Image URL:", selectedImage
+  ? URL.createObjectURL(selectedImage)
+  : singleUser?.image
+  ? `${import.meta.env.VITE_APP_API_IMG_URL}${singleUser.image}`
+  : fallbackImg);
 
   return (
     <>
@@ -167,7 +175,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                   </label>
 
                   <PrimaryButton
-                    btnText="Save Changes"
+                    btnText={ isPendingProfileUpdateMutation ? "Loading..." : `Save Changes`}
                     showImg={false}
                     btnClass="h-[46px]  !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white !px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
                   />
@@ -246,7 +254,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
 
             <div className="mb-6 text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
               <p className="mb-2.5">Additional Details:</p>
-              <div className="text-sm font-normal text-[#252525] py-4 px-[15px] rounded-lg bg-[#FBFCFD]">
+              <div className="text-sm font-normal text-[#252525] py-4 ps-0 px-[15px] rounded-lg bg-[#FBFCFD]">
                 {/* <p>
                   Sunrise Hills Nursing Home is a full-service assisted living
                   facility specializing in post-acute rehabilitation and

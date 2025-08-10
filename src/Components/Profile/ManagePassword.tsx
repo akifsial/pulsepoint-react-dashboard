@@ -14,7 +14,7 @@ const ManagePassword = () => {
   const [password2, setPassword2] = useState("");
 
   const {
-    register,
+    register, 
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -38,7 +38,6 @@ const ManagePassword = () => {
           ? "Incorrect Old Password"
           : error?.message
       );
-      // console.log("TAOST",error.message)
     },
   });
 
@@ -76,7 +75,7 @@ const ManagePassword = () => {
             id="password1"
             placeholder="**********************"
             // value={password}
-            fieldName="w-[38%]"
+            fieldName="sm:w-[38%] w-full"
             onChange={(e) => setPassword(e.target.value)}
             asterisk={false}
             register={register}
@@ -90,7 +89,7 @@ const ManagePassword = () => {
             id="password2"
             placeholder="**********************"
             // value={password1}
-            fieldName="w-[38%]"
+            fieldName="sm:w-[38%] w-full"
             onChange={(e) => setPassword1(e.target.value)}
             asterisk={false}
             register={register}
@@ -104,7 +103,7 @@ const ManagePassword = () => {
             id="password3"
             placeholder="**********************"
             // value={password2}
-            fieldName="w-[38%]"
+            fieldName="sm:w-[38%] w-full"
             onChange={(e) => setPassword2(e.target.value)}
             asterisk={false}
             register={register}
@@ -116,6 +115,7 @@ const ManagePassword = () => {
             btnText="Save Changes"
             showImg={false}
             btnClass="w-[22%] h-[46px] mt-6.5 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+            disabled={updatePatientProfileLoader}
           />
         </form>
       </div>

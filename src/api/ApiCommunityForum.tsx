@@ -1,18 +1,46 @@
 import axios from "axios";
+import {
+  AIBOT_SEND_MESSAGE_TYPE,
+  COMMENT_LIKE_TYPE,
+  JOIN_COMMUNITY_TYPE,
+  LIKE_POST_TYPE,
+  PARENT_COMMENT_REPLY_TYPE,
+  POST_COMMENT_TYPE,
+  SAVE_POST_TYPE,
+} from "@types/apiTypes";
+import toast from "react-hot-toast";
 
-export const ApiReportPost = async (data) => {
+// export const ApiReportPost = async (data: FormData): Promise<any> => {
+//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/report`;
+
+//   const token = JSON.parse(localStorage.getItem("token"));
+
+//   const response = await axios.post(BASE_URL, data, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+
+//   return response.data.payload;
+// };
+
+export const ApiReportPost = async (data: FormData): Promise<any> => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/report`;
 
-  const token = JSON.parse(localStorage.getItem("token"));
+  try {
+    const token = JSON.parse(localStorage.getItem("token") || "");
 
-  const response = await axios.post(BASE_URL, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+    const response = await axios.post(BASE_URL, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-  return response.data.payload;
+    return response.data?.payload;
+  } catch (error) {
+    console.error("xxxxxxxxxxxxxxxxxxxxxxxxx:", error);
+    toast.error(error?.response?.data?.errors[0]?.message)
+    throw error; // rethrow it so caller can handle it
+  }
 };
 
-export const ApiGetPopularCommunities = async (search) => {
+export const ApiGetPopularCommunities = async (search: string) => {
   const BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
   }community?title=${search}`;
@@ -25,7 +53,7 @@ export const ApiGetPopularCommunities = async (search) => {
   return response.data.payload;
 };
 
-export const ApiCreateCommunity = async (data) => {
+export const ApiCreateCommunity = async (data: FormData) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community`;
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -36,7 +64,7 @@ export const ApiCreateCommunity = async (data) => {
   return response.data.payload;
 };
 
-export const ApiPostComment = async (data) => {
+export const ApiPostComment = async (data: POST_COMMENT_TYPE) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/comment`;
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
@@ -49,7 +77,7 @@ export const ApiPostComment = async (data) => {
   return response.data.payload;
 };
 
-export const ApiGetCommunityPost = async () => {
+export const ApiGetCommunityPost = async (page: number = 1) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post`;
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
@@ -59,7 +87,13 @@ export const ApiGetCommunityPost = async () => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response.data.payload;
+  console.log("🔵 Page", page, "→ Data:", response.data.payload.records);
+
+  // return response.data.payload;
+  return {
+    records: response.data.payload.records,
+    hasMore: response.data.payload.records.length > 0, // or use actual flag from API
+  };
 };
 
 export const ApiGetCommunityPostSaved = async () => {
@@ -88,7 +122,7 @@ export const ApiGetSingleUser = async () => {
   return response.data.payload;
 };
 
-export const ApiCreatePostCommunity = async (data) => {
+export const ApiCreatePostCommunity = async (data: FormData) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post`;
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -99,10 +133,13 @@ export const ApiCreatePostCommunity = async (data) => {
   return response.data.payload;
 };
 
-export const ApiGellAllCommunity = async (search) => {
-  let BASE_URL = `${
-    import.meta.env.VITE_APP_API_URL
-  }community?user_communities=yes`;
+export const ApiGellAllCommunity = async (search: string) => {
+  let URL = `${import.meta.env.VITE_APP_API_URL}community?user_communities=yes`;
+
+  if (search) {
+    URL += `&search=${search}`;
+  }
+
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -111,14 +148,14 @@ export const ApiGellAllCommunity = async (search) => {
   //   BASE_URL+=`&${}`
   // }
 
-  const response = await axios.get(BASE_URL, {
+  const response = await axios.get(URL, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
   return response.data.payload;
 };
 
-export const ApiLikePost = async (data) => {
+export const ApiLikePost = async (data: LIKE_POST_TYPE) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/like`;
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
@@ -144,7 +181,9 @@ export const ApiPostReports = async () => {
   return response.data.payload;
 };
 
-export const ApiParentCommentReply = async (data) => {
+export const ApiParentCommentReply = async (
+  data: PARENT_COMMENT_REPLY_TYPE
+) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}comment`;
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
@@ -157,7 +196,10 @@ export const ApiParentCommentReply = async (data) => {
   return response.data.payload;
 };
 
-export const ApiLikeComment = async (commentId, data) => {
+export const ApiLikeComment = async (
+  commentId: number,
+  data: COMMENT_LIKE_TYPE
+) => {
   const BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
   }comment/like/${commentId}`;
@@ -185,7 +227,7 @@ export const ApiReplyOnReview = async (data) => {
   return response.data.payload;
 };
 
-export const ApieSaveCreatePost = async (data) => {
+export const ApieSaveCreatePost = async (data: SAVE_POST_TYPE) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/save`;
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
@@ -198,7 +240,7 @@ export const ApieSaveCreatePost = async (data) => {
   return response.data.payload;
 };
 
-export const ApiJoinCommunity = async (data) => {
+export const ApiJoinCommunity = async (data: JOIN_COMMUNITY_TYPE) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/join`;
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
@@ -211,7 +253,7 @@ export const ApiJoinCommunity = async (data) => {
   return response.data.payload;
 };
 
-export const ApiChatPost = async (data) => {
+export const ApiChatPost = async (data: AIBOT_SEND_MESSAGE_TYPE) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}chat`;
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -245,7 +287,7 @@ export const ApiGetAllConversation = async () => {
 };
 
 export const ApiGetConversationChatSpecific = async (
-  selectedConversationId
+  selectedConversationId: number
 ) => {
   const BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
@@ -259,7 +301,7 @@ export const ApiGetConversationChatSpecific = async (
   return response.data.payload;
 };
 
-export const ApiDeleteChat = async (selectedConversationId) => {
+export const ApiDeleteChat = async (selectedConversationId: number) => {
   const BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
   }chat/conversations/${selectedConversationId}`;
@@ -272,13 +314,16 @@ export const ApiDeleteChat = async (selectedConversationId) => {
   return response.data.payload;
 };
 
-export const ApiEditChatName = async (selectedConversationId) => {
+export const ApiEditChatName = async (
+  selectedConversationId: number,
+  name: string
+) => {
   const BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
   }chat/conversations/${selectedConversationId}`;
   const token = JSON.parse(localStorage.getItem("token"));
 
-  const response = await axios.delete(BASE_URL, {
+  const response = await axios.put(BASE_URL, name, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -307,7 +352,7 @@ export const ApiCreatePayment = async (data) => {
   return response.data.payload;
 };
 
-export const ApiGetSpecificCommunity = async (id) => {
+export const ApiGetSpecificCommunity = async (id: number) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/${id}`;
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -318,42 +363,29 @@ export const ApiGetSpecificCommunity = async (id) => {
   return response.data.payload;
 };
 
-export const ApiGetNotifications = async () => {
-  const BASE_URL = `${
-    import.meta.env.VITE_APP_API_URL
-  }user/notifications`;
+export const ApiGetNotifications = async (page = 1, limit = 5) => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/notifications`;
   const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
+    params: { page, limit }, // pass page and limit as query params
   });
 
   return response.data.payload;
 };
 
-export const ApiDeleteComment = async (commentId,post_id) => {
+export const ApiDeleteComment = async (
+  commentId: number,
+  post_id: number | string
+) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}comment/${commentId}`;
   const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.delete(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
-    data:post_id
+    data: post_id,
   });
 
   return response.data.payload;
 };
-
-
-
-// export const ApiLikeComment = async (data, id) => {
-//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}comment/like/${id}`;
-//   const token: string | null = JSON.parse(
-//     localStorage.getItem("token") || "null"
-//   );
-
-//   const response = await axios.post(BASE_URL, data, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response.data.payload;
-// };

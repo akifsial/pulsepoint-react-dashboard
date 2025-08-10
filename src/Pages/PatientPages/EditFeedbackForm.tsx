@@ -20,7 +20,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
   const [responses, setResponses] = useState({
     care_provider_id: data?.care_provider_id,
   });
-  console.log("RRRRRRRRRR", responses);
   const navigate = useNavigate();
 
   const surveySections = [
@@ -272,7 +271,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
     }));
   }, [data?.feedback]);
 
-  console.log("responseee", data);
 
   return (
     <>
@@ -344,8 +342,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
                 </div>
               ) : (
                 currentSection?.questions.map((q, qIdx) => {
-                  // console.log("^^^^^6",data?.feedback.filter((feed)=>(feed==q)))
-                  // console.log("++__",Object.keys(data?.feedback).filter((feed) => feed == q))
                   // const feedbackExists = data?.feedback?.hasOwnProperty(q.name);
                   // const feedbackValue = data?.feedback?.[q.name];
                   // const keyExists = q.name in data?.feedback;

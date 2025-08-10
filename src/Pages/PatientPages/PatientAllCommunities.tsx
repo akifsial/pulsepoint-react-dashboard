@@ -20,7 +20,7 @@ import { apiDeleteMyReviews } from "@src/api/ApiMyReviews";
 import { useNavigate } from "react-router-dom";
 import { useGetAllCommunities } from "@src/hooks/useCommunity";
 import JoinModal from "@components/Model/JoinModal";
-import { XCircleIcon } from "lucide-react";
+import { Trash, XCircleIcon } from "lucide-react";
 import {
   ApiGetPopularCommunities,
   ApiJoinCommunity,
@@ -30,7 +30,6 @@ import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 const PatientAllCommunites: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [searchText, setSearchText] = React.useState<string>("");
-  const [rating, setRating] = useState();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
@@ -38,6 +37,7 @@ const PatientAllCommunites: React.FC = () => {
 
   const { data, isLoading: isLoadingUseGetAllCommunities } =
     useGetAllCommunities(debouncedSearchText);
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   // State for managing the review form page
@@ -50,7 +50,6 @@ const PatientAllCommunites: React.FC = () => {
   // Add toast state
   const [showSuccessToast, setShowSuccessToast] = React.useState(false);
   const [selectedCommunityId, setSelectedCommunityId] = useState();
-  console.log("zzzz", selectedCommunityId);
   type ReviewDataTypes = {
     id?: number;
     provider_name?: string;
@@ -90,7 +89,6 @@ const PatientAllCommunites: React.FC = () => {
   const handleEditReview = (id: number | string) => {
     // setCurrentEditingReview(row);
     // setCurrentView("form");
-    // console.log("rrrrrrrrroooowwwwwwww", id);
     // navigate(`/patient/patient-feedback/edit/${id}`);
   };
 
@@ -152,48 +150,54 @@ const PatientAllCommunites: React.FC = () => {
   };
 
   const columns: TanDataTableColumn<ReviewDataTypes>[] = [
-{
-  accessor: "provider_name",
-  header: "Creator's Name",
-  showSort: true,
-  cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-    const { creator } = row.original;
-    const imageUrl = creator?.image
-      ? `${import.meta.env.VITE_APP_API_IMG_URL}${creator.image}`
-      : dummyImage;
+    {
+      accessor: "provider_name",
+      header: "Creator's Name",
+      width: "200px",
+      showSort: true,
+      cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
+        const { creator } = row.original;
+        const imageUrl = creator?.image
+          ? `${import.meta.env.VITE_APP_API_IMG_URL}${creator.image}`
+          : dummyImage;
 
-    return (
-      <div className="flex items-center gap-3">
-        <img
-          src={imageUrl}
-          alt={`${creator?.first_name ?? "User"} ${creator?.last_name ?? ""}`}
-          className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
-        />
-        <div className="flex flex-col">
-          <span className="font-medium text-sm text-[#252525] leading-tight">
-            {creator?.first_name} {creator?.last_name}
-          </span>
-          <span className="text-xs text-gray-500 leading-tight">
-            {creator?.email}
-          </span>
-        </div>
-      </div>
-    );
-  },
-},
+        return (
+          <div className="flex items-center gap-3">
+            <img
+              src={imageUrl}
+              alt={`${creator?.first_name ?? "User"} ${
+                creator?.last_name ?? ""
+              }`}
+              className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
+            />
+            <div className="flex flex-col">
+              <span className="font-medium text-sm text-[#252525] leading-tight">
+                {creator?.first_name} {creator?.last_name}
+              </span>
+              <span className="text-xs text-gray-500 leading-tight">
+                {creator?.email}
+              </span>
+            </div>
+          </div>
+        );
+      },
+    },
 
     {
       accessor: "title",
+      width: "160px",
       header: "Community Name",
       showSort: false,
     },
     {
       accessor: "description",
+      width: "600px",
       header: "Description",
       showSort: true,
     },
     {
       accessor: "date",
+      width: "150px",
       header: "Date",
       showSort: true,
       cell: (row) => (
@@ -201,23 +205,11 @@ const PatientAllCommunites: React.FC = () => {
       ),
     },
 
-    {
-      accessor: "status",
-      header: "Status",
-      showSort: true,
-      // cell: (row) => <i>{row?.original?.care_provider?.address}</i>,
-      //   cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-      //     const { care_provider } = row.original;
-      //     return (
-      //       <div className="flex items-center gap-3">
-      //         {care_provider?.address}
-      //       </div>
-      //     );
-      //   },
-    },
+   
   ];
 
   const handleRowSelect = (row: ReviewDataTypes) => {};
+
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -271,7 +263,9 @@ const PatientAllCommunites: React.FC = () => {
     await LeaveCommunityMutation(data);
   };
 
-  //   console.log("Search......",debouncedSearchText)
+
+                const userId=JSON.parse(localStorage.getItem("userInfo")).id
+                // console.log("ddddffff",data?.record)
 
   // Render the Reviews Table View
   const renderTableView = () => (
@@ -308,40 +302,52 @@ const PatientAllCommunites: React.FC = () => {
         </div>
 
         <div>
-            {isLoadingUseGetAllCommunities ? (
-              <TableSkeletonLoader />
-            ) : (
-              <TanDataTable<ReviewDataTypes>
-                columns={columns ?? []}
-                data={data?.records ?? []}
-                showCheckbox={false}
-                onRowSelect={handleRowSelect}
-                showActions={true}
-                className="my-custom-class"
-                actions={(row) => (
-                  //   <DropdownActions
-                  //     onJoin={() => handleEditReview(row?.feedback?.review_id)}
-                  //     variant="reviews"
-                  //     // onDelete={() => {
+          {isLoadingUseGetAllCommunities ? (
+            <TableSkeletonLoader />
+          ) : (
+            <div className="h-[300px] overflow-x-auto w-[100%] overflow-y-auto">
+
+            <TanDataTable<ReviewDataTypes>
+              columns={columns ?? []}
+              // data={data?.records ?? []}
+              // data={data ?? []}
+                data={data?.records?.filter((row) => row?.creator_id !== userId) ?? []}
+
+              showCheckbox={false}
+              onRowSelect={handleRowSelect}
+              showActions={true}
+              className="my-custom-class"
+              actions={(row) => {
+                console.log("________________________________",row?.creator_id)
+                //   <DropdownActions
+                //     onJoin={() => handleEditReview(row?.feedback?.review_id)}
+                //     variant="reviews"
+                //     // onDelete={() => {
                   //     //   setSelectedRowId(row.id);
                   //     //   setIsDeleteModalOpen(true);
                   //     // }}
                   //   />
                   // <PrimaryButton btnClass="bg-red-500" btnText="Unjoin" />
+                  return <div className="flex justify-center gap-3 items-center">
+                    
+                  {/* <Trash onClick={()=>(handleDeleteMyCommunity(row))} className="text-red-500 cursor-pointer"/> */}
+
                   <PrimaryButton
-                    btnText="Leave"
-                    btnClass="bg-red-100 text-red-700 hover:bg-red-200 border border-red-300 font-medium rounded-md !px-4 py-1.5 flex items-center gap-2"
-                    onClick={() => {
-                      setIsUnSubscribeModalOpen(true);
-                      setSelectedCommunityId(row.id);
-                    }}
+                  btnText="Leave"
+                  btnClass="bg-red-100 text-red-700 hover:bg-red-200 border border-red-300 font-medium rounded-md !px-4 py-1.5 flex items-center gap-2"
+                  onClick={() => {
+                    setIsUnSubscribeModalOpen(true);
+                    setSelectedCommunityId(row.id);
+                  }}
                   >
-                    <XCircleIcon className="w-4 h-4" />{" "}
-                    {/* Use Lucide or Heroicons */}
-                  </PrimaryButton>
-                )}
+                  <XCircleIcon className="w-4 h-4" />{" "}
+                  {/* Use Lucide or Heroicons */}
+                </PrimaryButton>
+                  </div>
+              }}
               />
-            )}
+              </div>
+          )}
 
           <JoinModal
             isOpen={isUnSubscribeModalOpen}
@@ -387,6 +393,8 @@ const PatientAllCommunites: React.FC = () => {
       </div>
     </div>
   );
+
+  
 
   // Main render - conditionally show table or form with toast
   return (
