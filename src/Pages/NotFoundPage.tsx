@@ -19,7 +19,7 @@ const NotFoundPage:React.FC = () => {
           Oops! The page you're looking for doesn't exist.
         </p>
         <Link
-          to="/"
+          to="/login"
           className="inline-block mt-6 px-6 py-3 bg-[#00B57A] text-white rounded-[8px] hover:bg-green-600 transition"
         >
           Go Back Home

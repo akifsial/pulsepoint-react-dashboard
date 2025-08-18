@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { Send } from "lucide-react";
 // import DummyUser from "@assets/DummyUser.jpg";
 // import commentIcon from "@assets/commentIcon.svg";
@@ -8,8 +9,12 @@ import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 // import arrowUpTrans from "@assets/arrowUpTrans.svg";
 import arrowUpTrans from "@assets/media/svgs/dashboard-svgs/arrowUp.svg";
 import dayjs from "dayjs";
+import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
+import arrowUp from "@assets/media/svgs/arrowUp.svg";
 import { IoEllipsisHorizontal, IoEllipsisVerticalSharp } from "react-icons/io5";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import DeleteDropdownActions from "@components/Dashboard-components/Dropdown-actions/DeleteDropdownActions";
+import Spinner from "@components/Loaders/Spinner";
 // import { ApiLikeComment } from "@src/api/ApiCommunityForum";
 // import { useQueryClient } from "@tanstack/react-query";
 
@@ -29,6 +34,8 @@ export const CommentItem = ({
   setIsCommentReply,
   replyId,
   setReplyParentId,
+  handleDeleteComment,
+  key,
 }) => {
   const isReplyVisible = parentCommentReplyId.includes(comment.id);
 
@@ -42,14 +49,25 @@ export const CommentItem = ({
     }
   };
 
+  const [replyLoading, setReplyLoading] = useState(false);
 
+  const handleReply = async () => {
+    if (!parentCommentReplyValue.trim()) return;
+
+    try {
+      setReplyLoading(true); // show spinner
+      await handleParentCommentReply(postId, comment?.id);
+    } finally {
+      setReplyLoading(false); // hide spinner
+    }
+  };
 
   return (
     <div className="ml-4 mt-3">
       {/*  */}
 
       {/*  */}
-      <div className="flex items-start gap-3 mb-3">
+      <div className="flex items-start relative gap-3 mb-3">
         <img
           src={
             comment?.user?.image
@@ -60,94 +78,116 @@ export const CommentItem = ({
           alt="userIcon"
         />
         <div className="flex  flex-col text-[#252525] font-normal">
-          <p className="font-semibold">
-            {comment?.user?.first_name} {comment?.user?.last_name}
-          </p>
-          <p className="text-[#00000] text-[12px]">
-            Today at {dayjs(comment?.created_at).format("h:mm A")}
-          </p>
-          <p className="text-sm text-gray-700 mb-2.5">{comment?.content}</p>
+          <div className="">
+            <p className="font-semibold">
+              {comment?.user?.first_name} {comment?.user?.last_name}
+            </p>
+            <p className="text-[#00000] text-[12px]">
+              Today at {dayjs(comment?.created_at).format("h:mm A")}
+            </p>
+            <p className="text-sm text-gray-700 mb-2.5">{comment?.content}</p>
 
-          {/* Like & Reply Buttons */}
-          <div className="flex gap-2.5 mb-2.5">
-            <div className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
+            {/* Like & Reply Buttons */}
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <div className="flex  items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
+                <button
+                  disabled={LikeIsPending}
+                  className="flex items-center gap-2"
+                  onClick={() => handleCommentReaction("like", comment, postId)}
+                >
+                  {/* <img src={arrowUpTrans} alt="Like" /> */}
+
+                  {/* <img src={arrowUpTrans} alt="Liked" /> */}
+                  {comment?.userLike?.is_like == true ? (
+                    <div className="bg-black p-1.5 rounded-full">
+                      {/* <img src={arrowUpTrans} alt="Liked" /> */}
+                      <img src={arrowUp} className="py-0.5 px-1" alt="Liked" />
+                    </div>
+                  ) : (
+                    <img src={arrowDowm} className="rotate-180" alt="Like" />
+                  )}
+
+                  {comment?.likeCount || 0}
+                </button>
+                <button
+                  className="ps-2"
+                  disabled={LikeIsPending}
+                  onClick={() =>
+                    handleCommentReaction("dislike", comment, postId)
+                  }
+                >
+                  {/* <img src={arrowUpTrans} alt="Dislike" /> */}
+                  {comment?.userLike?.is_like == false ? (
+                    <div className="bg-black p-1.5 rounded-full">
+                      {/* <img src={arrowUpTrans} alt="Liked" /> */}
+                      <img
+                        src={arrowUp}
+                        className="rotate-180 py-0.5 px-1"
+                        alt="Dislike"
+                      />
+                    </div>
+                  ) : (
+                    <img src={arrowDowm} alt="Dislike" />
+                  )}
+                </button>
+              </div>
+
+              {/* Reply Icon Button */}
               <button
-                disabled={LikeIsPending}
-                className="flex items-center gap-2"
-                onClick={() => handleCommentReaction("like", comment, postId)}
+                onClick={toggleReplies}
+                className="flex cursor-pointer items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-2 py-3 justify-center min-w-[78px]"
               >
-                {/* <img src={arrowUpTrans} alt="Like" /> */}
-
-                {/* <img src={arrowUpTrans} alt="Liked" /> */}
-                {comment?.userLike?.is_like == true ? (
-                  <div className="bg-black p-1.5 rounded-full">
-                    <img src={arrowUpTrans} alt="Liked" />
-                  </div>
-                ) : (
-                  <div className=" p-1.5 rounded-full">
-                    <img src={arrowUpTrans} alt="Liked" />
-                  </div>
-                )}
-
-                {comment?.likeCount || 0}
+                {/* <img src={commentIcon} alt="reply" /> */}
+                <img src={commentIcon} alt="Comments" />
               </button>
-              <button
-                className="ps-2"
-                disabled={LikeIsPending}
-                onClick={() =>
-                  handleCommentReaction("dislike", comment, postId)
-                }
-              >
-                {/* <img src={arrowUpTrans} alt="Dislike" /> */}
-                {comment?.userLike?.is_like == false ? (
-                  <div className="bg-black p-1.5 rounded-full">
-                    <img src={arrowUpTrans} alt="Liked" />
-                  </div>
-                ) : (
-                  <div className=" p-1.5 rounded-full">
-                    <img src={arrowUpTrans} alt="Liked" />
-                  </div>
-                )}
-              </button>
+
+              {/* _______________________________/ */}
+              {/* <div className="bg-grey-500 cursor-pointer">
+                <DropdownActions
+                  // onView={() => console.log("View Detail")}
+                  // onEdit={() => console.log("Edit Detail")}
+                  onDelete={() => handleDeleteComment(comment?.id, postId)}
+                  variant="simple"
+                />
+              </div> */}
+              {comment?.user?.id == myId?.id && (
+                <div className="bg-grey-500 cursor-pointer">
+                  <DeleteDropdownActions
+                    onDelete={() => handleDeleteComment(comment?.id, postId)}
+                    variant="simple"
+                  />
+                </div>
+              )}
+              {/* _______________________________/ */}
             </div>
-
-            {/* Reply Icon Button */}
-            <button
-              onClick={toggleReplies}
-              className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-2 py-1 justify-center min-w-[78px]"
-            >
-              {/* <img src={commentIcon} alt="reply" /> */}
-              <img src={commentIcon} alt="Comments" />
-            </button>
+            {/* Input Box for Reply */}
+            {isReplyVisible && (
+              <div className="relative mb-3">
+                <input
+                  type="text"
+                  // value={parentCommentReplyValue}
+                  onChange={(e) => setParentCommentReplyValue(e.target.value)}
+                  placeholder="Reply..."
+                  className="w-full outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
+                />
+                <button
+                  disabled={!parentCommentReplyValue.trim() || replyLoading}
+                  onClick={handleReply}
+                  className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${
+                    !parentCommentReplyValue.trim() || replyLoading
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-[#007AB2] hover:bg-[#005f8e] cursor-pointer"
+                  }`}
+                >
+                  {replyLoading ? (
+                    <Spinner />
+                  ) : (
+                    <Send className="w-3.5 h-3.5 text-white" />
+                  )}
+                </button>
+              </div>
+            )}
           </div>
-
-          {/* Input Box for Reply */}
-          {isReplyVisible && (
-            <div className="relative mb-3">
-              <input
-                type="text"
-                // value={parentCommentReplyValue}
-                onChange={(e) => setParentCommentReplyValue(e.target.value)}
-                placeholder="Reply..."
-                className="w-full bg-500-red outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
-              />
-              <button
-                disabled={!comment}
-                className={`absolute top-1/2 -translate-y-1/2 right-3 w-9 h-9 rounded-full flex items-center justify-center transition ${
-                  comment
-                    ? "bg-[#007AB2] hover:bg-[#005f8e] cursor-pointer"
-                    : "bg-gray-300"
-                }`}
-                onClick={() => handleParentCommentReply(postId, comment?.id)}
-              >
-                {PostsPending ? (
-                  "..."
-                ) : (
-                  <Send className="w-3.5 h-3.5 text-white" />
-                )}
-              </button>
-            </div>
-          )}
 
           {/* Show Replies if toggled */}
           {isReplyVisible && comment?.replies?.length > 0 && (
@@ -171,6 +211,7 @@ export const CommentItem = ({
                     setIsCommentReply={setIsCommentReply}
                     replyId={replyId}
                     setReplyParentId={setReplyParentId}
+                    handleDeleteComment={handleDeleteComment}
                   />
 
                   {/* <div className="bg-grey-500 mb-10 cursor-pointer">

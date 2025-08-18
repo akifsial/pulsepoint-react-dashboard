@@ -12,12 +12,14 @@ import {
   IoMailOutline,
   IoLocationSharp,
 } from "react-icons/io5";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/AuthApi/AuthApi";
 import Spinner from "@components/Loaders/Spinner";
 import { useAllApiInsuranceTypes } from "@src/hooks/useUsers";
+import { ArrowLeft } from "lucide-react";
+import PhoneInput from "react-phone-input-2";
 
 interface FormData {
   firstName: string;
@@ -38,7 +40,7 @@ interface FormData {
   preferredCommunication: string[];
 }
 
-const RegisterPatient = () => {
+const RegisterPatient = ({ setSelectUser }) => {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -82,7 +84,13 @@ const RegisterPatient = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm();
+    control,
+  } = useForm({
+    defaultValues: {
+      number: "+44", // initialize with Pakistan code
+    },
+  });
+  const [phoneValidation, setPhoneValidation] = useState(false);
 
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
@@ -155,8 +163,8 @@ const RegisterPatient = () => {
       mutationFn: ({ data }) => ApiRegister(data),
 
       onSuccess: async () => {
-        toast.success("Sign Up Successfully");
-        navigate("/patient/login");
+        toast.success("Patient Create Successfully");
+        navigate("/login");
       },
       onError: (error) => {
         // toast.error("Failed to Create Care Provid
@@ -166,6 +174,13 @@ const RegisterPatient = () => {
     });
 
   const RegisterSubmit = async (data) => {
+    if (data?.number == "") {
+      setPhoneValidation(true);
+      return;
+    } else {
+      setPhoneValidation(false);
+    }
+
     const registerData = {
       // for care_provider
       //   organization_name: "Joe Hospital",\
@@ -197,38 +212,45 @@ const RegisterPatient = () => {
   return (
     <>
       <OnBoardingLayout>
-        <div className="min-h-screen max-h-screen flex flex-col">
+        <div className="lg:min-h-[600px] lg:max-h-[600px] min-h-screen max-h-screen flex flex-col">
           <form
             onSubmit={handleSubmit(RegisterSubmit)}
-            className="space-y-6 overflow-y-auto "
+            className="sm:space-y-6"
           >
-            <div className="px-4 py-6">
-              <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
+            <div className="sm:px-4 py-6">
+              <p className="text-[#1A1A1A] flex items-center gap-5 text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
+                <span
+                  onClick={() => setSelectUser("")}
+                  className="cursor-pointer"
+                >
+                  <ArrowLeft />{" "}
+                </span>{" "}
                 Sign Up
               </p>
               <p className="text-[#252525] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
                 Join to explore and share care insights
               </p>
               {/* Name Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <InputField
-                    label="User Name"
-                    asterisk={true}
-                    icon={IoPersonOutline}
-                    id="userName"
-                    name="userName"
-                    type="text"
-                    placeholder="Enter your user name"
-                    register={register}
-                    registerName="userName"
-                    errors={errors}
-                    validation={{
-                      required: "First Name is required",
-                    }}
-                  />
-                </div>
+              <div>
+                <InputField
+                  label="User Name"
+                  asterisk={true}
+                  icon={IoPersonOutline}
+                  id="userName"
+                  name="userName"
+                  type="text"
+                  placeholder="Enter your user name"
+                                      className="pr-10"
 
+                  register={register}
+                  registerName="userName"
+                  errors={errors}
+                  validation={{
+                    required: "First Name is required",
+                  }}
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
                     label="First Name"
@@ -239,6 +261,7 @@ const RegisterPatient = () => {
                     type="text"
                     placeholder="Enter your user name"
                     register={register}
+                    className="pr-10"
                     registerName="firstName"
                     errors={errors}
                     validation={{
@@ -252,6 +275,7 @@ const RegisterPatient = () => {
                     label="Last Name"
                     asterisk={true}
                     icon={IoPersonOutline}
+                    className=" pr-10"
                     id="lastName"
                     name="lastName"
                     type="text"
@@ -268,23 +292,6 @@ const RegisterPatient = () => {
 
               {/* Other Form Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* <div>
-                  <InputField
-                    label="Last Name"
-                    asterisk={true}
-                    icon={IoPersonOutline}
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    placeholder="Enter your last name"
-                    register={register}
-                    registerName="lastName"
-                    errors={errors}
-                    validation={{
-                      required: "Last Name is required",
-                    }}
-                  />
-                </div> */}
                 <div>
                   <InputField
                     label="Email Address"
@@ -294,6 +301,7 @@ const RegisterPatient = () => {
                     name="email"
                     type="email"
                     placeholder="e.g. username@mail.com"
+                    className="pr-10"
                     register={register}
                     registerName="email"
                     errors={errors}
@@ -311,13 +319,14 @@ const RegisterPatient = () => {
                   )} */}
                 </div>
 
-                <div>
+                {/* <div>
                   <InputField
                     label="Phone Number"
                     asterisk={true}
                     icon={IoCallOutline}
                     id="number"
                     name="number"
+                    className="pr-10"
                     type="text"
                     placeholder="e.g., +1 800 555 1234"
                     register={register}
@@ -327,6 +336,47 @@ const RegisterPatient = () => {
                       required: "Phone is required",
                     }}
                   />
+                </div> */}
+                <div
+                  className={`relative grid grid-cols-1 mb-2 md:grid-cols-1 gap-2 ${
+                    phoneValidation ? "mb-9" : ""
+                  } `}
+                >
+                  <label className="block text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]">
+                    Phone Number
+                  </label>
+                  <Controller
+                    name="number"
+                    control={control}
+                    // rules={{ required: "Phone number is required" }}
+                    rules={{
+                      required: "Phone number is required",
+                    }}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <PhoneInput
+                          placeholder="Enter phone number"
+                          value={field.value}
+                          onChange={field.onChange}
+                          defaultCountry="US"
+                          className="w-full mb-3 h-[50px] w-full  border border-[#2525251A] rounded-[8px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
+                        />
+                        {fieldState.error && (
+                          <p className="text-red-500">
+                            {fieldState.error.message}
+                          </p>
+                        )}
+                      </>
+                    )}
+                  />
+
+                  {phoneValidation ? (
+                    <p className="text-red-500 absolute bottom-[-10px] ">
+                      Phone number is required
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
 
@@ -335,11 +385,12 @@ const RegisterPatient = () => {
                   <InputField
                     label="Age"
                     asterisk={true}
-                    icon={IoPersonOutline}
+                    // icon={IoPersonOutline}
                     id="age"
                     name="age"
                     type="number"
                     placeholder="Enter your age"
+                    // className="pr-10"
                     register={register}
                     registerName="age"
                     errors={errors}
@@ -425,6 +476,7 @@ const RegisterPatient = () => {
                     asterisk={true}
                     id="postal_code"
                     name="postal_code"
+                    className="pr-10"
                     type="text"
                     placeholder="Enter your zip code"
                     icon={IoLocationSharp}
@@ -462,6 +514,7 @@ const RegisterPatient = () => {
                     id="state"
                     name="state"
                     type="text"
+                    className="pr-10"
                     placeholder="e.g., California"
                     icon={IoLocationSharp}
                     register={register}
@@ -482,6 +535,7 @@ const RegisterPatient = () => {
                     icon={IoLocationSharp}
                     register={register}
                     registerName="streetAddress"
+                    className="pr-10"
                     errors={errors}
                     validation={{
                       required: "Address is required",
@@ -497,6 +551,7 @@ const RegisterPatient = () => {
                     label="Create a Password"
                     asterisk={true}
                     id="password"
+                    className="pr-10"
                     name="password"
                     type="password"
                     placeholder="Enter your password"
@@ -519,6 +574,7 @@ const RegisterPatient = () => {
                     register={register}
                     registerName="confirmPassword"
                     errors={errors}
+                    className="pr-10"
                     validation={{
                       required: "Confirm Password is required",
                       validate: (value) =>
@@ -589,7 +645,7 @@ const RegisterPatient = () => {
                 <p className="text-md font-semibold">
                   Preferred Communication Method
                 </p>
-                <div className="flex text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
+                <div className="flex flex-wrap gap-3 text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
                   <div className="flex items-center">
                     <input
                       type="radio"
@@ -598,7 +654,7 @@ const RegisterPatient = () => {
                       value="1"
                       checked={preferredMethod === "1"}
                       onChange={handleMethodChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                      className="mr-2 text-[14px] scale-150 border-[#FFFFFF] align-middle"
                     />
                     <label htmlFor="1" className="ml-1">
                       Via Email Address
@@ -638,7 +694,7 @@ const RegisterPatient = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full flex justify-center bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
+                className="w-full flex justify-center bg-[#28A2FF] text-white items-center h-[50px] px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
               >
                 {isRegisterPending ? <Spinner /> : "Sign Up"}
               </button>

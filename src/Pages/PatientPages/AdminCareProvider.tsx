@@ -8,6 +8,7 @@ import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
+import Pagination from "@components/Pagination/Pagination";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 import { useNavigate } from "react-router-dom";
@@ -23,13 +24,34 @@ const CareProviderDashboard: React.FC = () => {
   const [searchText, setSearchText] = React.useState<string>("");
   const [rating, setRating] = useState();
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
-  const { data: CareProvidersData, isLoading: isLoadingCareProvidersData } =
-    useCareProviders(debouncedSearchText, rating);
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState(true);
+
+  const {
+    data: CareProvidersData,
+    isLoading: isLoadingCareProvidersData,
+    refetch,
+  } = useCareProviders(
+    debouncedSearchText,
+    rating,
+    page,
+    sort == true ? "asc" : "desc"
+  );
   const {
     data: AllSavedCareProviders,
     isLoading: isLoadingAllSavedCareProvider,
-  } = useAllSavedCareProviders(debouncedSearchText, rating);
+  } = useAllSavedCareProviders(
+    debouncedSearchText,
+    rating,
+    page,
+    sort == true ? "asc" : "desc"
+  );
+  console.log("CARE", CareProvidersData);
 
+  const onSortClick = () => {
+    setSort(!sort);
+    refetch();
+  };
   type dataTypes = {
     id?: number;
     first_name?: string;
@@ -41,6 +63,7 @@ const CareProviderDashboard: React.FC = () => {
     reviews?: string;
     specialization?: string;
     location?: string;
+    onSortClick?: number;
   };
 
   const columns: TanDataTableColumn<dataTypes>[] = [
@@ -78,16 +101,46 @@ const CareProviderDashboard: React.FC = () => {
       header: "Date",
       showSort: true,
       cell: ({ row }) => (
-        <i>{dayjs(row?.original?.created_at).format("DD-MMMM-YYYY")}</i>
+        <i>{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
       ),
     },
+    // {
+    //   accessor: "total_rating",
+    //   header: "Rating",
+    //   showSort: true,
+    //   cell: ({ getValue }) => {
+    //     const rating = getValue();
+    //     return rating ? rating : ""
+    //   },
+    // },
+
     {
       accessor: "total_rating",
       header: "Rating",
       showSort: true,
       cell: ({ getValue }) => {
-        const rating = getValue();
-        return rating ? rating : ""
+        const rating = Number(getValue()) || 0;
+        const totalStars = 5;
+
+        const StarIcon = ({ filled }: { filled: boolean }) => (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            width="20"
+            height="20"
+          >
+            <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
+          </svg>
+        );
+
+        return (
+          <div className="flex items-center gap-0.5">
+            {Array.from({ length: totalStars }).map((_, index) => (
+              <StarIcon key={index} filled={index < rating} />
+            ))}
+          </div>
+        );
       },
     },
     {
@@ -200,6 +253,14 @@ const CareProviderDashboard: React.FC = () => {
     };
   }, [searchText]);
 
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchText]);
+
   return (
     <div className="mb-10">
       <h2
@@ -211,11 +272,12 @@ const CareProviderDashboard: React.FC = () => {
       tracking-normal
       text-brand-ink
       align-middle
+      mb-6
     "
       >
         Care Provider Listing
       </h2>
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] h-[450px] px-4 py-6 mb-6">
+      <div className="bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] h-[450px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Care Providers</h3>
           {/* searchbar */}
@@ -332,10 +394,11 @@ const CareProviderDashboard: React.FC = () => {
               <div className="overflow-x-auto">
                 <TanDataTable<dataTypes>
                   columns={columns}
-                  data={CareProvidersData ?? []}
+                  data={CareProvidersData?.payload?.records}
                   showCheckbox={false}
                   onRowSelect={handleRowSelect}
                   className="my-custom-class"
+                  onSortClick={onSortClick}
                 />
               </div>
             )
@@ -348,9 +411,18 @@ const CareProviderDashboard: React.FC = () => {
               showCheckbox={false}
               onRowSelect={handleRowSelect}
               className="my-custom-class"
+              onSortClick={onSortClick}
             />
           )}
         </div>
+      </div>
+      <div>
+        <Pagination
+          onPageChange={handlePageChange}
+          totalRows={CareProvidersData?.payload?.totalRecords}
+          currentPage={page}
+          rowsPerPage={3}
+        />
       </div>
     </div>
   );

@@ -2,7 +2,6 @@ import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommon
 import React, { useState, useRef, useEffect } from "react";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
@@ -16,6 +15,7 @@ import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.j
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReviewCard from "@components/ReviewCard";
+
 import dayjs from "dayjs";
 import { Search, Clock } from "lucide-react";
 import {
@@ -39,6 +39,7 @@ import { X } from "lucide-react";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 import { useMeApi } from "@src/hooks/useUsers";
 import axios from "axios";
+import Pagination from "@components/Pagination/Pagination";
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
@@ -77,37 +78,38 @@ const AdminDashboard: React.FC = () => {
   const queryClient = useQueryClient();
   const [rating, setRating] = useState();
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState(true);
+  console.log("ssssssssssssssss", sort);
   // Apis
   const { data: StatsData, isLoading } = useStatsApi();
   // const { data: CareProvidersData } = useCareProviders();
   const {
     data: CareProvidersData,
+    refetch,
     isFetching,
     isLoading: isLoadingCareProviderData,
-  } = useCareProviders(debouncedSearchText, rating);
+  } = useCareProviders(
+    debouncedSearchText,
+    rating,
+    page,
+    sort == true ? "asc" : "desc"
+  );
 
-  // const [searchParams] = useSearchParams();
-  // const token = searchParams.get("token");
-
-  // const {data:meData}=useMeApi(token)
-
-  // useEffect(()=>(
-  //   localStorage.setItem("token",token)
-  //   // localStorage.setItem()
-  // ),[token])
-
+  const onSortClick = () => {
+    setSort(!sort);
+    refetch();
+  };
   const [searchParams] = useSearchParams();
   const urlToken = searchParams.get("token"); // token from URL
+  console.log("TTTTTTTTTTTTTTTTTTTTT", urlToken);
   const [token, setToken] = useState<string | null>(null); // token state
 
   // Step 1: Save token from URL to localStorage (once)
   useEffect(() => {
     if (urlToken) {
       // localStorage.setItem("token", urlToken);
-      localStorage.setItem(
-        "token",
-        JSON.stringify(urlToken)
-      );
+      localStorage.setItem("token", JSON.stringify(urlToken));
       ApiMe();
 
       setToken(urlToken); // update state
@@ -128,21 +130,12 @@ const AdminDashboard: React.FC = () => {
       headers: { Authorization: `Bearer ${urlToken}` },
     });
 
-    if(response?.status==200){
-      localStorage.setItem("userInfo",JSON.stringify(response?.data?.payload))
+    if (response?.status == 200) {
+      localStorage.setItem("userInfo", JSON.stringify(response?.data?.payload));
     }
-
 
     return response.data.payload;
   };
-
-  // useEffect(()=>{
-  //   ApiMe()
-  // },[urlToken])
-
-  // Step 3: Use token only when it's available
-  // const { data: meData } = useMeApi(token); // `useMeApi` should have `enabled: !!token`
-
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -157,19 +150,6 @@ const AdminDashboard: React.FC = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
-
-  // const { data: CareProvidersData, refetch } = useQuery({
-  //   queryKey: ["careProviders", value],
-  //   queryFn: () => ApiGetCareProviders(value),
-  // });
-
-  // Recent searches data
-  const recentSearches: RecentSearch[] = [
-    { id: "1", text: "Johns Hopkins Hospital" },
-    { id: "2", text: "Dr. Amanda Reyes – Green Valley Rehab Center" },
-    { id: "3", text: "Search all providers near 10001" },
-    { id: "4", text: "St. Luke's Long-Term Care – 30303" },
-  ];
 
   type dataTypes = {
     id?: number;
@@ -223,16 +203,46 @@ const AdminDashboard: React.FC = () => {
       showSort: true,
       cell: (info) => {
         const row = info.row.original;
-        return <div>{dayjs(row?.created_at).format("DD-MM-YY") ?? "N/A"}</div>;
+        return <div>{dayjs(row?.created_at).format("DD/MM/YY") ?? "N/A"}</div>;
       },
     },
+    // {
+    //   accessor: "rating",
+    //   header: "Rating",
+    //   showSort: true,
+    //   cell: (info) => {
+    //     const row = info.row.original;
+    //     return <div>{row?.total_rating ?? "N/A"}</div>;
+    //   },
+    // },
+
     {
-      accessor: "rating",
+      accessor: "total_rating",
       header: "Rating",
       showSort: true,
-      cell: (info) => {
-        const row = info.row.original;
-        return <div>{row?.total_rating ?? "N/A"}</div>;
+      cell: ({ getValue }) => {
+        const rating = Number(getValue()) || 0;
+        const totalStars = 5;
+
+        const StarIcon = ({ filled }: { filled: boolean }) => (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            width="20"
+            height="20"
+          >
+            <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
+          </svg>
+        );
+
+        return (
+          <div className="flex items-center gap-0.5">
+            {Array.from({ length: totalStars }).map((_, index) => (
+              <StarIcon key={index} filled={index < rating} />
+            ))}
+          </div>
+        );
       },
     },
     {
@@ -241,91 +251,29 @@ const AdminDashboard: React.FC = () => {
       showSort: true,
     },
     {
-      accessor: "location",
+      accessor: "address",
       header: "Location",
       showSort: true,
     },
   ];
 
-  const data: dataTypes[] = [
-    {
-      id: 1,
-      first_name: "Alice",
-      last_name: "Border",
-      date: "9/04/12",
-      email: "alice.border@example.com",
-      image: alice,
-      rating: <RatingStars value={5} isDisabled={true} />,
-      specialization: "Elderly care",
-      location: "📍200 1st St SW, Rochester",
-    },
-    {
-      id: 2,
-      first_name: "Michael",
-      last_name: "Schofield",
-      date: "9/04/16",
-      email: "michael.schofield@example.com",
-      image: "/images/michael.png",
-      rating: <RatingStars value={3} isDisabled={true} />,
-      specialization: "Post-surgical rehab",
-      location: "📍190 E Bannock St, Boise, ID 83712",
-    },
-    {
-      id: 3,
-      first_name: "Sarah",
-      last_name: "Johnson",
-      date: "10/04/19",
-      email: "sarah.johnson@example.com",
-      image: "/images/sarah.png",
-      rating: <RatingStars value={4} isDisabled={true} />,
-      specialization: "Harmony Memory Care",
-      location: "📍T9500 Euclid Ave, Cleveland,",
-    },
-    {
-      id: 4,
-      first_name: "John",
-      last_name: "Doe",
-      date: "12/04/22",
-      email: "john.doe@example.com",
-      image: "/images/john.png",
-      rating: <RatingStars value={5} isDisabled={true} />,
-      specialization: "Fitness  services.",
-      location: "📍1468 Madison Ave, NY 10029",
-    },
-    {
-      id: 5,
-      first_name: "Emily",
-      last_name: "Davis",
-      date: "15/04/23",
-      email: "emily.davis@example.com",
-      image: "/images/emily.png",
-      rating: <RatingStars value={2} isDisabled={true} />,
-      specialization: "Rehabilitation Center",
-      location: "📍8900 N Kendall Dr, Miami, FL 33176",
-    },
-  ];
-
   const { data: recentSearchesData } = useRecentSearches();
 
-  const handleRowSelect = (row: any) => {
-  };
+  const handleRowSelect = (row: any) => {};
 
-  const handleReviewClick = () => {
-  };
+  const handleReviewClick = () => {};
 
   // Search dropdown handlers
   const handleSearchFocus = () => {
     setIsSearchDropdownOpen(true);
   };
 
-  const handleClearRecentSearches = () => {
-  };
+  const handleClearRecentSearches = () => {};
 
   const handleSearchItemClick = (searchValue: string) => {
     setSearchText(searchValue);
     setIsSearchDropdownOpen(false);
   };
-
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
@@ -435,15 +383,46 @@ const AdminDashboard: React.FC = () => {
   });
 
   const handleDeleteSearches = (id) => {
-
     deleteSearchesAllMutation(id);
   };
 
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchText]);
+
+
+  // useEffect(() => {
+  //   console.log("LLLLLLLLLL");
+  //   // Get token from query params
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const token = urlParams.get("token");
+
+  //   if (token) {
+  //     // Save to localStorage
+  //     localStorage.setItem("authToken", token);
+
+  //     // Remove token from URL for clean UI
+  //     navigate("/dashboard", { replace: true });
+  //   }
+  // }, [navigate]);
+
   return (
     <div className="mb-10">
-      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
+      <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[13px]">
         <StatsCommonCards
-          count={isLoading ? ( <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />) : StatsData?.totalProviders ? StatsData?.totalProviders : 0}
+          count={
+            isLoading ? (
+              <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />
+            ) : StatsData?.totalProviders ? (
+              StatsData?.totalProviders
+            ) : (
+              0
+            )
+          }
           title={
             <>
               Total Care <br />
@@ -456,7 +435,13 @@ const AdminDashboard: React.FC = () => {
         />
         <StatsCommonCards
           count={
-           isLoading ? ( <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />) : StatsData?.totalReviewsWritten ? StatsData?.totalReviewsWritten : 0
+            isLoading ? (
+              <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />
+            ) : StatsData?.totalReviewsWritten ? (
+              StatsData?.totalReviewsWritten
+            ) : (
+              0
+            )
           }
           title="Total Reviews Written"
           cardImg={WriteReview}
@@ -465,20 +450,26 @@ const AdminDashboard: React.FC = () => {
         />
         <StatsCommonCards
           count={
-           isLoading ? ( <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />) : StatsData?.averageRatingGiven ? StatsData?.averageRatingGiven : 0
+            isLoading ? (
+              <div className="h-[40px] w-[40px] bg-gray-100 rounded-md animate-pulse" />
+            ) : StatsData?.averageRatingGiven ? (
+              StatsData?.averageRatingGiven
+            ) : (
+              0
+            )
           }
           title="Average Rating Given"
           cardImg={ThumbsUp}
           imgBg="#FFE8CF"
           borderBg="#F98A17"
         />
-        <ReviewCard
+        {/* <ReviewCard
           backgroundImage={Patientdbimg}
           onReviewClick={handleReviewClick}
-        />
+        /> */}
       </div>
 
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] h-[400px] px-4 py-6 mb-6">
+      <div className="mt-6 overflow-y-auto bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] h-[400px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Care Providers</h3>
 
@@ -500,21 +491,6 @@ const AdminDashboard: React.FC = () => {
               {/* Search Dropdown - positioned below input */}
               {isSearchDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
-                  {/* Search Input in Dropdown */}
-                  {/* <div className="p-4 border-b border-gray-100">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchText}
-                        onChange={handleSearchChange}
-                        className="w-full pl-10 pr-4 py-3 text-gray-700 placeholder-gray-400 border border-blue-500 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
-                        autoFocus
-                      />
-                    </div>
-                  </div> */}
-
                   {/* Recents Section */}
 
                   {recentSearchesData?.length == 0 ? (
@@ -536,7 +512,7 @@ const AdminDashboard: React.FC = () => {
                       {/* Recent Searches List */}
 
                       <div className="space-y-0.5 max-h-[250px] min-h-[50px] overflow-y-auto">
-                        {recentSearchesData.length == 0 ? (
+                        {recentSearchesData?.length == 0 ? (
                           <div className="mt-3 flex justify-center">
                             <p className="text-[14px]">No Searches Found</p>
                           </div>
@@ -601,7 +577,10 @@ const AdminDashboard: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute left-0 top-[60px] w-50 z-50"
                   >
-                    <RatingFilterDropdown setShowRatingDropdown={setShowRatingDropdown} setRating={setRating} />
+                    <RatingFilterDropdown
+                      setShowRatingDropdown={setShowRatingDropdown}
+                      setRating={setRating}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -613,13 +592,23 @@ const AdminDashboard: React.FC = () => {
           {isLoadingCareProviderData ? (
             <TableSkeletonLoader />
           ) : (
-            <TanDataTable<dataTypes>
-              columns={columns ?? []}
-              data={CareProvidersData ?? []}
-              showCheckbox={false}
-              onRowSelect={handleRowSelect}
-              className="my-custom-class"
-            />
+            <div>
+              {/* <TanDataTable<dataTypes>
+                columns={columns ?? []}
+                data={CareProvidersData ?? []}
+                showCheckbox={false}
+                onRowSelect={handleRowSelect}
+                className="my-custom-class"
+              /> */}
+              <TanDataTable
+                columns={columns ?? []}
+                data={CareProvidersData?.payload?.records ?? []}
+                pageCount={2}
+                fetchData={CareProvidersData}
+                onSortClick={onSortClick}
+                // isLoading={loading}
+              />
+            </div>
           )}
 
           <DeleteModal
@@ -648,6 +637,13 @@ const AdminDashboard: React.FC = () => {
           )}
         </div>
       </div>
+
+      <Pagination
+        onPageChange={handlePageChange}
+        totalRows={CareProvidersData?.payload?.totalRecords}
+        currentPage={page}
+        rowsPerPage={3}
+      />
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import userProfile from "@assets/media/svgs/dashboard-svgs/userProfile.svg";
-import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
+// import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
+import arrowUp from "@assets/media/svgs/arrowUp.svg";
 import share from "@assets/media/svgs/dashboard-svgs/share.svg";
 import commentIcon from "@assets/media/svgs/dashboard-svgs/comment.svg";
 import Flagwhite from "@assets/media/svgs/dashboard-svgs/flag4.svg";
@@ -9,6 +10,7 @@ import Flagblue from "@assets/media/svgs/dashboard-svgs/flag3.svg";
 import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
+import arrowDown from "@assets/media/svgs/arrowDown.svg";
 import postImage from "../../../assets/media/images/dashboard-images/postImage.png";
 import Model from "@components/Model/Model";
 import FlagPost from "./FlagPost";
@@ -16,13 +18,14 @@ import SubmitReport from "./SubmitReport";
 import ShareModal from "@components/ShareModal";
 import {
   ApiDeleteComment,
+  ApiDeletePost,
   ApieSaveCreatePost,
   ApiLikeComment,
   ApiLikePost,
   ApiParentCommentReply,
   ApiPostComment,
 } from "@src/api/ApiCommunityForum";
-import { Send } from "lucide-react";
+import { Loader, Send } from "lucide-react";
 import {
   QueryClient,
   useMutation,
@@ -35,6 +38,9 @@ import { useGetSingleUser } from "@src/hooks/useCommunity";
 import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
 import { CommentItem } from "./CommentBlock";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import DeleteModal from "@src/components/Model/DeleteModal";
+import Spinner from "@components/Loaders/Spinner";
+import PostContent from "@components/PostContent";
 
 const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [activeTab, setActiveTab] = useState("home");
@@ -54,14 +60,24 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [parentCommentReplyValue, setParentCommentReplyValue] = useState("");
   const [shareModal, setShareModal] = useState(false);
   const [parentCommentReplyId, setParentCommentReplyId] = useState([]);
-  const { data: postData, isPending: PostsPending } = useGetCommunityPost();
+  const {
+    data: postData,
+    isPending: PostsPending,
+    isLoading,
+  } = useGetCommunityPost();
   const [replyId, setReplyId] = useState();
   const myId = JSON.parse(localStorage.getItem("userInfo"));
   const [replyInput, setReplyInput] = useState("");
   const [IsCommentReply, setIsCommentReply] = useState();
+  const [isPosting, setIsPosting] = useState(false);
   const [replyParentId, setReplyParentId] = useState();
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [deleteModalId, setDeleteModalId] = useState();
   // const [activePostActions, setActivePostActions] = useState(null);
   const menuRef = useRef(null);
+
+  // const userId = JSON.stringify(localStorage.getItem("userInfo"))?.address;
+  // console.log("___________________",userId)
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -233,55 +249,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
       toast.error("Something Went Wrong");
     },
   });
-  // ___________________
-  // const handleCommentReaction = async (status, comment, postId) => {
-  //   let newStatus = "";
-
-  //   // const alreadyLiked = comment?.comment_likes?.filter(
-  //   //   (item) => item.user_id == myId?.id
-  //   // );
-
-  //   // const alreadyLiked = comment?.userLike?.filter(
-  //   //   (item) => item.is_like == myId?.id
-  //   // );
-
-  //   // const alreadyLiked =
-  //   //   Array.isArray(comment?.userLike) &&
-  //   //   comment.userLike.length > 0
-  //   //     ? comment.userLike[0].is_like
-  //   //     : null;
-
-  //   console.log("xxxxx", comment);
-
-  //   if (status === "like") {
-  //     if (comment?.userLike?.is_like==true ) {
-  //       newStatus = ""; // remove like
-  //     } else {
-  //       newStatus = "like"; // set like
-  //     }
-  //   }
-
-  //   if (status === "dislike") {
-  //     if (comment?.userLike?.is_like == true || comment?.userLike==null ) {
-  //       // newStatus = ""; // remove dislike
-  //       newStatus = "dislike"; // set dislike
-  //     } else {
-  //       newStatus = ""; // remove dislike
-  //     }
-  //   }
-
-  //   const data = {
-  //     post_id: postId,
-  //     type: newStatus,
-  //   };
-
-  //   // const data = {
-  //   //   type: newStatus,
-  //   //   // post_id: post.id,
-  //   // };
-
-  //   await LikeParentCommentMutation({ commentId: comment?.id, data });
-  // };
 
   // MAIN CODE____________________________________
   // ___________________
@@ -353,31 +320,61 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   });
 
   const handleDeleteComment = async (commentId, postId) => {
+    console.log("DELDEDLELDELDLE", commentId, postId);
     const post_id = {
       post_id: postId,
     };
     await deleteCommentMutation(commentId, post_id);
   };
 
+  const {
+    mutateAsync: deletePostMutation,
+    // isPending: savedCareProvidersPending,
+  } = useMutation({
+    mutationFn: () => ApiDeletePost(deleteModalId),
+
+    onSuccess: async () => {
+      toast.success("Post Deleted Successfully");
+      setIsDeleteModal(false);
+      queryClient.invalidateQueries(["useGetCommunityPost"]); // refetch list
+    },
+    onError: (error) => {
+      toast.error("Something Went Wrong");
+    },
+  });
+
+  const handleDeletePost = async () => {
+    await deletePostMutation();
+  };
+
+  const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
+  console.log("user Id -----", userId);
+
+  const postsToRender = data?.data ?? postData?.records ?? [];
+  console.log("postsToRender------", data);
   return (
     <div
-      className={` transition-colors h-[400px] duration-300 ${
+      className={` transition-colors h-[400px] w-full duration-300 ${
         postData?.records?.length > 0 ? "h-[661px] overflow-y-auto" : ""
       } `}
       // style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
     >
-      {PostsPending ? <FeedSkeleton /> : ""}
-      {postData?.records?.length == 0 ? (
+      {PostsPending ? (
+        <FeedSkeleton />
+      ) : postsToRender?.length == 0 ? (
         <div className="flex justify-center h-full mt-[50px]">
           <h2>Nothing here yet!</h2>
         </div>
       ) : (
-        postData?.records?.map((post, index) => (
+        postsToRender?.map((post, index) => (
           <div key={index} className="post mb-6 relative last:m-0">
             <div className="post_content bg-white rounded-[10px]  p-4 relative ">
               <div className="flex justify-between items-center  mb-5">
                 <div className="flex items-center gap-3">
                   <div className="relative">
+                    {/* {
+                      post?.user?.image ? 
+                    } */}
                     <img
                       src={
                         post?.user?.image
@@ -386,7 +383,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                             }`
                           : DummyUser
                       }
-                      className="w-[43px] h-[43px] rounded-full object-cover border border-gray-200"
+                      className="w-[43px] h-[43px] rounded-full !object-cover border border-gray-200"
                       alt=""
                     />
                     {post?.user?.is_online ? (
@@ -397,14 +394,14 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                   </div>
                   <div className="flex flex-col">
                     <p
-                      className="font-semibold mb-1 text-[#252525] leading-tight cursor-pointer"
-                      onClick={() => {
-                        setOpenBackFeed(true);
-                        setPostIdFeed(post.id);
-                        {
-                          handleSingleUser;
-                        }
-                      }}
+                      className="font-semibold mb-1 text-[#252525] leading-tight "
+                      // onClick={() => {
+                      //   setOpenBackFeed(true);
+                      //   setPostIdFeed(post.id);
+                      //   {
+                      //     handleSingleUser;
+                      //   }
+                      // }}
                     >
                       {post?.user?.first_name ? post?.user?.first_name : ""}
                       {post?.user?.last_name ? (
@@ -470,18 +467,24 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                   {post.title}
                 </h3>
                 <p>
-                  {post?.content} <span className="text-[#868686]"></span>
+                  {/* {post?.content} <span className="text-[#868686]"></span> */}
+                  <PostContent content={post?.content} />
                 </p>
               </div>
-
-              <div className="mb-2.5 max-h-[500px]">
-                <img
-                  src={`${import.meta.env.VITE_APP_API_IMG_URL}${post?.image}`}
-                  alt=""
-                  loading="lazy"
-                  className="rounded-md w-full h-[400px] !object-fit"
-                />
-              </div>
+              {post?.image ? (
+                <div className="mb-2.5 max-h-[500px]">
+                  <img
+                    src={`${import.meta.env.VITE_APP_API_IMG_URL}${
+                      post?.image
+                    }`}
+                    alt=""
+                    loading="lazy"
+                    className="rounded-md w-full h-[400px] !object-fit"
+                  />
+                </div>
+              ) : (
+                ""
+              )}
 
               <div className="flex gap-2.5 mb-2.5">
                 <div className="flex gap-2.5 mb-2.5">
@@ -490,14 +493,22 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     <button
                       disabled={LikeIsPending}
                       onClick={() => handleReaction("like", post)}
-                      className="flex items-center gap-1 min-w-[40px] justify-center"
+                      className="flex items-center gap-2 min-w-[40px] justify-center"
                     >
                       {post.userLike?.is_like === true ? (
-                        <div className="bg-black p-1.5 rounded-full">
-                          <img src={arrowUpTrans} alt="Liked" />
+                        <div className="bg-black p-2 rounded-full">
+                          <img
+                            src={arrowUp}
+                            className="py-0.5 px-1"
+                            alt="Liked"
+                          />
                         </div>
                       ) : (
-                        <img src={arrowUpTrans} alt="Like" />
+                        <img
+                          src={arrowDowm}
+                          className="rotate-180"
+                          alt="Like"
+                        />
                       )}
                       {post?.like_count}
                     </button>
@@ -509,11 +520,15 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                       className="flex items-center gap-2 min-w-[40px] justify-center"
                     >
                       {post.userLike?.is_like === false ? (
-                        <div className="bg-black p-2 rounded-full">
-                          <img src={arrowUpTrans} alt="Disliked" />
+                        <div className="bg-black p-1 rounded-full">
+                          <img
+                            src={arrowUp}
+                            className="rotate-180 py-1.5 px-2"
+                            alt="Dislike"
+                          />
                         </div>
                       ) : (
-                        <img src={arrowUpTrans} alt="Dislike" />
+                        <img src={arrowDowm} alt="Dislike" />
                       )}
                     </button>
                   </div>
@@ -524,7 +539,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center"
                   >
                     <img src={commentIcon} alt="Comments" />
-                    {post?.comment_count}
+                    {post?._count?.comments}
                   </button>
 
                   {/* Share Button */}
@@ -552,7 +567,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     />
 
                     <button
-                      disabled={!comment}
+                      disabled={!comment || commentsIsPending}
                       className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${
                         comment
                           ? "bg-[#007AB2] hover:bg-[#005f8e] cursor-pointer"
@@ -560,40 +575,37 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                       }`}
                       onClick={handleComments}
                     >
-                      {PostsPending ? (
-                        "Loading..."
+                      {commentsIsPending ? (
+                        <Spinner />
                       ) : (
                         <Send className="w-3.5 h-3.5 text-white" />
                       )}
                     </button>
                   </div>
 
-                  {post?.comments
-                    ?.slice(0, showMoreComments[post.id] ? undefined : 3)
-                    .map((comment) => (
-                      <div className="flex items-center">
-                        <CommentItem
-                          key={comment.id}
-                          comment={comment}
-                          myId={myId}
-                          postId={post.id}
-                          LikeIsPending={LikeIsPending}
-                          PostsPending={PostsPending}
-                          handleCommentReaction={handleCommentReaction}
-                          parentCommentReplyId={parentCommentReplyId}
-                          handleParentComment={handleParentComment}
-                          parentCommentReplyValue={parentCommentReplyValue}
-                          setParentCommentReplyValue={
-                            setParentCommentReplyValue
-                          }
-                          handleParentCommentReply={handleParentCommentReply}
-                          IsCommentReply={IsCommentReply}
-                          setIsCommentReply={setIsCommentReply}
-                          replyId={replyId}
-                          setReplyParentId={setReplyParentId}
-                        />
+                  {post?.comments?.map((comment) => (
+                    <div className="flex  items-center">
+                      <CommentItem
+                        key={comment.id}
+                        comment={comment}
+                        myId={myId}
+                        postId={post.id}
+                        LikeIsPending={LikeIsPending}
+                        PostsPending={PostsPending}
+                        handleCommentReaction={handleCommentReaction}
+                        parentCommentReplyId={parentCommentReplyId}
+                        handleParentComment={handleParentComment}
+                        parentCommentReplyValue={parentCommentReplyValue}
+                        setParentCommentReplyValue={setParentCommentReplyValue}
+                        handleParentCommentReply={handleParentCommentReply}
+                        IsCommentReply={IsCommentReply}
+                        setIsCommentReply={setIsCommentReply}
+                        replyId={replyId}
+                        setReplyParentId={setReplyParentId}
+                        handleDeleteComment={handleDeleteComment}
+                      />
 
-                        <div className="bg-grey-500 mb-20 cursor-pointer">
+                      {/* <div className="bg-grey-500 mb-20 cursor-pointer">
                           <DropdownActions
                             // onView={() => console.log("View Detail")}
                             // onEdit={() => console.log("Edit Detail")}
@@ -602,10 +614,11 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                             }
                             variant="simple"
                           />
-                        </div>
-                        {/* </div> */}
-                      </div>
-                    ))}
+                        </div> */}
+
+                      {/* </div> */}
+                    </div>
+                  ))}
                   {/* YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY */}
                 </div>
               )}
@@ -616,9 +629,9 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                 >
                   {/* ✅ Flag Post Button */}
                   <button
-                    disabled={post?.post_report?.length > 0}
+                    disabled={post?.postFlag}
                     onClick={() => {
-                      if (post?.post_report?.length === 0) {
+                      if (post?.postFlag == null) {
                         setFlaggedPost({
                           ...post,
                           post_id: post.id,
@@ -630,7 +643,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     }}
                     className={`group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 rounded-[5px] flex items-center gap-2 mb-0.5
     ${
-      post?.post_report?.length > 0
+      post?.postFlag 
         ? "bg-gray-100 text-gray-400 cursor-not-allowed"
         : "hover:bg-[#E7F2F9] cursor-pointer"
     }`}
@@ -641,7 +654,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     <span className="hidden group-hover:inline-block">
                       <img src={Flagblue} alt="Flagblue" />
                     </span>
-                    {post?.post_report?.length > 0
+                    {post?.postFlag
                       ? "Already Reported"
                       : "Flag Post"}
                   </button>
@@ -662,6 +675,22 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     )}
                     {post?.savedPostUser ? "Unsave Post" : "Save Post"}
                   </button>
+
+                  {userId == post?.user_id ? (
+                    <button
+                      // onClick={() => handleDeletePost(post.id)}
+                      onClick={() => {
+                        setIsDeleteModal(true);
+                        setDeleteModalId(post?.id);
+                      }}
+                      className="group cursor-pointer w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
+                    >
+                      <img src={Save} alt="Save" />
+                      Delete
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               )}
             </div>
@@ -675,9 +704,16 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
             post_id={flaggedPost?.post_id}
             community_id={flaggedPost?.community_id}
             onSubmit={() => setShowSubmitReport(true)}
+            setIsFlagModalOpen={setIsFlagModalOpen}
           />
         </Model>
       )}
+      <DeleteModal
+        isOpen={isDeleteModal}
+        onClose={() => setIsDeleteModal(false)}
+        onDelete={handleDeletePost}
+        loading={isLoading}
+      />
 
       {showSubmitReport && (
         <Model

@@ -38,7 +38,7 @@ const PopularCommunity = () => {
   const [debouncedSearchText, setDebouncedSearchText] =
     useState(searchCommunity);
 
-  const userInfo = JSON.parse(localStorage.getItem("userInfo")).role_type;
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
 
   console.log("role_typerole_typerole_type", userInfo);
 

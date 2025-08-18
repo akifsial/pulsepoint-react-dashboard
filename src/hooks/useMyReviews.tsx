@@ -1,10 +1,10 @@
 import { ApiMyReviews, ApiMySingleReviews } from "@src/api/ApiMyReviews";
 import { useQuery } from "@tanstack/react-query";
 
-export const useApiMyReviews = (search: string, rating: number,filterValue) => {
+export const useApiMyReviews = (search: string, rating: number,filterValue,page, sort,) => {
   return useQuery({
-    queryKey: ["useApiMyReviews", search, rating,filterValue],
-    queryFn: () => ApiMyReviews(search, rating,filterValue),
+    queryKey: ["useApiMyReviews", search, rating,filterValue,page, sort],
+    queryFn: () => ApiMyReviews(search, rating,filterValue,page, sort),
     // enabled: !!search, // only fetch when search is not empty
     refetchOnWindowFocus: false,
   });

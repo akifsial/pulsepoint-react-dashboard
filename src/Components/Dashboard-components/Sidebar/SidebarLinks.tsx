@@ -1,7 +1,7 @@
 import dashboardIcon from "@assets/media/svgs/dashboard-svgs/Dashboard.svg";
 import UserIcon from "@assets/media/svgs/dashboard-svgs/user.svg";
 import userActive from "@assets/media/svgs/dashboard-svgs/user-active2.svg";
-import BlueUser from "@assets/media/svgs/dashboard-svgs/blue.svg"
+import BlueUser from "@assets/media/svgs/dashboard-svgs/blue.svg";
 import reviewIcon from "@assets/media/svgs/dashboard-svgs/Review.svg";
 import communityIcon from "@assets/media/svgs/dashboard-svgs/Community.svg";
 import dashboardHover from "@assets/media/svgs/dashboard-svgs/dashboard-hover.svg";
@@ -230,6 +230,18 @@ export const CareProfileSidebarLinks: SidebarLink[] = [
   {
     label: "Get Featured",
     path: "/care-provider/feature",
+    icon: {
+      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+
+  
+
+  {
+    label: "Payment History",
+    path: "/care-provider/payment-history",
     icon: {
       default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
       hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,

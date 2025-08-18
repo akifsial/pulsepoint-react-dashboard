@@ -35,6 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
     "/patient/chatbot",
     "/care-provider/chatbot",
     "/patient/payment-history",
+    "/care-provider/payment-history",
   ];
 
   const showOnlyIcons = iconOnlyRoutes.some((route) =>
@@ -55,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
             p-4 min-h-screen w-[89px]
             lg:translate-x-0 flex flex-col justify-between
             fixed top-0 left-0 z-50 transform transition-transform duration-500
-            ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
+            ${isOpen ? "translate-x-0 bg-white" : "-translate-x-full"}
           `}
         >
           <div className="space-y-2 mt-3">
@@ -87,7 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 />
               </div>
             </div> */}
-            {sidebarData.map((link, index) => {
+            {sidebarData?.map((link, index) => {
               const isActive = location.pathname === link.path;
 
               const [isHovered, setIsHovered] = useState(false);
@@ -199,7 +200,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
           </div>
           {AIShow && (
             <div
-              className="rounded-[10px] p-4 text-center"
+              className="rounded-[10px] p-4 mb-3 text-center"
               style={{
                 background:
                   " radial-gradient(96.35% 86.93% at 72.06% 38.43%, #023552 0%, #28A2FF 100%)",

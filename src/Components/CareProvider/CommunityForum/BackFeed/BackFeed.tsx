@@ -26,7 +26,7 @@ const BackFeed = ({ setOpenBackFeed, selectedCommunity }) => {
       <div className="mb-[25px]">
         {/* Fixed header */}
         <div
-          className="flex items-center gap-2.5 cursor-pointer px-5 py-4 bg-transparent sticky top-0 z-10"
+          className="flex items-center gap-2.5 cursor-pointer py-4 bg-transparent sticky top-0 z-10"
           onClick={() => setOpenBackFeed(false)}
         >
           <img src={backArrow} alt="backArrow" />
@@ -37,7 +37,7 @@ const BackFeed = ({ setOpenBackFeed, selectedCommunity }) => {
 
         {/* Scrollable content area */}
         <div
-          className="h-[603px] overflow-y-scroll pr-2"
+          className="h-[603px] overflow-y-scroll pr-"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",

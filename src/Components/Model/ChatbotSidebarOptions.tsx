@@ -30,7 +30,9 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
       onSuccess: async () => {
         toast.success("Chat Successfully Deleted");
         setIsDeleteModalOpen(false);
-        queryClient.invalidateQueries(["useGetAllConversations"]); // refetch list
+        // queryClient.invalidateQueries(["useGetAllConversations"]); // refetch listuseGetConversationChatSpecific
+        queryClient.invalidateQueries(["useGetConversationChatSpecific"]); // refetch listuseGetConversationChatSpecific
+
       },
       onError: (error) => {
         toast.error("Something Went Wrong");

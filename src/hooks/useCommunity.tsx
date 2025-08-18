@@ -71,14 +71,14 @@ export const useGetSingleUser = () => {
 //   });
 // };
 
-export const useGetAllCommunities = (search) => {
+export const useGetAllCommunities = (search, page, sort) => {
   return useQuery({
-    queryKey: ["useGetAllCommunities", search],
+    queryKey: ["useGetAllCommunities", search, page, sort],
     // queryFn: ({ queryKey }) => {
     //   const [, searchTerm] = queryKey; // Get the second item
     //   return ApiGellAllCommunity(searchTerm);
     // },
-    queryFn: () => ApiGellAllCommunity(search),
+    queryFn: () => ApiGellAllCommunity(search, page, sort),
     refetchOnWindowFocus: false,
   });
 };
@@ -104,6 +104,7 @@ export const useGetConversationChatSpecific = (selectedConversationId) => {
     queryKey: ["useGetConversationChatSpecific", selectedConversationId],
     queryFn: () => ApiGetConversationChatSpecific(selectedConversationId),
     refetchOnWindowFocus: false,
+    enabled: !!selectedConversationId, // Only runs if id is provided
   });
 };
 
@@ -115,15 +116,32 @@ export const useGetAllCommunityTopics = () => {
   });
 };
 
-export const useGetSpecificCommunity = (id) => {
+// export const useGetSpecificCommunity = (id) => {
+//   return useQuery({
+//     queryKey: ["useGetSpecificCommunity"],
+//     queryFn: () => ApiGetSpecificCommunity(id),
+//     refetchOnWindowFocus: false,
+//     enabled: !!id,
+//     staleTime: 0,
+//   });
+// };
+export const useGetSpecificCommunity = (id: string) => {
   return useQuery({
-    queryKey: ["useGetSpecificCommunity"],
-    queryFn: () => ApiGetSpecificCommunity(id),
+    queryKey: ["useGetSpecificCommunity", id], // id add kar do key me
+    queryFn: async () => {
+      try {
+        return await ApiGetSpecificCommunity(id);
+      } catch (err) {
+        return null; // agar error aaya to null return kare
+      }
+    },
     refetchOnWindowFocus: false,
     enabled: !!id,
     staleTime: 0,
   });
 };
+
+
 
 // export const useGetNotifications = () => {
 //   return useQuery({

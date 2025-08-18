@@ -19,8 +19,8 @@ const ChatbotLayout = () => {
   const [activeTab, setActiveTab] = useState("");
   const [selectedConversationId, setSelectedConversationId] = useState();
   const [chatBotData, setChatBotData] = useState([]);
-
-
+  const userRole=JSON.parse(localStorage.getItem("userInfo"))?.role_type
+console.log("ooooooooooo",userRole)
   // Function to handle tab clicks
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -29,11 +29,11 @@ const ChatbotLayout = () => {
   return (
     <div className="dashboard flex min-h-screen">
       {/* Main Sidebar */}
-      <Sidebar
+      {/* <Sidebar
         sidebarData={PatientSidebarLinks}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-      />
+      /> */}
 
       {/* Chatbot Sidebar */}
       <ChatbotSidebar
@@ -47,8 +47,10 @@ const ChatbotLayout = () => {
       />
 
       {/* Main Content Area */}
-      <div className={`relative lg:ml-16 ml-0 flex flex-col flex-1 px-4 pt-3`}>
-        {/* <div className="absolute w-full pr-8 -top-[116px]">
+      <div className={`relative lg:ml-16 ml-0 flex flex-col flex-1 sm:px-4 pt-3`}>
+        {
+          userRole=="PATIENT" ?
+        <div className="absolute w-full sm:pr-8 top-[-50px]">
           <DashboardHeader
             showProfileSidebar={true}
             sidebarOpen={isSidebarOpen}
@@ -56,8 +58,11 @@ const ChatbotLayout = () => {
             noticationLink="/patient/notification"
             routeSetting="/patient/manage-password"
           />
-        </div> */}
-        <main>
+        </div> 
+         : ""
+        } 
+        {/* <h5>hhh</h5> */}
+        <main className="mt-12">
           {/* Render the active component based on the selected tab */}
           {activeTab === "Nursing home in 90210." ? (
             <NursingHomeReview />

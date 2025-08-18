@@ -37,12 +37,13 @@ export const ProfileRoutes = [
         path: "feature",
         element: <CareProviderGetFeaturePage />,
       },
+      { path: "payment-history", element: <PaymentHistoryPage /> },
+
       // {
       //   path: "feature",
       //   element: <CareProviderGetFeaturePage />,
-        
+
       // },
-      
     ],
   },
   {

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import featureBg from "../../assets/media/images/dashboard-images/featureBg.png";
 import ProfileCards from "./ProfileCards";
 import BillingCheckout from "./BillingCheckout";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiCreatePayment } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -42,15 +42,18 @@ const GetFeature = () => {
     },
   ];
 
+  const queryClient=useQueryClient()
+
   const { mutateAsync: paymentMutation, isPending: isPendingPaymentMutation } =
     useMutation({
       mutationFn: (data) => ApiCreatePayment(data),
 
       onSuccess: async (data) => {
         // navigate(data?.url)
-        console.log("dddddddd plaan", data);
+        queryClient.invalidateQueries(["UseApiPaymentsHistory"]); // refetch list
+
         if (data?.free_plan_active == true) {
-          return toast.success("Free Plan Subscribe Successfully")
+          return toast.success("Free Plan Subscribe Successfully");
         } else {
           window.location.href = data?.url;
         }

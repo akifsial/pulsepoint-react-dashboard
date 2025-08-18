@@ -9,7 +9,7 @@ import NotficationBar from "./NotificationBar";
 import { useLocation } from "react-router-dom";
 import { Search, Clock } from "lucide-react";
 import { useMeApi } from "@src/hooks/useUsers";
-import dummyImage from "@assets/media/images/dashboard-images/userDummy.png"
+import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 
 interface Props {
   sidebarOpen: boolean;
@@ -32,6 +32,7 @@ const DashboardHeader: React.FC<Props> = ({
   noticationLink,
   routeProfile,
   routeSetting,
+  className,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -41,10 +42,16 @@ const DashboardHeader: React.FC<Props> = ({
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-
-  
+  const userRole = JSON.stringify(localStorage.getItem("userInfo"))?.role_type;
 
   const { data } = useMeApi();
+  console.log("dddddddddddddddddd", data);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     localStorage.setItem("userInfo", JSON.stringify(data));
+  //   }
+  // }, [data]);
 
   const recentSearches: RecentSearch[] = [
     { id: "1", text: "John Davis - Patient ID #10293" },
@@ -91,16 +98,17 @@ const DashboardHeader: React.FC<Props> = ({
   return (
     <header
       className={`${
-      showProfileSidebar ? "lg:ml-[80px]" : ""
-      } bg-white rounded-lg px-4 py-[14px] sm:px-6  z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
+        showProfileSidebar ? "" : ""
+      } bg-white bg-black ${className} w-full rounded-lg px-2 sm:px-4 py-[14px] sm:px-6  z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
     >
-      <div className="flex items-start sm:items-center justify-between gap-2 w-full flex-row">
+      <div className="flex items-center  sm:items-center justify-between gap-2 w-full flex-row">
         <div className="min-w-fit">
-          <h2 className="">👋 Welcome Back!</h2>
+          <h2 className="sm:!text-[25px] !text-[16px]">👋 Welcome Back!</h2>
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-2 min-w-fit relative">
+        <div className="flex items-center gap-2 relative">
+          {/* min with fit removed */}
           {/* Mobile menu button */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -110,7 +118,6 @@ const DashboardHeader: React.FC<Props> = ({
           </button>
           {/* Search Bar */}
           <div className="hidden lg:block relative provider-search-dropdown w-[300px] transition-all duration-300">
-          
             {isSearchDropdownOpen && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
                 {/* {searchText && (
@@ -178,12 +185,16 @@ const DashboardHeader: React.FC<Props> = ({
             className="flex items-center gap-2 cursor-pointer"
           >
             <img
-              src={data?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${data?.image}` : dummyImage }
+              src={
+                data?.image
+                  ? `${import.meta.env.VITE_APP_API_IMG_URL}${data?.image}`
+                  : dummyImage
+              }
               alt="User"
               className="w-[30px] h-[30px] lg:w-[46px] lg:h-[46px] rounded-full object-cover"
             />
-            <div className="hidden lg:flex flex-col">
-              <p className="font-semibold text-sm">{data?.first_name}</p>
+            <div className="lg:flex flex-col">
+              <p className="font-semibold text-sm">{data?.user_name}</p>
               <p className="text-xs text-gray-500">Profile</p>
             </div>
             <img src={dropDownArrow} alt="Arrow" className="w-4 h-4" />

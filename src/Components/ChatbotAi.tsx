@@ -29,10 +29,13 @@ const ChatbotAi: React.FC = ({
     setQuestion(""); // Clear input when chat changes
   }, [selectedConversationId]);
 
+  // const chatId=selectedConversationId
   // const [conversationId, setConversationId] = useState();
   const { data: conversationsData } = useGetConversationChatSpecific(
     selectedConversationId
   );
+
+  console.log("SELECTED CONVEO",selectedConversationId)
 
   const queryClient = useQueryClient();
 
@@ -96,15 +99,15 @@ const ChatbotAi: React.FC = ({
   };
 
   return (
-    <div className="w-full max-w-screen mx-auto bg-white rounded-lg p-8 shadow-sm">
-      <div className="flex flex-col gap-8 h-screen justify-center items-center">
+    <div className="w-full max-w-screen mx-auto bg-white rounded-lg px-2 sm:p-8 shadow-sm">
+      <div className="flex flex-col gap-8 h-full justify-center items-center">
         {/* Header Section */}
-        <div className="text-center">
+        <div className="text-center sm:mt-0 mt-10">
           <h2 className="font-grotesk font-bold text-[25px] leading-custom text-customGray text-center mb-2">
             Top Senior Spot - Ask a Question
           </h2>
 
-          <h6 className="font-geist font-medium text-base leading-capHeight text-customGray text-center">
+          <h6 className="font-geist sm:!text-[16px] !text-[14px] font-medium text-base leading-capHeight text-customGray text-center">
             Have a question about care providers? Get answers and advice from
             patients, caregivers, and experts.
           </h6>
@@ -114,7 +117,7 @@ const ChatbotAi: React.FC = ({
 
         <div
           ref={chatContainerRef}
-          className="h-[500px] text-black w-full rounded-[18px] p-4 chat-scroll text-[16px] overflow-y-auto scroll"
+          className="h-[200px] sm:h-[500px] text-black w-full rounded-[18px] p-4 chat-scroll text-[16px] overflow-y-auto scroll"
         >
           {selectedConversationId
             ? conversationsData?.records?.map((conversation) => (
@@ -166,13 +169,13 @@ const ChatbotAi: React.FC = ({
         />
 
         {/* Notice Text */}
-        <div className="font-geist font-medium text-base leading-relaxed text-customGray text-center">
+        <div className="font-geist sm:!text-[16px] !text-[14px] font-medium text-base leading-relaxed text-customGray text-center">
           It will need to know if the business is on cash vs accrual, from
           website and user provided description
         </div>
 
         {/* Category Buttons Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:mb-0 mb-8 md:grid-cols-4  gap-4">
           <PrimaryButton
             btnText="🏥 Care Provider reviews"
             btnTextClass="text-[12px] font-semibold"

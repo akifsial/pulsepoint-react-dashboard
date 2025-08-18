@@ -16,25 +16,28 @@ const CareProfileLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sdData, setSdData] = useState([]);
   const location = useLocation();
-//   useEffect(() => {
-//     if (location.pathname === "/admin") {
-//       setSdData(AdminSidebarLinks);
-//       console.log("Using AdminLinks");
-//     } else if (location.pathname === "/patient") {
-//       setSdData(PatientSidebarLinks);
-//       console.log("Using PatientLinks ");
-//     } else if (location.pathname === "/care-provider") {
-//       setSdData(sidebarLinks);
-//       console.log("Using CareProviderSidebarLinks");
-//     } else {
-//       setSdData([]);
-//       console.warn("No matching sidebar links for ");
-//     }
-//   }, [location.pathname]);
+  //   useEffect(() => {
+  //     if (location.pathname === "/admin") {
+  //       setSdData(AdminSidebarLinks);
+  //       console.log("Using AdminLinks");
+  //     } else if (location.pathname === "/patient") {
+  //       setSdData(PatientSidebarLinks);
+  //       console.log("Using PatientLinks ");
+  //     } else if (location.pathname === "/care-provider") {
+  //       setSdData(sidebarLinks);
+  //       console.log("Using CareProviderSidebarLinks");
+  //     } else {
+  //       setSdData([]);
+  //       console.warn("No matching sidebar links for ");
+  //     }
+  //   }, [location.pathname]);
 
-  const showProfileSidebar = ["/care-provider/profile", "/care-provider/manage-password", "/care-provider/feature"].some(
-    (path) => location.pathname.startsWith(path)
-  );
+  const showProfileSidebar = [
+    "/care-provider/profile",
+    "/care-provider/manage-password",
+    "/care-provider/feature",
+    "/care-provider/payment-history",
+  ].some((path) => location.pathname.startsWith(path));
   const mainMargin = showProfileSidebar ? "lg:ml-[357px]" : "lg:ml-[89px]";
 
   return (
@@ -60,10 +63,10 @@ const CareProfileLayout = () => {
           showProfileSidebar={showProfileSidebar}
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
-           routeProfile="/admin/profile"
-           routeSetting="/admin/manage-password"
+          routeProfile="/admin/profile"
+          routeSetting="/admin/manage-password"
         />
-        <main className="mt-24">
+        <main className="mt-20">
           <Outlet />
         </main>
       </div>

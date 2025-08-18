@@ -34,16 +34,18 @@ export const ApiReportPost = async (data: FormData): Promise<any> => {
 
     return response.data?.payload;
   } catch (error) {
-    console.error("xxxxxxxxxxxxxxxxxxxxxxxxx:", error);
-    toast.error(error?.response?.data?.errors[0]?.message)
+    toast.error(error?.response?.data?.errors[0]?.message);
     throw error; // rethrow it so caller can handle it
   }
 };
 
 export const ApiGetPopularCommunities = async (search: string) => {
-  const BASE_URL = `${
+  let BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
-  }community?title=${search}`;
+  }community?popular=true`;
+  if(search){
+    BASE_URL+=`&title=${search}`
+  }
   const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL, {
@@ -122,19 +124,36 @@ export const ApiGetSingleUser = async () => {
   return response.data.payload;
 };
 
+// export const ApiCreatePostCommunity = async (data: FormData) => {
+//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post`;
+//   const token = JSON.parse(localStorage.getItem("token"));
+
+//   const response = await axios.post(BASE_URL, data, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+
+//   return response.data.payload;
+// };
+
 export const ApiCreatePostCommunity = async (data: FormData) => {
-  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post`;
-  const token = JSON.parse(localStorage.getItem("token"));
+  try {
+    const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post`;
+    const token = JSON.parse(localStorage.getItem("token"));
 
-  const response = await axios.post(BASE_URL, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+    const response = await axios.post(BASE_URL, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-  return response.data.payload;
+    return response.data.payload;
+  } catch (error) {
+    console.error("Error creating community post:", error);
+    toast.error(error?.response?.data?.message);
+    throw error; // rethrow error so the caller can handle it
+  }
 };
 
-export const ApiGellAllCommunity = async (search: string) => {
-  let URL = `${import.meta.env.VITE_APP_API_URL}community?user_communities=yes`;
+export const ApiGellAllCommunity = async (search: string, page: number, sort:number) => {
+  let URL = `${import.meta.env.VITE_APP_API_URL}community?user_communities=yes&limit=3&page=${page}`;
 
   if (search) {
     URL += `&search=${search}`;
@@ -147,6 +166,10 @@ export const ApiGellAllCommunity = async (search: string) => {
   // if(search){
   //   BASE_URL+=`&${}`
   // }
+  if(sort){
+    URL += `&sort:created_at=${sort}`;
+    
+  }
 
   const response = await axios.get(URL, {
     headers: { Authorization: `Bearer ${token}` },
@@ -301,17 +324,38 @@ export const ApiGetConversationChatSpecific = async (
   return response.data.payload;
 };
 
+// export const ApiDeleteChat = async (selectedConversationId: number) => {
+//   const BASE_URL = `${
+//     import.meta.env.VITE_APP_API_URL
+//   }chat/conversations/${selectedConversationId}`;
+//   const token = JSON.parse(localStorage.getItem("token"));
+
+//   const response = await axios.delete(BASE_URL, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+
+//   return response.data.payload;
+// };
+
 export const ApiDeleteChat = async (selectedConversationId: number) => {
   const BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
   }chat/conversations/${selectedConversationId}`;
   const token = JSON.parse(localStorage.getItem("token"));
 
-  const response = await axios.delete(BASE_URL, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  try {
+    const response = await axios.delete(BASE_URL, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-  return response.data.payload;
+    return response.data.payload;
+  } catch (error) {
+    console.error("Error deleting chat:", error);
+
+    // Optional: rethrow so caller can handle it
+    toast.error(error?.response?.data?.errors[0]?.message);
+    throw error;
+  }
 };
 
 export const ApiEditChatName = async (
@@ -385,6 +429,19 @@ export const ApiDeleteComment = async (
   const response = await axios.delete(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
     data: post_id,
+  });
+
+  return response.data.payload;
+};
+
+export const ApiDeletePost = async (postId: number) => {
+  const BASE_URL = `${
+    import.meta.env.VITE_APP_API_URL
+  }community/post/${postId}`;
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  const response = await axios.delete(BASE_URL, {
+    headers: { Authorization: `Bearer ${token}` },
   });
 
   return response.data.payload;

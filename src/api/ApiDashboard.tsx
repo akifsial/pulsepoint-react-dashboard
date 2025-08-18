@@ -14,15 +14,26 @@ export const ApiStats = async () => {
   return response.data.payload;
 };
 
-export const ApiGetCareProviders = async (search: string, rating: number) => {
+export const ApiGetCareProviders = async (
+  search: string,
+  rating: number,
+  page: number,
+  sort:number
+) => {
   let BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
-  }user?role_type=CARE_PROVIDER`;
+  }user?role_type=CARE_PROVIDER&limit=3&page=${page}`;
   if (search) {
     BASE_URL += `&search=${search}`;
   }
+
   if (rating) {
     BASE_URL += `&total_rating=${rating}`;
+  }
+
+  if(sort){
+    BASE_URL += `&sort:created_at=${sort}`;
+    
   }
   // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
@@ -33,9 +44,8 @@ export const ApiGetCareProviders = async (search: string, rating: number) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response?.data?.payload?.records;
+  return response?.data;
 };
-
 
 export const ApiGetCareProvidersSingle = async (id: number) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/${id}`;
@@ -131,7 +141,9 @@ export const ApiGetRecentSearches = async () => {
 
 export const ApiDeleteRecentSearches = async () => {
   const userId = JSON.parse(localStorage.getItem("userInfo")).id;
-  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}recent-search/user/${userId}`;
+  const BASE_URL = `${
+    import.meta.env.VITE_APP_API_URL
+  }recent-search/user/${userId}`;
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );

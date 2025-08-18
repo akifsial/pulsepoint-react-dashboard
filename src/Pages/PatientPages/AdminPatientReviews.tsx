@@ -14,6 +14,7 @@ import ReviewForm from "@components/Review/ReviewForm";
 import Toast from "@components/Toast/Toast";
 import { useApiMyReviews } from "@src/hooks/useMyReviews";
 import dayjs from "dayjs";
+import Pagination from "@components/Pagination/Pagination";
 import DeleteModal from "@src/components/Model/DeleteModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiDeleteMyReviews } from "@src/api/ApiMyReviews";
@@ -27,12 +28,25 @@ const AdminPatientReviews: React.FC = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState(true);
 
   const {
     data,
     isLoading: isLoadingUseApiMyReviews,
     isFetching,
-  } = useApiMyReviews(debouncedSearchText, rating);
+    refetch,
+  } = useApiMyReviews(
+    debouncedSearchText,
+    rating,
+    page,
+    sort == true ? "asc" : "desc"
+  );
+
+  const onSortClick = () => {
+    setSort(!sort);
+    refetch();
+  };
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   // State for managing the review form page
@@ -58,6 +72,14 @@ const AdminPatientReviews: React.FC = () => {
   };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchText]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -149,6 +171,7 @@ const AdminPatientReviews: React.FC = () => {
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
         const { provider_name, care_provider, provider_email, provider_logo } =
           row.original;
+          console.log("--------------------------------------",care_provider)
         return (
           <div className="flex items-center gap-3">
             <img
@@ -157,7 +180,11 @@ const AdminPatientReviews: React.FC = () => {
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
             <div className="flex flex-col">
-              <span className="font-medium text-sm text-[#252525] leading-tight">
+              <span
+            onClick={() => navigate(`/patient/hospital-profile/${care_provider?.id}`)}
+              
+                className="font-medium text-sm text-[#252525] leading-tight"
+              >
                 {care_provider?.organization_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
@@ -174,14 +201,43 @@ const AdminPatientReviews: React.FC = () => {
       width: "200px",
       showSort: true,
       cell: (row) => (
-        <i>{dayjs(row?.original?.created_at).format("DD-MMMM-YYYY")}</i>
+        <i>{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
       ),
     },
+    // {
+    //   accessor: "rating",
+    //   header: "Rating",
+    //   width: "60px",
+    //   showSort: true,
+    // },
     {
       accessor: "rating",
       header: "Rating",
-      width: "60px",
       showSort: true,
+      cell: ({ getValue }) => {
+        const rating = Number(getValue()) || 0;
+        const totalStars = 5;
+
+        const StarIcon = ({ filled }: { filled: boolean }) => (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            width="20"
+            height="20"
+          >
+            <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
+          </svg>
+        );
+
+        return (
+          <div className="flex items-center gap-0.5">
+            {Array.from({ length: totalStars }).map((_, index) => (
+              <StarIcon key={index} filled={index < rating} />
+            ))}
+          </div>
+        );
+      },
     },
     {
       accessor: "content",
@@ -225,89 +281,6 @@ const AdminPatientReviews: React.FC = () => {
     },
   ];
 
-  const reviewsData: ReviewDataTypes[] = [
-    {
-      id: 1,
-      provider_name: "Mayo Clinic",
-      provider_email: "contact@mayoclinic.org",
-      date: "9/4/12",
-      rating: <RatingStars value={5} isDisabled={true} />,
-      numericRating: 5,
-      reviews:
-        "Staff was caring and responsive, though the wait time could be improved.",
-      location: "📍200 1st St SW, Rochester",
-    },
-    {
-      id: 2,
-      provider_name: "Cleveland Clinic",
-      provider_email: "info@clevelandclinic.com",
-      date: "5/7/16",
-      rating: <RatingStars value={4} isDisabled={true} />,
-      numericRating: 4,
-      reviews:
-        "Excellent support for my mother with dementia. Highly recommended.",
-      location: "📍9500 Euclid Ave, Cleveland",
-    },
-    {
-      id: 3,
-      provider_name: "Johns Hopkins Hospital",
-      provider_email: "support@hopkinshospital.org",
-      date: "10/6/13",
-      rating: <RatingStars value={4} isDisabled={true} />,
-      numericRating: 4,
-      reviews:
-        "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
-      location: "📍1800 Orleans St, Baltimore",
-    },
-    {
-      id: 4,
-      provider_name: "Massachusetts Gr. Hospital",
-      provider_email: "info@massgeneral.org",
-      date: "2/11/12",
-      provider_logo: dummyImage,
-      rating: <RatingStars value={2} isDisabled={true} />,
-      numericRating: 2,
-      reviews: "Great amenities and staff. Rooms were spacious and bright.",
-      location: "📍55 Fruit St, Boston",
-    },
-    {
-      id: 5,
-      provider_name: "Cedars-Sinai Medical Center",
-      provider_email: "hello@cedars-sinai.org",
-      date: "3/4/16",
-      provider_logo: dummyImage,
-      rating: <RatingStars value={1} isDisabled={true} />,
-      numericRating: 1,
-      reviews:
-        "Compassionate end-of-life care. They made a difficult time easier.",
-      location: "📍8700 Beverly Blvd, LA",
-    },
-    {
-      id: 6,
-      provider_name: "Mount Sinai Hospital",
-      provider_email: "contact@mountsinai.org",
-      date: "8/15/14",
-      provider_logo: dummyImage,
-      rating: <RatingStars value={1} isDisabled={true} />,
-      numericRating: 1,
-      reviews:
-        "The food quality was inconsistent, but the overall experience was positive.",
-      location: "📍1 Gustave L. Levy Pl, NY",
-    },
-    {
-      id: 7,
-      provider_name: "UCLA Medical Center",
-      provider_email: "info@uclahealth.org",
-      date: "11/22/15",
-      provider_logo: dummyImage,
-      rating: <RatingStars value={0} isDisabled={true} />,
-      numericRating: 0,
-      reviews:
-        "They offered a variety of activities that kept my father engaged.",
-      location: "📍757 Westwood Plaza, LA",
-    },
-  ];
-
   const handleRowSelect = (row: ReviewDataTypes) => {};
 
   useEffect(() => {
@@ -332,11 +305,12 @@ const AdminPatientReviews: React.FC = () => {
           tracking-normal
           text-brand-ink
           align-middle
+          mb-6
         "
       >
         My Reviews
       </h2>
-      <div className="mt-6 bg-[#FFFFFF] h-[400px] rounded-[10px] px-4 py-6 mb-6">
+      <div className="bg-[#FFFFFF] h-[400px] rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Given Reviews</h3>
           {/* searchbar */}
@@ -397,10 +371,11 @@ const AdminPatientReviews: React.FC = () => {
             <div className="overflow-x-auto">
               <TanDataTable<ReviewDataTypes>
                 columns={columns ?? []}
-                data={data ?? []}
+                data={data?.records ?? []}
                 showCheckbox={false}
                 onRowSelect={handleRowSelect}
                 showActions={true}
+                onSortClick={onSortClick}
                 className="my-custom-class"
                 actions={(row) => (
                   <DropdownActions
@@ -426,6 +401,14 @@ const AdminPatientReviews: React.FC = () => {
             // loading={deleteMutationLoading}
           />
         </div>
+      </div>
+      <div>
+        <Pagination
+          onPageChange={handlePageChange}
+          totalRows={data?.totalRecords}
+          currentPage={page}
+          rowsPerPage={3}
+        />
       </div>
     </div>
   );

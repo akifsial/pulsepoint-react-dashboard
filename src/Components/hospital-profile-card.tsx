@@ -56,7 +56,7 @@ export default function HospitalProfileCard({
 
   const handleBookmarkToggle = async () => {
     if (savedCareProvidersPending) return;
-    
+
     setIsBookmarked(!isBookmarked);
 
     if (data?.is_saved_care_provider == true) {
@@ -70,7 +70,7 @@ export default function HospitalProfileCard({
 
   const handleSaved = async () => {
     await savedCareProvidersMutation();
-    setSavedModal(false)
+    setSavedModal(false);
   };
 
   return (
@@ -102,28 +102,32 @@ export default function HospitalProfileCard({
           />
         </button> */}
 
-        <button 
-  type="button"
-  onClick={handleBookmarkToggle}
-  disabled={savedCareProvidersPending}
-  aria-label={isBookmarked ? "Remove bookmark" : "Bookmark hospital"}
-  className={`w-10 h-10 mt-3 sm:mt-0 grid cursor-pointer place-items-center rounded-full border border-gray-300
+        <button
+          type="button"
+          onClick={handleBookmarkToggle}
+          disabled={savedCareProvidersPending}
+          aria-label={isBookmarked ? "Remove bookmark" : "Bookmark hospital"}
+          className={`w-10 h-10 mt-3 sm:mt-0 grid cursor-pointer place-items-center rounded-full border border-gray-300
     hover:bg-gray-100 transition-colors ${
       savedCareProvidersPending ? "opacity-50 cursor-not-allowed" : ""
     }`}
->
-  <Bookmark
-    className={`w-4 h-4 ${
-      data?.is_saved_care_provider
-        ? "fill-current text-medical-blue"
-        : "text-gray-700"
-    }`}
-  />
-</button>
-
-
+        >
+          <Bookmark
+            className={`w-4 h-4 ${
+              data?.is_saved_care_provider
+                ? "fill-current text-medical-blue"
+                : "text-gray-700"
+            }`}
+          />
+        </button>
       </div>
-      {savedModal && <SavedModal onSaved={handleSaved} onClose={()=>(setSavedModal(false))} isOpen={true} />}
+      {savedModal && (
+        <SavedModal
+          onSaved={handleSaved}
+          onClose={() => setSavedModal(false)}
+          isOpen={true}
+        />
+      )}
       {/* About Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">About</h3>
@@ -133,15 +137,10 @@ export default function HospitalProfileCard({
           </span>
           <p className="text-sm text-gray-900 font-medium">{specialty}</p>
         </div>
-        <h4>
-           {data?.address} | {data?.organization_name}
-        </h4>
-        <p>
-          Sunrise Hills Nursing Home is a full-service assisted living facility
-          specializing in post-acute rehabilitation and long-term senior care.
-          Our mission is to provide compassionate, person-centered services in a
-          comfortable, home-like setting.
-        </p>
+        <h5>
+          {data?.address} | {data?.organization_name}
+        </h5>
+        <p>{data?.additional_details}</p>
         <p className="text-sm text-gray-700 leading-relaxed">{description}</p>
       </div>
 
@@ -151,16 +150,40 @@ export default function HospitalProfileCard({
           Services Offered:
         </h3>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-          {servicesData.map((service) => (
-            <li
-              key={service.id}
-              className="flex items-center space-x-2 text-sm"
-            >
-              <img src={Tick} alt="" className="w-4 h-4 flex-shrink-0" />
-              <span className="text-gray-700">{service.name}</span>
-            </li>
-          ))}
+          {data?.service?.length == 0 ? (
+            <p className=" mt-5">No Service Found</p>
+          ) : (
+            data?.service?.map((service) => (
+              <li
+                key={service.id}
+                className="flex items-center space-x-2 text-sm"
+              >
+                <img src={Tick} alt="" className="w-4 h-4 flex-shrink-0" />
+                <span className="text-gray-700">{service.name}</span>
+              </li>
+            ))
+          )}
         </ul>
+        <div className=" sm:grid grid-cols-3 mt-7 gap-2 justify-between">
+          {data?.gallary_images?.length > 0 ? (
+            data.gallary_images.map((img) => (
+              <div
+                key={img.id}
+                className="border sm:mb-0 mb-5 sm:py-0 py-4 flex justify-center border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow hover:scale-105 transition-transform duration-300 duration-300"
+              >
+                <img
+                  src={`${import.meta.env.VITE_APP_API_IMG_URL}${img.image}`}
+                  alt="Gallery"
+                  className="w-25 h-25 object-cover "
+                />
+              </div>
+            ))
+          ) : (
+            <p className="col-span-full text-center text-gray-500 italic">
+              No gallery images found
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

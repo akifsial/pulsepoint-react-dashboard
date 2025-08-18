@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { FaEdit } from "react-icons/fa";
@@ -27,7 +25,7 @@ const DropdownActions: React.FC<DropdownActionsProps> = ({
   onView,
   onApprove,
   onJoin,
-  
+
   variant = "default",
 }) => {
   const [open, setOpen] = useState(false);
@@ -164,14 +162,15 @@ const DropdownActions: React.FC<DropdownActionsProps> = ({
                 {getLabel("flag")}
               </button>
             )}
-
             {onDelete && (
               <button
                 onClick={() => {
                   onDelete();
                   setOpen(false);
                 }}
-                className={getClassName("delete")}
+                className={`${getClassName(
+                  "delete"
+                )} cursor-pointer flex items-center gap-2 px-3 py-2 w-full`}
               >
                 {variant === "default" && <MdDelete className="text-red-600" />}
                 {getLabel("delete")}
@@ -190,7 +189,6 @@ const DropdownActions: React.FC<DropdownActionsProps> = ({
                 {getLabel("Join")}
               </button>
             )}
-
           </div>,
           document.body
         )}

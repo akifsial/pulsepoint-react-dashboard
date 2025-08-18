@@ -4,8 +4,11 @@ import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
 import OnBoardingLayout from "@components/auth/OnBoradingLayout";
 import { Link, useNavigate } from "react-router-dom";
-import { Globe } from "lucide-react";
+import { ArrowLeft, Globe } from "lucide-react";
 import SocialLoginSection from "@components/SocialLoginSection";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 import {
   IoPersonOutline,
@@ -13,7 +16,7 @@ import {
   IoMailOutline,
   IoLocationSharp,
 } from "react-icons/io5";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/AuthApi/AuthApi";
@@ -42,7 +45,7 @@ interface FormData {
   preferredCommunication: string[];
 }
 
-const RegisterCareprovider = () => {
+const RegisterCareprovider = ({ setSelectUser }) => {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -62,14 +65,17 @@ const RegisterCareprovider = () => {
     preferredCommunication: [],
   });
 
-
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm();
+    control,
+  } = useForm({
+    defaultValues: {
+      number: "+44", // initialize with Pakistan code
+    },
+  });
 
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
@@ -116,15 +122,12 @@ const RegisterCareprovider = () => {
 
   const [preferredMethod, setPreferredMethod] = useState("");
   const { data: ProviderData } = useAllApiProviderTypes();
-  
-
 
   const providersOptions =
     ProviderData?.records?.map((insurance) => ({
       label: insurance.name,
       value: insurance.id,
     })) || [];
-
 
   const { mutateAsync: registerMutation, isPending: isRegisterPending } =
     useMutation({
@@ -133,14 +136,21 @@ const RegisterCareprovider = () => {
       onSuccess: async () => {
         toast.success("Care Provider Created Successfully");
         // navigate("/login");
-        navigate("/care-provider/login");
+        navigate("/login");
       },
-      onError: (err) => {
-       
-      },
+      onError: (err) => {},
     });
 
+  const [phoneValidation, setPhoneValidation] = useState(false);
+
   const RegisterSubmit = async (data) => {
+    console.log("phonephonephone", data?.number);
+    if (data?.number == "") {
+      setPhoneValidation(true);
+      return;
+    } else {
+      setPhoneValidation(false);
+    }
     const registerData = {
       // for care_provider
       organization_name: data.organizationName,
@@ -173,17 +183,23 @@ const RegisterCareprovider = () => {
   return (
     <>
       <OnBoardingLayout>
-        <div className="min-h-screen max-h-screen flex flex-col">
+        <div className="lg:min-h-[600px] lg:max-h-[600px] min-h-screen max-h-screen flex flex-col">
           <form
             onSubmit={handleSubmit(RegisterSubmit)}
-            className="space-y-6 overflow-y-auto "
+            className="sm:space-y-6"
           >
-            <div className="px-4 py-6">
-              <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
+            <div className="sm:px-4 py-6">
+              <p className="text-[#1A1A1A] flex items-center gap-5 text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
+                <span
+                  onClick={() => setSelectUser("")}
+                  className="cursor-pointer"
+                >
+                  <ArrowLeft />{" "}
+                </span>{" "}
                 Sign Up
               </p>
-              <p className="text-[#252525CC] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
-                Create Your Provider Account
+              <p className="text-[#252525] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
+                Join to explore and share care insights
               </p>
               {/* Name Fields */}
               {/* Name Fields */}
@@ -195,6 +211,7 @@ const RegisterCareprovider = () => {
                     icon={IoPersonOutline}
                     id="organizationName"
                     name="organizationName"
+                    className="pr-10"
                     type="text"
                     placeholder="St. Mary’s Rehabilitation Center"
                     register={register}
@@ -216,6 +233,7 @@ const RegisterCareprovider = () => {
                       type="text"
                       placeholder="@johndoe"
                       register={register}
+                      className="pr-10"
                       registerName="userName"
                       errors={errors}
                       validation={{
@@ -242,13 +260,14 @@ const RegisterCareprovider = () => {
               </div>
 
               {/* Email and Phone */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="w-full">
                   <InputField
                     label="Email Address"
                     asterisk={true}
                     icon={IoMailOutline}
                     id="email"
+                    className="pr-10"
                     name="email"
                     type="email"
                     placeholder="contact@organization.org"
@@ -264,12 +283,14 @@ const RegisterCareprovider = () => {
                     }}
                   />
                 </div>
-                <div>
+
+                {/* <div>
                   <InputField
                     label="Phone Number"
                     asterisk={true}
                     icon={IoCallOutline}
                     id="number"
+                    className="pr-10"
                     name="number"
                     type="text"
                     placeholder="e.g., +1 800 555 1234"
@@ -277,9 +298,49 @@ const RegisterCareprovider = () => {
                     registerName="number"
                     errors={errors}
                     validation={{
-                      required: "Phone Number is required",
+                      required: "Phone is required",
                     }}
                   />
+                </div> */}
+
+                <div
+                  className={`relative grid grid-cols-1 md:grid-cols-1 gap-2 ${
+                    phoneValidation ? "mb-6" : ""
+                  } `}
+                >
+                  <label className="block text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]">
+                    Phone Number
+                  </label>
+                  <Controller
+                    name="number"
+                    control={control}
+                    // rules={{ required: "Phone number is required" }}
+
+                    render={({ field, fieldState }) => (
+                      <>
+                        <PhoneInput
+                          placeholder="Enter phone number"
+                          value={field.value}
+                          onChange={field.onChange}
+                          defaultCountry="US"
+                          className="w-full mb-5 h-[50px] w-full  border border-[#2525251A] rounded-[8px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
+                        />
+                        {fieldState.error && (
+                          <p className="text-red-500 mb-3">
+                            {fieldState.error.message}
+                          </p>
+                        )}
+                      </>
+                    )}
+                  />
+
+                  {phoneValidation ? (
+                    <p className="text-red-500 absolute bottom-[-10px] ">
+                      Phone number is required
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
 
@@ -293,6 +354,7 @@ const RegisterCareprovider = () => {
                     id="zipCode"
                     name="zipCode"
                     type="text"
+                    className="pr-10"
                     placeholder="e.g., 78701"
                     register={register}
                     registerName="zipCode"
@@ -318,7 +380,6 @@ const RegisterCareprovider = () => {
                   />
                 </div>
               </div>
-
               {/* State & Street */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -328,6 +389,7 @@ const RegisterCareprovider = () => {
                     icon={IoLocationSharp}
                     id="state"
                     name="state"
+                    className="pr-10"
                     type="text"
                     placeholder="e.g., California"
                     register={register}
@@ -344,6 +406,7 @@ const RegisterCareprovider = () => {
                     asterisk={true}
                     icon={IoLocationSharp}
                     id="streetAddress"
+                    className="pr-10"
                     name="streetAddress"
                     type="text"
                     placeholder="e.g., 123 Main Street"
@@ -356,13 +419,13 @@ const RegisterCareprovider = () => {
                   />
                 </div>
               </div>
-
               {/* Website & Working Hours */}
               <div className="grid grid-cols-1">
                 <div>
                   <InputField
                     label="Website Url (optional)"
-                    icon={IoPersonOutline}
+                    icon={Globe}
+                    className="pr-10"
                     id="website"
                     name="website"
                     type="text"
@@ -372,21 +435,21 @@ const RegisterCareprovider = () => {
                     errors={errors}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <InputField
                     label="Working Hours"
                     id="workingHours"
                     name="workingHours"
-                    icon={IoPersonOutline}
+                    className="pr-10"
+                    icon={Globe}
                     type="text"
                     placeholder="Type your working hours"
                     register={register}
                     registerName="workingHours"
                     errors={errors}
                   />
-                </div>
+                </div> */}
               </div>
-
               {/* Password Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -396,6 +459,7 @@ const RegisterCareprovider = () => {
                     id="password"
                     name="password"
                     type="password"
+                    className="pr-10"
                     placeholder="Enter your password"
                     // icon={lockIcon} // ✅ lock icon here
                     register={register}
@@ -412,6 +476,7 @@ const RegisterCareprovider = () => {
                     asterisk={true}
                     id="confirmPassword"
                     name="confirmPassword"
+                    className="pr-10"
                     type="password"
                     placeholder="Confirm your password"
                     // icon={lockIcon} // ✅ lock icon here
@@ -430,7 +495,6 @@ const RegisterCareprovider = () => {
                     " "}
                 </div>
               </div>
-
               {/* <div className="space-y-4">
                 <p className="text-md font-semibold">
                   Preferred Communication Method
@@ -484,19 +548,18 @@ const RegisterCareprovider = () => {
                   </div>
                 </div>
               </div> */}
-
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full flex justify-center bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
+                className="w-full flex justify-center bg-[#28A2FF] items-center text-white h-[50px] px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
               >
                 {isRegisterPending ? <Spinner /> : "Sign Up"}
               </button>
               {/* calling component for Social icons */}
-              <SocialLoginSection
+              {/* <SocialLoginSection
                 action="login"
                 // handleSocialLogin={handleSocialLogin}
-              />
+              /> */}
               {/* "Don't have an account yet?" Section */}
               <div className="flex justify-center mt-6">
                 <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">

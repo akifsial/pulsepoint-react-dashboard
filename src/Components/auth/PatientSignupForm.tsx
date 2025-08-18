@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/AuthApi/AuthApi";
 import Spinner from "@components/Loaders/Spinner";
 import { useAllApiInsuranceTypes } from "@src/hooks/useUsers";
+import { ArrowLeft } from "lucide-react";
 
 interface FormData {
   firstName: string;
@@ -154,7 +155,7 @@ const PatientSignupForm = () => {
       mutationFn: ({ data }) => ApiRegister(data),
 
       onSuccess: async () => {
-        toast.success("Sign Up Successfully");
+        toast.success("Patient Create Successfully");
         navigate("/patient/login");
       },
       onError: (error) => {

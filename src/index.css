@@ -285,8 +285,11 @@
 }
 
 
-/* html,
-body,
-#root {
-  height: 100%;
-} */
+.form-control{
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.react-time-picker__wrapper{
+  border-radius: 15px;
+}

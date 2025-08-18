@@ -38,8 +38,8 @@ const ResetPasswordPage = () => {
 
   const resetSubmit = async (data) => {
     const pass = {
-      old_password: data.old_password,
-      new_password: data?.createPassword,
+      password: data.old_password,
+      // new_password: data?.createPassword,
     };
     await resetMutation({ data: pass });
   };

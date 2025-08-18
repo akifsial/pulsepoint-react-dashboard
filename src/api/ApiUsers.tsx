@@ -58,7 +58,7 @@ export const ApiUpdateUser = async (id: number, data) => {
     return response.data.payload;
   } catch (error) {
     console.error("Error updating user:", error);
-    toast.error(error?.response?.data?.message)
+    toast.error(error?.response?.data?.errors[0]?.message)
     throw error; // rethrow so calling code can handle it
   }
 };

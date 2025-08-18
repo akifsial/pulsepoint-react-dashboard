@@ -13,16 +13,32 @@ import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
+import Pagination from "@components/Pagination/Pagination";
 import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActivityCard";
 import { useApiMyReviews } from "@src/hooks/useMyReviews";
 import dayjs from "dayjs";
+import { useStatsApi } from "@src/hooks/useDashboard";
+
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
   const [rating, setRating] = useState("");
-  const { data: CareproviderData } = useApiMyReviews("", rating);
+  const [page, setPage] = useState(1);
+const [searchText, setSearchText] = useState("");
+const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
 
+  const [sort, setSort] = useState(true);
+
+  const { data: CareproviderData, refetch,  } = useApiMyReviews(
+    "",
+    rating,
+    page,
+    sort == true ? "asc" : "desc"
+  );
+
+  const { data: statsData } = useStatsApi();
+  console.log("stats", statsData);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -32,6 +48,8 @@ const CareProviderDashboard: React.FC = () => {
         setShowRatingDropdown(false);
       }
     };
+
+
 
     if (showRatingDropdown) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -54,6 +72,14 @@ const CareProviderDashboard: React.FC = () => {
     rating?: any;
     reviews?: string;
   };
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearchText]);
 
   const columns = [
     {
@@ -87,14 +113,41 @@ const CareProviderDashboard: React.FC = () => {
       accessor: "updated_at",
       header: "Date",
       showSort: true,
-      cell: (info: any) => (
-        <i>{dayjs(info.getValue()).format(" DD MMMM YY ")}</i>
-      ),
+      cell: (info: any) => <i>{dayjs(info.getValue()).format(" DD/MM/YY ")}</i>,
     },
+    // {
+    //   accessor: "rating",
+    //   header: "Rating",
+    //   showSort: true,
+    // },
     {
       accessor: "rating",
       header: "Rating",
       showSort: true,
+      cell: ({ getValue }) => {
+        const rating = Number(getValue()) || 0;
+        const totalStars = 5;
+
+        const StarIcon = ({ filled }: { filled: boolean }) => (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            width="20"
+            height="20"
+          >
+            <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
+          </svg>
+        );
+
+        return (
+          <div className="flex items-center gap-0.5">
+            {Array.from({ length: totalStars }).map((_, index) => (
+              <StarIcon key={index} filled={index < rating} />
+            ))}
+          </div>
+        );
+      },
     },
     {
       accessor: "content",
@@ -156,11 +209,20 @@ const CareProviderDashboard: React.FC = () => {
   const renderActions = (row: Person) => (
     <button onClick={() => alert(`Edit ${row.name}`)}>Edit</button>
   );
+
+      const onSortClick = () => {
+      setSort(!sort);
+      refetch();
+    };
+
+
+    // console.log("CareproviderDataCareproviderDataCareproviderData",CareproviderData?.records)
+
   return (
     <div className="mb-10">
-      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
+      <div className="w-[100%] grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
         <StatsCommonCards
-          count={0}
+          count={statsData?.totalPatientReviews ? statsData?.totalPatientReviews : 0}
           title="Total Patient Reviews"
           cardImg={contacts}
           imgBg="#EEE0FF"
@@ -174,14 +236,14 @@ const CareProviderDashboard: React.FC = () => {
           borderBg="#52C343"
         />
         <StatsCommonCards
-          count={0}
+          count={statsData?.flaggedReviews ? statsData?.flaggedReviews : 0}
           title="Flagged Reviews"
           cardImg={flags}
           imgBg="#FFE8CF"
           borderBg="#F98A17"
         />
         <StatsCommonCards
-          count={0}
+          count={statsData?.profileViewsThisMonth ? statsData?.profileViewsThisMonth : 0}
           title="Profile Views This Month"
           cardImg={userSearch}
           imgBg="#E2F0F6"
@@ -194,7 +256,7 @@ const CareProviderDashboard: React.FC = () => {
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
-              <div className="flex items gap-4 ">
+              <div className="flex flex-wrap items gap-4 ">
                 <PrimaryButton
                   btnText={` ${rating} Ratings`}
                   showImg={true}
@@ -237,10 +299,11 @@ const CareProviderDashboard: React.FC = () => {
         <div>
           <TanDataTable<dataTypes>
             columns={columns}
-            data={CareproviderData ?? ""}
+            data={CareproviderData?.records ?? ""}
             showCheckbox={false}
             onRowSelect={handleRowSelect}
             actions={renderActions}
+            onSortClick={onSortClick}
             // showActions={true}
             className="my-custom-class"
             // actions={(row) => (
@@ -252,8 +315,14 @@ const CareProviderDashboard: React.FC = () => {
             // )}
           />
         </div>
+        <Pagination
+          onPageChange={handlePageChange}
+          totalRows={CareproviderData?.totalRecords}
+          currentPage={page}
+          rowsPerPage={3}
+        />
       </div>
-      <div className="bg-[#FFFFFF] rounded-[10px] px-4 p-5">
+      {/* <div className="bg-[#FFFFFF] rounded-[10px] px-4 p-5">
         <div>
           <div className="flex md:flex-row flex-col md:items-center md:justify-between mb-6.5">
             <h3 className="mb-3 md:mb-0">Community Forum Activity</h3>
@@ -274,7 +343,7 @@ const CareProviderDashboard: React.FC = () => {
             <ForumActivityCard />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

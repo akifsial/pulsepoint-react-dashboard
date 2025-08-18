@@ -8,14 +8,20 @@ interface SocialLoginSectionProps {
   handleSocialLogin: (provider: string) => void;
 }
 
-const SocialLoginSection: React.FC<SocialLoginSectionProps> = ({ action, handleSocialLogin }) => {
-
+const SocialLoginSection: React.FC<SocialLoginSectionProps> = ({
+  action,
+  handleSocialLogin,
+}) => {
   // const handleNavigate=()=>{
   //   window.open("https://phpstack-1250693-5723234.cloudwaysapps.com/api/v1/auth/google/callback","_self")
   // }
 
   const loginWithGoogle = () => {
     window.location.href = `${import.meta.env.VITE_APP_API_URL}auth/google`;
+  };
+
+  const loginWithFacebook = () => {
+    window.location.href = `${import.meta.env.VITE_APP_API_URL}auth/facebook`;
   };
 
   return (
@@ -36,7 +42,7 @@ const SocialLoginSection: React.FC<SocialLoginSectionProps> = ({ action, handleS
           alt="Google"
           className="w-12 h-12 cursor-pointer hover:opacity-80 transition-opacity"
           // onClick={() => handleSocialLogin("google")}
-          onClick={()=>(loginWithGoogle())}
+          onClick={() => loginWithGoogle()}
         />
         {/* </Link> */}
         <img
@@ -49,7 +55,7 @@ const SocialLoginSection: React.FC<SocialLoginSectionProps> = ({ action, handleS
           src={fbIcon}
           alt="Facebook"
           className="w-12 h-12 cursor-pointer hover:opacity-80 transition-opacity"
-          onClick={() => handleSocialLogin("facebook")}
+          onClick={() => loginWithFacebook()}
         />
       </div>
     </div>

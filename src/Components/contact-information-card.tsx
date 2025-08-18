@@ -54,7 +54,7 @@ export default function ContactInformationCard({
             <span className="text-gray-900">{weekdayHours}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700">Sat - Sun | 09:00AM -01:00PM</span>
+            <span className="text-gray-700">{data?.start_day} - {data?.end_day} | {data?.time_in} - {data?.time_out} </span>
             <span className="text-gray-900">{weekendHours}</span>
           </div>
         </div>

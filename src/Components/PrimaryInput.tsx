@@ -18,7 +18,7 @@ const PrimaryInput: React.FC<CommonInputsProps> = ({
   requiredText,
   validation,
   errors,
-  defaultValidation = "Required",
+  defaultValidation = "",
   type = "text",
   eyeIcon = false,
   label,
@@ -52,7 +52,7 @@ const PrimaryInput: React.FC<CommonInputsProps> = ({
             {...(register && registerName
               ? register(
                   registerName,
-                  validation || { required: "This field is required" }
+                  // validation || { required: "This field is required" }
                 )
               : {})}
             className={`w-full rounded-xl bg-white placeholder:text-[12px] shadow_bg placeholder:text-[var(--text-muted)] outline-none resize-none ${

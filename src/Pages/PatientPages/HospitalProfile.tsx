@@ -29,7 +29,7 @@ const HospitalProfile = () => {
         <div className="h-[661px] overflow-y-auto transition-colors duration-300 bg-medical-bg">
           {/* Header */}
           <header
-            className="md:max-w-7xl max-w-full py-7 mx-auto  sm:px-6 px-8 flex flex-wrap justify-between items-center md:justify-between md:gap-0 gap-3 items-center relative "
+            className="md:max-w-7xl max-w-full py-7 mx-auto  sm:px-6 px-3 flex flex-wrap justify-between items-center md:justify-between md:gap-0 gap-3 items-center relative "
             style={{
               background:
                 "linear-gradient(107.76deg, #f4f7ff -2.99%, #ddeff7 64.85%, #d6e0f9 113.61%)",
@@ -41,8 +41,8 @@ const HospitalProfile = () => {
                 className="h-5 w-5 cursor-pointer text-black"
                 onClick={handleGoBack}
               />
-              <h1 className="font-space font-bold text-[25px] leading-[32px] text-[#181D27] align-middle [leading-trim:cap] [text-edge:cap]">
-                {data?.first_name ? data?.first_name : "Anonymus"}{" "}
+              <h1 className="font-space font-bold !text-[20px] sm:!text-[28px] leading-[32px] text-[#181D27] align-middle [leading-trim:cap] [text-edge:cap]">
+                {data?.organization_name ? data?.organization_name : data?.user_name}{" "}
                 {data?.last_name}
               </h1>
             </div>

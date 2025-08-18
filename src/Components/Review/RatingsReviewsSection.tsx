@@ -1,6 +1,6 @@
 import { useCareProviderSingle } from "@src/hooks/useDashboard";
 import { Star } from "lucide-react";
-
+import DummyImage from "@src/assets/media/images/dashboard-images/userDummy.png"
 /**
  * Review object shape.
  */
@@ -56,14 +56,14 @@ function ReviewCard({ review, data }: { review: Review }) {
           {/* Rating stars at top */}
           <div className="flex items-center gap-2 mb-4">
             <StarRating
-              rating={review.rating}
+              rating={single_review.rating}
               avg_rating={data?.ratingData?.avg_rating}
             />
           </div>
 
           {/* Review content */}
           <p className="text-gray-700 text-sm leading-relaxed mb-4">
-            "{review.content}"
+            "{single_review.content}"
           </p>
 
           {/* Author info */}
@@ -71,9 +71,14 @@ function ReviewCard({ review, data }: { review: Review }) {
             {/* Reviewer Details */}
 
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+              {/* <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
                 <span className="text-white font-semibold text-lg">A</span>
-              </div>
+              </div> */}
+
+              {
+                <img src={ single_review?.patient?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${single_review?.patient?.image}` : DummyImage } alt="Methew" className="rounded-[50%] w-[40px] h-[40px] object-fit" />
+
+              }
               <div>
                 <h4 className="font-semibold text-gray-900 text-sm">
                   {single_review?.patient?.first_name}{" "}
@@ -125,7 +130,7 @@ export default function RatingsReviewsSection({
   // Sample data if no reviews provided
   const { data } = useCareProviderSingle(id);
 
-  console.log("rola",rating)
+  console.log("rrrrrrrrr",data)
 
   return (
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
@@ -149,9 +154,9 @@ export default function RatingsReviewsSection({
 
       {/* Reviews grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {data?.reviews_to_careprovider?.map((review) => (
-          <ReviewCard key={review.id} review={review} data={data} />
-        ))}
+        {/* {data?.reviews_to_careprovider?.map((review) => ( */}
+          <ReviewCard data={data} />
+        {/* ))} */}
       </div>
 
       {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">

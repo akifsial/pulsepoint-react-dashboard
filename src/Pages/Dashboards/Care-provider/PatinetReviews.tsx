@@ -77,10 +77,10 @@ const PatinetReviews: React.FC = () => {
       <h2 className="mb-4">Patient Reviews</h2>
       <div className="bg-[#FFFFFF] rounded-[10px] px-5 py-5">
         {/* Fixed Header */}
-        <div className="mb-7 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">View and respond to feedback</h3>
+        <div className="mb-7 flex lg:flex-row flex-col lg:items-center lg:justify-between">
+          <h3 className="lg:mb-0 mb-3">View and respond to feedback</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <div className="relative sm:flex items-center gap-4">
+            <div className="relative md:flex items-center gap-4">
               <div className="flex items-center gap-2 sm:mb-0 mb-5">
                 <p className="text-[#252525] font-medium text-sm">
                   Show Reviews
@@ -97,7 +97,7 @@ const PatinetReviews: React.FC = () => {
                 <PrimaryButton
                   btnText={` ${rating} Ratings`}
                   showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
+                  imgClass="w-[24px] h-[24px] ml-2 object-cover"
                   img={filterIcon}
                   imgPosition="left"
                   btnClass="border flex border-[#252525] px-4 md:w-[101px] h-[46px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"

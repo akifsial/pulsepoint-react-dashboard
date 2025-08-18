@@ -228,7 +228,7 @@ const CareProviderDashboard: React.FC = () => {
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium text-sm">Filter by</p>
+            <p className="text-[#252525] font-medium text-sm">Filtersdfghj by</p>
             <div className="relative">
               <div className="relative">
               <div className="flex items gap-4">

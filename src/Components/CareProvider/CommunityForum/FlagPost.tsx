@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 import DragMedia from "./DragMedia";
 import TextField from "./TextField";
 import { ApiReportPost } from "@src/api/ApiCommunityForum";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import PrimaryInput from "@components/PrimaryInput";
 import { PrimaryButton } from "@components/Buttons/PrimaryButton";
 import { useGetReportsPost } from "@src/hooks/useCommunity";
 
-const FlagPost = ({ onSubmit, post_id, community_id }) => {
-  console.log("🛑 Received in FlagPost:", { post_id, community_id });
+const FlagPost = ({ onSubmit, post_id, community_id,setIsFlagModalOpen }) => {
   const [reportReasonId, setReportReasonId] = useState(null);
   const [comment, setComment] = useState("");
+  console.log("repost readons id", reportReasonId);
   const { data } = useGetReportsPost();
   const {
     register,
@@ -23,6 +23,8 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
   } = useForm();
 
   const [file, setFile] = useState();
+
+  const queryClient=useQueryClient()
 
   const {
     mutateAsync: ReportPostMutation,
@@ -33,18 +35,22 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
 
     onSuccess: async () => {
       toast.success("Report Successfully");
-      // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
-      onSubmit();
-      window.location.reload();
+      setIsFlagModalOpen(false)
+      queryClient.invalidateQueries(["useGetCommunityPost"]); // refetch list
+      // onSubmit();
     },
     onError: (error) => {
-      console.error("xxxxxxxxxxxxxxxxxxxxxxxxx:", error);
 
       // toast.error("Something Went Wrong");
     },
   });
 
   const handleReportSubmit = async (data) => {
+    console.log("rrrrrrrrrrrrr", reportReasonId);
+    if (reportReasonId == null) {
+      toast.error("Select atleast one reason for flagging");
+      return;
+    }
     const formData = new FormData();
     formData.append("post_id", post_id);
     formData.append("community_id", community_id);
@@ -57,8 +63,6 @@ const FlagPost = ({ onSubmit, post_id, community_id }) => {
     // formData.append("")
 
     await ReportPostMutation(formData);
-      window.location.reload();
-
   };
 
   return (

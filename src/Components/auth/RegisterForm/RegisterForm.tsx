@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import OnBoardingLayout from "../OnBoradingLayout";
 import { Link, useNavigate } from "react-router-dom";
-import { Globe } from "lucide-react";
+import { ArrowLeft, Globe } from "lucide-react";
 
 import {
   IoPersonOutline,
@@ -12,6 +12,8 @@ import {
   IoLocationSharp,
 } from "react-icons/io5";
 import { useForm } from "react-hook-form";
+// import { ArrowDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/AuthApi/AuthApi";
@@ -224,28 +226,58 @@ const RegisterForm = () => {
   return (
     <>
       {selectUser == "care_provider" ? (
-        <RegisterCareprovider />
+        <RegisterCareprovider setSelectUser={setSelectUser} />
       ) : selectUser == "patient" ? (
-        <RegisterPatient />
+        <RegisterPatient setSelectUser={setSelectUser} />
       ) : (
         ""
       )}
 
       {selectUser == "" ? (
         <OnBoardingLayout>
-          <div className="min-h-screen max-h-screen flex  flex-col">
-            <div className="mt-10">
-              <label for="register">Choose where to register</label>
+          <div className="lg:min-h-[600px] min-h-screen max-h-screen flex  flex-col">
+            <p className="text-[#1A1A1A] mt-10 text-[24px] sm:text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
+              Choose Your Registration Type
+            </p>
+            <p className="text-[#252525] text-[14px] sm:text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
+              Please select where you’d like to register your account. This will
+              help us set up your experience and tailor it to your needs.
+            </p>
+
+            <div className="mt-10 relative">
+              <label htmlFor="register" className="block mb-2">
+                Choose where to register
+              </label>
               <select
                 id="register"
                 name="register"
-                className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-gray-500 focus:outline-none "
+                className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] mt-1 p-[15px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] leading-[140%] tracking-[0%] 
+    placeholder:text-gray-500 focus:outline-none appearance-none pr-10"
                 onChange={(e) => setSelectUser(e.target.value)}
               >
                 {registerOptions?.map((opt) => (
-                  <option value={opt?.value}>{opt?.label}</option>
+                  <option key={opt?.value} value={opt?.value}>
+                    {opt?.label}
+                  </option>
                 ))}
               </select>
+
+              {/* Custom Icon (replace with your pana icon) */}
+              <span className="absolute inset-y-0 top-9 right-3 flex items-center pointer-events-none">
+                <ChevronDown />
+              </span>
+            </div>
+
+            <div className="flex justify-center mt-5">
+              <p className="text-[14px] sm:text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
+                Already have an account yet?{" "}
+                <Link
+                  to="/login"
+                  className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
+                >
+                  Login now
+                </Link>
+              </p>
             </div>
           </div>
         </OnBoardingLayout>

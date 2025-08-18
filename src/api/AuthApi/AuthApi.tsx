@@ -69,7 +69,7 @@ export const ApiVerifyOtp = async (data) => {
   const otpId = JSON.parse(localStorage.getItem("id"));
 
   try {
-    const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/verify/${otpId}`;
+    const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/verify/${otpId}?type=reset`;
 
     const response = await axios.post(BASE_URL, data);
     localStorage.setItem("resetToken", response?.data?.payload?.resetToken);

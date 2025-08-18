@@ -10,6 +10,8 @@ import defaultSettingsHover from "@assets/media/svgs/dashboard-svgs/setting-hove
 import { useNavigate } from "react-router-dom";
 import { useMeApi } from "@src/hooks/useUsers";
 import { disconnectSocket } from "@src/socket/socket";
+import { queryClient } from "./queryClient"; // jahan aapne client banaya hai
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ProfileDropdownProps {
   userIcon?: string;
@@ -34,16 +36,18 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   const navigate = useNavigate();
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
 
+  const queryClient=useQueryClient()
+
   const handleLogout = () => {
+    queryClient.clear()
     disconnectSocket();
 
     localStorage.clear();
-    if (userRole == "PATIENT") {
-      navigate("/patient/login");
-    } else {
-      navigate("/care-provider/login");
-    }
+    navigate("/login");
   };
+
+
+  console.log("userRoleuserRoleuserRole",userRole)
 
   return (
     <div>
@@ -70,7 +74,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           className="flex items-center gap-3 w-full text-left py-2 mb-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("settings")}
           onMouseLeave={() => setHovered(null)}
-          onClick={() => navigate("/patient/manage-password")}
+          onClick={() => navigate( userRole == "CARE_PROVIDER" ? `/care-provider/manage-password` : `/patient/manage-password` )}
         >
           <img
             src={hovered === "settings" ? settingsIconHover : settingsIcon}

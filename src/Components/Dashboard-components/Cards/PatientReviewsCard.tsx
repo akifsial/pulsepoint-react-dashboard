@@ -19,7 +19,7 @@ interface PatientReviewsCardProps {
 
 const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
   filterValue,
-  rating
+  rating,
 }) => {
   const sliders = [
     {
@@ -64,9 +64,10 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
   const [selectedFeedbackToFlag, setSelectedFeedbackToFlag] = useState(null);
   const [flagModalOpen, setFlagModalOpen] = useState(false);
   const [isFlagging, setIsFlagging] = useState(false);
-  console.log("ffffffffff",rating)
 
-  const { data, isLoading } = useApiMyReviews("", rating,filterValue);
+  const { data, isLoading } = useApiMyReviews("", rating, filterValue);
+  console.log("ffgggfffgg",filterValue)
+
 
   const queryClient = useQueryClient();
 
@@ -95,7 +96,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
     mutationFn: (feedbackId) => ApiFlagReview(feedbackId),
 
     onSuccess: async (data) => {
-      console.log("data aya ha ",data)
+      console.log("data aya ha ", data);
       queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
     },
     onError: (error) => {
@@ -162,8 +163,8 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
     <>
       {isLoading ? (
         <PatientReviewLoader />
-      ) : data?.length > 0 ? (
-        data?.map((item, index) => (
+      ) : data?.records?.length > 0 ? (
+        data?.records?.map((item, index) => (
           <div key={index} className="bg-[#FAFAFA] rounded-[8px] p-5 mb-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-[10px] text-[#252525] text-[16px]">
@@ -204,7 +205,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
             {/* <FlagModal onDelete={()=>handleFlagReview(item?.feedback?.id,item?.review_flag)} isOpen={true} /> */}
 
             <div className="flex items-center gap-0.5 mb-2">
-              {/* <RatingStars value={item.review} isDisabled={true} />xxx */}
+              {/* <RatingStars value={item.review} isDisabled={true} /> */}
               <StarRating
                 rating={item?.rating}
                 // avg_rating={data?.ratingData?.avg_rating}

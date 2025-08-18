@@ -79,7 +79,7 @@ const LoginPage = () => {
 
   return (
     <OnBoardingLayout logoParentClass="absolute top-14 right-0 left-0 flex justify-center">
-      <div className="flex flex-col min-h-screen sm:mt-0 mt-[60px] p-2 sm:p-6 justify-center ">
+      <div className="flex flex-col lg:min-h-[700px] min-h-screen sm:mt-0 mt-[60px] p-2 sm:p-6 justify-center ">
         <h2 className=" !text-[25px] sm:!text-[35px] font-bold leading-[140%] tracking-[0%] text-[#1A1A1A] font-space-grotesk mb-2">
           Login
         </h2>
@@ -99,6 +99,7 @@ const LoginPage = () => {
             onChange={handleChange}
             placeholder="e.g. john"
             register={register}
+            className="pr-10"
             registerName="email"
             errors={errors}
             validation={{
@@ -124,6 +125,7 @@ const LoginPage = () => {
             register={register}
             registerName="password"
             errors={errors}
+            className="pr-10"
             validation={{
               required: "Password is required",
             }}
@@ -161,7 +163,7 @@ const LoginPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#28A2FF] flex justify-center text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors cursor-pointer mb-1"
+            className="w-full bg-[#28A2FF] flex justify-center items-center text-white h-[50px] px-4 rounded-lg font-medium text-lg transition-colors cursor-pointer mb-1"
           >
             <span>{isLoginLoading ? <Spinner /> : "Login"}</span>
           </button>
@@ -174,21 +176,12 @@ const LoginPage = () => {
           <div className="flex justify-center">
             <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
               Don’t have an account yet?{" "}
-              {pathname == "/patient/login" ? (
-                <Link
-                  to="/patient/signup"
-                  className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
-                >
-                  Register now
-                </Link>
-              ) : (
-                <Link
-                  to="/care-provider/signup"
-                  className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
-                >
-                  Register now
-                </Link>
-              )}
+              <Link
+                to="/signup"
+                className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
+              >
+                Register now
+              </Link>
             </p>
           </div>
         </form>

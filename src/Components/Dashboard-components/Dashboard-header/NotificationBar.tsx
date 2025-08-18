@@ -38,6 +38,10 @@ const NotficationBar = ({ noticationLink }) => {
 
   const { data, isLoading } = useGetNotifications();
 
+  const userRole=JSON.parse(localStorage.getItem("userInfo"))?.role_type
+
+  console.log("rooooole",userRole)
+
   return (
     <div className="border h-[300px]  border-[#2525251A] bg-white rounded-xl shadow-[0_0_8.9px_0_rgba(0,0,0,0.25)] w-[414px]">
       <div className="px-5  py-[17px]">
@@ -75,7 +79,7 @@ const NotficationBar = ({ noticationLink }) => {
         )}
       </div>
 
-      <div onClick={() => navigate("/patient/notification")} className="cursor-pointer text-[#006EFF] font-medium text-[15px] bg-[#FAFAFA] border-t border-t-[#D5D7DA] flex justify-center items-center gap-2 p-[13px] rounded-b-xl rounded-bl-xl">
+      <div onClick={() => userRole=="PATIENT" ? navigate("/patient/notification") : navigate("/care-provider/notification") } className="cursor-pointer text-[#006EFF] font-medium text-[15px] bg-[#FAFAFA] border-t border-t-[#D5D7DA] flex justify-center items-center gap-2 p-[13px] rounded-b-xl rounded-bl-xl">
         View all notifications
         <IoArrowForward size={18} color="#006EFF" />
       </div>

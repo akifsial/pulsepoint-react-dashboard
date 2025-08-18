@@ -7,7 +7,7 @@ const OurFeed = (data) => {
   // console.log("DATA.........--------", data)
   return (
     <>
-      <div className="block md:flex md:items-start md:gap-6">
+      <div className="block md:flex md:items-start justify-between md:gap-6">
         <CommunityFeed data={data} />
         {/* <CommunityAccountPosts data={data} /> */}
         <PopularCommunity />

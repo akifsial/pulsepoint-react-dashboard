@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+} from "react-share";
+
+import {
   FaPinterest,
   FaTwitter,
   FaInstagram,
@@ -16,6 +22,7 @@ interface ShareModalProps {
 
 const ShareModal: React.FC<ShareModalProps> = ({ onClose }) => {
   const [activeIcon, setActiveIcon] = useState<string>("");
+  const shareUrl = `https://mywebsite.com/posts/${1}`;
 
   const modalContent = (
     <div
@@ -39,37 +46,39 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose }) => {
           </button>
         </div>
         {/* Social Icons */}
-        <div className="flex justify-between items-center mb-6 px-4">
-          <IconButton
-            icon={<FaPinterest />}
-            active={activeIcon === "pinterest"}
-            onClick={() => setActiveIcon("pinterest")}
-          />
-          <IconButton
-            icon={<FaTwitter />}
-            active={activeIcon === "twitter"}
-            onClick={() => setActiveIcon("twitter")}
-          />
-          <IconButton
-            icon={<FaInstagram />}
-            active={activeIcon === "instagram"}
-            onClick={() => setActiveIcon("instagram")}
-          />
-          <IconButton
-            icon={<FaFacebookF />}
-            active={activeIcon === "facebook"}
-            onClick={() => setActiveIcon("facebook")}
-          />
-          <IconButton
-            icon={<FaTumblr />}
-            active={activeIcon === "tumblr"}
-            onClick={() => setActiveIcon("tumblr")}
-          />
-          <IconButton
-            icon={<FaLinkedinIn />}
-            active={activeIcon === "linkedin"}
-            onClick={() => setActiveIcon("linkedin")}
-          />
+        <div className="flex justify-center gap-5 items-center mb-6 px-4">
+          <TwitterShareButton>
+            <IconButton
+              icon={<FaTwitter />}
+              active={activeIcon === "twitter"}
+              onClick={() => setActiveIcon("twitter")}
+            />
+          </TwitterShareButton>
+
+          {/* <FacebookShareButton url={shareUrl} quote="asdasdasd">
+            <IconButton
+              icon={<FaFacebookF />}
+              active={activeIcon === "facebook"}
+              onClick={() => setActiveIcon("facebook")}
+            />
+          </FacebookShareButton> */}
+
+          <FacebookShareButton
+  url={shareUrl}
+  quote="Check out this post!"
+  onClick={() => setActiveIcon("facebook")} // optional: mark as active
+>
+  <FaFacebookF size={24} className={activeIcon === "facebook" ? "text-blue-600" : "text-gray-700"} />
+</FacebookShareButton>
+
+
+          <LinkedinShareButton>
+            <IconButton
+              icon={<FaLinkedinIn />}
+              active={activeIcon === "linkedin"}
+              onClick={() => setActiveIcon("linkedin")}
+            />
+          </LinkedinShareButton>
         </div>
 
         {/* Link Share */}

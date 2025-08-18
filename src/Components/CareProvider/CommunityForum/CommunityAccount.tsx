@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "@components/Loaders/Spinner";
 import CommunityAccountPosts from "@components/CommunityAccountPosts";
 import PopularCommunity from "./PopularCommunity";
+import CommunitiesSpinner from "@components/Loaders/CommunitiesSpinner";
 
 const CommunityAccount = ({ setOpenBackFeed }) => {
   const [joined, setJoined] = useState(false);
@@ -30,20 +31,26 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState();
   const navigate = useNavigate();
   const userId = JSON.parse(localStorage.getItem("userInfo")).id;
+  const userType = JSON.parse(localStorage.getItem("userInfo")).role_type;
+
 
   const handleJoinClick = () => setJoined(true);
   const handleAddCommunityClick = () => setJoined(false);
 
   const { id } = useParams();
-  const { data, refetch } = useGetSpecificCommunity(id ?? "");
+  const { data, refetch, isLoading, isFetching, isError } =
+    useGetSpecificCommunity(id ?? "");
+
+  console.log(
+    "community_postscommunity_postscommunity_posts",
+    data?.community_posts
+  );
 
   const location = useLocation(); // detects route changes
 
   useEffect(() => {
     refetch();
   }, [location]);
-
-  console.log("data comes", data);
 
   const queryClient = useQueryClient();
 
@@ -76,210 +83,227 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
   return (
     <>
       {/* {!showPatientInfo ? ( */}
-      <div className="mb-[25px]">
-        {/* Fixed header */}
-        <div
-          className="flex items-center gap-2.5 cursor-pointer px-5 py-4 bg-transparent sticky top-0 z-10"
-          onClick={() => {
-            navigate("/patient/community-forum");
-          }}
-        >
-          <img src={backArrow} alt="backArrow" />
-          <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
-            Back to Feed
-          </h2>
-        </div>
 
-        {/* Scrollable content area */}
-        <div
-          className="h-[603px] overflow-y-scroll pr-2"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-        >
-          {/* Hide scrollbar in WebKit browsers */}
-          <style jsx>{`
-            ::-webkit-scrollbar {
-              display: none;
-            }
-          `}</style>
+      {isLoading || isFetching ? (
+       <div className="text-center flex mt-40 justify-center"><CommunitiesSpinner /></div>
+      ) : isError ? (
+        <p className="!text-[30px]">something went wrong</p>
+      ) : data ? (
+        <div className="mb-[25px]">
+          {/* Fixed header */}
+          <div
+            className="flex items-center gap-2.5 cursor-pointer px-5 py-4 bg-transparent sticky top-0 z-10"
+            onClick={() => {
+              userType == "CARE_PROVIDER" ?
+              navigate("/care-provider/community-form") : navigate("/patient/community-forum")
+            }}
+          >
+            <img src={backArrow} alt="backArrow" />
+            <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
+              Back to Feed
+            </h2>
+          </div>
 
-          <div className="rounded-xl bg-white mb-[14px]">
-            <div
-              className="h-[147px] relative"
-              // style={{
-              //   backgroundImage: `url(${
-              //     data?.banner_image
-              //       ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-              //           data?.banner_image
-              //         }`
-              //       : topSenior
-              //   }
-              //   })`,
-              //   backgroundRepeat: "no-repeat",
-              //   backgroundSize: "cover",
-              //   backgroundPosition: "center",
-              // }}
-            >
-              <img
-                className="h-[100%] w-full object-cover"
-                src={
-                  data?.banner_image
-                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                        data?.banner_image
-                      }`
-                    : topSenior
-                }
-                alt=""
-              />
-            </div>
+          {/* Scrollable content area */}
+          <div
+            className="h-[603px] overflow-y-scroll pr-2"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+          >
+            {/* Hide scrollbar in WebKit browsers */}
+            <style jsx>{`
+              ::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
 
-            <div className="relative">
-              <div className="absolute w-[101px] bottom-[-50px] left-6">
+            <div className="rounded-xl bg-white mb-[14px]">
+              <div
+                className="h-[147px] relative"
+                // style={{
+                //   backgroundImage: `url(${
+                //     data?.banner_image
+                //       ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                //           data?.banner_image
+                //         }`
+                //       : topSenior
+                //   }
+                //   })`,
+                //   backgroundRepeat: "no-repeat",
+                //   backgroundSize: "cover",
+                //   backgroundPosition: "center",
+                // }}
+              >
                 <img
+                  className="h-[100%] w-full object-cover"
                   src={
-                    data?.profile_icon_image
+                    data?.banner_image
                       ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                          data?.profile_icon_image
+                          data?.banner_image
                         }`
                       : topSenior
                   }
-                  className="w-24 h-24 rounded-full object-cover border border-gray-200 shadow-[0_0_0_5px_white]"
-                  alt="topSenior"
+                  alt=""
                 />
-                <span className="absolute bottom-2 right-3 w-4 h-4 bg-[#52C343] rounded-full shadow-[0_0_0_6px_white]" />
               </div>
-            </div>
 
-            <div className="md:flex md:items-center justify-between pt-[75px] pb-5 px-5">
-              <div className="max-w-[535px] md:mb-0 mb-3">
-                <h2
-                  className="text-xl font-semibold text-[#252525] font-[Space Grotesk] mb-2 cursor-pointer"
-                  onClick={() => setShowPatientInfo(true)}
-                >
-                  {data?.title}
-                </h2>
-                <div className="flex items-center gap-3.5 mb-2">
-                  <div className="flex items-center gap-0.5">
-                    <img
-                      src={Calender}
-                      alt="Calendar"
-                      className="w-5 h-5 object-contain"
-                    />
-                    <p className="pt-1">Create Post</p>
-                  </div>
-                  {/* <div className="flex gap-0.5">
+              <div className="relative">
+                <div className="absolute w-[101px] bottom-[-50px] left-6">
+                  <img
+                    src={
+                      data?.profile_icon_image
+                        ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                            data?.profile_icon_image
+                          }`
+                        : topSenior
+                    }
+                    className="w-24 h-24 rounded-full object-cover border border-gray-200 shadow-[0_0_0_5px_white]"
+                    alt="topSenior"
+                  />
+                  <span className="absolute bottom-2 right-3 w-4 h-4 bg-[#52C343] rounded-full shadow-[0_0_0_6px_white]" />
+                </div>
+              </div>
+
+              <div className="md:flex md:items-center justify-between pt-[75px] pb-5 px-5">
+                <div className="max-w-[535px] md:mb-0 mb-3">
+                  <h2
+                    className="text-xl font-semibold text-[#252525] font-[Space Grotesk] mb-2 cursor-pointer"
+                    onClick={() => setShowPatientInfo(true)}
+                  >
+                    {data?.title}
+                  </h2>
+                  <div className="flex items-center gap-3.5 mb-2">
+                    <div className="flex items-center gap-0.5">
+                      <img
+                        src={Calender}
+                        alt="Calendar"
+                        className="w-5 h-5 object-contain"
+                      />
+                      <p className="pt-1">Create Post</p>
+                    </div>
+                    {/* <div className="flex gap-0.5">
                       <img src={Global} alt="" />
                       <p>{data?.type=="PRIVATE" ? "Private" : "Public"}</p>
                     </div> */}
-                  <div className="flex items-center ">
-                    {/* <img
+                    <div className="flex items-center ">
+                      {/* <img
                       src={data?.type === "PUBLIC" ? Global : PrivateLock}
                       alt={data?.type === "PUBLIC" ? "Public" : "Private"}
                       className="w-7 object-contain"
                     /> */}
-                    {data?.type === "PUBLIC" ? (
-                      <img src={Global} alt="" className="w-7 pr-1.5 object-contain" />
-                    ) : (
-                      <img src={PrivateLock} alt="" className="w-7 object-contain" />
-                    ) }
-                    <p className="text-sm font-medium">
-                      {data?.type === "PRIVATE" ? "Private" : "Public"}
-                    </p>
+                      {data?.type === "PUBLIC" ? (
+                        <img
+                          src={Global}
+                          alt=""
+                          className="w-7 pr-1.5 object-contain"
+                        />
+                      ) : (
+                        <img
+                          src={PrivateLock}
+                          alt=""
+                          className="w-7 object-contain"
+                        />
+                      )}
+                      <p className="text-sm font-medium">
+                        {data?.type === "PRIVATE" ? "Private" : "Public"}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <p>{data?.description}</p>
-              </div>
-
-              <div className="md:pl-10 md:border-l md:border-l-black">
-                <div className="flex items-center mb-4">
-                  <div className="pr-6">
-                    <p>
-                      <b>{data?.member_count}</b>
-                    </p>
-                    <p>Members</p>
-                  </div>
-                  <div className="pl-6 border-l border-black/20">
-                    <p>
-                      <b>20K</b>
-                    </p>
-                    <p className="flex items-center gap-1">
-                      <span className="w-2 h-2 bg-[#52C343] rounded-full"></span>
-                      Online
-                    </p>
-                  </div>
+                  <p>{data?.description}</p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3.5">
-                  {data?.is_joined ? (
-                    <PrimaryButton
-                      btnText="Create Post"
-                      showImg={true}
-                      img={addCommunity}
-                      imgClass="w-[19px] h-[19px] object-cover"
-                      imgPosition="left"
-                      btnClass="border-1 border-[#000] w-fit h-[46px] !rounded-[10px] !px-4 py-[10px] text-sm text-[#252525] font-semibold leading-[33px] gap-2 flex items-center justify-center"
-                      onClick={() => setShowCreatePostModal(true)}
-                    />
-                  ) : (
-                    ""
-                  )}
+                <div className="md:pl-10 md:border-l md:border-l-black">
+                  <div className="flex items-center mb-4">
+                    <div className="pr-6">
+                      <p>
+                        <b>{data?.member_count}</b>
+                      </p>
+                      <p>Members</p>
+                    </div>
+                    <div className="pl-6 border-l border-black/20">
+                      <p>
+                        <b>{data?.online_members_count}</b>
+                      </p>
+                      <p className="flex items-center gap-1">
+                        <span className="w-2 h-2 bg-[#52C343] rounded-full"></span>
+                        Online
+                      </p>
+                    </div>
+                  </div>
 
-                  {data?.is_joined ? (
-                    <PrimaryButton
-                      btnText="Leave Community"
+                  <div className="flex flex-wrap items-center gap-3.5">
+                    {data?.is_joined ? (
+                      <PrimaryButton
+                        btnText="Create Post"
+                        showImg={true}
+                        img={addCommunity}
+                        imgClass="w-[19px] h-[19px] object-cover"
+                        imgPosition="left"
+                        btnClass="border-1 border-[#000] w-fit h-[46px] !rounded-[10px] !px-4 py-[10px] text-sm text-[#252525] font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                        onClick={() => setShowCreatePostModal(true)}
+                      />
+                   ) : (
+                      ""
+                    )} 
+
+                    {data?.is_joined ? (
+                      <PrimaryButton
+                        btnText="Leave Community"
+                        showImg={false}
+                        btnClass="w-[142px] h-[46px] !rounded-[10px] border border-black bg-[#252525] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                        onClick={() =>
+                          data?.is_joined == true
+                            ? setIsLeaveModalOpen(true)
+                            : handleJoinCommunity
+                        }
+                      />
+                    ) :
+                     <PrimaryButton
+                      btnText="Join Community"
                       showImg={false}
-                      btnClass="w-[142px] h-[46px] !rounded-[10px] border border-black bg-[#252525] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
-                      onClick={() =>
-                        data?.is_joined == true
-                          ? setIsLeaveModalOpen(true)
-                          : handleJoinCommunity
-                      }
+                      btnClass="w-fit h-[46px] !rounded-[10px] bg-[#007AB2] !px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                      onClick={handleJoinCommunity}
                     />
-                  ) : // <PrimaryButton
-                  //   btnText="Join Community"
-                  //   showImg={false}
-                  //   btnClass="w-fit h-[46px] !rounded-[10px] bg-[#007AB2] !px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center"
-                  //   onClick={handleJoinCommunity}
-                  // />
-                  data?.creator_id == userId ? (
-                    ""
-                  ) : (
-                    <PrimaryButton
-                      btnText={
-                        isPendingCommunityJoin ? (
-                          <div className="">
-                            <Spinner />
-                          </div>
-                        ) : (
-                          "Join Community"
-                        )
-                      }
-                      showImg={false}
-                      btnClass={`w-fit h-[46px] !rounded-[10px] ${
-                        isPendingCommunityJoin
-                          ? "bg-[#007AB2] cursor-not-allowed"
-                          : "bg-[#007AB2]"
-                      } !px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center`}
-                      onClick={
-                        !isPendingCommunityJoin
-                          ? handleJoinCommunity
-                          : undefined
-                      }
+                    
+                  // data?.creator_id == userId ? (
+                  //   ""
+                  // ) : (
+                  //   <PrimaryButton
+                  //     btnText={
+                  //       isPendingCommunityJoin ? (
+                  //         <div className="">
+                  //           <Spinner />
+                  //         </div>
+                  //       ) : (
+                  //         "Join Community"
+                  //       )
+                  //     }
+                  //     showImg={false}
+                  //     btnClass={`w-fit h-[46px] !rounded-[10px] ${
+                  //       isPendingCommunityJoin
+                  //         ? "bg-[#007AB2] cursor-not-allowed"
+                  //         : "bg-[#007AB2]"
+                  //     } !px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center`}
+                  //     onClick={
+                  //       !isPendingCommunityJoin
+                  //         ? handleJoinCommunity
+                  //         : undefined
+                  //     }
+                  //   />
+                  }
+                    <LeaveCommunityModal
+                      loading={isPendingCommunityJoin}
+                      onLeave={handleJoinCommunity}
+                      isOpen={isLeaveModalOpen}
+                      onClose={() => setIsLeaveModalOpen(false)}
                     />
-                  )}
-                  <LeaveCommunityModal
-                    loading={isPendingCommunityJoin}
-                    onLeave={handleJoinCommunity}
-                    isOpen={isLeaveModalOpen}
-                    onClose={() => setIsLeaveModalOpen(false)}
-                  />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          {/* {data?.is_joined == true ? (
+            {/* {data?.is_joined == true ? (
               <OurFeed data={data} />
             ) : (
               <h3 className="text-center mt-25">
@@ -287,19 +311,24 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
               </h3>
             )} */}
 
-          {data?.is_joined ? (
-            data.community_posts && data.community_posts.length > 0 ? (
-              <OurFeed data={data} />
+            {data?.is_joined ? (
+              data.community_posts && data.community_posts.length > 0 ? (
+                <OurFeed data={data?.community_posts} />
+              ) : (
+                <h3 className="text-center mt-6 text-gray-500">
+                  No data found
+                </h3>
+              )
             ) : (
-              <h3 className="text-center mt-6 text-gray-500">No data found</h3>
-            )
-          ) : (
-            <h3 className="text-center mt-6 text-gray-500">
-              Join the community to see posts
-            </h3>
-          )}
+              <h3 className="text-center mt-6 text-gray-500">
+                Join the community to see posts
+              </h3>
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <p className="text-[30px] mt-40 text-center !text-extrabold">No communities found</p>
+      )}
       {/* ) : ( */}
       {/* <PatientInfo setShowPatientInfo={setShowPatientInfo} /> */}
       {/* )} */}

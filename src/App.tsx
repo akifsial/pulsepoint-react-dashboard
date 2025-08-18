@@ -1,6 +1,8 @@
 import Router from "@routes/Router";
 import React, { useEffect, useRef } from "react";
 import { Toaster } from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
+import { setupInterceptors } from "./interceptor";
 // import { connectSocket } from "@src/socket/";
 
 const App: React.FC = () => {
@@ -36,6 +38,31 @@ const App: React.FC = () => {
   //     }
   //   };
   // }, []);
+
+  const navigate=useNavigate()
+  
+
+const location = useLocation();
+
+  // useEffect(() => {
+  //   setupInterceptors(navigate);
+  // }, [navigate]);
+
+
+// useEffect(() => {
+//   const params = new URLSearchParams(location.search);
+//   const token = params.get("token");
+//   if (token) {
+//     // localStorage.setItem("token", token);
+//     localStorage.setItem("token", JSON.stringify(token));
+
+//     // localStorage.setItem("userInfo", token);
+
+//     console.log("✅ Token stored from router:", token);
+//     navigate("/patient/dashboard")
+//   }
+// }, [location]);
+
 
   return (
     <div>

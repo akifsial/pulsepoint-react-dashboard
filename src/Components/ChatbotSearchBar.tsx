@@ -15,7 +15,7 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({
   question,
   setQuestion,
   iconSrc,
-  handleChatPost
+  handleChatPost,
 }) => {
   // const [question, setQuestion] = useState("");
   const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
@@ -26,18 +26,26 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({
     }
   };
 
-  
   return (
     <div className="flex items-center justify-center w-full">
       <div className="relative w-full ">
-        <div className="flex items-center w-full bg-white border border-[#007AB2] rounded-full w-[831px] h-[60px] px-[20px] py-[10px]">
-          <img  src={AI} alt="AI Icon" className="w-[16px] h-[19px] mr-4" />
+        <div className="flex items-center w-full bg-white border border-[#007AB2] rounded-full w-[831px] h-[60px] sm:px-[20px] px-[10px] py-[10px]">
+          <img
+            src={AI}
+            alt="AI Icon"
+            className="sm:w-[16px] w-[13px] h-[13px] sm:h-[19px] mr-4"
+          />
           <input
             type="text"
             placeholder="Ask AI for its suggestions..."
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            className="flex-1 outline-none text-gray-700 placeholder-gray-400"
+            className="flex-1 sm:text-[16px] text-[13px] outline-none text-gray-700 placeholder-gray-400"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleChatPost();
+              }
+            }}
           />
           <button
             onClick={() => handleChatPost()}
@@ -46,7 +54,7 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({
             <img
               src={iconSrc || ChatIcon}
               alt="Send"
-              className="w-[43px] h-[43px]"
+              className="sm:w-[43px] w-[30px] h-[30px] sm:h-[43px]"
             />
           </button>
         </div>

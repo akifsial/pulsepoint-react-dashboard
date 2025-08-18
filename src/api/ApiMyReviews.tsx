@@ -3,15 +3,22 @@ import axios from "axios";
 export const ApiMyReviews = async (
   search: string,
   rating: number,
-  filterValue
+  filterValue,
+  page: number,
+  sort:number
+
 ) => {
-  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?search=${search}`;
+  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?search=${search}&limit=3&page=${1}`;
 
   if (rating) {
     BASE_URL += `&rating=${rating}`;
   }
   if (filterValue) {
     BASE_URL += `&is_flagged=${filterValue}`;
+  }
+    if(sort){
+    BASE_URL += `&sort:created_at=${sort}`;
+    
   }
 
   const token = JSON.parse(localStorage.getItem("token"));
@@ -20,7 +27,7 @@ export const ApiMyReviews = async (
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response?.data?.payload?.records;
+  return response?.data?.payload;
 };
 
 export const apiDeleteMyReviews = async (id: number) => {

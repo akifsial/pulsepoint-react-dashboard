@@ -66,7 +66,6 @@ const ProfileCards = ({ onUpgrade, subscriptionTime, user }) => {
     }
   };
 
-  console.log("subscriptionTime", subscriptionTime);
   return (
     <div className="md:flex gap-2 flex-wrap justify-center mb-6">
       {plans?.map((plan, index) => {

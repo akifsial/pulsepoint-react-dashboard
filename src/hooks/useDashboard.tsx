@@ -15,14 +15,18 @@ export const useStatsApi = () => {
   });
 };
 
-export const useCareProviders = (search: string, rating: number) => {
+export const useCareProviders = (search: string, rating: number,page:number,sort) => {
   return useQuery({
-    queryKey: ["useCareProviders", search, rating],
-    queryFn: () => ApiGetCareProviders(search, rating),
+    queryKey: ["useCareProviders", search, rating,page,sort],
+    queryFn: () => ApiGetCareProviders(search, rating,page,sort),
     // enabled: !!search, // only fetch when search is not empty
     refetchOnWindowFocus: false,
+        // { keepPreviousData: true }
+
   });
 };
+
+// ................................................................
 
 export const useCareProviderSingle = (id: number) => {
   return useQuery({

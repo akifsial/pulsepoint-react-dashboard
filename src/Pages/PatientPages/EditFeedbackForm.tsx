@@ -4,7 +4,7 @@ import TextField from "@components/CareProvider/CommunityForum/TextField";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { useNavigate, useParams } from "react-router-dom";
 import Model from "@components/Model/Model";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiCreateFeedback } from "@src/api/ApiDashboard";
 import toast from "react-hot-toast";
 import Spinner from "@components/Loaders/Spinner";
@@ -230,6 +230,7 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
   };
 
   const currentSection = surveySections[currentStep];
+  const queryClient=useQueryClient()
 
   const { mutateAsync: feedbackMutation, isPending: isFeedbackPending } =
     useMutation({
@@ -237,6 +238,9 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
 
       onSuccess: async () => {
         toast.success("Review Updated Successfully");
+        queryClient.invalidateQueries(["useApiMySingleReviews"]); // refetch list
+        navigate(`/patient/patient-reviews`);
+
         setFeedbackOpen(false);
         // navigate(`/patient/hospital-profile/${id}`);
       },
@@ -270,7 +274,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
       content: data?.content,
     }));
   }, [data?.feedback]);
-
 
   return (
     <>

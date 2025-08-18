@@ -37,7 +37,7 @@ const CreatePost = ({ setIsOpen, communityId }) => {
         queryClient.invalidateQueries(["useGetSpecificCommunity"]); // refetch list
       },
       onError: () => {
-        toast.error("Something Went Wrong");
+        // toast.error("Something Went Wrong");
       },
     });
 

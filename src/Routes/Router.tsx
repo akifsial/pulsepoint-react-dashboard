@@ -18,7 +18,6 @@ const Router: React.FC = () => {
           path={path}
           element={<PublicProtectRoute>{element}</PublicProtectRoute>}
         />
-        // <Route key={path} path={path} element={<PublicProtectRoute>{element}</PublicProtectRoute>} />
       ))}
 
       {/* Dashboard Routes */}
@@ -26,15 +25,37 @@ const Router: React.FC = () => {
         <Route
           key={path}
           path={path}
-          element={<ProtectedRoutes>{element}</ProtectedRoutes>}
+          element={
+            <ProtectedRoutes
+              allowedRoles={
+                path.includes("care-provider")
+                  ? ["CARE_PROVIDER"]
+                  : path.includes("patient")
+                  ? ["PATIENT"]
+                  : undefined
+              }
+            >
+              {element}
+            </ProtectedRoutes>
+          }
         >
           {children?.map((child) => (
             <Route
               key={child.path || "index"}
               path={child.path}
-              // element={
-              // <ProtectedRoutes>{child.element}</ProtectedRoutes>}
-              element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
+              element={
+                <ProtectedRoutes
+                  allowedRoles={
+                    path.includes("care-provider")
+                      ? ["CARE_PROVIDER"]
+                      : path.includes("patient")
+                      ? ["PATIENT"]
+                      : undefined
+                  }
+                >
+                  {child.element}
+                </ProtectedRoutes>
+              }
               index={child.path === "" ? true : undefined}
             />
           ))}
@@ -46,75 +67,100 @@ const Router: React.FC = () => {
         <Route
           key={path}
           path={path}
-          element={<ProtectedRoutes>{element}</ProtectedRoutes>}
+          element={
+            <ProtectedRoutes allowedRoles={["PATIENT"]}>
+              {element}
+            </ProtectedRoutes>
+          }
         >
           {children?.map((child) => (
             <Route
               key={child.path || "index"}
               path={child.path}
-              element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
-              // element={child.element}
-              // element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
+              element={
+                <ProtectedRoutes allowedRoles={["PATIENT"]}>
+                  {child.element}
+                </ProtectedRoutes>
+              }
               index={child.path === "" ? true : undefined}
             />
           ))}
         </Route>
       ))}
-      {/* Admin Routes */}
-      {/* {AdminRoutes.map(({ path, element, children }) => (
-        <Route key={path} path={path} element={element}>
-          {children?.map((child) => (
-            <Route
-              key={child.path || "index"}
-              path={child.path}
-              element={child.element}
-              index={child.path === "" ? true : undefined}
-            />
-          ))}
-        </Route>
-      ))} */}
 
       {/* Admin Routes */}
       {AdminRoutes.map(({ path, element, children }) => (
-        <Route key={path} path={path} element={element}>
+        <Route
+          key={path}
+          path={path}
+          element={
+            <ProtectedRoutes allowedRoles={["ADMIN"]}>
+              {element}
+            </ProtectedRoutes>
+          }
+        >
           {children?.map((child) => (
             <Route
               key={child.path || "index"}
               path={child.path}
-              element={<ProtectedRoutes>{child.element}</ProtectedRoutes>}
-              // element={
-              //   child.isProtected ? (
-              //     <ProtectedRoutes>{child.element}</ProtectedRoutes>
-              //   ) : (
-              //     child.element
-              //   )
-              // }
+              element={
+                <ProtectedRoutes allowedRoles={["ADMIN"]}>
+                  {child.element}
+                </ProtectedRoutes>
+              }
               index={child.path === "" ? true : undefined}
             />
           ))}
         </Route>
       ))}
 
+      {/* Profile Routes */}
       {ProfileRoutes.map(({ path, element, children }) => (
         <Route
           key={path}
           path={path}
-          // element={<ProtectedRoutes>{element}</ProtectedRoutes>}
-          element={element}
-          // element={<ProtectedRoutes>{element}</ProtectedRoutes>}
+          element={
+            <ProtectedRoutes
+              allowedRoles={
+                path.includes("/care-provider")
+                  ? ["CARE_PROVIDER"]
+                  : path.includes("/patient")
+                  ? ["PATIENT"]
+                  : path.includes("/admin")
+                  ? ["ADMIN"]
+                  : undefined
+              }
+            >
+              {element}
+            </ProtectedRoutes>
+          }
         >
           {children?.map((child) => (
             <Route
               key={child.path || "index"}
               path={child.path}
-              element={child.element}
+              element={
+                <ProtectedRoutes
+                  allowedRoles={
+                    path.includes("/care-provider")
+                      ? ["CARE_PROVIDER"]
+                      : path.includes("/patient")
+                      ? ["PATIENT"]
+                      : path.includes("/admin")
+                      ? ["ADMIN"]
+                      : undefined
+                  }
+                >
+                  {child.element}
+                </ProtectedRoutes>
+              }
               index={child.path === "" ? true : undefined}
             />
           ))}
         </Route>
       ))}
+
       {/* 404 Not Found */}
-      {/* <Route path="/patient/chatbot" element={ <ChatbotLayout /> }/> */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

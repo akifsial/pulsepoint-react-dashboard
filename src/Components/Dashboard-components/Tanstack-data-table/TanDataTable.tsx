@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SortIcon from "@assets/media/svgs/dashboard-svgs/sortIcon.svg";
 import {
   useReactTable,
   getCoreRowModel,
@@ -21,7 +22,7 @@ const TanDataTable = <T extends object>({
   actions = () => null,
   showActions = false,
   isLoading = false,
-
+  onSortClick,
   className = "",
 }: TanDataTableProps<T>) => {
   const columnHelper = createColumnHelper<T>();
@@ -102,13 +103,15 @@ const TanDataTable = <T extends object>({
                       width: columns.find((c) => c.accessor === header.id)
                         ?.width,
                     }}
-                    className={`px-4 py-4 font-medium text-[#252525] ${
+                    className={`px-4  py-4 font-medium text-[#252525] ${
                       header.column.getCanSort()
                         ? "cursor-pointer select-none"
                         : ""
                     }`}
                     onClick={header.column.getToggleSortingHandler()}
                   >
+                    <span className="flex items-center gap-1">
+
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -116,14 +119,16 @@ const TanDataTable = <T extends object>({
                           header.getContext()
                         )}
                     {header.column.getCanSort() && (
-                      <span className="ml-1 text-xs">
-                        {header.column.getIsSorted() === "asc"
+                      <span className="ml-1 text-xs " onClick={onSortClick}>
+                        {/* {header.column.getIsSorted() === "asc"
                           ? "▲"
                           : header.column.getIsSorted() === "desc"
                           ? "▼"
-                          : "⇅"}
+                          : "⇅"} */}
+                        <img className="" src={SortIcon} alt="" />
                       </span>
                     )}
+                    </span>
                   </th>
                 ))}
               </tr>

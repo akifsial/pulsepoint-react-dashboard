@@ -4,11 +4,15 @@ import ChangePhoto from "./ChangePhoto";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import userProfile from "../../assets/media/svgs/dashboard-svgs/profile1.svg";
 // import fallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
-import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png"
+import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
 import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
-import { useMeApi } from "@src/hooks/useUsers";
-import { useForm } from "react-hook-form";
+import {
+  useAllApiInsuranceTypes,
+  useAllApiProviderTypes,
+  useMeApi,
+} from "@src/hooks/useUsers";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiUpdateUser } from "@src/api/ApiUsers";
@@ -52,13 +56,37 @@ const PatientProfile = ({ onChangePassword }) => {
   const [Gender, setGender] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      communication_method_id: "",
+    },
+  });
   const [selectedImage, setSelectedImage] = useState("");
   const [singleUser, setSingleUser] = useState();
 
   const { data: meData } = useMeApi();
+  const { data: ProviderData } = useAllApiProviderTypes();
 
+  const providersOptions =
+    ProviderData?.records?.map((insurance) => ({
+      label: insurance.name,
+      value: insurance.id,
+    })) || [];
   const queryClient = useQueryClient();
+
+  const [preferredMethod, setPreferredMethod] = useState("");
+  // Handler to update state on radio change
+  const handleMethodChange = (e) => {
+    setPreferredMethod(e.target.value);
+  };
+
+  // console.log("preferedee",preferredMethod)
 
   const {
     mutateAsync: updatePatientProfile,
@@ -71,14 +99,15 @@ const PatientProfile = ({ onChangePassword }) => {
       queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message);
+      // toast.error(error.response?.data?.message);
       // console.log("ERRROR AGAY HA ", error?.message);
     },
   });
 
   const profileSubmit = async (data) => {
-     if (updatePatientProfileLoader) return;
-     
+    console.log("############", data);
+    if (updatePatientProfileLoader) return;
+
     const formData = new FormData();
     // formData.append("image", selectedImage);
     // formData.append("user_name", data.user_name);
@@ -93,8 +122,18 @@ const PatientProfile = ({ onChangePassword }) => {
     formData.append("number", data.number);
     formData.append("postal_code", data.postal_code);
     formData.append("state", data.state);
-    if(selectedImage) {
-      formData.append("image", selectedImage)
+    formData.append("website_url", data.website);
+    formData.append("communication_method_id", data?.communication_method_id);
+    formData.append("insurance_type_id", data?.insurance_type_id);
+    formData.append("marital_status", data?.maritalStatus);
+
+    // formData.append("marital_status", data?.maritalStatus);
+
+    // insurance_type_id: data.insurance_type_id,
+    // marital_status: data.maritalStatus,
+
+    if (selectedImage) {
+      formData.append("image", selectedImage);
     }
     await updatePatientProfile({ id: meData?.id, data: formData });
   };
@@ -113,8 +152,17 @@ const PatientProfile = ({ onChangePassword }) => {
       setValue("state", meData.state || "");
       setValue("zip", meData.postal_code || "");
       setValue("city", meData.city || "");
-      setValue("address", meData.address || "");
+      setValue("communication_method_id", meData.communication_method_id || "");
 
+      setValue("address", meData.address || "");
+      setValue("website", meData.website_url || "");
+      setValue("communication_method_id", meData.communication_method_id || "");
+      setValue("insurance_type_id", meData.insurance_type_id || "");
+      setValue("maritalStatus", meData.marital_status || "");
+
+      // formData.append("website_url", data.website);
+      // formData.append("communication_method_id", preferredMethod);
+      // formData.append("insurance_type_id", data?.insurance_type_id);
       // Optional: If you're also maintaining local state for select dropdowns
       setGender(meData.gender || "");
       setState(meData.state || "");
@@ -122,6 +170,21 @@ const PatientProfile = ({ onChangePassword }) => {
     }
   }, [meData, setValue]);
 
+  const { data: InsuranceData } = useAllApiInsuranceTypes();
+
+  const insuranceOptions =
+    InsuranceData?.records?.map((insurance) => ({
+      label: insurance.name,
+      value: insurance.id,
+    })) || [];
+
+  const maritalStatusOptions = [
+    { value: "single", label: "Single" },
+    { value: "married", label: "Married" },
+    { value: "divorced", label: "Divorced" },
+    { value: "widowed", label: "Widowed" },
+    { value: "separated", label: "Separated" },
+  ];
 
   return (
     <>
@@ -168,13 +231,16 @@ const PatientProfile = ({ onChangePassword }) => {
                 </div>
                 <div>
                   <h4 className="font-bold mb-1 text-[#252525] text-xl leading-tight">
-                    {meData?.first_name} {meData?.last_name}
+                    {meData?.first_name
+                      ? meData?.first_name
+                      : meData?.user_name}
+                    {/* {meData?.user_name} */}
                   </h4>
-                  {meData?.specialization && (
+                  {/* {meData?.specialization && (
                     <span className="text-base font-medium text-[#181D27]/50 leading-tight">
                       ({meData.specialization})
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="flex flex-wrap gap-5">
@@ -223,19 +289,25 @@ const PatientProfile = ({ onChangePassword }) => {
                 placeholder="@johndoe"
                 register={register}
                 registerName={"user_name"}
+                errors={errors}
               />
 
               <InputField
                 label="First Name:"
                 id="first_name"
-                name="first_name"
-                type="text"
-                fieldName="sm:w-[32%] w-full"
-                iconUrl={""}
                 placeholder="John"
                 register={register}
-                registerName={"first_name"}
+                registerName="first_name"
+                validation={{
+                  required: "First name is required",
+                  minLength: {
+                    value: 2,
+                    message: "Must be at least 2 characters",
+                  },
+                }}
+                errors={errors}
               />
+
               <InputField
                 label="Last Name:"
                 id="last_name"
@@ -246,6 +318,14 @@ const PatientProfile = ({ onChangePassword }) => {
                 placeholder="Doe"
                 register={register}
                 registerName={"last_name"}
+                validation={{
+                  required: "Last name is required",
+                  minLength: {
+                    value: 2,
+                    message: "Must be at least 2 characters",
+                  },
+                }}
+                errors={errors}
               />
 
               <InputField
@@ -259,6 +339,10 @@ const PatientProfile = ({ onChangePassword }) => {
                 register={register}
                 registerName={"email"}
                 disabled={true}
+                validation={{
+                  required: "Email is required",
+                }}
+                errors={errors}
               />
               <InputField
                 label="Phone Number"
@@ -270,17 +354,25 @@ const PatientProfile = ({ onChangePassword }) => {
                 placeholder="+1***********"
                 register={register}
                 registerName={"number"}
+                validation={{
+                  required: "Number is required",
+                }}
+                errors={errors}
               />
               <InputField
                 label="Age"
                 id="age"
                 name="age"
-                type="age"
+                type="number"
                 fieldName="sm:w-[32%] w-full"
                 iconUrl={""}
                 placeholder="89"
                 register={register}
                 registerName={"age"}
+                validation={{
+                  required: "Age is required",
+                }}
+                errors={errors}
               />
               <SelectField
                 label="Gender"
@@ -291,7 +383,13 @@ const PatientProfile = ({ onChangePassword }) => {
                 selectName="sm:sm:w-[32%] w-full"
                 register={register}
                 registerName={"gender"}
+                validation={{
+                  required: "Gender is required",
+                }}
+                errors={errors}
               />
+
+            
             </div>
 
             <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3 mt-1">
@@ -308,6 +406,10 @@ const PatientProfile = ({ onChangePassword }) => {
                 selectName="sm:w-[32%] w-full"
                 register={register}
                 registerName={"state"}
+                validation={{
+                  required: "Select a state",
+                }}
+                errors={errors}
               />
 
               <InputField
@@ -319,6 +421,10 @@ const PatientProfile = ({ onChangePassword }) => {
                 fieldName="sm:w-[32%]"
                 register={register}
                 registerName={"postal_code"}
+                validation={{
+                  required: "Zip code is required",
+                }}
+                errors={errors}
               />
               <SelectField
                 label="City"
@@ -329,7 +435,47 @@ const PatientProfile = ({ onChangePassword }) => {
                 selectName="sm:sm:w-[32%] w-full"
                 register={register}
                 registerName={"city"}
+                validation={{
+                  required: "Select a city",
+                }}
+                errors={errors}
               />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <SelectField
+                  label="Marital Status"
+                  id="maritalStatus"
+                  name="maritalStatus"
+                  asterisk={true}
+                  options={maritalStatusOptions}
+                  register={register}
+                  registerName="maritalStatus"
+                  // errors={errors}
+                  validation={{
+                    required: "Marital status is required",
+                  }}
+                  errors={errors}
+                />
+              </div>
+
+              <div>
+                <SelectField
+                  label="Insurance Type"
+                  id="insurance_type_id"
+                  name="insurance_type_id"
+                  asterisk={true}
+                  options={insuranceOptions}
+                  register={register}
+                  registerName="insurance_type_id"
+                  // errors={errors}
+                  validation={{
+                    required: "Insurance type is required",
+                  }}
+                  errors={errors}
+                />
+              </div>
             </div>
 
             <InputField
@@ -340,7 +486,134 @@ const PatientProfile = ({ onChangePassword }) => {
               placeholder="2301 Guadalupe Street"
               register={register}
               registerName={"address"}
+              validation={{
+                required: "Address is required",
+              }}
+              errors={errors}
             />
+
+            {/* <div className="space-y-4">
+              <p className="text-md font-semibold">
+                Preferred Communication Method
+              </p>
+              <div className="flex flex-wrap gap-3 text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="1"
+                    name="preferredCommunication"
+                    value="1"
+                    checked={preferredMethod === "1"}
+                    onChange={handleMethodChange}
+                    className="mr-2 text-[14px] scale-150 border-[#FFFFFF] align-middle"
+                  />
+                  <label htmlFor="1" className="ml-1">
+                    Via Email Address
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="2"
+                    name="preferredCommunication"
+                    value="2"
+                    checked={preferredMethod === "2"}
+                    onChange={handleMethodChange}
+                    className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                  />
+                  <label htmlFor="2" className="ml-1">
+                    Via Phone Number
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    id="3"
+                    name="preferredCommunication"
+                    value="3"
+                    checked={preferredMethod === "3"}
+                    onChange={handleMethodChange}
+                    className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                  />
+                  <label htmlFor="3" className="ml-1">
+                    Via SMS Text
+                  </label>
+                </div>
+              </div>
+            </div> */}
+
+            <div className="space-y-4">
+              <p className="text-md font-semibold">
+                Preferred Communication Method
+              </p>
+              <Controller
+                control={control}
+                name="communication_method_id"
+                rules={{ required: "Please select a contact method" }}
+                render={({ field, fieldState }) => {
+                  console.log("FFFFFFFFF", field?.value);
+                  return (
+                    <div className="flex flex-wrap gap-3 text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          id="1"
+                          value="1"
+                          checked={field.value === 1}
+                          // onChange={(e) => field.onChange(e.target.value)}
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                          }
+                          className="mr-2 text-[14px] scale-150 border-[#FFFFFF] align-middle"
+                        />
+                        <label htmlFor="1" className="ml-1">
+                          Via Email Address
+                        </label>
+                      </div>
+
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          id="2"
+                          value="2"
+                          checked={field.value === 2}
+                          // onChange={(e) => field.onChange(e.target.value)}
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                          }
+                          className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                        />
+                        <label htmlFor="2" className="ml-1">
+                          Via Phone Number
+                        </label>
+                      </div>
+
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          id="3"
+                          value="3"
+                          checked={field.value === 3}
+                          // onChange={(e) => field.onChange(e.target.value)}
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                          }
+                          className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                        />
+                        <label htmlFor="3" className="ml-1">
+                          Via SMS Text
+                        </label>
+                      </div>
+                      {fieldState.error && (
+                        <p className="text-sm text-red-500 mt-1">
+                          {fieldState.error.message}
+                        </p>
+                      )}
+                    </div>
+                  );
+                }}
+              />
+            </div>
           </form>
         </div>
       </div>

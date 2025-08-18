@@ -64,7 +64,7 @@ const ManagePassword = () => {
         </h2>
       </div>
 
-      <div className="rounded-[10px] bg-white p-10">
+      <div className="rounded-[10px] bg-white py-10 px-3 sm:p-10">
         <h4 className="font-bold text-[#252525] text-xl leading-tight mb-7">
           Update Password
         </h4>
@@ -75,7 +75,7 @@ const ManagePassword = () => {
             id="password1"
             placeholder="**********************"
             // value={password}
-            fieldName="sm:w-[38%] w-full"
+            fieldName="sm:w-[300px] w-full"
             onChange={(e) => setPassword(e.target.value)}
             asterisk={false}
             register={register}
@@ -89,7 +89,7 @@ const ManagePassword = () => {
             id="password2"
             placeholder="**********************"
             // value={password1}
-            fieldName="sm:w-[38%] w-full"
+            fieldName="sm:w-[300px] w-full"
             onChange={(e) => setPassword1(e.target.value)}
             asterisk={false}
             register={register}
@@ -103,7 +103,7 @@ const ManagePassword = () => {
             id="password3"
             placeholder="**********************"
             // value={password2}
-            fieldName="sm:w-[38%] w-full"
+            fieldName="sm:w-[300px] w-full"
             onChange={(e) => setPassword2(e.target.value)}
             asterisk={false}
             register={register}
@@ -114,7 +114,7 @@ const ManagePassword = () => {
           <PrimaryButton
             btnText="Save Changes"
             showImg={false}
-            btnClass="w-[22%] h-[46px] mt-6.5 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+            btnClass="md:w-[22%] sm:w-[30%] w-full h-[46px] mt-6.5 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
             disabled={updatePatientProfileLoader}
           />
         </form>
