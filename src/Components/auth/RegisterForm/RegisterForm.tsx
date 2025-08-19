@@ -15,6 +15,8 @@ import { useForm } from "react-hook-form";
 // import { ArrowDown } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
+import dummyImage from "@assets/media/images/signup-img.png";
+import signupLogo from "@assets/media/images/signup-logo.png";
 import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/AuthApi/AuthApi";
 import Spinner from "@components/Loaders/Spinner";
@@ -234,9 +236,23 @@ const RegisterForm = () => {
       )}
 
       {selectUser == "" ? (
-        <OnBoardingLayout>
-          <div className="lg:min-h-[600px] min-h-screen max-h-screen flex  flex-col">
-            <p className="text-[#1A1A1A] mt-10 text-[24px] sm:text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
+        <div className="grid lg:grid-cols-2  gap-5 sm:p-7 bg-[linear-gradient(107.76deg,_#F4F7FF_-2.99%,_#DDEFF7_64.85%,_#D6E0F9_113.61%)]">
+          <div className="lg:flex hidden">
+            <img
+              src={dummyImage}
+              alt="User Image"
+              className="w-full h-full min-h-[759px] rounded-[10px]"
+            />
+          </div>
+          <div className="bg-white justify-center lg:h-full h-screen rounded-[10px] px-3 sm:px-[60px] flex  flex-col">
+            <div className="flex items-center justify-center">
+              <img
+                src={signupLogo}
+                alt="Signup Logo"
+                className="w-[243px] h-[55px]"
+              />
+            </div>
+            <p className="text-[#1A1A1A] mt-10  text-[24px] sm:text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
               Choose Your Registration Type
             </p>
             <p className="text-[#252525] text-[14px] sm:text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
@@ -280,7 +296,7 @@ const RegisterForm = () => {
               </p>
             </div>
           </div>
-        </OnBoardingLayout>
+        </div>
       ) : (
         ""
       )}

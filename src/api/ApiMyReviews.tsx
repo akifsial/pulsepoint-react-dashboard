@@ -17,7 +17,7 @@ export const ApiMyReviews = async (
     BASE_URL += `&is_flagged=${filterValue}`;
   }
     if(sort){
-    BASE_URL += `&sort:created_at=${sort}`;
+    BASE_URL += `&sort=created_at:${sort}`;
     
   }
 

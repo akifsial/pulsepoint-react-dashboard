@@ -197,7 +197,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     formData.append("time_out", endTime);
     formData.append("specialization", data?.specialization);
 
-
     fields?.map((field) => formData.append("services[]", field));
 
     removeImagesIds?.forEach((removeId) =>
@@ -229,8 +228,17 @@ const ProfileDetail1 = ({ onChangePassword }) => {
       setStartTime(meData?.time_in || "");
       setEndTime(meData?.time_out || "");
       setValue("userName", meData?.user_name || "");
-      
-      setValue("specialization", meData.specialization || "");
+
+      // setValue("specialization", meData.specialization || "");
+
+      if (
+        meData.specialization &&
+        meData.specialization !== "Neuro Specialization"
+      ) {
+        setValue("specialization", meData.specialization);
+      } else {
+        setValue("specialization", ""); // keep empty
+      }
 
       // setValue("startDay", meData.startDay || "");
       // setValue("endDay", meData.endDay || "");
@@ -330,9 +338,12 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                       ? singleUser?.organization_name
                       : singleUser?.user_name}
                   </h4>
-                  <span className="text-base text-[#181D27]/50 leading-tight">
-                    {singleUser?.specialization}
-                  </span>
+                  {singleUser?.specialization &&
+                    singleUser?.specialization !== "Neuro Specialization" && (
+                      <span className="text-base text-[#181D27]/50 leading-tight">
+                        {singleUser?.specialization}
+                      </span>
+                    )}
                 </div>
               </div>
 
@@ -407,7 +418,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 value={organization}
                 onChange={(e) => setOrganization(e.target.value)}
                 options={organizationOptions}
-                selectName="sm:w-[49%] w-full"
+                selectName="sm:w-[49%] !mb-8.5 w-full"
                 register={register}
                 registerName="organization"
                 validation={{
@@ -481,7 +492,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
               errors={errors}
             />
 
-            <div className="mb-6 text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
+            <div className="mb-6 h-[190px] text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
               <p className="mb-2.5">Additional Details:</p>
               <div className="text-sm font-normal text-[#252525] py-4 ps-0 px-[15px] rounded-lg bg-[#FBFCFD]">
                 {/* <p>
@@ -497,19 +508,19 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 <textarea
                   id="message"
                   rows="4"
-                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Write your thoughts here..."
                   // {...register("additional_details")}
                   {...register("additional_details", {
                     required: "Additional Detail is required",
                   })}
                 ></textarea>
-                {errors.additional_details && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.additional_details.message}
-                  </p>
-                )}
               </div>
+              {errors.additional_details && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.additional_details.message}
+                </p>
+              )}
             </div>
 
             <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
@@ -523,7 +534,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 options={stateOptions}
-                selectName="sm:w-[32%] w-full"
+                selectName="sm:w-[32%] !mb-8.5 w-full"
                 register={register}
                 registerName="state"
                 validation={{
@@ -537,7 +548,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 options={cityOptions}
-                selectName="w-full sm:w-[32%]"
+                selectName="w-full !mb-8.5 sm:w-[32%]"
                 register={register}
                 registerName="city"
                 validation={{

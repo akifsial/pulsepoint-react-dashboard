@@ -18,6 +18,7 @@ import provideIcon from "@assets/media/svgs/provide.svg";
 import provideactive from "@assets/media/svgs/provide-active.svg";
 import profile from "@assets/media/svgs/dashboard-svgs/profile.svg";
 import profileActive from "@assets/media/svgs/dashboard-svgs/profileActive.svg";
+import { CommunityIconWhite, CommunityIconBlack, CommunityIconBlue } from "@components/CommunitiesSVG";
 import manage from "@assets/media/svgs/dashboard-svgs/manage.svg";
 import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg";
 import feature from "@assets/media/svgs/dashboard-svgs/feature.svg";
@@ -114,13 +115,23 @@ export const PatientSidebarLinks: SidebarLink[] = [
     },
   },
 
-  {
+  // {
+  //   label: "Communities",
+  //   path: "/patient/communities",
+  //   icon: {
+  //     default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
+  //     hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
+  //     active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+  //   },
+  // },
+
+    {
     label: "Communities",
     path: "/patient/communities",
     icon: {
-      default: <img src={communityIcon} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={communityHover} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <CommunityIconBlack className="w-6 h-6" />,
+      hover: <CommunityIconBlue className="w-6 h-6" />,
+      active: <CommunityIconWhite className="w-6 h-6" />,
     },
   },
 ];

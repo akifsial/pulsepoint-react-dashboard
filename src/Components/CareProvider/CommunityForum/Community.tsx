@@ -29,7 +29,7 @@ const Community = () => {
           selectedCommunity={selectedCommunity}
         />
       ) : (
-        <div className="w-full block justify-between md:flex md:items-start md:gap-6">
+        <div className="w-full block justify-between mb-8 md:flex md:items-start md:gap-6">
           <div className="flex-1 md:mb-0 mb-8">
             <h2 className="text-xl font-semibold mb-3.5 text-[#252525] font-[Space Grotesk]">
               Your Feed

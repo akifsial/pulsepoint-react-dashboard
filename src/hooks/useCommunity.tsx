@@ -10,6 +10,7 @@ import {
   ApiGetCommunityTopics,
   ApiGetSpecificCommunity,
   ApiGetNotifications,
+  ApiGetSinglePost,
 } from "@src/api/ApiCommunityForum";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { USE_GET_NOTIFICATIONS_PROPS } from "@types/apiTypes";
@@ -141,8 +142,6 @@ export const useGetSpecificCommunity = (id: string) => {
   });
 };
 
-
-
 // export const useGetNotifications = () => {
 //   return useQuery({
 //     queryKey: ["useGetNotifications"],
@@ -171,5 +170,14 @@ export const useGetNotifications = ({
     queryFn: () => ApiGetNotifications(page, limit),
     keepPreviousData: true,
     refetchOnWindowFocus: false,
+  });
+};
+
+export const useGetSingleCommunityPost = (id) => {
+  return useQuery({
+    queryKey: ["useGetSingleCommunityPost",id],
+    queryFn: () => ApiGetSinglePost(id),
+    // keepPreviousData: true,
+    // refetchOnWindowFocus: false,
   });
 };

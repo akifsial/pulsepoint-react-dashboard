@@ -80,26 +80,35 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
     await communityJoinMutation(data1);
   };
 
+  const [showInitialLoader, setShowInitialLoader] = useState(true);
+
+// hide spinner after first fetch
+useEffect(() => {
+  if (!isLoading) {
+    setShowInitialLoader(false);
+  }
+}, [isLoading]);
+
   return (
     <>
       {/* {!showPatientInfo ? ( */}
 
-      {isLoading || isFetching ? (
-       <div className="text-center flex mt-40 justify-center"><CommunitiesSpinner /></div>
+      { showInitialLoader ? (
+       <div className="text-center flex mt-30 justify-center"><CommunitiesSpinner /></div>
       ) : isError ? (
         <p className="!text-[30px]">something went wrong</p>
       ) : data ? (
         <div className="mb-[25px]">
           {/* Fixed header */}
           <div
-            className="flex items-center gap-2.5 cursor-pointer px-5 py-4 bg-transparent sticky top-0 z-10"
+            className="flex items-center gap-2.5 cursor-pointer pb-4 bg-transparent sticky top-0 z-10"
             onClick={() => {
               userType == "CARE_PROVIDER" ?
               navigate("/care-provider/community-form") : navigate("/patient/community-forum")
             }}
           >
             <img src={backArrow} alt="backArrow" />
-            <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
+            <h2 className="text-xl font-semibold text-[#252525]  font-[Space Grotesk]">
               Back to Feed
             </h2>
           </div>

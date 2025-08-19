@@ -20,9 +20,13 @@ interface ShareModalProps {
   onClose: () => void;
 }
 
-const ShareModal: React.FC<ShareModalProps> = ({ onClose }) => {
+const ShareModal: React.FC<ShareModalProps> = ({ onClose,postId }) => {
+// console.log("pppppppppppppppppppppppppppp",postId)
+
   const [activeIcon, setActiveIcon] = useState<string>("");
-  const shareUrl = `https://mywebsite.com/posts/${1}`;
+  const shareUrl = `https://phpstack-1250693-5723234.cloudwaysapps.com/patient/community/post/${postId}`;
+  // const shareUrl = `http://localhost:5173/patient/community/post/${postId}`;
+
 
   const modalContent = (
     <div
@@ -64,13 +68,17 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose }) => {
           </FacebookShareButton> */}
 
           <FacebookShareButton
-  url={shareUrl}
-  quote="Check out this post!"
-  onClick={() => setActiveIcon("facebook")} // optional: mark as active
->
-  <FaFacebookF size={24} className={activeIcon === "facebook" ? "text-blue-600" : "text-gray-700"} />
-</FacebookShareButton>
-
+            url={shareUrl}
+            quote="Check out this post!"
+            onClick={() => setActiveIcon("facebook")} // optional: mark as active
+          >
+            <FaFacebookF
+              size={24}
+              className={
+                activeIcon === "facebook" ? "text-blue-600" : "text-gray-700"
+              }
+            />
+          </FacebookShareButton>
 
           <LinkedinShareButton>
             <IconButton

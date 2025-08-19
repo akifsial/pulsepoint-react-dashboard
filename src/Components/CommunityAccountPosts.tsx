@@ -181,12 +181,12 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
     onSuccess: async () => {
       queryClient.invalidateQueries(["useGetCommunityPost"]);
-      toast.success("Reply Posted Successfully");
+      // toast.success("Reply Posted Successfully");
       setComment("");
       setParentCommentReplyValue("");
     },
     onError: (error) => {
-      toast.error("Something Went Wrong");
+      // toast.error("Something Went Wrong");
     },
   });
 

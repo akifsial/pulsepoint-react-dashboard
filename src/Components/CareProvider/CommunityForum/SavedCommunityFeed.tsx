@@ -2282,8 +2282,8 @@ const SavedCommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
         </div>
       ) : (
         postsToRender?.map((post, index) => (
-          <div key={index} className="post mb-6 relative last:m-0">
-            <div className="post_content bg-white rounded-[10px]  p-4 relative ">
+          <div key={index} className="post relative  last:m-0">
+            <div className="post_content bg-white h-[400px] overflow-y-auto rounded-[10px]  p-4 relative ">
               <div className="flex justify-between items-center  mb-5">
                 <div className="flex items-center gap-3">
                   <div className="relative">

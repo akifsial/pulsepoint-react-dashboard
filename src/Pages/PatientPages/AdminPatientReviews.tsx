@@ -43,6 +43,8 @@ const AdminPatientReviews: React.FC = () => {
     sort == true ? "asc" : "desc"
   );
 
+  console.log("sssssss",data)
+
   const onSortClick = () => {
     setSort(!sort);
     refetch();

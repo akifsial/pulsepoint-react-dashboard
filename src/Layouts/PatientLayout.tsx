@@ -21,7 +21,7 @@ const hideHeader=location.pathname.startsWith("/patient/chatbot")
           routeSetting="/patient/manage-password"
         />}
         
-        <main className="mt-12">
+        <main className="mt-9">
           <Outlet />
         </main>
       </div>

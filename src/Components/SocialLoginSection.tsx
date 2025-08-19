@@ -24,6 +24,9 @@ const SocialLoginSection: React.FC<SocialLoginSectionProps> = ({
     window.location.href = `${import.meta.env.VITE_APP_API_URL}auth/facebook`;
   };
 
+    const loginWithTwitter = () => {
+    window.location.href = `${import.meta.env.VITE_APP_API_URL}auth/twitter`;
+  };
   return (
     <div className="flex flex-col items-center justify-center mt-4">
       <div className="flex items-center w-[306px] h-[11px] gap-[23px]">
@@ -49,7 +52,7 @@ const SocialLoginSection: React.FC<SocialLoginSectionProps> = ({
           src={twiterIcon}
           alt="Twitter"
           className="w-12 h-12 cursor-pointer hover:opacity-80 transition-opacity"
-          onClick={() => handleSocialLogin("twitter")}
+          onClick={() => loginWithTwitter()}
         />
         <img
           src={fbIcon}

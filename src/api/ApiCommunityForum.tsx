@@ -167,7 +167,7 @@ export const ApiGellAllCommunity = async (search: string, page: number, sort:num
   //   BASE_URL+=`&${}`
   // }
   if(sort){
-    URL += `&sort:created_at=${sort}`;
+    URL += `&sort=created_at:${sort}`;
     
   }
 
@@ -434,13 +434,47 @@ export const ApiDeleteComment = async (
   return response.data.payload;
 };
 
-export const ApiDeletePost = async (postId: number) => {
-  const BASE_URL = `${
-    import.meta.env.VITE_APP_API_URL
-  }community/post/${postId}`;
-  const token = JSON.parse(localStorage.getItem("token"));
+// export const ApiDeletePost = async (postId: number) => {
+//   const BASE_URL = `${
+//     import.meta.env.VITE_APP_API_URL
+//   }community/post/${postId}`;
+//   const token = JSON.parse(localStorage.getItem("token"));
 
-  const response = await axios.delete(BASE_URL, {
+//   const response = await axios.delete(BASE_URL, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+
+//   return response.data.payload;
+// };
+
+
+export const ApiDeletePost = async (postId: number) => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/${postId}`;
+  const token = JSON.parse(localStorage.getItem("token") || "null");
+
+  try {
+    const response = await axios.delete(BASE_URL, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data?.payload;
+  } catch (error) {
+    console.error("Error deleting post:", error?.response?.data?.message);
+    toast.error(error?.response?.data?.message)
+
+    // You can throw the error again if you want to handle it in react-query
+    throw error;
+  }
+};
+
+
+export const ApiGetSinglePost = async (id) => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/${id}`;
+  const token: string | null = JSON.parse(
+    localStorage.getItem("token") || "null"
+  );
+
+  const response = await axios.get(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

@@ -32,7 +32,7 @@ export const ApiGetCareProviders = async (
   }
 
   if(sort){
-    BASE_URL += `&sort:created_at=${sort}`;
+    BASE_URL += `&sort=created_at:${sort}`;
     
   }
   // const token = JSON.parse(localStorage.getItem("token"));

@@ -12,6 +12,8 @@ import PatientAllCommunities from "@pages/PatientPages/PatientAllCommunities";
 import StripeSuccessPage from "@components/auth/StripeSuccessPage";
 import StripeCancelPage from "@components/auth/StripeCancelledPage";
 import CommunityAccount from "@components/CareProvider/CommunityForum/CommunityAccount";
+import CommunityAccountPosts from "@components/CommunityAccountPosts";
+import CommunitySinglePost from "@components/CareProvider/CommunityForum/CommunitySinglePost";
 export const PatientRoutes = [
   {
     path: "/patient",
@@ -31,6 +33,8 @@ export const PatientRoutes = [
       { path: "chatbot", element: <ChatbotLayout /> },
       { path: "nursing-home", element: <NursingHomeReviews /> },
       { path: "community-account/:id", element: <CommunityAccount /> },
+      { path: "community/post/:id", element: <CommunitySinglePost /> },
+
 
       // { path: "payment-history", element: <NursingHomeReviews /> },
     ],

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Send } from "lucide-react";
 // import DummyUser from "@assets/DummyUser.jpg";
@@ -36,16 +36,17 @@ export const CommentItem = ({
   setReplyParentId,
   handleDeleteComment,
   key,
+  inputRef
 }) => {
-  const isReplyVisible = parentCommentReplyId.includes(comment.id);
+  const [activeReplyId, setActiveReplyId] = useState<number | null>(null);
+
+  const isReplyVisible = activeReplyId === comment.id;
 
   const toggleReplies = () => {
     if (isReplyVisible) {
-      // Remove from state
-      handleParentComment(null, comment.id); // send second arg to remove
+      setActiveReplyId(null); // dobara click → band
     } else {
-      // Add to state
-      handleParentComment(comment.id);
+      setActiveReplyId(comment.id); // click → open
     }
   };
 
@@ -137,8 +138,10 @@ export const CommentItem = ({
                 onClick={toggleReplies}
                 className="flex cursor-pointer items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-2 py-3 justify-center min-w-[78px]"
               >
-                {/* <img src={commentIcon} alt="reply" /> */}
                 <img src={commentIcon} alt="Comments" />
+                <span className="text-sm">
+                  {comment?.replies?.length || 0}
+                </span>
               </button>
 
               {/* _______________________________/ */}
@@ -165,8 +168,18 @@ export const CommentItem = ({
               <div className="relative mb-3">
                 <input
                   type="text"
+                  ref={inputRef}
                   // value={parentCommentReplyValue}
                   onChange={(e) => setParentCommentReplyValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Enter" &&
+                      parentCommentReplyValue.trim() &&
+                      !replyLoading
+                    ) {
+                      handleReply();
+                    }
+                  }}
                   placeholder="Reply..."
                   className="w-full outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
                 />

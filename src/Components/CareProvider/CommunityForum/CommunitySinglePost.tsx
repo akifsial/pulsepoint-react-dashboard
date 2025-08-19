@@ -33,7 +33,10 @@ import {
 } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import arrowUpTrans from "@assets/media/svgs/dashboard-svgs/arrowUp.svg";
-import { useGetCommunityPost } from "@src/hooks/useCommunity";
+import {
+  useGetCommunityPost,
+  useGetSingleCommunityPost,
+} from "@src/hooks/useCommunity";
 import { useGetSingleUser } from "@src/hooks/useCommunity";
 import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
 import { CommentItem } from "./CommentBlock";
@@ -41,8 +44,9 @@ import DropdownActions from "@components/Dashboard-components/Dropdown-actions/D
 import DeleteModal from "@src/components/Model/DeleteModal";
 import Spinner from "@components/Loaders/Spinner";
 import PostContent from "@components/PostContent";
+import { useParams } from "react-router-dom";
 
-const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
+const CommunitySinglePost = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [activePostActions, setActivePostActions] = useState(null);
   const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
@@ -60,11 +64,17 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [parentCommentReplyValue, setParentCommentReplyValue] = useState("");
   const [shareModal, setShareModal] = useState(false);
   const [parentCommentReplyId, setParentCommentReplyId] = useState([]);
+  const {id}=useParams()
+
+  const { data: singlePostData } = useGetSingleCommunityPost(id);
+
   const {
     data: postData,
     isPending: PostsPending,
     isLoading,
   } = useGetCommunityPost();
+
+
   const [replyId, setReplyId] = useState();
   const myId = JSON.parse(localStorage.getItem("userInfo"));
   const [replyInput, setReplyInput] = useState("");
@@ -74,6 +84,8 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteModalId, setDeleteModalId] = useState();
   // const [activePostActions, setActivePostActions] = useState(null);
+
+  console.log("iiiiiiiiiiiiiiiiii",id)
 
   const menuRef = useRef(null);
 
@@ -175,9 +187,10 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
   useEffect(() => {
     const initialState: { [postId: number]: boolean | null } = {};
-    postData?.records?.forEach((post) => {
-      initialState[post.id] = post.userLike?.is_like ?? null;
-    });
+    // postData?.records?.forEach((post) => {
+    initialState[singlePostData?.id] =
+      singlePostData?.userLike?.is_like ?? null;
+    // });
     setLocalLikes(initialState);
   }, [postData]);
 
@@ -393,8 +406,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     },
   });
 
-  const [sharePostId,setSharePostId]=useState()
-
   const handleDeletePost = async () => {
     await deletePostMutation();
   };
@@ -418,131 +429,136 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
           <h2>Nothing here yet!</h2>
         </div>
       ) : (
-        postsToRender?.map((post, index) => (
-          <div key={index} className="post mb-6 relative last:m-0">
-            <div className="post_content bg-white rounded-[10px]  p-4 relative ">
-              <div className="flex justify-between items-center  mb-5">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    {/* {
+        <div key={1} className="post mb-6 relative last:m-0">
+          <div className="post_content bg-white rounded-[10px]  p-4 relative ">
+            <div className="flex justify-between items-center  mb-5">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  {/* {
                       post?.user?.image ? 
                     } */}
-                    <img
-                      src={
-                        post?.user?.image
-                          ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                              post?.user?.image
-                            }`
-                          : DummyUser
-                      }
-                      className="w-[43px] h-[43px] rounded-full !object-cover border border-gray-200"
-                      alt=""
-                    />
-                    {post?.user?.is_online ? (
-                      <span className="absolute bottom-2 right-0 w-2 h-2 bg-[#52C343] rounded-full shadow-[0_0_0_2px_white]" />
+                  <img
+                    src={
+                      singlePostData?.user?.image
+                        ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                            singlePostData?.user?.image
+                          }`
+                        : DummyUser
+                    }
+                    className="w-[43px] h-[43px] rounded-full !object-cover border border-gray-200"
+                    alt=""
+                  />
+                  {singlePostData?.user?.is_online ? (
+                    <span className="absolute bottom-2 right-0 w-2 h-2 bg-[#52C343] rounded-full shadow-[0_0_0_2px_white]" />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <p
+                    className="font-semibold mb-1 text-[#252525] leading-tight "
+                    // onClick={() => {
+                    //   setOpenBackFeed(true);
+                    //   setPostIdFeed(post.id);
+                    //   {
+                    //     handleSingleUser;
+                    //   }
+                    // }}
+                  >
+                    {singlePostData?.user?.first_name
+                      ? singlePostData?.user?.first_name
+                      : ""}
+                    {singlePostData?.user?.last_name ? (
+                      <span>{singlePostData?.user?.last_name}</span>
                     ) : (
                       ""
                     )}
-                  </div>
-                  <div className="flex flex-col">
-                    <p
-                      className="font-semibold mb-1 text-[#252525] leading-tight "
-                      // onClick={() => {
-                      //   setOpenBackFeed(true);
-                      //   setPostIdFeed(post.id);
-                      //   {
-                      //     handleSingleUser;
-                      //   }
-                      // }}
-                    >
-                      {post?.user?.first_name ? post?.user?.first_name : ""}
-                      {post?.user?.last_name ? (
-                        <span>{post?.user?.last_name}</span>
-                      ) : (
-                        ""
-                      )}
-                      {/* <span>{post?.user?.last_name}</span> */}
-                      {post?.user?.organization_name
-                        ? post?.user?.organization_name
-                        : ""}{" "}
-                    </p>
-                    <span className="text-sm text-gray-500 leading-tight">
-                      {post.userPost}
-                    </span>
-                  </div>
+                    {/* <span>{post?.user?.last_name}</span> */}
+                    {singlePostData?.user?.organization_name
+                      ? singlePostData?.user?.organization_name
+                      : ""}{" "}
+                  </p>
+                  <span className="text-sm text-gray-500 leading-tight">
+                    {singlePostData?.userPost}
+                  </span>
                 </div>
-                <button
-                  className="cursor-pointer relative z-20"
-                  onClick={() =>
+              </div>
+              <button
+                className="cursor-pointer relative z-20"
+                onClick={
+                  () =>
                     setActivePostActions(
-                      activePostActions === index ? null : index
+                      activePostActions === singlePostData?.id
+                        ? null
+                        : singlePostData?.id
                     )
-                  }
-                  aria-label="Toggle post actions"
+                  // handle
+                }
+                aria-label="Toggle post actions"
+              >
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 26 26"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    width="26"
-                    height="26"
-                    viewBox="0 0 26 26"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g opacity="0.8">
-                      <circle
-                        cx="13.16"
-                        cy="5.45"
-                        r="1.07"
-                        stroke="#252525"
-                        strokeWidth="2.14"
-                      />
-                      <circle
-                        cx="13.16"
-                        cy="12.94"
-                        r="1.07"
-                        stroke="#252525"
-                        strokeWidth="2.14"
-                      />
-                      <circle
-                        cx="13.16"
-                        cy="20.43"
-                        r="1.07"
-                        stroke="#252525"
-                        strokeWidth="2.14"
-                      />
-                    </g>
-                  </svg>
-                </button>
-              </div>
+                  <g opacity="0.8">
+                    <circle
+                      cx="13.16"
+                      cy="5.45"
+                      r="1.07"
+                      stroke="#252525"
+                      strokeWidth="2.14"
+                    />
+                    <circle
+                      cx="13.16"
+                      cy="12.94"
+                      r="1.07"
+                      stroke="#252525"
+                      strokeWidth="2.14"
+                    />
+                    <circle
+                      cx="13.16"
+                      cy="20.43"
+                      r="1.07"
+                      stroke="#252525"
+                      strokeWidth="2.14"
+                    />
+                  </g>
+                </svg>
+              </button>
+            </div>
 
-              <div className="text-sm text-[#252525] mb-7">
-                <h3 className="mb-2 font-[Space Grotesk] text-xl">
-                  {post.title}
-                </h3>
-                <p>
-                  {/* {post?.content} <span className="text-[#868686]"></span> */}
-                  <PostContent content={post?.content} />
-                </p>
+            <div className="text-sm text-[#252525] mb-7">
+              <h3 className="mb-2 font-[Space Grotesk] text-xl">
+                {singlePostData?.title}
+              </h3>
+              <p>
+                {/* {post?.content} <span className="text-[#868686]"></span> */}
+                <PostContent content={singlePostData?.content} />
+              </p>
+            </div>
+            {singlePostData?.image ? (
+              <div className="mb-2.5 max-h-[500px]">
+                <img
+                  src={`${import.meta.env.VITE_APP_API_IMG_URL}${
+                    singlePostData?.image
+                  }`}
+                  alt=""
+                  loading="lazy"
+                  className="rounded-md w-full h-[400px] !object-fit"
+                />
               </div>
-              {post?.image ? (
-                <div className="mb-2.5 max-h-[500px]">
-                  <img
-                    src={`${import.meta.env.VITE_APP_API_IMG_URL}${
-                      post?.image
-                    }`}
-                    alt=""
-                    loading="lazy"
-                    className="rounded-md w-full h-[400px] !object-cover"
-                  />
-                </div>
-              ) : (
-                ""
-              )}
+            ) : (
+              ""
+            )}
 
+            <div className="flex gap-2.5 mb-2.5">
               <div className="flex gap-2.5 mb-2.5">
-                <div className="flex gap-2.5 mb-2.5">
-                  <div className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
-                    {/* Like Button */}
-                    {/* <button
+                <div className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
+                  {/* Like Button */}
+                  {/* <button
                       disabled={LikeIsPending}
                       onClick={() => handleReaction("like", post)}
                       className="flex items-center gap-2 min-w-[40px] justify-center"
@@ -565,8 +581,8 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                       {post?.like_count}
                     </button> */}
 
-                    {/* Dislike Button */}
-                    {/* <button
+                  {/* Dislike Button */}
+                  {/* <button
                       disabled={LikeIsPending}
                       onClick={() => handleReaction("dislike", post)}
                       className="flex items-center gap-2 min-w-[40px] justify-center"
@@ -584,137 +600,132 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                       )}
                     </button> */}
 
-                    <button
-                      className={`flex cursor-pointer items-center gap-2 min-w-[40px] justify-center 
-                      `}
-                      onClick={() => handleReaction("like", post)}
-                      disabled={ localLock || LikeIsPending || PostsPending } // include the 500ms lock
-                    >
-                      {localLikes[post.id] === true ? (
-                        <div className="bg-black p-2 rounded-full">
-                          <img
-                            src={arrowUp}
-                            className="py-0.5 px-1"
-                            alt="Liked"
-                          />
-                        </div>
-                      ) : (
-                        <img
-                          src={arrowDowm}
-                          className="rotate-180"
-                          alt="Like"
-                        />
-                      )}
-                      {/* {post._count?.likes +
-                        (localLikes[post.id] === true ? 1 : 0)} */}
-                         {post._count?.likes }
-                    </button>
-
-                    <button
-                      className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
-                      onClick={() => handleReaction("dislike", post)}
-                      // disabled={LikeIsPending && PostsPending}
-                      disabled={ localLock || LikeIsPending || PostsPending } // include the 500ms lock
-
-                    >
-                      {localLikes[post.id] === false ? (
-                        <div className="bg-black p-1 rounded-full">
-                          <img
-                            src={arrowUp}
-                            className="rotate-180 py-1.5 px-2"
-                            alt="Dislike"
-                          />
-                        </div>
-                      ) : (
-                        <img src={arrowDowm} alt="Dislike" />
-                      )}
-                    </button>
-                  </div>
-
-                  {/* Comments Button */}
                   <button
-                    onClick={() => toggleComments(post.id)}
-                    className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center"
+                    className={`flex cursor-pointer items-center gap-2 min-w-[40px] justify-center 
+                      `}
+                    onClick={() => handleReaction("like", singlePostData)}
+                    disabled={localLock || LikeIsPending || PostsPending} // include the 500ms lock
                   >
-                    <img src={commentIcon} alt="Comments" />
-                    {post?._count?.comments}
+                    {localLikes[singlePostData?.id] === true ? (
+                      <div className="bg-black p-2 rounded-full">
+                        <img
+                          src={arrowUp}
+                          className="py-0.5 px-1"
+                          alt="Liked"
+                        />
+                      </div>
+                    ) : (
+                      <img src={arrowDowm} className="rotate-180" alt="Like" />
+                    )}
+                    {/* {post._count?.likes +
+                        (localLikes[post.id] === true ? 1 : 0)} */}
+                    {singlePostData?._count?.likes}
                   </button>
 
-                  {/* Share Button */}
                   <button
-                    onClick={() => {setShareModal(true); setSharePostId(post?.id)}}
-                    className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1 py-1 min-w-[78px] justify-center"
+                    className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
+                    onClick={() => handleReaction("dislike", singlePostData)}
+                    // disabled={LikeIsPending && PostsPending}
+                    disabled={localLock || LikeIsPending || PostsPending} // include the 500ms lock
                   >
-                    <img src={share} alt="Share" />
-                    Share
+                    {localLikes[singlePostData?.id] === false ? (
+                      <div className="bg-black p-1 rounded-full">
+                        <img
+                          src={arrowUp}
+                          className="rotate-180 py-1.5 px-2"
+                          alt="Dislike"
+                        />
+                      </div>
+                    ) : (
+                      <img src={arrowDowm} alt="Dislike" />
+                    )}
                   </button>
                 </div>
-                {shareModal && (
-                  <ShareModal postId={post?.id} onClose={() => setShareModal(false)} />
-                )}
+
+                {/* Comments Button */}
+                <button
+                  onClick={() => toggleComments(singlePostData?.id)}
+                  className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center"
+                >
+                  <img src={commentIcon} alt="Comments" />
+                  {singlePostData?._count?.comments}
+                </button>
+
+                {/* Share Button */}
+                <button
+                  onClick={() => setShareModal(true)}
+                  className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1 py-1 min-w-[78px] justify-center"
+                >
+                  <img src={share} alt="Share" />
+                  Share
+                </button>
               </div>
-              {openComments === post.id && (
-                <div>
-                  <div className="relative mb-3">
-                    <input
-                      type="text"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      placeholder="Join the conversation"
-                      className="w-full bg-white outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
-                      onKeyDown={(e) => {
-                        if (
-                          e.key === "Enter" &&
-                          comment.trim() &&
-                          !commentsIsPending
-                        ) {
-                          e.preventDefault();
-                          handleSendComment();
-                        }
-                      }}
+              {shareModal && (
+                <ShareModal onClose={() => setShareModal(false)} />
+              )}
+            </div>
+            {openComments === singlePostData?.id && (
+              <div>
+                <div className="relative mb-3">
+                  <input
+                    type="text"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Join the conversation"
+                    className="w-full bg-white outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
+                    onKeyDown={(e) => {
+                      if (
+                        e.key === "Enter" &&
+                        comment.trim() &&
+                        !commentsIsPending
+                      ) {
+                        e.preventDefault();
+                        handleSendComment();
+                      }
+                    }}
+                  />
+
+                  <button
+                    disabled={!comment || commentsIsPending}
+                    className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${
+                      comment
+                        ? "bg-[#007AB2] hover:bg-[#005f8e] cursor-pointer"
+                        : "bg-gray-300"
+                    }`}
+                    onClick={handleComments}
+                  >
+                    {commentsIsPending ? (
+                      <Spinner />
+                    ) : (
+                      <Send className="w-3.5 h-3.5 text-white" />
+                    )}
+                  </button>
+                </div>
+
+                {singlePostData?.comments?.map((comment) => (
+                  <div className="flex  items-center">
+                    <CommentItem
+                      key={comment.id}
+                      comment={comment}
+                      myId={myId}
+                      postId={singlePostData.id}
+                      LikeIsPending={LikeIsPending}
+                      PostsPending={PostsPending}
+                      handleCommentReaction={handleCommentReaction}
+                      parentCommentReplyId={parentCommentReplyId}
+                      handleParentComment={handleParentComment}
+                      parentCommentReplyValue={parentCommentReplyValue}
+                      setParentCommentReplyValue={setParentCommentReplyValue}
+                      handleParentCommentReply={handleParentCommentReply}
+                      IsCommentReply={IsCommentReply}
+                      setIsCommentReply={setIsCommentReply}
+                      replyId={replyId}
+                      setReplyParentId={setReplyParentId}
+                      handleDeleteComment={handleDeleteComment}
+                      inputRef={inputRef}
                     />
 
-                    <button
-                      disabled={!comment || commentsIsPending}
-                      className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${
-                        comment
-                          ? "bg-[#007AB2] hover:bg-[#005f8e] cursor-pointer"
-                          : "bg-gray-300"
-                      }`}
-                      onClick={handleComments}
-                    >
-                      {commentsIsPending ? (
-                        <Spinner />
-                      ) : (
-                        <Send className="w-3.5 h-3.5 text-white" />
-                      )}
-                    </button>
-                  </div>
-
-                  {post?.comments?.map((comment) => (
-                    <div className="flex  items-center">
-                      <CommentItem
-                        key={comment.id}
-                        comment={comment}
-                        myId={myId}
-                        postId={post.id}
-                        LikeIsPending={LikeIsPending}
-                        PostsPending={PostsPending}
-                        handleCommentReaction={handleCommentReaction}
-                        parentCommentReplyId={parentCommentReplyId}
-                        handleParentComment={handleParentComment}
-                        parentCommentReplyValue={parentCommentReplyValue}
-                        setParentCommentReplyValue={setParentCommentReplyValue}
-                        handleParentCommentReply={handleParentCommentReply}
-                        IsCommentReply={IsCommentReply}
-                        setIsCommentReply={setIsCommentReply}
-                        replyId={replyId}
-                        setReplyParentId={setReplyParentId}
-                        handleDeleteComment={handleDeleteComment}
-                        inputRef={inputRef}
-                      />
-
-                      {/* <div className="bg-grey-500 mb-20 cursor-pointer">
+                    {/* <div className="bg-grey-500 mb-20 cursor-pointer">
                           <DropdownActions
                             // onView={() => console.log("View Detail")}
                             // onEdit={() => console.log("Edit Detail")}
@@ -725,84 +736,83 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                           />
                         </div> */}
 
-                      {/* </div> */}
-                    </div>
-                  ))}
-                  {/* YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY */}
-                </div>
-              )}
-              {activePostActions === index && (
-                <div
-                  ref={menuRef}
-                  className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50"
-                >
-                  {/* ✅ Flag Post Button */}
-                  <button
-                    disabled={post?.postFlag}
-                    onClick={() => {
-                      if (post?.postFlag == null) {
-                        setFlaggedPost({
-                          ...post,
-                          post_id: post.id,
-                          community_id: post.community_id,
-                        });
-                        setIsFlagModalOpen(true);
-                        setShowSubmitReport(false);
-                      }
-                    }}
-                    className={`group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 rounded-[5px] flex items-center gap-2 mb-0.5
+                    {/* </div> */}
+                  </div>
+                ))}
+                {/* YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY */}
+              </div>
+            )}
+            {activePostActions === singlePostData?.id && (
+              <div
+                ref={menuRef}
+                className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50"
+              >
+                {/* ✅ Flag Post Button */}
+                <button
+                  disabled={singlePostData?.postFlag}
+                  onClick={() => {
+                    if (singlePostData?.postFlag == null) {
+                      setFlaggedPost({
+                        ...singlePostData,
+                        post_id: singlePostData.id,
+                        community_id: singlePostData.community_id,
+                      });
+                      setIsFlagModalOpen(true);
+                      setShowSubmitReport(false);
+                    }
+                  }}
+                  className={`group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 rounded-[5px] flex items-center gap-2 mb-0.5
     ${
-      post?.postFlag
+      singlePostData?.postFlag
         ? "bg-gray-100 text-gray-400 cursor-not-allowed"
         : "hover:bg-[#E7F2F9] cursor-pointer"
     }`}
-                  >
-                    <span className="inline-block group-hover:hidden">
-                      <img src={Flagwhite} alt="Flagwhite" />
-                    </span>
-                    <span className="hidden group-hover:inline-block">
-                      <img src={Flagblue} alt="Flagblue" />
-                    </span>
-                    {post?.postFlag ? "Already Reported" : "Flag Post"}
-                  </button>
+                >
+                  <span className="inline-block group-hover:hidden">
+                    <img src={Flagwhite} alt="Flagwhite" />
+                  </span>
+                  <span className="hidden group-hover:inline-block">
+                    <img src={Flagblue} alt="Flagblue" />
+                  </span>
+                  {singlePostData?.postFlag ? "Already Reported" : "Flag Post"}
+                </button>
 
-                  {/* ✅ Save / Unsave Post Button */}
+                {/* ✅ Save / Unsave Post Button */}
+                <button
+                  onClick={() => handleSavePost(singlePostData.id)}
+                  className="group cursor-pointer w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
+                >
+                  {singlePostData?.savedPostUser == null ? (
+                    <span className="inline-block">
+                      <img src={Save} alt="Save" />
+                    </span>
+                  ) : (
+                    <span>
+                      <img src={SaveBlue} alt="SaveBlue" />
+                    </span>
+                  )}
+                  {singlePostData?.savedPostUser ? "Unsave Post" : "Save Post"}
+                </button>
+
+                {userId == singlePostData?.user_id ? (
                   <button
-                    onClick={() => handleSavePost(post.id)}
+                    // onClick={() => handleDeletePost(post.id)}
+                    onClick={() => {
+                      setIsDeleteModal(true);
+                      setDeleteModalId(singlePostData?.id);
+                    }}
                     className="group cursor-pointer w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
                   >
-                    {post?.savedPostUser == null ? (
-                      <span className="inline-block">
-                        <img src={Save} alt="Save" />
-                      </span>
-                    ) : (
-                      <span>
-                        <img src={SaveBlue} alt="SaveBlue" />
-                      </span>
-                    )}
-                    {post?.savedPostUser ? "Unsave Post" : "Save Post"}
+                    <img src={Save} alt="Save" />
+                    Delete
                   </button>
-
-                  {userId == post?.user_id ? (
-                    <button
-                      // onClick={() => handleDeletePost(post.id)}
-                      onClick={() => {
-                        setIsDeleteModal(true);
-                        setDeleteModalId(post?.id);
-                      }}
-                      className="group cursor-pointer w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 hover:bg-[#E7F2F9] rounded-[5px] flex items-center gap-2"
-                    >
-                      <img src={Save} alt="Save" />
-                      Delete
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              )}
-            </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            )}
           </div>
-        ))
+        </div>
       )}
 
       {isFlagModalOpen && (
@@ -834,4 +844,4 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   );
 };
 
-export default CommunityFeed;
+export default CommunitySinglePost;

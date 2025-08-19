@@ -23,10 +23,10 @@ export const useMeApi = (params = {}) => {
 //   });
 // };
 
-export const useAllSavedCareProviders = (search: string, rating: number) => {
+export const useAllSavedCareProviders = (search: string, rating: number,sort) => {
   return useQuery({
-    queryKey: ["useAllSavedCareProviders", search, rating], // this enables caching per set of params
-    queryFn: () => ApiAllSavedCareProviders(search, rating),
+    queryKey: ["useAllSavedCareProviders", search, rating,sort], // this enables caching per set of params
+    queryFn: () => ApiAllSavedCareProviders(search, rating,sort),
     refetchOnWindowFocus: false,
   });
 };

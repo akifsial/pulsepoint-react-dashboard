@@ -14,21 +14,26 @@ export const ApiMe = async () => {
 
 export const ApiAllSavedCareProviders = async (
   search: string,
-  rating: number
+  rating: number,
+  sort
 ) => {
+  console.log("SSSSSSSSSSSSSSSoooooooooooooooooooooooooooo",sort)
   let BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
   }user/save-care-provider?search=${search}`;
   if (rating) {
     BASE_URL += `&total_rating=${rating}`;
   }
+  //   if (sort) {
+  //   BASE_URL += `&sort=created_at:${sort}`;
+  // }
   const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response.data.payload.records;
+  return response.data.payload;
 };
 
 // export const ApiUpdateUser = async (id: number, data) => {

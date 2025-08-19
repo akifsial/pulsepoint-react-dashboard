@@ -403,7 +403,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 options={stateOptions}
-                selectName="sm:w-[32%] w-full"
+                selectName="sm:w-[32%] !mb-8.5 w-full"
                 register={register}
                 registerName={"state"}
                 validation={{
@@ -432,7 +432,7 @@ const PatientProfile = ({ onChangePassword }) => {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 options={cityOptions}
-                selectName="sm:sm:w-[32%] w-full"
+                selectName="sm:sm:w-[32%] !mb-8.5 w-full"
                 register={register}
                 registerName={"city"}
                 validation={{

@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { ApiLogin } from "@src/api/AuthApi/AuthApi";
 // import Toast from "@components/Toast/Toast";
+import dummyImage from "@assets/media/images/signup-img.png";
+import signupLogo from "@assets/media/images/signup-logo.png";
+
 import { useForm } from "react-hook-form";
 import Spinner from "@components/Loaders/Spinner";
 import toast from "react-hot-toast";
@@ -78,8 +81,25 @@ const LoginPage = () => {
   };
 
   return (
-    <OnBoardingLayout logoParentClass="absolute top-14 right-0 left-0 flex justify-center">
-      <div className="flex flex-col lg:min-h-[700px] min-h-screen sm:mt-0 mt-[60px] p-2 sm:p-6 justify-center ">
+    // <OnBoardingLayout logoParentClass="absolute top-14 right-0 left-0 flex justify-center">
+    <div className="grid  lg:grid-cols-2 gap-5 sm:p-7 bg-[linear-gradient(107.76deg,_#F4F7FF_-2.99%,_#DDEFF7_64.85%,_#D6E0F9_113.61%)]">
+      <div className="lg:flex hidden">
+          <img
+        src={dummyImage}
+        alt="User Image"
+        className="w-full h-full min-h-[759px] rounded-[10px]"
+      />
+      </div>
+
+
+      <div className="flex bg-white rounded-[10px] px-3 md:!px-[60px] flex-col lg:min-h-[700px] min-h-screen sm:mt-0  lg:py-0 py-10 justify-center ">
+        <div className="flex mb-4 items-center justify-center">
+           <img
+              src={signupLogo}
+              alt="Signup Logo"
+              className="w-[243px] h-[55px]"
+            />
+        </div>
         <h2 className=" !text-[25px] sm:!text-[35px] font-bold leading-[140%] tracking-[0%] text-[#1A1A1A] font-space-grotesk mb-2">
           Login
         </h2>
@@ -186,7 +206,9 @@ const LoginPage = () => {
           </div>
         </form>
       </div>
-    </OnBoardingLayout>
+    
+    </div>
+    // </OnBoardingLayout>
   );
 };
 

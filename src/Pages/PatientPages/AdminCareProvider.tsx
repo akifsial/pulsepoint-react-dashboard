@@ -16,57 +16,9 @@ import { useCareProviders } from "@src/hooks/useDashboard";
 import dayjs from "dayjs";
 import { useAllSavedCareProviders } from "@src/hooks/useUsers";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import SavedCareProviders from "./SavedCareProviders";
 
-const CareProviderDashboard: React.FC = () => {
-  const navigate = useNavigate();
-  const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
-  const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
-  const [searchText, setSearchText] = React.useState<string>("");
-  const [rating, setRating] = useState();
-  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
-  const [page, setPage] = useState(1);
-  const [sort, setSort] = useState(true);
-
-  const {
-    data: CareProvidersData,
-    isLoading: isLoadingCareProvidersData,
-    refetch,
-  } = useCareProviders(
-    debouncedSearchText,
-    rating,
-    page,
-    sort == true ? "asc" : "desc"
-  );
-  const {
-    data: AllSavedCareProviders,
-    isLoading: isLoadingAllSavedCareProvider,
-  } = useAllSavedCareProviders(
-    debouncedSearchText,
-    rating,
-    page,
-    sort == true ? "asc" : "desc"
-  );
-  console.log("CARE", CareProvidersData);
-
-  const onSortClick = () => {
-    setSort(!sort);
-    refetch();
-  };
-  type dataTypes = {
-    id?: number;
-    first_name?: string;
-    last_name?: string;
-    date?: string;
-    email?: string;
-    image?: string;
-    rating?: number | string | React.ReactNode;
-    reviews?: string;
-    specialization?: string;
-    location?: string;
-    onSortClick?: number;
-  };
-
-  const columns: TanDataTableColumn<dataTypes>[] = [
+  export const columns: TanDataTableColumn<dataTypes>[] = [
     {
       accessor: "first_name",
       header: "Provider’s Name",
@@ -154,6 +106,57 @@ const CareProviderDashboard: React.FC = () => {
       showSort: true,
     },
   ];
+
+const CareProviderDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
+  const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
+  const [searchText, setSearchText] = React.useState<string>("");
+  const [rating, setRating] = useState();
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState(true);
+
+  const {
+    data: CareProvidersData,
+    isLoading: isLoadingCareProvidersData,
+    refetch,
+  } = useCareProviders(
+    debouncedSearchText,
+    rating,
+    page,
+    sort == true ? "asc" : "desc"
+  );
+  // const {
+  //   data: AllSavedCareProviders,
+  //   isLoading: isLoadingAllSavedCareProvider,
+  // } = useAllSavedCareProviders(
+  //   debouncedSearchText,
+  //   rating,
+  //   page,
+  //   sort == true ? "asc" : "desc"
+  // );
+  console.log("CARE", CareProvidersData);
+
+  const onSortClick = () => {
+    setSort(!sort);
+    refetch();
+  };
+  type dataTypes = {
+    id?: number;
+    first_name?: string;
+    last_name?: string;
+    date?: string;
+    email?: string;
+    image?: string;
+    rating?: number | string | React.ReactNode;
+    reviews?: string;
+    specialization?: string;
+    location?: string;
+    onSortClick?: number;
+  };
+
+
 
   const data: dataTypes[] = [
     {
@@ -402,20 +405,23 @@ const CareProviderDashboard: React.FC = () => {
                 />
               </div>
             )
-          ) : isLoadingAllSavedCareProvider ? (
-            <TableSkeletonLoader />
-          ) : (
-            <TanDataTable<dataTypes>
+          )  : (
+            <>
+            {/* <TanDataTable<dataTypes>
               columns={columns}
               data={AllSavedCareProviders ?? []}
               showCheckbox={false}
               onRowSelect={handleRowSelect}
               className="my-custom-class"
               onSortClick={onSortClick}
-            />
+            /> */}
+            <SavedCareProviders onSortClick={onSortClick} debouncedSearchText={debouncedSearchText} rating={rating} page={page} sort={sort} />
+            </>
           )}
         </div>
       </div>
+      {
+        activeTab == "all" ? 
       <div>
         <Pagination
           onPageChange={handlePageChange}
@@ -423,7 +429,8 @@ const CareProviderDashboard: React.FC = () => {
           currentPage={page}
           rowsPerPage={3}
         />
-      </div>
+      </div> : ""
+      }
     </div>
   );
 };

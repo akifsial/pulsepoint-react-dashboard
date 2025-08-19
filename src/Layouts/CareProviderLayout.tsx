@@ -29,7 +29,7 @@ const CareProviderLayout = () => {
           className={isCareProviderChatbotPage ? "max-w-[91%] ml-20" : ""}
         />
 
-        <main className="mt-12">
+        <main className="mt-9">
           <Outlet />
         </main>
       </div>
