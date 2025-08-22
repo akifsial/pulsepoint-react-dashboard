@@ -5,7 +5,8 @@ import CareProviderDashboard from "@pages/Dashboards/Care-provider/CareProviderD
 import CommunityForm from "@pages/Dashboards/Care-provider/CommunityForm";
 import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
 import PatinetReviews from "@pages/Dashboards/Care-provider/PatinetReviews";
-
+import PatientAllCommunites from "@pages/PatientPages/PatientAllCommunities";
+// /care-provider/communities
 export const DashboardRoutes = [
   {
     path: "/care-provider",
@@ -18,6 +19,8 @@ export const DashboardRoutes = [
       // { path: "notification", element: <NotificationPage /> },
       { path: "community-account/:id", element: <CommunityAccount /> },
       { path: "chatbot", element: <ChatbotLayout /> },
+      { path: "communities", element: <PatientAllCommunites /> },
+
     ],
   },
 ];

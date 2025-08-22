@@ -9,7 +9,7 @@ const PostContent = ({ content }: { content: string }) => {
 
   const displayText = isExpanded
     ? content
-    : words.slice(0, 50).join(" ") + (isLong ? "..." : "");
+    : words.slice(0, 30).join(" ") + (isLong ? "..." : "");
 
   return (
     <div className="text-sm text-[#252525] mb-7">

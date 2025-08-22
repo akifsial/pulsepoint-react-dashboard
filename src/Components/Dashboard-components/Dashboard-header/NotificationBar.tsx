@@ -9,6 +9,10 @@ import dayjs from "dayjs";
 import { useGetNotifications } from "@src/hooks/useCommunity";
 import Spinner from "@components/Loaders/Spinner";
 import { useNavigate } from "react-router-dom";
+import { PrimaryButton } from "@components/Buttons/PrimaryButton";
+import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ApiAcceptPrivateCommunity } from "@src/api/ApiCommunityForum";
 
 const NotficationBar = ({ noticationLink }) => {
   const navigate = useNavigate();
@@ -38,9 +42,34 @@ const NotficationBar = ({ noticationLink }) => {
 
   const { data, isLoading } = useGetNotifications();
 
-  const userRole=JSON.parse(localStorage.getItem("userInfo"))?.role_type
+  const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
+  const queryClient = useQueryClient();
 
-  console.log("rooooole",userRole)
+  const {
+    mutateAsync: savedCareProvidersMutation,
+    isPending: savedCareProvidersPending,
+  } = useMutation({
+    mutationFn: ({ memberId, status }) =>
+      ApiAcceptPrivateCommunity(memberId, status),
+    
+    onSuccess: async (data) => {
+      queryClient.invalidateQueries(["useGetNotifications"]); // refetch list
+      if(data?.record?.status=="APPROVED"){
+        toast.success("Request Accepted!");
+      }else{
+        toast.success("Request Declined!");
+
+      }
+    },
+    onError: (error) => {
+      // toast.error("Something Went Wrong");
+    },
+  });
+
+  const handleAcceptPrivateCommunity = async (memberId, status) => {
+    console.log("sssssssssssss", status);
+    await savedCareProvidersMutation({ memberId, status });
+  };
 
   return (
     <div className="border h-[300px]  border-[#2525251A] bg-white rounded-xl shadow-[0_0_8.9px_0_rgba(0,0,0,0.25)] w-[414px]">
@@ -57,19 +86,77 @@ const NotficationBar = ({ noticationLink }) => {
           data.records.map((item, index) => (
             <div
               key={index}
-              className="relative py-[11px] flex items-center gap-2.5 font-medium leading-5.5 text-sm mb-[5px] last:mb-0"
+              className="relative py-[3px] flex flex-col  items-start gap-0 font-medium leading-5.5 text-sm mb-[5px] last:mb-0"
             >
-              <img
-                src={Like}
-                alt="Like"
-                className="rounded-[5px] h-9 w-9 object-cover"
-              />
-              <p className="flex justify-between w-[270px]">
-                {item.message}
-                <span className="block absolute right-0 top-[20%] text-right text-xs text-[#252525]/40">
-                  {dayjs(item?.created_at).format("h:mm A")}
-                </span>
-              </p>
+              <div
+                onClick={() =>
+                  userRole == "PATIENT"
+                    ? navigate("/patient/notification")
+                    : navigate("/care-provider/notification")
+                }
+                className="flex items-center gap-2.5"
+              >
+                <img
+                  src={Like}
+                  alt="Like"
+                  className="rounded-[5px] h-9 w-9 object-cover"
+                />
+                <p className="flex justify-between w-[270px]">
+                  {item.message}
+                  <span className="block absolute right-0 top-[20%] text-right text-xs text-[#252525]/40">
+                    {dayjs(item?.created_at).format("h:mm A")}
+                  </span>
+                </p>
+              </div>
+              {item?.member_id ? (
+                <div className="flex pl-12 gap-[8px]">
+                  {/* Accept Button */}
+                  <button
+                    onClick={() =>
+                      handleAcceptPrivateCommunity(item?.member_id, "APPROVED")
+                    }
+                    className="flex items-center cursor-pointer justify-center text-white !mt-3 bg-[#2291E3] text-[12px] !w-[70px] !h-[30px] !rounded-[6px]"
+                  >
+                    {/* Tick Icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-7.364 7.364a1 1 0 01-1.414 0L3.293 9.414a1 1 0 011.414-1.414l4.222 4.222 6.657-6.657a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+
+                  {/* Cancel Button */}
+                  <button
+                    onClick={() =>
+                      handleAcceptPrivateCommunity(item?.member_id, "DECLINED")
+                    }
+                    className="flex items-center cursor-pointer justify-center text-white !mt-3 bg-red-600 text-[12px] !w-[70px] !h-[30px] !rounded-[6px]"
+                  >
+                    {/* Cross Icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           ))
         ) : (
@@ -79,7 +166,14 @@ const NotficationBar = ({ noticationLink }) => {
         )}
       </div>
 
-      <div onClick={() => userRole=="PATIENT" ? navigate("/patient/notification") : navigate("/care-provider/notification") } className="cursor-pointer text-[#006EFF] font-medium text-[15px] bg-[#FAFAFA] border-t border-t-[#D5D7DA] flex justify-center items-center gap-2 p-[13px] rounded-b-xl rounded-bl-xl">
+      <div
+        onClick={() =>
+          userRole == "PATIENT"
+            ? navigate("/patient/notification")
+            : navigate("/care-provider/notification")
+        }
+        className="cursor-pointer text-[#006EFF] font-medium text-[15px] bg-[#FAFAFA] border-t border-t-[#D5D7DA] flex justify-center items-center gap-2 p-[13px] rounded-b-xl rounded-bl-xl"
+      >
         View all notifications
         <IoArrowForward size={18} color="#006EFF" />
       </div>

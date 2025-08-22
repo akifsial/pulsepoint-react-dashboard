@@ -60,7 +60,7 @@ export const PrimaryButton: React.FC<ExtendedBtnProps> = ({
 
   return (
     <button
-      className={`rounded-[20px] cursor-pointer !p-0 h-[36px] ${
+      className={`rounded-[20px] ${disabled==true ? "" : "cursor-pointer"} !p-0 h-[36px] ${
         disabled ? "opacity-50 cursor-not-allowed" : ""
       } ${btnClass}`}
       onClick={onClick}

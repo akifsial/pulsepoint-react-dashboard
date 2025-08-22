@@ -7,6 +7,7 @@ import userProfile from "../../assets/media/svgs/dashboard-svgs/profile1.svg";
 import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
 import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
+import { IoLocationSharp } from "react-icons/io5";
 import {
   useAllApiInsuranceTypes,
   useAllApiProviderTypes,
@@ -388,8 +389,6 @@ const PatientProfile = ({ onChangePassword }) => {
                 }}
                 errors={errors}
               />
-
-            
             </div>
 
             <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3 mt-1">
@@ -397,7 +396,7 @@ const PatientProfile = ({ onChangePassword }) => {
             </h4>
 
             <div className="sm:flex  items-center gap-4">
-              <SelectField
+              {/* <SelectField
                 label="State"
                 id="state"
                 value={state}
@@ -410,13 +409,32 @@ const PatientProfile = ({ onChangePassword }) => {
                   required: "Select a state",
                 }}
                 errors={errors}
-              />
+              /> */}
+
+              <div>
+                <InputField
+                  label="State"
+                  asterisk={true}
+                  id="state"
+                  name="state"
+                  type="text"
+                  className="pr-10"
+                  placeholder="e.g., California"
+                  icon={IoLocationSharp}
+                  register={register}
+                  registerName="state"
+                  errors={errors}
+                  validation={{
+                    required: "State is required",
+                  }}
+                />
+              </div>
 
               <InputField
                 label="Zip Code:"
                 id="postal_code"
                 name="postal_code"
-                type="text"
+                type="number"
                 placeholder="78701"
                 fieldName="sm:w-[32%]"
                 register={register}

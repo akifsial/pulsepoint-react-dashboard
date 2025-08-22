@@ -65,8 +65,9 @@ export const ProtectedRoutes: React.FC<{ children: React.ReactNode; allowedRoles
   children,
   allowedRoles,
 }) => {
+    const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("userInfo") || "{}");
-  const isAuthenticated = !!user?.role_type;
+  const isAuthenticated = !!user?.role_type 
   const userRole = user?.role_type;
 
   if (!isAuthenticated) {
@@ -88,7 +89,8 @@ export const ProtectedRoutes: React.FC<{ children: React.ReactNode; allowedRoles
 
 export const PublicProtectRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("userInfo") || "{}");
-  const isAuthenticated = !!user?.role_type;
+  const token = localStorage.getItem("token");
+  const isAuthenticated =  !!user?.role_type;
 
   if (isAuthenticated) {
     // redirect based on role

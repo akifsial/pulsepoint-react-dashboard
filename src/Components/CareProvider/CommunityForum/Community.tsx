@@ -12,6 +12,7 @@ import SaveWhite from "@assets/media/svgs/dashboard-svgs/save-white.svg";
 import SaveBlack from "@assets/media/svgs/dashboard-svgs/save-black.svg";
 
 import SavedCommunityFeed from "./SavedCommunityFeed";
+import PopularPostsCommunity from "./PopularPostsCommunity";
 // import ReactSVG from "react-svg";
 
 const Community = () => {
@@ -87,12 +88,12 @@ const Community = () => {
                 Save Posts
               </button>
             </div>
-            {activeTab == "home" || activeTab == "Popular" ? (
+            {activeTab == "home"  ? (
               <CommunityFeed
                 setOpenBackFeed={setOpenBackFeed}
                 setPostIdFeed={setPostIdFeed}
               />
-            ) : (
+            ): activeTab=="Popular" ? <PopularPostsCommunity/> : (
               <SavedCommunityFeed />
             )}
           </div>

@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { Search, Clock } from "lucide-react";
 import { useMeApi } from "@src/hooks/useUsers";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   sidebarOpen: boolean;
@@ -95,6 +96,13 @@ const DashboardHeader: React.FC<Props> = ({
     setIsSearchDropdownOpen(false);
   };
 
+  const queryClient = useQueryClient();
+
+  const handleNotifications = () => {
+    setShowNotifications((prev) => !prev);
+queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
+  };
+
   return (
     <header
       className={`${
@@ -167,7 +175,7 @@ const DashboardHeader: React.FC<Props> = ({
           </div>
           {/* Notification Icon */}
           <div
-            onClick={() => setShowNotifications((prev) => !prev)}
+            onClick={() => handleNotifications()}
             className=" cursor-pointer relative"
             ref={notificationRef}
           >

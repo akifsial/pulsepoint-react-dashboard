@@ -23,10 +23,10 @@ export const usePopularCommunities = (search) => {
   });
 };
 
-export const useGetCommunityPost = () => {
+export const useGetCommunityPost = (popular) => {
   return useQuery({
-    queryKey: ["useGetCommunityPost"],
-    queryFn: () => ApiGetCommunityPost(),
+    queryKey: ["useGetCommunityPost",popular],
+    queryFn: () => ApiGetCommunityPost(popular),
     refetchOnWindowFocus: false,
   });
 };
@@ -175,7 +175,7 @@ export const useGetNotifications = ({
 
 export const useGetSingleCommunityPost = (id) => {
   return useQuery({
-    queryKey: ["useGetSingleCommunityPost",id],
+    queryKey: ["useGetSingleCommunityPost", id],
     queryFn: () => ApiGetSinglePost(id),
     // keepPreviousData: true,
     // refetchOnWindowFocus: false,

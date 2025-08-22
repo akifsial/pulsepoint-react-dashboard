@@ -179,14 +179,17 @@ const PatientAllCommunites: React.FC = () => {
       width: "200px",
       showSort: true,
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-        const { creator,id } = row.original;
+        const { creator, id } = row.original;
         const imageUrl = creator?.image
           ? `${import.meta.env.VITE_APP_API_IMG_URL}${creator.image}`
           : dummyImage;
         // console.log("ssssssssss",row)
 
         return (
-          <div className="flex items-center gap-3 pe-10">
+          <div
+            className="flex cursor-pointer items-center gap-3 pe-10"
+            onClick={() => navigate(`/patient/community-account/${id}`)}
+          >
             <img
               src={imageUrl}
               alt={`${creator?.first_name ?? creator?.user_name ?? "User"} ${
@@ -195,12 +198,7 @@ const PatientAllCommunites: React.FC = () => {
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
             <div className="flex flex-col">
-              <span
-                onClick={() =>
-                  navigate(`/patient/community-account/${id}`)
-                }
-                className="font-medium text-sm text-[#252525] leading-tight"
-              >
+              <span className="font-medium text-sm text-[#252525] leading-tight">
                 {creator?.first_name ?? creator?.user_name} {creator?.last_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
@@ -233,6 +231,16 @@ const PatientAllCommunites: React.FC = () => {
         <i>{dayjs(row?.original?.created_at).format("DD-MMMM-YYYY")}</i>
       ),
     },
+
+    //  {
+    //   accessor: "status",
+    //   width: "150px",
+    //   header: "Status",
+    //   showSort: true,
+    //   // cell: (row) => (
+    //   //   <i>{dayjs(row?.original?.status)}</i>
+    //   // ),
+    // },
   ];
 
   const handleRowSelect = (row: ReviewDataTypes) => {};
@@ -312,19 +320,7 @@ const PatientAllCommunites: React.FC = () => {
       <div className="bg-[#FFFFFF] h-[400px] rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">All Communities</h3>
-          {/* searchbar */}
-          {/* <div className="lg:flex lg:flex-1 lg:justify-end lg:px-5">
-            <CommonInput
-              placeholder="Search with Provider name"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              showImg={true}
-              imgSrc={searchIcon}
-              imgLeft={true}
-              inputClassName="text-sm"
-              containerClassName="w-full border-gray-200 rounded-lg py-3 max-w-sm"
-            />
-          </div> */}
+        
         </div>
 
         <div>

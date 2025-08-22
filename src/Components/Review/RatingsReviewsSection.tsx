@@ -1,6 +1,6 @@
 import { useCareProviderSingle } from "@src/hooks/useDashboard";
 import { Star } from "lucide-react";
-import DummyImage from "@src/assets/media/images/dashboard-images/userDummy.png"
+import DummyImage from "@src/assets/media/images/dashboard-images/userDummy.png";
 /**
  * Review object shape.
  */
@@ -17,29 +17,55 @@ export type Review = {
 /**
  * Stars 1‑5 (filled).
  */
+
+// OLD CODE
+// function StarRating({
+//   rating,
+//   className = "",
+//   avg_rating,
+// }: {
+//   rating: number;
+//   className?: string;
+// }) {
+//   console.log("average rating", avg_rating);
+//   return (
+//     <div className={`flex items-center gap-1 ${className}`.trim()}>
+//       {[1, 2, 3, 4, 5].map((star) => {
+//         return (
+//           <Star
+//             key={star}
+//             className={`h-4 w-4 ${
+//               star <= avg_rating
+//                 ? "text-yellow-400 fill-yellow-400"
+//                 : "text-gray-300 fill-gray-300"
+//             }`}
+//           />
+//         );
+//       })}
+//     </div>
+//   );
+// }
+// OLD CODE
+
 function StarRating({
   rating,
   className = "",
-  avg_rating,
 }: {
   rating: number;
   className?: string;
 }) {
-  console.log("average rating", avg_rating);
   return (
     <div className={`flex items-center gap-1 ${className}`.trim()}>
-      {[1, 2, 3, 4, 5].map((star) => {
-        return (
-          <Star
-            key={star}
-            className={`h-4 w-4 ${
-              star <= avg_rating
-                ? "text-yellow-400 fill-yellow-400"
-                : "text-gray-300 fill-gray-300"
-            }`}
-          />
-        );
-      })}
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={`h-4 w-4 ${
+            star <= rating
+              ? "text-yellow-400 fill-yellow-400"
+              : "text-gray-300 fill-gray-300"
+          }`}
+        />
+      ))}
     </div>
   );
 }
@@ -48,7 +74,8 @@ function StarRating({
  * Individual review card.
  */
 function ReviewCard({ review, data }: { review: Review }) {
-  console.log("DATA", data);
+  console.log("vvvvvvvvvvvvvvvvvvvDDDDDDDDDDDDDDDDDDDDDDDD", data);
+
   return (
     <>
       {data?.reviews_to_careprovider?.map((single_review) => (
@@ -67,17 +94,26 @@ function ReviewCard({ review, data }: { review: Review }) {
           </p>
 
           {/* Author info */}
-          <div className="flex items-center gap-3">
+          <div className="flex  items-center gap-3">
             {/* Reviewer Details */}
-
+            {/*  */}
             <div className="flex items-center space-x-3">
               {/* <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
                 <span className="text-white font-semibold text-lg">A</span>
               </div> */}
 
               {
-                <img src={ single_review?.patient?.image ? `${import.meta.env.VITE_APP_API_IMG_URL}${single_review?.patient?.image}` : DummyImage } alt="Methew" className="rounded-[50%] w-[40px] h-[40px] object-fit" />
-
+                <img
+                  src={
+                    single_review?.patient?.image
+                      ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                          single_review?.patient?.image
+                        }`
+                      : DummyImage
+                  }
+                  alt="Methew"
+                  className="rounded-[50%] w-[40px] h-[40px] object-fit"
+                />
               }
               <div>
                 <h4 className="font-semibold text-gray-900 text-sm">
@@ -89,6 +125,7 @@ function ReviewCard({ review, data }: { review: Review }) {
                 </p>
               </div>
             </div>
+            {/*  */}
 
             {/* Reviewer Details */}
 
@@ -102,6 +139,42 @@ function ReviewCard({ review, data }: { review: Review }) {
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-10zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
               </svg>
             </div>
+          </div>
+
+          <div>
+            {/* REPLY OF CAREPROVIDER */}
+
+            {single_review?.replies?.map((reply) => (
+              <div className="flex flex-col items-start mt-10 gap-3 space-x-3">
+                {/* <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                <span className="text-white font-semibold text-lg">A</span>
+              </div> */}
+
+                {
+                  <img
+                    src={
+                      single_review?.patient?.image
+                        ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                            single_review?.patient?.image
+                          }`
+                        : DummyImage
+                    }
+                    alt="Methew"
+                    className="rounded-[50%] w-[40px] h-[40px] object-fit"
+                  />
+                }
+                <div >
+                  <h4 className="font-semibold text-gray-900 text-sm">
+                    {single_review?.patient?.first_name}{" "}
+                    {single_review?.patient?.last_name}
+                  </h4>
+                  <p className="text-xs text-gray-500">
+                    {single_review?.patient?.email}
+                  </p>
+                </div>
+                <i className="font-bold">{reply?.content}</i>
+              </div>
+            ))}
           </div>
         </div>
       ))}
@@ -130,8 +203,6 @@ export default function RatingsReviewsSection({
   // Sample data if no reviews provided
   const { data } = useCareProviderSingle(id);
 
-  console.log("rrrrrrrrr",data)
-
   return (
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
       {/* Header */}
@@ -155,7 +226,7 @@ export default function RatingsReviewsSection({
       {/* Reviews grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {/* {data?.reviews_to_careprovider?.map((review) => ( */}
-          <ReviewCard data={data} />
+        <ReviewCard data={data} />
         {/* ))} */}
       </div>
 

@@ -5,37 +5,54 @@ import stars from "@assets/media/svgs/dashboard-svgs/stars.svg";
 import flags from "@assets/media/svgs/dashboard-svgs/flag.svg";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import RatingStars from "@components/Shared-components/RatingStars";
-import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
+import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
+import userDummy from "@assets/media/images/dashboard-images/userDummy.png"
 import Pagination from "@components/Pagination/Pagination";
 import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActivityCard";
 import { useApiMyReviews } from "@src/hooks/useMyReviews";
 import dayjs from "dayjs";
 import { useStatsApi } from "@src/hooks/useDashboard";
-
+import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
+import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
   const [rating, setRating] = useState("");
   const [page, setPage] = useState(1);
-const [searchText, setSearchText] = useState("");
-const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
+  const [searchText, setSearchText] = useState("");
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
 
   const [sort, setSort] = useState(true);
+  const [filterValue, setFilterValue] = useState("");
 
-  const { data: CareproviderData, refetch,  } = useApiMyReviews(
-    "",
+  const {
+    data: CareproviderData,
+    isLoading: CareProviderLoading,
+    refetch,
+  } = useApiMyReviews(
+    debouncedSearchText,
     rating,
+    filterValue,
     page,
     sort == true ? "asc" : "desc"
   );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchText]);
 
   const { data: statsData } = useStatsApi();
   console.log("stats", statsData);
@@ -48,8 +65,6 @@ const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
         setShowRatingDropdown(false);
       }
     };
-
-
 
     if (showRatingDropdown) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -93,7 +108,7 @@ const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
         return (
           <div className="flex items-center gap-3">
             <img
-              src={`${import.meta.env.VITE_APP_API_IMG_URL}${image}`}
+              src={image ? `${import.meta.env.VITE_APP_API_IMG_URL}${image}` : userDummy}
               alt={`${first_name} ${last_name}`}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
@@ -210,19 +225,20 @@ const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
     <button onClick={() => alert(`Edit ${row.name}`)}>Edit</button>
   );
 
-      const onSortClick = () => {
-      setSort(!sort);
-      refetch();
-    };
+  const onSortClick = () => {
+    setSort(!sort);
+    refetch();
+  };
 
-
-    // console.log("CareproviderDataCareproviderDataCareproviderData",CareproviderData?.records)
+  // console.log("CareproviderDataCareproviderDataCareproviderData",CareproviderData?.records)
 
   return (
     <div className="mb-10">
       <div className="w-[100%] grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
         <StatsCommonCards
-          count={statsData?.totalPatientReviews ? statsData?.totalPatientReviews : 0}
+          count={
+            statsData?.totalPatientReviews ? statsData?.totalPatientReviews : 0
+          }
           title="Total Patient Reviews"
           cardImg={contacts}
           imgBg="#EEE0FF"
@@ -243,7 +259,11 @@ const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
           borderBg="#F98A17"
         />
         <StatsCommonCards
-          count={statsData?.profileViewsThisMonth ? statsData?.profileViewsThisMonth : 0}
+          count={
+            statsData?.profileViewsThisMonth
+              ? statsData?.profileViewsThisMonth
+              : 0
+          }
           title="Profile Views This Month"
           cardImg={userSearch}
           imgBg="#E2F0F6"
@@ -254,6 +274,18 @@ const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3">Recent Reviews</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
+            <div className=" lg:flex lg:flex-1 lg:justify-end px-5">
+              <CommonInput
+                placeholder="Search with Provider name"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                showImg={true}
+                imgSrc={searchIcon}
+                imgLeft={true}
+                inputClassName="text-sm "
+                containerClassName="w-full border-gray-200 rounded-lg py-3 max-w-sm"
+              />
+            </div>
             <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative">
               <div className="flex flex-wrap items gap-4 ">
@@ -266,7 +298,7 @@ const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
                   btnClass="border border-[#252525] px-4 md:w-[101px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
-                <PrimaryButton
+                {/* <PrimaryButton
                   btnText="View All Reviews"
                   btnTextClass="text-[#FFFFFF] text-sm font-semibold"
                   showImg={true}
@@ -274,7 +306,7 @@ const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
                   img={ForwardArrow}
                   imgPosition="right"
                   btnClass="border border-[#252525] px-4 py-3 md:w-[159px] h-[46px] w-full rounded-lg bg-[#000000]"
-                />
+                /> */}
               </div>
               <AnimatePresence>
                 {showRatingDropdown && (
@@ -297,23 +329,33 @@ const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
           </div>
         </div>
         <div>
-          <TanDataTable<dataTypes>
+          {/* <TanDataTable<dataTypes>
             columns={columns}
             data={CareproviderData?.records ?? ""}
             showCheckbox={false}
             onRowSelect={handleRowSelect}
             actions={renderActions}
             onSortClick={onSortClick}
-            // showActions={true}
+           
             className="my-custom-class"
-            // actions={(row) => (
-            //   <DropdownActions
-            //     onView={() => console.log("View", row.id)}
-            //     onEdit={() => console.log("Edit", row.id)}
-            //     onDelete={() => console.log("Delete", row.id)}
-            //   />
-            // )}
-          />
+          
+          /> */}
+
+          <div>
+            {CareProviderLoading ? (
+             <TableSkeletonLoader/>
+            ) : (
+              <TanDataTable<dataTypes>
+                columns={columns}
+                data={CareproviderData?.records ?? []} // better to use [] instead of ""
+                showCheckbox={false}
+                onRowSelect={handleRowSelect}
+                actions={renderActions}
+                onSortClick={onSortClick}
+                className="my-custom-class"
+              />
+            )}
+          </div>
         </div>
         <Pagination
           onPageChange={handlePageChange}

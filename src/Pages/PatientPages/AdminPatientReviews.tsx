@@ -30,6 +30,7 @@ const AdminPatientReviews: React.FC = () => {
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(true);
+  const [filterValue,setFilterValue]=useState(false)
 
   const {
     data,
@@ -39,11 +40,12 @@ const AdminPatientReviews: React.FC = () => {
   } = useApiMyReviews(
     debouncedSearchText,
     rating,
+    filterValue,
     page,
     sort == true ? "asc" : "desc"
   );
 
-  console.log("sssssss",data)
+  console.log("sssssss", data);
 
   const onSortClick = () => {
     setSort(!sort);
@@ -173,20 +175,21 @@ const AdminPatientReviews: React.FC = () => {
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
         const { provider_name, care_provider, provider_email, provider_logo } =
           row.original;
-          console.log("--------------------------------------",care_provider)
+        console.log("--------------------------------------", care_provider);
         return (
-          <div className="flex items-center gap-3">
+          <div
+            className="flex cursor-pointer items-center gap-3"
+            onClick={() =>
+              navigate(`/patient/hospital-profile/${care_provider?.id}`)
+            }
+          >
             <img
               src={provider_logo || dummyImage}
               alt={provider_name}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
             <div className="flex flex-col">
-              <span
-            onClick={() => navigate(`/patient/hospital-profile/${care_provider?.id}`)}
-              
-                className="font-medium text-sm text-[#252525] leading-tight"
-              >
+              <span className="font-medium text-sm text-[#252525] leading-tight">
                 {care_provider?.organization_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">

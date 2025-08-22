@@ -27,14 +27,14 @@ const SavedModal: React.FC<SavedModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl font-semibold mb-4 text-start">
-          Are you sure you want to saved this Care Provider?
+          Are you sure you want to unsaved this Care Provider?
         </h2>
         <div className="flex justify-end gap-4">
           <button
             className="px-4 py-2 cursor-pointer bg-[#007AB2] text-white rounded hover:bg-[#007ab2da] transition"
             onClick={onSaved}
           >
-            {loading ? <Spinner /> : "Yes, Save"}
+            {loading ? <Spinner /> : "Yes, Unsaved"}
           </button>
           <button
             className="px-4 cursor-pointer py-2 border border-gray-300 rounded hover:bg-gray-100 transition"

@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import FlagModal from "@components/Model/FlagModal";
 import PatientReviewLoader from "@components/Loaders/PatientReviewLoader";
+import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 
 interface PatientReviewsCardProps {
   filterValue: string;
@@ -218,9 +219,9 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
             {item?.replies?.map((reply) => (
               <div className="bg-[#E4F1F9] flex items-center gap-5 p-[10px]">
                 <img
-                  src={`${import.meta.env.VITE_APP_API_IMG_URL}${
+                  src={ item.care_provider.image ? ` ${import.meta.env.VITE_APP_API_IMG_URL}${
                     item.care_provider.image
-                  }`}
+                  }` : DummyUser}
                   alt=""
                   className="w-[43px] h-[43px] object-cover rounded-full"
                 />
@@ -252,6 +253,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
                   />
                   <div className="absolute cursor-pointer top-[20%] cursor right-2">
                     <button
+                    className="cursor-pointer"
                       onClick={() => handleReviewReply(item?.feedback?.id)}
                     >
                       <Send />

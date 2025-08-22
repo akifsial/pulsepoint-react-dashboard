@@ -38,7 +38,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
         <div className="flex">
           <label
             htmlFor={id}
-            className="block mb-1 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
+            className="block mb-2.5 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]"
           >
             {label}
           </label>
@@ -54,12 +54,14 @@ const SelectField: React.FC<SelectFieldProps> = ({
         <select
           id={id}
           // value={currentValue}
+          {...(registerName && register(registerName, rest.validation))} // pass validation here
           // onChange={onChange}
           {...(registerName && register(registerName))}
           className={`w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] p-[15px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] leading-[140%] tracking-[0%] placeholder:text-gray-500 focus:outline-none ${
             gray ? "bg-gray-100" : ""
           } appearance-none`}
           {...rest}
+          defaultValue=""
         >
           {options?.map((option) => (
             <option key={option.value} value={option.value}>
@@ -74,7 +76,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
       </div>
 
       {errorMessage && (
-        <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
+        <p className="mt-1 text-sm text-red-500">{errorMessage}</p>
       )}
     </div>
   );

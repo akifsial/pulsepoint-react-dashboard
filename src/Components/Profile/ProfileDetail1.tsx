@@ -10,7 +10,10 @@ import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
 import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
 import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";
 import fallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
+import {
 
+  IoLocationSharp,
+} from "react-icons/io5";
 import Global from "../../assets/media/svgs/dashboard-svgs/globalField.svg";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -390,6 +393,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 fieldName="sm:w-[49%] w-full"
                 iconUrl={inputUser}
                 register={register}
+                disabled={true}
                 registerName="userName"
                 placeholder="User Name"
                 validation={{
@@ -528,7 +532,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
             </h4>
 
             <div className="flex flex-wrap items-center gap-4">
-              <SelectField
+              {/* <SelectField
                 label="State"
                 id="state"
                 value={state}
@@ -541,7 +545,26 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                   required: "Select a state",
                 }}
                 errors={errors}
-              />
+              /> */}
+
+              <div>
+                <InputField
+                  label="State"
+                  asterisk={true}
+                  icon={IoLocationSharp}
+                  id="state"
+                  name="state"
+                  className="pr-10"
+                  type="text"
+                  placeholder="e.g., California"
+                  register={register}
+                  registerName="state"
+                  errors={errors}
+                  validation={{
+                    required: "State is required",
+                  }}
+                />
+              </div>
               <SelectField
                 label="City"
                 id="city"
@@ -560,7 +583,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 label="Zip Code:"
                 id="zip"
                 name="zip"
-                type="text"
+                type="number"
                 placeholder="78701"
                 fieldName="w-full sm:w-[32%]"
                 register={register}

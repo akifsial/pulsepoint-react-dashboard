@@ -76,12 +76,21 @@ const PopularCommunity = () => {
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message);
+      // toast.error(error?.response?.data === null ? "Please add images" : " please slect topics");
+      // toast.error("Please add images ");
       console.log("eeeeeee",error)
 
     },
   });
 
   const handleCommunityCreate = async (data) => {
+
+    if(selectedTopicId1 || selectedTopicId2 || selectedTopicId3 || selectedTopicId4){
+
+    }
+    else{
+      return toast.error("Please select atleast one topic")
+    }
     const formData = new FormData();
     formData.append("title", name);
     formData.append("description", description);
@@ -192,6 +201,8 @@ const PopularCommunity = () => {
             }}
             onClose={closeModal}
             setName={setName}
+            name={name}
+            description={description}
             setDescription={setDescription}
             isPrivate={isPrivate}
             setIsPrivate={setIsPrivate}

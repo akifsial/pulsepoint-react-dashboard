@@ -15,18 +15,29 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 import { X } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface ShareModalProps {
   onClose: () => void;
 }
 
-const ShareModal: React.FC<ShareModalProps> = ({ onClose,postId }) => {
-// console.log("pppppppppppppppppppppppppppp",postId)
+const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
+  console.log("pppppppppppppppppppppppppppp", postId);
 
   const [activeIcon, setActiveIcon] = useState<string>("");
   const shareUrl = `https://phpstack-1250693-5723234.cloudwaysapps.com/patient/community/post/${postId}`;
   // const shareUrl = `http://localhost:5173/patient/community/post/${postId}`;
 
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    toast.success("Copied Successfully!")
+    const link = `https://phpstack-1250693-5723234.cloudwaysapps.com/patient/community/post/${postId}`;
+    navigator.clipboard.writeText(link).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // 2s baad reset
+    });
+  };
 
   const modalContent = (
     <div
@@ -39,7 +50,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose,postId }) => {
       >
         <div className="flex items-center justify-between">
           {/* Title */}
-          <h2 className="text-xl font-semibold mb-6">Share this design</h2>
+          <h2 className="text-xl font-semibold mb-6">Share this post</h2>
 
           {/* Close Button */}
           <button
@@ -50,14 +61,14 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose,postId }) => {
           </button>
         </div>
         {/* Social Icons */}
-        <div className="flex justify-center gap-5 items-center mb-6 px-4">
-          <TwitterShareButton>
+        <div className="flex justify-start gap-5 items-center mb-6 px-4">
+          {/* <TwitterShareButton>
             <IconButton
               icon={<FaTwitter />}
               active={activeIcon === "twitter"}
               onClick={() => setActiveIcon("twitter")}
             />
-          </TwitterShareButton>
+          </TwitterShareButton> */}
 
           {/* <FacebookShareButton url={shareUrl} quote="asdasdasd">
             <IconButton
@@ -80,25 +91,26 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose,postId }) => {
             />
           </FacebookShareButton>
 
-          <LinkedinShareButton>
+          {/* <LinkedinShareButton>
             <IconButton
               icon={<FaLinkedinIn />}
               active={activeIcon === "linkedin"}
               onClick={() => setActiveIcon("linkedin")}
             />
-          </LinkedinShareButton>
+          </LinkedinShareButton> */}
         </div>
 
         {/* Link Share */}
         <div className="text-left text-sm font-medium text-gray-500 mb-2">
           Or copy link
         </div>
-        <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-          <input
+        <div className="flex bg-[#F3F4F6] items-center border border-gray-300 rounded-lg overflow-hidden">
+          <textarea
             type="text"
-            className="flex-1 px-3 py-2 text-sm bg-gray-100 outline-none"
+            value={`https://phpstack-1250693-5723234.cloudwaysapps.com/patient/community/post/${postId}`}
+            className="flex-1 !h-20 w-full px-3 py-2 text-sm bg-gray-100 outline-none"
           />
-          <button className="text-[#007AB2] cursor-pointer px-4 py-2 text-sm font-semibold">
+          <button onClick={handleCopy} className="text-[#007AB2] bg-[#F3F4F6] cursor-pointer px-4 py-2 text-sm font-semibold">
             Copy
           </button>
         </div>

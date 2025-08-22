@@ -11,6 +11,8 @@ export const ApiLogin = async (data) => {
       JSON.stringify(response?.data?.payload?.accessToken)
     );
 
+    console.log("vvvVVVvvv")
+
     // if(response.status==200){
     // }
 
@@ -28,7 +30,6 @@ export const ApiLogin = async (data) => {
     );
     return response.data.payload;
   } catch (error) {
-    console.log("asdasdasd",error)
     toast.error(error?.response?.data?.errors[0]?.message);
     throw error;
   }

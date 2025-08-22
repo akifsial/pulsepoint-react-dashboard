@@ -1,8 +1,7 @@
 import React, { useRef, useState } from "react";
 
 import { Send } from "lucide-react";
-// import DummyUser from "@assets/DummyUser.jpg";
-// import commentIcon from "@assets/commentIcon.svg";
+
 import commentIcon from "@assets/media/svgs/dashboard-svgs/comment.svg";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 
@@ -15,8 +14,6 @@ import { IoEllipsisHorizontal, IoEllipsisVerticalSharp } from "react-icons/io5";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import DeleteDropdownActions from "@components/Dashboard-components/Dropdown-actions/DeleteDropdownActions";
 import Spinner from "@components/Loaders/Spinner";
-// import { ApiLikeComment } from "@src/api/ApiCommunityForum";
-// import { useQueryClient } from "@tanstack/react-query";
 
 export const CommentItem = ({
   comment,
@@ -36,7 +33,7 @@ export const CommentItem = ({
   setReplyParentId,
   handleDeleteComment,
   key,
-  inputRef
+  inputRef,
 }) => {
   const [activeReplyId, setActiveReplyId] = useState<number | null>(null);
 
@@ -52,15 +49,25 @@ export const CommentItem = ({
 
   const [replyLoading, setReplyLoading] = useState(false);
 
-  const handleReply = async () => {
-    if (!parentCommentReplyValue.trim()) return;
+  const handleReply = async (postId, commentId, value) => {
+    // console.log("xxxxxxxxxxxxxxxxxxxxxx", postid);
+    if (!replyValues[commentId]?.trim()) return;
 
     try {
-      setReplyLoading(true); // show spinner
-      await handleParentCommentReply(postId, comment?.id);
+      setReplyLoading(true);
+      await handleParentCommentReply(postId, commentId, value[commentId]);
+      // clear only that field
+      setReplyValues((prev) => ({ ...prev, [commentId]: "" }));
     } finally {
-      setReplyLoading(false); // hide spinner
+      setReplyLoading(false);
     }
+  };
+
+  const [replyValues, setReplyValues] = useState({});
+
+  // update handler
+  const handleReplyChange = (id, value) => {
+    setReplyValues((prev) => ({ ...prev, [id]: value }));
   };
 
   return (
@@ -91,17 +98,14 @@ export const CommentItem = ({
             {/* Like & Reply Buttons */}
             <div className="flex items-center gap-2.5 mb-2.5">
               <div className="flex  items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
+                {/* LIKEEEEE */}
                 <button
                   disabled={LikeIsPending}
                   className="flex items-center gap-2"
                   onClick={() => handleCommentReaction("like", comment, postId)}
                 >
-                  {/* <img src={arrowUpTrans} alt="Like" /> */}
-
-                  {/* <img src={arrowUpTrans} alt="Liked" /> */}
                   {comment?.userLike?.is_like == true ? (
                     <div className="bg-black p-1.5 rounded-full">
-                      {/* <img src={arrowUpTrans} alt="Liked" /> */}
                       <img src={arrowUp} className="py-0.5 px-1" alt="Liked" />
                     </div>
                   ) : (
@@ -117,10 +121,8 @@ export const CommentItem = ({
                     handleCommentReaction("dislike", comment, postId)
                   }
                 >
-                  {/* <img src={arrowUpTrans} alt="Dislike" /> */}
                   {comment?.userLike?.is_like == false ? (
                     <div className="bg-black p-1.5 rounded-full">
-                      {/* <img src={arrowUpTrans} alt="Liked" /> */}
                       <img
                         src={arrowUp}
                         className="rotate-180 py-0.5 px-1"
@@ -131,6 +133,39 @@ export const CommentItem = ({
                     <img src={arrowDowm} alt="Dislike" />
                   )}
                 </button>
+
+                {/* <button
+                  className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
+                  onClick={() => handleReaction("like", post)}
+                  disabled={localLock || LikeIsPending || PostsPending}
+                >
+                  {localLikes[postId] === true ? (
+                    <div className="bg-black p-2 rounded-full">
+                      <img src={arrowUp} className="py-0.5 px-1" alt="Liked" />
+                    </div>
+                  ) : (
+                    <img src={arrowDowm} className="rotate-180" alt="Like" />
+                  )}
+                  {localCounts[post.id] ?? 0}
+                </button>
+
+                <button
+                  className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
+                  onClick={() => handleReaction("dislike", post)}
+                  disabled={localLock || LikeIsPending || PostsPending}
+                >
+                  {localLikes[post.id] === false ? (
+                    <div className="bg-black p-1 rounded-full">
+                      <img
+                        src={arrowUp}
+                        className="rotate-180 py-1.5 px-2"
+                        alt="Dislike"
+                      />
+                    </div>
+                  ) : (
+                    <img src={arrowDowm} alt="Dislike" />
+                  )}
+                </button> */}
               </div>
 
               {/* Reply Icon Button */}
@@ -139,20 +174,9 @@ export const CommentItem = ({
                 className="flex cursor-pointer items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-2 py-3 justify-center min-w-[78px]"
               >
                 <img src={commentIcon} alt="Comments" />
-                <span className="text-sm">
-                  {comment?.replies?.length || 0}
-                </span>
+                <span className="text-sm">{comment?.replies?.length || 0}</span>
               </button>
 
-              {/* _______________________________/ */}
-              {/* <div className="bg-grey-500 cursor-pointer">
-                <DropdownActions
-                  // onView={() => console.log("View Detail")}
-                  // onEdit={() => console.log("Edit Detail")}
-                  onDelete={() => handleDeleteComment(comment?.id, postId)}
-                  variant="simple"
-                />
-              </div> */}
               {comment?.user?.id == myId?.id && (
                 <div className="bg-grey-500 cursor-pointer">
                   <DeleteDropdownActions
@@ -166,10 +190,10 @@ export const CommentItem = ({
             {/* Input Box for Reply */}
             {isReplyVisible && (
               <div className="relative mb-3">
-                <input
+                {/* <input
                   type="text"
                   ref={inputRef}
-                  // value={parentCommentReplyValue}
+                  value={parentCommentReplyValue}
                   onChange={(e) => setParentCommentReplyValue(e.target.value)}
                   onKeyDown={(e) => {
                     if (
@@ -182,12 +206,36 @@ export const CommentItem = ({
                   }}
                   placeholder="Reply..."
                   className="w-full outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
+                /> */}
+
+                <input
+                  type="text"
+                  placeholder="Reply..."
+                  value={replyValues[comment.id] || ""}
+                  className="w-full outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
+                  onChange={(e) =>
+                    handleReplyChange(comment.id, e.target.value)
+                  }
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Enter" &&
+                      replyValues[comment.id]?.trim() &&
+                      !replyLoading
+                    ) {
+                      handleReply(postId, comment.id, replyValues);
+                    }
+                  }}
                 />
+
                 <button
-                  disabled={!parentCommentReplyValue.trim() || replyLoading}
-                  onClick={handleReply}
+                  // disabled={!replyValues.trim() || replyLoading}
+                  onClick={() => handleReply(postId, comment.id, replyValues)}
+                  // className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition
+
+                  // `}
+
                   className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${
-                    !parentCommentReplyValue.trim() || replyLoading
+                    !replyValues[comment?.id]?.trim() || replyLoading
                       ? "bg-gray-300 cursor-not-allowed"
                       : "bg-[#007AB2] hover:bg-[#005f8e] cursor-pointer"
                   }`}
@@ -226,15 +274,6 @@ export const CommentItem = ({
                     setReplyParentId={setReplyParentId}
                     handleDeleteComment={handleDeleteComment}
                   />
-
-                  {/* <div className="bg-grey-500 mb-10 cursor-pointer">
-                    <DropdownActions
-                      // onView={() => console.log("View Detail")}
-                      // onEdit={() => console.log("Edit Detail")}
-                      onDelete={() => handleDelete(reply?.id)}
-                      variant="simple"
-                    />
-                  </div> */}
                 </div>
               ))}
             </div>

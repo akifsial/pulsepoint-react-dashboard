@@ -47,7 +47,7 @@ const ViewCommunity = ({ community, goBack }) => {
         <div className="flex items-center mb-4.5 gap-2.5 " >
           <img src={backArrow} alt="backArrow" className="cursor-pointer" onClick={()=>goBack(false)}/>
           <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
-            Back to Feedsdfghj
+            Back to Feed
           </h2>
         </div>
       </div>

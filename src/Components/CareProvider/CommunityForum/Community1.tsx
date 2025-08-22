@@ -11,6 +11,8 @@ const Community1 = ({
   setDescription,
   isPrivate,
   setIsPrivate,
+  name,
+  description
 }) => {
   const {
     register,
@@ -46,6 +48,7 @@ const Community1 = ({
         {...register("name", { required: "Name is required" })}
         className="w-full mb-1 h-[50px] mb-5 bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
         onChange={(e) => setName(e.target.value)}
+        value={name}
       />
 
       <label
@@ -60,6 +63,7 @@ const Community1 = ({
         // id={id}
         // name={id}
         placeholder={"Enter description"}
+        value={description}
         // rows={row}
         className={`w-full  h-[90px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] py-2.5 font-normal text-[16px] leading-[140%] text-[#1A1A1A] mb-1 focus:outline-none placeholder:text-sm placeholder:font-medium `}
         onChange={(e) => setDescription(e.target.value)}
@@ -78,7 +82,7 @@ const Community1 = ({
           htmlFor="privateCheck"
           className="text-sm text-black font-[Geist] cursor-pointer"
         >
-          You want to keep this post private?
+          You want to keep this community private?
         </label>
       </div>
 

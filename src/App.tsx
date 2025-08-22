@@ -12,7 +12,6 @@ const App: React.FC = () => {
   //   // const token = JSON.stringify(localStorage.getItem("token")); // or however you're getting it
   //   const token = JSON.stringify(localStorage.getItem("token")); // or however you're getting it
 
-
   //   // Step 1: Create socket instance and store in ref
   //   if (token !== 'null') {
   //     console.log("token is coming")
@@ -39,29 +38,39 @@ const App: React.FC = () => {
   //   };
   // }, []);
 
-  const navigate=useNavigate()
-  
+  const navigate = useNavigate();
 
-const location = useLocation();
+  const location = useLocation();
 
   // useEffect(() => {
   //   setupInterceptors(navigate);
   // }, [navigate]);
 
+  // useEffect(() => {
+  //   const params = new URLSearchParams(location.search);
+  //   const token = params.get("token");
+  //   if (token) {
+  //     // localStorage.setItem("token", token);
+  //     localStorage.setItem("token", JSON.stringify(token));
 
-// useEffect(() => {
-//   const params = new URLSearchParams(location.search);
-//   const token = params.get("token");
-//   if (token) {
-//     // localStorage.setItem("token", token);
-//     localStorage.setItem("token", JSON.stringify(token));
+  //     // localStorage.setItem("userInfo", token);
 
-//     // localStorage.setItem("userInfo", token);
+  //     console.log("✅ Token stored from router:", token);
+  //     navigate("/patient/dashboard")
+  //   }
+  // }, [location]);
 
-//     console.log("✅ Token stored from router:", token);
-//     navigate("/patient/dashboard")
-//   }
-// }, [location]);
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const token = params.get("token");
+
+  //   if (token) {
+  //     localStorage.setItem("accestoken", token); // Store the token
+  //     // console.log("asdasdasdasdasd","")
+  //     // window.location.href = "/dashboard"; // Redirect to dashboard
+  //   }
+  // }, []);
+
 
 
   return (

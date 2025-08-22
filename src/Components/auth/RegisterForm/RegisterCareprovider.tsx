@@ -106,12 +106,25 @@ const RegisterCareprovider = ({ setSelectUser }) => {
     { value: "life", label: "Life Insurance" },
     { value: "disability", label: "Disability Insurance" },
   ];
+  // const cityOptions = [
+  //   { value: "new_york", label: "New York" },
+  //   { value: "los_angeles", label: "Los Angeles" },
+  //   { value: "chicago", label: "Chicago" },
+  //   { value: "houston", label: "Houston" },
+  //   { value: "miami", label: "Miami" },
+  // ];
+
   const cityOptions = [
-    { value: "new_york", label: "New York" },
-    { value: "los_angeles", label: "Los Angeles" },
-    { value: "chicago", label: "Chicago" },
-    { value: "houston", label: "Houston" },
-    { value: "miami", label: "Miami" },
+    { value: "New York", label: "New York" },
+    { value: "London", label: "London" },
+    { value: "Paris", label: "Paris" },
+    { value: "Dubai", label: "Dubai" },
+    { value: "Singapore", label: "Singapore" },
+    { value: "Tokyo", label: "Tokyo" },
+    { value: "Hong Kong", label: "Hong Kong" },
+    { value: "Zurich", label: "Zurich" },
+    { value: "Los Angeles", label: "Los Angeles" },
+    { value: "Monaco", label: "Monaco" },
   ];
 
   const providerOptions = [
@@ -174,7 +187,8 @@ const RegisterCareprovider = ({ setSelectUser }) => {
       provider_type_id: 1,
       state: data.state,
       address: data.streetAddress,
-      website_url: "yeah.com",
+      // website_url: "yeah.com",
+      website_url: data.website || "",
       working_hours: "Uk Bargingham Street ",
       marital_status: data.maritalStatus,
       // communication_method_id: preferredMethod,
@@ -204,6 +218,7 @@ const RegisterCareprovider = ({ setSelectUser }) => {
             <form
               onSubmit={handleSubmit(RegisterSubmit)}
               className="sm:space-y-6"
+              noValidate
             >
               <div className="sm:px-4 py-6">
                 <p className="text-[#1A1A1A] flex items-center gap-5 text-[25px] sm:text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
@@ -277,7 +292,7 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                 </div>
 
                 {/* Email and Phone */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="w-full">
                     <InputField
                       label="Email Address"
@@ -323,16 +338,15 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                   <div
                     className={`relative grid grid-cols-1 md:grid-cols-1 gap-2 ${
                       phoneValidation ? "mb-6" : ""
-                    } `}
+                    }`}
                   >
                     <label className="block text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]">
-                      Phone Number
+                      Phone Number<span className="text-red-500 ml-1">*</span>
                     </label>
-                    <Controller
+
+                    {/* <Controller
                       name="number"
                       control={control}
-                      // rules={{ required: "Phone number is required" }}
-
                       render={({ field, fieldState }) => (
                         <>
                           <PhoneInput
@@ -340,24 +354,72 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                             value={field.value}
                             onChange={field.onChange}
                             defaultCountry="US"
-                            className="w-full mb-5 h-[50px] w-full  border border-[#2525251A] rounded-[8px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
+                            className="w-full h-[50px] border border-[#2525251A] rounded-[8px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
                           />
-                          {fieldState.error && (
-                            <p className="text-red-500 mb-3">
-                              {fieldState.error.message}
-                            </p>
-                          )}
+                        
+                          <div className="h-[20px]">
+                            {fieldState.error && (
+                              <p className="text-red-500 text-sm">
+                                {fieldState.error.message}
+                              </p>
+                            )}
+                          </div>
                         </>
                       )}
+                    /> */}
+
+                    <Controller
+                      name="number"
+                      control={control}
+                      rules={{
+                        required: "Phone number is required",
+                        minLength: {
+                          value: 5,
+                          message: "Invalid phone number",
+                        },
+                      }}
+                      render={({ field, fieldState }) => {
+                        const handleChange = (value: string) => {
+                          // Remove all non-digit characters
+                          const cleanValue = value.replace(/\D/g, "");
+                          if (!cleanValue) {
+                            field.onChange(""); // Clear value if empty
+                          } else {
+                            field.onChange(value); // Otherwise update normally
+                          }
+                        };
+
+                        return (
+                          <>
+                            <PhoneInput
+                              placeholder="Enter phone number"
+                              value={field.value || ""}
+                              onChange={handleChange}
+                              defaultCountry="US"
+                              className="w-full h-[50px] border border-[#2525251A] rounded-[8px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
+                              inputProps={{
+                                required: true,
+                              }}
+                            />
+                            <div className="h-[20px]">
+                              {fieldState.error && (
+                                <p className="text-red-500 text-sm">
+                                  {fieldState.error.message}
+                                </p>
+                              )}
+                            </div>
+                          </>
+                        );
+                      }}
                     />
 
-                    {phoneValidation ? (
-                      <p className="text-red-500 absolute bottom-[-10px] ">
-                        Phone number is required
-                      </p>
-                    ) : (
-                      ""
-                    )}
+                    <div className="h-[20px]">
+                      {phoneValidation && (
+                        <p className="text-red-500 text-sm">
+                          Phone number is required
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -370,7 +432,7 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                       icon={IoLocationSharp}
                       id="zipCode"
                       name="zipCode"
-                      type="text"
+                      type="number"
                       className="pr-10"
                       placeholder="e.g., 78701"
                       register={register}

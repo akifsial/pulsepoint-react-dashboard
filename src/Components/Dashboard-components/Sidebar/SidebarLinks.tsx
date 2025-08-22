@@ -18,7 +18,11 @@ import provideIcon from "@assets/media/svgs/provide.svg";
 import provideactive from "@assets/media/svgs/provide-active.svg";
 import profile from "@assets/media/svgs/dashboard-svgs/profile.svg";
 import profileActive from "@assets/media/svgs/dashboard-svgs/profileActive.svg";
-import { CommunityIconWhite, CommunityIconBlack, CommunityIconBlue } from "@components/CommunitiesSVG";
+import {
+  CommunityIconWhite,
+  CommunityIconBlack,
+  CommunityIconBlue,
+} from "@components/CommunitiesSVG";
 import manage from "@assets/media/svgs/dashboard-svgs/manage.svg";
 import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg";
 import feature from "@assets/media/svgs/dashboard-svgs/feature.svg";
@@ -66,6 +70,17 @@ export const sidebarLinks: SidebarLink[] = [
       active: <img src={communityActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
+
+  {
+    label: "Communities",
+    path: "/care-provider/communities",
+    icon: {
+      default: <CommunityIconBlack className="w-6 h-6" />,
+      hover: <CommunityIconBlue className="w-6 h-6" />,
+      active: <CommunityIconWhite className="w-6 h-6" />,
+    },
+  },
+
   // {
   //   label: "Notification",
   //   path: "/care-provider/notification",
@@ -125,7 +140,7 @@ export const PatientSidebarLinks: SidebarLink[] = [
   //   },
   // },
 
-    {
+  {
     label: "Communities",
     path: "/patient/communities",
     icon: {
@@ -247,8 +262,6 @@ export const CareProfileSidebarLinks: SidebarLink[] = [
       active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
-
-  
 
   {
     label: "Payment History",

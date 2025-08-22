@@ -1,22 +1,22 @@
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import { useAllSavedCareProviders } from "@src/hooks/useUsers";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import Pagination from "@components/Pagination/Pagination";
+import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 // import columns from "@pages/PatientPages/";
 function SavedCareProviders({
   debouncedSearchText,
   rating,
   page,
+  setPage,
   // sort,
   // onSortClick,
 }) {
-
-
-  const [sort,setSort]=useState(true)
-
+  const [sort, setSort] = useState(true);
+  // const [page, setPage] = useState(1);
 
   const {
     data: AllSavedCareProviders,
@@ -29,17 +29,16 @@ function SavedCareProviders({
     sort == true ? "asc" : "desc"
   );
 
-  console.log("%%%%%%%%%%%%%%%%",AllSavedCareProviders)
-
-
-    const onSortClick = () => {
+  const onSortClick = () => {
     setSort(!sort);
     refetch();
   };
 
-//   const [page, setPage] = useState(1);
+  //   const [page, setPage] = useState(1);
 
-  const columns: TanDataTableColumn<dataTypes>[] = [
+  const getColumns = (
+    navigate: ReturnType<typeof useNavigate>
+  ): TanDataTableColumn<dataTypes>[] => [
     {
       accessor: "first_name",
       header: "Provider’s Name",
@@ -129,22 +128,25 @@ function SavedCareProviders({
   ];
 
   const handleRowSelect = (row: dataTypes) => {};
-
+  const navigate = useNavigate();
+  const columns = React.useMemo(() => getColumns(navigate), [navigate]);
   const handlePageChange = (page) => {
     setPage(page);
   };
 
   return (
-    <div>
-      <TanDataTable<dataTypes>
-        columns={columns}
-        data={AllSavedCareProviders?.records ?? []}
-        showCheckbox={false}
-        onRowSelect={handleRowSelect}
-        className="my-custom-class"
-        onSortClick={onSortClick}
-      />
-      
+    <div className="">
+     { isLoadingAllSavedCareProvider ? (
+      <TableSkeletonLoader />) : (
+      <div className="overflow-x-auto">
+        <TanDataTable<dataTypes>
+          columns={columns}
+          data={AllSavedCareProviders?.records ?? []}
+          showCheckbox={false}
+          onRowSelect={handleRowSelect}
+          className="my-custom-class"
+          onSortClick={onSortClick}
+        />
       <div className="">
         <Pagination
           onPageChange={handlePageChange}
@@ -153,6 +155,8 @@ function SavedCareProviders({
           rowsPerPage={3}
         />
       </div>{" "}
+      </div>
+      )}
     </div>
   );
 }

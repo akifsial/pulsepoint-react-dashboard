@@ -7,13 +7,15 @@ import {
 } from "@src/api/ApiUsers";
 import { useQuery } from "@tanstack/react-query";
 
-export const useMeApi = (params = {}) => {
+export const useMeApi = (enabled = true) => {
   return useQuery({
-    queryKey: ["useMeApi"], // this enables caching per set of params
+    queryKey: ["useMeApi"],
     queryFn: () => ApiMe(),
+    enabled, 
     refetchOnWindowFocus: false,
   });
 };
+
 
 // export const useMeApi = (token: string | null) => {
 //   return useQuery({
@@ -23,10 +25,10 @@ export const useMeApi = (params = {}) => {
 //   });
 // };
 
-export const useAllSavedCareProviders = (search: string, rating: number,sort) => {
+export const useAllSavedCareProviders = (search: string, rating: number,page,sort) => {
   return useQuery({
-    queryKey: ["useAllSavedCareProviders", search, rating,sort], // this enables caching per set of params
-    queryFn: () => ApiAllSavedCareProviders(search, rating,sort),
+    queryKey: ["useAllSavedCareProviders", search, rating,page,sort], // this enables caching per set of params
+    queryFn: () => ApiAllSavedCareProviders(search, rating,page,sort),
     refetchOnWindowFocus: false,
   });
 };

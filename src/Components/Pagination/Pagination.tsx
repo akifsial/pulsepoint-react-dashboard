@@ -53,9 +53,13 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <div className="bg-[#f5f7fb] flex md:justify-between justify-center md:pt-0 pt-4 flex-wrap  items-center ps-[24px] pe-[24px]">
       <div>
-        <p className="font-medium text-[14px]">
+        {/* <p className="font-medium text-[14px]">
           Showing {currentPage * rowsPerPage - rowsPerPage + 1} to{" "}
           {currentPage * rowsPerPage} of {totalRows} entries
+        </p> */}
+         <p className="font-medium text-[14px]">
+          Showing {currentPage} to{" "}
+          {totalPages} of {totalRows} entries
         </p>
       </div>
       <div className="flex md:gap-2 gap-1 items-center py-4 ">

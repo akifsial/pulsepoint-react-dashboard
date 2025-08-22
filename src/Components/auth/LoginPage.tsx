@@ -54,7 +54,7 @@ const LoginPage = () => {
         console.log("NUTELA", response.user.role_type);
         toast.success("Login Successful");
 
-        const token = JSON.parse(localStorage.getItem("token"));
+        const token =localStorage.getItem("token");
 
         // const socket = connectSocket(token);
         connectSocket(token);

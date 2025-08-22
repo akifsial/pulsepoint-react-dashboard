@@ -32,6 +32,7 @@ const CommunityTopics = ({
         {options.map((option, index) => (
           <button
             type="button"
+            // value={selectedId}
             key={index}
             onClick={() => handleSelect(option.id)}
             className={`py-1.5 cursor-pointer px-4 rounded-[20px] transition-all duration-200

@@ -547,7 +547,7 @@ const CommunitySinglePost = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                   }`}
                   alt=""
                   loading="lazy"
-                  className="rounded-md w-full h-[400px] !object-fit"
+                  className="rounded-md w-full h-[400px] object-cover"
                 />
               </div>
             ) : (
@@ -661,7 +661,7 @@ const CommunitySinglePost = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                 </button>
               </div>
               {shareModal && (
-                <ShareModal onClose={() => setShareModal(false)} />
+                <ShareModal postId={singlePostData?.id} onClose={() => setShareModal(false)} />
               )}
             </div>
             {openComments === singlePostData?.id && (

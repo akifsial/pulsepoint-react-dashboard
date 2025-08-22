@@ -7,6 +7,7 @@ import { useCareProviderSingle } from "@src/hooks/useDashboard";
 import { ApiSavedCareProviders } from "@src/api/ApiDashboard";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import UnSavedModal from "./Model/UnSavedModal";
 import SavedModal from "./Model/SavedModal";
 
 interface HospitalProfileCardProps {
@@ -29,7 +30,9 @@ export default function HospitalProfileCard({
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { data } = useCareProviderSingle(id);
   const queryClient = useQueryClient();
-  const [savedModal, setSavedModal] = useState();
+  const [unSavedModal, setUnSavedModal] = useState();
+  const [savedModal, setSavedModal] = useState(false);
+
   // Example services data; replace or populate as needed
   const servicesData = [
     { id: 1, name: "24/7 Nursing Care" },
@@ -46,7 +49,11 @@ export default function HospitalProfileCard({
     mutationFn: () => ApiSavedCareProviders({ care_provider_id: data?.id }),
 
     onSuccess: async () => {
-      toast.success("Care Provider Saved Successfully");
+      if (data?.is_saved_by_patients) {
+        toast.success("Care Provider Unsaved Successfully");
+      } else {
+        toast.success("Care Provider Saved Successfully");
+      }
       queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
     },
     onError: (error) => {
@@ -54,21 +61,48 @@ export default function HospitalProfileCard({
     },
   });
 
+  // const handleBookmarkToggle = async () => {
+  //   if (savedCareProvidersPending) return;
+
+  //   setIsBookmarked(!isBookmarked);
+
+  //   if (data?.is_saved_care_provider == true) {
+  //     // handleSaved()
+  //     setUnSavedModal(true);
+  //     return;
+  //   }
+
+  //   await savedCareProvidersMutation();
+  // };
+
   const handleBookmarkToggle = async () => {
     if (savedCareProvidersPending) return;
 
     setIsBookmarked(!isBookmarked);
 
-    if (data?.is_saved_care_provider == true) {
-      // handleSaved()
-      setSavedModal(true);
+    if (data?.is_saved_by_patients == true) {
+      // agar already saved hai → Unsave modal dikhana
+      setUnSavedModal(true);
       return;
     }
 
-    await savedCareProvidersMutation();
+    // agar abhi tak saved nahi hai → SaveModal dikhana
+    handleSaveClick();
   };
 
   const handleSaved = async () => {
+    await savedCareProvidersMutation();
+    setUnSavedModal(false);
+  };
+
+  const handleSaveClick = () => {
+    if (savedCareProvidersPending) return;
+    // Pehle modal kholna
+    setSavedModal(true);
+  };
+
+  // jab modal me confirm ho
+  const handleConfirmSave = async () => {
     await savedCareProvidersMutation();
     setSavedModal(false);
   };
@@ -114,20 +148,41 @@ export default function HospitalProfileCard({
         >
           <Bookmark
             className={`w-4 h-4 ${
-              data?.is_saved_care_provider
+              data?.is_saved_by_patients
                 ? "fill-current text-medical-blue"
                 : "text-gray-700"
             }`}
           />
         </button>
       </div>
-      {savedModal && (
-        <SavedModal
+      {/* {unSavedModal && (
+        <UnSavedModal
           onSaved={handleSaved}
-          onClose={() => setSavedModal(false)}
+          onClose={() => setUnSavedModal(false)}
           isOpen={true}
         />
+      )} */}
+
+      {savedModal && (
+        <SavedModal
+          onSaved={handleConfirmSave}
+          onClose={() => setSavedModal(false)}
+          isOpen={true}
+          loading={savedCareProvidersPending}
+
+        />
       )}
+
+      {unSavedModal && (
+        <UnSavedModal
+          onSaved={handleSaved}
+          onClose={() => setUnSavedModal(false)}
+          isOpen={true}
+          loading={savedCareProvidersPending}
+
+        />
+      )}
+
       {/* About Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">About</h3>

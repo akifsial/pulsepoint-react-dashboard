@@ -42,7 +42,7 @@ import DeleteModal from "@src/components/Model/DeleteModal";
 import Spinner from "@components/Loaders/Spinner";
 import PostContent from "@components/PostContent";
 
-const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
+const PopularPostsCommunity = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [activePostActions, setActivePostActions] = useState(null);
   const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
@@ -64,7 +64,8 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     data: postData,
     isPending: PostsPending,
     isLoading,
-  } = useGetCommunityPost();
+    refetch,
+  } = useGetCommunityPost(true);
   const [replyId, setReplyId] = useState();
   const myId = JSON.parse(localStorage.getItem("userInfo"));
   const [replyInput, setReplyInput] = useState("");
@@ -91,6 +92,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   };
 
   useEffect(() => {
+    refetch();
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setActivePostActions(null);
@@ -912,4 +914,4 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   );
 };
 
-export default CommunityFeed;
+export default PopularPostsCommunity;
