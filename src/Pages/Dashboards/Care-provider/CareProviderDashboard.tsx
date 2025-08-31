@@ -20,6 +20,8 @@ import dayjs from "dayjs";
 import { useStatsApi } from "@src/hooks/useDashboard";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import { useMeApi } from "@src/hooks/useUsers";
+import { useNavigate } from "react-router-dom";
 
 const CareProviderDashboard: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -31,6 +33,13 @@ const CareProviderDashboard: React.FC = () => {
 
   const [sort, setSort] = useState(true);
   const [filterValue, setFilterValue] = useState("");
+const navigate=useNavigate()
+    const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
+  
+    useEffect(()=>{
+      MeDataFetch()
+    })
+  
 
   const {
     data: CareproviderData,
@@ -55,7 +64,6 @@ const CareProviderDashboard: React.FC = () => {
   }, [searchText]);
 
   const { data: statsData } = useStatsApi();
-  console.log("stats", statsData);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -230,7 +238,6 @@ const CareProviderDashboard: React.FC = () => {
     refetch();
   };
 
-  // console.log("CareproviderDataCareproviderDataCareproviderData",CareproviderData?.records)
 
   return (
     <div className="mb-10">
@@ -276,7 +283,7 @@ const CareProviderDashboard: React.FC = () => {
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <div className=" lg:flex lg:flex-1 lg:justify-end px-5">
               <CommonInput
-                placeholder="Search with Provider name"
+                placeholder="Search with Provider name, zipcode"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 showImg={true}

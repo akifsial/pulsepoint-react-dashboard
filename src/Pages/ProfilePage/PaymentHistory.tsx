@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BadgeCheck, XCircle } from "lucide-react";
 import { UseApiPaymentsHistory } from "@src/hooks/usePayments";
 import PaymentHistoryLoader from "@components/Loaders/PaymentHistoryLoader";
+import { useMeApi } from "@src/hooks/useUsers";
+import { useNavigate } from "react-router-dom";
 
 type PaymentRecord = {
   id: string;
@@ -44,6 +46,13 @@ const formatAmount = (amount: number, currency: string) => {
 
 const PaymentHistoryPage = () => {
   const { data, isLoading } = UseApiPaymentsHistory();
+  const navigate=useNavigate()
+    const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
+  
+    useEffect(()=>{
+      MeDataFetch()
+    })
+  
 
   return (
     <div className="min-h-screen py-10 px-4">

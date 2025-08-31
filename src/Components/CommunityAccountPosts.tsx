@@ -563,18 +563,15 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
                         <div className="bg-grey-500 mb-20 cursor-pointer">
                           <DropdownActions
-                            // onView={() => console.log("View Detail")}
-                            // onEdit={() => console.log("Edit Detail")}
+                           
                             onDelete={() =>
                               handleDeleteComment(comment?.id, post?.id)
                             }
                             variant="simple"
                           />
                         </div>
-                        {/* </div> */}
                       </div>
                     ))}
-                  {/* YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY */}
                 </div>
               )}
               {activePostActions === index && (
@@ -613,9 +610,7 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                         <img src={SaveBlue} alt="SaveBlue" />
                       </span>
                     )}
-                    {/* <span className="hidden group-hover:inline-block">
-                      <img src={SaveBlue} alt="SaveBlue" />
-                    </span> */}
+                   
                     Save Post
                   </button>
                 </div>

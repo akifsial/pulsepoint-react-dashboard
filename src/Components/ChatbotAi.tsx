@@ -7,11 +7,14 @@ import ReactMarkdown from "https://esm.sh/react-markdown@7";
 import {
   QueryClient,
   useMutation,
+  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { ApiChatPost } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
 import { useGetConversationChatSpecific } from "@src/hooks/useCommunity";
+import { useNavigate } from "react-router-dom";
+import { ApiMe } from "@src/api/ApiUsers";
 
 const ChatbotAi: React.FC = ({
   selectedConversationId,
@@ -25,6 +28,19 @@ const ChatbotAi: React.FC = ({
   // const [chatBotData, setChatBotData] = useState([]);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  const {
+    data: user,
+    refetch,
+    isLoading: isUserLoading,
+  } = useQuery({
+    queryKey: ["me"],
+    queryFn: ApiMe,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   useEffect(() => {
     setQuestion(""); // Clear input when chat changes
   }, [selectedConversationId]);
@@ -34,8 +50,6 @@ const ChatbotAi: React.FC = ({
   const { data: conversationsData } = useGetConversationChatSpecific(
     selectedConversationId
   );
-
-  console.log("SELECTED CONVEO",selectedConversationId)
 
   const queryClient = useQueryClient();
 
@@ -58,9 +72,10 @@ const ChatbotAi: React.FC = ({
     // Handle form submission
   };
 
+  const navigate = useNavigate();
   const { mutateAsync: ChatPostMutation, isPending: isPendingChatPost } =
     useMutation({
-      mutationFn: (data) => ApiChatPost(data),
+      mutationFn: (data) => ApiChatPost(data, navigate),
 
       onSuccess: async (data) => {
         // setConversationId()
@@ -76,7 +91,7 @@ const ChatbotAi: React.FC = ({
         // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
       },
       onError: (error) => {
-        toast.error(error?.response?.data?.message);
+        // toast.error(error?.response?.data?.message);
       },
     });
 
@@ -115,7 +130,7 @@ const ChatbotAi: React.FC = ({
 
         {/* Search Input Section */}
 
-        <div
+        {/* <div
           ref={chatContainerRef}
           className="h-[200px] sm:h-[500px] text-black w-full rounded-[18px] p-4 chat-scroll text-[16px] overflow-y-auto scroll"
         >
@@ -124,26 +139,15 @@ const ChatbotAi: React.FC = ({
                 <>
                   <div className="flex justify-end">
                     <p className="bg-[#E4E6E7] mt-5 text-black p-2 mb-5 rounded-[10px] w-fit">
-                      {/* <ReactMarkdown> */}
                       {conversation?.content}
-                      {/* </ReactMarkdown> */}
                     </p>
 
-                    {/* <p className="prose prose-sm prose-slate dark:prose-invert max-w-none">
-                        {conversation?.bot_reply?.content}
-                    </p> */}
                   </div>
                   <p className="prose prose-sm prose-slate dark:prose-invert max-w-none">
                     <ReactMarkdown>
                       {conversation?.bot_reply?.content}
                     </ReactMarkdown>
                   </p>
-
-                  {/* <p>
-                    <ReactMarkdown>
-                      {conversation?.bot_reply?.content}{" "}
-                    </ReactMarkdown>
-                  </p> */}
                 </>
               ))
             : chatBotData?.map((bot) => (
@@ -155,6 +159,49 @@ const ChatbotAi: React.FC = ({
                   </div>
                   <p>{bot.bot}</p>
                 </>
+              ))}
+        </div> */}
+
+        <div
+          ref={chatContainerRef}
+          className="h-[200px] sm:h-[500px] text-black w-full rounded-[18px] p-4 chat-scroll text-[16px] overflow-y-auto scroll"
+        >
+          {selectedConversationId
+            ? conversationsData?.records?.map((conversation, index) => (
+                <React.Fragment key={index}>
+                  {/* User Message */}
+                  {conversation?.content && (
+                    <div className="flex justify-end">
+                      <p className="bg-[#E4E6E7] mt-5 text-black p-2 mb-5 rounded-[10px] w-fit">
+                        {conversation.content}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Bot Reply */}
+                  {conversation?.bot_reply?.content && (
+                    <p className="prose prose-sm prose-slate dark:prose-invert max-w-none">
+                      <ReactMarkdown>
+                        {conversation.bot_reply.content}
+                      </ReactMarkdown>
+                    </p>
+                  )}
+                </React.Fragment>
+              ))
+            : chatBotData?.map((bot, index) => (
+                <React.Fragment key={index}>
+                  {/* User Message */}
+                  {bot.user && (
+                    <div className="flex justify-end">
+                      <p className="bg-[#E4E6E7] text-black p-2 mb-3 rounded-[10px] w-fit">
+                        {bot.user}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Bot Reply */}
+                  {bot.bot && <p>{bot.bot}</p>}
+                </React.Fragment>
               ))}
         </div>
 

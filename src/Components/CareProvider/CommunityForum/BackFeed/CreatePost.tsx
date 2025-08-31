@@ -33,7 +33,7 @@ const CreatePost = ({ setIsOpen, communityId }) => {
     useMutation({
       mutationFn: (data) => ApiCreatePostCommunity(data),
       onSuccess: async () => {
-        toast.success("Post Created Successfully");
+        toast.success("Post Under Review");
         queryClient.invalidateQueries(["useGetSpecificCommunity"]); // refetch list
       },
       onError: () => {

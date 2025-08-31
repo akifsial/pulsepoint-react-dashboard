@@ -83,14 +83,9 @@ const CommunitySinglePost = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [replyParentId, setReplyParentId] = useState();
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteModalId, setDeleteModalId] = useState();
-  // const [activePostActions, setActivePostActions] = useState(null);
-
-  console.log("iiiiiiiiiiiiiiiiii",id)
 
   const menuRef = useRef(null);
 
-  // const userId = JSON.stringify(localStorage.getItem("userInfo"))?.address;
-  // console.log("___________________",userId)
   const handleSendComment = async () => {
     if (!comment.trim() || !postId) return;
 
@@ -255,7 +250,6 @@ const CommunitySinglePost = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClear = () => {
-    console.log("________________");
     if (inputRef.current) {
       inputRef.current.value = ""; // clears the input
     }
@@ -383,7 +377,6 @@ const CommunitySinglePost = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   });
 
   const handleDeleteComment = async (commentId, postId) => {
-    console.log("DELDEDLELDELDLE", commentId, postId);
     const post_id = {
       post_id: postId,
     };
@@ -411,10 +404,8 @@ const CommunitySinglePost = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   };
 
   const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
-  console.log("user Id -----", userId);
 
   const postsToRender = data?.data ?? postData?.records ?? [];
-  console.log("postsToRender------", data);
   return (
     <div
       className={` transition-colors h-[400px] w-full duration-300 ${

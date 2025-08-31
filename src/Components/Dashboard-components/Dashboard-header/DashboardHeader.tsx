@@ -6,7 +6,7 @@ import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png
 import dropDownArrow from "@assets/media/svgs/dashboard-svgs/arrow-down.svg";
 import ProfileDropdown from "../Dropdowns/ProfileDropdown";
 import NotficationBar from "./NotificationBar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Search, Clock } from "lucide-react";
 import { useMeApi } from "@src/hooks/useUsers";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
@@ -44,15 +44,10 @@ const DashboardHeader: React.FC<Props> = ({
   const notificationRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const userRole = JSON.stringify(localStorage.getItem("userInfo"))?.role_type;
+const navigate=useNavigate()
+  const { data } = useMeApi(navigate);
 
-  const { data } = useMeApi();
-  console.log("dddddddddddddddddd", data);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     localStorage.setItem("userInfo", JSON.stringify(data));
-  //   }
-  // }, [data]);
 
   const recentSearches: RecentSearch[] = [
     { id: "1", text: "John Davis - Patient ID #10293" },
@@ -236,7 +231,7 @@ queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="absolute right-39 top-[75px] w-[370px] z-50"
+            className="absolute right-49 top-[75px] w-[370px] z-50"
           >
             <NotficationBar noticationLink={noticationLink} />
           </motion.div>

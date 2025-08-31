@@ -1,4 +1,6 @@
 import axios from "axios";
+import Swal from "sweetalert2";
+
 import {
   AIBOT_SEND_MESSAGE_TYPE,
   COMMENT_LIKE_TYPE,
@@ -9,6 +11,7 @@ import {
   SAVE_POST_TYPE,
 } from "@types/apiTypes";
 import toast from "react-hot-toast";
+import { Navigate, useNavigate } from "react-router-dom";
 
 // export const ApiReportPost = async (data: FormData): Promise<any> => {
 //   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/report`;
@@ -77,13 +80,11 @@ export const ApiPostComment = async (data: POST_COMMENT_TYPE) => {
   return response.data.payload;
 };
 
-export const ApiGetCommunityPost = async (popular=false) => {
-  console.log("_________________________",popular)
+export const ApiGetCommunityPost = async (popular = false) => {
   let BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post`;
 
-
-  if(popular){
-    BASE_URL+=`?popular=true`
+  if (popular) {
+    BASE_URL += `?popular=true`;
   }
 
   const token: string | null = JSON.parse(
@@ -94,7 +95,6 @@ export const ApiGetCommunityPost = async (popular=false) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  // console.log("🔵 Page", page, "→ Data:", response.data.payload.records);
 
   // return response.data.payload;
   return {
@@ -286,15 +286,70 @@ export const ApiJoinCommunity = async (data: JOIN_COMMUNITY_TYPE) => {
   return response.data.payload;
 };
 
-export const ApiChatPost = async (data: AIBOT_SEND_MESSAGE_TYPE) => {
+// export const ApiChatPost = async (data: AIBOT_SEND_MESSAGE_TYPE) => {
+//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}chat`;
+//   const token = JSON.parse(localStorage.getItem("token"));
+
+//   const response = await axios.post(BASE_URL, data, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+
+//   return response.data.payload;
+// };
+
+    // const role_type = localStorage.getItem("userInfo")?.role_type;
+
+
+export const ApiChatPost = async (data: AIBOT_SEND_MESSAGE_TYPE, navigate) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}chat`;
-  const token = JSON.parse(localStorage.getItem("token"));
+  const token = JSON.parse(localStorage.getItem("token") || "null");
+  try {
+    const response = await axios.post(BASE_URL, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-  const response = await axios.post(BASE_URL, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+    return response.data.payload;
+  } catch (error) {
+    
+      const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
+    const role_type = userInfo?.role_type;  // ✅ Get fresh role_type here
+    Swal.fire({
+      title: "<strong>Error</strong>",
+      icon: "error",
+      html: `
+    ${error?.response?.data?.errors[0]?.message}
+    <br/><br/>
+  `,
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText: `
+    <i class="fa fa-check"></i> Subscribe
+  `,
+      confirmButtonAriaLabel: "Subscribe Now",
+      cancelButtonText: `
+    <i class="fa fa-times"></i> Cancel
+  `,
+      cancelButtonAriaLabel: "Cancel",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#aaa",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (role_type == "PATIENT") {
+          navigate("/patient/feature", { replace: true });
+          // ✅ URL will be http://localhost:5173/patient/feature
+        } 
+        if (role_type=="CARE_PROVIDER") {
+          navigate("/care-provider/feature", { replace: true });
+          // navigate("/patient/feature", { replace: true });
 
-  return response.data.payload;
+
+        }
+      }
+    });
+
+    // throw error; // 🔁 rethrow so the caller can handle it
+  }
 };
 
 export const ApiGetChatBot = async (data) => {
@@ -516,7 +571,6 @@ export const ApiGetSinglePost = async (id) => {
 };
 
 export const ApiDeleteCommunity = async (communityId: number) => {
-  console.log("_____________________________",communityId)
   const BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
   }community/${communityId}`;

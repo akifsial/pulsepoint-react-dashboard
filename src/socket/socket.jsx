@@ -76,6 +76,5 @@ export const disconnectSocket = () => {
     socket.emit("manual_disconnect");
     socket.disconnect();
     socket = null;
-    console.log("🔌 Socket disconnected manually");
   }
 };

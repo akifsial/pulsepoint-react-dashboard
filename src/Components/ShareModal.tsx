@@ -22,11 +22,9 @@ interface ShareModalProps {
 }
 
 const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
-  console.log("pppppppppppppppppppppppppppp", postId);
 
   const [activeIcon, setActiveIcon] = useState<string>("");
   const shareUrl = `https://phpstack-1250693-5723234.cloudwaysapps.com/patient/community/post/${postId}`;
-  // const shareUrl = `http://localhost:5173/patient/community/post/${postId}`;
 
   const [copied, setCopied] = useState(false);
 
@@ -62,21 +60,8 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
         </div>
         {/* Social Icons */}
         <div className="flex justify-start gap-5 items-center mb-6 px-4">
-          {/* <TwitterShareButton>
-            <IconButton
-              icon={<FaTwitter />}
-              active={activeIcon === "twitter"}
-              onClick={() => setActiveIcon("twitter")}
-            />
-          </TwitterShareButton> */}
-
-          {/* <FacebookShareButton url={shareUrl} quote="asdasdasd">
-            <IconButton
-              icon={<FaFacebookF />}
-              active={activeIcon === "facebook"}
-              onClick={() => setActiveIcon("facebook")}
-            />
-          </FacebookShareButton> */}
+        
+       
 
           <FacebookShareButton
             url={shareUrl}
@@ -91,13 +76,6 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
             />
           </FacebookShareButton>
 
-          {/* <LinkedinShareButton>
-            <IconButton
-              icon={<FaLinkedinIn />}
-              active={activeIcon === "linkedin"}
-              onClick={() => setActiveIcon("linkedin")}
-            />
-          </LinkedinShareButton> */}
         </div>
 
         {/* Link Share */}

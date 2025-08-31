@@ -59,7 +59,7 @@ const queryClient=useQueryClient()
         // 1️⃣ Save token
         localStorage.setItem("token", tokenFromUrl);
 
-        // 2️⃣ Clean URL (remove ?token=xxx)
+        // 2️⃣ Clean URL (remove ?token=)
         const url = new URL(window.location.href);
         url.searchParams.delete("token");
         window.history.replaceState({}, "", url.toString());

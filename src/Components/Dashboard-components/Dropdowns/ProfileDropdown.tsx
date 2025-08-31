@@ -47,7 +47,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   };
 
 
-  console.log("userRoleuserRoleuserRole",userRole)
 
   return (
     <div>
@@ -70,7 +69,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           <span className="font-medium text-[#252525]">My Profile</span>
         </div>
 
-        <div
+        {/* <div
           className="flex items-center gap-3 w-full text-left py-2 mb-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
           onMouseEnter={() => setHovered("settings")}
           onMouseLeave={() => setHovered(null)}
@@ -82,7 +81,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             className="w-[22px] h-[22px] object-cover"
           />
           <span className="font-medium text-[#252525]">Settings</span>
-        </div>
+        </div> */}
       </div>
 
       <button

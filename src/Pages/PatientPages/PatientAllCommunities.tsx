@@ -27,6 +27,7 @@ import {
   ApiJoinCommunity,
 } from "@src/api/ApiCommunityForum";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import { useMeApi } from "@src/hooks/useUsers";
 
 const PatientAllCommunites: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -37,6 +38,13 @@ const PatientAllCommunites: React.FC = () => {
   const [isUnSubscribeModalOpen, setIsUnSubscribeModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(true);
+  const navigate=useNavigate()
+    const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
+  
+    useEffect(()=>{
+      MeDataFetch()
+    })
+  
 
   const {
     data,
@@ -49,7 +57,7 @@ const PatientAllCommunites: React.FC = () => {
   );
 
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // State for managing the review form page
   const [currentView, setCurrentView] = React.useState<"table" | "form">(
     "table"
@@ -183,7 +191,6 @@ const PatientAllCommunites: React.FC = () => {
         const imageUrl = creator?.image
           ? `${import.meta.env.VITE_APP_API_IMG_URL}${creator.image}`
           : dummyImage;
-        // console.log("ssssssssss",row)
 
         return (
           <div
@@ -255,25 +262,7 @@ const PatientAllCommunites: React.FC = () => {
     };
   }, [searchText]);
 
-  //   const { mutateAsync: deleteMutation, isPending: deleteMutationLoading } =
-  //     useMutation({
-  //       mutationFn: () => apiDeleteMyReviews(selectedRowId),
-  //       onSuccess: async () => {
-  //         queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
-  //         setIsDeleteModalOpen(false);
 
-  //         // queryClient.invalidateQueries(["detailersFranchise"]);
-  //       },
-  //       onError: (error) => {
-  //         console.error("Error deleting user:", error);
-  //       },
-  //     });
-
-  //   const handleDelete = async () => {
-  //     if (selectedRowId !== null) {
-  //       await deleteMutation(selectedRowId);
-  //     }
-  //   };
 
   const {
     mutateAsync: LeaveCommunityMutation,
@@ -298,7 +287,6 @@ const PatientAllCommunites: React.FC = () => {
   };
 
   const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
-  // console.log("ddddffff",data?.record)
 
   // Render the Reviews Table View
   const renderTableView = () => (

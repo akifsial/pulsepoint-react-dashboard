@@ -7,10 +7,10 @@ import {
 } from "@src/api/ApiUsers";
 import { useQuery } from "@tanstack/react-query";
 
-export const useMeApi = (enabled = true) => {
+export const useMeApi = (navigate,enabled = true) => {
   return useQuery({
     queryKey: ["useMeApi"],
-    queryFn: () => ApiMe(),
+    queryFn: () => ApiMe(navigate),
     enabled, 
     refetchOnWindowFocus: false,
   });

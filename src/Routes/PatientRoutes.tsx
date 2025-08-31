@@ -28,7 +28,7 @@ export const PatientRoutes = [
       { path: "community-forum", element: <AdminCommunityForum /> },
       { path: "communities", element: <PatientAllCommunities /> },
 
-      { path: "hospital-profile/:id", element: <HospitalProfile /> },
+      { path: "careprovider-profile/:id", element: <HospitalProfile /> },
       { path: "notification", element: <NotificationPage /> },
       { path: "chatbot", element: <ChatbotLayout /> },
       { path: "nursing-home", element: <NursingHomeReviews /> },

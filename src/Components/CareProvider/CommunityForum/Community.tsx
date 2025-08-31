@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommunityFeed from "./CommunityFeed";
 import PopularCommunity from "./PopularCommunity";
 import WhiteHome from "@assets/media/svgs/dashboard-svgs/homeWhite.svg";
@@ -13,13 +13,21 @@ import SaveBlack from "@assets/media/svgs/dashboard-svgs/save-black.svg";
 
 import SavedCommunityFeed from "./SavedCommunityFeed";
 import PopularPostsCommunity from "./PopularPostsCommunity";
+import { useMeApi } from "@src/hooks/useUsers";
+import { useNavigate } from "react-router-dom";
 // import ReactSVG from "react-svg";
 
 const Community = () => {
+  const navigate=useNavigate()
   const [activeTab, setActiveTab] = useState("home");
   const [openBackFeed, setOpenBackFeed] = useState(false);
   const [postIdFeed, setPostIdFeed] = useState();
   const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
+
+  useEffect(()=>{
+    MeDataFetch()
+  })
 
   return (
     <>

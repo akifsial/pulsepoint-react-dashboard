@@ -31,8 +31,6 @@ const ForgotPasswordPage = () => {
         toast.success("OTP Sent Successfully");
       },
       onError: (error) => {
-        // console.log("error2468",error)
-        // toast.error(error?.response?.data?.message);
       },
     });
 

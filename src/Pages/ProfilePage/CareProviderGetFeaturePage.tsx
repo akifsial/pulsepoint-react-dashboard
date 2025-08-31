@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import featureBg from "../../assets/media/images/dashboard-images/featureBg.png";
 import { useMutation } from "@tanstack/react-query";
 import { ApiCreatePayment } from "@src/api/ApiCommunityForum";
@@ -6,9 +6,17 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import CreProviderBillingCheckout from "./CreProviderBillingCheckout";
 import CareProviderProfileCards from "./CareProviderProfileCards";
+import { useMeApi } from "@src/hooks/useUsers";
 const CareProviderGetFeaturePage = () => {
   const [billingCheck, setBillingCheck] = useState(false);
   const navigate = useNavigate();
+
+  const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
+
+  useEffect(() => {
+    MeDataFetch();
+  });
+
   const points = [
     {
       title: "Appear at the Top of Search Results",

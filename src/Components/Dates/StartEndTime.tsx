@@ -17,7 +17,6 @@ const StartEndTime: React.FC<StartEndTimeProps> = ({
   control,
 }) => {
 
-  console.log("start",startTime)
   const generateTimes = (intervalMinutes: number = 30) => {
     const times: string[] = [];
     for (let h = 0; h < 24; h++) {

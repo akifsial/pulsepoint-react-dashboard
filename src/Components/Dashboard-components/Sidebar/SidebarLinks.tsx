@@ -23,12 +23,14 @@ import {
   CommunityIconBlack,
   CommunityIconBlue,
 } from "@components/CommunitiesSVG";
+import moneyIcon from "@assets/media/svgs/dashboard-svgs/money.svg"
 import manage from "@assets/media/svgs/dashboard-svgs/manage.svg";
 import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg";
 import feature from "@assets/media/svgs/dashboard-svgs/feature.svg";
 import featureActive from "@assets/media/svgs/dashboard-svgs/featureActive.svg";
 
 import type { ReactNode } from "react";
+import { MdFeaturedPlayList, MdOutlineFeaturedPlayList } from "react-icons/md";
 
 type SidebarIconSet = {
   default?: ReactNode;
@@ -81,6 +83,16 @@ export const sidebarLinks: SidebarLink[] = [
     },
   },
 
+    {
+    label: "Get Featured",
+    path: "/care-provider/feature",
+    icon: {
+      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
+  
   // {
   //   label: "Notification",
   //   path: "/care-provider/notification",
@@ -149,7 +161,17 @@ export const PatientSidebarLinks: SidebarLink[] = [
       active: <CommunityIconWhite className="w-6 h-6" />,
     },
   },
+    {
+    label: "Get Featured",
+    path: "/patient/feature",
+    icon: {
+      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+    },
+  },
 ];
+
 export const AdminSidebarLinks: SidebarLink[] = [
   {
     label: "Dashboard",
@@ -267,9 +289,9 @@ export const CareProfileSidebarLinks: SidebarLink[] = [
     label: "Payment History",
     path: "/care-provider/payment-history",
     icon: {
-      default: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
-      hover: <img src={feature} alt="Dashboard" className="w-5 h-5" />,
-      active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
+      default: <img src={moneyIcon} alt="Dashboard" className="w-5 h-5" />,
+      hover: <img src={moneyIcon} alt="Dashboard" className="w-5 h-5" />,
+      active: <img src={moneyIcon} alt="Dashboard" className="w-5 h-5" />,
     },
   },
   //   {
@@ -319,4 +341,5 @@ export const PatientProfileSidebarLinks: SidebarLink[] = [
       active: <img src={featureActive} alt="Dashboard" className="w-5 h-5" />,
     },
   },
+
 ];

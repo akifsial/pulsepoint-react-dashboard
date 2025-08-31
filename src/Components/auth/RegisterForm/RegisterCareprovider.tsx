@@ -159,7 +159,6 @@ const RegisterCareprovider = ({ setSelectUser }) => {
   const [phoneValidation, setPhoneValidation] = useState(false);
 
   const RegisterSubmit = async (data) => {
-    console.log("phonephonephone", data?.number);
     if (data?.number == "") {
       setPhoneValidation(true);
       return;
@@ -182,7 +181,7 @@ const RegisterCareprovider = ({ setSelectUser }) => {
       age: data.age,
       role_type: "CARE_PROVIDER",
       postal_code: data.zipCode,
-      specialization: "Neuro Specialization",
+      specialization: data?.specialization,
       city: data.city,
       provider_type_id: 1,
       state: data.state,
@@ -223,7 +222,9 @@ const RegisterCareprovider = ({ setSelectUser }) => {
               <div className="sm:px-4 py-6">
                 <p className="text-[#1A1A1A] flex items-center gap-5 text-[25px] sm:text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
                   <span
-                    onClick={() => setSelectUser("")}
+                    onClick={() => {setSelectUser(""); // Remove hash from URL
+window.history.replaceState(null, "", window.location.pathname + window.location.search);
+}}
                     className="cursor-pointer"
                   >
                     <ArrowLeft />{" "}
@@ -275,7 +276,9 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                     </div>
                   </div>
                 </div>
-                <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="">
+
                   <SelectField
                     label="Provider Type"
                     id="providerType"
@@ -289,6 +292,27 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                       required: "Provider Type is required",
                     }}
                   />
+                  </div>
+
+
+                  <div className="">
+                    <InputField
+                      label="Specialization:"
+                      id="specialization"
+                      name="specialization"
+                      type="text"
+                      fieldName="w-full"
+                      // iconUrl={Global}
+                      placeholder="eg.Eye Specialist"
+                      className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
+                      register={register}
+                      registerName="specialization"
+                      validation={{
+                        required: "Specialization is required",
+                      }}
+                      errors={errors}
+                    />
+                  </div>
                 </div>
 
                 {/* Email and Phone */}

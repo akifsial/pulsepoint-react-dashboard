@@ -36,12 +36,7 @@ export const useInfiniteCommunityPosts = () => {
     queryKey: ["infiniteCommunityPosts"],
     queryFn: ({ pageParam = 1 }) => ApiGetCommunityPost(pageParam),
     getNextPageParam: (lastPage, allPages) => {
-      // console.log("All page",allPages)
-      // // Assuming the API response gives something like `hasMore` or `nextPage`
-      // if (lastPage.hasMore) {
-      //   return allPages.length + 1; // or return lastPage.nextPage;
-      // }
-      // return undefined;
+    
       return lastPage.records.length > 0 ? allPages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false,

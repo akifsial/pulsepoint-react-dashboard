@@ -58,7 +58,7 @@ const Pagination: React.FC<PaginationProps> = ({
           {currentPage * rowsPerPage} of {totalRows} entries
         </p> */}
          <p className="font-medium text-[14px]">
-          Showing {currentPage} to{" "}
+          Showing {currentPage} to {" "}
           {totalPages} of {totalRows} entries
         </p>
       </div>

@@ -14,7 +14,6 @@ import { useGetReportsPost } from "@src/hooks/useCommunity";
 const FlagPost = ({ onSubmit, post_id, community_id,setIsFlagModalOpen }) => {
   const [reportReasonId, setReportReasonId] = useState(null);
   const [comment, setComment] = useState("");
-  console.log("repost readons id", reportReasonId);
   const { data } = useGetReportsPost();
   const {
     register,
@@ -46,7 +45,6 @@ const FlagPost = ({ onSubmit, post_id, community_id,setIsFlagModalOpen }) => {
   });
 
   const handleReportSubmit = async (data) => {
-    console.log("rrrrrrrrrrrrr", reportReasonId);
     if (reportReasonId == null) {
       toast.error("Select atleast one reason for flagging");
       return;

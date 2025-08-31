@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import arrowIcon from "@assets/media/images/arrow-down.svg";
 
 import OnBoardingLayout from "../OnBoradingLayout";
@@ -145,8 +145,6 @@ const RegisterForm = () => {
       value: insurance.id,
     })) || [];
 
-  // console.log("InsuranceDataInsuranceDataInsuranceData", InsuranceData);
-  // Handler to update state on radio change
   const handleMethodChange = (e) => {
     setPreferredMethod(e.target.value);
   };
@@ -169,6 +167,14 @@ const RegisterForm = () => {
     });
   };
 
+
+    useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      setSelectUser(hash);
+    }
+  }, []);
+
   const { mutateAsync: registerMutation, isPending: isRegisterPending } =
     useMutation({
       mutationFn: ({ data }) => ApiRegister(data),
@@ -178,14 +184,21 @@ const RegisterForm = () => {
         // navigate("/login");
         navigate("/care-provider/login");
       },
-      onError: (err) => {
-        // console.log("errrorr",error.message)
-        // toast.error("Failed to Create Care Provider");
-        // toast.error(error);
-        // toast.error(err?.message)
-        console.log("eeeee", err.message);
-      },
+      onError: (err) => {},
     });
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSelectUser(value);
+
+    if (value) {
+      // Set hash in URL
+      window.location.hash = value;
+    } else {
+      // clear hash
+      window.location.hash = "";
+    }
+  };
 
   const RegisterSubmit = async (data) => {
     const registerData = {
@@ -222,8 +235,6 @@ const RegisterForm = () => {
     { label: "Care Provider", value: "care_provider" },
     { label: "Patient", value: "patient" },
   ];
-
-  console.log("seeeeeeeeiiiiiiii", selectUser);
 
   return (
     <>
@@ -269,7 +280,7 @@ const RegisterForm = () => {
                 name="register"
                 className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] mt-1 p-[15px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] leading-[140%] tracking-[0%] 
     placeholder:text-gray-500 focus:outline-none appearance-none pr-10"
-                onChange={(e) => setSelectUser(e.target.value)}
+                onChange={handleChange}
               >
                 {registerOptions?.map((opt) => (
                   <option key={opt?.value} value={opt?.value}>

@@ -6,6 +6,8 @@ import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import PatientReviewsCard from "@components/Dashboard-components/Cards/PatientReviewsCard";
 import { v4 as uuid } from "uuid";
+import { useMeApi } from "@src/hooks/useUsers";
+import { useNavigate } from "react-router-dom";
 // import { useApiMyReviews } from "@src/hooks/useMyReviews";
 
 const PatinetReviews: React.FC = () => {
@@ -13,7 +15,13 @@ const PatinetReviews: React.FC = () => {
   const [filterValue, setFilterValue] = React.useState("");
   const dropdownRef = React.useRef<HTMLDivElement>(null);
   const [rating, setRating] = React.useState("");
-
+  const navigate=useNavigate()
+    const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
+  
+    useEffect(()=>{
+      MeDataFetch()
+    })
+  
   // const { data, isLoading } = useApiMyReviews("", rating);
 
   useEffect(() => {
@@ -70,7 +78,6 @@ const PatinetReviews: React.FC = () => {
   //   await savedCareProvidersMutation();
   // };
 
-  console.log("filtervalueee", filterValue);
 
   return (
     <div>

@@ -142,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
             ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
           `}
         >
-          <div className="space-y-2 mt-3 ">
+          <div className="space-y-2 mt-3 mb-5 ">
             <div
               className="mb-7 max-w-[250px] mx-auto cursor-pointer"
               // onClick={() => navigate("/")}
@@ -220,7 +220,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 img={AiIcon}
                 imgPosition="left"
                 btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
-                onClick={() => navigate("/patient/feature")}
+                // onClick={() => navigate("/patient/feature")}
+                onClick={() => navigate("/patient/chatbot")}
               />
             </div>
           )}

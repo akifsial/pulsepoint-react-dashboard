@@ -74,12 +74,10 @@ const PopularPostsCommunity = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [replyParentId, setReplyParentId] = useState();
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteModalId, setDeleteModalId] = useState();
-  // const [activePostActions, setActivePostActions] = useState(null);
 
   const menuRef = useRef(null);
 
-  // const userId = JSON.stringify(localStorage.getItem("userInfo"))?.address;
-  // console.log("___________________",userId)
+
   const handleSendComment = async () => {
     if (!comment.trim() || !postId) return;
 
@@ -299,7 +297,6 @@ const PopularPostsCommunity = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClear = () => {
-    console.log("________________");
     if (inputRef.current) {
       inputRef.current.value = ""; // clears the input
     }
@@ -427,7 +424,6 @@ const PopularPostsCommunity = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   });
 
   const handleDeleteComment = async (commentId, postId) => {
-    console.log("DELDEDLELDELDLE", commentId, postId);
     const post_id = {
       post_id: postId,
     };

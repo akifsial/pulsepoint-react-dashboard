@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-// import arrowIcon from "@assets/media/images/arrow-down.svg";
 import InputField from "@components/InputField";
 import SelectField from "@components/SelectField";
-import OnBoardingLayout from "@components/auth/OnBoradingLayout";
 
 import { Link, useNavigate } from "react-router-dom";
 import SocialLoginSection from "@components/SocialLoginSection";
 import {
   IoPersonOutline,
-  IoCallOutline,
   IoMailOutline,
   IoLocationSharp,
 } from "react-icons/io5";
@@ -62,25 +59,6 @@ const RegisterPatient = ({ setSelectUser }) => {
     preferredCommunication: [],
   });
 
-  // const [errors, setErrors] = useState<FormData>({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   phone: "",
-  //   age: "",
-  //   gender: "",
-  //   maritalStatus: "",
-  //   insuranceType: "",
-  //   password: "",
-  //   confirmPassword: "",
-  //   zipCode: "",
-  //   city: "",
-  //   state: "",
-  //   streetAddress: "",
-  //   preferredCommunication: [],
-  //   careNeeds: "",
-  // });
-
   const {
     register,
     handleSubmit,
@@ -102,8 +80,6 @@ const RegisterPatient = ({ setSelectUser }) => {
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
-    // { value: "other", label: "Other" },
-    // { value: "prefer-not-to-say", label: "Prefer not to say" },
   ];
 
   const maritalStatusOptions = [
@@ -114,27 +90,20 @@ const RegisterPatient = ({ setSelectUser }) => {
     { value: "separated", label: "Separated" },
   ];
 
-  const insuranceTypeOptions = [
-    { value: "1", label: "Health Insurance" },
-    { value: "2", label: "Dental Insurance" },
-    { value: "3", label: "Vision Insurance" },
-    { value: "4", label: "Life Insurance" },
-    { value: "5", label: "Disability Insurance" },
-  ];
   const cityOptions = [
-    { value: "new_york", label: "New York" },
-    { value: "los_angeles", label: "Los Angeles" },
-    { value: "chicago", label: "Chicago" },
-    { value: "houston", label: "Houston" },
-    { value: "miami", label: "Miami" },
+    { value: "New York", label: "New York" },
+    { value: "London", label: "London" },
+    { value: "Paris", label: "Paris" },
+    { value: "Dubai", label: "Dubai" },
+    { value: "Singapore", label: "Singapore" },
+    { value: "Tokyo", label: "Tokyo" },
+    { value: "Hong Kong", label: "Hong Kong" },
+    { value: "Zurich", label: "Zurich" },
+    { value: "Los Angeles", label: "Los Angeles" },
+    { value: "Monaco", label: "Monaco" },
   ];
 
   const { data: InsuranceData } = useAllApiInsuranceTypes();
-  // const insuranceOptions =
-  //   InsuranceData?.records?.map((insurance) => ({
-  //     label: insurance.name,
-  //     value: insurance.id,
-  //   })) || [];
 
   const insuranceOptions = [
     { label: "Select Insurance", value: "" },
@@ -176,11 +145,7 @@ const RegisterPatient = ({ setSelectUser }) => {
         toast.success("Patient Create Successfully");
         navigate("/login");
       },
-      onError: (error) => {
-        // toast.error("Failed to Create Care Provid
-        // // er");
-        // toast.error(error?.response?.data?.message);
-      },
+      onError: (error) => {},
     });
 
   const RegisterSubmit = async (data) => {
@@ -191,17 +156,11 @@ const RegisterPatient = ({ setSelectUser }) => {
       setPhoneValidation(false);
     }
 
-    // if (data?.insurance_type_id == "") {
-    //   return toast.error("Insurance is required");
-    // }
-
     if (preferredMethod == "") {
       return toast.error("Select atleast one communition method");
     }
 
     const registerData = {
-      // for care_provider
-      //   organization_name: "Joe Hospital",\
       user_name: data.userName,
       email: data.email,
       first_name: data.firstName,
@@ -214,7 +173,7 @@ const RegisterPatient = ({ setSelectUser }) => {
       age: data.age,
       role_type: "PATIENT",
       postal_code: data.postal_code,
-      specialization: "Neuro Specialization",
+      specialization: data?.specialization,
       city: data.city,
       provider_type_id: 1,
       state: data.state,
@@ -223,6 +182,7 @@ const RegisterPatient = ({ setSelectUser }) => {
       working_hours: "Uk Bargingham Street ",
       marital_status: data.maritalStatus,
       communication_method_id: Number(preferredMethod),
+      birth_date: data.birth_date,
     };
     await registerMutation({ data: registerData });
   };
@@ -254,7 +214,9 @@ const RegisterPatient = ({ setSelectUser }) => {
               <div className="sm:px-4 py-6">
                 <p className="text-[#1A1A1A] flex items-center gap-5 text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
                   <span
-                    onClick={() => setSelectUser("")}
+                    onClick={() => {setSelectUser(""); // Remove hash from URL
+window.history.replaceState(null, "", window.location.pathname + window.location.search);
+}}
                     className="cursor-pointer"
                   >
                     <ArrowLeft />{" "}
@@ -352,24 +314,6 @@ const RegisterPatient = ({ setSelectUser }) => {
                   )} */}
                   </div>
 
-                  {/* <div>
-                  <InputField
-                    label="Phone Number"
-                    asterisk={true}
-                    icon={IoCallOutline}
-                    id="number"
-                    name="number"
-                    className="pr-10"
-                    type="text"
-                    placeholder="e.g., +1 800 555 1234"
-                    register={register}
-                    registerName="number"
-                    errors={errors}
-                    validation={{
-                      required: "Phone is required",
-                    }}
-                  />
-                </div> */}
                   <div
                     className={`relative grid grid-cols-1 md:grid-cols-1 gap-2 ${
                       phoneValidation ? "mb-6" : ""
@@ -547,6 +491,8 @@ const RegisterPatient = ({ setSelectUser }) => {
                   />
                 </div>
 
+               
+
                 {/* zip code and city */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -622,6 +568,25 @@ const RegisterPatient = ({ setSelectUser }) => {
                       }}
                     />
                   </div>
+                </div>
+
+                <div>
+                  <InputField
+                    label="Birth Date"
+                    id="birth_date"
+                    name="birth_date"
+                    asterisk={true}
+                    type="date"
+                    placeholder="e.g., 21 Sep 2020"
+                    // icon={IoLocationSharp}
+                    register={register}
+                    registerName="birth_date"
+                    className="pr-10"
+                    errors={errors}
+                    // validation={{
+                    //   required: "Birth Date is required",
+                    // }}
+                  />
                 </div>
 
                 {/* Password Fields */}

@@ -1,31 +1,66 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const handleUnauthorized = (error) => {
-  console.log("ERRORR", error);
-  if (axios.isAxiosError(error)) {
-    if (error.response?.status === 401) {
-      // 401 => unauthorized
-      localStorage.removeItem("token");
-      localStorage.removeItem("userInfo");
-      window.location.href = "/login"; // navigate to login
-    } else {
-      return;
-    }
+let unauthorizedHandled = false;
+
+
+const handleUnauthorized = (error, navigate) => {
+  // const navigate=useNavigate()
+
+  // if (error=="remove") {
+  //     localStorage.removeItem("token");
+  //     localStorage.removeItem("userInfo");
+  //     // window.location.href = "/login"; // navigate to login
+  //     navigate("/login") // navigate to login
+
+  //   } else {
+  //     return;
+  //   }
+
+  if (unauthorizedHandled) return; // ✅ prevent multiple executions
+  unauthorizedHandled = true;
+
+  if (
+    error === "remove" ||
+    (axios.isAxiosError(error) && error.response?.status === 401)
+  ) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
+    toast.error("Your account has been suspended!")
+    // navigate("/login");
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
+
+    // Swal.fire({
+    //   title: "<strong>Error</strong>",
+    //   icon: "error",
+    //   html: `
+    //     // ${"Your Session has been expired!"}
+    //     <br/><br/>
+    //   `,
+
+    //  });
+
+    // window.location.href = "/login"; // ✅ works anywhere
   }
+
+  // if (axios.isAxiosError(error)) {
+  //   if (error.response?.status === 401) {
+  //     localStorage.removeItem("token");
+  //     localStorage.removeItem("userInfo");
+  //     // window.location.href = "/login"; // navigate to login
+  //     navigate("/login") // navigate to login
+
+  //   } else {
+  //     return;
+  //   }
+  // }
 };
 
-// export const ApiMe = async () => {
-//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/me`;
-//   const token = JSON.parse(localStorage.getItem("token"));
-//   const response = await axios.get(BASE_URL, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response.data.payload;
-// };
-
-export const ApiMe = async () => {
+export const ApiMe = async (navigate) => {
   try {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/me`;
     const token = JSON.parse(localStorage.getItem("token"));
@@ -34,10 +69,25 @@ export const ApiMe = async () => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    console.log("RRRRRRRRR", response?.data?.payload?.status);
+    if (response?.data?.payload?.status == "INACTIVE") {
+      // Swal.fire({
+      //   title: "<strong>Error</strong>",
+      //   icon: "error",
+      //   html: `
+      //     // ${"Your Session has been expired!"}
+      //     <br/><br/>
+      //   `,
+
+      //  });
+
+      handleUnauthorized("remove", navigate);
+    }
+
     return response.data.payload;
   } catch (error) {
-    handleUnauthorized(error);
-    throw error; // react query ko propagate karne ke liye
+    handleUnauthorized(error, navigate);
+    throw error;
   }
 };
 
@@ -53,9 +103,7 @@ export const ApiAllSavedCareProviders = async (
   if (rating) {
     BASE_URL += `&total_rating=${rating}`;
   }
-  //   if (sort) {
-  //   BASE_URL += `&sort=created_at:${sort}`;
-  // }
+
   const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL, {
@@ -64,20 +112,6 @@ export const ApiAllSavedCareProviders = async (
 
   return response.data.payload;
 };
-
-// export const ApiUpdateUser = async (id: number, data) => {
-//   const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
-
-//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/${userId}`;
-//   const token = JSON.parse(localStorage.getItem("token"));
-//   // const token = localStorage.getItem("token");
-
-//   const response = await axios.put(BASE_URL, data, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response.data.payload;
-// };
 
 export const ApiUpdateUser = async (id: number, data) => {
   try {
@@ -101,22 +135,15 @@ export const ApiUpdateUser = async (id: number, data) => {
 export const ApiProviderTypes = async () => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/provider-type`;
 
-  const response = await axios.get(
-    BASE_URL
-    // headers: { Authorization: `Bearer ${token}` },
-  );
+  const response = await axios.get(BASE_URL);
 
   return response.data.payload;
 };
 
 export const ApiInsuranceTypes = async () => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/insurance-type`;
-  // const token = JSON.parse(localStorage.getItem("token"));
 
-  const response = await axios.get(
-    BASE_URL
-    // headers: { Authorization: `Bearer ${token}` },
-  );
+  const response = await axios.get(BASE_URL);
 
   return response.data.payload;
 };

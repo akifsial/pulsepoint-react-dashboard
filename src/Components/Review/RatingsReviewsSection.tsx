@@ -14,38 +14,6 @@ export type Review = {
   createdAt: string | Date;
 };
 
-/**
- * Stars 1‑5 (filled).
- */
-
-// OLD CODE
-// function StarRating({
-//   rating,
-//   className = "",
-//   avg_rating,
-// }: {
-//   rating: number;
-//   className?: string;
-// }) {
-//   console.log("average rating", avg_rating);
-//   return (
-//     <div className={`flex items-center gap-1 ${className}`.trim()}>
-//       {[1, 2, 3, 4, 5].map((star) => {
-//         return (
-//           <Star
-//             key={star}
-//             className={`h-4 w-4 ${
-//               star <= avg_rating
-//                 ? "text-yellow-400 fill-yellow-400"
-//                 : "text-gray-300 fill-gray-300"
-//             }`}
-//           />
-//         );
-//       })}
-//     </div>
-//   );
-// }
-// OLD CODE
 
 function StarRating({
   rating,
@@ -70,117 +38,87 @@ function StarRating({
   );
 }
 
-/**
- * Individual review card.
- */
-function ReviewCard({ review, data }: { review: Review }) {
-  console.log("vvvvvvvvvvvvvvvvvvvDDDDDDDDDDDDDDDDDDDDDDDD", data);
 
+function ReviewCard({ review, data }: { review: Review; data?: any }) {
   return (
     <>
-      {data?.reviews_to_careprovider?.map((single_review) => (
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
-          {/* Rating stars at top */}
-          <div className="flex items-center gap-2 mb-4">
-            <StarRating
-              rating={single_review.rating}
-              avg_rating={data?.ratingData?.avg_rating}
-            />
+      {data?.reviews_to_careprovider
+  ?.filter((single_review) => !single_review.review_flag)?.map((single_review) => (
+        <div
+          key={single_review.id}
+          className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition"
+        >
+          {/* Rating + Date */}
+          <div className="flex items-center justify-between mb-4">
+            <StarRating rating={single_review.rating} />
+            <span className="text-xs text-gray-400">
+              {new Date(single_review.created_at).toLocaleDateString()}
+            </span>
           </div>
 
           {/* Review content */}
-          <p className="text-gray-700 text-sm leading-relaxed mb-4">
-            "{single_review.content}"
+          <p className="text-gray-700 text-base leading-relaxed mb-5 italic">
+            “{single_review.content}”
           </p>
 
-          {/* Author info */}
-          <div className="flex  items-center gap-3">
-            {/* Reviewer Details */}
-            {/*  */}
-            <div className="flex items-center space-x-3">
-              {/* <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
-                <span className="text-white font-semibold text-lg">A</span>
-              </div> */}
-
-              {
-                <img
-                  src={
-                    single_review?.patient?.image
-                      ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                          single_review?.patient?.image
-                        }`
-                      : DummyImage
-                  }
-                  alt="Methew"
-                  className="rounded-[50%] w-[40px] h-[40px] object-fit"
-                />
+          {/* Reviewer */}
+          <div className="flex items-center gap-3">
+            <img
+              src={
+                single_review?.patient?.image
+                  ? `${import.meta.env.VITE_APP_API_IMG_URL}${single_review.patient.image}`
+                  : DummyImage
               }
-              <div>
-                <h4 className="font-semibold text-gray-900 text-sm">
-                  {single_review?.patient?.first_name}{" "}
-                  {single_review?.patient?.last_name}
-                </h4>
-                <p className="text-xs text-gray-500">
-                  {single_review?.patient?.email}
-                </p>
-              </div>
-            </div>
-            {/*  */}
-
-            {/* Reviewer Details */}
-
-            {/* Quote mark */}
-            <div className="ml-auto">
-              <svg
-                className="w-8 h-8 text-gray-300"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-10zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
-              </svg>
+              alt="Reviewer"
+              className="rounded-full w-12 h-12 object-cover"
+            />
+            <div>
+              <h4 className="font-semibold text-gray-900 text-sm">
+                {single_review?.patient?.first_name}{" "}
+                {single_review?.patient?.last_name}
+              </h4>
+              <p className="text-xs text-gray-500">
+                {single_review?.patient?.email}
+              </p>
             </div>
           </div>
 
-          <div>
-            {/* REPLY OF CAREPROVIDER */}
-
-            {single_review?.replies?.map((reply) => (
-              <div className="flex flex-col items-start mt-10 gap-3 space-x-3">
-                {/* <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
-                <span className="text-white font-semibold text-lg">A</span>
-              </div> */}
-
-                {
+          {/* Provider Reply */}
+          {single_review?.replies?.length > 0 && (
+            <div className="mt-6 pl-4 border-l-4 border-blue-200">
+              <p className="text-sm font-medium text-gray-800 mb-2">
+                Provider’s Reply:
+              </p>
+              {single_review.replies.map((reply: any) => (
+                <div key={reply.id} className="flex items-start gap-3 mt-2">
                   <img
                     src={
-                      single_review?.patient?.image
-                        ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                            single_review?.patient?.image
-                          }`
+                      data?.image
+                        ? `${import.meta.env.VITE_APP_API_IMG_URL}${data.image}`
                         : DummyImage
                     }
-                    alt="Methew"
-                    className="rounded-[50%] w-[40px] h-[40px] object-fit"
+                    alt="Provider"
+                    className="rounded-full w-10 h-10 object-cover"
                   />
-                }
-                <div >
-                  <h4 className="font-semibold text-gray-900 text-sm">
-                    {single_review?.patient?.first_name}{" "}
-                    {single_review?.patient?.last_name}
-                  </h4>
-                  <p className="text-xs text-gray-500">
-                    {single_review?.patient?.email}
-                  </p>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 text-sm">
+                      {data?.first_name} {data?.last_name}
+                    </h4>
+                    <p className="text-xs text-gray-500">{data?.email}</p>
+                    <p className="mt-1 text-gray-700 text-sm">
+                      {reply.content}
+                    </p>
+                  </div>
                 </div>
-                <i className="font-bold">{reply?.content}</i>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       ))}
     </>
   );
 }
+
 
 /**
  * Ratings & Reviews section props.
@@ -230,15 +168,7 @@ export default function RatingsReviewsSection({
         {/* ))} */}
       </div>
 
-      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {data?.reviews_to_careprovider?.length === 0 ? (
-          <p>No Review Found</p>
-        ) : (
-          data.reviews_to_careprovider.map((review) => (
-            <ReviewCard key={review.id} review={review} data={data} />
-          ))
-        )}
-      </div> */}
+
     </div>
   );
 }

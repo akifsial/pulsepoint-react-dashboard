@@ -10,7 +10,6 @@ interface DeleteModalProps {
 
 const FlagModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onDelete,loading,data }) => {
   if (!isOpen) return null;
-  console.log("data-----",data)
   const modalContent = (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0000003d] bg-opacity-50" onClick={onClose}>
       <div

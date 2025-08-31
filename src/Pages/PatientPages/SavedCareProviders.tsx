@@ -125,6 +125,11 @@ function SavedCareProviders({
       header: "Location",
       showSort: true,
     },
+        {
+    accessor: "postal_code",
+    header: "Zip Code",
+    showSort: true,
+  },
   ];
 
   const handleRowSelect = (row: dataTypes) => {};

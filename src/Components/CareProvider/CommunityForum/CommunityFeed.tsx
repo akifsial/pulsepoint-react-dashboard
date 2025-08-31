@@ -77,8 +77,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
   const menuRef = useRef(null);
 
-  // const userId = JSON.stringify(localStorage.getItem("userInfo"))?.address;
-  // console.log("___________________",userId)
+
   const handleSendComment = async () => {
     if (!comment.trim() || !postId) return;
 
@@ -297,7 +296,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClear = () => {
-    console.log("________________");
     if (inputRef.current) {
       inputRef.current.value = ""; // clears the input
     }
@@ -425,7 +423,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   });
 
   const handleDeleteComment = async (commentId, postId) => {
-    console.log("DELDEDLELDELDLE", commentId, postId);
     const post_id = {
       post_id: postId,
     };
@@ -815,34 +812,38 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                   className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50"
                 >
                   {/* ✅ Flag Post Button */}
-                  <button
-                    disabled={post?.postFlag}
-                    onClick={() => {
-                      if (post?.postFlag == null) {
-                        setFlaggedPost({
-                          ...post,
-                          post_id: post.id,
-                          community_id: post.community_id,
-                        });
-                        setIsFlagModalOpen(true);
-                        setShowSubmitReport(false);
-                      }
-                    }}
-                    className={`group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 rounded-[5px] flex items-center gap-2 mb-0.5
+                  {userId !== post?.user_id ? (
+                    <button
+                      disabled={post?.postFlag}
+                      onClick={() => {
+                        if (post?.postFlag == null) {
+                          setFlaggedPost({
+                            ...post,
+                            post_id: post.id,
+                            community_id: post.community_id,
+                          });
+                          setIsFlagModalOpen(true);
+                          setShowSubmitReport(false);
+                        }
+                      }}
+                      className={`group w-full text-left pl-[10px] pr-5.5 text-sm py-2.5 rounded-[5px] flex items-center gap-2 mb-0.5
     ${
       post?.postFlag
         ? "bg-gray-100 text-gray-400 cursor-not-allowed"
         : "hover:bg-[#E7F2F9] cursor-pointer"
     }`}
-                  >
-                    <span className="inline-block group-hover:hidden">
-                      <img src={Flagwhite} alt="Flagwhite" />
-                    </span>
-                    <span className="hidden group-hover:inline-block">
-                      <img src={Flagblue} alt="Flagblue" />
-                    </span>
-                    {post?.postFlag ? "Already Reported" : "Flag Post"}
-                  </button>
+                    >
+                      <span className="inline-block group-hover:hidden">
+                        <img src={Flagwhite} alt="Flagwhite" />
+                      </span>
+                      <span className="hidden group-hover:inline-block">
+                        <img src={Flagblue} alt="Flagblue" />
+                      </span>
+                      {post?.postFlag ? "Already Reported" : "Flag Post"}
+                    </button>
+                  ) : (
+                    ""
+                  )}
 
                   {/* ✅ Save / Unsave Post Button */}
                   <button

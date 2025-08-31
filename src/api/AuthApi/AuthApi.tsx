@@ -11,19 +11,6 @@ export const ApiLogin = async (data) => {
       JSON.stringify(response?.data?.payload?.accessToken)
     );
 
-    console.log("vvvVVVvvv")
-
-    // if(response.status==200){
-    // }
-
-    // if (response.status == 200) {
-    //   if (response.data.payload.user.role_type == "PATIENT") {
-    //     navigate("/patient/dashboard");
-    //   }else{
-    //     navigate("/care-provider")
-    //   }
-    // }
-
     localStorage.setItem(
       "userInfo",
       JSON.stringify(response?.data?.payload?.user)
@@ -44,7 +31,6 @@ export const ApiForgot = async (data) => {
 
     return response.data.payload.records;
   } catch (error) {
-    console.log("forgot",error)
     toast.error(error?.response?.data?.errors[0]?.message)
     throw new error();
 
@@ -57,7 +43,6 @@ export const ApiRegister = async (data) => {
 
     const response = await axios.post(BASE_URL, data);
     localStorage.setItem("id", response?.data?.payload?.id);
-    console.log("RESPONSE -- -- - - -",response)
     return response.data.payload.records;
     
   } catch (error) {
@@ -80,7 +65,7 @@ export const ApiVerifyOtp = async (data) => {
 };
 
 export const ApiResetPassword = async (data) => {
-  const resetToken = localStorage.getItem("resetToken"); // no need to parse
+  const resetToken = localStorage.getItem("resetToken"); 
   const id = localStorage.getItem("id");
 
   try {
@@ -94,8 +79,6 @@ export const ApiResetPassword = async (data) => {
 
     return response.data?.payload?.records;
   } catch (error) {
-    // ✅ Proper error throwing
-    console.log("API EERRROORR", error)
     toast.error(error?.response?.data?.errors[0]?.message)
     throw new Error(error?.response?.data?.message || "Password reset failed");
   }
@@ -113,7 +96,6 @@ export const ApiChangePassword = async (data) => {
 
     return response.data?.payload?.records;
   } catch (error) {
-    // ✅ Proper error throwing
     throw new Error(error?.response?.data?.message || "Password reset failed");
   }
 };

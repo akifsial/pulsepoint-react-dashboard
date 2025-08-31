@@ -50,7 +50,6 @@ export const CommentItem = ({
   const [replyLoading, setReplyLoading] = useState(false);
 
   const handleReply = async (postId, commentId, value) => {
-    // console.log("xxxxxxxxxxxxxxxxxxxxxx", postid);
     if (!replyValues[commentId]?.trim()) return;
 
     try {

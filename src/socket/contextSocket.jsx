@@ -11,10 +11,8 @@ export const ConversationProvider = ({ children }) => {
     if (!token) return;
 
     socket.auth = { token };
-    // console.log("TOKENNNNN",token)
 
     socket.on("connect", () => {
-      console.log("Connected to socket:", socket.id);
       setIsConnected(true);
     });
 

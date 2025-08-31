@@ -142,8 +142,7 @@ const SignupForm = () => {
       value: insurance.id,
     })) || [];
 
-  // console.log("InsuranceDataInsuranceDataInsuranceData", InsuranceData);
-  // Handler to update state on radio change
+
   const handleMethodChange = (e) => {
     setPreferredMethod(e.target.value);
   };
@@ -176,11 +175,7 @@ const SignupForm = () => {
         navigate("/care-provider/login");
       },
       onError: (err) => {
-        // console.log("errrorr",error.message)
-        // toast.error("Failed to Create Care Provider");
-        // toast.error(error);
-        // toast.error(err?.message)
-        console.log("eeeee", err.message);
+       
       },
     });
 

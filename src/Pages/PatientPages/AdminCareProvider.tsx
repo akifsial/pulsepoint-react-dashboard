@@ -14,7 +14,7 @@ import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-da
 import { useNavigate } from "react-router-dom";
 import { useCareProviders } from "@src/hooks/useDashboard";
 import dayjs from "dayjs";
-import { useAllSavedCareProviders } from "@src/hooks/useUsers";
+import { useAllSavedCareProviders, useMeApi } from "@src/hooks/useUsers";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 import SavedCareProviders from "./SavedCareProviders";
 export const getColumns = (
@@ -31,7 +31,7 @@ export const getColumns = (
         <div
           className="flex items-center gap-3 cursor-pointer"
           // onClick={() => navigate(`/patient/hospital-profile/${id}`)}
-          onClick={() => navigate(`/patient/hospital-profile/${id}`)}
+          onClick={() => navigate(`/patient/careprovider-profile/${id}`)}
         >
           <img
             src={dummyImage}
@@ -105,6 +105,11 @@ export const getColumns = (
     header: "Location",
     showSort: true,
   },
+  {
+    accessor: "postal_code",
+    header: "Zip Code",
+    showSort: true,
+  },
 ];
 
 const CareProviderDashboard: React.FC = () => {
@@ -117,6 +122,12 @@ const CareProviderDashboard: React.FC = () => {
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(true);
+  const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
+
+  useEffect(() => {
+    MeDataFetch();
+  });
+
 
   const {
     data: CareProvidersData,
@@ -138,12 +149,11 @@ const CareProviderDashboard: React.FC = () => {
   //   sort == true ? "asc" : "desc"
   // );
 
-useEffect(()=>{
-  if(rating){
-    setPage(1)
-  }
-
-},[rating])
+  useEffect(() => {
+    if (rating) {
+      setPage(1);
+    }
+  }, [rating]);
 
   const onSortClick = () => {
     setSort(!sort);
@@ -291,7 +301,7 @@ useEffect(()=>{
           {/* searchbar */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
             <CommonInput
-              placeholder="Search with Provider name"
+              placeholder="Search with Provider name,zipcode"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               showImg={true}

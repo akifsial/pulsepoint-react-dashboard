@@ -80,10 +80,8 @@ const AdminDashboard: React.FC = () => {
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(true);
-  console.log("ssssssssssssssss", sort);
   // Apis
   const { data: StatsData, isLoading } = useStatsApi();
-  // const { data: CareProvidersData } = useCareProviders();
   const {
     data: CareProvidersData,
     refetch,
@@ -95,6 +93,13 @@ const AdminDashboard: React.FC = () => {
     page,
     sort == true ? "asc" : "desc"
   );
+  
+    const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
+  
+    useEffect(()=>{
+      MeDataFetch()
+    })
+  
 
   const onSortClick = () => {
     setSort(!sort);
@@ -102,7 +107,6 @@ const AdminDashboard: React.FC = () => {
   };
   const [searchParams] = useSearchParams();
   const urlToken = searchParams.get("token"); // token from URL
-  console.log("TTTTTTTTTTTTTTTTTTTTT", urlToken);
   const [token, setToken] = useState<string | null>(null); // token state
 
   // Step 1: Save token from URL to localStorage (once)
@@ -124,7 +128,6 @@ const AdminDashboard: React.FC = () => {
 
   const ApiMe = async () => {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}auth/me`;
-    // const token = JSON.parse(localStorage.getItem("token"));
 
     const response = await axios.get(BASE_URL, {
       headers: { Authorization: `Bearer ${urlToken}` },
@@ -177,7 +180,7 @@ const AdminDashboard: React.FC = () => {
         return (
           <div
             className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate(`/patient/hospital-profile/${id}`)}
+            onClick={() => navigate(`/patient/careprovider-profile/${id}`)}
             // onClick={() => navigate("/patient/hospital-profile")}
           >
             <img
@@ -206,15 +209,6 @@ const AdminDashboard: React.FC = () => {
         return <div>{dayjs(row?.created_at).format("DD/MM/YY") ?? "N/A"}</div>;
       },
     },
-    // {
-    //   accessor: "rating",
-    //   header: "Rating",
-    //   showSort: true,
-    //   cell: (info) => {
-    //     const row = info.row.original;
-    //     return <div>{row?.total_rating ?? "N/A"}</div>;
-    //   },
-    // },
 
     {
       accessor: "total_rating",
@@ -253,6 +247,11 @@ const AdminDashboard: React.FC = () => {
     {
       accessor: "address",
       header: "Location",
+      showSort: true,
+    },
+    {
+      accessor: "postal_code",
+      header: "Zip Code",
       showSort: true,
     },
   ];
@@ -318,7 +317,6 @@ const AdminDashboard: React.FC = () => {
       mutationFn: ({ data }) =>
         ApiCareProviderStatusUpdate(data, selectedRowId),
 
-      // onMutate: () => setLoadingId(currentId),
       onSuccess: async () => {
         queryClient.invalidateQueries(["useCareProviders"]); // refetch list
         toast.success("Status Update Successfully");
@@ -329,14 +327,6 @@ const AdminDashboard: React.FC = () => {
       },
     });
 
-  // const handleUpdateStatus = () => {
-  //   const data = {
-  //     status: status === "ACTIVE" ? "INACTIVE" : "ACTIVE", //
-  //   };
-
-  //   // updateMutation.mutate({ currentId, formData });
-  //   updateStatusMutation({ data });
-  // };
 
   const handleUpdateStatus = (stst) => {
     const newStatus = stst === "ACTIVE" ? "INACTIVE" : "ACTIVE";
@@ -395,20 +385,6 @@ const AdminDashboard: React.FC = () => {
   }, [searchText]);
 
 
-  // useEffect(() => {
-  //   console.log("LLLLLLLLLL");
-  //   // Get token from query params
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const token = urlParams.get("token");
-
-  //   if (token) {
-  //     // Save to localStorage
-  //     localStorage.setItem("authToken", token);
-
-  //     // Remove token from URL for clean UI
-  //     navigate("/dashboard", { replace: true });
-  //   }
-  // }, [navigate]);
 
   return (
     <div className="mb-10">
@@ -480,7 +456,7 @@ const AdminDashboard: React.FC = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Search with Provider name"
+                  placeholder="Search with Provider name, zipcode"
                   value={searchText}
                   onChange={handleSearchChange}
                   onFocus={handleSearchFocus}

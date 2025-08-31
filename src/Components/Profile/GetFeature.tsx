@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import featureBg from "../../assets/media/images/dashboard-images/featureBg.png";
 import ProfileCards from "./ProfileCards";
 import BillingCheckout from "./BillingCheckout";
@@ -13,12 +13,16 @@ const GetFeature = () => {
   const [billingCheck, setBillingCheck] = useState(false);
   const navigate = useNavigate();
   const [subscriptionTime, setSubscriptionTime] = useState("");
-  console.log("______", subscriptionTime);
-  const { data: user, isLoading: isUserLoading } = useQuery({
+  const { data: user,refetch, isLoading: isUserLoading } = useQuery({
     queryKey: ["me"],
     queryFn: ApiMe,
   });
 
+  
+    useEffect(()=>{
+      refetch()
+    },[])
+  
   const points = [
     {
       title: "Appear at the Top of Search Results",
@@ -59,7 +63,6 @@ const GetFeature = () => {
         }
       },
       onError: (error) => {
-        console.log("eeeee", error?.response?.data?.message);
         toast.error(error?.response?.data?.message);
       },
     });
@@ -88,26 +91,10 @@ const GetFeature = () => {
             Feature My Facility
           </h2>
 
-          <div
-            className="p-4 h-[152px] bg-cover bg-center rounded-lg mb-5 "
-            style={{
-              backgroundImage: `url(${featureBg})`,
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <div className="max-w-[585px] text-white font-medium leading-6">
-              <h4 className="text-xl font-bold font-[Space Grotesk] mb-2">
-                💡 Why Feature Your Facility?
-              </h4>
-              <p className="text-[14px] md:text-[16px]">
-                Get more visibility, build trust, and attract the right patients
-                by featuring your facility on our care provider network.
-              </p>
-            </div>
-          </div>
+      
           <div className="flex justify-between items-center mb-10 ">
             <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-3">
-              Feature My Facility
+              {/* Feature My Facility */}
             </h4>
 
             {/* <SelectField
@@ -136,7 +123,7 @@ const GetFeature = () => {
             onUpgrade={handlePlan}
             user={user}
           />
-          <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
+          {/* <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
             💡 Advantages of Feature Plans?
           </h4>
           <div className="rounded-[10px] py-2.5 px-5 bg-white mb-5">
@@ -157,7 +144,7 @@ const GetFeature = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </>
       )}
     </>

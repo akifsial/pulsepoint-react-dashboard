@@ -7,7 +7,7 @@ function Fallback() {
   const navigate = useNavigate();
 
   // ✅ API will run only after token exists
-  const { data, isSuccess, isFetching } = useMeApi(!!token);
+  const { data, isSuccess, isFetching } = useMeApi(!!token,navigate);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);

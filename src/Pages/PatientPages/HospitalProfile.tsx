@@ -19,7 +19,6 @@ const HospitalProfile = () => {
 
   const { data } = useCareProviderSingle(id);
 
-  // console.log("asdasdasdasdasd",data)
 
   return (
     <>

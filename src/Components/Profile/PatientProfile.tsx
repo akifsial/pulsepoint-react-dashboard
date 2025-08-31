@@ -14,10 +14,11 @@ import {
   useMeApi,
 } from "@src/hooks/useUsers";
 import { Controller, useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { ApiUpdateUser } from "@src/api/ApiUsers";
+import { ApiMe, ApiUpdateUser } from "@src/api/ApiUsers";
 import Spinner from "@components/Loaders/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const organizationOptions = [
   { value: "male", label: "Male" },
@@ -68,10 +69,23 @@ const PatientProfile = ({ onChangePassword }) => {
       communication_method_id: "",
     },
   });
+  const {
+    data: user,
+    refetch,
+    isLoading: isUserLoading,
+  } = useQuery({
+    queryKey: ["me"],
+    queryFn: ApiMe,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   const [selectedImage, setSelectedImage] = useState("");
   const [singleUser, setSingleUser] = useState();
-
-  const { data: meData } = useMeApi();
+const navigate=useNavigate()
+  const { data: meData } = useMeApi(navigate);
   const { data: ProviderData } = useAllApiProviderTypes();
 
   const providersOptions =
@@ -87,8 +101,6 @@ const PatientProfile = ({ onChangePassword }) => {
     setPreferredMethod(e.target.value);
   };
 
-  // console.log("preferedee",preferredMethod)
-
   const {
     mutateAsync: updatePatientProfile,
     isPending: updatePatientProfileLoader,
@@ -99,14 +111,10 @@ const PatientProfile = ({ onChangePassword }) => {
       toast.success("Profile Updated Successfully");
       queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
     },
-    onError: (error) => {
-      // toast.error(error.response?.data?.message);
-      // console.log("ERRROR AGAY HA ", error?.message);
-    },
+    onError: (error) => {},
   });
 
   const profileSubmit = async (data) => {
-    console.log("############", data);
     if (updatePatientProfileLoader) return;
 
     const formData = new FormData();
@@ -151,7 +159,7 @@ const PatientProfile = ({ onChangePassword }) => {
       setValue("age", meData.age || "");
       setValue("gender", meData.gender || "");
       setValue("state", meData.state || "");
-      setValue("zip", meData.postal_code || "");
+      setValue("postal_code", meData.postal_code || "");
       setValue("city", meData.city || "");
       setValue("communication_method_id", meData.communication_method_id || "");
 
@@ -569,7 +577,6 @@ const PatientProfile = ({ onChangePassword }) => {
                 name="communication_method_id"
                 rules={{ required: "Please select a contact method" }}
                 render={({ field, fieldState }) => {
-                  console.log("FFFFFFFFF", field?.value);
                   return (
                     <div className="flex flex-wrap gap-3 text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
                       <div className="flex items-center">

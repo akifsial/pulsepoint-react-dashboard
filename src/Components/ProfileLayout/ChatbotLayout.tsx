@@ -20,7 +20,6 @@ const ChatbotLayout = () => {
   const [selectedConversationId, setSelectedConversationId] = useState();
   const [chatBotData, setChatBotData] = useState([]);
   const userRole=JSON.parse(localStorage.getItem("userInfo"))?.role_type
-console.log("ooooooooooo",userRole)
   // Function to handle tab clicks
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -29,12 +28,7 @@ console.log("ooooooooooo",userRole)
   return (
     <div className="dashboard flex min-h-screen">
       {/* Main Sidebar */}
-      {/* <Sidebar
-        sidebarData={PatientSidebarLinks}
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-      /> */}
-
+      
       {/* Chatbot Sidebar */}
       <ChatbotSidebar
         sidebarData={chatbotSidebarLinks}

@@ -19,7 +19,6 @@ const StartEndDay: React.FC<DayPickerProps> = ({
   control,
 }) => {
 
-    console.log("sppppppppspspsp",startDay)
   return (
     <div className="flex flex-col gap-4 sm:mb-0 mb-6 sm:p-4 max-w-md">
       {/* Start Day */}

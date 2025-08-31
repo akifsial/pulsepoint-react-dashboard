@@ -40,12 +40,10 @@ const PopularCommunity = () => {
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
 
-  console.log("role_typerole_typerole_type", userInfo);
 
   const { data, isPending,refetch } = usePopularCommunities(debouncedSearchText);
 
 
-  console.log("Get popular",data)
 
   const popularCommunity = [
     { icon: community1, title: "Hospital Stay Reviews" },
@@ -76,9 +74,6 @@ const PopularCommunity = () => {
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message);
-      // toast.error(error?.response?.data === null ? "Please add images" : " please slect topics");
-      // toast.error("Please add images ");
-      console.log("eeeeeee",error)
 
     },
   });

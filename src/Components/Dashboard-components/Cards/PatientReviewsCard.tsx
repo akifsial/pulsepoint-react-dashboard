@@ -67,8 +67,6 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
   const [isFlagging, setIsFlagging] = useState(false);
 
   const { data, isLoading } = useApiMyReviews("", rating, filterValue);
-  console.log("ffgggfffgg",filterValue)
-
 
   const queryClient = useQueryClient();
 
@@ -97,7 +95,6 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
     mutationFn: (feedbackId) => ApiFlagReview(feedbackId),
 
     onSuccess: async (data) => {
-      console.log("data aya ha ", data);
       queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
     },
     onError: (error) => {
@@ -166,114 +163,225 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
         <PatientReviewLoader />
       ) : data?.records?.length > 0 ? (
         data?.records?.map((item, index) => (
-          <div key={index} className="bg-[#FAFAFA] rounded-[8px] p-5 mb-5">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-[10px] text-[#252525] text-[16px]">
+          // <div key={index} className="bg-[#FAFAFA] rounded-[8px] p-5 mb-5">
+          //   <div className="flex items-center justify-between mb-3">
+          //     <div className="flex items-center gap-[10px] text-[#252525] text-[16px]">
+          //       <img
+          //         src={
+          //           item?.patient?.image
+          //             ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+          //                 item?.patient?.image
+          //               } `
+          //             : dummyImage
+          //         }
+          //         alt="User"
+          //         className="w-[50px] h-[50px] object-cover rounded-full"
+          //       />
+
+          //       <p className=" font-bold mb-0.5">
+          //         {item.patient?.first_name} {item.patient?.first_name}
+          //       </p>
+          //       <span className="text-[13px]">{item.userHour}</span>
+          //     </div>
+
+          //     <div
+          //       onClick={() => {
+          //         // handleFlagReview(item?.feedback?.id, item?.review_flag)
+          //         setSelectedFeedbackToFlag(item?.feedback?.id);
+          //         setFlagModalOpen(true);
+          //       }}
+          //       className="border cursor-pointer border-[#D3D3D3] rounded-[10px] px-[7px] py-[9.5px] flex items-center gap-2"
+          //     >
+          //       {item?.review_flag.length > 0 ? (
+          //         <img src={flag} alt="flag" className="w-[24px] h-[24px]" />
+          //       ) : (
+          //         <Flag />
+          //       )}
+          //       <p className="text-[16px] text-[#252525]">{item.flagged}</p>
+          //     </div>
+          //   </div>
+          //   {/* <FlagModal onDelete={()=>handleFlagReview(item?.feedback?.id,item?.review_flag)} isOpen={true} /> */}
+
+          //   <div className="flex items-center gap-0.5 mb-2">
+          //     {/* <RatingStars value={item.review} isDisabled={true} /> */}
+          //     <StarRating
+          //       rating={item?.rating}
+          //       // avg_rating={data?.ratingData?.avg_rating}
+          //     />
+          //     <p className="text-[16px] text-[#252525]"> ({item.rating})</p>
+          //   </div>
+
+          //   <p className="text-[16px] text-[#252525] mb-4">“{item.content}”</p>
+
+          //   {item?.replies?.map((reply) => (
+          //     <div className="bg-[#E4F1F9] flex items-center gap-5 p-[10px]">
+          //       <img
+          //         src={ item.care_provider.image ? ` ${import.meta.env.VITE_APP_API_IMG_URL}${
+          //           item.care_provider.image
+          //         }` : DummyUser}
+          //         alt=""
+          //         className="w-[43px] h-[43px] object-cover rounded-full"
+          //       />
+          //       <p className="text-[16px] text-[#252525] ">{reply?.content}</p>
+          //     </div>
+          //   ))}
+
+          //   <div
+          //     className="flex items-center gap-4 px-4 py-2.5 rounded-[5px]"
+          //     style={item.comment ? { backgroundColor: "#EEF2F5" } : {}}
+          //   >
+          //     {/* <img
+          //     src={`${import.meta.env.VITE_APP_API_IMG_URL}${
+          //       item.care_provider.image
+          //     }`}
+          //     alt=""
+          //     className="w-[43px] h-[43px] object-cover rounded-full"
+          //   /> */}
+
+          //     {item.comment ? (
+          //       <p>{item.comment}</p>
+          //     ) : item?.replies?.length == 0 ? (
+          //       <div className="relative w-full">
+          //         <input
+          //           placeholder="Add a reply"
+          //           value={reviewReplyValue}
+          //           className="w-full border border-[#D3D3D3] bg-white outline-0 border-[1px] rounded-[5px] !p-2.5  text-sm"
+          //           onChange={(e) => setReviewReplyValue(e.target.value)}
+          //         />
+          //         <div className="absolute cursor-pointer top-[20%] cursor right-2">
+          //           <button
+          //           className="cursor-pointer"
+          //             onClick={() => handleReviewReply(item?.feedback?.id)}
+          //           >
+          //             <Send />
+          //           </button>
+          //         </div>
+          //       </div>
+          //     ) : (
+          //       ""
+          //     )}
+          //     <FlagModal
+          //       isOpen={flagModalOpen}
+          //       onClose={() => {
+          //         setFlagModalOpen(false);
+          //         setSelectedFeedbackToFlag(null);
+          //       }}
+          //       onDelete={confirmFlagReview}
+          //       loading={isFlagging}
+          //       data={item?.review_flag}
+          //     />
+          //   </div>
+          // </div>
+          <div
+            key={index}
+            className="bg-white shadow-sm border border-gray-200 rounded-2xl p-6 mb-6 hover:shadow-md transition"
+          >
+            {/* Header - User Info & Flag */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
                 <img
                   src={
                     item?.patient?.image
                       ? `${import.meta.env.VITE_APP_API_IMG_URL}${
                           item?.patient?.image
-                        } `
+                        }`
                       : dummyImage
                   }
                   alt="User"
-                  className="w-[50px] h-[50px] object-cover rounded-full"
+                  className="w-12 h-12 rounded-full object-cover border border-gray-200"
                 />
-
-                <p className=" font-bold mb-0.5">
-                  {item.patient?.first_name} {item.patient?.first_name}
-                </p>
-                <span className="text-[13px]">{item.userHour}</span>
+                <div>
+                  <p className="text-sm font-semibold text-gray-900">
+                    {item.patient?.first_name} {item.patient?.last_name}
+                  </p>
+                  <span className="text-xs text-gray-500">{item.userHour}</span>
+                </div>
               </div>
 
-              <div
+              <button
                 onClick={() => {
-                  // handleFlagReview(item?.feedback?.id, item?.review_flag)
                   setSelectedFeedbackToFlag(item?.feedback?.id);
                   setFlagModalOpen(true);
                 }}
-                className="border cursor-pointer border-[#D3D3D3] rounded-[10px] px-[7px] py-[9.5px] flex items-center gap-2"
+                className="flex items-center gap-2 text-sm text-gray-500 border border-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-50"
               >
                 {item?.review_flag.length > 0 ? (
-                  <img src={flag} alt="flag" className="w-[24px] h-[24px]" />
+                  <img src={flag} alt="flagged" className="w-4 h-4" />
                 ) : (
-                  <Flag />
+                  <Flag size={16} />
                 )}
-                <p className="text-[16px] text-[#252525]">{item.flagged}</p>
-              </div>
-            </div>
-            {/* <FlagModal onDelete={()=>handleFlagReview(item?.feedback?.id,item?.review_flag)} isOpen={true} /> */}
-
-            <div className="flex items-center gap-0.5 mb-2">
-              {/* <RatingStars value={item.review} isDisabled={true} /> */}
-              <StarRating
-                rating={item?.rating}
-                // avg_rating={data?.ratingData?.avg_rating}
-              />
-              <p className="text-[16px] text-[#252525]"> ({item.rating})</p>
+                <span>{item.flagged || "Flag"}</span>
+              </button>
             </div>
 
-            <p className="text-[16px] text-[#252525] mb-4">“{item.content}”</p>
+            {/* Rating */}
+            <div className="flex items-center gap-2 mb-3">
+              <StarRating rating={item?.rating} />
+              <span className="text-sm text-gray-700 font-medium">
+                ({item.rating})
+              </span>
+            </div>
 
+            {/* Review Content */}
+            <p className="text-gray-700 text-sm leading-relaxed italic mb-4">
+              “{item.content}”
+            </p>
+
+            {/* Provider Reply */}
             {item?.replies?.map((reply) => (
-              <div className="bg-[#E4F1F9] flex items-center gap-5 p-[10px]">
+              <div
+                key={reply.id}
+                className="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-start gap-3 mb-4"
+              >
                 <img
-                  src={ item.care_provider.image ? ` ${import.meta.env.VITE_APP_API_IMG_URL}${
-                    item.care_provider.image
-                  }` : DummyUser}
-                  alt=""
-                  className="w-[43px] h-[43px] object-cover rounded-full"
+                  src={
+                    item.care_provider?.image
+                      ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                          item.care_provider?.image
+                        }`
+                      : DummyUser
+                  }
+                  alt="Provider"
+                  className="w-10 h-10 rounded-full object-cover border border-gray-200"
                 />
-                <p className="text-[16px] text-[#252525] ">{reply?.content}</p>
+                <div>
+                  <p className="text-sm font-semibold text-gray-900">
+ {item?.care_provider?.organization_name || item?.care_provider?.user_name }
+                  </p>
+                  <p className="text-sm text-gray-700">{reply?.content}</p>
+                </div>
               </div>
             ))}
 
-            <div
-              className="flex items-center gap-4 px-4 py-2.5 rounded-[5px]"
-              style={item.comment ? { backgroundColor: "#EEF2F5" } : {}}
-            >
-              {/* <img
-              src={`${import.meta.env.VITE_APP_API_IMG_URL}${
-                item.care_provider.image
-              }`}
-              alt=""
-              className="w-[43px] h-[43px] object-cover rounded-full"
-            /> */}
+            {/* Reply Input */}
+            {item?.replies?.length === 0 && (
+              <div className="relative mt-3">
+                <input
+                  placeholder="Write a reply..."
+                  value={reviewReplyValue}
+                  onChange={(e) => setReviewReplyValue(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg py-2 px-3 pr-10 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
+                />
+                <button
+                  onClick={() => handleReviewReply(item?.feedback?.id)}
+                  className="absolute right-3 top-2.5 text-blue-600 hover:text-blue-800"
+                >
+                  <Send size={18} />
+                </button>
+              </div>
+            )}
 
-              {item.comment ? (
-                <p>{item.comment}</p>
-              ) : item?.replies?.length == 0 ? (
-                <div className="relative w-full">
-                  <input
-                    placeholder="Add a reply"
-                    value={reviewReplyValue}
-                    className="w-full border border-[#D3D3D3] bg-white outline-0 border-[1px] rounded-[5px] !p-2.5  text-sm"
-                    onChange={(e) => setReviewReplyValue(e.target.value)}
-                  />
-                  <div className="absolute cursor-pointer top-[20%] cursor right-2">
-                    <button
-                    className="cursor-pointer"
-                      onClick={() => handleReviewReply(item?.feedback?.id)}
-                    >
-                      <Send />
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-              <FlagModal
-                isOpen={flagModalOpen}
-                onClose={() => {
-                  setFlagModalOpen(false);
-                  setSelectedFeedbackToFlag(null);
-                }}
-                onDelete={confirmFlagReview}
-                loading={isFlagging}
-                data={item?.review_flag}
-              />
-            </div>
+            {/* Flag Modal */}
+            <FlagModal
+              isOpen={flagModalOpen}
+              onClose={() => {
+                setFlagModalOpen(false);
+                setSelectedFeedbackToFlag(null);
+              }}
+              onDelete={confirmFlagReview}
+              loading={isFlagging}
+              data={item?.review_flag}
+            />
           </div>
         ))
       ) : (

@@ -49,7 +49,10 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({
           />
           <button
             onClick={() => handleChatPost()}
-            className="text-white cursor-pointer rounded-full mr-0 transition-colors"
+            disabled={!question.trim()} // agar empty ho to disable
+            className={`text-white cursor-pointer rounded-full mr-0 transition-colors ${
+              !question.trim() ? "opacity-50 !cursor-not-allowed" : ""
+            }`}
           >
             <img
               src={iconSrc || ChatIcon}

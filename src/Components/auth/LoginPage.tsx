@@ -51,7 +51,6 @@ const LoginPage = () => {
       mutationFn: ({ data }) => ApiLogin(data),
 
       onSuccess: async (response) => {
-        console.log("NUTELA", response.user.role_type);
         toast.success("Login Successful");
 
         const token =localStorage.getItem("token");
@@ -70,8 +69,7 @@ const LoginPage = () => {
         }
       },
       onError: (response) => {
-        // toast.error(error?.response?.data?.message);
-        console.log("eooeoeoeo", response);
+       
       },
     }
   );

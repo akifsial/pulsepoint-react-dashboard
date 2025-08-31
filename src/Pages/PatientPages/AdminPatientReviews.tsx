@@ -20,6 +20,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiDeleteMyReviews } from "@src/api/ApiMyReviews";
 import { useNavigate } from "react-router-dom";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import { useMeApi } from "@src/hooks/useUsers";
 
 const AdminPatientReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -31,6 +32,12 @@ const AdminPatientReviews: React.FC = () => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(true);
   const [filterValue,setFilterValue]=useState(false)
+  const navigate=useNavigate()
+  const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
+
+  useEffect(()=>{
+    MeDataFetch()
+  })
 
   const {
     data,
@@ -45,14 +52,13 @@ const AdminPatientReviews: React.FC = () => {
     sort == true ? "asc" : "desc"
   );
 
-  console.log("sssssss", data);
 
   const onSortClick = () => {
     setSort(!sort);
     refetch();
   };
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // State for managing the review form page
   const [currentView, setCurrentView] = React.useState<"table" | "form">(
     "table"
@@ -175,12 +181,11 @@ const AdminPatientReviews: React.FC = () => {
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
         const { provider_name, care_provider, provider_email, provider_logo } =
           row.original;
-        console.log("--------------------------------------", care_provider);
         return (
           <div
             className="flex cursor-pointer items-center gap-3"
             onClick={() =>
-              navigate(`/patient/hospital-profile/${care_provider?.id}`)
+              navigate(`/patient/careprovider-profile/${care_provider?.id}`)
             }
           >
             <img
@@ -209,12 +214,7 @@ const AdminPatientReviews: React.FC = () => {
         <i>{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
       ),
     },
-    // {
-    //   accessor: "rating",
-    //   header: "Rating",
-    //   width: "60px",
-    //   showSort: true,
-    // },
+   
     {
       accessor: "rating",
       header: "Rating",
@@ -275,14 +275,7 @@ const AdminPatientReviews: React.FC = () => {
         );
       },
 
-      // cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-      //   const { location } = row.original.;
-      //   return (
-      //     <div className="flex items-center">
-      //       <span className="text-sm text-[#252525]">{row?.original}</span>
-      //     </div>
-      //   );
-      // },
+  
     },
   ];
 
@@ -321,7 +314,7 @@ const AdminPatientReviews: React.FC = () => {
           {/* searchbar */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
             <CommonInput
-              placeholder="Search with Provider name"
+              placeholder="Search with Provider name, zipcode"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               showImg={true}

@@ -10,10 +10,7 @@ import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
 import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
 import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";
 import fallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
-import {
-
-  IoLocationSharp,
-} from "react-icons/io5";
+import { IoLocationSharp } from "react-icons/io5";
 import Global from "../../assets/media/svgs/dashboard-svgs/globalField.svg";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -30,6 +27,7 @@ import "react-clock/dist/Clock.css";
 import StartEndDate from "@components/Dates/StartEndTime";
 import StartEndTime from "@components/Dates/StartEndTime";
 import StartEndDay from "@components/Dates/StartEndDay";
+import { useNavigate } from "react-router-dom";
 
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
@@ -121,6 +119,12 @@ const ProfileDetail1 = ({ onChangePassword }) => {
   // -------------------------------------------
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
+  const navigate=useNavigate()
+  const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
+
+  useEffect(() => {
+    MeDataFetch();
+  });
 
   const {
     register,
@@ -140,7 +144,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     },
   });
 
-  const { data: meData } = useMeApi();
+  const { data: meData } = useMeApi(navigate);
 
   const userId = JSON.parse(localStorage.getItem("userInfo")).id;
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
@@ -226,6 +230,8 @@ const ProfileDetail1 = ({ onChangePassword }) => {
       setValue("city", meData.city || "");
       setValue("address", meData.address || "");
       setValue("additional_details", meData.additional_details || "");
+      setValue("zip", meData.postal_code || "");
+
       setStartDay(meData?.start_day || ""); // pre-fill start day
       setEndDay(meData?.end_day || "");
       setStartTime(meData?.time_in || "");

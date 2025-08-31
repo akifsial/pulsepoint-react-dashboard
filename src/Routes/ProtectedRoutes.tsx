@@ -8,7 +8,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 //   const navigate = useNavigate();
 //   const userRole=JSON.parse(localStorage.getItem("userInfo"))?.role_type
 
-//   console.log("nnnnnnnnmmmmmmmm",userRole)
 
 //   useEffect(() => {
 //     if (!isAuthenticate) {

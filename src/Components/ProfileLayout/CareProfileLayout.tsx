@@ -16,21 +16,7 @@ const CareProfileLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sdData, setSdData] = useState([]);
   const location = useLocation();
-  //   useEffect(() => {
-  //     if (location.pathname === "/admin") {
-  //       setSdData(AdminSidebarLinks);
-  //       console.log("Using AdminLinks");
-  //     } else if (location.pathname === "/patient") {
-  //       setSdData(PatientSidebarLinks);
-  //       console.log("Using PatientLinks ");
-  //     } else if (location.pathname === "/care-provider") {
-  //       setSdData(sidebarLinks);
-  //       console.log("Using CareProviderSidebarLinks");
-  //     } else {
-  //       setSdData([]);
-  //       console.warn("No matching sidebar links for ");
-  //     }
-  //   }, [location.pathname]);
+  
 
   const showProfileSidebar = [
     "/care-provider/profile",

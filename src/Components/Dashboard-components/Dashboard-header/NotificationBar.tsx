@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IoArrowForward } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Like from "../../../assets/media/svgs/dashboard-svgs/Like.svg";
@@ -13,9 +13,16 @@ import { PrimaryButton } from "@components/Buttons/PrimaryButton";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiAcceptPrivateCommunity } from "@src/api/ApiCommunityForum";
+import { useMeApi } from "@src/hooks/useUsers";
 
 const NotficationBar = ({ noticationLink }) => {
   const navigate = useNavigate();
+
+  const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
+
+  useEffect(() => {
+    MeDataFetch();
+  });
 
   const notifications = [
     {
@@ -51,14 +58,13 @@ const NotficationBar = ({ noticationLink }) => {
   } = useMutation({
     mutationFn: ({ memberId, status }) =>
       ApiAcceptPrivateCommunity(memberId, status),
-    
+
     onSuccess: async (data) => {
       queryClient.invalidateQueries(["useGetNotifications"]); // refetch list
-      if(data?.record?.status=="APPROVED"){
+      if (data?.record?.status == "APPROVED") {
         toast.success("Request Accepted!");
-      }else{
+      } else {
         toast.success("Request Declined!");
-
       }
     },
     onError: (error) => {
@@ -67,7 +73,6 @@ const NotficationBar = ({ noticationLink }) => {
   });
 
   const handleAcceptPrivateCommunity = async (memberId, status) => {
-    console.log("sssssssssssss", status);
     await savedCareProvidersMutation({ memberId, status });
   };
 
