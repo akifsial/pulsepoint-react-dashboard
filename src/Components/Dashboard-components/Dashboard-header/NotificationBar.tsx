@@ -77,12 +77,12 @@ const NotficationBar = ({ noticationLink }) => {
   };
 
   return (
-    <div className="border h-[300px]  border-[#2525251A] bg-white rounded-xl shadow-[0_0_8.9px_0_rgba(0,0,0,0.25)] w-[414px]">
+    <div className="border h-[300px] notificationBar border-[#2525251A] bg-white rounded-xl shadow-[0_0_8.9px_0_rgba(0,0,0,0.25)] md:w-[414px] w-[280px]">
       <div className="px-5  py-[17px]">
         <h4 className="font-semibold">Notifications</h4>
       </div>
 
-      <div className="border-t h-[200px] overflow-y-scroll border-t-[#D5D7DA] p-4">
+      <div className="border-t h-[200px] overflow-y-scroll border-t-[#D5D7DA] px-2 py-4 md:p-4">
         {isLoading ? (
           <div className="text-center text-gray-500 text-sm py-10">
             Loading Notifications...
@@ -91,23 +91,30 @@ const NotficationBar = ({ noticationLink }) => {
           data.records.map((item, index) => (
             <div
               key={index}
-              className="relative py-[3px] flex flex-col  items-start gap-0 font-medium leading-5.5 text-sm mb-[5px] last:mb-0"
+              // className="relative py-[3px] flex flex-col  items-start gap-10 font-medium leading-5.5 text-sm mb-[5px] last:mb-0"
             >
               <div
+                // onClick={() =>
+                //   userRole == "PATIENT"
+                //     ? navigate("/patient/notification")
+                //     : navigate("/care-provider/notification")
+                // }
                 onClick={() =>
                   userRole == "PATIENT"
                     ? navigate("/patient/notification")
-                    : navigate("/care-provider/notification")
+                    : userRole == "CARE_PROVIDER"
+                    ? navigate("/care-provider/notification")
+                    : navigate("/admin/notification")
                 }
-                className="flex items-center gap-2.5"
+                className="flex md:justify-start justify-between md:items-center gap-2 md:gap-4.5"
               >
                 <img
                   src={Like}
                   alt="Like"
-                  className="rounded-[5px] h-9 w-9 object-cover"
+                  className="rounded-[5px] md:mt-0 mt-1.5 md:h-9 h-6 w-6 md:w-9 object-cover"
                 />
-                <p className="flex justify-between w-[270px]">
-                  {item.message}
+                <p className="flex justify-between flex-col w-[270px]">
+                  <p className="md:pr-0 text-[12px] md:text-[14px] pr-20">{item.message}</p>
                   <span className="block absolute right-0 top-[20%] text-right text-xs text-[#252525]/40">
                     {dayjs(item?.created_at).format("h:mm A")}
                   </span>
@@ -117,9 +124,10 @@ const NotficationBar = ({ noticationLink }) => {
                 <div className="flex pl-12 gap-[8px]">
                   {/* Accept Button */}
                   <button
-                    onClick={() =>
-                      handleAcceptPrivateCommunity(item?.member_id, "APPROVED")
-                    }
+                    onClick={(e) =>{
+                      e.stopPropagation(); 
+                      handleAcceptPrivateCommunity(item?.member_id, "APPROVED");
+                    }}
                     className="flex items-center cursor-pointer justify-center text-white !mt-3 bg-[#2291E3] text-[12px] !w-[70px] !h-[30px] !rounded-[6px]"
                   >
                     {/* Tick Icon */}
@@ -175,7 +183,9 @@ const NotficationBar = ({ noticationLink }) => {
         onClick={() =>
           userRole == "PATIENT"
             ? navigate("/patient/notification")
-            : navigate("/care-provider/notification")
+            : userRole == "CARE_PROVIDER"
+            ? navigate("/care-provider/notification")
+            : navigate("/admin/notification")
         }
         className="cursor-pointer text-[#006EFF] font-medium text-[15px] bg-[#FAFAFA] border-t border-t-[#D5D7DA] flex justify-center items-center gap-2 p-[13px] rounded-b-xl rounded-bl-xl"
       >

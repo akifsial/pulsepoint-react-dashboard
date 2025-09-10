@@ -7,76 +7,84 @@ import ProfessionalCard from "@components/Website/Home/ProfessionalCard";
 import { TestimonialCarousel } from "@components/Website/Home/TestimonialCard";
 import ResourceCard from "@components/Website/Home/ResourceCard";
 import ProcessStep from "@components/Website/Home/ProcessStep";
-// import TopBar from "@components/Website/Layout/TopBar";
 import Header from "@components/Website/Layout/Header";
-// import Button from "../components/Shared/Button";
-// import CategoryCard from "../components/Home/CategoryCard";
-// import ServiceCard from "../components/Home/ServiceCard";
-// import ProfessionalCard from "../components/Home/ProfessionalCard";
-// import { TestimonialCarousel } from "../components/Home/TestimonialCard";
-// import ResourceCard from "../components/Home/ResourceCard";
-// import ProcessStep from "../components/Home/ProcessStep";
-
+import { useBlog, useCategory, useGetBlogs } from "@src/hooks/useWebsite";
+import dummyImage from "@assets/media/images/dummyUser.png"
 const HomePage = () => {
   // Sample data arrays following your pattern of using arrays for similar components
   const categories = [
     {
       title: "Activities",
-      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&h=300&fit=crop",
-      link: "/activities"
+      image:
+        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&h=300&fit=crop",
+      link: "/activities",
     },
     {
       title: "Costs",
-      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=300&fit=crop",
-      link: "/costs"
+      image:
+        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=300&fit=crop",
+      link: "/costs",
     },
     {
       title: "Exercises",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=300&fit=crop",
-      link: "/exercises"
+      image:
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=300&fit=crop",
+      link: "/exercises",
     },
     {
       title: "Facilities",
-      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=300&fit=crop",
-      link: "/facilities"
+      image:
+        "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=300&fit=crop",
+      link: "/facilities",
     },
     {
       title: "Financial Advice",
-      image: "https://images.unsplash.com/photo-1554224154-26032fced8bd?w=300&h=300&fit=crop",
-      link: "/financial-advice"
+      image:
+        "https://images.unsplash.com/photo-1554224154-26032fced8bd?w=300&h=300&fit=crop",
+      link: "/financial-advice",
     },
     {
       title: "Gadgets",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=300&h=300&fit=crop",
-      link: "/gadgets"
-    }
+      image:
+        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=300&h=300&fit=crop",
+      link: "/gadgets",
+    },
   ];
+
 
   const services = [
     {
       title: "Independent Living",
-      description: "For active seniors who can manage on their own but prefer the convenience of community living, often with amenities like housekeeping and social activities.",
-      image: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=400&h=300&fit=crop",
-      link: "/services/independent-living"
+      description:
+        "For active seniors who can manage on their own but prefer the convenience of community living, often with amenities like housekeeping and social activities.",
+      image:
+        "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=400&h=300&fit=crop",
+      link: "/services/independent-living",
     },
     {
       title: "Assisted Living",
-      description: "For those who need help with daily tasks such as bathing, dressing, or medication management, while still enjoying a level of independence.",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop",
-      link: "/services/assisted-living"
+      description:
+        "For those who need help with daily tasks such as bathing, dressing, or medication management, while still enjoying a level of independence.",
+      image:
+        "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop",
+      link: "/services/assisted-living",
     },
     {
       title: "Memory Care",
-      description: "Specialized care for seniors with Alzheimer's or other forms of dementia, offering a secure and supportive environment.",
-      image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=300&fit=crop",
-      link: "/services/memory-care"
+      description:
+        "Specialized care for seniors with Alzheimer's or other forms of dementia, offering a secure and supportive environment.",
+      image:
+        "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=300&fit=crop",
+      link: "/services/memory-care",
     },
     {
       title: "Skilled Nursing Facilities",
-      description: "Provide 24-hour medical care and rehabilitation for seniors with serious health conditions.",
-      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop",
-      link: "/services/skilled-nursing"
-    }
+      description:
+        "Provide 24-hour medical care and rehabilitation for seniors with serious health conditions.",
+      image:
+        "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop",
+      link: "/services/skilled-nursing",
+    },
   ];
 
   const featuredProfessionals = [
@@ -84,34 +92,38 @@ const HomePage = () => {
       id: "1",
       name: "Dr. Susan Meadows",
       title: "Geriatric Specialist",
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face",
       rating: 4.9,
-      profileLink: "/professionals/dr-susan-meadows"
+      profileLink: "/professionals/dr-susan-meadows",
     },
     {
       id: "2",
       name: "Golden Years Rehab",
       title: "Senior Rehab Facility",
-      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop",
       rating: 4.3,
-      profileLink: "/facilities/golden-years-rehab"
+      profileLink: "/facilities/golden-years-rehab",
     },
     {
       id: "3",
       name: "Nancy Porter",
       title: "In-Home Care Nurse",
-      image: "https://images.unsplash.com/photo-1594824475317-1b96d0719faf?w=150&h=150&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1594824475317-1b96d0719faf?w=150&h=150&fit=crop&crop=face",
       rating: 4.3,
-      profileLink: "/professionals/nancy-porter"
+      profileLink: "/professionals/nancy-porter",
     },
     {
       id: "4",
       name: "Memory Care",
       title: "Alzheimer's Care Center",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=150&h=150&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=150&h=150&fit=crop",
       rating: 4.3,
-      profileLink: "/facilities/memory-care-center"
-    }
+      profileLink: "/facilities/memory-care-center",
+    },
   ];
 
   const testimonials = [
@@ -119,71 +131,79 @@ const HomePage = () => {
       id: "1",
       name: "Patricia M.",
       title: "Dash Private Villa Project Investor",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b605?w=150&h=150&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1494790108755-2616b612b605?w=150&h=150&fit=crop&crop=face",
       rating: 5.0,
-      content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands."
+      content:
+        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
     },
     {
       id: "2",
       name: "Emma D.",
       title: "Dash Private Villa Project Investor",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face",
+      image:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face",
       rating: 5.0,
-      content: "We were overwhelmed until we found Harmony Heights. They gave us three excellent options and guided us through every step. Now my father feels at home again."
-    }
+      content:
+        "We were overwhelmed until we found Harmony Heights. They gave us three excellent options and guided us through every step. Now my father feels at home again.",
+    },
   ];
 
   const featuredResources = [
     {
       title: "The Craziest Travel Deals You NEED to Know",
       category: "In Community Tips",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=250&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=250&fit=crop",
       readTime: "5 min read",
-      link: "/resources/travel-deals"
+      link: "/resources/travel-deals",
     },
     {
       title: "Inside This Hidden Paradise That Nobody Talks About",
       category: "In Travel Tips",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop",
       readTime: "7 min read",
-      link: "/resources/hidden-paradise"
+      link: "/resources/hidden-paradise",
     },
     {
       title: "5 Shocking Dangers of Traveling Over 70+",
       category: "In Community Tips",
-      image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=250&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=250&fit=crop",
       readTime: "4 min read",
-      link: "/resources/travel-safety"
-    }
+      link: "/resources/travel-safety",
+    },
   ];
 
   const processSteps = [
     {
       icon: <MapPin className="w-6 h-6 text-blue-500" />,
       title: "Sign Up & Set Your Location",
-      description: "Create a free account in just a few clicks."
+      description: "Create a free account in just a few clicks.",
     },
     {
       icon: <Clock className="w-6 h-6 text-blue-500" />,
       title: "Find Care You Are Happy With",
-      description: "Explore care near you with our AI App Help."
+      description: "Explore care near you with our AI App Help.",
     },
     {
       icon: <Users className="w-6 h-6 text-blue-500" />,
       title: "Network & Community",
-      description: "Meet wonderful pros like Ronal for support."
+      description: "Meet wonderful pros like Ronal for support.",
     },
     {
       icon: <Heart className="w-6 h-6 text-blue-500" />,
       title: "Make Confident Decisions",
-      description: "Trust verified pros like Rona for honest help."
-    }
+      description: "Trust verified pros like Rona for honest help.",
+    },
   ];
+
 
   return (
     <div className="min-h-screen">
-                  {/* < TopBar /> */}
-< Header />
+      {/* < TopBar /> */}
+      <Header />
       {/* Hero Section */}
       <section className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -199,7 +219,9 @@ const HomePage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-6 text-white">
                   <div className="flex items-center text-sm mb-2">
-                    <span className="bg-blue-500 px-2 py-1 rounded text-xs font-medium mr-3">Facilities</span>
+                    <span className="bg-blue-500 px-2 py-1 rounded text-xs font-medium mr-3 text-black">
+                      Facilities
+                    </span>
                     <span>Published: February 24, 2025</span>
                     <span className="mx-2">•</span>
                     <span>Article</span>
@@ -207,11 +229,15 @@ const HomePage = () => {
                     <span>4 min read</span>
                   </div>
                   <h1 className="text-2xl lg:text-3xl font-bold mb-3">
-                    East Bay | Constance Wu (Crazy Rich Asians) | DRAMA | Full Movie in English
+                    East Bay | Constance Wu (Crazy Rich Asians) | DRAMA | Full
+                    Movie in English
                   </h1>
-                  <Link to="/articles/featured" className="text-blue-400 hover:text-blue-300 font-medium">
+                  {/* <Link
+                    // to="/articles/featured"
+                    className="text-blue-400 hover:text-blue-300 font-medium"
+                  >
                     Read More
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>
@@ -220,37 +246,47 @@ const HomePage = () => {
             <div className="space-y-6">
               {[
                 {
-                  title: "Learning to Live Improve Your English Story Learn English Stori...",
+                  title:
+                    "Learning to Live Improve Your English Story Learn English Stori...",
                   readTime: "2 MIN READ",
-                  image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=150&h=100&fit=crop"
+                  image:
+                    "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=150&h=100&fit=crop",
                 },
                 {
-                  title: "30 Min Senior Workout Routines – Standing & Seated Chair Exercise...",
+                  title:
+                    "30 Min Senior Workout Routines – Standing & Seated Chair Exercise...",
                   readTime: "2 MIN READ",
-                  image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=150&h=100&fit=crop"
+                  image:
+                    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=150&h=100&fit=crop",
                 },
                 {
-                  title: "3 Simple At-Home Exercises for Seniors | Stay Active and Strong...",
+                  title:
+                    "3 Simple At-Home `Exercises for Seniors | Stay Active and Strong...",
                   readTime: "2 MIN READ",
-                  image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=150&h=100&fit=crop"
-                }
+                  image:
+                    "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=150&h=100&fit=crop",
+                },
               ].map((article, index) => (
                 <div key={index} className="flex space-x-4">
+
                   <img
                     src={article.image}
                     alt={article.title}
                     className="w-20 h-16 object-cover rounded flex-shrink-0"
                   />
                   <div className="flex-1">
-                    <div className="text-xs text-gray-500 mb-1">{article.readTime}</div>
+                    <div className="text-xs text-gray-500 mb-1">
+                      {article.readTime}  
+                    </div>
                     <h3 className="text-sm font-medium text-gray-900 line-clamp-3 hover:text-blue-500 cursor-pointer">
                       {article.title}
                     </h3>
-                    <div className="mt-2">
+                    {/* <div className="mt-2">
                       <span className="text-blue-500 text-xs font-medium hover:text-blue-600 cursor-pointer">
                         Read More
                       </span>
-                    </div>
+                    </div> */}
+
                   </div>
                 </div>
               ))}
@@ -260,10 +296,12 @@ const HomePage = () => {
       </section>
 
       {/* Explore Categories Section */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-gray-50 py-[50px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Explore Categories</h2>
+            <h2 className="text-[36px] font-bold text-black">
+              Explore Categories
+            </h2>
             <Button variant="primary" className="flex items-center space-x-2">
               <span>Explore All</span>
               <ArrowRight className="w-4 h-4" />
@@ -271,7 +309,7 @@ const HomePage = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {categories.map((category, index) => (
-              <CategoryCard key={index} {...category} />
+              <CategoryCard categoryUrl={category.link} key={index} {...category} />
             ))}
           </div>
         </div>
@@ -281,7 +319,9 @@ const HomePage = () => {
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Explore Our Services</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Explore Our Services
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               There are various types of seniors living options, including:
             </p>
@@ -295,10 +335,12 @@ const HomePage = () => {
       </section>
 
       {/* Featured This Week Section */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-gray-50 py-[50px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Featured this week</h2>
+            <h2 className="text-3xl font-bold text-gray-900">
+              Featured this week
+            </h2>
             <Button variant="primary" className="flex items-center space-x-2">
               <span>Explore All</span>
               <ArrowRight className="w-4 h-4" />
@@ -317,11 +359,13 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">What Seniors are Saying</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                What Seniors are Saying
+              </h2>
               <p className="text-gray-600 mb-8">
-                We're proud to help thousands of families make confident care decisions. 
-                Here's what real users have shared about their experiences with providers 
-                they found through our platform.
+                We're proud to help thousands of families make confident care
+                decisions. Here's what real users have shared about their
+                experiences with providers they found through our platform.
               </p>
               <TestimonialCarousel testimonials={testimonials} />
             </div>
@@ -337,14 +381,16 @@ const HomePage = () => {
       </section>
 
       {/* Featured Resources Section */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-gray-50 py-[50px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Featured Resources</h2>
-            <Button variant="primary" className="flex items-center space-x-2">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Featured Resources
+            </h2>
+            {/* <Button variant="primary" className="flex items-center space-x-2">
               <span>See All News</span>
               <ArrowRight className="w-4 h-4" />
-            </Button>
+            </Button> */}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredResources.map((resource, index) => (
@@ -359,7 +405,9 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">How It Works</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+                How It Works
+              </h2>
               <div className="space-y-8">
                 {processSteps.map((step, index) => (
                   <ProcessStep key={index} {...step} stepNumber={index + 1} />
@@ -387,20 +435,29 @@ const HomePage = () => {
                 <img
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
                   alt="Cody Fisher"
-                  className="w-10 h-10 rounded-full"
+                  className="w-10 object-cover h-10 rounded-full"
                 />
                 <div>
                   <h3 className="font-semibold">Cody Fisher</h3>
-                  <p className="text-sm text-gray-400">Posted by: caregiverSon89</p>
+                  <p className="text-[14px] font-normal text-[#252525]">
+                    Posted by: caregiverSon89
+                  </p>
                 </div>
               </div>
-              
-              <h2 className="text-2xl font-bold mb-4">How do I convince my dad to accept home care?</h2>
+
+              <h2 className="text-[24px] font-bold mb-4">
+                How do I convince my dad to accept home care?
+              </h2>
               <p className="text-gray-300 mb-6">
-                My 78-year-old dad is struggling with mobility, but refuses help at home. Has anyone had success getting through to a stubborn parent? 
-                <span className="text-blue-400 cursor-pointer hover:text-blue-300"> Read more...</span>
+                My 78-year-old dad is struggling with mobility, but refuses help
+                at home. Has anyone had success getting through to a stubborn
+                parent?
+                {/* <span className="text-blue-400 cursor-pointer hover:text-blue-300">
+                  {" "}
+                  Read more...
+                </span> */}
               </p>
-              
+
               <div className="relative mb-6">
                 <img
                   src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&h=300&fit=crop"
@@ -408,7 +465,7 @@ const HomePage = () => {
                   className="w-full h-48 object-cover rounded-lg"
                 />
               </div>
-              
+
               <div className="flex items-center space-x-6 text-sm">
                 <button className="flex items-center space-x-2 bg-gray-800 px-3 py-1 rounded">
                   <span>👍</span>
@@ -428,19 +485,28 @@ const HomePage = () => {
 
             {/* Top Doctors Sidebar */}
             <div>
-              <h3 className="text-xl font-semibold mb-6">Top doctors in Community</h3>
+              <h3 className="text-xl font-semibold mb-6">
+                Top Communities
+              </h3>
               <div className="space-y-4">
                 {[
                   { name: "Doug Kerr", date: "May 21, 2006" },
                   { name: "Asher Kelman", date: "Apr 27, 2006" },
                   { name: "Jerome Marot", date: "Jan 19, 2011" },
-                  { name: "Antonio Correia", date: "Feb 12, 2025" }
+                  { name: "Antonio Correia", date: "Feb 12, 2025" },
                 ].map((doctor, index) => (
                   <div key={index} className="flex items-center space-x-3">
                     <img
-                      src={`https://images.unsplash.com/photo-${1507003211169 + index}?w=40&h=40&fit=crop&crop=face`}
+                      // src={`${import.meta.env.VITE_APP_API_IMG_URL}${doctor?.profile_icon_image}`}
+                      src={
+                        doctor?.profile_icon_image
+                          ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                              doctor.profile_icon_image
+                            }`
+                          : dummyImage
+                      }
                       alt={doctor.name}
-                      className="w-10 h-10 rounded-full"
+                      className="w-10 object-cover h-10 rounded-full"
                     />
                     <div>
                       <h4 className="font-medium">{doctor.name}</h4>

@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiFlagReview } from "@src/api/ApiMyReviews";
 import { Flag, Send, Star } from "lucide-react";
+import FlagReviewIcon from "@assets/media/svgs/dashboard-svgs/flag4.svg"
 import { ApiReplyOnReview } from "@src/api/ApiCommunityForum";
 import { useForm } from "react-hook-form";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
@@ -291,7 +292,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
                   className="w-12 h-12 rounded-full object-cover border border-gray-200"
                 />
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">
+                  <p className="text-sm space-grotesk font-semibold text-gray-900">
                     {item.patient?.first_name} {item.patient?.last_name}
                   </p>
                   <span className="text-xs text-gray-500">{item.userHour}</span>
@@ -308,7 +309,9 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
                 {item?.review_flag.length > 0 ? (
                   <img src={flag} alt="flagged" className="w-4 h-4" />
                 ) : (
-                  <Flag size={16} />
+                  // <FlagReviewIcon size={16} />
+                  <img src={FlagReviewIcon} alt="flagged" className="w-4 h-4" />
+
                 )}
                 <span>{item.flagged || "Flag"}</span>
               </button>
@@ -345,7 +348,7 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
                   className="w-10 h-10 rounded-full object-cover border border-gray-200"
                 />
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">
+                  <p className="text-sm space-grotesk font-semibold text-gray-900">
  {item?.care_provider?.organization_name || item?.care_provider?.user_name }
                   </p>
                   <p className="text-sm text-gray-700">{reply?.content}</p>

@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import { useAllSavedCareProviders, useMeApi } from "@src/hooks/useUsers";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 import SavedCareProviders from "./SavedCareProviders";
+import { spawn } from "child_process";
 export const getColumns = (
   navigate: ReturnType<typeof useNavigate>
 ): TanDataTableColumn<dataTypes>[] => [
@@ -31,7 +32,7 @@ export const getColumns = (
         <div
           className="flex items-center gap-3 cursor-pointer"
           // onClick={() => navigate(`/patient/hospital-profile/${id}`)}
-          onClick={() => navigate(`/patient/careprovider-profile/${id}`)}
+          onClick={() => navigate(`/patient/care-provider/${id}`)}
         >
           <img
             src={dummyImage}
@@ -50,10 +51,10 @@ export const getColumns = (
   },
   {
     accessor: "date",
-    header: "Date",
+    header: <span className="ml-7">Date</span>,
     showSort: true,
     cell: ({ row }) => (
-      <i>{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
+      <i className="ml-9">{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
     ),
   },
   // {
@@ -283,23 +284,24 @@ const CareProviderDashboard: React.FC = () => {
     <div className="mb-10">
       <h2
         className="
-      font-space-grotesk
-      font-bold
+      space-grotesk
+      !font-bold
       text-heading
       leading-8
       tracking-normal
       text-brand-ink
       align-middle
       mb-6
+      !text-[25px]
     "
       >
         Care Provider Listing
       </h2>
-      <div className="bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] h-[450px] px-4 py-6">
-        <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Care Providers</h3>
+      <div className="bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] min-h-[450px] px-4 py-6  w-full">
+        <div className="mb-6 flex flex-wrap gap-3 md:flex-row flex-col md:items-center md:justify-between">
+          <h3 className="md:mb-0 mb-3 font-bold text-[20px] space-grotesk">Care Providers</h3>
           {/* searchbar */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
+          <div className="lg:flex lg:flex-1 lg:justify-end lg:px-5 px-0">
             <CommonInput
               placeholder="Search with Provider name,zipcode"
               value={searchText}
@@ -307,12 +309,12 @@ const CareProviderDashboard: React.FC = () => {
               showImg={true}
               imgSrc={searchIcon}
               imgLeft={true}
-              inputClassName="text-sm "
-              containerClassName="w-full border-gray-200 rounded-lg py-3 max-w-sm"
+              inputClassName="text-sm inter !placeholder-[#252525]"
+              containerClassName="w-full border-[#252525] rounded-lg py-3 max-w-sm"
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium text-sm">Filter by</p>
+            <p className="text-[#252525] font-medium inter text-sm">Filter by</p>
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setShowRatingDropdown(!showRatingDropdown)}
@@ -321,7 +323,7 @@ const CareProviderDashboard: React.FC = () => {
                 } border-[#252525] px-4 md:w-[110px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5`}
               >
                 {rating ? rating : ""}
-                <span className=" pe-1 flex"> Ratings</span>
+                <span className=" pe-1 flex inter font-medium text-[14px]"> Ratings</span>
                 <img
                   src={filterIcon}
                   alt="filter icon"
@@ -349,16 +351,16 @@ const CareProviderDashboard: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="mb-4 flex">
+        <div className="mb-4 flex flex-wrap md:justify-start justify-center">
           <div
             className={`tab ${
               activeTab === "all"
-                ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]"
+                ? "bg-[#E9F2F6] w-full md:text-start text-center md:w-[213px] border-b-2 border-[#007AB2]"
                 : "bg-white"
             } `}
             onClick={() => handleTabClick("all")}
             style={{
-              width: "213px",
+              // width: "213px",
               height: "47px",
               gap: "10px",
               paddingTop: "18px",
@@ -369,7 +371,7 @@ const CareProviderDashboard: React.FC = () => {
             }}
           >
             <p
-              className={`font-medium text-sm ${
+              className={`font-medium text-[16px] ${
                 activeTab === "all" ? "text-[#007AB2]" : "text-[#252525CC]"
               }`}
             >
@@ -377,14 +379,14 @@ const CareProviderDashboard: React.FC = () => {
             </p>
           </div>
           <div
-            className={`tab ${
+            className={`tab md:text-start text-center ${
               activeTab === "saved"
-                ? "bg-[#E9F2F6] border-b-2 border-[#007AB2]"
+                ? "bg-[#E9F2F6] w-full md:w-[213px]  border-b-2 border-[#007AB2]"
                 : "bg-white"
             } `}
             onClick={() => handleTabClick("saved")}
             style={{
-              width: "213px",
+              // width: "213px",
               height: "47px",
               gap: "10px",
               paddingTop: "18px",
@@ -395,7 +397,7 @@ const CareProviderDashboard: React.FC = () => {
             }}
           >
             <p
-              className={`font-medium text-sm ${
+              className={`font-medium text-[16px] ${
                 activeTab === "saved" ? "text-[#007AB2]" : "text-[#252525CC]"
               }`}
             >
@@ -409,7 +411,7 @@ const CareProviderDashboard: React.FC = () => {
             isLoadingCareProvidersData ? (
               <TableSkeletonLoader />
             ) : (
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto w-full">
                 <TanDataTable<dataTypes>
                   columns={columns}
                   data={CareProvidersData?.payload?.records}
@@ -442,7 +444,6 @@ const CareProviderDashboard: React.FC = () => {
             </>
           )}
         </div>
-      </div>
       {activeTab == "all" ? (
         <div>
           <Pagination
@@ -455,6 +456,7 @@ const CareProviderDashboard: React.FC = () => {
       ) : (
         ""
       )}
+      </div>
     </div>
   );
 };

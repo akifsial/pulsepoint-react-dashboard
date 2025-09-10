@@ -11,14 +11,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
-            <Link to="/" className="flex items-center space-x-2 mb-4">
+            <p className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
                 <span className="text-white font-bold text-lg">TS</span>
               </div>
               <span className="text-xl font-bold">
                 TopSenior<span className="text-blue-500">Spot</span>
               </span>
-            </Link>
+            </p>
             <p className="text-gray-300 text-sm leading-relaxed max-w-md">
               Connecting seniors with quality healthcare providers, care facilities, and resources. 
               Making informed decisions about senior care has never been easier.

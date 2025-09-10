@@ -8,7 +8,6 @@ import SocialLoginSection from "../SocialLoginSection"; // Import the new compon
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { ApiLogin } from "@src/api/AuthApi/AuthApi";
-// import Toast from "@components/Toast/Toast";
 import dummyImage from "@assets/media/images/signup-img.png";
 import signupLogo from "@assets/media/images/signup-logo.png";
 
@@ -51,7 +50,6 @@ const LoginPage = () => {
       mutationFn: ({ data }) => ApiLogin(data),
 
       onSuccess: async (response) => {
-        toast.success("Login Successful");
 
         const token =localStorage.getItem("token");
 
@@ -59,14 +57,17 @@ const LoginPage = () => {
         connectSocket(token);
 
         // socket.on("connect", () => {
-        //   console.log("Socket connected ✅");
         // });
 
         if (response?.user?.role_type == "PATIENT") {
           navigate("/patient/dashboard");
-        } else {
+        }  if (response?.user?.role_type == "CARE_PROVIDER") {
           navigate("/care-provider");
+        }  if (response?.user?.role_type == "ADMIN"){
+          navigate("/admin");
         }
+        toast.success("Login Successful");
+
       },
       onError: (response) => {
        

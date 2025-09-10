@@ -6,18 +6,18 @@ const api = axios.create({
 });
 
 // Add interceptor
-export const setupInterceptors = (navigate: NavigateFunction) => {
-  api.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (error.response?.status === 401) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userInfo");
-        navigate("/login"); // redirect to login
-      }
-      return Promise.reject(error);
-    }
-  );
-};
+// export const setupInterceptors = (navigate: NavigateFunction) => {
+//   api.interceptors.response.use(
+//     (response) => response,
+//     (error) => {
+//       if (error.response?.status === 401) {
+//         localStorage.removeItem("token");
+//         localStorage.removeItem("userInfo");
+//         navigate("/login"); // redirect to login
+//       }
+//       return Promise.reject(error);
+//     }
+//   );
+// };
 
 export default api;

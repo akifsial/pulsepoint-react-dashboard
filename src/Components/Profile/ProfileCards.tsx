@@ -26,10 +26,10 @@ const plans = [
     price: "$5.99/month",
     features: [
       // "All Basic Plan features",
-      "Featured placement on homepage or category pages",
-      "Increased visibility and ranking across the platform",
-      "Increased profile detail (more photos, description)",
-      "AI chatbot use",
+      // "Featured placement on homepage or category pages",
+      // "Increased visibility and ranking across the platform",
+      // "Increased profile detail (more photos, description)",
+      "Unlimited AI Chatbot Use",
       // "Everything in Starter",
       // "Appear in featured sections (homepage, category pages)",
       // "Insights dashboard (views, clicks, contacts)",
@@ -82,16 +82,16 @@ const ProfileCards = ({ onUpgrade, subscriptionTime, user }) => {
             }`}
           >
             <div>
-              <h3 className="text-lg font-semibold mb-3">{plan.title}</h3>
+              <h3 className="text-lg font-semibold mb-3 space-grotesk">{plan.title}</h3>
 
               <div
-                className={`text-3xl font-bold mb-4 inline-block px-4 py-[9px] rounded-[5px] ${
+                className={`text-3xl  font-bold mb-4 inline-block px-4 py-[9px] rounded-[5px] ${
                   isHighlighted
                     ? "bg-[#022D46] text-white"
                     : "bg-[#EAF6FF] text-[#007AB2]"
                 }`}
               >
-                <h2>
+                <h2 className="space-grotesk">
                   {" "}
                   {plan.title == "Free Plan"
                     ? plan.price

@@ -6,7 +6,7 @@ const Reviewed = () => {
   return (
     <div className='flex items-center gap-2.5'>
       <TopReview/>
-      <Action/>
+      {/* <Action/> */}
     </div>
   )
 }

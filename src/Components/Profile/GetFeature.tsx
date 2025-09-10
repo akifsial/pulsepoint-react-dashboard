@@ -87,7 +87,7 @@ const GetFeature = () => {
         <BillingCheckout />
       ) : (
         <>
-          <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
+          <h2 className="text-[25px] space-grotesk font-bold text-[#181D27] font-[Space Grotesk] mb-6">
             Feature My Facility
           </h2>
 
@@ -111,7 +111,7 @@ const GetFeature = () => {
 
             <select
               name="subscription"
-              className="w-[49%] border border-gray-300 rounded px-3 py-2 text-sm"
+              className="md:w-[49%] w-full border border-gray-300 rounded px-3 py-2 text-sm"
               onChange={(e) => setSubscriptionTime(e.target.value)}
             >
               <option value="monthly">Monthly Subscription</option>

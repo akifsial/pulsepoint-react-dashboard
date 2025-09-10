@@ -364,11 +364,11 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
             </div>
           </div>
 
-          <div className="flex justify-between mt-4 mb-2">
+          <div className="flex flex-wrap md:gap-0 gap-3 justify-between mt-4 mb-2">
             {currentStep > 0 ? (
               <button
                 type="button"
-                className="bg-gray-200 cursor-pointer  w-[100px] h-[46px] !rounded-[10px] px-4 py-[10px] font-semibold leading-[33px] gap-[10px] flex items-center justify-center text-black hover:bg-[#f2f2f2] transition-colors"
+                className="bg-gray-200 cursor-pointer  md:w-[100px] w-full  h-[46px] !rounded-[10px] px-4 py-[10px] font-semibold leading-[33px] gap-[10px] flex items-center justify-center text-black hover:bg-[#f2f2f2] transition-colors"
                 onClick={handlePrev}
               >
                 Back
@@ -382,7 +382,7 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
                 type="button"
                 onClick={handleNext}
                 disabled={!isCurrentStepValid}
-                className={`w-[100px] h-[46px] px-4 py-[10px] !rounded-[10px] font-semibold leading-[33px] flex items-center justify-center transition-colors gap-[10px] 
+                className={` md:w-[100px] w-full h-[46px] px-4 py-[10px] !rounded-[10px] font-semibold leading-[33px] flex items-center justify-center transition-colors gap-[10px] 
       ${
         !isCurrentStepValid
           ? "bg-gray-300 cursor-not-allowed text-white"
@@ -398,7 +398,7 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
                 }`}
                 showImg={false}
                 disabled={!isCurrentStepValid || isFeedbackPending}
-                btnClass={`border-1 w-[200px] h-[46px] !rounded-[10px] px-4 py-[10px] font-semibold leading-[33px] gap-[10px] flex items-center justify-center transition-colors ${
+                btnClass={`border-1 md:w-[200px] w-full  h-[46px] !rounded-[10px] px-4 py-[10px] font-semibold leading-[33px] gap-[10px] flex items-center justify-center transition-colors ${
                   !isCurrentStepValid || isFeedbackPending
                     ? "bg-gray-300 text-white cursor-not-allowed"
                     : "bg-[#28A2FF] hover:bg-[#2196F3] text-white"

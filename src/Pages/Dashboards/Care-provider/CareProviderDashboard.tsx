@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import RatingStars from "@components/Shared-components/RatingStars";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-import userDummy from "@assets/media/images/dashboard-images/userDummy.png"
+import userDummy from "@assets/media/images/dashboard-images/userDummy.png";
 import Pagination from "@components/Pagination/Pagination";
 import ForumActivityCard from "@components/Dashboard-components/Cards/ForumActivityCard";
 import { useApiMyReviews } from "@src/hooks/useMyReviews";
@@ -33,13 +33,12 @@ const CareProviderDashboard: React.FC = () => {
 
   const [sort, setSort] = useState(true);
   const [filterValue, setFilterValue] = useState("");
-const navigate=useNavigate()
-    const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
-  
-    useEffect(()=>{
-      MeDataFetch()
-    })
-  
+  const navigate = useNavigate();
+  const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
+
+  useEffect(() => {
+    MeDataFetch();
+  });
 
   const {
     data: CareproviderData,
@@ -114,9 +113,13 @@ const navigate=useNavigate()
           patient: { first_name, last_name, email, image },
         } = row.original;
         return (
-          <div className="flex items-center gap-3">
+          <div className="flex me-6 items-center gap-3">
             <img
-              src={image ? `${import.meta.env.VITE_APP_API_IMG_URL}${image}` : userDummy}
+              src={
+                image
+                  ? `${import.meta.env.VITE_APP_API_IMG_URL}${image}`
+                  : userDummy
+              }
               alt={`${first_name} ${last_name}`}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
@@ -138,11 +141,7 @@ const navigate=useNavigate()
       showSort: true,
       cell: (info: any) => <i>{dayjs(info.getValue()).format(" DD/MM/YY ")}</i>,
     },
-    // {
-    //   accessor: "rating",
-    //   header: "Rating",
-    //   showSort: true,
-    // },
+
     {
       accessor: "rating",
       header: "Rating",
@@ -176,6 +175,19 @@ const navigate=useNavigate()
       accessor: "content",
       header: "Reviews",
       showSort: true,
+    },
+    {
+      accessor: "postal_code",
+      header: "Zip Code",
+      showSort: true,
+      cell: ({ row }: any) => {
+        const {
+          patient: { postal_code },
+        } = row.original;
+        return (
+          <span>{postal_code}</span>
+        );
+      },
     },
   ];
 
@@ -238,7 +250,6 @@ const navigate=useNavigate()
     refetch();
   };
 
-
   return (
     <div className="mb-10">
       <div className="w-[100%] grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[13px]">
@@ -279,7 +290,7 @@ const navigate=useNavigate()
       </div>
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Recent Reviews</h3>
+          <h3 className="md:mb-0 mb-3 space-grotesk font-bold text-[20px] ">Recent Reviews</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <div className=" lg:flex lg:flex-1 lg:justify-end px-5">
               <CommonInput
@@ -289,11 +300,11 @@ const navigate=useNavigate()
                 showImg={true}
                 imgSrc={searchIcon}
                 imgLeft={true}
-                inputClassName="text-sm "
-                containerClassName="w-full border-gray-200 rounded-lg py-3 max-w-sm"
+                inputClassName="text-sm placeholder-[#252525]"
+                containerClassName="w-full border-[#252525] inter rounded-lg py-3 max-w-sm"
               />
             </div>
-            <p className="text-[#252525] font-medium text-sm">Filter by</p>
+            <p className="text-[#252525] font-medium inter text-sm">Filter by</p>
             <div className="relative">
               <div className="flex flex-wrap items gap-4 ">
                 <PrimaryButton
@@ -302,7 +313,7 @@ const navigate=useNavigate()
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
+                  btnClass="border inter border-[#252525] px-4 md:w-[101px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
                 {/* <PrimaryButton
@@ -350,7 +361,7 @@ const navigate=useNavigate()
 
           <div>
             {CareProviderLoading ? (
-             <TableSkeletonLoader/>
+              <TableSkeletonLoader />
             ) : (
               <TanDataTable<dataTypes>
                 columns={columns}

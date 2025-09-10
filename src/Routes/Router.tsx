@@ -9,6 +9,7 @@ import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
 import { ProtectedRoutes, PublicProtectRoute } from "./ProtectedRoutes";
 import { TokenHandler } from "./TokenHandler";
 import PatientLayout from "@layouts/PatientLayout";
+import HomePage from "@pages/Web-pages/home-page/HomePage";
 
 const Router: React.FC = () => {
   return (
@@ -165,9 +166,10 @@ const Router: React.FC = () => {
         ))}
 
         {/* 404 Not Found */}
+        {/* <Route path="/" element={<HomePage />} /> */}
 
         {/* <Route element={<PatientLayout />}> */}
-          <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
         {/* </Route> */}
         {/* <Route path="*" element={<NotFoundPage />} /> */}
       </Routes>

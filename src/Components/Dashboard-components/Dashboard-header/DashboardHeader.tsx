@@ -44,10 +44,8 @@ const DashboardHeader: React.FC<Props> = ({
   const notificationRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const userRole = JSON.stringify(localStorage.getItem("userInfo"))?.role_type;
-const navigate=useNavigate()
+  const navigate = useNavigate();
   const { data } = useMeApi(navigate);
-
-
 
   const recentSearches: RecentSearch[] = [
     { id: "1", text: "John Davis - Patient ID #10293" },
@@ -58,7 +56,7 @@ const navigate=useNavigate()
 
   useEffect(() => {
     setShowMenu(false);
-    setShowNotifications(false);
+    // setShowNotifications(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -95,7 +93,7 @@ const navigate=useNavigate()
 
   const handleNotifications = () => {
     setShowNotifications((prev) => !prev);
-queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
+    queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
   };
 
   return (
@@ -104,9 +102,9 @@ queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
         showProfileSidebar ? "" : ""
       } bg-white bg-black ${className} w-full rounded-lg px-2 sm:px-4 py-[14px] sm:px-6  z-40 transition-all duration-300 lg:left-72 lg:right-4 left-4 right-4`}
     >
-      <div className="flex items-center  sm:items-center justify-between gap-2 w-full flex-row">
+      <div className="flex items-center flex-wrap justify-center  sm:items-center md:justify-between md:gap-2 gap-4 w-full flex-row">
         <div className="min-w-fit">
-          <h2 className="sm:!text-[25px] !text-[16px]">👋 Welcome Back!</h2>
+          <h2 className="sm:!text-[25px] !text-[16px] space-grotesk font-bold">👋 Welcome Back!</h2>
         </div>
 
         {/* Right Section */}
@@ -115,7 +113,7 @@ queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
           {/* Mobile menu button */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className=" rounded-full hover:bg-gray-100 block lg:hidden"
+            className="cursor-pointer rounded-full hover:bg-gray-100 block lg:hidden"
           >
             <MdMenu size={20} />
           </button>
@@ -123,21 +121,6 @@ queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
           <div className="hidden lg:block relative provider-search-dropdown w-[300px] transition-all duration-300">
             {isSearchDropdownOpen && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
-                {/* {searchText && (
-                  <div className="p-4 border-b border-gray-100">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 text-sm text-gray-700 border border-blue-500 rounded-lg outline-none focus:ring-1 focus:ring-blue-500"
-                        autoFocus
-                      />
-                    </div>
-                  </div>
-                )} */}
                 <div className="py-2 px-[15px]">
                   <div className="flex items-center justify-between mb-0">
                     <h3 className="text-gray-500 font-medium text-sm">
@@ -181,6 +164,38 @@ queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
             />
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
           </div>
+          {/* <div className="relative">
+            <AnimatePresence>
+              {showNotifications && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute sm:right-68 right-26 md:right-12 top-[25px] md:w-[370px] w-[10px] z-50"
+                >
+                  <NotficationBar noticationLink={noticationLink} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div> */}
+
+          <div className="relative">
+            <AnimatePresence>
+              {showNotifications && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute sm:right-68 right-26 md:right-12 top-[25px] md:w-[370px] w-[10px] z-50"
+                  ref={notificationRef} // Move the ref here
+                >
+                  <NotficationBar noticationLink={noticationLink} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* Profile */}
           <div
@@ -197,8 +212,8 @@ queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
               className="w-[30px] h-[30px] lg:w-[46px] lg:h-[46px] rounded-full object-cover"
             />
             <div className="lg:flex flex-col">
-              <p className="font-semibold text-sm">{data?.user_name}</p>
-              <p className="text-xs text-gray-500">Profile</p>
+              <p className="font-semibold text-[14px] bricolage-grotesque">{data?.full_name ? data?.full_name : data?.user_name }</p>
+              <p className="text-[12px] inter text-[#252525]">Profile</p>
             </div>
             <img src={dropDownArrow} alt="Arrow" className="w-4 h-4" />
           </div>
@@ -214,26 +229,12 @@ queryClient.invalidateQueries({ queryKey: ["useGetNotifications"] });
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="absolute right-0 top-[75px] w-55 bg-white border border-gray-200 shadow-xl px-2 rounded-xl py-4 z-50"
+            className="absolute  sm:top-[68px] right-8 md:top-[70px] lg:top-[75px] w-55 bg-white border border-gray-200 shadow-xl px-2 rounded-xl py-4 z-50"
           >
             <ProfileDropdown
               routeSetting={routeSetting}
               routeProfile={routeProfile}
             />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {showNotifications && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="absolute right-49 top-[75px] w-[370px] z-50"
-          >
-            <NotficationBar noticationLink={noticationLink} />
           </motion.div>
         )}
       </AnimatePresence>

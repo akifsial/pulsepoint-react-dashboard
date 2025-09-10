@@ -147,7 +147,7 @@ const PostCard: React.FC<PostCardProps> = ({
           <h3 className="mb-2.5">{post.title}</h3>
           <p className="text-sm text-[#252525] mb-7">
             {post.desc}{" "}
-            <span className="text-[#868686]">Read more..</span>
+            {/* <span className="text-[#868686]">Read more..</span> */}
           </p>
         </div>
 

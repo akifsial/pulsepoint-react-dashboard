@@ -1,5 +1,5 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SiteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
 import miniLogo from "@assets/media/svgs/mini-logo.svg";
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
@@ -22,6 +22,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
   const [searchText, setSearchText] = useState("");
   const AIShow = location.pathname.startsWith("/patient");
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
   const iconOnlyRoutes = [
     "/admin/profile",
     "/admin/feature",
@@ -48,12 +50,30 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
 
   // const userRole=JSON.stringify(localStorage.getItem("userInfo")).role_type
 
+  // click outside close logic
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        if (isOpen) {
+          onClose();
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen, onClose]);
+
   return (
     <>
       {showOnlyIcons ? (
         <aside
+          ref={sidebarRef}
           className={`
-            p-4 min-h-screen w-[89px]
+            p-4 min-h-screen w-[89px] 
             lg:translate-x-0 flex flex-col justify-between
             fixed top-0 left-0 z-50 transform transition-transform duration-500
             ${isOpen ? "translate-x-0 bg-white" : "-translate-x-full"}
@@ -134,18 +154,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
         </aside>
       ) : (
         <aside
+          ref={sidebarRef}
           className={`
             p-4 min-h-screen w-68
             lg:translate-x-0 
             flex flex-col justify-between
-            fixed top-0 left-0 z-50 transform transition-transform duration-500
+            fixed top-0 left-0 z-50 transform overflow-y-auto h-[100%] transition-transform duration-500
             ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
           `}
         >
-          <div className="space-y-2 mt-3 mb-5 ">
+          <div className=" space-y-2 mt-3 mb-5 ">
             <div
               className="mb-7 max-w-[250px] mx-auto cursor-pointer"
-              // onClick={() => navigate("/")}
               onClick={
                 userRole == "PATIENT"
                   ? () => navigate("/patient/dashboard")
@@ -159,7 +179,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               />
             </div>
             <div>
-              <div className="flex-1 flex md:hidden">
+              {/* <div className="flex-1 flex md:hidden">
                 <CommonInput
                   placeholder="Search here..."
                   value={searchText}
@@ -170,10 +190,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                   inputClassName="text-sm"
                   containerClassName="w-full max-w-md"
                 />
-              </div>
+              </div> */}
             </div>
             {sidebarData.map((link, index) => {
-              const isActive = location.pathname === link.path;
+              const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+              let isActive = false;
+              if (userInfo?.role_type == "PATIENT") {
+                isActive = location.pathname.startsWith(link.path);
+              } else {
+                isActive = location.pathname === link.path;
+              }
 
               const [isHovered, setIsHovered] = useState(false);
               let Icon = link.icon.default;
@@ -193,7 +219,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                   onMouseLeave={() => setIsHovered(false)}
                 >
                   <span>{Icon}</span>
-                  <span>{link.label}</span>
+                  <span className="text-[16px] font-medium">{link.label}</span>
                 </NavLink>
               );
             })}
@@ -208,10 +234,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
             >
               <img src={Chatbot} alt="chatbot" className="mx-auto mb-3" />
               <div className="text-white text-sm font-normal mb-2">
-                <strong className="text-[17px] font-bold">
+                <strong className="text-[17px] space-grotesk font-bold">
                   Unlock Premium Insights
                 </strong>
-                <p>Upgrade for Advanced Filters & Provider Comparisons.</p>
+                <p className="inter text-[14px] font-light">Upgrade for Advanced Filters & Provider Comparisons.</p>
               </div>
               <PrimaryButton
                 btnText="AI Chatbot"
@@ -219,7 +245,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 imgClass="w-[20px] h-[20px] object-cover"
                 img={AiIcon}
                 imgPosition="left"
-                btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-sm font-medium"
+                btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-[16px] font-semibold"
                 // onClick={() => navigate("/patient/feature")}
                 onClick={() => navigate("/patient/chatbot")}
               />

@@ -59,13 +59,13 @@ const ManagePassword = () => {
         onClick={() => Navigate(-1)}
       >
         <img src={backArrow} alt="backArrow" />
-        <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk]">
+        <h2 className="text-[25px] font-bold space-grotesk text-[#181D27] font-[Space Grotesk]">
           Back to Profile details
         </h2>
       </div>
 
       <div className="rounded-[10px] bg-white py-10 px-3 sm:p-10">
-        <h4 className="font-bold text-[#252525] text-xl leading-tight mb-7">
+        <h4 className="font-bold space-grotesk text-[#252525] text-xl leading-tight mb-7">
           Update Password
         </h4>
         <form onSubmit={handleSubmit(passwordChangeSubmit)}>

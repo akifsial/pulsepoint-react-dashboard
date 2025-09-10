@@ -7,6 +7,8 @@ import defaultLogout from "@assets/media/svgs/dashboard-svgs/login.svg";
 import defaultLogoutHover from "@assets/media/svgs/dashboard-svgs/login-hover.svg";
 import defaultSettings from "@assets/media/svgs/dashboard-svgs/setting.svg";
 import defaultSettingsHover from "@assets/media/svgs/dashboard-svgs/setting-hover.svg";
+import webIcon from "@assets/media/images/dashboard-images/web.png";
+
 import { useNavigate } from "react-router-dom";
 import { useMeApi } from "@src/hooks/useUsers";
 import { disconnectSocket } from "@src/socket/socket";
@@ -36,17 +38,29 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   const navigate = useNavigate();
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
 
-  const queryClient=useQueryClient()
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
-    queryClient.clear()
+    queryClient.clear();
     disconnectSocket();
 
     localStorage.clear();
-    navigate("/login");
+
+    // if (userRole == "PATIENT" ) {
+    //   navigate("/login");
+    // } else if(userRole=="CARE_PROVIDER") {
+    //   navigate("/admin/login");
+    // }
+
+    // if (userRole == "ADMIN") {
+    //   navigate("/admin/login");
+    // } else {
+    //   navigate("/login");
+    // }
+
+      navigate("/login");
+
   };
-
-
 
   return (
     <div>
@@ -58,7 +72,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           onClick={() =>
             userRole == "CARE_PROVIDER"
               ? navigate("/care-provider/profile")
-              : navigate("/patient/profile")
+              : userRole == "PATIENT"
+              ? navigate("/patient/profile")
+              : navigate("/admin/profile")
           }
         >
           <img
@@ -66,22 +82,31 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             alt="User"
             className="w-[22px] h-[22px] object-cover"
           />
-          <span className="font-medium text-[#252525]">My Profile</span>
+          <span className="font-medium text-[14px] text-[#252525]">My Profile</span>
         </div>
 
-        {/* <div
-          className="flex items-center gap-3 w-full text-left py-2 mb-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
-          onMouseEnter={() => setHovered("settings")}
-          onMouseLeave={() => setHovered(null)}
-          onClick={() => navigate( userRole == "CARE_PROVIDER" ? `/care-provider/manage-password` : `/patient/manage-password` )}
+        <div
+          className="flex items-center gap-3 w-full mb-2 text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
+          // onMouseEnter={() => setHovered("user")}
+          // onMouseLeave={() => setHovered(null)}
+          // onClick={() =>
+          //   userRole == "CARE_PROVIDER"
+          //     ? navigate("/care-provider/web")
+          //     : userRole == "PATIENT"
+          //     ? navigate("/patient/web")
+          //     : navigate("/admin/web")
+          // }
+          onClick={
+            () => navigate("/") // Everyone else goes to main website root
+          }
         >
           <img
-            src={hovered === "settings" ? settingsIconHover : settingsIcon}
-            alt="Settings"
+            src={webIcon}
+            alt="User"
             className="w-[22px] h-[22px] object-cover"
           />
-          <span className="font-medium text-[#252525]">Settings</span>
-        </div> */}
+          <span className="font-medium text-[14px] text-[#252525]">View Web</span>
+        </div>
       </div>
 
       <button
@@ -95,7 +120,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           alt="Logout"
           className="w-[22px] h-[22px] object-cover"
         />
-        <span className="font-medium text-[#252525]">Logout</span>
+        <span className="font-medium  text-[14px] text-[#252525]">Logout</span>
       </button>
     </div>
   );

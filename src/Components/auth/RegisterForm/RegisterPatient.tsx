@@ -214,9 +214,14 @@ const RegisterPatient = ({ setSelectUser }) => {
               <div className="sm:px-4 py-6">
                 <p className="text-[#1A1A1A] flex items-center gap-5 text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
                   <span
-                    onClick={() => {setSelectUser(""); // Remove hash from URL
-window.history.replaceState(null, "", window.location.pathname + window.location.search);
-}}
+                    onClick={() => {
+                      setSelectUser(""); // Remove hash from URL
+                      window.history.replaceState(
+                        null,
+                        "",
+                        window.location.pathname + window.location.search
+                      );
+                    }}
                     className="cursor-pointer"
                   >
                     <ArrowLeft />{" "}
@@ -491,8 +496,6 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                   />
                 </div>
 
-               
-
                 {/* zip code and city */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -507,6 +510,7 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       icon={IoLocationSharp}
                       register={register}
                       registerName="postal_code"
+                      isZipCode={true}
                       errors={errors}
                       validation={{
                         required: "Zip Code is required",

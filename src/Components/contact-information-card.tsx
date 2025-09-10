@@ -33,6 +33,13 @@ export default function ContactInformationCard({
         <p className="text-sm text-gray-900">{data?.address}</p>
       </div>
 
+      <div className="mb-4">
+        <label className="text-sm text-gray-500 flex items-center gap-1 mb-1">
+          Website:
+        </label>
+        <p className="text-sm text-gray-900">{data?.website_url}</p>
+      </div>
+
       {/* Phone */}
       <div className="mb-4">
         <label className="text-sm text-gray-500 flex items-center gap-1 mb-1">
@@ -50,11 +57,14 @@ export default function ContactInformationCard({
         </label>
         <div className="space-y-1">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700">{data?.working_hours}</span>
+            {/* <span className="text-gray-700">{data?.working_hours}</span> */}
             <span className="text-gray-900">{weekdayHours}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700">{data?.start_day} - {data?.end_day} | {data?.time_in} - {data?.time_out} </span>
+            <span className="text-gray-700">
+              {data?.start_day} - {data?.end_day} | {data?.time_in} -{" "}
+              {data?.time_out}{" "}
+            </span>
             <span className="text-gray-900">{weekendHours}</span>
           </div>
         </div>

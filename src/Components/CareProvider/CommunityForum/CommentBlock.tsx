@@ -68,6 +68,52 @@ export const CommentItem = ({
   const handleReplyChange = (id, value) => {
     setReplyValues((prev) => ({ ...prev, [id]: value }));
   };
+  
+
+  const [localLike, setLocalLike] = useState(comment?.userLike?.is_like ?? null);
+const [localCount, setLocalCount] = useState(comment?.likeCount || 0);
+
+const handleReactionClick = async (status: "like" | "dislike") => {
+  let newStatus = localLike;
+  let newCount = localCount;
+
+  if (status === "like") {
+    if (localLike === true) {
+      // undo like
+      newStatus = null;
+      newCount = Math.max(0, newCount - 1);
+    } else {
+      // like
+      newStatus = true;
+      newCount = newCount + 1;
+      if (localLike === false) {
+        // switching from dislike → just +1
+      }
+    }
+  }
+
+  if (status === "dislike") {
+    if (localLike === false) {
+      // undo dislike
+      newStatus = null;
+    } else {
+      // dislike
+      newStatus = false;
+      if (localLike === true) {
+        // switch from like → remove one
+        newCount = Math.max(0, newCount - 1);
+      }
+    }
+  }
+
+  // Update UI instantly
+  setLocalLike(newStatus);
+  setLocalCount(newCount);
+
+  // Call API
+  await handleCommentReaction(status, comment, postId);
+};
+
 
   return (
     <div className="ml-4 mt-3">
@@ -98,40 +144,39 @@ export const CommentItem = ({
             <div className="flex items-center gap-2.5 mb-2.5">
               <div className="flex  items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
                 {/* LIKEEEEE */}
-                <button
-                  disabled={LikeIsPending}
-                  className="flex items-center gap-2"
-                  onClick={() => handleCommentReaction("like", comment, postId)}
-                >
-                  {comment?.userLike?.is_like == true ? (
-                    <div className="bg-black p-1.5 rounded-full">
-                      <img src={arrowUp} className="py-0.5 px-1" alt="Liked" />
-                    </div>
-                  ) : (
-                    <img src={arrowDowm} className="rotate-180" alt="Like" />
-                  )}
+                    <button
+                disabled={LikeIsPending}
+                className="flex items-center gap-2"
+                onClick={() => handleReactionClick("like")}
+              >
+                {localLike === true ? (
+                  <div className="bg-black p-1.5 rounded-full">
+                    <img src={arrowUp} className="py-0.5 px-1" alt="Liked" />
+                  </div>
+                ) : (
+                  <img src={arrowDowm} className="rotate-180" alt="Like" />
+                )}
+                {localCount}
+              </button>
 
-                  {comment?.likeCount || 0}
-                </button>
-                <button
-                  className="ps-2"
-                  disabled={LikeIsPending}
-                  onClick={() =>
-                    handleCommentReaction("dislike", comment, postId)
-                  }
-                >
-                  {comment?.userLike?.is_like == false ? (
-                    <div className="bg-black p-1.5 rounded-full">
-                      <img
-                        src={arrowUp}
-                        className="rotate-180 py-0.5 px-1"
-                        alt="Dislike"
-                      />
-                    </div>
-                  ) : (
-                    <img src={arrowDowm} alt="Dislike" />
-                  )}
-                </button>
+              {/* Dislike */}
+              <button
+                className="ps-2"
+                disabled={LikeIsPending}
+                onClick={() => handleReactionClick("dislike")}
+              >
+                {localLike === false ? (
+                  <div className="bg-black p-1.5 rounded-full">
+                    <img
+                      src={arrowUp}
+                      className="rotate-180 py-0.5 px-1"
+                      alt="Dislike"
+                    />
+                  </div>
+                ) : (
+                  <img src={arrowDowm} alt="Dislike" />
+                )}
+              </button>
 
                 {/* <button
                   className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"

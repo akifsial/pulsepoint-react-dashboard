@@ -62,7 +62,7 @@ const Pagination: React.FC<PaginationProps> = ({
           {totalPages} of {totalRows} entries
         </p>
       </div>
-      <div className="flex md:gap-2 gap-1 items-center py-4 ">
+      <div className="flex flex-wrap md:gap-2 gap-1 items-center py-4 ">
         <button
           onClick={handlePrev}
           disabled={currentPage === 1}

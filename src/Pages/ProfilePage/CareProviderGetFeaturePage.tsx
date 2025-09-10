@@ -66,7 +66,7 @@ const CareProviderGetFeaturePage = () => {
         <CreProviderBillingCheckout />
       ) : (
         <>
-          <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
+          <h2 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] space-grotesk mb-6">
             Feature My Facility
           </h2>
 
@@ -78,7 +78,7 @@ const CareProviderGetFeaturePage = () => {
             }}
           >
             <div className="max-w-[585px] text-white font-medium leading-6">
-              <h4 className="text-xl font-bold font-[Space Grotesk] mb-2">
+              <h4 className="text-xl space-grotesk font-bold font-[Space Grotesk] mb-2">
                 💡 Why Feature Your Facility?
               </h4>
               <p className="text-[14px] md:text-[16px]">
@@ -87,11 +87,11 @@ const CareProviderGetFeaturePage = () => {
               </p>
             </div>
           </div>
-          <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-3">
+          <h4 className="text-[25px] space-grotesk font-bold text-[#181D27] font-[Space Grotesk] mb-3">
             Feature My Facility
           </h4>
           <CareProviderProfileCards onUpgrade={handlePlan} />
-          <h4 className="text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-4">
+          <h4 className="text-[25px] space-grotesk font-bold text-[#181D27] font-[Space Grotesk] mb-4">
             💡 Advantages of Feature Plans?
           </h4>
           <div className="rounded-[10px] py-2.5 px-5 bg-white mb-5">

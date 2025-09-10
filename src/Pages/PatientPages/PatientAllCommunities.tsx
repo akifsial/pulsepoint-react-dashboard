@@ -180,6 +180,7 @@ const PatientAllCommunites: React.FC = () => {
     }
   };
 
+  const userInfo=JSON.parse(localStorage.getItem("userInfo"))
   const columns: TanDataTableColumn<ReviewDataTypes>[] = [
     {
       accessor: "provider_name",
@@ -195,7 +196,7 @@ const PatientAllCommunites: React.FC = () => {
         return (
           <div
             className="flex cursor-pointer items-center gap-3 pe-10"
-            onClick={() => navigate(`/patient/community-account/${id}`)}
+            onClick={() => ( userInfo?.role_type=="PATIENT" ? navigate(`/patient/community-account/${id}`) : navigate(`/care-provider/community-account/${id}`))}
           >
             <img
               src={imageUrl}
@@ -293,7 +294,7 @@ const PatientAllCommunites: React.FC = () => {
     <div className="mb-10">
       <h2
         className="
-          font-space-grotesk
+          space-grotesk
           font-bold
           text-heading
           leading-8
@@ -301,13 +302,14 @@ const PatientAllCommunites: React.FC = () => {
           text-brand-ink
           align-middle
           mb-6
+          text-[25px]
         "
       >
         My Comunities
       </h2>
       <div className="bg-[#FFFFFF] h-[400px] rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">All Communities</h3>
+          <h3 className="md:mb-0 mb-3 text-[20px] font-bold space-grotesk">All Communities</h3>
         
         </div>
 
@@ -318,12 +320,7 @@ const PatientAllCommunites: React.FC = () => {
             <div className="h-[300px] overflow-x-auto w-[100%] overflow-y-auto">
               <TanDataTable<ReviewDataTypes>
                 columns={columns ?? []}
-                // data={data?.records ?? []}
-                // data={data ?? []}
-                // data={
-                //   data?.records?.filter((row) => row?.creator_id !== userId) ??
-                //   []
-                // }
+               
                 data={data?.records ?? []}
                 showCheckbox={false}
                 onRowSelect={handleRowSelect}

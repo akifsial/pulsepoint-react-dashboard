@@ -30,10 +30,10 @@ const StatsCommonCards: React.FC<StatsCommonCardsProps> = ({
         <>
           {/* Default content */}
           <div>
-            <p className="text-[45px] font-bold font-secondary text-[#1C1C1C] leading-10 mb-3">
+            <p className="text-[45px] space-grotesk font-bold font-secondary text-[#1C1C1C] leading-10 mb-3">
               {count}
             </p>
-            <p className="text-[#181D27] text-[17px] font-bold leading-tight">
+            <p className="text-[#5D6168] space-grotesk text-[17px] font-bold leading-tight">
               {title}
             </p>
           </div>

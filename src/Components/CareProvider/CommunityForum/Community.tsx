@@ -40,10 +40,10 @@ const Community = () => {
       ) : (
         <div className="w-full block justify-between mb-8 md:flex md:items-start md:gap-6">
           <div className="flex-1 md:mb-0 mb-8">
-            <h2 className="text-xl font-semibold mb-3.5 text-[#252525] font-[Space Grotesk]">
+            <h2 className="text-xl space-grotesk font-semibold mb-3.5 text-[#252525] font-[Space Grotesk]">
               Your Feed
             </h2>
-            <div className="flex flex-wrap gap-[5px] mb-6">
+            <div className="flex flex-wrap md:justify-start justify-center gap-[5px] mb-6">
               <button
                 onClick={() => setActiveTab("home")}
                 className={`flex items-center cursor-pointer gap-2 px-4 py-[7px] rounded-[20px] transition-all ${

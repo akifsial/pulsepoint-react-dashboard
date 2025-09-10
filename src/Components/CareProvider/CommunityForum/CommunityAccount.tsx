@@ -46,6 +46,7 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
   const { data, refetch, isLoading, isFetching, isError } =
     useGetSpecificCommunity(id ?? "");
 
+
   const location = useLocation(); // detects route changes
 
   useEffect(() => {
@@ -137,7 +138,7 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
             }}
           >
             <img src={backArrow} alt="backArrow" />
-            <h2 className="text-xl font-semibold text-[#252525]  font-[Space Grotesk]">
+            <h2 className="text-xl space-grotesk font-bold text-[#252525]  font-[Space Grotesk]">
               Back to Feed
             </h2>
           </div>
@@ -192,7 +193,7 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
               <div className="md:flex md:items-center justify-between pt-[75px] pb-5 px-5">
                 <div className="max-w-[535px] md:mb-0 mb-3">
                   <h2
-                    className="text-xl font-semibold text-[#252525] font-[Space Grotesk] mb-2 cursor-pointer"
+                    className="text-xl space-grotesk font-semibold text-[#252525] font-[Space Grotesk] mb-2 cursor-pointer"
                     onClick={() => setShowPatientInfo(true)}
                   >
                     {data?.title}
@@ -206,16 +207,9 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
                       />
                       <p className="pt-1">Create Post</p>
                     </div>
-                    {/* <div className="flex gap-0.5">
-                      <img src={Global} alt="" />
-                      <p>{data?.type=="PRIVATE" ? "Private" : "Public"}</p>
-                    </div> */}
+                  
                     <div className="flex items-center ">
-                      {/* <img
-                      src={data?.type === "PUBLIC" ? Global : PrivateLock}
-                      alt={data?.type === "PUBLIC" ? "Public" : "Private"}
-                      className="w-7 object-contain"
-                    /> */}
+                    
                       {data?.type === "PUBLIC" ? (
                         <img
                           src={Global}
@@ -331,13 +325,7 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
                 </div>
               </div>
             </div>
-            {/* {data?.is_joined == true ? (
-              <OurFeed data={data} />
-            ) : (
-              <h3 className="text-center mt-25">
-                Joined Community to see posts
-              </h3>
-            )} */}
+   
 
             {data?.is_joined ? (
               data.community_posts && data.community_posts.length > 0 ? (

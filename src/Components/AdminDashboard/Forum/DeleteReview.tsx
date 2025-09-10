@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import SuccessIcon from "@assets/media/images/reset-success-icon.png";
 
 const DeleteReview = () => {

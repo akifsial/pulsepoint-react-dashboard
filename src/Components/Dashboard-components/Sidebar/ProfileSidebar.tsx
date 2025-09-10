@@ -44,7 +44,7 @@ const ProfileSidebar: React.FC<SidebarProps> = ({
             <NavLink
               to={link.path}
               key={index}
-              className={`flex items-center gap-3 px-4 py-[10px] rounded-[10px] transition-all ${
+              className={`flex items-center  gap-3 px-4 py-[10px] rounded-[10px] transition-all ${
                 isActive
                   ? "bg-[#28A2FF] text-white"
                   : "text-gray-700 hover:bg-[#daeffd]"

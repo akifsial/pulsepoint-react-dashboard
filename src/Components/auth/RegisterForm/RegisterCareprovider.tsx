@@ -461,6 +461,7 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       placeholder="e.g., 78701"
                       register={register}
                       registerName="zipCode"
+                      isZipCode={true}
                       errors={errors}
                       validation={{
                         required: "Zip code is required",

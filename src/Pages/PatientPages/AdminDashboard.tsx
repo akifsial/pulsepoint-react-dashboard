@@ -15,7 +15,7 @@ import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.j
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ReviewCard from "@components/ReviewCard";
-
+import MessageIcon from "@assets/media/svgs/dashboard-svgs/message-time.svg";
 import dayjs from "dayjs";
 import { Search, Clock } from "lucide-react";
 import {
@@ -38,7 +38,9 @@ import toast from "react-hot-toast";
 import { X } from "lucide-react";
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
 import { useMeApi } from "@src/hooks/useUsers";
+import LikeIcon from "@assets/media/svgs/dashboard-svgs/like-tag2.svg";
 import axios from "axios";
+import userDown from "@assets/media/svgs/dashboard-svgs/user-down-01.svg";
 import Pagination from "@components/Pagination/Pagination";
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
@@ -93,13 +95,12 @@ const AdminDashboard: React.FC = () => {
     page,
     sort == true ? "asc" : "desc"
   );
-  
-    const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
-  
-    useEffect(()=>{
-      MeDataFetch()
-    })
-  
+
+  const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
+
+  useEffect(() => {
+    MeDataFetch();
+  });
 
   const onSortClick = () => {
     setSort(!sort);
@@ -180,7 +181,7 @@ const AdminDashboard: React.FC = () => {
         return (
           <div
             className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate(`/patient/careprovider-profile/${id}`)}
+            onClick={() => navigate(`/patient/care-provider/${id}`)}
             // onClick={() => navigate("/patient/hospital-profile")}
           >
             <img
@@ -189,10 +190,10 @@ const AdminDashboard: React.FC = () => {
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
             <div className="flex flex-col">
-              <span className="font-medium text-sm text-[#252525] leading-tight">
+              <span className="font-medium text-[16px] text-[#252525] leading-tight">
                 {organization_name}
               </span>
-              <span className="text-xs text-gray-500 leading-tight">
+              <span className="text-[12px] text-gray-500 leading-tight">
                 {email}
               </span>
             </div>
@@ -202,11 +203,16 @@ const AdminDashboard: React.FC = () => {
     },
     {
       accessor: "date",
-      header: "Date",
+      header: <span className="ml-7">Date</span>,
+      width: 200,
       showSort: true,
       cell: (info) => {
         const row = info.row.original;
-        return <div>{dayjs(row?.created_at).format("DD/MM/YY") ?? "N/A"}</div>;
+        return (
+          <div className="ml-9 font-normal">
+            {dayjs(row?.created_at).format("DD/MM/YY") ?? "N/A"}
+          </div>
+        );
       },
     },
 
@@ -223,8 +229,8 @@ const AdminDashboard: React.FC = () => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
-            width="20"
-            height="20"
+            width="17"
+            height="17"
           >
             <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
           </svg>
@@ -327,7 +333,6 @@ const AdminDashboard: React.FC = () => {
       },
     });
 
-
   const handleUpdateStatus = (stst) => {
     const newStatus = stst === "ACTIVE" ? "INACTIVE" : "ACTIVE";
 
@@ -384,8 +389,6 @@ const AdminDashboard: React.FC = () => {
     setPage(1);
   }, [searchText]);
 
-
-
   return (
     <div className="mb-10">
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[13px]">
@@ -405,7 +408,7 @@ const AdminDashboard: React.FC = () => {
               Providers Listing
             </>
           }
-          cardImg={userSearch}
+          cardImg={userDown}
           imgBg="#EEE0FF"
           borderBg="#9747FF"
         />
@@ -420,7 +423,7 @@ const AdminDashboard: React.FC = () => {
             )
           }
           title="Total Reviews Written"
-          cardImg={WriteReview}
+          cardImg={MessageIcon}
           imgBg="#D8F6D4"
           borderBg="#52C343"
         />
@@ -435,32 +438,28 @@ const AdminDashboard: React.FC = () => {
             )
           }
           title="Average Rating Given"
-          cardImg={ThumbsUp}
+          cardImg={LikeIcon}
           imgBg="#FFE8CF"
           borderBg="#F98A17"
         />
-        {/* <ReviewCard
-          backgroundImage={Patientdbimg}
-          onReviewClick={handleReviewClick}
-        /> */}
       </div>
 
-      <div className="mt-6 overflow-y-auto bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] h-[400px] px-4 py-6">
-        <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Care Providers</h3>
+      <div className="mt-6 overflow-y-auto w-[100%] bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] h-[400px] px-4 py-6">
+        <div className="mb-6 flex gap-4 md:flex-row flex-col md:items-center md:justify-between">
 
           {/* Updated searchbar with dropdown */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5 relative">
+          <h3 className="md:mb-0 space-grotesk text-[20px] font-bold text-gray-900 mb-3">Care Providers</h3>
+          <div className=" lg:flex lg:flex-1 lg:justify-end px-0 mb-4 mt-2 lg:px-5 relative">
             <div className="w-full max-w-sm relative search-dropdown-container">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#252525] w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search with Provider name, zipcode"
                   value={searchText}
                   onChange={handleSearchChange}
                   onFocus={handleSearchFocus}
-                  className="w-full pl-10 pr-4 py-3 text-gray-700 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
+                  className="w-full min-w-[250px] text-[14px] font-medium inter pl-10 pr-4 py-3 text-gray-700 placeholder-[#252525] border border-[#252525] rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
                 />
               </div>
 
@@ -517,23 +516,23 @@ const AdminDashboard: React.FC = () => {
           </div>
 
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium text-sm">Filter by</p>
             <div className="relative" ref={dropdownRef}>
               <div className="flex items-center flex-wrap gap-4">
+            <p className="text-[#252525] inter font-medium text-[14px]">Filter by</p>
                 <PrimaryButton
                   btnText={` ${rating ? rating : ""} Ratings`}
                   showImg={true}
                   imgClass="w-[24px] h-[24px] object-cover"
                   img={filterIcon}
                   imgPosition="right"
-                  btnClass="border border-[#252525] !px-2.5 rounded-[10px] text-[#252525] text-sm font-medium"
+                  btnClass="border inter border-[#252525] !px-2 rounded-[10px] text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
                 <button
                   onClick={() => navigate("/patient/care-provider")}
                   className="border border-[#252525] px-4 py-3 cursor-pointer md:w-[180px] w-full rounded-[10px] bg-[#000000] flex items-center justify-center gap-2"
                 >
-                  <span className="text-[#FFFFFF] text-sm font-semibold">
+                  <span className="text-[#FFFFFF] inter  text-[14px] font-semibold">
                     View All Listing
                   </span>
                   <img
@@ -568,23 +567,17 @@ const AdminDashboard: React.FC = () => {
           {isLoadingCareProviderData ? (
             <TableSkeletonLoader />
           ) : (
-            <div>
-              {/* <TanDataTable<dataTypes>
-                columns={columns ?? []}
-                data={CareProvidersData ?? []}
-                showCheckbox={false}
-                onRowSelect={handleRowSelect}
-                className="my-custom-class"
-              /> */}
-              <TanDataTable
-                columns={columns ?? []}
-                data={CareProvidersData?.payload?.records ?? []}
-                pageCount={2}
-                fetchData={CareProvidersData}
-                onSortClick={onSortClick}
-                // isLoading={loading}
-              />
-            </div>
+            // <div className="w-full overflow-x-auto">
+
+            <TanDataTable
+              columns={columns ?? []}
+              data={CareProvidersData?.payload?.records ?? []}
+              pageCount={2}
+              fetchData={CareProvidersData}
+              onSortClick={onSortClick}
+              // isLoading={loading}
+            />
+            // </div>
           )}
 
           <DeleteModal

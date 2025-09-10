@@ -57,7 +57,7 @@ const PaymentHistoryPage = () => {
   return (
     <div className="min-h-screen py-10 px-4">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">
+        <h2 className="text-3xl space-grotesk font-bold mb-6 text-gray-800">
           Payment History
         </h2>
 

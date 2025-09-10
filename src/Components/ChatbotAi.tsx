@@ -15,12 +15,15 @@ import toast from "react-hot-toast";
 import { useGetConversationChatSpecific } from "@src/hooks/useCommunity";
 import { useNavigate } from "react-router-dom";
 import { ApiMe } from "@src/api/ApiUsers";
+import { MdMenu } from "react-icons/md";
 
 const ChatbotAi: React.FC = ({
   selectedConversationId,
   setSelectedConversationId,
   chatBotData,
   setChatBotData,
+  setIsSidebarOpen,
+  isSidebarOpen,
 }) => {
   const [question, setQuestion] = useState("");
   const [botAnswers, setBotAnswers] = useState([]);
@@ -114,9 +117,19 @@ const ChatbotAi: React.FC = ({
   };
 
   return (
-    <div className="w-full max-w-screen mx-auto bg-white rounded-lg px-2 sm:p-8 shadow-sm">
+    <div className="w-full max-w-screen mx-auto bg-white rounded-lg px-2 sm:p-8  shadow-sm">
       <div className="flex flex-col gap-8 h-full justify-center items-center">
         {/* Header Section */}
+        <div className="w-full flex justify-end">
+          <button
+            onClick={() => {
+              setIsSidebarOpen(!isSidebarOpen);
+            }}
+            className="cursor-pointer rounded-full sm:m-0 mt-8 me-6   hover:bg-gray-100 block lg:hidden"
+          >
+            <MdMenu size={30} />
+          </button>
+        </div>
         <div className="text-center sm:mt-0 mt-10">
           <h2 className="font-grotesk font-bold text-[25px] leading-custom text-customGray text-center mb-2">
             Top Senior Spot - Ask a Question
@@ -222,7 +235,7 @@ const ChatbotAi: React.FC = ({
         </div>
 
         {/* Category Buttons Grid */}
-        <div className="grid grid-cols-1 sm:mb-0 mb-8 md:grid-cols-4  gap-4">
+        {/* <div className="grid grid-cols-1 sm:mb-0 mb-8 md:grid-cols-4  gap-4">
           <PrimaryButton
             btnText="🏥 Care Provider reviews"
             btnTextClass="text-[12px] font-semibold"
@@ -277,7 +290,52 @@ const ChatbotAi: React.FC = ({
             // onClick={(e) => setQuestion(e.target.value)}
             onClick={() => handleChatPost("🧾 Nursing Home Advice")}
           />
-        </div>
+        </div> */}
+<div className="grid grid-cols-1 w-full sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  <PrimaryButton
+    btnText="🏥 Care Provider reviews"
+    btnTextClass="text-sm font-semibold"
+    btnClass="border border-[#252525] py-3 w-full rounded-[10px] flex items-center justify-center"
+    onClick={() => handleChatPost("🏥 Care Provider reviews")}
+  />
+  <PrimaryButton
+    btnText="📋 Medical Ratings"
+    btnTextClass="text-sm font-semibold"
+    btnClass="border border-[#252525] px-6 py-3 w-full rounded-[10px] flex items-center justify-center"
+    onClick={() => handleChatPost("📋 Medical Ratings")}
+  />
+  <PrimaryButton
+    btnText="🧓 Patient feedback"
+    btnTextClass="text-sm font-semibold"
+    btnClass="border border-[#252525] px-6 py-3 w-full rounded-[10px] flex items-center justify-center"
+    onClick={() => handleChatPost("🧓 Patient feedback")}
+  />
+  <PrimaryButton
+    btnText="🤖 AI Support"
+    btnTextClass="text-sm font-semibold"
+    btnClass="border border-[#252525] px-6 py-3 w-full rounded-[10px] flex items-center justify-center"
+    onClick={() => handleChatPost("🤖 AI Support")}
+  />
+  <PrimaryButton
+    btnText="🛏️ Rehab Care"
+    btnTextClass="text-sm font-semibold"
+    btnClass="border border-[#252525] px-6 py-3 w-full rounded-[10px] flex items-center justify-center"
+    onClick={() => handleChatPost("🛏️ Rehab Care")}
+  />
+  <PrimaryButton
+    btnText="💰 Insurance Acceptance"
+    btnTextClass="text-sm font-semibold"
+    btnClass="border border-[#252525] px-6 py-3 w-full rounded-[10px] flex items-center justify-center"
+    onClick={() => handleChatPost("💰 Insurance Acceptance")}
+  />
+  <PrimaryButton
+    btnText="🧾 Nursing Home Advice"
+    btnTextClass="text-sm font-semibold"
+    btnClass="border border-[#252525] px-6 py-3 w-full rounded-[10px] flex items-center justify-center"
+    onClick={() => handleChatPost("🧾 Nursing Home Advice")}
+  />
+</div>
+
       </div>
     </div>
   );

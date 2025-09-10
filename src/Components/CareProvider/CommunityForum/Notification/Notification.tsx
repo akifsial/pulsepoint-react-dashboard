@@ -82,10 +82,10 @@ const Notification = () => {
 
   return (
     <>
-      <h2 className="mb-5">Notifications</h2>
+      <h2 className="mb-5 space-grotesk text-[25px] font-bold">Notifications</h2>
       <div className="bg-white p-5 rounded-[10px] h-[607px]">
         {/* Tabs */}
-        <div className="flex mb-2.5 border-b-2 border-b-[#007AB2] w-[426px]">
+        <div className="flex flex-wrap md:justify-start justify-center mb-2.5 border-b-2 border-b-[#007AB2]">
           {["notification", "all"].map((tab) => (
             <button
               key={tab}

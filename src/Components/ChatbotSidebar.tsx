@@ -30,9 +30,9 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
   const { data, isLoading } = useGetAllConversations();
 
   // Close the sidebar when the location changes
-  useEffect(() => {
-    onClose();
-  }, [location.pathname, onClose]);
+  // useEffect(() => {
+  //   onClose();
+  // }, [location.pathname, onClose]);
 
   // Handle the click event to trigger the onTabClick function
   const handleLinkClick = (link: string) => {
@@ -44,7 +44,7 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
     <aside
       className={`fixed top-0 z-50 w-[268px] h-full bg-[#F5FBFF] shadow-lg p-4
         transition-all duration-300 ease-in-out
-        ${isOpen ? "left-[89px]" : "-left-full"} lg:left-[89px] lg:block`}
+        ${isOpen ? "left-[0px]" : "-left-full"} lg:left-[89px] lg:block`}
     >
       <div className="space-y-2 flex flex-col mt-3 h-full overflow-y-auto">
         {isLoading ? (
@@ -94,7 +94,10 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
         )}
         <div className=" flex items-end justify-center h-full">
           <PrimaryButton
-            onClick={() => {setSelectedConversationId(""); setChatBotData([])}}
+            onClick={() => {
+              setSelectedConversationId("");
+              setChatBotData([]);
+            }}
             btnText="New Chat"
             btnClass="text-white bg-black !rounded-[6px]"
           />

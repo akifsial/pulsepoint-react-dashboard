@@ -19,7 +19,7 @@ const PostContent = ({ content }: { content: string }) => {
           onClick={() => setIsExpanded(!isExpanded)}
           className="text-[#1D83CE] cursor-pointer font-medium hover:underline mt-2"
         >
-          {isExpanded ? "Show Less" : "Read More"}
+          {/* {isExpanded ? "Show Less" : "Read More"} */}
         </button>
       )}
     </div>

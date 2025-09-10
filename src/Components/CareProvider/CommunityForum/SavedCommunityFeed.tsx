@@ -538,7 +538,7 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
               </div>
 
               <div className="text-sm text-[#252525] mb-7">
-                <h3 className="mb-2 font-[Space Grotesk] text-xl">
+                <h3 className="mb-2 space-grotesk font-[Space Grotesk] font-bold text-[20px]">
                   {post.title}
                 </h3>
                 <p>

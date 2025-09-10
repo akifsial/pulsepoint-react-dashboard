@@ -1,5 +1,7 @@
-import { Star } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, Star } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import DummyUser from "@assets/media/images/dummyUser.png";
+import Button from "../Shared/Button";
 
 interface ProfessionalCardProps {
   id: string;
@@ -10,7 +12,16 @@ interface ProfessionalCardProps {
   profileLink: string;
 }
 
-const ProfessionalCard = ({ name, title, image, rating, profileLink }: ProfessionalCardProps) => {
+const ProfessionalCard = ({
+  id,
+  organization_name,
+  last_name,
+  total_rating,
+  title,
+  image,
+  rating,
+  profileLink,
+}: ProfessionalCardProps) => {
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
@@ -24,28 +35,52 @@ const ProfessionalCard = ({ name, title, image, rating, profileLink }: Professio
     ));
   };
 
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
-      <div className="flex flex-col items-center text-center">
+    <div className="bg-[#F5F5F5] rounded-lg p-[20px] shadow-sm hover:shadow-md transition-shadow duration-300">
+      <div className="flex flex-row gap-2 justify-start items-center text-center">
         <img
-          src={image}
-          alt={name}
+          src={
+            image
+              ? `${import.meta.env.VITE_APP_API_IMG_URL}${image}`
+              : DummyUser
+          }
+          // alt={name}
           className="w-16 h-16 rounded-full object-cover mb-4"
         />
-        <h3 className="font-semibold text-gray-900 mb-1">{name}</h3>
-        <p className="text-sm text-gray-600 mb-3">{title}</p>
-        
-        <div className="flex items-center mb-3">
-          {renderStars(rating)}
-          <span className="ml-2 text-sm font-medium text-gray-900">{rating}</span>
+        <div className="">
+          <h3 className="font-semibold text-start text-[16px] text-black mb-0">
+            {" "}
+            {organization_name}{" "}
+          </h3>
+          {/* <p className="text-sm text-black mb-3">{title}</p> */}
+          <p className="text-[14px] text-start text-normal text-black mb-3">
+            {"Geriatric Specialist"}
+          </p>
         </div>
-        
-        <Link
+
+        {/* <Link
           to={profileLink}
           className="bg-black text-white px-6 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
         >
           Profile
-        </Link>
+        </Link> */}
+      </div>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center">
+          {renderStars(total_rating)}
+          <span className="ml-2 text-sm font-medium text-gray-900">
+            {total_rating}
+          </span>
+        </div>
+
+        <Button
+          onClick={() => navigate(`/patient/care-provider/profile/${id}`)}
+          className="!bg-black cursor-pointer flex items-center space-x-2"
+        >
+          <span>Profile</span>
+        </Button>
       </div>
     </div>
   );

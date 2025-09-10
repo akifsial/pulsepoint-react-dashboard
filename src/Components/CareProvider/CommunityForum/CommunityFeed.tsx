@@ -66,17 +66,24 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     isLoading,
   } = useGetCommunityPost();
   const [replyId, setReplyId] = useState();
+  const [replyParentId, setReplyParentId] = useState();
   const myId = JSON.parse(localStorage.getItem("userInfo"));
   const [replyInput, setReplyInput] = useState("");
   const [IsCommentReply, setIsCommentReply] = useState();
   const [isPosting, setIsPosting] = useState(false);
-  const [replyParentId, setReplyParentId] = useState();
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteModalId, setDeleteModalId] = useState();
+  const [localCounts, setLocalCounts] = useState<{ [postId: number]: number }>(
+    {}
+  );
   // const [activePostActions, setActivePostActions] = useState(null);
+  const [sharePostId, setSharePostId] = useState();
+  const [localLikes, setLocalLikes] = useState<{
+    [postId: number]: boolean | null;
+  }>({});
+  const [localLock, setLocalLock] = useState(false);
 
   const menuRef = useRef(null);
-
 
   const handleSendComment = async () => {
     if (!comment.trim() || !postId) return;
@@ -130,8 +137,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     await getSingleUserMutation();
   };
 
-  const queryClient = useQueryClient();
-
   const { mutateAsync: commentsMutation, isPending: commentsIsPending } =
     useMutation({
       mutationFn: (data) => ApiPostComment(data),
@@ -168,10 +173,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     },
   });
 
-  const [localLikes, setLocalLikes] = useState<{
-    [postId: number]: boolean | null;
-  }>({});
-
   useEffect(() => {
     const initialState: { [postId: number]: boolean | null } = {};
     postData?.records?.forEach((post) => {
@@ -179,51 +180,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     });
     setLocalLikes(initialState);
   }, [postData]);
-
-  const [localLock, setLocalLock] = useState(false);
-
-  // const handleReaction = async (status: "like" | "dislike", post) => {
-  //   setLocalLikes((prev) => {
-  //     const current = prev[post.id] ?? null;
-
-  //     if (status === "like") {
-  //       return { ...prev, [post.id]: current === true ? null : true };
-  //     } else {
-  //       return { ...prev, [post.id]: current === false ? null : false };
-  //     }
-  //   });
-
-  //   setLocalLock(true);
-  //   setTimeout(() => setLocalLock(false), 2000); // 500ms lock
-
-  //   let newStatus = "";
-
-  //   const alreadyLiked = post.userLike?.is_like === true;
-  //   const alreadyDisliked = post.userLike?.is_like === false;
-
-  //   if (status === "like") {
-  //     if (alreadyLiked) {
-  //       newStatus = ""; // remove like
-  //     } else {
-  //       newStatus = "like"; // set like
-  //     }
-  //   }
-
-  //   if (status === "dislike") {
-  //     if (alreadyDisliked) {
-  //       newStatus = ""; // remove dislike
-  //     } else {
-  //       newStatus = "dislike"; // set dislike
-  //     }
-  //   }
-
-  //   const data = {
-  //     type: newStatus,
-  //     post_id: post.id,
-  //   };
-
-  //   await LikeMutation(data);
-  // };
 
   const handleReaction = async (status: "like" | "dislike", post) => {
     setLocalLikes((prev) => {
@@ -302,41 +258,6 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   };
 
   // Parent Comment Reply
-
-  const {
-    mutateAsync: ParentCommentReplyMutation,
-    // isPending: isPendingParentCommentReply,
-  } = useMutation({
-    mutationFn: ({ data, commentId }) => ApiParentCommentReply(data, commentId),
-
-    onSuccess: async () => {
-      handleClear();
-
-      queryClient.invalidateQueries(["useGetCommunityPost"]);
-      toast.success("Reply Posted Successfully");
-      setComment("");
-      setParentCommentReplyValue("");
-    },
-    onError: (error) => {
-      toast.error("Something Went Wrong");
-    },
-  });
-
-  const handleParentCommentReply = async (postId, parentCommentId, value) => {
-    // if (id) {
-    //   setReplyId(id);
-    // }
-    const data = {
-      content: value,
-      post_id: postId,
-      parent_id: parentCommentId,
-    };
-    // await ParentCommentReplyMutation(data,commentId:parentCommentId);
-    await ParentCommentReplyMutation({
-      data,
-      commentId: parentCommentId,
-    });
-  };
 
   // MAIN CODE____________________________________
 
@@ -445,19 +366,14 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     },
   });
 
-  const [sharePostId, setSharePostId] = useState();
-
   const handleDeletePost = async () => {
     await deletePostMutation();
   };
 
   const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
 
-  const postsToRender = data?.data ?? postData?.records ?? [];
 
-  const [localCounts, setLocalCounts] = useState<{ [postId: number]: number }>(
-    {}
-  );
+  const postsToRender = data?.data ?? postData?.records ?? [];
 
   useEffect(() => {
     const initialLikes: { [postId: number]: boolean | null } = {};
@@ -471,6 +387,43 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     setLocalLikes(initialLikes);
     setLocalCounts(initialCounts);
   }, [postData]);
+
+  const queryClient = useQueryClient();
+
+  const {
+    mutateAsync: ParentCommentReplyMutation,
+    // isPending: isPendingParentCommentReply,
+  } = useMutation({
+    mutationFn: ({ data, commentId }) => ApiParentCommentReply(data, commentId),
+
+    onSuccess: async () => {
+      handleClear();
+
+      queryClient.invalidateQueries(["useGetCommunityPost"]);
+      toast.success("Reply Posted Successfully");
+      setComment("");
+      setParentCommentReplyValue("");
+    },
+    onError: (error) => {
+      toast.error("Something Went Wrong");
+    },
+  });
+
+  const handleParentCommentReply = async (postId, parentCommentId, value) => {
+    // if (id) {
+    //   setReplyId(id);
+    // }
+    const data = {
+      content: value,
+      post_id: postId,
+      parent_id: parentCommentId,
+    };
+    // await ParentCommentReplyMutation(data,commentId:parentCommentId);
+    await ParentCommentReplyMutation({
+      data,
+      commentId: parentCommentId,
+    });
+  };
 
   return (
     <div
@@ -583,10 +536,10 @@ const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {
               </div>
 
               <div className="text-sm text-[#252525] mb-7">
-                <h3 className="mb-2 font-[Space Grotesk] text-xl">
+                <h3 className="mb-2 space-grotesk font-bold font-[Space Grotesk] text-xl ">
                   {post.title}
                 </h3>
-                <p>
+                <p className="font-normal text-[16px]">
                   {/* {post?.content} <span className="text-[#868686]"></span> */}
                   <PostContent content={post?.content} />
                 </p>

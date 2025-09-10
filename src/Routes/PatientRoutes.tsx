@@ -14,6 +14,12 @@ import StripeCancelPage from "@components/auth/StripeCancelledPage";
 import CommunityAccount from "@components/CareProvider/CommunityForum/CommunityAccount";
 import CommunityAccountPosts from "@components/CommunityAccountPosts";
 import CommunitySinglePost from "@components/CareProvider/CommunityForum/CommunitySinglePost";
+import Blogs from "@pages/Blogs/Blogs";
+import HomePage from "@pages/Web-pages/home-page/HomePage";
+import CommunityAccountWeb from "@components/CareProvider/CommunityForum/CommunityAccountWeb";
+import CategoryPage from "@components/Website/Home/CategoryPage";
+import { Navigate } from "react-router-dom";
+import CareProviderProfile from "@pages/CareProviderProfile/CareProviderProfile";
 export const PatientRoutes = [
   {
     path: "/patient",
@@ -28,13 +34,14 @@ export const PatientRoutes = [
       { path: "community-forum", element: <AdminCommunityForum /> },
       { path: "communities", element: <PatientAllCommunities /> },
 
-      { path: "careprovider-profile/:id", element: <HospitalProfile /> },
+      { path: "care-provider/:id", element: <HospitalProfile /> },
       { path: "notification", element: <NotificationPage /> },
       { path: "chatbot", element: <ChatbotLayout /> },
       { path: "nursing-home", element: <NursingHomeReviews /> },
       { path: "community-account/:id", element: <CommunityAccount /> },
       { path: "community/post/:id", element: <CommunitySinglePost /> },
-
+      { path: "blogs", element: <Blogs /> },
+      // { path: "/profile/:id", element: <CareProviderProfile /> },
 
       // { path: "payment-history", element: <NursingHomeReviews /> },
     ],
@@ -47,4 +54,13 @@ export const PatientRoutes = [
     path: "/cancel",
     element: <StripeCancelPage />,
   },
+  { path: "/", element: <HomePage /> },
+  {
+    path: "/patient/web",
+    element: <Navigate to="/" replace />,
+  },
+
+  { path: "/patient/web/community/:id", element: <CommunityAccountWeb /> },
+  { path: "/patient/web/category", element: <CategoryPage /> },
+  { path: "/patient/care-provider/profile/:id", element: <CareProviderProfile /> },
 ];

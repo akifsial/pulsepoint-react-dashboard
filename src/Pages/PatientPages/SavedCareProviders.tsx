@@ -49,7 +49,8 @@ function SavedCareProviders({
         return (
           <div
             className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate(`/patient/hospital-profile/${id}`)}
+            // onClick={() => navigate(`/patient/hospital-profile/${id}`)}
+            onClick={() => navigate(`/patient/care-provider/${id}`)}
           >
             <img
               src={dummyImage}
@@ -70,10 +71,10 @@ function SavedCareProviders({
     },
     {
       accessor: "date",
-      header: "Date",
+      header: <span className="ml-7">Date</span>,
       showSort: true,
       cell: ({ row }) => (
-        <i>{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
+        <i className="ml-9">{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
       ),
     },
     // {
@@ -143,7 +144,7 @@ function SavedCareProviders({
     <div className="">
      { isLoadingAllSavedCareProvider ? (
       <TableSkeletonLoader />) : (
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto w-full">
         <TanDataTable<dataTypes>
           columns={columns}
           data={AllSavedCareProviders?.records ?? []}

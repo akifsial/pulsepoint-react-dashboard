@@ -40,7 +40,7 @@ const HospitalProfile = () => {
                 className="h-5 w-5 cursor-pointer text-black"
                 onClick={handleGoBack}
               />
-              <h1 className="font-space font-bold !text-[20px] sm:!text-[28px] leading-[32px] text-[#181D27] align-middle [leading-trim:cap] [text-edge:cap]">
+              <h1 className="font-space space-grotesk font-bold !text-[20px] sm:!text-[28px] leading-[32px] text-[#181D27] align-middle [leading-trim:cap] [text-edge:cap]">
                 {data?.organization_name ? data?.organization_name : data?.user_name}{" "}
                 {data?.last_name}
               </h1>
@@ -59,7 +59,7 @@ const HospitalProfile = () => {
           </header>
 
           {/* Main Content */}
-          <main className="  max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+          <main className="  max-w-7xl mx-auto md:px-4 md:px-6 px-0 lg:px-8 md:pt-12 pt-4 pb-6">
             {/* Hospital Profile and Contact Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
               <HospitalProfileCard

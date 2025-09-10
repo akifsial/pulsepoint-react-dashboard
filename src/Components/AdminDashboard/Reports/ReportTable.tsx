@@ -1,189 +1,221 @@
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import React, { useRef, useState } from "react";
-import downarrow from "@assets/media/svgs/downarrow.svg"
-import client from "@assets/media/images/client.png"
-import whitearrow from "@assets/media/svgs/whitearrow.svg"
-import edit from "@assets/media/svgs/edit.svg"
-import exports from "@assets/media/svgs/export.svg";
-// import EditDetails from "../AdminCare/EditDetails";
+// import React, { useState, useEffect } from "react";
+// import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
+// import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+// import exports from "@assets/media/svgs/export.svg";
+// import whitearrow from "@assets/media/svgs/whitearrow.svg";
+// import { apiServices } from "@src/Shared/apiServices";
+// import apiEndpoint from "@src/Shared/apiEndPoint";
+// import { AnimatePresence, motion } from "framer-motion";
+// import whitearr from "../../../assets/media/svgs/whitearr.svg";
+// import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+// import jsPDF from "jspdf";
+// import autoTable from "jspdf-autotable";
+// import SelectField from "@components/SelectField";
 
-const ReportTable: React.FC = () => {
-   const [isOpen, setIsOpen] = useState(false);
-  const [showEditPage, setShowEditPage] = useState(false);
-  const dropdownRef = useRef(null);
+// // Define the type for the row data (replacing 'Person' with an actual type)
+// type Post = {
+//   id: string | number;
+//   post: string;
+//   users: string;
+//   role: string;
+//   community: string;
+//   status: string;
+//   date: string;
+// };
 
-  // if (showEditPage) {
-  //   return <EditDetails goBack={() => setShowEditPage(false)} />;
-  // }
-  const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
-  type dataTypes = {
-    id?: string
-    post?: string;
-    users?:string;
-    user?: string;
-    type?: string;
-    community?: string;
-    flagged?: string;
-    date?: string;
-    status?: string;
-  };
+// const ReportTable: React.FC = () => {
+//   const [posts, setPosts] = useState<Post[]>([]);
+//   const [loading, setLoading] = useState<boolean>(false);
+//   const [isExportOpen, setIsExportOpen] = useState(false);
 
-  const columns = [
-    {
-      accessor: "post",
-      header: "Post ID",
-      showSort: true,
-    },
-    // {
-    //   accessor: "userData",
-    //   header: "Topic Names",
-    //   showSort: true,
-    //   cell: ({ row }: any) => {
-    //     const { first_name, last_name, email } = row.original;
-    //     return (
-    //       <div className="flex items-center gap-3">
-    //         <div className="flex flex-col">
-    //           <span className="font-medium text-sm text-[#252525] leading-tight">
-    //             {first_name} {last_name}
-    //           </span>
-    //           <span className="text-xs text-gray-500 leading-tight">
-    //             {email}
-    //           </span>
-    //         </div>
-    //       </div>
-    //     );
-    //   },
-    // },
-    {
-      accessor: "users",
-      header: "Users",
-      showSort: true,
-    },
-    {
-      accessor: "user",
-      header: "User",
-      showSort: true,
-    },
-    {
-      accessor: "type",
-      header: "Type",
-      showSort: true,
-    },
-    {
-      accessor: "community",
-      header: "Community",
-      showSort: true,
-    },
-    {
-      accessor: "flagged",
-      header: "Flagged",
-      showSort: true,
-    },
-    {
-      accessor: "status",
-      header: "Status",
-      showSort: true,
-    },
-    {
-      accessor: "date",
-      header: "Action Date",
-      showSort: true,
-    },
-  ];
+//   // API integration to fetch all community posts
+//   useEffect(() => {
+//     const fetchPosts = async () => {
+//       try {
+//         setLoading(true);
+//         const response = await apiServices.get(
+//           apiEndpoint.getAllCommunityPosts
+//         );
+//         if (response.data.success) {
+//           const records = response.data.payload.records || [];
+//           const mappedPosts = records.map((post: any) => ({
+//             // id: post.id,
+//             post: post.community_id,
+//             users: post.user?.first_name || "Unknown User",
+//             role: post.user?.role_type || "Unknown Role",
+//             community: post.community.title,
+//             status: post.status,
+//             date: new Date(post.created_at).toLocaleDateString(),
+//           }));
+//           setPosts(mappedPosts);
+//         }
+//       } catch (error) {
+//         console.error("Error fetching posts:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
 
-  const data: dataTypes[] = [
-    {
-      id: "1",
-      post: "CM-1224",
-      users: "Savannah Nguyen",
-      user: "Patient",
-      type: "Discussion",
-      community: "Dementia Support",
-      flagged: "Yes",
-      status: "Under review",
-      date: "9/4/12"
-    }, 
-    {
-      id: "1",
-      post: "CM-1224",
-      users: "Savannah Nguyen",
-      user: "Patient",
-      type: "Discussion",
-      community: "Dementia Support",
-      flagged: "Yes",
-      status: "Under review",
-      date: "9/4/12"
-    }, 
-    {
-      id: "1",
-      post: "CM-1224",
-      users: "Savannah Nguyen",
-      user: "Patient",
-      type: "Discussion",
-      community: "Dementia Support",
-      flagged: "Yes",
-      status: "Under review",
-      date: "9/4/12"
-    }, 
-  ];
+//     fetchPosts();
+//   }, []);
 
-  const handleRowSelect = (row: Person) => {
-    console.log("Selected row:", row);
-  };
+//   // Define columns for TanDataTable with 'accessor' set to 'id'
+//   const columns: TanDataTableColumn<Post>[] = [
+//     { accessor: "post", header: "Post ID", showSort: true },
+//     { accessor: "users", header: "Users", showSort: true },
+//     { accessor: "role", header: "Role", showSort: true },
+//     { accessor: "community", header: "Community", showSort: true },
+//     { accessor: "status", header: "Status", showSort: true },
+//     { accessor: "date", header: "Last Action", showSort: true },
+//   ];
 
-  const renderActions = (row: Person) => (
-    <button onClick={() => alert(`Edit ${row.name}`)}>Edit</button>
-  );
-  return (
-    
-    <div className="mb-10">
+//   // Handle row selection (use when a row is selected)
+//   const handleRowSelect = (row: Post) => {
+//   };
 
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        {/* <div className="mb-3 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h4>Trending Topics in Communities</h4>
-        </div> */}
-        <div className="flex items-center justify-between mb-7">
-          <div className="flex items-center gap-4">
-            <h3>Community Engagement</h3>
-          </div>
+//   // Render actions (like buttons) for each row
+//   const renderActions = (row: Post) => (
+//     <button onClick={() => alert(`Edit ${row.post}`)}>Edit</button>
+//   );
 
-          <div className="flex items-center gap-3.5 pt-1.5">
-           
+//   // Function to handle CSV export
+//   const handleExportCSV = () => {
+//     const csvRows = [
+//       ["Post ID", "Users", "Role", "Community", "Status", "Last Action"],
+//       ...posts.map((item) =>
+//         ["post", "users", "role", "community", "status", "date"].map(
+//           (key) => item[key] || ""
+//         )
+//       ),
+//     ];
 
-            <div className="border border-[#252525] rounded-[5px] flex items-center justify-center gap-2.5 py-3 px-4">
-            <span className="font-medium text-[14px] text-[rgba(37, 37, 37, 0.6)]">
-              Last 7 Days
-            </span>
-            <span>
-              <img src={downarrow} alt="" />
-            </span>
-          </div>
-            <PrimaryButton
-                btnText="Export Table"
-                showImg={true}
-                img={exports}
-                imgClass="w-4 h-4"
-                suffixImg={whitearrow}
-                suffixImgClass="w-4 h-4"
-                onClick={() => setIsOpen(!isOpen)}
-                btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
-              />
-          </div>
-        </div>
-        <div>
-          <TanDataTable<dataTypes>
-            columns={columns}
-            data={data}
-            showCheckbox={false}
-            onRowSelect={handleRowSelect}
-            className="my-custom-class"
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
+//     const csvContent =
+//       "data:text/csv;charset=utf-8," +
+//       csvRows.map((e) => e.join(",")).join("\n");
 
-export default ReportTable;
+//     const encodedUri = encodeURI(csvContent);
+//     const link = document.createElement("a");
+//     link.setAttribute("href", encodedUri);
+//     link.setAttribute("download", "Moderation_Summary.csv");
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+//     setIsExportOpen(false);
+//   };
 
+//   // Function to handle PDF export
+//   const handleExportPDF = () => {
+//     const doc = new jsPDF();
+//     const tableColumn = [
+//       "Post ID",
+//       "Users",
+//       "Role",
+//       "Community",
+//       "Status",
+//       "Last Action",
+//     ];
+//     const tableRows = posts.map((item) =>
+//       ["post", "users", "role", "community", "status", "date"].map(
+//         (key) => item[key] || ""
+//       )
+//     );
+
+//     doc.text("Moderation Summary Data", 14, 15);
+
+//     // Ensure autoTable is applied correctly here
+//     autoTable(doc, {
+//       head: [tableColumn],
+//       body: tableRows,
+//       startY: 20,
+//       styles: { fontSize: 8 },
+//     });
+
+//     doc.save("Moderation_Summary.pdf");
+//     setIsExportOpen(false);
+//   };
+//   const [timeRange1, setTimeRange1] = useState("7d");
+//   const timeOptions = [
+//     { value: "7d", label: "Last 7 Days" },
+//     { value: "30d", label: "Last 30 Days" },
+//     { value: "90d", label: "Last 90 Days" },
+//   ];
+
+//   return (
+//     <div className="mb-10">
+//       <div className="flex items-center justify-between">
+//         <div className="flex items-center gap-4">
+//           <h3>Moderation Summary</h3>
+//         </div>
+//         <div className="flex items-center gap-3.5 pt-3">
+//           <div className="relative">
+//             <div className="flex items gap-4">
+//               <div className="">
+//                 <SelectField
+//                   options={timeOptions}
+//                   value={timeRange1}
+//                   onChange={(e) => setTimeRange1(e.target.value)}
+//                   className="pr-9 border border-[#252525] rounded-[5px] "
+//                 />
+//               </div>
+//               <PrimaryButton
+//                 btnText="Export Table"
+//                 showImg={true}
+//                 img={exports}
+//                 imgClass="w-4 h-4"
+//                 suffixImg={whitearrow}
+//                 suffixImgClass="w-4 h-4"
+//                 onClick={() => setIsExportOpen(!isExportOpen)}
+//                 btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
+//               />
+//             </div>
+//             <AnimatePresence>
+//               {isExportOpen && (
+//                 <motion.div
+//                   initial={{ opacity: 0, y: -10 }}
+//                   animate={{ opacity: 1, y: 0 }}
+//                   exit={{ opacity: 0, y: -10 }}
+//                   transition={{ duration: 0.3 }}
+//                   className="absolute top-[50px] left-[150px] bg-white shadow-md rounded-lg p-4 z-50"
+//                 >
+//                   <div className="flex flex-col gap-2 w-full">
+//                     <button
+//                       className="text-sm text-black mb-2.5"
+//                       onClick={handleExportCSV}
+//                     >
+//                       Export as CSV
+//                     </button>
+//                     <button
+//                       className="text-sm text-black"
+//                       onClick={handleExportPDF}
+//                     >
+//                       Export as PDF
+//                     </button>
+//                   </div>
+//                 </motion.div>
+//               )}
+//             </AnimatePresence>
+//           </div>
+//         </div>
+//       </div>
+//       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
+//         <h4 className="text-xl font-bold mb-2">Top Contributors</h4>
+//         <div>
+//           {loading ? (
+//             <p className="text-center text-gray-500 py-10">Loading posts...</p>
+//           ) : (
+//             <TanDataTable
+//               columns={columns}
+//               data={posts}
+//               showCheckbox={false}
+//               className="my-custom-class"
+//               onRowSelect={handleRowSelect}
+//               renderActions={renderActions}
+//             />
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ReportTable;

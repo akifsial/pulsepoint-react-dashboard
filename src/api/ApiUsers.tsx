@@ -1,23 +1,10 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 
 let unauthorizedHandled = false;
 
-
 const handleUnauthorized = (error, navigate) => {
-  // const navigate=useNavigate()
 
-  // if (error=="remove") {
-  //     localStorage.removeItem("token");
-  //     localStorage.removeItem("userInfo");
-  //     // window.location.href = "/login"; // navigate to login
-  //     navigate("/login") // navigate to login
-
-  //   } else {
-  //     return;
-  //   }
 
   if (unauthorizedHandled) return; // ✅ prevent multiple executions
   unauthorizedHandled = true;
@@ -28,36 +15,12 @@ const handleUnauthorized = (error, navigate) => {
   ) {
     localStorage.removeItem("token");
     localStorage.removeItem("userInfo");
-    toast.error("Your account has been suspended!")
+    toast.error("Your account has been suspended!");
     // navigate("/login");
     setTimeout(() => {
       navigate("/login");
     }, 1000);
-
-    // Swal.fire({
-    //   title: "<strong>Error</strong>",
-    //   icon: "error",
-    //   html: `
-    //     // ${"Your Session has been expired!"}
-    //     <br/><br/>
-    //   `,
-
-    //  });
-
-    // window.location.href = "/login"; // ✅ works anywhere
   }
-
-  // if (axios.isAxiosError(error)) {
-  //   if (error.response?.status === 401) {
-  //     localStorage.removeItem("token");
-  //     localStorage.removeItem("userInfo");
-  //     // window.location.href = "/login"; // navigate to login
-  //     navigate("/login") // navigate to login
-
-  //   } else {
-  //     return;
-  //   }
-  // }
 };
 
 export const ApiMe = async (navigate) => {
@@ -69,7 +32,6 @@ export const ApiMe = async (navigate) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log("RRRRRRRRR", response?.data?.payload?.status);
     if (response?.data?.payload?.status == "INACTIVE") {
       // Swal.fire({
       //   title: "<strong>Error</strong>",
@@ -95,7 +57,6 @@ export const ApiAllSavedCareProviders = async (
   search: string,
   rating: number,
   page,
-  sort
 ) => {
   let BASE_URL = `${
     import.meta.env.VITE_APP_API_URL

@@ -239,7 +239,7 @@ const navigate=useNavigate()
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-bold mb-1 text-[#252525] text-xl leading-tight">
+                  <h4 className="font-bold mb-1 space-grotesk text-[#252525] text-xl leading-tight">
                     {meData?.first_name
                       ? meData?.first_name
                       : meData?.user_name}
@@ -254,7 +254,7 @@ const navigate=useNavigate()
               </div>
               <div className="flex flex-wrap gap-5">
                 <label
-                  className="border-1 cursor-pointer border-[#25252533] w-[159px] h-[46px] bg-[#F3F3F3] !rounded-[10px] px-4 py-[10px] text-base text-[#252525] font-medium leading-[33px] gap-2 flex items-center justify-center"
+                  className="border-1 cursor-pointer border-[#25252533] md:w-[159px] w-full h-[46px] bg-[#F3F3F3] !rounded-[10px] px-4 py-[10px] text-base text-[#252525] font-medium leading-[33px] gap-2 flex items-center justify-center"
                   htmlFor="upload"
                 >
                   Change Photo
@@ -264,14 +264,14 @@ const navigate=useNavigate()
                     updatePatientProfileLoader ? "Loading..." : "Save Changes"
                   }`}
                   showImg={false}
-                  btnClass=" w-[159px] h-[46px] !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                  btnClass=" md:w-[159px] w-full h-[46px] !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
                   type="submit"
                   disabled={updatePatientProfileLoader}
                 />
               </div>
             </div>
 
-            <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
+            <h4 className="text-xl font-bold space-grotesk text-[#1A1A1A] font-[Space Grotesk] mb-3">
               Add Personal Information
             </h4>
             <div className="sm:flex sm:flex-wrap items-center gap-x-4">
@@ -293,7 +293,7 @@ const navigate=useNavigate()
                 id="user_name"
                 name="user_name"
                 type="text"
-                fieldName="sm:w-[32%] w-full"
+                fieldName="sm:w-[32%]  w-full"
                 iconUrl={""}
                 placeholder="@johndoe"
                 register={register}
@@ -399,7 +399,7 @@ const navigate=useNavigate()
               />
             </div>
 
-            <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3 mt-1">
+            <h4 className="text-xl space-grotesk font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3 mt-1">
               Add Location
             </h4>
 
@@ -446,6 +446,7 @@ const navigate=useNavigate()
                 placeholder="78701"
                 fieldName="sm:w-[32%]"
                 register={register}
+                isZipCode={true}
                 registerName={"postal_code"}
                 validation={{
                   required: "Zip code is required",
@@ -569,7 +570,7 @@ const navigate=useNavigate()
             </div> */}
 
             <div className="space-y-4">
-              <p className="text-md font-semibold">
+              <p className="text-md space-grotesk font-semibold">
                 Preferred Communication Method
               </p>
               <Controller

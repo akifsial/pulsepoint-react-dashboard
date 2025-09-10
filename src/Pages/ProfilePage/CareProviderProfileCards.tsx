@@ -68,7 +68,7 @@ const CareProviderProfileCards = ({ onUpgrade }) => {
             }`}
           >
             <div>
-              <h3 className="text-lg font-semibold mb-3">{plan.title}</h3>
+              <h3 className="text-lg space-grotesk font-semibold mb-3">{plan.title}</h3>
 
               <div
                 className={`text-3xl font-bold mb-4 inline-block px-4 py-[9px] rounded-[5px] ${
@@ -77,7 +77,7 @@ const CareProviderProfileCards = ({ onUpgrade }) => {
                     : "bg-[#EAF6FF] text-[#007AB2]"
                 }`}
               >
-                <h2> {plan.price}</h2>
+                <h2 className="space-grotesk"> {plan.price}</h2>
               </div>
 
               <ul className="space-y-3 mb-6">

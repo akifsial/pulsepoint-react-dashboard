@@ -316,7 +316,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     <>
       <div>
         <div className="overflow-y-auto rounded-[10px] bg-white py-8 px-3 sm:p-10 h-[601px]">
-          <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
+          <h4 className="text-xl space-grotesk font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
             Add Personal Information
           </h4>
 
@@ -342,7 +342,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                   style={{ border: "1px solid rgba(0,0,0,10%)" }}
                 />
                 <div>
-                  <h4 className="font-bold mb-1 text-[#252525] text-xl leading-tight">
+                  <h4 className="font-bold mb-1 space-grotesk text-[#252525] text-xl leading-tight">
                     {singleUser?.organization_name
                       ? singleUser?.organization_name
                       : singleUser?.user_name}
@@ -359,7 +359,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
               <div className="ml-auto md:w-fit">
                 <div className="w-full flex flex-wrap gap-5">
                   <label
-                    className="border-1 cursor-pointer border-[#25252533] w-[159px] h-[46px] bg-[#F3F3F3] !rounded-[10px] px-4 py-[10px] text-base text-[#252525] font-medium leading-[33px] gap-2 flex items-center justify-center"
+                    className="border-1 cursor-pointer border-[#25252533] md:w-[159px] w-full h-[46px] bg-[#F3F3F3] !rounded-[10px] px-4 py-[10px] text-base text-[#252525] font-medium leading-[33px] gap-2 flex items-center justify-center"
                     htmlFor="upload"
                   >
                     Change Photo
@@ -373,7 +373,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                         : `Save Changes`
                     }
                     showImg={false}
-                    btnClass="h-[46px]  !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white !px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
+                    btnClass="h-[46px] md:w-[159px] w-full !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white !px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
                   />
                 </div>
                 <input
@@ -440,7 +440,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 label="Phone:"
                 id="tel"
                 name="tel"
-                type="tel"
+                type="number"
                 fieldName="sm:w-[49%] w-full"
                 iconUrl={Call}
                 placeholder="(123) 456-7890]"
@@ -503,18 +503,9 @@ const ProfileDetail1 = ({ onChangePassword }) => {
             />
 
             <div className="mb-6 h-[190px] text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
-              <p className="mb-2.5">Additional Details:</p>
+              <p className="mb-2.5 ">Additional Details:</p>
               <div className="text-sm font-normal text-[#252525] py-4 ps-0 px-[15px] rounded-lg bg-[#FBFCFD]">
-                {/* <p>
-                  Sunrise Hills Nursing Home is a full-service assisted living
-                  facility specializing in post-acute rehabilitation and
-                  long-term senior care. Our mission is to provide
-                  compassionate, person-centered services in a comfortable,
-                  home-like setting.Sunrise Hills Nursing Home is a full-service
-                  assisted living facility specializing in post-acute
-                  rehabilitation and long-term senior care.
-                </p> */}
-
+              
                 <textarea
                   id="message"
                   rows="4"
@@ -533,7 +524,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
               )}
             </div>
 
-            <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
+            <h4 className="text-xl space-grotesk font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
               Location Information
             </h4>
 
@@ -594,6 +585,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 fieldName="w-full sm:w-[32%]"
                 register={register}
                 registerName="zip"
+                isZipCode={true}
                 validation={{
                   required: "Zip code is required",
                 }}
@@ -663,7 +655,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
 
             <div className="w-full mb-8">
               {/* Upload Box */}
-              <p className="mb-3 mt-6 font-bold text-black">Upload Gallery</p>
+              <p className="mb-3 mt-6 font-bold space-grotesk text-black">Upload Gallery</p>
               <label
                 htmlFor="image-upload"
                 className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
@@ -737,7 +729,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
             {/* Multi Image Uploader */}
 
             {/* REpeater Field */}
-            <p className="mb-3 mt-6 font-bold text-black">
+            <p className="mb-3 mt-6 space-grotesk font-bold text-black">
               Careprovider Support Services
             </p>
 

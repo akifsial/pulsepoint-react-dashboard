@@ -11,7 +11,6 @@ import {
 } from "@tanstack/react-table";
 
 import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
-
 import { TanDataTableProps } from "./types";
 
 const TanDataTable = <T extends object>({
@@ -67,127 +66,123 @@ const TanDataTable = <T extends object>({
         ]
       : []),
   ];
+
   const table = useReactTable({
-    // data,
-    data: data ?? [], // fallback to empty array if undefined
+    data: data ?? [],
     columns: baseColumns,
-    state: {
-      sorting,
-    },
+    state: { sorting },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
 
-  {
-    isLoading ? (
-      <TableSkeletonLoader />
-    ) : (
-      <TanDataTable data={data} columns={columns} />
-    );
-  }
+  if (isLoading) return <TableSkeletonLoader />;
 
   return (
-    <div
-      className={`overflow-x-auto overflow-y-visible rounded-[4px] scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-500 ${className}`}
-    >
-      <div className="w-full overflow-x-auto">
-        <table className="min-w-[600px] w-full text-sm text-left">
-          <thead className="bg-[var(--primary-color)] text-[#252525]">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    style={{
-                      width: columns.find((c) => c.accessor === header.id)
-                        ?.width,
-                    }}
-                    className={`px-4  py-4 font-medium text-[#252525] ${
-                      header.column.getCanSort()
-                        ? "cursor-pointer select-none"
-                        : ""
-                    }`}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    <span className="flex items-center gap-1">
+    <div className={`${className}`}>
+      <div
+        className="relative w-full overflow-x-auto"
+        style={
+          {
+            // scrollbarGutter: "stable",
+          }
+        }
+      >
+        <div
+          className="min-w-full"
+          style={{
+            overflowX: "auto",
+            scrollbarWidth: "thin",
+            scrollbarColor: "#a0aec0 transparent",
+          }}
+        >
+          <div
+            className={`relative md:w-full md:max-w-[400px] min-w-full sm:w-143 w-[100px] overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 hover:scrollbar-thumb-gray-500 ${className}`}
+          >
+            <table className="w-full whitespace-nowrap text-sm text-left">
+              <thead className="bg-[var(--primary-color)] text-[#252525]">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      const colDef = columns.find(
+                        (c) => c.accessor === header.column.id
+                      );
 
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                    {header.column.getCanSort() && (
-                      <span className="ml-1 text-xs " onClick={onSortClick}>
-                        {/* {header.column.getIsSorted() === "asc"
-                          ? "▲"
-                          : header.column.getIsSorted() === "desc"
-                          ? "▼"
-                          : "⇅"} */}
-                        <img className="" src={SortIcon} alt="" />
-                      </span>
-                    )}
-                    </span>
-                  </th>
+                      return (
+                        <th
+                          key={header.id}
+                          style={{ width: colDef?.width || "auto" }}
+                          className={`px-4 py-4 font-medium text-[#252525] ${
+                            header.column.getCanSort()
+                              ? "cursor-pointer select-none"
+                              : ""
+                          }`}
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          <span className="flex items-center gap-1">
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                            {header.column.getCanSort() && (
+                              <span
+                                className="ml-1 text-xs"
+                                onClick={onSortClick}
+                              >
+                                <img src={SortIcon} alt="sort" />
+                              </span>
+                            )}
+                          </span>
+                        </th>
+                      );
+                    })}
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </thead>
-          {/* <tbody>
-            {table?.getRowModel()?.rows?.map((row, idx) => (
-              <tr
-                key={row.id}
-                className="bg-white hover:bg-[var(--primary-color-hover-light)] transition-colors duration-200"
-                style={{ borderBottom: "1px solid #2525251a" }}
-              >
-                {row?.getVisibleCells()?.map((cell) => (
-                  <td key={cell.id} className="px-2 py-5 ">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody> */}
+              </thead>
 
-          <tbody>
-            {table.getRowModel().rows.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={baseColumns.length}
-                  className="text-center py-6 text-gray-500"
-                >
-                  No Data Found
-                </td>
-              </tr>
-            ) : (
-              table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="bg-white hover:bg-[var(--primary-color-hover-light)] transition-colors duration-200"
-                  style={{ borderBottom: "1px solid #2525251a" }}
-                >
-                  {row.getVisibleCells().map((cell) => (
+              <tbody>
+                {table.getRowModel().rows.length === 0 ? (
+                  <tr>
                     <td
-                      key={cell.id}
-                      style={{
-                        width: columns.find(
-                          (c) => c.accessor === cell.column.id
-                        )?.width,
-                      }}
-                      className="px-2 py-5"
+                      colSpan={baseColumns.length}
+                      className="text-center py-6 text-gray-500"
                     >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      No Data Found
                     </td>
-                  ))}
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                  </tr>
+                ) : (
+                  table.getRowModel().rows.map((row) => (
+                    <tr
+                      key={row.id}
+                      className="bg-white hover:bg-[var(--primary-color-hover-light)] transition-colors duration-200"
+                      style={{ borderBottom: "1px solid #2525251a" }}
+                    >
+                      {row.getVisibleCells().map((cell) => {
+                        const colDef = columns.find(
+                          (c) => c.accessor === cell.column.id
+                        );
+                        return (
+                          <td
+                            key={cell.id}
+                            style={{ width: colDef?.width || "auto" }}
+                            className="px-2 py-5"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

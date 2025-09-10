@@ -17,7 +17,7 @@ interface LocationState {
   };
 }
 
-const EditReviewPage: React.FC = () => {
+const EditReviewPage: React.FC = ({setShowAddModal}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState;
@@ -122,7 +122,8 @@ const EditReviewPage: React.FC = () => {
         <div className="mt-6 flex gap-4 justify-end">
           <PrimaryButton
             btnText="Cancel"
-            onClick={handleCancel}
+            // onClick={handleCancel}
+            onClick={()=>(setShowAddModal(false))}
             btnClass="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-md"
           />
         </div>

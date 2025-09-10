@@ -125,7 +125,7 @@ const PopularCommunity = () => {
   return (
     <>
       {/* Sidebar */}
-      <div>
+      <div className="md:mt-0 mt-10">
         <CommonInput
           placeholder="Search Communities "
           showImg={true}
@@ -138,7 +138,7 @@ const PopularCommunity = () => {
         />
 
         <div className="bg-white h-[50vh] overflow-y-auto rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
-          <h4 className="mb-1.5">Popular Communities</h4>
+          <h4 className="mb-1.5 space-grotesk font-bold text-[20px]">Popular Communities</h4>
 
           {isPending ? (
             <PopularCommunitySkeleton />
@@ -180,7 +180,7 @@ const PopularCommunity = () => {
           img={addCommunity}
           imgClass="w-[19px] h-[19px] object-cover"
           imgPosition="left"
-          btnClass="border-1 mb-5 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
+          btnClass="border-1 mb-5 border-[#000] w-[292px] w-full h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
           onClick={() => setStep(1)}
         />
       </div>

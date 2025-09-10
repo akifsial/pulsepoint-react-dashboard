@@ -145,7 +145,7 @@ export default function RatingsReviewsSection({
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
       {/* Header */}
       <div className="flex items-center flex-wrap md:justify-between justify-center md:gap-0 gap-5 justify-between mb-8">
-        <h2 className="text-xl font-semibold text-gray-900">
+        <h2 className="text-xl space-grotesk font-semibold text-gray-900">
           Ratings & Reviews
         </h2>
         <div className="flex items-center flex-wrap md:justify-between justify-center gap-2">
@@ -154,7 +154,7 @@ export default function RatingsReviewsSection({
             avg_rating={Math.round(rating)}
           />
 
-          <span className="font-semibold text-gray-900">
+          <span className="font-semibold space-grotesk text-gray-900">
             {" "}
             {data?.ratingData?.display}
           </span>

@@ -81,33 +81,33 @@ const PatinetReviews: React.FC = () => {
 
   return (
     <div>
-      <h2 className="mb-4">Patient Reviews</h2>
-      <div className="bg-[#FFFFFF] rounded-[10px] px-5 py-5">
+      <h2 className="mb-4 text-[25px] font-bold space-grotesk">Patient Reviews</h2>
+      <div className="bg-[#FFFFFF] rounded-[10px] md:px-5 md:py-5 px-3 py-3">
         {/* Fixed Header */}
         <div className="mb-7 flex lg:flex-row flex-col lg:items-center lg:justify-between">
-          <h3 className="lg:mb-0 mb-3">View and respond to feedback</h3>
+          <h3 className="lg:mb-0 space-grotesk text-[20px] font-bold mb-3">View and respond to feedback</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
             <div className="relative md:flex items-center gap-4">
-              <div className="flex items-center gap-2 sm:mb-0 mb-5">
-                <p className="text-[#252525] font-medium text-sm">
+              <div className="flex items-center gap-2 md:mb-0 mb-5">
+                <p className="text-[#252525] inter font-medium text-sm">
                   Show Reviews
                 </p>
                 <SelectCommonBox
                   value={filterValue}
                   onChange={(val) => setFilterValue(val)}
                   options={statusOptions}
-                  className="w-full md:w-[125px] h-[44px] text-sm"
+                  className="w-full inter md:w-[125px] h-[44px] text-sm"
                 />
               </div>
               <div className="flex items-center gap-2">
-                <p className="text-[#252525] font-medium text-sm">Filter by</p>
+                <p className="text-[#252525] inter font-medium text-sm">Filter by</p>
                 <PrimaryButton
                   btnText={` ${rating} Ratings`}
                   showImg={true}
                   imgClass="w-[24px] h-[24px] ml-2 object-cover"
                   img={filterIcon}
                   imgPosition="left"
-                  btnClass="border flex border-[#252525] px-4 md:w-[101px] h-[46px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
+                  btnClass="border inter flex border-[#252525] px-4 md:w-[101px] h-[46px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
               </div>

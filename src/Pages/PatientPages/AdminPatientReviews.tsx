@@ -185,7 +185,7 @@ const AdminPatientReviews: React.FC = () => {
           <div
             className="flex cursor-pointer items-center gap-3"
             onClick={() =>
-              navigate(`/patient/careprovider-profile/${care_provider?.id}`)
+              navigate(`/patient/care-provider/${care_provider?.id}`)
             }
           >
             <img
@@ -207,11 +207,11 @@ const AdminPatientReviews: React.FC = () => {
     },
     {
       accessor: "date",
-      header: "Date",
+      header: <span className="ml-7">Date</span>,
       width: "200px",
       showSort: true,
       cell: (row) => (
-        <i>{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
+        <i className="ml-9">{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
       ),
     },
    
@@ -296,21 +296,22 @@ const AdminPatientReviews: React.FC = () => {
     <div className="mb-10">
       <h2
         className="
-          font-space-grotesk
-          font-bold
+          space-grotesk
+          !font-bold
           text-heading
           leading-8
           tracking-normal
           text-brand-ink
           align-middle
           mb-6
+          text-[25px]
         "
       >
         My Reviews
       </h2>
       <div className="bg-[#FFFFFF] h-[400px] rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Given Reviews</h3>
+          <h3 className="md:mb-0 mb-3 space-grotesk text-[20px] font-bold">Given Reviews</h3>
           {/* searchbar */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
             <CommonInput
@@ -320,12 +321,12 @@ const AdminPatientReviews: React.FC = () => {
               showImg={true}
               imgSrc={searchIcon}
               imgLeft={true}
-              inputClassName="text-sm"
-              containerClassName="w-full border-gray-200 rounded-lg py-3 max-w-sm"
+              inputClassName="text-sm placeholder-[#252525]"
+              containerClassName="w-full border-[#252525] rounded-lg py-3 max-w-sm"
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium text-sm">Filter By</p>
+            <p className="text-[#252525] font-medium inter text-sm">Filter By</p>
             <div className="relative" ref={dropdownRef}>
               <div className="flex items gap-4">
                 <button
@@ -333,7 +334,7 @@ const AdminPatientReviews: React.FC = () => {
                   className={`border border-[#252525] px-4 md:w-[110px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5`}
                 >
                   {rating ? rating : ""}
-                  <span>Ratings</span>
+                  <span className="inter text-[14px] font-medium">Ratings</span>
                   <img
                     src={filterIcon}
                     alt="filter icon"
