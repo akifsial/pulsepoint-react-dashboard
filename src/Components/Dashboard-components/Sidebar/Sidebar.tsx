@@ -73,13 +73,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
         <aside
           ref={sidebarRef}
           className={`
-            p-4 min-h-screen w-[89px] 
+             p-4 min-h-screen w-[89px] 
             lg:translate-x-0 flex flex-col justify-between
             fixed top-0 left-0 z-50 transform transition-transform duration-500
             ${isOpen ? "translate-x-0 bg-white" : "-translate-x-full"}
           `}
         >
-          <div className="space-y-2 mt-3">
+          <div className=" space-y-2 mt-3">
             <div
               className="mb-7 max-w-[250px] mx-auto cursor-pointer"
               onClick={
@@ -120,7 +120,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 <NavLink
                   to={link.path}
                   key={index}
-                  className={`flex items-center gap-3 px-4 py-[10px] rounded-[10px] transition-all ${
+                  className={`flex  items-center gap-3 px-4 py-[10px] rounded-[10px] transition-all ${
                     isActive
                       ? "bg-[#28A2FF] text-white"
                       : "text-gray-700 hover:bg-[#daeffd]"
@@ -237,7 +237,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 <strong className="text-[17px] space-grotesk font-bold">
                   Unlock Premium Insights
                 </strong>
-                <p className="inter text-[14px] font-light">Upgrade for Advanced Filters & Provider Comparisons.</p>
+                <p className="inter text-[14px] font-light">
+                  Upgrade for Advanced Filters & Provider Comparisons.
+                </p>
               </div>
               <PrimaryButton
                 btnText="AI Chatbot"

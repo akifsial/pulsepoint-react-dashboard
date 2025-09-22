@@ -12,7 +12,7 @@
 // export default HomePage;
 
 // import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Button from "@components/Website/Shared/Button";
 import CategoryCard from "@components/Website/Home/CategoryCard";
 import ServiceCard from "@components/Website/Home/ServiceCard";
@@ -24,17 +24,6 @@ import TopBar from "@components/Website/Layout/TopBar";
 import Header from "@components/Website/Layout/Header";
 import UtilityRow from "@components/Website/Layout/UtilityRow";
 import FeaturedArticleCard from "@components/Website/Home/FeaturedArticleCard";
-import FeatureCareImg from "@assets/media/website/feature-card.png";
-import Exerciseone from "@assets/media/website/exercise-1.svg";
-import Exercisetwo from "@assets/media/website/exercise-2.svg";
-import Exercisethree from "@assets/media/website/exercise-3.svg";
-import Exercisefour from "@assets/media/website/exercise-4.svg";
-import RiverImg from "@assets/media/website/river.svg";
-import CostImg from "@assets/media/website/rising-cost.svg";
-import YogaImg from "@assets/media/website/yoga.svg";
-import WorkImg from "@assets/media/website/work.svg";
-import CalculateImg from "@assets/media/website/calculate.svg";
-import GadgetImg from "@assets/media/website/gadget.svg";
 import Independent from "@assets/media/website/independent.svg";
 import Memory from "@assets/media/website/memory.svg";
 import NursingFacility from "@assets/media/website/nursing-facility.svg";
@@ -56,37 +45,73 @@ import SmallArticleCard from "@components/Website/Home/SmallArticleCard";
 import Footer from "@components/Website/Layout/Footer";
 import ArrowButtonGroup from "@components/Website/Shared/ArrowButtonGroup";
 import Convience from "@components/Website/Home/Convience";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
-import { useCategory, useFeaturedWeakReviews } from "@src/hooks/useWebsite";
-import { useReview } from "@src/hooks/useWebsite";
-import dummyImage from "@assets/media/images/client.png";
-import { useBlog, useRecentBlogs } from "@src/hooks/useWebsite";
-import { useState } from "react";
+
+import {
+  useCategory,
+  useFeaturedWeakReviews,
+  useGetBlogs,
+  useGetCategories,
+  useGetFeaturedPosts,
+  useGetPopularPost,
+  useRecentBlogs,
+} from "@src/hooks/useWebsite";
+
+// import arrowrigh
 import Spinner from "@components/Loaders/Spinner";
 // import Button from "../components/Shared/Button";
+
+import { useRef, useState } from "react";
+import LoginOrSignupModal from "@components/Model/LoginOrSignupModal";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   // Sample data arrays following your pattern of using arrays for similar components
 
   const { data } = useRecentBlogs();
-  const { data: categories, isLoading, isError } = useCategory();
-  const { data: featuredReviews } = useFeaturedWeakReviews();
+  const { data: popularPost } = useGetPopularPost();
 
+  const { data: categories, isLoading, isError } = useGetCategories();
+  const { data: featuredReviews } = useFeaturedWeakReviews();
+  const [loginModal, setLoginModal] = useState(false);
+  const { data: FeaturedPosts } = useGetFeaturedPosts();
+
+  console.log("OOOOOOOOOOOOOO", FeaturedPosts);
+
+  console.log("FFFFFFFFFFFFFFFFF", categories);
+
+  const { data: getBlogs } = useGetBlogs();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  const scrollLeft = () => {
+    scrollRef.current?.scrollBy({ left: -500, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current?.scrollBy({ left: 500, behavior: "smooth" });
+  };
   // const {data:catData}=useCategory()
 
-
   if (isLoading) {
-    return <p className="text-center"><Spinner/></p>;
-  }
-
-  if (isError) {
     return (
-      <p className="text-center text-red-500">Failed to load categories</p>
+      <p className="text-center">
+        <Spinner />
+      </p>
     );
   }
+
+  console.log("_____________________", getBlogs);
+
+  // if (isError) {
+  //   return (
+  //     <p className="text-center text-red-500">Failed to load categories</p>
+  //   );
+  // }
 
   // Agar API me `records` hai
 
@@ -187,10 +212,34 @@ const HomePage = () => {
     },
   ];
 
+  const handleLogin = () => {
+    queryClient.clear();
+
+    // disconnectSocket();
+
+    localStorage.clear();
+    navigate("/login");
+  };
+
+  const handleSignup = () => {
+    queryClient.clear();
+
+    // disconnectSocket();
+
+    localStorage.clear();
+    navigate("/signup");
+  };
+
   return (
     <div className="min-h-screen">
       <TopBar />
       <UtilityRow />
+      <LoginOrSignupModal
+        onSignup={() => handleSignup()}
+        onLogin={() => handleLogin()}
+        isOpen={loginModal}
+        onClose={() => setLoginModal(false)}
+      />
       {/* <Header /> */}
 
       {/* FEATURED + SIDEBAR WRAPPER */}
@@ -200,20 +249,21 @@ const HomePage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* ───── Left: featured story ───── */}
             <FeaturedArticleCard
-              image={data?.records?.[0]?.image}
+              image={getBlogs?.data?.data?.[0]?.featured_image}
               category="Facilities"
               published={new Date(
-                data?.records?.[0]?.created_at
+                getBlogs?.data?.data?.[0]?.date
               ).toLocaleString()}
               typeLabel="Article"
               readTime="4 min read"
-              title={data?.records?.[0]?.title}
-              link="/articles/featured"
+              title={getBlogs?.data?.data?.[0]?.title}
+              link={getBlogs?.data?.data?.[0]?.link}
+              id={getBlogs?.data?.data?.[0]?.id}
             />
 
             {/* ───── Right: sidebar list ───── */}
-            <div className="space-y-6">
-              {data?.records?.slice(1).map((blog, i) => (
+            <div className="space-y-6 flex flex-col items-end ">
+              {getBlogs?.data?.data?.slice(1, 4).map((blog, i) => (
                 <SmallArticleCard key={i} {...blog} />
               ))}
             </div>
@@ -221,14 +271,18 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="bg-gray-50 py-[40px]">
+      {/* <section className="bg-gray-50 py-[40px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="md:text-[36px] text-[20px] font-bold md:mb-[50px] mb-[25px] ">Explore Categories</h2>
+          <h2 className="md:text-[36px] text-[20px] font-bold md:mb-[50px] mb-[25px] ">
+            Explore Categories
+          </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {categories?.records?.map((category: any,index) => (
+            {categories?.data?.data?.map((category: any, index) => (
               <CategoryCard
                 key={category.id}
                 id={category.id}
+                categoryName={category?.slug}
+
                 title={category.name}
                 // image={
                 //   category.image
@@ -241,7 +295,7 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Explore Our Services Section */}
       <section className="bg-white py-16">
@@ -270,7 +324,6 @@ const HomePage = () => {
             <h2 className="md:text-3xl text-2xl font-bold text-gray-900">
               Featured this week
             </h2>
-           
           </div>
 
           {/* Grid of professional cards */}
@@ -287,11 +340,6 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative">
-              {/* <img
-                src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=600&h=400&fit=crop"
-                alt="Senior care consultation"
-                className="w-full h-96 object-cover rounded-lg"
-              /> */}
               <div className="w-full min-h-[187px] flex flex-col gap-[15px]">
                 <div>
                   <h2 className="font-geist font-bold md:text-[36px] text-[25px] leading-[125%] text-[#252525]">
@@ -304,11 +352,30 @@ const HomePage = () => {
                     platform.
                   </p>
                 </div>
-                {/* <ArrowButtonGroup /> */}
+
+                {/* 👇 Buttons directly below the paragraph */}
+                <div className="flex gap-2 mt-4">
+                  <button
+                    onClick={scrollLeft}
+                    className="px-[20px] py-[10px] cursor-pointer bg-white border rounded-[4px] border-[#162544] hover:bg-gray-200 transition-colors"
+                  >
+                    <ArrowLeft className="w-5 h-5 text-[#162544]" />
+                  </button>
+                  <button
+                    onClick={scrollRight}
+                    className="px-[20px] py-[10px] cursor-pointer bg-white border rounded-[4px] border-[#162544] hover:bg-gray-200 transition-colors"
+                  >
+                    <ArrowRight className="w-5 h-5 text-[#162544]" />
+                  </button>
+                </div>
               </div>
             </div>
+
             <div>
-              <TestimonialCarousel testimonials={featuredReviews} />
+              <TestimonialCarousel
+                ref={scrollRef}
+                testimonials={featuredReviews}
+              />
             </div>
           </div>
         </div>
@@ -316,7 +383,7 @@ const HomePage = () => {
 
       {/* Featured Resources Section */}
       <section className="bg-[#F3F8FC] py-[80px]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-[135px]">
+        <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* header */}
           <div className="mb-8 flex md:gap-0 gap-5 flex-wrap items-center justify-between">
             <h2 className="md:text-3xl text-2xl font-bold text-gray-900">
@@ -329,7 +396,7 @@ const HomePage = () => {
           </div>
           {/* cards */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {featuredResources.map((item, i) => (
+            {FeaturedPosts?.data?.data?.map((item, i) => (
               <ResourceCard key={i} {...item} />
             ))}
           </div>
@@ -456,7 +523,17 @@ const HomePage = () => {
           </div>
         </div>
       </section> */}
-      <Convience />
+      {/* {
+        userInfo?.role_type=="PATIENT" || userInfo?.role_type=="CARE_PROVIDER" ?
+        <Convience setLoginModal={setLoginModal} /> : ""
+      } */}
+
+      {(userInfo?.role_type === "PATIENT" ||
+        userInfo?.role_type === "CARE_PROVIDER") &&
+        popularPost !== null && (
+          <Convience setLoginModal={setLoginModal} />
+        )}
+
       <Footer />
     </div>
   );

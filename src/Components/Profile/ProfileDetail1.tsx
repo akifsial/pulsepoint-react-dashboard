@@ -28,6 +28,7 @@ import StartEndDate from "@components/Dates/StartEndTime";
 import StartEndTime from "@components/Dates/StartEndTime";
 import StartEndDay from "@components/Dates/StartEndDay";
 import { useNavigate } from "react-router-dom";
+import Map from "@components/Map/Map";
 
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
@@ -119,7 +120,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
   // -------------------------------------------
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
 
   useEffect(() => {
@@ -148,6 +149,8 @@ const ProfileDetail1 = ({ onChangePassword }) => {
 
   const userId = JSON.parse(localStorage.getItem("userInfo")).id;
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
+  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState();
 
   const queryClient = useQueryClient();
 
@@ -203,6 +206,8 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     formData.append("time_in", startTime);
     formData.append("time_out", endTime);
     formData.append("specialization", data?.specialization);
+    // formData.append("long", longitude);
+    // formData.append("lat", latitude);
 
     fields?.map((field) => formData.append("services[]", field));
 
@@ -214,7 +219,11 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     selectedImages?.map((image) => formData.append("gallery_images", image));
 
     await profileUpdateMutation(formData);
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
   };
+
 
   useEffect(() => {
     if (meData) {
@@ -311,6 +320,13 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     newFields[index] = value;
     setFields(newFields);
   };
+
+  const handleMap = (e) => {
+    setLatitude(e.latitude);
+    setLongitude(e.longitude);
+  };
+
+  console.log("hhhhhhhhhhhhhhh", longitude);
 
   return (
     <>
@@ -505,7 +521,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
             <div className="mb-6 h-[190px] text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
               <p className="mb-2.5 ">Additional Details:</p>
               <div className="text-sm font-normal text-[#252525] py-4 ps-0 px-[15px] rounded-lg bg-[#FBFCFD]">
-              
                 <textarea
                   id="message"
                   rows="4"
@@ -529,21 +544,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
             </h4>
 
             <div className="flex flex-wrap items-center gap-4">
-              {/* <SelectField
-                label="State"
-                id="state"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                options={stateOptions}
-                selectName="sm:w-[32%] !mb-8.5 w-full"
-                register={register}
-                registerName="state"
-                validation={{
-                  required: "Select a state",
-                }}
-                errors={errors}
-              /> */}
-
               <div>
                 <InputField
                   label="State"
@@ -608,6 +608,16 @@ const ProfileDetail1 = ({ onChangePassword }) => {
               errors={errors}
             />
 
+            <div>
+              <div className="flex">
+                <label className="block mb-3 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]">
+                  Add Your Location
+                </label>
+                {/* {asterisk && <span className="text-red-500 ml-1">*</span>} */}
+              </div>
+              <Map onLocationSelect={(e) => handleMap(e)} />
+            </div>
+
             {/* Multi Image Uploader */}
 
             {/* <div className="w-full">
@@ -655,7 +665,9 @@ const ProfileDetail1 = ({ onChangePassword }) => {
 
             <div className="w-full mb-8">
               {/* Upload Box */}
-              <p className="mb-3 mt-6 font-bold space-grotesk text-black">Upload Gallery</p>
+              <p className="mb-3 mt-6 font-bold space-grotesk text-black">
+                Upload Gallery
+              </p>
               <label
                 htmlFor="image-upload"
                 className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"

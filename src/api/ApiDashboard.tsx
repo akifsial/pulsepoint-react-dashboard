@@ -22,7 +22,7 @@ export const ApiGetCareProviders = async (
 ) => {
   let BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
-  }user?role_type=CARE_PROVIDER&limit=3&page=${page}`;
+  }user?role_type=CARE_PROVIDER&limit=10&page=${page}`;
   if (search) {
     BASE_URL += `&search=${search}`;
   }

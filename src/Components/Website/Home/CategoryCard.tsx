@@ -6,18 +6,18 @@ interface CategoryCardProps {
   link: string;
 }
 import dummyPost from "@assets/media/images/dashboard-images/postFallback.png"
-const CategoryCard = ({ id, title, image, url_key }: CategoryCardProps) => {
+const CategoryCard = ({ id, title, image, url_key,categoryName }: CategoryCardProps) => {
   const navigate = useNavigate();
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
   const handleCategory = () => {
     if (userRole == "PATIENT") {
-      navigate(`/patient/web/category?id=${id}`);
+      navigate(`/patient/web/category?id=${id}&category=${categoryName}`);
     }
     if (userRole == "CARE_PROVIDER") {
-      navigate(`/web/category?id=${id}`);
+      navigate(`/web/category?id=${id}&category=${categoryName}`);
     }
 
-    navigate(`/web/category?id=${id}`)
+    navigate(`/web/category?id=${id}&category=${categoryName}`)
   };
   return (
     <p

@@ -50,6 +50,7 @@ const RatingStars = ({
       onChange={onChange}
       itemStyles={myStyles}
       isDisabled={isDisabled}
+      
     />
   );
 };

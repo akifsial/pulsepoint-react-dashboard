@@ -25,19 +25,21 @@ import { useMeApi } from "@src/hooks/useUsers";
 const AdminPatientReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [searchText, setSearchText] = React.useState<string>("");
-  const [rating, setRating] = useState();
+  const [rating, setRating] = useState("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(true);
-  const [filterValue,setFilterValue]=useState(false)
-  const navigate=useNavigate()
-  const { data:MeData,refetch:MeDataFetch } = useMeApi(navigate);
+  const [filterValue, setFilterValue] = useState(false);
+  const navigate = useNavigate();
+  const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
 
-  useEffect(()=>{
-    MeDataFetch()
-  })
+  useEffect(() => {
+    MeDataFetch();
+  });
+
+  const [limit,setLimit]=useState(10)
 
   const {
     data,
@@ -49,9 +51,10 @@ const AdminPatientReviews: React.FC = () => {
     rating,
     filterValue,
     page,
-    sort == true ? "asc" : "desc"
-  );
+    sort == true ? "asc" : "desc",
+    limit
 
+  );
 
   const onSortClick = () => {
     setSort(!sort);
@@ -211,10 +214,42 @@ const AdminPatientReviews: React.FC = () => {
       width: "200px",
       showSort: true,
       cell: (row) => (
-        <i className="ml-9">{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
+        <i className="ml-9">
+          {dayjs(row?.original?.created_at).format("DD/MM/YY")}
+        </i>
       ),
     },
-   
+
+    // {
+    //   accessor: "rating",
+    //   header: "Rating",
+    //   showSort: true,
+    //   cell: ({ getValue }) => {
+    //     const rating = Number(getValue()) || 0;
+    //     const totalStars = 5;
+
+    //     const StarIcon = ({ filled }: { filled: boolean }) => (
+    //       <svg
+    //         xmlns="http://www.w3.org/2000/svg"
+    //         viewBox="0 0 24 24"
+    //         fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+    //         width="20"
+    //         height="20"
+    //       >
+    //         <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
+    //       </svg>
+    //     );
+
+    //     return (
+    //       <div className="flex items-center gap-0.5">
+    //         {Array.from({ length: totalStars }).map((_, index) => (
+    //           <StarIcon key={index} filled={index < rating} />
+    //         ))}
+    //       </div>
+    //     );
+    //   },
+    // },
+
     {
       accessor: "rating",
       header: "Rating",
@@ -222,6 +257,10 @@ const AdminPatientReviews: React.FC = () => {
       cell: ({ getValue }) => {
         const rating = Number(getValue()) || 0;
         const totalStars = 5;
+
+        if (rating === 0) {
+          return <span className="text-gray-500">N/A</span>;
+        }
 
         const StarIcon = ({ filled }: { filled: boolean }) => (
           <svg
@@ -242,7 +281,7 @@ const AdminPatientReviews: React.FC = () => {
             ))}
           </div>
         );
-      },
+      }
     },
     {
       accessor: "content",
@@ -274,8 +313,6 @@ const AdminPatientReviews: React.FC = () => {
           </div>
         );
       },
-
-  
     },
   ];
 
@@ -309,11 +346,13 @@ const AdminPatientReviews: React.FC = () => {
       >
         My Reviews
       </h2>
-      <div className="bg-[#FFFFFF] h-[400px] rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
+      <div className="bg-[#FFFFFF] h-fit rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3 space-grotesk text-[20px] font-bold">Given Reviews</h3>
+          <h3 className="md:mb-0 mb-3 space-grotesk text-[20px] font-bold">
+            Given Reviews
+          </h3>
           {/* searchbar */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:px-5 px-0">
             <CommonInput
               placeholder="Search with Provider name, zipcode"
               value={searchText}
@@ -326,7 +365,9 @@ const AdminPatientReviews: React.FC = () => {
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium inter text-sm">Filter By</p>
+            <p className="text-[#252525] font-medium inter text-sm">
+              Filter By
+            </p>
             <div className="relative" ref={dropdownRef}>
               <div className="flex items gap-4">
                 <button
@@ -367,7 +408,7 @@ const AdminPatientReviews: React.FC = () => {
           {isLoadingUseApiMyReviews ? (
             <TableSkeletonLoader />
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto w-full h-fit overflow-y-auto">
               <TanDataTable<ReviewDataTypes>
                 columns={columns ?? []}
                 data={data?.records ?? []}
@@ -399,15 +440,15 @@ const AdminPatientReviews: React.FC = () => {
             onDelete={handleDelete}
             // loading={deleteMutationLoading}
           />
-        </div>
-      </div>
       <div>
         <Pagination
           onPageChange={handlePageChange}
           totalRows={data?.totalRecords}
           currentPage={page}
-          rowsPerPage={3}
+          rowsPerPage={10}
         />
+      </div>
+        </div>
       </div>
     </div>
   );

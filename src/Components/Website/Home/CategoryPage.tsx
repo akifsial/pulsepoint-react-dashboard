@@ -92,7 +92,6 @@
 
 //   const { data: categoryBlogs } = useGetCategoryBlogs(id);
 
-
 //   // const filteredPosts =
 //   //   selectedCategory === "All"
 //   //     ? posts
@@ -139,122 +138,117 @@
 
 // export default CategoryPage;
 
-import { useGetCategoryBlogs } from "@src/hooks/useWebsite";
+import {
+  useGetBlogsCategory,
+  useGetCategoryBlogs,
+} from "@src/hooks/useWebsite";
 import React, { useState, useEffect } from "react";
 import TopBar from "../Layout/TopBar";
 import UtilityRow from "../Layout/UtilityRow";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Spinner from "@components/Loaders/Spinner";
+import BannerWeb from "@pages/Web-pages/Components/BannerWeb";
+import PostWeb from "@pages/Web-pages/Components/PostWeb";
+import CategoriesTab from "@pages/Web-pages/Components/CategoriesTab";
+import CategorySidebar from "@pages/Web-pages/Components/CategorySidebar";
+import Pagination from "@components/Pagination/Pagination";
+import WebPagination from "@components/Pagination/WebPagination";
 
 const CategoryPage: React.FC = () => {
-  const [categoryId, setCategoryId] = useState<string | null>(null);
+  // const [categoryId, setCategoryId] = useState<string | null>(null);
+  const [category, setCategory] = useState<string | null>(null);
+  console.log();
   const [expandedPosts, setExpandedPosts] = useState<Record<number, boolean>>(
     {}
   );
   const location = useLocation();
   const navigate = useNavigate(); // <-- useNavigate hook
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
+  const queryParams = new URLSearchParams(location.search);
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get("id");
-    setCategoryId(id);
+    const category = queryParams.get("category");
+
+    setCategory(category);
+    // setCategoryId(id);
   }, [location.search]);
 
   const {
-    data: categoryBlogs,
+    data: blogsCategories,
     isLoading,
-    isError,
     refetch,
-  } = useGetCategoryBlogs(categoryId);
+  } = useGetBlogsCategory(category, currentPage);
+
+  console.log("------------------------------------", blogsCategories);
+
+  const categoryParam = queryParams.get("category");
+
+  // const {
+  //   data: categoryBlogs,
+  //   isLoading,
+  //   isError,
+  //   refetch,
+  // } = useGetCategoryBlogs(categoryId);
+
+  const [categoryName, setCategoryName] = useState<string>("");
+
+  // const filteredBlogs = categoryBlogs?.records?.filter(
+  //   (cat) => cat?.id === categoryId
+  // );
 
   useEffect(() => {
-    if (categoryId) {
-      refetch();
-    }
-  }, [categoryId, refetch]);
-
-  const toggleExpand = (postId: number) => {
-    setExpandedPosts((prev) => ({
-      ...prev,
-      [postId]: !prev[postId],
-    }));
-  };
-
-  if (isLoading)
-    return <p className="text-center mt-20 ">Loading...</p>;
-  // if (isError)
-  //   return (
-  //     <p className="text-center mt-20 text-red-500">Failed to load category</p>
-  //   );
+    refetch();
+  }, [currentPage]);
 
   return (
     <div className="w-full">
       <TopBar />
       <UtilityRow />
 
-      {/* Page Title */}
-      {/* <h1 className="text-3xl font-bold text-gray-800 mt-6 mb-6 text-center">
-        Browse Posts by Category
-      </h1> */}
+      <BannerWeb pageName={categoryParam} />
 
-      <div className="mt-6 px-5 mx-auto w-full max-w-screen-xl">
-        <p
-          onClick={() => navigate("/")}
-          className="px-4 flex gap-2 py-2 items-center w-[200px] text-gray-800 rounded-lg cursor-pointer text-[28px] font-medium"
-        >
-          <ArrowLeft /> Go Back
-        </p>
-      </div>
-
-      {/* Posts Grid */}
-      <div className="grid mt-12 py-4 mx-auto w-full max-w-screen-xl px-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {categoryBlogs?.records?.map((post) => {
-          const isExpanded = expandedPosts[post.id] || false;
-          return (
-            <div
-              key={post.id}
-              className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 flex flex-col justify-between"
-            >
-              <img
-                src={`${import.meta.env.VITE_APP_API_IMG_URL}${post?.image}`}
-                alt={post.title}
-                className="w-full h-52 object-cover rounded-lg mb-4 shadow-sm"
-              />
-              <div className="flex-1">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                  {post.title}
-                </h2>
-                <p className="text-gray-600 text-sm mb-3">
-                  {isExpanded
-                    ? post.content
-                    : post.content.slice(0, 100) +
-                      (post.content.length > 100 ? "..." : "")}
-                </p>
-              </div>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-full">
-                  {post?.category?.name}
-                </span>
-                {post.content.length > 100 && (
-                  <button
-                    className="text-blue-600 cursor-pointer hover:underline text-sm font-medium"
-                    onClick={() => toggleExpand(post.id)}
-                  >
-                    {isExpanded ? "Read Less" : "Read More"}
-                  </button>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {categoryBlogs?.records?.length === 0 && (
-        <p className="text-center text-gray-500 mt-20 text-lg">
+      {isLoading ? (
+        <p className="text-center mt-20">Loading...</p>
+      ) : blogsCategories?.data?.length === 0 ? (
+        <p className="text-center text-gray-500 mt-5 text-lg">
           No posts found.
         </p>
+      ) : (
+        <>
+          <div className="grid mt-5 py-4 mx-auto w-full max-w-screen-xl px-8 sm:grid-cols-1 md:grid-cols-3 gap-8">
+            {/* First 2 blog posts in col-span-2 */}
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <PostWeb
+                data={blogsCategories}
+                setCategoryName={setCategoryName}
+                categoryId={category}
+              />
+            </div>
+            {/* Right side single column */}
+            <div className="col-span-1">
+              <CategorySidebar categoryId={category} />
+            </div>
+          </div>
+          <div className=" flex justify-center w-full">
+            <div className="w-fit mb-5">
+              <WebPagination
+                // rowsPerPage={pageSize}
+                rowsPerPage={10} // 3 rows per page
+                totalRows={blogsCategories?.data?.pagination?.total_posts}
+                currentPage={blogsCategories?.data?.pagination?.current_page}
+                onPageChange={setCurrentPage}
+              />{" "}
+            </div>
+          </div>
+        </>
       )}
+
+      {/* Pagination (if needed) */}
+      {/* <div className="bg-red-500 w-full">
+      <Pagination />
+    </div> */}
     </div>
   );
 };

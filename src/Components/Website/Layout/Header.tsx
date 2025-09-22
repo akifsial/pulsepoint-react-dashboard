@@ -24,7 +24,6 @@ interface HeaderProps {
   setIsMobileMenuOpen: (open: boolean) => void;
 }
 
-
 const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
@@ -85,7 +84,6 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
 
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
 
-
   const handleCategory = (id) => {
     if (userRole == "PATIENT") {
       navigate(`/patient/web/category?id=${id}`);
@@ -93,6 +91,8 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
     if (userRole == "CARE_PROVIDER") {
       navigate(`/care-provider/web/category?id=${id}`);
     }
+
+    navigate(`/web/category?id=${id}`);
   };
 
   const isActiveLink = (href: string) => {
@@ -108,7 +108,7 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div  className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
                   <span className="text-white font-bold text-lg">TS</span>
@@ -125,7 +125,7 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                 <div key={item?.name} className="relative group">
                   <p
                     // to={item?.url_key}
-                    onClick={()=>(handleCategory(item?.id))}
+                    onClick={() => handleCategory(item?.id)}
                     className={`flex items-center  text-sm font-medium transition-colors ${
                       isActiveLink(item?.url_key)
                         ? "text-blue-500"
@@ -217,7 +217,7 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                     }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {item.label}
+                    {item.label}z\x\zx\zx
                   </Link>
                   {item.subItems && (
                     <div className="ml-4 space-y-1">

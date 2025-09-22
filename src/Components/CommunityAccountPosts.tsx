@@ -238,7 +238,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   //   //     ? comment.userLike[0].is_like
   //   //     : null;
 
-
   //   if (status === "like") {
   //     if (comment?.userLike?.is_like==true ) {
   //       newStatus = ""; // remove like
@@ -322,7 +321,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     };
     await savePostMutation(data);
   };
-
 
   const {
     mutateAsync: deleteCommentMutation,
@@ -563,7 +561,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
                         <div className="bg-grey-500 mb-20 cursor-pointer">
                           <DropdownActions
-                           
                             onDelete={() =>
                               handleDeleteComment(comment?.id, post?.id)
                             }
@@ -610,7 +607,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                         <img src={SaveBlue} alt="SaveBlue" />
                       </span>
                     )}
-                   
                     Save Post
                   </button>
                 </div>

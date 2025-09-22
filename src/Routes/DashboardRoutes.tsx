@@ -1,3 +1,4 @@
+import StripeSuccessPage from "@components/auth/StripeSuccessPage";
 import CommunityAccount from "@components/CareProvider/CommunityForum/CommunityAccount";
 import CommunityAccountWeb from "@components/CareProvider/CommunityForum/CommunityAccountWeb";
 import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
@@ -36,6 +37,11 @@ export const DashboardRoutes = [
     path: "/care-provider/web",
     element: <Navigate to="/" replace />,
   },
+    
+  {
+    path: "/success",
+    element: <StripeSuccessPage />,
+  },
   {
     path: "/care-provider/web/community/:id",
     element: <CommunityAccountWeb />,
@@ -45,6 +51,7 @@ export const DashboardRoutes = [
   // { path: "category/blog", element: <CategoryPage /> },
   { path: "/web/category", element: <CategoryPage /> },
   { path: "/care-provider/profile/:id", element: <CareProviderProfile /> },
+  // { path: "/patient/care-provider/profile/:id", element: <CareProviderProfile /> },
 
   // { path: "/about-us", element: <AboutPage /> },
 ];

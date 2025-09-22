@@ -11,6 +11,10 @@ import {
   ApiGetPopularPost,
   ApiGetCategoryBlogs,
   ApiGetBlogs,
+  ApiGetCategories,
+  ApiGetBlogsCategory,
+  ApiGetFeaturedPosts,
+  ApiGetSingleBlog,
 } from "@src/api/ApiWebsite";
 import { useQuery } from "@tanstack/react-query";
 
@@ -78,11 +82,10 @@ export const useGetPopularPost = () => {
 
 export const useGetCategoryBlogs = (id) => {
   return useQuery({
-    queryKey: ["useGetCategoryBlogs",id],
+    queryKey: ["useGetCategoryBlogs", id],
     queryFn: () => ApiGetCategoryBlogs(id),
   });
 };
-
 
 export const useGetBlogs = () => {
   return useQuery({
@@ -90,3 +93,35 @@ export const useGetBlogs = () => {
     queryFn: () => ApiGetBlogs(),
   });
 };
+
+export const useGetCategories = () => {
+  return useQuery({
+    queryKey: ["useGetCategories"],
+    queryFn: () => ApiGetCategories(),
+  });
+};
+
+// ApiGetBlogsCategory
+
+export const useGetBlogsCategory = (id,currentPage) => {
+  return useQuery({
+    queryKey: ["useGetBlogsCategory", id,currentPage],
+    queryFn: () => ApiGetBlogsCategory(id,currentPage),
+  });
+};
+
+export const useGetFeaturedPosts = (id) => {
+  return useQuery({
+    queryKey: ["useGetFeaturedPosts", id],
+    queryFn: () => ApiGetFeaturedPosts(id),
+  });
+};
+
+export const useGetSingleBlog = (id) => {
+  return useQuery({
+    queryKey: ["useGetSingleBlog", id],
+    queryFn: () => ApiGetSingleBlog(id),
+  });
+};
+
+ApiGetFeaturedPosts;

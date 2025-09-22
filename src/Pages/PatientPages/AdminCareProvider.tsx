@@ -54,7 +54,9 @@ export const getColumns = (
     header: <span className="ml-7">Date</span>,
     showSort: true,
     cell: ({ row }) => (
-      <i className="ml-9">{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
+      <i className="ml-9">
+        {dayjs(row?.original?.created_at).format("DD/MM/YY")}
+      </i>
     ),
   },
   // {
@@ -73,6 +75,11 @@ export const getColumns = (
     showSort: true,
     cell: ({ getValue }) => {
       const rating = Number(getValue()) || 0;
+
+      if (rating === 0) {
+        return <span className="text-gray-500">N/A</span>;
+      }
+
       const totalStars = 5;
 
       const StarIcon = ({ filled }: { filled: boolean }) => (
@@ -80,8 +87,8 @@ export const getColumns = (
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
-          width="20"
-          height="20"
+          width="17"
+          height="17"
         >
           <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
         </svg>
@@ -93,6 +100,20 @@ export const getColumns = (
             <StarIcon key={index} filled={index < rating} />
           ))}
         </div>
+      );
+    },
+  },
+  {
+    accessor: "overall_rating",
+    header: "Overall Rating",
+    showSort: true,
+    cell: ({ row }) => {
+      const rating = Number(row.original?.overall_rating ?? 0);
+
+      return rating === 0 ? (
+        <span className="text-gray-500">N/A</span>
+      ) : (
+        <RatingStars value={rating} isDisabled={true} />
       );
     },
   },
@@ -128,7 +149,6 @@ const CareProviderDashboard: React.FC = () => {
   useEffect(() => {
     MeDataFetch();
   });
-
 
   const {
     data: CareProvidersData,
@@ -299,7 +319,9 @@ const CareProviderDashboard: React.FC = () => {
       </h2>
       <div className="bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] min-h-[450px] px-4 py-6  w-full">
         <div className="mb-6 flex flex-wrap gap-3 md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3 font-bold text-[20px] space-grotesk">Care Providers</h3>
+          <h3 className="md:mb-0 mb-3 font-bold text-[20px] space-grotesk">
+            Care Providers
+          </h3>
           {/* searchbar */}
           <div className="lg:flex lg:flex-1 lg:justify-end lg:px-5 px-0">
             <CommonInput
@@ -314,7 +336,9 @@ const CareProviderDashboard: React.FC = () => {
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium inter text-sm">Filter by</p>
+            <p className="text-[#252525] font-medium inter text-sm">
+              Filter by
+            </p>
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setShowRatingDropdown(!showRatingDropdown)}
@@ -323,7 +347,10 @@ const CareProviderDashboard: React.FC = () => {
                 } border-[#252525] px-4 md:w-[110px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5`}
               >
                 {rating ? rating : ""}
-                <span className=" pe-1 flex inter font-medium text-[14px]"> Ratings</span>
+                <span className=" pe-1 flex inter font-medium text-[14px]">
+                  {" "}
+                  Ratings
+                </span>
                 <img
                   src={filterIcon}
                   alt="filter icon"
@@ -411,7 +438,7 @@ const CareProviderDashboard: React.FC = () => {
             isLoadingCareProvidersData ? (
               <TableSkeletonLoader />
             ) : (
-              <div className="overflow-x-auto w-full">
+              <div className="overflow-x-auto w-full h-fit overflow-y-auto">
                 <TanDataTable<dataTypes>
                   columns={columns}
                   data={CareProvidersData?.payload?.records}
@@ -444,18 +471,18 @@ const CareProviderDashboard: React.FC = () => {
             </>
           )}
         </div>
-      {activeTab == "all" ? (
-        <div>
-          <Pagination
-            onPageChange={handlePageChange}
-            totalRows={CareProvidersData?.payload?.totalRecords}
-            currentPage={page}
-            rowsPerPage={3}
-          />
-        </div>
-      ) : (
-        ""
-      )}
+        {activeTab == "all" ? (
+          <div>
+            <Pagination
+              onPageChange={handlePageChange}
+              totalRows={CareProvidersData?.payload?.totalRecords}
+              currentPage={page}
+              rowsPerPage={10}
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

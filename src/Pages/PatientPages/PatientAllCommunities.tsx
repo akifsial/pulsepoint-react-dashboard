@@ -307,13 +307,13 @@ const PatientAllCommunites: React.FC = () => {
       >
         My Comunities
       </h2>
-      <div className="bg-[#FFFFFF] h-[400px] rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
+      <div className="bg-[#FFFFFF] h-fit rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3 text-[20px] font-bold space-grotesk">All Communities</h3>
         
         </div>
 
-        <div>
+        <div className="overflow-x-auto w-full h-fit overflow-y-auto">
           {isLoadingUseGetAllCommunities ? (
             <TableSkeletonLoader />
           ) : (

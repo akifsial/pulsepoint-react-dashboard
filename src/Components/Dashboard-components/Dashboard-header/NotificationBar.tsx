@@ -106,7 +106,7 @@ const NotficationBar = ({ noticationLink }) => {
                     ? navigate("/care-provider/notification")
                     : navigate("/admin/notification")
                 }
-                className="flex md:justify-start justify-between md:items-center gap-2 md:gap-4.5"
+                className="flex md:justify-start justify-between md:items-center gap-2 md:gap-4.5 mb-3"
               >
                 <img
                   src={Like}
@@ -115,13 +115,12 @@ const NotficationBar = ({ noticationLink }) => {
                 />
                 <p className="flex justify-between flex-col w-[270px]">
                   <p className="md:pr-0 text-[12px] md:text-[14px] pr-20">{item.message}</p>
-                  <span className="block absolute right-0 top-[20%] text-right text-xs text-[#252525]/40">
-                    {dayjs(item?.created_at).format("h:mm A")}
-                  </span>
+              
                 </p>
+                
               </div>
               {item?.member_id ? (
-                <div className="flex pl-12 gap-[8px]">
+                <div className="flex pl-12 bg-red-500 gap-[8px]">
                   {/* Accept Button */}
                   <button
                     onClick={(e) =>{

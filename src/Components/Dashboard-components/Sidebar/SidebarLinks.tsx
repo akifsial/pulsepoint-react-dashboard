@@ -28,8 +28,8 @@ import manage from "@assets/media/svgs/dashboard-svgs/manage.svg";
 import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg";
 import feature from "@assets/media/svgs/dashboard-svgs/feature.svg";
 import featureActive from "@assets/media/svgs/dashboard-svgs/featureActive.svg";
-import blogIcons from "@assets/media/svgs/dashboard-svgs/blogs.svg"
-import blogIconsWhite from "@assets/media/svgs/dashboard-svgs/blogsWhite.svg"
+import blogIcons from "@assets/media/svgs/dashboard-svgs/blogs.svg";
+import blogIconsWhite from "@assets/media/svgs/dashboard-svgs/blogsWhite.svg";
 
 import type { ReactNode } from "react";
 import { MdFeaturedPlayList, MdOutlineFeaturedPlayList } from "react-icons/md";
@@ -218,7 +218,7 @@ export const AdminSidebarLinks: SidebarLink[] = [
     },
   },
 
-  //   {
+  // {
   //   label: "Blogs",
   //   path: "/admin/blogs",
   //   icon: {

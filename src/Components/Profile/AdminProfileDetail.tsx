@@ -206,6 +206,8 @@ const AdminProfileDetail = () => {
     fetchUserProfile();
   }, []);
 
+  console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", selectedImage);
+
   const handleSaveChanges = async () => {
     if (!userId) return toast.error("User ID not found");
 
@@ -219,7 +221,7 @@ const AdminProfileDetail = () => {
       formData.append("state", state);
       formData.append("city", city);
 
-      if (selectedImage instanceof File) {
+      if (selectedImage) {
         formData.append("image", selectedImage); // ✅ only File
       }
 
@@ -231,7 +233,7 @@ const AdminProfileDetail = () => {
       if (response.data.success) {
         toast.success("Profile updated successfully!");
         fetchUserProfile(); // refresh backend image
-        setSelectedImage(null); // reset local file
+        // setSelectedImage(null); // reset local file
       } else {
         toast.error(response.data.message || "Update failed");
       }
@@ -272,12 +274,12 @@ const AdminProfileDetail = () => {
               </div>
             </div>
 
-            {/* <label
+            <label
               className="border-1 cursor-pointer border-[#25252533] w-[159px] h-[46px] bg-[#F3F3F3] !rounded-[10px] px-4 py-[10px] text-base text-[#252525] font-medium leading-[33px] gap-2 flex items-center justify-center"
               htmlFor="upload"
             >
               Change Photo
-            </label> */}
+            </label>
             <input
               type="file"
               id="upload"

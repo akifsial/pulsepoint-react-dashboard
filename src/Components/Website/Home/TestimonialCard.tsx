@@ -25,14 +25,14 @@ const TestimonialCard = ({
         className={`w-4 h-4 ${
           index < Math.floor(rating)
             ? "text-yellow-400 fill-current"
-            : "text-gray-300"
+            : "text-[#D5D5D5] fill-current"
         }`}
       />
     ));
   };
 
   return (
-    <div className="bg-[#F5F5F5] flex flex-col justify-between h-[300px] rounded-lg p-6 shadow-sm">
+    <div className="bg-[#F5F5F5] flex flex-col justify-between w-[500px] h-[300px] rounded-lg p-6 shadow-sm">
       <div className="">
         <div className="flex items-center mb-4">
           {renderStars(feedback?.rating)}
@@ -55,44 +55,39 @@ const TestimonialCard = ({
           alt={name}
           className="w-[50px] h-[50px] rounded-[0px] object-cover mr-4"
         />
-        <div>
+        <div className="flex items-center">
           <h4 className="font-bold text-[#252525] text-[20px]">
             {feedback?.patient?.first_name} {feedback?.patient?.last_name}
           </h4>
-          <p className="text-[16px] font-normal text-[#252525]">
-            Dash Private Villa Project Investor
-          </p>
+         
         </div>
       </div>
     </div>
   );
 };
 
+// TestimonialCarousel.tsx
+import { useRef, forwardRef } from "react";
+
 interface TestimonialCarouselProps {
-  testimonials: TestimonialCardProps[];
+  testimonials: any;
 }
 
-const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
-  return (
-    <div className="relative">
-      <div className="flex space-x-6 overflow-x-auto pb-4">
-        {testimonials?.records?.map((testimonial) => (
-          <div key={testimonial.id} className="flex-none w-96">
+const TestimonialCarousel = forwardRef<HTMLDivElement, TestimonialCarouselProps>(
+  ({ testimonials }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="flex space-x-6 overflow-x-auto pb-4 scroll-smooth"
+      >
+        {testimonials?.records?.map((testimonial: any) => (
+          <div key={testimonial.id} className=" w-full">
             <TestimonialCard {...testimonial} />
           </div>
         ))}
       </div>
+    );
+  }
+);
 
-      {/* <div className="flex justify-center mt-6 space-x-2">
-        <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
-          <ChevronLeft className="w-5 h-5 text-gray-600" />
-        </button>
-        <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
-          <ChevronRight className="w-5 h-5 text-gray-600" />
-        </button>
-      </div> */}
-    </div>
-  );
-};
-
-export { TestimonialCard, TestimonialCarousel };
+export { TestimonialCarousel };

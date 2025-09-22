@@ -40,6 +40,8 @@ const CareProviderDashboard: React.FC = () => {
     MeDataFetch();
   });
 
+  const [limit,setLimit]=useState(3)
+
   const {
     data: CareproviderData,
     isLoading: CareProviderLoading,
@@ -49,7 +51,8 @@ const CareProviderDashboard: React.FC = () => {
     rating,
     filterValue,
     page,
-    sort == true ? "asc" : "desc"
+    sort == true ? "asc" : "desc",
+    limit
   );
 
   useEffect(() => {
@@ -292,7 +295,7 @@ const CareProviderDashboard: React.FC = () => {
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3 space-grotesk font-bold text-[20px] ">Recent Reviews</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <div className=" lg:flex lg:flex-1 lg:justify-end px-5">
+            <div className=" lg:flex lg:flex-1 lg:justify-end md:px-5 px-0">
               <CommonInput
                 placeholder="Search with Provider name, zipcode"
                 value={searchText}
@@ -359,7 +362,7 @@ const CareProviderDashboard: React.FC = () => {
           
           /> */}
 
-          <div>
+          <div className="overflow-x-auto w-full h-fit overflow-y-auto">
             {CareProviderLoading ? (
               <TableSkeletonLoader />
             ) : (

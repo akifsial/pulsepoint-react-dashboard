@@ -83,6 +83,8 @@ const PatientProfile = ({ onChangePassword }) => {
   }, []);
 
   const [selectedImage, setSelectedImage] = useState("");
+
+  console.log("PPPPPPPPPPPP",selectedImage)
   const [singleUser, setSingleUser] = useState();
 const navigate=useNavigate()
   const { data: meData } = useMeApi(navigate);

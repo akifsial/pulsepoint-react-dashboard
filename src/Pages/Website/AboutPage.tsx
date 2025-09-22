@@ -1,105 +1,108 @@
 import medicalImage from "@assets/media/images/dashboard-images/about-banner.png";
+import aboutBanner2 from "@assets/media/images/dashboard-images/about-banner2.png";
 import Footer from "@components/Website/Layout/Footer";
 import TopBar from "@components/Website/Layout/TopBar";
 import UtilityRow from "@components/Website/Layout/UtilityRow";
+import BannerWeb from "@pages/Web-pages/Components/BannerWeb";
+import CategoriesTab from "@pages/Web-pages/Components/CategoriesTab";
+import nursingImg from "@assets/media/images/dashboard-images/nursing.png";
+import { Link } from "react-router-dom";
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Navbar + Utility */}
       <TopBar />
       <UtilityRow />
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-blue-50 via-white to-blue-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="space-y-6">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
-              About{" "}
-              <span className="text-blue-600">TopSeniorSpot</span>
-            </h1>
-            <p className="text-lg text-gray-700">
-              We are dedicated to helping seniors and their families make
-              informed decisions about care options and healthy aging.
-            </p>
-            <p className="text-gray-700">
-              Our platform connects you with trusted healthcare providers,
-              care facilities, and resources to support your journey. We make
-              senior care simple, reliable, and compassionate.
-            </p>
-            <p className="text-gray-700">
-              Whether it’s finding the right caregiver, exploring health tips,
-              or accessing community support,{" "}
-              <span className="font-semibold text-blue-600">
-                TopSeniorSpot
-              </span>{" "}
-              is your trusted partner for senior well-being.
-            </p>
+      <div className="relative bg-gradient-to-r from-blue-50 via-white to-blue-50 py-20 pt-0 pb-0">
+        <BannerWeb className="bg-white" pageName="About Us" />
 
-            {/* CTA Button */}
-            {/* <button className="mt-6 px-8 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 hover:shadow-lg transition">
-              Learn More
-            </button> */}
-          </div>
+        {/* <CategoriesTab categoryTitle={"Categories"} /> */}
 
-          {/* Right Image */}
-          <div className="flex justify-center">
-            <img
-              src={medicalImage}
-              alt="Medical care"
-              className="w-full max-w-md md:max-w-lg rounded-2xl shadow-xl object-cover"
-            />
+        {/*  */}
+
+        <section className={`bg-[#F3F8FC] py-[0px] md:pt-[75px] pt-[30px]  md:pb-[60px] pb-[20px]`}>
+          <div>
+            <div className="w-full flex justify-between flex-wrap md:gap-0 gap-5 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-5 mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="md:text-[36px] w-[365px] text-[25px] font-bold md:mb-[22px] mb-[0px] ">
+                Compassionate Senior Living
+              </h2>
+
+              <p className="w-[581px] flex justify-center items-center">
+                “Our mission is to enhance the quality of life for seniors by
+                providing compassionate care, promoting independence, and
+                creating a safe, supportive, and engaging community where every
+                individual is respected and valued.”
+              </p>
+              {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+              {categories?.records?.map((category: any, index) => (
+                <CategoryCard
+                  key={category.id}
+                  id={category.id}
+                  title={category.name}
+                  // image={
+                  //   category.image
+                  //     ? `${import.meta.env.VITE_APP_API_IMG_URL}${category.image}`
+                  //     : WorkImg
+                  // }
+                  // link={`/category/${category.url_key}`}
+                  // image={`https://picsum.photos/id/237/300/${2}`}
+                />
+              ))}
+            </div> */}
+            </div>
+            <div className="w-full flex justify-center h-[341px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <img className="w-full object-cover" src={aboutBanner2} alt="" />
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/*  */}
+
+        {/*  */}
+
+        <section className="bg-white md:py-16 pt-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="md:text-[36px] md:w-[320px] w-full text-[25px] font-bold text-[#252525] mb-[28px]">
+                  Care That Feels Like Family
+                </h2>
+                <div className="space-y-4">
+                  <p>
+                    I am passionate about enriching the lives of older adults
+                    and creating environments where seniors feel respected,
+                    supported, and truly at home. With a background in
+                    [healthcare | lifestyle | financial advice | technology
+                    guides], etc., I’ve dedicated my career to ensuring that
+                    ageing adults receive compassionate care and have access to
+                    meaningful, engaging experiences every day.
+                  </p>
+                  <p>
+                    Whether I’m helping families navigate care options,
+                    coordinating wellness programs, or supporting residents in
+                    their daily routines, my goal is always to promote dignity,
+                    independence, and joy in later life. I believe that senior
+                    living is not just about care—it’s about community,
+                    connection, and quality of life.
+                  </p>
+                </div>
+              </div>
+              <div className="relative">
+                <img
+                  src={nursingImg}
+                  alt="How it works"
+                  className="w-full h-[484px] object-cover rounded-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
 
-      {/* Why Choose Section */}
-      <div className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Why Choose <span className="text-blue-600">TopSeniorSpot?</span>
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-12">
-            We combine technology, expert advice, and community support to
-            provide seniors and their families with reliable resources for a
-            healthier and happier life.
-          </p>
-
-          {/* Features Grid */}
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="bg-blue-50 p-8 rounded-xl shadow hover:shadow-lg transition text-left">
-              <h3 className="font-bold text-xl text-gray-800 mb-3">
-                Trusted Providers
-              </h3>
-              <p className="text-gray-600">
-                Connect with verified healthcare professionals and facilities
-                that meet the highest standards of care.
-              </p>
-            </div>
-            <div className="bg-blue-50 p-8 rounded-xl shadow hover:shadow-lg transition text-left">
-              <h3 className="font-bold text-xl text-gray-800 mb-3">
-                Reliable Resources
-              </h3>
-              <p className="text-gray-600">
-                Access guides, tips, and educational content crafted for senior
-                well-being and family support.
-              </p>
-            </div>
-            <div className="bg-blue-50 p-8 rounded-xl shadow hover:shadow-lg transition text-left">
-              <h3 className="font-bold text-xl text-gray-800 mb-3">
-                Community Support
-              </h3>
-              <p className="text-gray-600">
-                Join a caring community of seniors and families sharing
-                experiences, advice, and encouragement.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
       <Footer />
-
     </div>
   );
 };

@@ -20,13 +20,11 @@ export const ApiCategories = async () => {
 export const ApiSingleCategory = async (id) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}category/${id}`;
   // const token = JSON.parse(localStorage.getItem("token"));
-  const token: string | null = JSON.parse(
-    localStorage.getItem("token") || "null"
-  );
+  // const token: string | null = JSON.parse(
+  //   localStorage.getItem("token") || "null"
+  // );
 
-  const response = await axios.get(BASE_URL, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await axios.get(BASE_URL);
 
   return response.data.payload;
 };
@@ -145,19 +143,21 @@ export const ApiGetPopularDoctors = async (search: string) => {
 };
 
 export const ApiGetPopularPost = async (search: string) => {
-  let BASE_URL = `${
-    import.meta.env.VITE_APP_API_URL
-  }community/popular-post`;
+  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/popular-post`;
 
-  // const token = JSON.parse(localStorage.getItem("token"));
+  const token = JSON.parse(localStorage.getItem("token"));
 
-  const response = await axios.get(BASE_URL);
+  const response = await axios.get(BASE_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
   return response.data.payload;
 };
 
 export const ApiGetCategoryBlogs = async (id) => {
-  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}blog/category/${id}?page=1&limit=5`;
+  const BASE_URL = `${
+    import.meta.env.VITE_APP_API_URL
+  }blog/category/${id}?page=1&limit=5`;
   // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
@@ -170,9 +170,8 @@ export const ApiGetCategoryBlogs = async (id) => {
   return response.data.payload;
 };
 
-
 export const ApiGetBlogs = async () => {
-  const BASE_URL = `https://topseniorspot.com/wp-json/wp/v2/posts`;
+  const BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts`;
   // const token = JSON.parse(localStorage.getItem("token"));
   // const token: string | null = JSON.parse(
   //   localStorage.getItem("token") || "null"
@@ -180,5 +179,72 @@ export const ApiGetBlogs = async () => {
 
   const response = await axios.get(BASE_URL);
 
-  return response.data.payload;
+  return response;
 };
+
+export const ApiGetCategories = async () => {
+  const BASE_URL = `https://topseniorspot.com/wp-json/topsenior/v1/categories`;
+  // const token = JSON.parse(localStorage.getItem("token"));
+  // const token: string | null = JSON.parse(
+  //   localStorage.getItem("token") || "null"
+  // );
+
+  const response = await axios.get(BASE_URL);
+
+  return response;
+};
+//topseniorspot.com/wp-json/wp/v2/posts?categories=63
+
+export const ApiGetBlogsCategory = async (id,currentPage) => {
+  // console.log("asdasd")
+  // const BASE_URL = `https://topseniorspot.com/wp-json/wp/v2/posts?categories=${id}`;
+  let BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts/category/${id}?per_page=10`;
+  BASE_URL+=`&page=${currentPage}`
+
+  // const token = JSON.parse(localStorage.getItem("token"));
+  // const token: string | null = JSON.parse(
+  //   localStorage.getItem("token") || "null"
+  // );
+
+  const response = await axios.get(BASE_URL);
+
+  return response;
+};
+
+export const ApiGetFeaturedPosts = async (id) => {
+  const BASE_URL = `https://topseniorspot.com/wp-json/topsenior/v1/posts/featured`;
+  // const token = JSON.parse(localStorage.getItem("token"));
+  // const token: string | null = JSON.parse(
+  //   localStorage.getItem("token") || "null"
+  // );
+
+  const response = await axios.get(BASE_URL);
+
+  return response;
+};
+
+export const ApiGetSingleBlog = async (id) => {
+  const BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts/${id}`;
+  // const token = JSON.parse(localStorage.getItem("token"));
+  // const token: string | null = JSON.parse(
+  //   localStorage.getItem("token") || "null"
+  // );
+
+  const response = await axios.get(BASE_URL);
+
+  return response;
+};
+
+// export const ApiGetFBlogs = async (id) => {
+//   const BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts/featured`;
+//   // const token = JSON.parse(localStorage.getItem("token"));
+//   // const token: string | null = JSON.parse(
+//   //   localStorage.getItem("token") || "null"
+//   // );
+
+//   const response = await axios.get(BASE_URL);
+
+//   return response;
+// };
+
+// https://topseniorspot.com/wp-json/wp/v2/posts?meta_key=featured&meta_value=1&_embed

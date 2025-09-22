@@ -216,12 +216,47 @@ const AdminDashboard: React.FC = () => {
       },
     },
 
+    // {
+    //   accessor: "total_rating",
+    //   header: "Rating",
+    //   showSort: true,
+    //   cell: ({ getValue }) => {
+    //     const rating = Number(getValue()) || 0;
+    //     const totalStars = 5;
+
+    //     const StarIcon = ({ filled }: { filled: boolean }) => (
+    //       <svg
+    //         xmlns="http://www.w3.org/2000/svg"
+    //         viewBox="0 0 24 24"
+    //         fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+    //         width="17"
+    //         height="17"
+    //       >
+    //         <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
+    //       </svg>
+    //     );
+
+    //     return (
+    //       <div className="flex items-center gap-0.5">
+    //         {Array.from({ length: totalStars }).map((_, index) => (
+    //           <StarIcon key={index} filled={index < rating} />
+    //         ))}
+    //       </div>
+    //     );
+    //   },
+    // },
+
     {
       accessor: "total_rating",
       header: "Rating",
       showSort: true,
       cell: ({ getValue }) => {
         const rating = Number(getValue()) || 0;
+
+        if (rating === 0) {
+          return <span className="text-gray-500">N/A</span>;
+        }
+
         const totalStars = 5;
 
         const StarIcon = ({ filled }: { filled: boolean }) => (
@@ -242,6 +277,22 @@ const AdminDashboard: React.FC = () => {
               <StarIcon key={index} filled={index < rating} />
             ))}
           </div>
+        );
+      },
+    },
+
+    {
+      accessor: "overall_rating",
+      header: "Overall Rating",
+      showSort: true,
+
+      cell: ({ row }) => {
+        const rating = Number(row.original?.overall_rating ?? 0);
+
+        return rating === 0 ? (
+          <span className="text-gray-500">N/A</span>
+        ) : (
+          <RatingStars value={rating} isDisabled={true} />
         );
       },
     },
@@ -444,81 +495,85 @@ const AdminDashboard: React.FC = () => {
         />
       </div>
 
-      <div className="mt-6 overflow-y-auto w-[100%] bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] h-[400px] px-4 py-6">
-        <div className="mb-6 flex gap-4 md:flex-row flex-col md:items-center md:justify-between">
-
+      <div className="mt-6 overflow-y-auto w-[100%] bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] h-fit px-4 mb-0 py-6">
+        <div className="mb-6 flex gap-2 md:mt-0 mt-5 md:flex-row flex-col md:items-center md:justify-between">
           {/* Updated searchbar with dropdown */}
-          <h3 className="md:mb-0 space-grotesk text-[20px] font-bold text-gray-900 mb-3">Care Providers</h3>
-          <div className=" lg:flex lg:flex-1 lg:justify-end px-0 mb-4 mt-2 lg:px-5 relative">
-            <div className="w-full max-w-sm relative search-dropdown-container">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#252525] w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search with Provider name, zipcode"
-                  value={searchText}
-                  onChange={handleSearchChange}
-                  onFocus={handleSearchFocus}
-                  className="w-full min-w-[250px] text-[14px] font-medium inter pl-10 pr-4 py-3 text-gray-700 placeholder-[#252525] border border-[#252525] rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
-                />
-              </div>
+          <div className="lg:flex md:flex-nowrap flex-wrap items-center gap-5">
+            <h3 className="lg:mb-0 space-grotesk text-[20px] font-bold text-gray-900 mb-3">
+              Care Providers
+            </h3>
+            <div className="relative">
+              <Search className="absolute left-2 top-6 transform -translate-y-1/2 text-[#252525] w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search with Provider name, zipcode"
+                value={searchText}
+                onChange={handleSearchChange}
+                onFocus={handleSearchFocus}
+                className="w-full min-w-[250px] text-[14px] font-medium inter pl-10 pr-4 py-3 text-gray-700 placeholder-[#252525] border border-[#252525] rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
+              />
+            <div className="sm:block hidden lg:flex lg:flex-1 lg:justify-end px-0 mt-2 lg:px-5 relative">
+              <div className="w-full max-w-sm search-dropdown-container">
+                {/* Search Dropdown - positioned below input */}
+                {isSearchDropdownOpen && (
+                  <div className="absolute top-0 left-0  mt-2 bg-white rounded-lg  shadow-lg z-50 min-w-[300px] max-h-[400px] overflow-hidden">
+                    {/* Recents Section */}
 
-              {/* Search Dropdown - positioned below input */}
-              {isSearchDropdownOpen && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
-                  {/* Recents Section */}
+                    {recentSearchesData?.length == 0 ? (
+                      ""
+                    ) : (
+                      <div className="p-2">
+                        <div className="flex items-center justify-between mb-0">
+                          <h3 className="text-gray-600 font-medium text-base">
+                            Recents
+                          </h3>
+                          <button
+                            onClick={() => handleDeleteSearches()}
+                            className="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors"
+                          >
+                            Clear
+                          </button>
+                        </div>
 
-                  {recentSearchesData?.length == 0 ? (
-                    ""
-                  ) : (
-                    <div className="p-2">
-                      <div className="flex items-center justify-between mb-0">
-                        <h3 className="text-gray-600 font-medium text-base">
-                          Recents
-                        </h3>
-                        <button
-                          onClick={() => handleDeleteSearches()}
-                          className="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors"
-                        >
-                          Clear
-                        </button>
-                      </div>
+                        {/* Recent Searches List */}
 
-                      {/* Recent Searches List */}
-
-                      <div className="space-y-0.5 max-h-[250px] min-h-[50px] overflow-y-auto">
-                        {recentSearchesData?.length == 0 ? (
-                          <div className="mt-3 flex justify-center">
-                            <p className="text-[14px]">No Searches Found</p>
-                          </div>
-                        ) : (
-                          recentSearchesData?.map((search) => (
-                            <div
-                              key={search.id}
-                              onClick={() =>
-                                handleSearchItemClick(search.keyword)
-                              }
-                              className="flex items-center p-2 hover:bg-gray-50 cursor-pointer rounded-md transition-colors"
-                            >
-                              <Clock className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3" />
-                              <span className="text-gray-700 text-sm leading-relaxed">
-                                {search.keyword}
-                              </span>
+                        <div className="space-y-0.5 max-h-[250px] min-h-[50px] overflow-y-auto">
+                          {recentSearchesData?.length == 0 ? (
+                            <div className="mt-3 flex justify-center">
+                              <p className="text-[14px]">No Searches Found</p>
                             </div>
-                          ))
-                        )}
+                          ) : (
+                            recentSearchesData?.map((search) => (
+                              <div
+                                key={search.id}
+                                onClick={() =>
+                                  handleSearchItemClick(search.keyword)
+                                }
+                                className="flex items-center p-2 hover:bg-gray-50 cursor-pointer rounded-md transition-colors"
+                              >
+                                <Clock className="w-4 h-4 text-gray-400 flex-shrink-0 mr-3" />
+                                <span className="text-gray-700 text-sm leading-relaxed">
+                                  {search.keyword}
+                                </span>
+                              </div>
+                            ))
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              )}
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
             </div>
           </div>
 
-          <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
+          <div className="flex md:flex-row md:mt-0 mt-5 flex-col md:items-center md:gap-4 gap-3">
             <div className="relative" ref={dropdownRef}>
-              <div className="flex items-center flex-wrap gap-4">
-            <p className="text-[#252525] inter font-medium text-[14px]">Filter by</p>
+              <div className="flex items-center md:flex-nowrap flex-wrap gap-4">
+                <p className="text-[#252525] inter font-medium text-[14px]">
+                  Filter by
+                </p>
                 <PrimaryButton
                   btnText={` ${rating ? rating : ""} Ratings`}
                   showImg={true}
@@ -605,14 +660,14 @@ const AdminDashboard: React.FC = () => {
             ""
           )}
         </div>
-      </div>
-
       <Pagination
         onPageChange={handlePageChange}
         totalRows={CareProvidersData?.payload?.totalRecords}
         currentPage={page}
-        rowsPerPage={3}
+        rowsPerPage={10}
       />
+      </div>
+
     </div>
   );
 };

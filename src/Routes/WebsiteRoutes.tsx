@@ -21,10 +21,11 @@ import HelpCenterPage from "@pages/Website/HelpCenterPage";
 import PrivacyPolicy from "@pages/Website/PrivacyPolicy";
 import TermsOfService from "@pages/Website/TermsServices";
 import DisclosurePolicy from "@pages/Website/DisclosurePolicy";
+import Blog from "@pages/Web-pages/blogs-page/Blog";
 
 export const websitePublicRoutes = [
   // { path: "/", element: <HomePage /> },
-    {
+  {
     path: "/",
     element: (
       <PublicProtectRoute forceRedirectToDashboard={false}>
@@ -32,6 +33,8 @@ export const websitePublicRoutes = [
       </PublicProtectRoute>
     ),
   },
+  { path: "/blog/:id", element: <Blog /> },
+
   { path: "/about-us", element: <AboutPage /> },
   { path: "/care-provider/signup", element: <SignupForm /> },
   { path: "/patient/signup", element: <PatientSignupForm /> },
@@ -61,12 +64,7 @@ export const websitePublicRoutes = [
   { path: "/terms-of-service", element: <TermsOfService /> },
   { path: "/disclosure-policy", element: <DisclosurePolicy /> },
 
-
-
-// privacy-policy
-
-
-
+  // privacy-policy
 ];
 
 // export const websitePrivateRoutes = [

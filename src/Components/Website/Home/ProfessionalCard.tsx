@@ -29,14 +29,14 @@ const ProfessionalCard = ({
         className={`w-4 h-4 ${
           index < Math.floor(rating)
             ? "text-yellow-400 fill-current"
-            : "text-gray-300"
+            : "text-[#D5D5D5] fill-current"
         }`}
       />
     ));
   };
 
   const navigate = useNavigate();
-
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   return (
     <div className="bg-[#F5F5F5] rounded-lg p-[20px] shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="flex flex-row gap-2 justify-start items-center text-center">
@@ -75,12 +75,21 @@ const ProfessionalCard = ({
           </span>
         </div>
 
-        <Button
-          onClick={() => navigate(`/patient/care-provider/profile/${id}`)}
-          className="!bg-black cursor-pointer flex items-center space-x-2"
-        >
-          <span>Profile</span>
-        </Button>
+        {userInfo?.role_type == "PATIENT" ||
+        userInfo?.role_type == "CARE_PROVIDER" ? (
+          <Button
+            className="!bg-black cursor-pointer flex items-center space-x-2"
+            onClick={() =>
+              userInfo?.role_type == "PATIENT"
+                ? navigate(`/patient/care-provider/profile/${id}`)
+                : navigate(`/care-provider/profile/${id}`)
+            }
+          >
+            <span>Profile</span>
+          </Button>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

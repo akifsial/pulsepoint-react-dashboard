@@ -30,7 +30,7 @@ export const useCareProviders = (search: string, rating: number,page:number,sort
 
 export const useCareProviderSingle = (id: number) => {
   return useQuery({
-    queryKey: ["useCareProviderSingle"], // cache by ID
+    queryKey: ["useCareProviderSingle",id], // cache by ID
     queryFn: () => ApiGetCareProvidersSingle(id),
     enabled: !!id, // only fetch if id exists
     refetchOnWindowFocus: false,

@@ -81,7 +81,7 @@ const TanDataTable = <T extends object>({
   return (
     <div className={`${className}`}>
       <div
-        className="relative w-full overflow-x-auto"
+        className="relative  w-full overflow-x-auto"
         style={
           {
             // scrollbarGutter: "stable",

@@ -206,7 +206,7 @@ export default function HospitalProfileCard({
         </h3>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
           {data?.service?.length == 0 ? (
-            <p className=" mt-5">No Service Found</p>
+            <p className=" mt-2 mb-4 text-gray-400 ms-0">No Service Found</p>
           ) : (
             data?.service?.map((service) => (
               <li

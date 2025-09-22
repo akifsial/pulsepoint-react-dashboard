@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiFlagReview } from "@src/api/ApiMyReviews";
 import { Flag, Send, Star } from "lucide-react";
-import FlagReviewIcon from "@assets/media/svgs/dashboard-svgs/flag4.svg"
+import FlagReviewIcon from "@assets/media/svgs/dashboard-svgs/flag4.svg";
 import { ApiReplyOnReview } from "@src/api/ApiCommunityForum";
 import { useForm } from "react-hook-form";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
@@ -23,42 +23,6 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
   filterValue,
   rating,
 }) => {
-  const sliders = [
-    {
-      image: userImage,
-      userName: "Patricia M.",
-      userHour: "5 hours ago",
-      flagIcon: flag,
-      review: "5.0",
-      userIcon: userReview,
-      sliderDesc:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      flagged: "Flagged",
-      comment: "Thank you so much for your honest feedback.😊🙏",
-    },
-    {
-      image: userImage,
-      userName: "John D.",
-      userHour: "10 hours ago",
-      flagIcon: flag,
-      review: "4.5",
-      userIcon: userReview,
-      sliderDesc:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      flagged: "Flagged",
-    },
-    {
-      image: userImage,
-      userName: "John D.",
-      userHour: "10 hours ago",
-      flagIcon: flag,
-      review: "4.5",
-      userIcon: userReview,
-      sliderDesc:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      flagged: "Flagged",
-    },
-  ];
 
   const { register, handleSubmit } = useForm();
 
@@ -311,7 +275,6 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
                 ) : (
                   // <FlagReviewIcon size={16} />
                   <img src={FlagReviewIcon} alt="flagged" className="w-4 h-4" />
-
                 )}
                 <span>{item.flagged || "Flag"}</span>
               </button>
@@ -349,7 +312,8 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
                 />
                 <div>
                   <p className="text-sm space-grotesk font-semibold text-gray-900">
- {item?.care_provider?.organization_name || item?.care_provider?.user_name }
+                    {item?.care_provider?.organization_name ||
+                      item?.care_provider?.user_name}
                   </p>
                   <p className="text-sm text-gray-700">{reply?.content}</p>
                 </div>
@@ -361,13 +325,13 @@ const PatientReviewsCard: React.FC<PatientReviewsCardProps> = ({
               <div className="relative mt-3">
                 <input
                   placeholder="Write a reply..."
-                  value={reviewReplyValue}
+                  // value={reviewReplyValue}
                   onChange={(e) => setReviewReplyValue(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg py-2 px-3 pr-10 text-sm focus:ring-2 focus:ring-blue-200 outline-none"
                 />
                 <button
                   onClick={() => handleReviewReply(item?.feedback?.id)}
-                  className="absolute right-3 top-2.5 text-blue-600 hover:text-blue-800"
+                  className="cursor-pointer absolute right-3 top-2.5 text-blue-600 hover:text-blue-800"
                 >
                   <Send size={18} />
                 </button>

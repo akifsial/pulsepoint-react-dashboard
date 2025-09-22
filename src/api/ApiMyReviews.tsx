@@ -1,14 +1,52 @@
 import axios from "axios";
 
+// export const ApiMyReviews = async (
+//   search: string,
+//   rating: number,
+//   filterValue,
+//   page: number,
+//   sort:number
+
+// ) => {
+//   let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?search=${search}&limit=3&page=${1}`;
+
+//   if (rating) {
+//     BASE_URL += `&rating=${rating}`;
+//   }
+//   if (filterValue) {
+//     BASE_URL += `&is_flagged=${filterValue}`;
+//   }
+//     if(sort){
+//     BASE_URL += `&sort=created_at:${sort}`;
+
+//   }
+
+//   const token = JSON.parse(localStorage.getItem("token"));
+
+//   const response = await axios.get(BASE_URL, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+
+//   return response?.data?.payload;
+// };
+
 export const ApiMyReviews = async (
   search: string,
   rating: number,
-  filterValue,
+  filterValue: boolean,
   page: number,
-  sort:number
-
+  sort: string, // 👈 should be string ("asc" | "desc")
+  limit
 ) => {
-  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?search=${search}&limit=3&page=${1}`;
+  let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?search=${search}`;
+
+  if (limit) {
+    BASE_URL += `&limit=${limit}`;
+  }
+
+  if (page) {
+    BASE_URL += `&page=${page}`;
+  }
 
   if (rating) {
     BASE_URL += `&rating=${rating}`;
@@ -16,12 +54,11 @@ export const ApiMyReviews = async (
   if (filterValue) {
     BASE_URL += `&is_flagged=${filterValue}`;
   }
-    if(sort){
+  if (sort) {
     BASE_URL += `&sort=created_at:${sort}`;
-    
   }
 
-  const token = JSON.parse(localStorage.getItem("token"));
+  const token = JSON.parse(localStorage.getItem("token") || "null");
 
   const response = await axios.get(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
@@ -32,7 +69,6 @@ export const ApiMyReviews = async (
 
 export const apiDeleteMyReviews = async (id: number) => {
   const userInfoString = JSON.parse(localStorage.getItem("userInfo")); // ← returns string
-
 
   const care_provider_id = { care_provider_id: userInfoString?.id };
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback/${id}`;
@@ -48,7 +84,6 @@ export const apiDeleteMyReviews = async (id: number) => {
 
   return response.data.payload;
 };
-
 
 export const ApiMySingleReviews = async (id: number) => {
   let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback/${id}`;
@@ -85,7 +120,6 @@ export const ApiFlagReview = async (feedbackId) => {
     }feedback/flag/${feedbackId}`;
 
     const token = JSON.parse(localStorage.getItem("token"));
-
 
     const response = await axios.post(BASE_URL, null, {
       headers: {

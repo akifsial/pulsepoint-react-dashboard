@@ -9,6 +9,13 @@ import postImage from "@assets/media/images/dashboard-images/postFallback.png";
 import dummyImage from "@assets/media/images/dummyUser.png";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 import commentIcon from "@assets/media/svgs/dashboard-svgs/comment.svg";
+import goldenArrowUpIcon from "@assets/media/svgs/dashboard-svgs/goldenUpArrow.svg"
+import goldenArrowDownIcon from "@assets/media/svgs/dashboard-svgs/goldenDownArrow.svg"
+import goldenCommentIcon from "@assets/media/svgs/dashboard-svgs/commentsGoldenIcon.svg"
+// import goldenShareIcon from "@assets/media/svgs/dashboard-svgs/"
+import shareGoldenIcon from "@assets/media/svgs/dashboard-svgs/shareGoldenIcon.svg"
+
+// import goldenArrowDownIcon from "@assets/media/svgs/dashboard-svgs/goldenDownArrow.svg"
 
 import {
   useGetPopularCommunities,
@@ -38,7 +45,9 @@ export default function Convience() {
     useState(searchCommunity);
 
   // -------------------
+  const { data: popularPost } = useGetPopularPost();
 
+console.log("POPOPOPO",popularPost)
   const {
     data: postData,
     isPending: PostsPending,
@@ -79,11 +88,11 @@ export default function Convience() {
 
   useEffect(() => {
     const initialState: { [postId: number]: boolean | null } = {};
-    postData?.records?.forEach((post) => {
-      initialState[post.id] = post.userLike?.is_like ?? null;
-    });
+    // popularPost?.records?.forEach((post) => {
+    initialState[popularPost?.id] = popularPost?.userLike?.is_like ?? null;
+    // });
     setLocalLikes(initialState);
-  }, [postData]);
+  }, [popularPost]);
 
   const buttons = [
     { btnText: "Vote", btnIcon: arrowUp, downarrow: arrowDowm },
@@ -165,7 +174,6 @@ export default function Convience() {
   const [replyId, setReplyId] = useState();
   const [replyParentId, setReplyParentId] = useState();
   const [search, setSearch] = useState("");
-  const { data: popularPost } = useGetPopularPost();
   const [localCounts, setLocalCounts] = useState<{
     [postId: number]: number;
   }>(0);
@@ -374,6 +382,7 @@ export default function Convience() {
   };
 
   return (
+    
     <section className="bg-[#F3F8FC] text-black py-16 max-w-8xl mx-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex md:flex-nowrap flex-wrap gap-4">
@@ -427,9 +436,147 @@ export default function Convience() {
                     : postImage
                 }
                 alt="Community discussion"
-                className="w-[764px] h-[291px] object-cover rounded-lg"
+                className="md:w-[764px] w-full h-[291px] object-cover rounded-lg"
               />
               {/* You can add more images below if needed */}
+            </div>
+
+            <div>
+              <div className="flex gap-2.5 mb-2.5">
+                <div className="flex flex-wrap gap-2.5 mb-2.5">
+                  <div className="flex items-center gap-2 bg-black rounded-[5px] px-1.5 py-1.5 min-w-[128px] justify-center">
+                    <button
+                      className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
+                      onClick={() => handleReaction("like", popularPost)}
+                      disabled={localLock || LikeIsPending || PostsPending}
+                    >
+                      {localLikes[popularPost?.id] === true ? (
+                        <div className="bg-[#2A2A2A]  p-2 rounded-full">
+                          <img
+                            src={goldenArrowUpIcon}
+                            className="py-0.5 px-1"
+                            alt="Liked"
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          src={goldenArrowDownIcon}
+                          className="rotate-180"
+                          alt="Like"
+                        />
+                      )}
+                      {/* {localCounts[popularPost?.id] ?? 0} */}
+<span className="text-white font-normal">Vote</span>
+
+                    </button>
+                    <button
+                      className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
+                      onClick={() => handleReaction("dislike", popularPost)}
+                      disabled={localLock || LikeIsPending || PostsPending}
+                    >
+                      {localLikes[popularPost?.id] === false ? (
+                        <div className="bg-[#2A2A2A] p-1 rounded-full">
+                          <img
+                            src={ goldenArrowUpIcon}
+                            className="rotate-180 py-1.5 px-2"
+                            alt="Dislike"
+                          />
+                        </div>
+                      ) : (
+                        <img src={goldenArrowDownIcon} alt="Dislike" />
+                      )}
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => toggleComments(popularPost.id)}
+                    className="flex items-center bg-black text-white rounded-[5px]  cursor-pointer gap-2 bg-[#E6E9EB] px-1.5 py-1.5 min-w-[88px] justify-center"
+                  >
+                    <img src={goldenCommentIcon} alt="Comments" />
+                    {popularPost?._count?.comments}
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setSharePostId(popularPost?.id);
+                    }}
+                    className="flex items-center cursor-pointer gap-2 bg-black text-white rounded-[5px]  px-[15px] py-1 min-w-[78px] justify-center"
+                  >
+                    <img src={shareGoldenIcon} alt="Share" />
+                    Share
+                  </button>
+                </div>
+              </div>
+              {openComments === popularPost?.id && (
+                <div>
+                  <div className="relative mb-3">
+                    <input
+                      type="text"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="Join the conversation"
+                      className="w-full bg-white outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "Enter" &&
+                          comment.trim() &&
+                          !commentsIsPending
+                        ) {
+                          e.preventDefault();
+                          handleSendComment();
+                        }
+                      }}
+                    />
+
+                    <button
+                      disabled={!comment || commentsIsPending}
+                      className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${
+                        comment
+                          ? "bg-[#007AB2] hover:bg-[#005f8e] cursor-pointer"
+                          : "bg-gray-300"
+                      }`}
+                      onClick={handleComments}
+                    >
+                      {commentsIsPending ? (
+                        <Spinner />
+                      ) : (
+                        <Send className="w-3.5 h-3.5 text-white" />
+                      )}
+                    </button>
+                  </div>
+
+                  {popularPost?.comments?.map((comment) => (
+                    <div className="flex  items-center">
+                      <CommentItem
+                        key={comment.id}
+                        comment={comment}
+                        myId={myId}
+                        postId={popularPost.id}
+                        LikeIsPending={LikeIsPending}
+                        PostsPending={PostsPending}
+                        handleCommentReaction={handleCommentReaction}
+                        parentCommentReplyId={parentCommentReplyId}
+                        handleParentComment={handleParentComment}
+                        parentCommentReplyValue={parentCommentReplyValue}
+                        setParentCommentReplyValue={setParentCommentReplyValue}
+                        handleParentCommentReply={handleParentCommentReply}
+                        IsCommentReply={IsCommentReply}
+                        setIsCommentReply={setIsCommentReply}
+                        replyId={replyId}
+                        setReplyParentId={setReplyParentId}
+                        handleDeleteComment={handleDeleteComment}
+                        inputRef={inputRef}
+                        localLikes={localLikes}
+                        localCounts={localCounts}
+                        handleReaction={handleReaction}
+                        localLikes={localLikes}
+                        localCounts={localCounts}
+                        post={popularPost}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* ----------------------------------------- */}

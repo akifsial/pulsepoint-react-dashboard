@@ -282,7 +282,7 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
           </div>
         </div>
         <form onSubmit={ReviewHandle}>
-          <div className="space-y-8">
+          <div className="space-y-8 ">
             <div>
               <strong className="text-lg font-semibold mb-2">
                 {currentSection.section}

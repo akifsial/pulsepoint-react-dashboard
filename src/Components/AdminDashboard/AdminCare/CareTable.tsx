@@ -56,7 +56,7 @@ const CareProviderDashboard: React.FC = () => {
     email?: string;
     image?: string;
   };
-  
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -78,14 +78,12 @@ const CareProviderDashboard: React.FC = () => {
     setCurrentPage(1);
     fetchProviders(selectedRating, 1, searchText);
   }, [selectedRating]);
-  
-  
-  
+
   // Re-fetch when page changes (include current search)
   useEffect(() => {
     fetchProviders(selectedRating, currentPage, searchText);
   }, [currentPage]);
-  
+
   const handleRatingSelect = (rating: string) => {
     setSelectedRating(rating);
   };
@@ -161,7 +159,6 @@ const CareProviderDashboard: React.FC = () => {
       setLoading(false);
     }
   };
-
 
   // recent search api and filteration;
   const fetchRecentSearches = async () => {
@@ -243,10 +240,10 @@ const CareProviderDashboard: React.FC = () => {
         const displayName = organization_name || first_name || "N/A";
         return (
           <div
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={ () => {
-                              navigate(`/admin/careprovider-info/${id}`);
-                            }}
+            className="flex  pe-10 items-center gap-3 cursor-pointer"
+            onClick={() => {
+              navigate(`/admin/careprovider-info/${id}`);
+            }}
           >
             <img
               src={
@@ -291,13 +288,28 @@ const CareProviderDashboard: React.FC = () => {
       header: "Avg. Rating",
       showSort: true,
       cell: ({ row }) => {
-     
-        return (
-          <RatingStars
-            value={Number(row.original?.rating ?? 0)}
-            isDisabled={true}
-          />
-        );
+        const rating = Number(row.original?.rating ?? 0);
+
+        // Show N/A if rating is 0
+        if (rating === 0) {
+          return <span className="text-gray-500">N/A</span>;
+        }
+
+        return <RatingStars value={rating} isDisabled={true} />;
+      },
+    },
+    {
+      accessor: "overall_rating",
+      header: "Overall Rating",
+      showSort: true,
+      cell: ({ row }) => {
+        const rating = Number(row.original?.overall_rating ?? 0);
+
+        if (rating === 0) {
+          return <span className="text-gray-500">N/A</span>;
+        }
+
+        return <RatingStars value={rating} isDisabled={true} />;
       },
     },
     {
@@ -376,7 +388,9 @@ const CareProviderDashboard: React.FC = () => {
         ) : (
           <>
             <div className="mb-6 flex md:flex-row flex-col md:items-center px-5 md:justify-between">
-              <h3 className="md:mb-0 mb-3 text-[20px] font-bold space-grotesk ">Care Providers</h3>
+              <h3 className="md:mb-0 mb-3 text-[20px] font-bold space-grotesk ">
+                Care Providers
+              </h3>
 
               <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
                 <CommonInput
@@ -393,7 +407,9 @@ const CareProviderDashboard: React.FC = () => {
               </div>
 
               <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-                <p className="text-[#252525] inter font-medium text-sm">Filter by</p>
+                <p className="text-[#252525] inter font-medium text-sm">
+                  Filter by
+                </p>
                 <div className="relative" ref={dropdownRef}>
                   <PrimaryButton
                     btnText={
@@ -449,7 +465,6 @@ const CareProviderDashboard: React.FC = () => {
                             },
                             type: "view",
                           },
-                        
                         ]}
                       />
                     )}
@@ -461,7 +476,7 @@ const CareProviderDashboard: React.FC = () => {
             <div>
               <Pagination
                 rowsPerPage={pageSize}
-                totalRows={careProvidersData?.totalRecords || 0} // ✅ API ka totalRecords use karo
+                totalRows={careProvidersData?.totalRecords || 0} 
                 currentPage={currentPage}
                 onPageChange={setCurrentPage}
               />

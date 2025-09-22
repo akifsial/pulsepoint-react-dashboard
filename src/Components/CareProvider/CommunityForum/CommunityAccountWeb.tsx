@@ -42,7 +42,6 @@ const CommunityAccountWeb = ({ setOpenBackFeed }) => {
   const userId = JSON.parse(localStorage.getItem("userInfo")).id;
   const userType = JSON.parse(localStorage.getItem("userInfo")).role_type;
 
-
   const handleJoinClick = () => setJoined(true);
   const handleAddCommunityClick = () => setJoined(false);
 
@@ -124,17 +123,15 @@ const CommunityAccountWeb = ({ setOpenBackFeed }) => {
 
   const handleBackFeed = () => {
     userType == "CARE_PROVIDER"
-        ? navigate("/care-provider/web")
-        : navigate("/patient/web");
-
- 
+      ? navigate("/care-provider/web")
+      : navigate("/patient/web");
   };
 
   return (
     <>
       {/* {!showPatientInfo ? ( */}
 
-        <TopBar />
+      <TopBar />
       <UtilityRow />
 
       {showInitialLoader ? (

@@ -20,7 +20,7 @@ const ServiceCard = ({ title, description, image, link }: ServiceCardProps) => {
     : description.slice(0, previewLength) + (shouldTruncate ? "..." : "");
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div className="bg-white rounded-lg overflow-hidden duration-300">
       <div className="md:flex">
         <div className="md:w-1/3">
           <img

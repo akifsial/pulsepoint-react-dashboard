@@ -74,14 +74,33 @@ export const apiServices = {
     return axiosInstance.post(endPoint, data ?? {});
   },
 
+  // update: async (data: unknown, endPoint: string): Promise<AxiosResponse> => {
+  //   // const token = localStorage.getItem("token");
+  //   const token: string | null = JSON.parse(
+  //     localStorage.getItem("token") || "null"
+  //   );
+  //   return axiosInstance.put(endPoint, data, {
+  //     headers: token ? { Authorization: `Bearer ${token}` } : {},
+  //   });
+  // },
+
   update: async (data: unknown, endPoint: string): Promise<AxiosResponse> => {
-    // const token = localStorage.getItem("token");
     const token: string | null = JSON.parse(
       localStorage.getItem("token") || "null"
     );
-    return axiosInstance.put(endPoint, data, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    });
+
+    const headers: Record<string, string> = {};
+
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    // 👇 Check if data is FormData, then set proper headers
+    if (data instanceof FormData) {
+      headers["Content-Type"] = "multipart/form-data";
+    }
+
+    return axiosInstance.put(endPoint, data, { headers });
   },
 
   deleteBodyParam: async (
