@@ -1,0 +1,13 @@
+<!-- Save this as user-icon-with-blue-bar.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 64" width="48" height="64" aria-hidden="true">
+  <!-- person (stroke only) -->
+  <g stroke="#444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- head -->
+    <circle cx="24" cy="14" r="6" />
+    <!-- shoulders / torso -->
+    <path d="M8 38c0-8 8-14 16-14s16 6 16 14" />
+  </g>
+
+  <!-- blue bar at bottom -->
+  <rect x="0" y="56" width="48" height="8" rx="2" ry="2" fill="#2EA3FF" />
+</svg>

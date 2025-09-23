@@ -7,61 +7,64 @@ const DragMedia = ({
   onChange,
   asterisk,
   imgType,
+  file,
   className = "",
+  id,
+  error,
 }) => {
+  const imageUrl = file ? URL.createObjectURL(file) : null;
+
   return (
     <div className="mb-5">
-      <label className="block mb-2 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]">
-        {label}{" "}
-        {required && (
-          <span className="text-red-500">
-            {" "}
-            {asterisk && <span className="text-red-500">*</span>}
-          </span>
-        )}
-      </label>
       <label
-        htmlFor="dropzone-file"
-        className={`flex flex-col items-center justify-center p-3 w-full max-h-[128px] border-2 border-dashed border-[#E5E7EB] rounded-xl cursor-pointer bg-[#FBFCFD] hover:bg-gray-50 transition ${className}`}
+        htmlFor={id}
+        className="block mb-2 text-[16px] font-medium text-black font-[Geist]"
       >
-        <div className="flex flex-col items-center justify-center">
-          <div
-            className="mb-0 border border-[#E9EAEB] bg-white rounded-lg h-10 w-10"
-            style={{
-              boxShadow: `
-                0px 1px 2px 0px rgba(16, 24, 40, 0.04),
-                inset 0px -2px 0px 0px rgba(10, 13, 18, 0.04),
-                inset 0px 0px 0px 1px rgba(10, 13, 18, 0.12)
-              `,
-            }}
-          >
-            <span
-              className="w-full h-full flex items-center justify-center mb-1"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              viewBox="0 0 24 24"
-            >
-              <img src={Drop} alt="ImgDrop" />
-            </span>
+        {label}
+        {required && asterisk && <span className="text-red-500">*</span>}
+      </label>
+
+      <label
+        htmlFor={id}
+        className={`relative flex items-center justify-center p-3 w-full h-[120px] border-2 border-dashed ${
+          error ? "border-red-500" : "border-[#E5E7EB]"
+        } rounded-xl cursor-pointer bg-[#FBFCFD] hover:bg-gray-50 transition overflow-hidden ${className}`}
+      >
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt="Preview"
+            className="object-contain w-full h-full"
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center">
+            <div className="mb-2 border border-[#E9EAEB] bg-white rounded-lg h-10 w-10 overflow-hidden">
+              <img
+                src={Drop}
+                alt="Drop Icon"
+                className="object-contain w-full h-full"
+              />
+            </div>
+            <p className="text-sm font-medium text-[#535862]/80">
+              <span className="text-[#005BE0]">Click to upload</span> or drag and drop
+            </p>
+            {imgType && (
+              <span className="font-bold text-sm leading-5 text-[#252525]/80">
+                SVG, PNG, JPG or GIF (max. 800x400px)
+              </span>
+            )}
           </div>
-          <p className="text-sm font-medium text-[#535862]/80">
-            <span className="text-[#005BE0]">Click to upload</span> or drag and
-            drop
-          </p>
-          {imgType && (
-            <span className="font-bold text-sm leading-5 text-[#252525]/80">
-              SVG, PNG, JPG or GIF (max. 800x400px)
-            </span>
-          )}
-        </div>
+        )}
+
         <input
-          id="dropzone-file"
+          id={id}
           type="file"
           className="hidden"
           onChange={onChange}
         />
       </label>
+
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
     </div>
   );
 };

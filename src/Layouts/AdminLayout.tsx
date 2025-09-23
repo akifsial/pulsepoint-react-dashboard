@@ -17,8 +17,9 @@ const AdminLayout = () => {
           setSidebarOpen={setIsSidebarOpen}
           noticationLink="/admin/notification"
           routeProfile="/admin/profile"
+          routeSetting="/admin/manage-password"
         />
-        <main className="mt-28 overflow-hidden">
+        <main className="mt-12 overflow-hidden">
           <Outlet />
         </main>
       </div>

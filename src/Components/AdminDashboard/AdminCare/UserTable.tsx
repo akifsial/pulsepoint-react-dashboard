@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
@@ -12,10 +10,13 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 // import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 // import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import { FaRegFileAlt } from "react-icons/fa";
+import UserInfo from "./UserInfo";
 
 const UserTable: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
+const [selectedUser, setSelectedUser]=useState(false);
 
   type dataTypes = {
     id?: number;
@@ -26,7 +27,7 @@ const UserTable: React.FC = () => {
     email?: string;
     lastdate?: string;
     image?: string;
-    actions?: string
+    actions?: string;
   };
 
   const columns: TanDataTableColumn<dataTypes>[] = [
@@ -35,7 +36,7 @@ const UserTable: React.FC = () => {
       header: "Provider's Name",
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
-        const { first_name, email} = row.original;
+        const { first_name, email } = row.original;
         return (
           <div className="flex items-center gap-3">
             <img
@@ -55,7 +56,7 @@ const UserTable: React.FC = () => {
         );
       },
     },
-     {
+    {
       accessor: "date",
       header: "Registered Date",
       showSort: true,
@@ -70,7 +71,7 @@ const UserTable: React.FC = () => {
       header: "Last Visit Date",
       showSort: true,
     },
-     {
+    {
       accessor: "status",
       header: "Status",
       showSort: true,
@@ -93,66 +94,67 @@ const UserTable: React.FC = () => {
         );
       },
     },
-//      {
-//       accessor: "status",
-//       header: "Status",
-//       showSort: true,
-//       cell: ({ row }: { row: { original: dataTypes } }) => {
-//         const status = row.original.status?.toLowerCase();
-//         const statusStyles = {
-//           pending: "text-[#067647] border-[1.5px] border-[#079455]",
-//           approved: "text-[blue] border-[1.5px] border-[blue]",
-//           flagged: "text-[#C22E00] border-[1.5px] border-[#C22E00]",
-//         };
+    //      {
+    //       accessor: "status",
+    //       header: "Status",
+    //       showSort: true,
+    //       cell: ({ row }: { row: { original: dataTypes } }) => {
+    //         const status = row.original.status?.toLowerCase();
+    //         const statusStyles = {
+    //           pending: "text-[#067647] border-[1.5px] border-[#079455]",
+    //           approved: "text-[blue] border-[1.5px] border-[blue]",
+    //           flagged: "text-[#C22E00] border-[1.5px] border-[#C22E00]",
+    //         };
 
-//         return (
-//           <span
-//   className={`text-xs font-medium px-3 py-1 rounded-full ${
-//     statusStyles[status as keyof typeof statusStyles] || "bg-gray-200 text-gray-700"
-//   }`}
-// >
-//   {status?.charAt(0).toUpperCase() + status?.slice(1)}
-// </span>
+    //         return (
+    //           <span
+    //   className={`text-xs font-medium px-3 py-1 rounded-full ${
+    //     statusStyles[status as keyof typeof statusStyles] || "bg-gray-200 text-gray-700"
+    //   }`}
+    // >
+    //   {status?.charAt(0).toUpperCase() + status?.slice(1)}
+    // </span>
 
-//         );
-//       },
-//     },
+    //         );
+    //       },
+    //     },
   ];
 
   const data: dataTypes[] = [
     {
-      id: 1,   
+      id: 1,
       first_name: "Savannah Nguyen",
       email: "nevaehsimmsons@gmail.com",
       date: "9/4/12",
-      reviews: "Staff was caring and responsive, though the wait time could be improved",
+      reviews:
+        "Staff was caring and responsive, though the wait time could be improved",
       lastdate: "9/4/12",
-      status: "Active"
+      status: "Active",
     },
     {
-      id: 2,   
+      id: 2,
       first_name: "Stroke Rehab Tips",
       email: "nevaehsimmsons@gmail.com",
       date: "9/4/12",
-      reviews: "Staff was caring and responsive, though the wait time could be improved",
+      reviews:
+        "Staff was caring and responsive, though the wait time could be improved",
       lastdate: "9/4/12",
-      status: "Inactive"
+      status: "Inactive",
     },
     {
-      id: 3,   
+      id: 3,
       first_name: "Stroke Rehab Tips",
       email: "nevaehsimmsons@gmail.com",
       date: "9/4/12",
-      reviews: "Staff was caring and responsive, though the wait time could be improved",
+      reviews:
+        "Staff was caring and responsive, though the wait time could be improved",
       lastdate: "9/4/12",
-      status: "Active"
+      status: "Active",
     },
   ];
 
   const handleRowSelect = (row: dataTypes) => {
-    console.log("Selected row:", row);
   };
-
 
   const handleTabClick = (tab: "all" | "saved") => {
     setActiveTab(tab);
@@ -160,8 +162,8 @@ const UserTable: React.FC = () => {
   const [searchText, setSearchText] = React.useState<string>("");
 
   return (
-    <div className="mb-10">
-     
+    <>
+    {selectedUser? (<UserInfo/>):(<div className="mb-10">
       <div className=" bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className=" flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="mb-3 font-space-grotesk">Added Patients</h3>
@@ -177,10 +179,15 @@ const UserTable: React.FC = () => {
               className="my-custom-class"
               actions={(row) => (
                 <DropdownActions
-                  onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit Detail", row.id)}
-                  onDelete={() => console.log("Delete Provider", row.id)}
-                  variant="simple"
+                  variant="default"
+                  actions={[
+                    {
+                      label: "View Detail",
+                      icon: <FaRegFileAlt className="text-gray-600" />,
+                      onClick: () => setSelectedUser(true),
+                      type: "view",
+                    },
+                  ]}
                 />
               )}
             />
@@ -195,8 +202,6 @@ const UserTable: React.FC = () => {
               actions={(row) => (
                 <DropdownActions
                   onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit Detail", row.id)}
-                  onDelete={() => console.log("Delete Provider", row.id)}
                   variant="simple"
                 />
               )}
@@ -204,7 +209,9 @@ const UserTable: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </div>)}
+    </>
+    
   );
 };
 

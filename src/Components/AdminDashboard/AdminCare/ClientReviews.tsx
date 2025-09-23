@@ -1,101 +1,98 @@
 import React from "react";
-import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import userImage from "@assets/media/svgs/dashboard-svgs/userImage.svg";
-import userReview from "@assets/media/svgs/dashboard-svgs/userReview.svg";
-import flag from "@assets/media/svgs/dashboard-svgs/flag2.svg";
+// import { IoIosCloseCircleOutline } from "react-icons/io";
 import RatingStars from "@components/Shared-components/RatingStars";
-import close from "@assets/media/svgs/dashboard-svgs/close-circle.svg"
+import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 
-interface ClientReviewsProps {
-  filterValue: string;
+interface Review {
+  id: number;
+  content: string;
+  rating: number;
+  created_at: string;
+  patient: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    image?: string | null;
+  };
+  replies?: {
+    id: number;
+    content: string;
+  }[];
 }
 
-const ClientReviews: React.FC<ClientReviewsProps> = ({ filterValue }) => {
-  const sliders = [
-    {
-      image: userImage,
-      userName: "Patricia M.",
-      userHour: "5 hours ago",
-      flagIcon: flag,
-      review: "5.0",
-      userIcon: userReview,
-      img1: close,
-      sliderDesc:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available.I could finally breathe knowing that she was in good hands",
-      flagged: "Flagged",
-      comment: "Thank you so much for your honest feedback.😊🙏",
-    },
-    {
-      image: userImage,
-      userName: "John D.",
-      userHour: "10 hours ago",
-      flagIcon: flag,
-      review: "5.0",
-      userIcon: userReview,
-      img1: close,
-      sliderDesc:
-        "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available.I could finally breathe knowing that she was in good hands",
-      flagged: "Flagged",
-    },
-  ];
+interface ClientReviewsProps {
+  reviews: Review[];
+}
 
+const ClientReviews: React.FC<ClientReviewsProps> = ({ reviews }) => {
   return (
-    <>
-     <div className="flex gap-5">
-       {sliders.map((item, index) => (
-        <div key={index} className="bg-[#FAFAFA] rounded-[8px] p-5 mb-5">
+    <div className="flex flex-wrap gap-5">
+      {reviews?.map((item) => (
+        <div
+          key={item.id}
+          className="bg-[#FAFAFA] rounded-[8px] p-2 sm:p-5 mb-5 md:max-w-[49%] max-w-full w-full"
+        >
+          {/* Header */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-[18px]">
               <img
-                src={item.image}
-                alt="User"
+                src={
+                  item.patient?.image
+                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${item.patient.image}`
+                    : dummyImage
+                }
+                alt={item.patient?.first_name}
                 className="w-[50px] h-[50px] object-cover rounded-full"
               />
-              <div className="flex gap-2.5 text-[#252525] text-[16px]">
-                <p className=" font-bold mb-0.5">{item.userName}</p>
-                <p className="">{item.userHour}</p>
+              <div className="flex gap-2.5 text-[#252525] text-[14px] sm:text-[16px]">
+                <p className="font-bold mb-0.5 space-grotesk">
+                  {item.patient?.first_name} {item.patient?.last_name}
+                </p>
+                <p className="text-sm text-gray-500">
+                  {new Date(item.created_at).toLocaleString()}
+                </p>
               </div>
             </div>
-            <div className="border rounded-[5px] p-2">
+            {/* <div className="flex item-center gap-1 border border-[#000]/50 rounded-[10px] p-2 cursor-pointer">
+              <IoIosCloseCircleOutline className="h-6 w-6" />
               <span>Deleted Review</span>
-              <img src={item.img1} alt="" />
-            </div>
+            </div> */}
           </div>
 
+          {/* Rating */}
           <div className="flex items-center gap-2 mb-2">
-            <RatingStars value={item.review} isDisabled={true} />
-            <p className="text-[16px] text-[#252525]">({item.review})</p>
+            <RatingStars value={item.rating} isDisabled={true} />
+            <p className="text-[16px] text-[#252525]">({item.rating})</p>
           </div>
 
+          {/* Review Content */}
           <div>
-            <p className="text-[16px] text-[#252525] ">“{item.sliderDesc}”</p>
+            <p className="text-[16px] text-[#252525]">“{item.content}”</p>
           </div>
 
-          {/* <div
-            className="flex items-center gap-4 px-4 py-2.5 rounded-[5px]"
-            style={item.comment ? { backgroundColor: "#EEF2F5" } : {}}
-          >
-            <img
-              src={item.userIcon}
-              alt=""
-              className="w-[43px] h-[43px] object-cover rounded-full"
-            />
-
-            {item.comment ? (
-              <p>{item.comment}</p>
-            ) : (
-              <input
-                type="text"
-                placeholder="Add a reply"
-                className="w-full bg-white outline-0 border-[1px] rounded-[5px] p-2.5 text-sm"
-                style={{ borderColor: "#D3D3D3" }}
+          {/* Replies */}
+          {item.replies && item.replies.length > 0 && (
+            <div
+              className="flex items-start gap-4 px-4 py-2.5 rounded-[5px] mt-3"
+              style={{ backgroundColor: "#EEF2F5" }}
+            >
+              <img
+                src={dummyImage}
+                alt="reply"
+                className="w-[43px] h-[43px] object-cover rounded-full"
               />
-            )}
-          </div> */}
+              <div>
+                {item.replies.map((reply) => (
+                  <p key={reply.id} className="text-sm text-gray-700">
+                    {reply.content}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ))}
-     </div>
-    </>
+    </div>
   );
 };
 

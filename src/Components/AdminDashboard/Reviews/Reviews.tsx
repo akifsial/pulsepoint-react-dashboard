@@ -1,4 +1,3 @@
-import React from 'react'
 import ReviewsTable from './ReviewsTable'
 
 const Reviews = () => {

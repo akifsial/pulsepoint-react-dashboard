@@ -1,10 +1,8 @@
-import Community from '@components/CareProvider/CommunityForum/Community'
-import React from 'react'
+import Community from "@components/CareProvider/CommunityForum/Community";
+import React from "react";
 
-const CommunityForm:React.FC = () => {
-  return (
-    <Community/>
-  )
-}
+const CommunityForm: React.FC = () => {
+  return <Community />;
+};
 
-export default CommunityForm
+export default CommunityForm;

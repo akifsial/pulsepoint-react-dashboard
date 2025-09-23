@@ -1,31 +1,52 @@
-import React from 'react'
+import React, { useState } from "react";
 
-const CommunityTopics = ({title, text1 ,text2 ,text3,text4 ,text5 ,asterisk}) => {
+const CommunityTopics = ({
+  title,
+  asterisk,
+  options = [],
+  onSelect,
+  setSelectedTopicId
+
+}) => {
+  const [selectedId, setSelectedId] = useState(null);
+
+  const handleSelect = (id) => {
+    setSelectedId(id);
+    if (onSelect) onSelect(id);
+    
+    setSelectedTopicId(id) // topic id set
+
+  };
+
   return (
-    <>
-    <div className='text-base'>
-        <h6 className='font-medium  mb-2'>{title}   {asterisk && (
-            <span className="text-red-500 font-medium text-[16px] leading-[140%] tracking-normal font-geist relative top-[-1px]">*
-            </span>
-          )}</h6>
-        <div className="flex  font-normal text-[#1A1A1A] gap-[11px] mb-5 flex-wrap">
-            <div className='py-1.5  px-4 text-white bg-[#28A2FF] rounded-[20px]'><p>{text1}</p></div>
-            <div className='py-1.5 px-4  bg-[#F4F4F4] rounded-[20px] hover:bg-[#DDF0FF]'><p>{text2}</p></div>
-            <div className='py-1.5 px-4  bg-[#F4F4F4] rounded-[20px] hover:bg-[#DDF0FF]'><p>{text3}</p></div>
-            {text4 && (
-          <div className="py-1.5 px-4  bg-[#F4F4F4] rounded-[20px] hover:bg-[#DDF0FF]">
-            <p>{text4}</p>
-          </div>
+    <div className="text-base">
+      <h6 className="font-medium mb-2">
+        {title}{" "}
+        {asterisk && (
+          <span className="text-red-500 font-medium text-[16px] leading-[140%] tracking-normal font-geist relative top-[-1px]">
+            *
+          </span>
         )}
-        {text5 && (
-          <div className="py-1.5 px-4  bg-[#F4F4F4] rounded-[20px] hover:bg-[#DDF0FF]">
-            <p>{text5}</p>
-          </div>
-        )}
-        </div>
+      </h6>
+      <div className="flex font-normal text-[#1A1A1A] gap-[11px] mb-5 flex-wrap">
+        {options.map((option, index) => (
+          <button
+            type="button"
+            // value={selectedId}
+            key={index}
+            onClick={() => handleSelect(option.id)}
+            className={`py-1.5 cursor-pointer px-4 rounded-[20px] transition-all duration-200
+              ${selectedId === option.id
+                ? "bg-[#28A2FF] text-white"
+                : "bg-[#F4F4F4] text-black hover:bg-[#DDF0FF]"
+              }`}
+          >
+            {option.text}
+          </button>
+        ))}
+      </div>
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default CommunityTopics
+export default CommunityTopics;

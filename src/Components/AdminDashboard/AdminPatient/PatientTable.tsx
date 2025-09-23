@@ -1,58 +1,205 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
-import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-// import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
-// import RatingStars from "@components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import alice from "@assets/media/images/dashboard-images/alice.svg";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-import exports from "@assets/media/svgs/export.svg"
-import whitearrow from "@assets/media/svgs/whitearrow.svg"
 import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import UserInfo from "./UserInfo";
+import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import { FaRegFileAlt } from "react-icons/fa";
+import { apiServices } from "@src/Shared/apiServices";
+import apiEndpoint from "@src/Shared/apiEndPoint";
+import ExportTable from "@components/Shared-components/ExportTable";
+import autoTable from "jspdf-autotable";
+import { debounce } from "lodash";
+import SkeletonTableLoader from "@components/Loader/SkeltonTableLoader";
+import Pagination from "@components/Pagination/Pagination";
+import { useNavigate } from "react-router-dom";
+import AdminDropdownAction from "../AdminDropdownAction/AdminDropdownAction";
 
-const CareProviderDashboard: React.FC = () => {
-  const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
-  const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
-  const [isExportOpen, setIsExportOpen] = useState(false);
+declare module "jspdf" {
+  interface jsPDF {
+    autoTable: typeof autoTable;
+  }
+}
 
+const PatientTable: React.FC = () => {
   type dataTypes = {
-    id?: number;
+    id: number;
     first_name?: string;
-    // last_name?: string;
-    date?: string;
-    email?: string;
-    image?: string;
-    // rating?: number | string | React.ReactNode;
     reviews?: string;
+    patient?: number;
     lastdate?: string;
     status?: string;
-    // specialization?: string;
-    // location?: string;
+    email?: string;
+    date?: string;
+    image?: string;
   };
 
+  const [selectedUser, setSelectedUser] = useState<dataTypes | false>(false);
+  const [searchText, setSearchText] = useState<string>("");
+  const navigate = useNavigate();
+  const [patientData, setPatientData] = useState<dataTypes[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [, setRecentSearches] = useState<string[]>([]);
+  const [patientsData, setPatientsData] = useState();
+  // pagination
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const pageSize = 3;
+  const [totalRecords, setTotalRecords] = useState<number>(0);
+
+  const capitalizeFirstLetter = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await apiServices.get(apiEndpoint.me);
+      if (response.data.success) {
+        const userData = response.data.payload;
+        const capitalizedFirstName = capitalizeFirstLetter(
+          userData.first_name || ""
+        );
+        // capitalizedFirstName available if needed
+        setUserId(userData.id);
+      }
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+  // integrating api for fetching patients data
+  // API: server-side pagination
+  const fetchPatients = async (search: string) => {
+    try {
+      setLoading(true);
+      let url = apiEndpoint.getUsersByRole(
+        `PATIENT&page=${currentPage}&limit=${pageSize}`
+      );
+      if (search && search.trim() !== "") {
+        url += `&search=${encodeURIComponent(search.trim())}`;
+      }
+
+      const response = await apiServices.get(url);
+      const records = response.data?.payload?.records || [];
+      setTotalRecords(
+        response.data?.payload?.totalRecords ?? records.length ?? 0
+      );
+      setPatientsData(response.data.payload);
+
+      const mappedData: dataTypes[] = records.map((item: any) => ({
+        id: item.id,
+        first_name: item.first_name,
+        email: item.email,
+        image: item.image || dummyImage,
+        date: new Date(item.created_at).toLocaleDateString(),
+        status: item.status,
+        reviews: "–",
+        lastdate: new Date(item.updated_at).toLocaleDateString(),
+        postal_code: item?.postal_code,
+        community: item?.community,
+      }));
+
+      setPatientData(mappedData);
+    } catch (error) {
+      console.error("Failed to fetch patient data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // recent search api and filteration
+  const fetchRecentSearches = async () => {
+    if (!userId) return;
+    try {
+      const response = await apiServices.get(
+        apiEndpoint.getRecentSearches(userId)
+      );
+      if (response.data?.success) {
+        setRecentSearches(response.data.payload || []);
+      }
+    } catch (error) {
+      console.error("Error fetching recent searches:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
+  // NOTE: only depend on userId and currentPage to avoid double-calls.
+  useEffect(() => {
+    if (userId !== null) {
+      fetchPatients(searchText);
+    }
+  }, [userId, currentPage]);
+
+  const debouncedFetchPatients = debounce((search: string) => {
+    fetchPatients(search);
+  }, 500);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchText(value);
+    setCurrentPage(1); // reset page on new search
+    debouncedFetchPatients(value);
+  };
+
+  // Filtered data
+  const filteredResult = useMemo(
+    () =>
+      (patientData ?? []).filter((item) =>
+        `${item.first_name ?? ""} ${item.email ?? ""} ${item.id}`
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      ),
+    [patientData, searchText]
+  );
+
+  // Pagination calculations now based on server total
+  const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
+
+  const handleRowSelect = (row: dataTypes) => {
+  };
 
   const columns: TanDataTableColumn<dataTypes>[] = [
     {
       accessor: "first_name",
-      header: "Provider’s Name",
+      header: "Patient’s Name",
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
-        const { first_name,  email } = row.original;
+        const { first_name, email, image, id } = row.original;
         return (
-          <div className="flex items-center gap-3">
+          <div
+            className="flex mr-10 items-center gap-3 cursor-pointer"
+            onClick={() => {
+              // Navigate to UserInfo page with user ID in URL
+              navigate(`/admin/patient-info/${id}`);
+            }}
+         
+          >
+            {/* <img
+              src={`${import.meta.env.VITE_APP_API_IMG_URL}${image}`}
+              alt={first_name}
+              className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
+            /> */}
             <img
-              src={dummyImage}
-              alt={`${first_name} `}
+              src={
+                row.original.image
+                  ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                      row.original.image
+                    }`
+                  : dummyImage
+              }
+              onError={(e) => {
+                // if broken URL, fallback to dummyImage
+                (e.currentTarget as HTMLImageElement).src = dummyImage;
+              }}
+              alt={row.original.first_name || "Patient"}
               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
             />
             <div className="flex flex-col">
-              <span className="font-medium text-sm text-[#252525] leading-tight">
-                {first_name} 
+              <span className="font-medium text-sm text-[#252525] leading-tight ">
+                {first_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
                 {email}
@@ -64,17 +211,12 @@ const CareProviderDashboard: React.FC = () => {
     },
     {
       accessor: "date",
-      header: "Registered Date",
-      showSort: true,
-    },
-    {
-      accessor: "reviews",
-      header: "Reviews",
+      header: <span className="-ml-2">Registered Date</span>,
       showSort: true,
     },
     {
       accessor: "lastdate",
-      header: "Last Visit Date",
+      header: <span className="-ml-3">Last Visit Date</span>,
       showSort: true,
     },
     {
@@ -82,8 +224,8 @@ const CareProviderDashboard: React.FC = () => {
       header: "Status",
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
-        const status = row.original.status?.toLowerCase();
-        const statusStyles = {
+        const status = row.original.status ?? "";
+        const statusStyles: Record<"active" | "inactive", string> = {
           active: "text-[#067647] border-[1.5px] border-[#079455]",
           inactive: "text-[#C22E00] border-[1.5px] border-[#C22E00]",
         };
@@ -91,430 +233,246 @@ const CareProviderDashboard: React.FC = () => {
         return (
           <span
             className={`text-xs font-medium px-3 py-1 rounded-full ${
-              statusStyles[status as "active" | "inactive"] ||
+              statusStyles[status.toLowerCase() as "active" | "inactive"] ||
               "bg-gray-200 text-gray-700"
             }`}
           >
-            {status?.charAt(0).toUpperCase() + status?.slice(1)}
+            {status.charAt(0).toUpperCase() + status.slice(1)}
           </span>
         );
       },
     },
-  ];
+    {
+      accessor: "postal_code",
+      header: "Zip Code",
+      showSort: true,
+      cell: ({ row }: { row: { original: dataTypes } }) => {
+        // const postal_code = row.original.postal_code ?? "";
+        const { postal_code } = row.original;
 
-  const data: dataTypes[] = [
-    {
-      id: 1,
-      first_name: "Savannah Nguyen",
-      date: "9/04/12",
-      reviews:
-        "Staff was caring and responsive, though the wait time could be improved.",
-      lastdate: "9/4/12",
-      email: "nevaeh.simmons@gmail.com",
-      image: alice,
-      status: "Active",
-    },
-    {
-      id: 2,
-      first_name: "Kristin Watson",
-      date: "5/7/16",
-      email: "alma.lawson@example.com",
-      reviews:
-        "“Excellent support for my mother with  dementia. Highly recommended.”",
-      lastdate: "9/4/12",
-      image: "/images/michael.png",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      first_name: "Brooklyn Simmons",
-      date: "10/6/13",
-      email: "deanna.curtis@example.com",
-      reviews:
-        "“Facilities are clean and staff is friendly.  A bit pricey, but worth it.",
-      lastdate: "9/4/12",
-      image: "/images/michael.png",
-      status: "Active",
-    },
-    {
-      id: 4,
-      first_name: "Arlene McCoy",
-      date: "2/11/12",
-      email: "tanya.hill@example.com",
-      reviews:
-        "“Great amenities and staff. Rooms were  spacious and bright.”",
-      lastdate: "9/4/12",
-      image: "/images/michael.png",
-      status: "Inactive",
-    },
-    {
-      id: 5,
-      first_name: "Eleanor Pena",
-      date: "3/4/16",
-      email: "michelle.rivera@example.com",
-      reviews:
-        "“Compassionate end-of-life care. They  made a difficult time easier.",
-      lastdate: "9/4/12",
-      image: "/images/michael.png",
-      status: "Active",
-    },
-    {
-      id: 6,
-      first_name: "Jenny Wilson",
-      date: "8/15/14",
-      email: "michelle.rivera@example.com",
-      reviews:
-        "“The food quality was inconsistent, but  the overall experience was positive.”",
-      lastdate: "9/4/12",
-      image: "/images/michael.png",
-      status: "Active",
-    },
-    {
-      id: 7,
-      first_name: "Ralph Edwards",
-      date: "11/22/15",
-      email: "dolores.chambers@example.com",
-      reviews:
-        "“They offered a variety of activities that kept my father engaged. ",
-      lastdate: "9/4/12",
-      image: "/images/michael.png",
-      status: "Active",
+        return <span className="ml-2.5">{postal_code ? postal_code : "N/A"}</span>;
+      },
     },
   ];
 
-  const handleRowSelect = (row: dataTypes) => {
-    console.log("Selected row:", row);
-  };
+  // Pagination UI
+  // const Pagination = () => {
+  //   if (totalRecords <= pageSize) return null;
 
-  const renderActions = (row: dataTypes) => (
-    <button onClick={() => alert(`Edit ${row.first_name} ${row.last_name}`)}>
-      Edit
-    </button>
-  );
+  //   const canPrev = currentPage > 1;
+  //   const canNext = currentPage < totalPages;
 
-  const handleTabClick = (tab: "all" | "saved") => {
-    setActiveTab(tab);
-  };
-  const [searchText, setSearchText] = React.useState<string>("");
+  //   type PageItem = number | "ELLIPSIS";
+
+  //   const getPageItems = (): PageItem[] => {
+  //     const items: PageItem[] = [];
+  //     items.push(1);
+
+  //     if (currentPage <= 2 && totalPages > 2) {
+  //       items.push(2);
+  //       if (totalPages > 3) items.push("ELLIPSIS");
+  //     }
+
+  //     if (currentPage > 2 && currentPage < totalPages - 1) {
+  //       if (currentPage - 1 > 2) items.push("ELLIPSIS");
+  //       items.push(currentPage - 1, currentPage, currentPage + 1);
+  //       if (currentPage + 1 < totalPages - 1) items.push("ELLIPSIS");
+  //     }
+
+  //     if (currentPage >= totalPages - 1 && totalPages > 3) {
+  //       items.push("ELLIPSIS");
+  //       if (totalPages - 1 > 1) items.push(totalPages - 1);
+  //     }
+
+  //     if (totalPages > 1) items.push(totalPages);
+
+  //     return items.filter((v, i, a) => a.indexOf(v) === i);
+  //   };
+
+  //   const items = getPageItems();
+
+  //   const startIdx = totalRecords ? (currentPage - 1) * pageSize + 1 : 0;
+  //   const endIdx = Math.min(currentPage * pageSize, totalRecords);
+
+  //   return (
+  //     <div className="py-4">
+  //       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+  //         {/* LEFT: statement */}
+  //         <div className="text-sm text-[#6b7280]">
+  //           Showing <span className="font-medium">{startIdx}</span> to{" "}
+  //           <span className="font-medium">{endIdx}</span> of{" "}
+  //           <span className="font-medium">{totalRecords}</span> results
+  //         </div>
+
+  //         {/* RIGHT: buttons */}
+  //         <div className="flex items-center gap-2 md:justify-end">
+  //           <button
+  //             type="button"
+  //             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+  //             disabled={!canPrev}
+  //             className={`px-2 py-1 text-sm ${
+  //               canPrev
+  //                 ? "text-[#2563eb] hover:underline"
+  //                 : "text-[#c7c7c7] cursor-default"
+  //             }`}
+  //           >
+  //             Prev
+  //           </button>
+
+  //           {/* Page numbers with ellipsis */}
+  //           {items.map((it, idx) =>
+  //             it === "ELLIPSIS" ? (
+  //               <span key={`e-${idx}`} className="px-2 text-sm text-[#111827]">
+  //                 …
+  //               </span>
+  //             ) : (
+  //               <button
+  //                 key={it}
+  //                 type="button"
+  //                 onClick={() => setCurrentPage(it)}
+  //                 className={`min-w-[34px] h-8 px-3 text-sm rounded
+  //                   border border-[#E5E7EB]
+  //                   ${
+  //                     it === currentPage
+  //                       ? "bg-[#1D4ED8] text-white border-[#1D4ED8]"
+  //                       : "bg-white text-[#111827] hover:bg-[#F3F4F6]"
+  //                   }`}
+  //               >
+  //                 {it}
+  //               </button>
+  //             )
+  //           )}
+
+  //           <button
+  //             type="button"
+  //             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+  //             disabled={!canNext}
+  //             className={`px-2 py-1 text-sm ${
+  //               canNext
+  //                 ? "text-[#2563eb] hover:underline"
+  //                 : "text-[#c7c7c7] cursor-default"
+  //             }`}
+  //           >
+  //             Next
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className="mb-10">
-      <h2
-        className="
-      font-space-grotesk
-      font-bold
-      text-heading
-      leading-8
-      tracking-normal
-      text-brand-ink
-      align-middle
-    "
+      {!selectedUser && (
+        <h2 className="space-grotesk md:mt-0 mt-5 text-[25px] !font-bold text-heading leading-8 tracking-normal text-brand-ink">
+          Patients List
+        </h2>
+      )}
+      <div
+        className={` mt-6 rounded-[10px] pt-6 ${
+          selectedUser ? "" : "bg-white"
+        }`}
       >
-        Patients List
-      </h2>
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Patients’ Details</h3>
-          {/* searchbar */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
-            <CommonInput
-              placeholder="Search by Name, Email, or ID"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              showImg={true}
-              imgSrc={searchIcon}
-              imgLeft={true}
-              inputClassName="text-sm"
-              containerClassName="rounded-[10px]"
-            />
-          </div>
-          <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium text-sm">Filter by</p>
-            <div className="relative">
-              <div className="relative">
-              <div className="flex items gap-4">
-                <PrimaryButton
-                  btnText="Ratings"
+        {selectedUser ? (
+          <UserInfo
+            userData={selectedUser}
+            goBack={() => setSelectedUser(false)}
+          />
+        ) : (
+          <>
+            <div className="mb-6 flex md:flex-row flex-col md:items-center px-5 md:justify-between">
+              <h3 className="md:mb-0 mb-3 text-[20px] font-bold  space-grotesk">Patient's Details</h3>
+
+              <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
+                <CommonInput
+                  placeholder="Search by Name, Email, or ID"
+                  value={searchText}
+                  onChange={handleSearchChange}
+                  onFocus={fetchRecentSearches}
                   showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={filterIcon}
-                  imgPosition="left"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
-                  onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                />
-                <PrimaryButton
-                  btnText="Export Table"
-                  showImg={true}
-                  img={exports}
-                  imgClass="w-4 h-4"
-                  suffixImg={whitearrow}
-                  suffixImgClass="w-4 h-4"
-                  onClick={() => setIsExportOpen(!isExportOpen)}
-                  btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
+                  imgSrc={searchIcon}
+                  imgLeft={true}
+                  inputClassName="text-sm !placeholder-[#252525] inter"
+                  containerClassName="rounded-[10px]"
                 />
               </div>
-              <AnimatePresence>
-                {showRatingDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-[60px] w-50 z-50"
-                  >
-                    <RatingFilterDropdown />
-                  </motion.div>
-                )}
-                {isExportOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute top-[60px] left-[120px] bg-white  shadow-md rounded-lg p-4 z-50"
-                  >
-                    <div className="flex flex-col gap-2">
-                      <button className="text-sm text-black hover:text-blue-600">Export as CSV</button>
-                      <button className="text-sm text-black hover:text-blue-600">Export AS Pdf</button>
+
+              <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
+                <div className="relative">
+                  <div className="relative">
+                    <div className="flex items gap-4">
+                      <ExportTable
+                        data={filteredResult}
+                        fileName="Patients"
+                        columnNames={[
+                          "Patient's Name",
+                          "Email",
+                          "Registered Date",
+                          "Reviews",
+                          "Last Visit Date",
+                          "Status",
+                        ]}
+                        columnKeys={[
+                          "first_name",
+                          "email",
+                          "date",
+                          "reviews",
+                          "lastdate",
+                          "status",
+                        ]}
+                      />
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div className="mb-8">
+              {loading ? (
+                <p className="text-center  text-gray-500 px-10 py-10">
+                  <SkeletonTableLoader />
+                </p>
+              ) : (
+                <>
+                  <TanDataTable<dataTypes>
+                    columns={columns}
+                    data={patientData}
+                    // showCheckbox={true}
+                    onRowSelect={handleRowSelect}
+                    showActions={true}
+                    actions={(row) => (
+                      <AdminDropdownAction
+                        variant="default"
+                        actions={[
+                          {
+                            label: "View Detail",
+                            icon: <FaRegFileAlt className="text-gray-600" />,
+                            type: "view",
+                            onClick: () => {
+                              // Navigate to UserInfo page with user ID in URL
+                              navigate(`/admin/patient-info/${row.id}`);
+                            },
+                          },
+                        ]}
+                      />
+                    )}
+                  />
+                  {/* <Pagination /> */}
+                </>
+              )}
             </div>
-          </div>
-        </div>
-        <div>
-          {activeTab === "all" ? (
-            <TanDataTable<dataTypes>
-              columns={columns}
-              data={data}
-              showCheckbox={true}
-              onRowSelect={handleRowSelect}
-              showActions={true}
-              className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit Details", row.id)}
-                  onDelete={() => console.log("Delete Provider", row.id)}
-                />
-              )}
-            />
-          ) : (
-            <TanDataTable<dataTypes>
-              columns={columns}
-              data={data.slice(0, 3)}
-              showCheckbox={true}
-              onRowSelect={handleRowSelect}
-              showActions={true}
-              className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit", row.id)}
-                  onDelete={() => console.log("Delete", row.id)}
-                />
-              )}
-            />
-          )}
-        </div>
+            <div>
+              <Pagination
+                rowsPerPage={pageSize}
+                totalRows={patientsData?.totalRecords || 0} // ✅ API ka totalRecords use karo
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 };
 
-export default CareProviderDashboard;
-
-
-// import React, { useState } from "react";
-// import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-// import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
-// import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-// import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-// import { AnimatePresence, motion } from "framer-motion";
-// import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
-// import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-// import alice from "@assets/media/images/dashboard-images/alice.svg";
-// import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-// import exports from "@assets/media/svgs/export.svg";
-// import whitearrow from "@assets/media/svgs/whitearrow.svg";
-// import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-// import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
-
-// const CareProviderDashboard: React.FC = () => {
-//   const [showRatingDropdown, setShowRatingDropdown] = useState(false);
-//   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
-//   const [searchText, setSearchText] = useState<string>("");
-//   const [isExportOpen, setIsExportOpen] = useState(false);
-
-//   type dataTypes = {
-//     id?: number;
-//     first_name?: string;
-//     date?: string;
-//     email?: string;
-//     image?: string;
-//     reviews?: string;
-//     lastdate?: string;
-//     status?: string;
-//   };
-
-//   const columns: TanDataTableColumn<dataTypes>[] = [
-//     {
-//       accessor: "first_name",
-//       header: "Provider’s Name",
-//       showSort: true,
-//       cell: ({ row }) => {
-//         const { first_name, email } = row.original;
-//         return (
-//           <div className="flex items-center gap-3">
-//             <img
-//               src={dummyImage}
-//               alt={`${first_name}`}
-//               className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
-//             />
-//             <div className="flex flex-col">
-//               <span className="font-medium text-sm text-[#252525] leading-tight">{first_name}</span>
-//               <span className="text-xs text-gray-500 leading-tight">{email}</span>
-//             </div>
-//           </div>
-//         );
-//       },
-//     },
-//     { accessor: "date", header: "Registered Date", showSort: true },
-//     { accessor: "reviews", header: "Reviews", showSort: true },
-//     { accessor: "lastdate", header: "Last Visit Date", showSort: true },
-//     {
-//       accessor: "status",
-//       header: "Status",
-//       showSort: true,
-//       cell: ({ row }) => {
-//         const status = row.original.status?.toLowerCase();
-//         const statusStyles = {
-//           active: "text-[#067647] border-[1.5px] border-[#079455]",
-//           inactive: "text-[#C22E00] border-[1.5px] border-[#C22E00]",
-//         };
-//         return (
-//           <span
-//             className={`text-xs font-medium px-3 py-1 rounded-full ${
-//               statusStyles[status as "active" | "inactive"] || "bg-gray-200 text-gray-700"
-//             }`}
-//           >
-//             {status?.charAt(0).toUpperCase() + status?.slice(1)}
-//           </span>
-//         );
-//       },
-//     },
-//   ];
-
-//   const data: dataTypes[] = [
-//     {
-//       id: 1,
-//       first_name: "Savannah Nguyen",
-//       date: "9/04/12",
-//       reviews: "Staff was caring and responsive, though the wait time could be improved.",
-//       lastdate: "9/4/12",
-//       email: "nevaeh.simmons@gmail.com",
-//       image: alice,
-//       status: "Active",
-//     },
-//     // ... other data entries
-//   ];
-
-//   const handleRowSelect = (row: dataTypes) => {
-//     console.log("Selected row:", row);
-//   };
-
-//   return (
-//     <div className="mb-10">
-//       <h2 className="font-space-grotesk font-bold text-heading leading-8 tracking-normal text-brand-ink">Patients List</h2>
-//       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-//         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-//           <h3 className="md:mb-0 mb-3">Patients’ Details</h3>
-//           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
-//             <CommonInput
-//               placeholder="Search by Name, Email, or ID"
-//               value={searchText}
-//               onChange={(e) => setSearchText(e.target.value)}
-//               showImg={true}
-//               imgSrc={searchIcon}
-//               imgLeft={true}
-//               inputClassName="text-sm"
-//               containerClassName="rounded-[10px]"
-//             />
-//           </div>
-//           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-//             <p className="text-[#252525] font-medium text-sm">Filter by</p>
-//             <div className="relative">
-//               <div className="flex items gap-4">
-//                 <PrimaryButton
-//                   btnText="ratings"
-//                   showImg={true}
-//                   imgClass="w-[24px] h-[24px] object-cover"
-//                   img={filterIcon}
-//                   imgPosition="left"
-//                   btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] h-[44px] rounded-[10px] text-[#252525] text-sm font-medium"
-//                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-//                 />
-//                 <PrimaryButton
-//                   btnText="Export Table"
-//                   showImg={true}
-//                   img={exports}
-//                   imgClass="w-4 h-4"
-//                   suffixImg={whitearrow}
-//                   suffixImgClass="w-4 h-4"
-//                   onClick={() => setIsExportOpen(!isExportOpen)}
-//                   btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
-//                 />
-//               </div>
-//               <AnimatePresence>
-//                 {showRatingDropdown && (
-//                   <motion.div
-//                     initial={{ opacity: 0, y: -10 }}
-//                     animate={{ opacity: 1, y: 0 }}
-//                     exit={{ opacity: 0, y: -10 }}
-//                     transition={{ duration: 0.3 }}
-//                     className="absolute left-0 top-[60px] w-50 z-50"
-//                   >
-//                     <RatingFilterDropdown />
-//                   </motion.div>
-//                 )}
-//                 {isExportOpen && (
-//                   <motion.div
-//                     initial={{ opacity: 0, y: -10 }}
-//                     animate={{ opacity: 1, y: 0 }}
-//                     exit={{ opacity: 0, y: -10 }}
-//                     transition={{ duration: 0.3 }}
-//                     className="absolute top-[60px] left-[120px] bg-white border shadow-md rounded-lg p-4 z-50"
-//                   >
-//                     <div className="flex flex-col gap-2">
-//                       <button className="text-sm text-black hover:text-blue-600">Export 1</button>
-//                       <button className="text-sm text-black hover:text-blue-600">Export 2</button>
-//                     </div>
-//                   </motion.div>
-//                 )}
-//               </AnimatePresence>
-//             </div>
-//           </div>
-//         </div>
-//         <TanDataTable<dataTypes>
-//           columns={columns}
-//           data={data}
-//           showCheckbox={true}
-//           onRowSelect={handleRowSelect}
-//           showActions={true}
-//           className="my-custom-class"
-//           actions={(row) => (
-//             <DropdownActions
-//               onView={() => console.log("View Detail", row.id)}
-//               onEdit={() => console.log("Edit Details", row.id)}
-//               onDelete={() => console.log("Delete Provider", row.id)}
-//             />
-//           )}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CareProviderDashboard;
+export default PatientTable;

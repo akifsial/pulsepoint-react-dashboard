@@ -20,18 +20,32 @@
 // ];
 
 // const stateOptions = [
-//   { value: "Punjab", label: "Punjab" },
-//   { value: "Sindh", label: "Sindh" },
-//   { value: "Balochistan", label: "Balochistan" },
-//   { value: "KPK", label: "Khyber Pakhtunkhwa" },
+//   { value: "California", label: "California" },          // USA – Tech & Hollywood hub
+//   { value: "New York", label: "New York" },              // USA – NYC is world-famous
+//   { value: "Texas", label: "Texas" },                    // USA – Known for size, oil, culture
+//   { value: "Florida", label: "Florida" },                // USA – Famous for tourism & Miami
+//   { value: "Bavaria", label: "Bavaria" },                // Germany – Munich & BMW
+//   { value: "Île-de-France", label: "Île-de-France" },    // France – Includes Paris
+//   { value: "Dubai", label: "Dubai" },                    // UAE – Luxury and architecture
+//   { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, // Japan – Tokyo is iconic
+//   { value: "Ontario", label: "Ontario" },                // Canada – Includes Toronto
+//   { value: "Maharashtra", label: "Maharashtra" },        // India – Includes Mumbai
 // ];
 
-// const cityOptions = [
-//   { value: "Lahore", label: "Lahore" },
-//   { value: "Karachi", label: "Karachi" },
-//   { value: "Quetta", label: "Quetta" },
-//   { value: "Peshawar", label: "Peshawar" },
-// ];
+
+const cityOptions = [
+  { value: "New York", label: "New York" },
+  { value: "London", label: "London" },
+  { value: "Paris", label: "Paris" },
+  { value: "Dubai", label: "Dubai" },
+  { value: "Singapore", label: "Singapore" },
+  { value: "Tokyo", label: "Tokyo" },
+  { value: "Hong Kong", label: "Hong Kong" },
+  { value: "Zurich", label: "Zurich" },
+  { value: "Los Angeles", label: "Los Angeles" },
+  { value: "Monaco", label: "Monaco" },
+];
+
 
 // const ProfileDetail = () => {
 //   const [isModalOpen, setIsModalOpen] = useState(false);

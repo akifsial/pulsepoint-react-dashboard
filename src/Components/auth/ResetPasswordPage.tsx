@@ -20,51 +20,44 @@ const ResetPasswordPage = () => {
 
   const navigate = useNavigate();
 
-  const { mutateAsync: resetMutation, isPending: isResetLoading } = useMutation(
-    {
-      mutationFn: ({ data }) => ApiResetPassword(data),
+  const { mutateAsync: resetMutation, isPending: isResetLoading } = useMutation({
+    mutationFn: ({ data }) => ApiResetPassword(data),
 
-      onSuccess: async () => {
-        toast.success("Password Reset Successfully");
-        navigate("/login");
-        localStorage.clear()
-      },
-      onError: (error) => {
-        toast.error("Reset Password Failed");
-      },
-    }
-  );
+    onSuccess: async () => {
+      toast.success("Password Reset Successfully");
+      navigate("/login");
+      localStorage.clear();
+    },
+    onError: (error) => {},
+  });
 
   const resetSubmit = async (data) => {
     const pass = {
-      password: data?.createPassword,
+      password: data.old_password,
+      // new_password: data?.createPassword,
     };
-    await resetMutation({ data:pass });
+    await resetMutation({ data: pass });
   };
 
   return (
     <OnBoardingLayout logoParentClass="absolute top-35 right-0 left-0 flex justify-center">
       <div className="flex flex-col min-h-screen p-6 justify-center items-start">
-        <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-1">
-          Reset Password
-        </h2>
+        <h2 className="text-[#1A1A1A] font-[Space Grotesk] font-bold text-[35px] leading-[140%] tracking-[0%] mb-1">Reset Password</h2>
 
-        <p className="font-[Geist] font-normal text-[16px] leading-[150%] tracking-[0%] text-[#252525CC] mb-4">
-          Enter your new password and reset your password{" "}
-        </p>
+        <p className="font-[Geist] font-normal text-[16px] leading-[150%] tracking-[0%] text-[#252525CC] mb-4">Enter your new password and reset your password </p>
 
         <form onSubmit={handleSubmit(resetSubmit)} className="space-y-6 w-full">
           <InputField
             label="Create a Password"
             asterisk={true}
             id="createPassword"
-            name="createPassword"
+            name="old_password"
             type="password"
             icon={IoLockClosedOutline}
             placeholder="***************"
             showPasswordToggle={true}
             register={register}
-            registerName="createPassword"
+            registerName="old_password"
             errors={errors}
             validation={{
               required: "Password is required",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
@@ -12,15 +12,62 @@ import CommonInput from "@components/Shared-components/Inputs/Common-Input/Commo
 import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
 import ReviewForm from "@components/Review/ReviewForm";
 import Toast from "@components/Toast/Toast";
+import { useApiMyReviews } from "@src/hooks/useMyReviews";
+import dayjs from "dayjs";
+import Pagination from "@components/Pagination/Pagination";
+import DeleteModal from "@src/components/Model/DeleteModal";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiDeleteMyReviews } from "@src/api/ApiMyReviews";
+import { useNavigate } from "react-router-dom";
+import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import { useMeApi } from "@src/hooks/useUsers";
 
 const AdminPatientReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [searchText, setSearchText] = React.useState<string>("");
-  
+  const [rating, setRating] = useState("");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState(true);
+  const [filterValue, setFilterValue] = useState(false);
+  const navigate = useNavigate();
+  const { data: MeData, refetch: MeDataFetch } = useMeApi(navigate);
+
+  useEffect(() => {
+    MeDataFetch();
+  });
+
+  const [limit, setLimit] = useState(10);
+
+  const {
+    data,
+    isLoading: isLoadingUseApiMyReviews,
+    isFetching,
+    refetch,
+  } = useApiMyReviews(
+    debouncedSearchText,
+    rating,
+    filterValue,
+    page,
+    sort == true ? "desc" : "asc",
+    limit
+  );
+
+  const onSortClick = () => {
+    setSort(!sort);
+    refetch();
+  };
+  const queryClient = useQueryClient();
+  // const navigate = useNavigate();
   // State for managing the review form page
-  const [currentView, setCurrentView] = React.useState<'table' | 'form'>('table');
-  const [currentEditingReview, setCurrentEditingReview] = React.useState<ReviewDataTypes | null>(null);
-  
+  const [currentView, setCurrentView] = React.useState<"table" | "form">(
+    "table"
+  );
+  const [currentEditingReview, setCurrentEditingReview] =
+    React.useState<ReviewDataTypes | null>(null);
+
   // Add toast state
   const [showSuccessToast, setShowSuccessToast] = React.useState(false);
 
@@ -36,35 +83,84 @@ const AdminPatientReviews: React.FC = () => {
     provider_logo?: string;
   };
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchText]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowRatingDropdown(false);
+      }
+    }
+
+    if (showRatingDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showRatingDropdown]);
+
   // Handler functions for the review form
-  const handleEditReview = (row: ReviewDataTypes) => {
-    setCurrentEditingReview(row);
-    setCurrentView('form');
+  const handleEditReview = (id: number | string) => {
+    // setCurrentEditingReview(row);
+    // setCurrentView("form");
+    navigate(`/patient/patient-feedback/edit/${id}`);
+  };
+
+  const { mutateAsync: deleteMutation } = useMutation({
+    mutationFn: (id: number) => apiDeleteMyReviews(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["useApiMyReviews", debouncedSearchText, rating],
+      });
+      setIsDeleteModalOpen(false);
+    },
+  });
+
+  const handleDelete = async () => {
+    if (selectedRowId !== null) {
+      await deleteMutation(selectedRowId);
+    }
   };
 
   // Updated handleSaveReview function with toast
-  const handleSaveReview = (updatedReview: { rating: number; comment: string }) => {
+  const handleSaveReview = (updatedReview: {
+    rating: number;
+    comment: string;
+  }) => {
     if (currentEditingReview) {
       // Here you would typically update your data source (API call, state update, etc.)
-      console.log("Saving review for provider:", currentEditingReview.provider_name);
-      console.log("Updated review:", updatedReview);
-      
+
       // You can update the reviewsData here or make an API call
       // For now, we'll just log it and show success toast
-      
+
       // Show success toast
       setShowSuccessToast(true);
-      
+
       // Go back to table view after a short delay to show the toast
       setTimeout(() => {
-        setCurrentView('table');
+        setCurrentView("table");
         setCurrentEditingReview(null);
       }, 1500);
     }
   };
 
   const handleCancelEdit = () => {
-    setCurrentView('table');
+    setCurrentView("table");
     setCurrentEditingReview(null);
   };
 
@@ -72,8 +168,8 @@ const AdminPatientReviews: React.FC = () => {
   const handleToastClose = () => {
     setShowSuccessToast(false);
     // Ensure we go back to table view when toast is closed
-    if (currentView === 'form') {
-      setCurrentView('table');
+    if (currentView === "form") {
+      setCurrentView("table");
       setCurrentEditingReview(null);
     }
   };
@@ -83,10 +179,17 @@ const AdminPatientReviews: React.FC = () => {
       accessor: "provider_name",
       header: "Provider's Name",
       showSort: true,
+      width: "250px",
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-        const { provider_name, provider_email, provider_logo } = row.original;
+        const { provider_name, care_provider, provider_email, provider_logo } =
+          row.original;
         return (
-          <div className="flex items-center gap-3">
+          <div
+            className="flex me-5 cursor-pointer items-center gap-3"
+            onClick={() =>
+              navigate(`/patient/care-provider/${care_provider?.id}`)
+            }
+          >
             <img
               src={provider_logo || dummyImage}
               alt={provider_name}
@@ -94,10 +197,10 @@ const AdminPatientReviews: React.FC = () => {
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
-                {provider_name}
+                {care_provider?.organization_name?.length>20 ? care_provider?.organization_name?.slice(0,20)+"..." : care_provider?.organization_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
-                {provider_email}
+                {care_provider?.email}
               </span>
             </div>
           </div>
@@ -106,172 +209,190 @@ const AdminPatientReviews: React.FC = () => {
     },
     {
       accessor: "date",
-      header: "Date",
+      header: <span className="">Date</span>,
+      width: "200px",
       showSort: true,
-      cell: (info: any) => <i>{info.getValue()}</i>,
+      cell: (row) => (
+        <i className="">
+          {dayjs(row?.original?.created_at).format("DD/MM/YY")}
+        </i>
+      ),
     },
+
+    // {
+    //   accessor: "rating",
+    //   header: "Rating",
+    //   showSort: true,
+    //   cell: ({ getValue }) => {
+    //     const rating = Number(getValue()) || 0;
+    //     const totalStars = 5;
+
+    //     const StarIcon = ({ filled }: { filled: boolean }) => (
+    //       <svg
+    //         xmlns="http://www.w3.org/2000/svg"
+    //         viewBox="0 0 24 24"
+    //         fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+    //         width="20"
+    //         height="20"
+    //       >
+    //         <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
+    //       </svg>
+    //     );
+
+    //     return (
+    //       <div className="flex items-center gap-0.5">
+    //         {Array.from({ length: totalStars }).map((_, index) => (
+    //           <StarIcon key={index} filled={index < rating} />
+    //         ))}
+    //       </div>
+    //     );
+    //   },
+    // },
+
     {
       accessor: "rating",
       header: "Rating",
       showSort: true,
+      cell: ({ getValue }) => {
+        const rating = Number(getValue()) || 0;
+        const totalStars = 5;
+
+        if (rating === 0) {
+          return <span className="text-gray-500 ">N/A</span>;
+        }
+
+        const StarIcon = ({ filled }: { filled: boolean }) => (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            width="20"
+            height="20"
+          >
+            <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
+          </svg>
+        );
+
+        return (
+          <div className="flex items-center gap-0.5">
+            {Array.from({ length: totalStars }).map((_, index) => (
+              <StarIcon key={index} filled={index < rating} />
+            ))}
+          </div>
+        );
+      },
     },
     {
-      accessor: "reviews",
-      header: "Reviews",
+      accessor: "content",
+      header: "Content",
+      width: "150px",
       showSort: false,
+      cell: ({ getValue }) => (
+        <div className="flex max-w-[180px] justify-center">
+          {getValue() ? (
+            <span className="truncate block w-[150px] text-left">
+              {getValue()}
+            </span>
+          ) : (
+            <span className="text-gray-500">N/A</span>
+          )}
+        </div>
+      ),
+    },
+    {
+      accessor: "address",
+      header: "Location",
+      showSort: true,
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-        const { reviews } = row.original;
+        const { care_provider } = row.original;
+        const address = care_provider?.address || "N/A";
+
         return (
-          <div className="max-w-xs">
-            <span className="text-sm text-[#252525] line-clamp-2">
-              "{reviews}"
+          <div className="max-w-[150px]">
+            <span
+              className={
+                address === "N/A"
+                  ? "text-gray-500 flex justify-center w-[180px]"
+                  : "truncate block w-[180px] text-left"
+              }
+              title={address !== "N/A" ? address : ""}
+            >
+              {address}
             </span>
           </div>
         );
       },
     },
-    {
-      accessor: "location",
-      header: "Location",
-      showSort: true,
-      cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-        const { location } = row.original;
-        return (
-          <div className="flex items-center">
-            <span className="text-sm text-[#252525]">{location}</span>
-          </div>
-        );
-      },
-    },
   ];
 
-  const reviewsData: ReviewDataTypes[] = [
-    {
-      id: 1,
-      provider_name: "Mayo Clinic",
-      provider_email: "contact@mayoclinic.org",
-      date: "9/4/12",
-      rating: <RatingStars value={5} isDisabled={true} />,
-      numericRating: 5,
-      reviews: "Staff was caring and responsive, though the wait time could be improved.",
-      location: "📍200 1st St SW, Rochester",
-    },
-    {
-      id: 2,
-      provider_name: "Cleveland Clinic",
-      provider_email: "info@clevelandclinic.com",
-      date: "5/7/16",
-      rating: <RatingStars value={4} isDisabled={true} />,
-      numericRating: 4,
-      reviews: "Excellent support for my mother with dementia. Highly recommended.",
-      location: "📍9500 Euclid Ave, Cleveland",
-    },
-    {
-      id: 3,
-      provider_name: "Johns Hopkins Hospital",
-      provider_email: "support@hopkinshospital.org",
-      date: "10/6/13",
-      rating: <RatingStars value={4} isDisabled={true} />,
-      numericRating: 4,
-      reviews: "Facilities are clean and staff is friendly. A bit pricey, but worth it.",
-      location: "📍1800 Orleans St, Baltimore",
-    },
-    {
-      id: 4,
-      provider_name: "Massachusetts Gr. Hospital",
-      provider_email: "info@massgeneral.org",
-      date: "2/11/12",
-      provider_logo: dummyImage,
-      rating: <RatingStars value={2} isDisabled={true} />,
-      numericRating: 2,
-      reviews: "Great amenities and staff. Rooms were spacious and bright.",
-      location: "📍55 Fruit St, Boston",
-    },
-    {
-      id: 5,
-      provider_name: "Cedars-Sinai Medical Center",
-      provider_email: "hello@cedars-sinai.org",
-      date: "3/4/16",
-      provider_logo: dummyImage,
-      rating: <RatingStars value={1} isDisabled={true} />,
-      numericRating: 1,
-      reviews: "Compassionate end-of-life care. They made a difficult time easier.",
-      location: "📍8700 Beverly Blvd, LA",
-    },
-    {
-      id: 6,
-      provider_name: "Mount Sinai Hospital",
-      provider_email: "contact@mountsinai.org",
-      date: "8/15/14",
-      provider_logo: dummyImage,
-      rating: <RatingStars value={1} isDisabled={true} />,
-      numericRating: 1,
-      reviews: "The food quality was inconsistent, but the overall experience was positive.",
-      location: "📍1 Gustave L. Levy Pl, NY",
-    },
-    {
-      id: 7,
-      provider_name: "UCLA Medical Center",
-      provider_email: "info@uclahealth.org",
-      date: "11/22/15",
-      provider_logo: dummyImage,
-      rating: <RatingStars value={0} isDisabled={true} />,
-      numericRating: 0,
-      reviews: "They offered a variety of activities that kept my father engaged.",
-      location: "📍757 Westwood Plaza, LA",
-    },
-  ];
+  const handleRowSelect = (row: ReviewDataTypes) => {};
 
-  const handleRowSelect = (row: ReviewDataTypes) => {
-    console.log("Selected row:", row);
-  };
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchText]);
 
   // Render the Reviews Table View
   const renderTableView = () => (
     <div className="mb-10">
       <h2
         className="
-          font-space-grotesk
-          font-bold
+          space-grotesk
+          !font-bold
           text-heading
           leading-8
           tracking-normal
           text-brand-ink
           align-middle
+          mb-6
+          text-[25px]
         "
       >
         My Reviews
       </h2>
-      <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
+      <div className="bg-[#FFFFFF] h-fit rounded-tr-[10px] rounded-tl-[10px] px-4 py-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3">Given Reviews</h3>
+          <h3 className="md:mb-0 mb-3 space-grotesk text-[20px] font-bold">
+            Given Reviews
+          </h3>
           {/* searchbar */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:px-5 px-0">
             <CommonInput
-              placeholder="Search with Provider name , zip code"
+              placeholder="Search with Provider name, zipcode"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               showImg={true}
               imgSrc={searchIcon}
               imgLeft={true}
-              inputClassName="text-sm"
-              containerClassName="w-full max-w-sm"
+              inputClassName="text-sm placeholder-[#252525]"
+              containerClassName="w-full border-[#252525] rounded-lg py-3 max-w-sm"
             />
           </div>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
-            <p className="text-[#252525] font-medium text-sm">Filter By</p>
-            <div className="relative">
+            <p className="text-[#252525] font-medium inter text-sm">
+              Filter By
+            </p>
+            <div className="relative" ref={dropdownRef}>
               <div className="flex items gap-4">
-                <PrimaryButton
-                  btnText="Ratings"
-                  showImg={true}
-                  imgClass="w-[24px] h-[24px] object-cover"
-                  img={filterIcon}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 md:w-[101px] w-full py-[10px] rounded-[10px] text-[#252525] text-sm font-medium"
+                <button
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
-                />
+                  className={`border border-[#252525] px-4 md:w-[110px] w-full py-[5px] cursor-pointer rounded-[30px] text-[#252525] text-sm font-medium flex items-center justify-center gap-1.5`}
+                >
+                  {rating ? rating : ""}
+                  <span className="inter text-[14px] font-medium">Ratings</span>
+                  <img
+                    src={filterIcon}
+                    alt="filter icon"
+                    className="w-[24px] h-[24px] object-cover"
+                  />
+                </button>
               </div>
+
               <AnimatePresence>
                 {showRatingDropdown && (
                   <motion.div
@@ -279,9 +400,12 @@ const AdminPatientReviews: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute left-0 top-[60px] w-50 z-50"
+                    className="absolute md:left-[-100px] top-[50px] w-50 z-50"
                   >
-                    <RatingFilterDropdown />
+                    <RatingFilterDropdown
+                      setShowRatingDropdown={setShowRatingDropdown}
+                      setRating={setRating}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -290,20 +414,49 @@ const AdminPatientReviews: React.FC = () => {
         </div>
 
         <div>
-          <TanDataTable<ReviewDataTypes>
-            columns={columns}
-            data={reviewsData}
-            showCheckbox={false}
-            onRowSelect={handleRowSelect}
-            showActions={true}
-            className="my-custom-class"
-            actions={(row) => (
-              <DropdownActions
-                onEdit={() => handleEditReview(row)}
-                onDelete={() => console.log("Delete Review", row.id)}
+          {isLoadingUseApiMyReviews ? (
+            <TableSkeletonLoader />
+          ) : (
+            <div className="overflow-x-auto w-full h-fit overflow-y-auto">
+              <TanDataTable<ReviewDataTypes>
+                columns={columns ?? []}
+                data={data?.records ?? []}
+                showCheckbox={false}
+                onRowSelect={handleRowSelect}
+                showActions={true}
+                onSortClick={onSortClick}
+                className="my-custom-class"
+                actions={(row) => (
+                  <DropdownActions
+                    onEdit={() => handleEditReview(row?.feedback?.review_id)}
+                    variant="reviews"
+                    onDelete={() => {
+                      setSelectedRowId(row?.feedback?.review_id); // ✅ match what API expects
+                      setIsDeleteModalOpen(true);
+                    }}
+                  />
+                )}
               />
-            )}
+            </div>
+          )}
+
+          <DeleteModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => {
+              setIsDeleteModalOpen(false);
+              setSelectedRowId(null);
+            }}
+            onDelete={handleDelete}
+            // loading={deleteMutationLoading}
           />
+          <div>
+            <Pagination
+              onPageChange={handlePageChange}
+              totalRows={data?.totalRecords}
+              currentPage={page}
+              rowsPerPage={10}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -331,7 +484,7 @@ const AdminPatientReviews: React.FC = () => {
         <ReviewForm
           currentReview={{
             rating: currentEditingReview?.numericRating || 0,
-            comment: currentEditingReview?.reviews || ''
+            comment: currentEditingReview?.reviews || "",
           }}
           onSave={handleSaveReview}
           onCancel={handleCancelEdit}
@@ -343,8 +496,8 @@ const AdminPatientReviews: React.FC = () => {
   // Main render - conditionally show table or form with toast
   return (
     <>
-      {currentView === 'table' ? renderTableView() : renderFormView()}
-      
+      {currentView === "table" ? renderTableView() : renderFormView()}
+
       {/* Global Success Toast */}
       <Toast
         isVisible={showSuccessToast}

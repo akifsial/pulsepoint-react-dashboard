@@ -4,6 +4,7 @@ import notFoundAnimation from "@assets/animations/Not-found.json.json";
 import { Link } from "react-router-dom";
 
 const NotFoundPage:React.FC = () => {
+  const userRole=JSON.parse(localStorage.getItem("userInfo"))?.user_role
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center text-white text-center px-4"
@@ -18,7 +19,7 @@ const NotFoundPage:React.FC = () => {
           Oops! The page you're looking for doesn't exist.
         </p>
         <Link
-          to="/"
+          to="/login"
           className="inline-block mt-6 px-6 py-3 bg-[#00B57A] text-white rounded-[8px] hover:bg-green-600 transition"
         >
           Go Back Home

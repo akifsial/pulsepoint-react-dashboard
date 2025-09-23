@@ -32,7 +32,6 @@ const BillingCheckout: React.FC = () => {
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Proceeding with checkout...", formData);
     setIsCheckoutSuccessful(true);
   };
 

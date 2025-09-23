@@ -3,6 +3,7 @@ export type TanDataTableColumn<T> = {
   header: string;
   cell?: (info: any) => React.ReactNode;
   showSort?: boolean;
+  width?: string;
 };
 
 export type TanDataTableProps<T> = {
@@ -13,4 +14,5 @@ export type TanDataTableProps<T> = {
   actions?: (row: T) => React.ReactNode;
   showActions?: boolean;
   className?: string;
+  isLoading?: false;
 };

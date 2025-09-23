@@ -24,18 +24,17 @@ const OTPPage: React.FC = () => {
     return () => clearTimeout(id); // Cleanup on re-render
   }, [timer]);
 
-  const { mutateAsync: otpVerifyMutation, isPending: otpVerifyLoading } =
-    useMutation({
-      mutationFn: (otp) => ApiVerifyOtp(otp),
+  const { mutateAsync: otpVerifyMutation, isPending: otpVerifyLoading } = useMutation({
+    mutationFn: (otp) => ApiVerifyOtp(otp),
 
-      onSuccess: async () => {
-        toast.success("OTP Matched!");
-        navigate("/reset-password");
-      },
-      onError: (error) => {
-        console.error("OTP Not Matched:", error);
-      },
-    });
+    onSuccess: async () => {
+      toast.success("OTP Matched!");
+      navigate("/reset-password");
+    },
+    onError: (error) => {
+      console.error("OTP Not Matched:", error);
+    },
+  });
 
   const otpVerifySubmit = () => {
     otpVerifyMutation({ otp: otp });
@@ -44,9 +43,7 @@ const OTPPage: React.FC = () => {
     <OnBoardingLayout>
       <div className="flex  justify-center items-center py-8 ">
         <div className="p-8 rounded-xl  w-[400px]">
-          <h2 className="text-center uber-move !text-[28px] !font-semibold mb-2">
-            Account Verification
-          </h2>
+          <h2 className="text-center uber-move !text-[28px] !font-semibold mb-2">Account Verification</h2>
           <p className="text-center text-sm mb-5">Enter verify code below</p>
 
           <div className="mb-5 flex justify-center">
@@ -67,13 +64,7 @@ const OTPPage: React.FC = () => {
             />
           </div>
 
-          <PrimaryButton
-            btnText={`${
-              otpVerifyLoading ? <Spinner /> : `Verify Code In ${timer}s`
-            }`}
-            onClick={otpVerifySubmit}
-            disabled={timer == 50 && true}
-          />
+          <PrimaryButton btnText={`${otpVerifyLoading ? "Loading..." : `Verify Code In ${timer}s`}`} onClick={otpVerifySubmit} disabled={timer == 50 && true} />
 
           {/* <PrimaryButton
             btnText="Resend Code"

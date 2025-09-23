@@ -1,113 +1,104 @@
+import React, { useState, useEffect } from "react";
 import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import React from "react";
+import apiEndpoint from "@src/Shared/apiEndPoint";
+import { apiServices } from "@src/Shared/apiServices";
+import SkeletonTableLoader from "@components/Loader/SkeltonTableLoader";
+import Pagination from "@components/Pagination/Pagination";
 
+// Interface for the trending topic data structure
+interface TrendingTopicData {
+  id: number;
+  topic_name: string;
+  replies: number;
+  users: number;
+  last_active: string;
+}
 
 const CareProviderDashboard: React.FC = () => {
-  const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
-  type dataTypes = {
-    id?: number;
-    first_name?: string;
-    last_name?: string;
-    Replies?:string;
-    Users?:string;
-    date?: string;
-    LastActive?: string;
-  };
+  const [trendingTopics, setTrendingTopics] = useState<TrendingTopicData[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalRows, setTotalRows] = useState<number>(0);
 
+  const pageSize = 3;
+
+  // Function to fetch trending topics data from API
+  const fetchTrendingTopics = async (page: number) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Include pagination params
+      const response = await apiServices.get(
+        apiEndpoint.trendingTopics(`trending_topics&page=${page}&limit=${pageSize}`)
+      );
+
+      if (response.data.success) {
+        const dataWithId = response.data.payload.map((item: any, index: number) => ({
+          ...item,
+          id: (page - 1) * pageSize + index + 1, // unique id across pages
+        }));
+        setTrendingTopics(dataWithId);
+
+        // Use total count from API if available, otherwise fallback
+        setTotalRows(response.data.total || response.data.payload.length);
+      } else {
+        setError("Error: Failed to fetch data");
+      }
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setError("Failed to fetch data");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+  // Fetch data when page changes
+  useEffect(() => {
+    fetchTrendingTopics(currentPage);
+  }, [currentPage]);
+
+  // Define columns for the TanDataTable
   const columns = [
-    {
-      accessor: "id",
-      header: "Id",
-      showSort: true,
-    },
-    {
-      accessor: "userData",
-      header: "Topic Names",
-      showSort: true,
-      cell: ({ row }: any) => {
-        const { first_name, last_name, email } = row.original;
-        return (
-          <div className="flex items-center gap-3">
-            <div className="flex flex-col">
-              <span className="font-medium text-sm text-[#252525] leading-tight">
-                {first_name} {last_name}
-              </span>
-              <span className="text-xs text-gray-500 leading-tight">
-                {email}
-              </span>
-            </div>
-          </div>
-        );
-      },
-    },
-    {
-      accessor: "Replies",
-      header: "Replies",
-      showSort: true,
-    },
-    {
-      accessor: "Users",
-      header: "Users",
-      showSort: true,
-    },
-    {
-      accessor: "LastActive",
-      header: "Last Active",
-      showSort: true,
-    },
+    { accessor: "id", header: "Id", showSort: true },
+    { accessor: "topic_name", header: "Topic Names", showSort: true },
+    { accessor: "replies", header: "Replies", showSort: true },
+    { accessor: "users", header: "Users", showSort: true },
+    { accessor: "last_active", header: "Last Active", showSort: true },
   ];
 
-  const data: dataTypes[] = [
-    {
-      id: "01",
-      first_name: "Best Hospitals for Post-Surgery Rehab?",
-      Replies: "100",
-      Users: "45k",
-      LastActive: "1h ago",
-    },
-    {
-      id: "02",
-      first_name: "Signs of Quality in Nursing Homes",
-      Replies: "73",
-      Users: "1.0M",
-      LastActive: "1h ago",
-    },
-    {
-      id: "03",
-      first_name: "Home Health vs. Hospice-Whats'Right",
-      Replies: "56",
-      Users: "1.0k",
-      LastActive: "2h ago",
-    },
-    {
-      id: "04",
-      first_name: "Hidden Costs in Long-Term Care Facilities",
-      Replies: "67",
-      Users: "55k",
-      LastActive: "3h ago",
-    },
-  ];
+  if (error) return <div>{error}</div>;
 
-  const handleRowSelect = (row: Person) => {
-    console.log("Selected row:", row);
-  };
-
-  const renderActions = (row: Person) => (
-    <button onClick={() => alert(`Edit ${row.name}`)}>Edit</button>
-  );
   return (
     <div className="mb-10">
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-3 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h4>Trending Topics in Communities</h4>
+          <h4 className=" space-grotesk  text-[20px] font-bold ">Trending Topics in Communities</h4>
         </div>
         <div>
-          <TanDataTable<dataTypes>
-            columns={columns}
-            data={data}
-            showCheckbox={true}
-            onRowSelect={handleRowSelect}
-            className="my-custom-class"
+          {loading ? (
+            <p className="text-center text-gray-500 px-10 py-10">
+              <SkeletonTableLoader />
+            </p>
+          ) : (
+            <TanDataTable<TrendingTopicData>
+              columns={columns}
+              data={trendingTopics}
+              className="my-custom-class"
+            />
+          )}
+        </div>
+
+        {/* Pagination */}
+        <div className="mt-4">
+          <Pagination
+            // rowsPerPage={pageSize}
+              rowsPerPage={pageSize} // 3 rows per page
+            totalRows={totalRows}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
           />
         </div>
       </div>

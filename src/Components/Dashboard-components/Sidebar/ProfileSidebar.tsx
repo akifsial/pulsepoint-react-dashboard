@@ -5,20 +5,24 @@ import { SidebarLink } from "../Dashboard-components/Sidebar/SidebarLinks";
 
 interface SidebarProps {
   sidebarData: SidebarLink[];
-    isOpen: boolean;
+  isOpen: boolean;
   onClose: () => void;
 }
 
-const ProfileSidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
+const ProfileSidebar: React.FC<SidebarProps> = ({
+  isOpen,
+  onClose,
+  sidebarData,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
-useEffect(() => {
+  useEffect(() => {
     onClose();
   }, [location.pathname]);
   return (
     <aside
-    className={`
-    fixed top-0 z-50 w-[268px] min-h-screen bg-[#F5FBFF] shadow-lg p-4
+      className={`
+    fixed top-0 z-50 md:w-[268px] min-h-screen bg-[#F5FBFF] shadow-lg p-4
     transition-all duration-300 ease-in-out
 
     // Small screens
@@ -27,7 +31,6 @@ useEffect(() => {
     // Large screens
     lg:left-[89px] lg:block
   `}
-
     >
       <div className="space-y-2 mt-3 h-screen">
         {sidebarData.map((link, index) => {
@@ -41,7 +44,7 @@ useEffect(() => {
             <NavLink
               to={link.path}
               key={index}
-              className={`flex items-center gap-3 px-4 py-[10px] rounded-[10px] transition-all ${
+              className={`flex items-center  gap-3 px-4 py-[10px] rounded-[10px] transition-all ${
                 isActive
                   ? "bg-[#28A2FF] text-white"
                   : "text-gray-700 hover:bg-[#daeffd]"

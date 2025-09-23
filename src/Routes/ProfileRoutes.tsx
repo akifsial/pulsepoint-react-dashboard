@@ -5,10 +5,12 @@ import CareProfileLayout from "@components/ProfileLayout/CareProfileLayout";
 import PatientProfileLayout from "@components/ProfileLayout/PatientProfileLayout";
 import ProfileLayout from "@components/ProfileLayout/ProfileLayout";
 import GetFeaturePage from "@pages/ProfilePage/GetFeaturePage";
+import CareProviderGetFeaturePage from "@pages/ProfilePage/CareProviderGetFeaturePage";
 import ManagePasswordPage from "@pages/ProfilePage/ManagePasswordPage";
 import PatientProfileDetailPage from "@pages/ProfilePage/PatientProfileDetailPage";
 import ProfileDetailPage from "@pages/ProfilePage/ProfileDetailPage";
 import ProtectedRoutes from "./ProtectedRoutes";
+import PaymentHistoryPage from "@pages/ProfilePage/PaymentHistory";
 export const ProfileRoutes = [
   {
     path: "/admin",
@@ -25,22 +27,23 @@ export const ProfileRoutes = [
     children: [
       {
         path: "profile",
-        element: (
-            <ProfileDetailPage />
-        ),
+        element: <ProfileDetailPage />,
       },
       {
         path: "manage-password",
-        element: (
-            <ManagePasswordPage />
-        ),
+        element: <ManagePasswordPage />,
       },
       {
         path: "feature",
-        element: (
-            <GetFeaturePage />
-        ),
+        element: <CareProviderGetFeaturePage />,
       },
+      { path: "payment-history", element: <PaymentHistoryPage /> },
+
+      // {
+      //   path: "feature",
+      //   element: <CareProviderGetFeaturePage />,
+
+      // },
     ],
   },
   {
@@ -50,6 +53,7 @@ export const ProfileRoutes = [
       { path: "profile", element: <PatientProfile /> },
       { path: "manage-password", element: <ManagePasswordPage /> },
       { path: "feature", element: <GetFeaturePage /> },
+      { path: "payment-history", element: <PaymentHistoryPage /> },
     ],
   },
 ];

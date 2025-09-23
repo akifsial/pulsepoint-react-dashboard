@@ -33,7 +33,6 @@
 //   const handleSubmit = (e: React.FormEvent) => {
 //     e.preventDefault();
 
-//     console.log("Community Form Data:", formData);
 //     onSubmit(formData);
 //     onClose();
 //   };

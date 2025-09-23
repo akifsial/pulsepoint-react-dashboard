@@ -44,8 +44,9 @@ const ProfileLayout = () => {
           sidebarOpen={isSidebarOpen}
           setSidebarOpen={setIsSidebarOpen}
           routeProfile="/admin/profile"
+          routeSetting="/admin/manage-password"
         />
-        <main className="mt-24">
+        <main className="mt-20">
           <Outlet />
         </main>
       </div>

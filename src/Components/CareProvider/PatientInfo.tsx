@@ -22,7 +22,7 @@ const PatientInfo = ({ setShowPatientInfo }) => {
         <img src={backArrow} alt="backArrow" />
         <h2 className="text-xl font-semibold text-[#252525] font-[Space Grotesk]">
           Patient’s Profile
-        </h2>
+        </h2> 
       </div>
     <div className='bg-white pt-5 pb-8 px-6 rounded-[10px]'>
             <div className="flex items-center gap-6 mb-6">

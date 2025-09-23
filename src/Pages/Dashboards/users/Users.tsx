@@ -24,7 +24,6 @@ const Users: React.FC = () => {
     { id: 2, name: "Bob", age: 30, email: "bob@example.com" },
   ];
   const handleRowSelect = (row: Person) => {
-    console.log("Selected row:", row);
   };
 
   const renderActions = (row: Person) => (

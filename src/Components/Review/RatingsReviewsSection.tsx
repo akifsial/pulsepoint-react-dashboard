@@ -1,5 +1,6 @@
+import { useCareProviderSingle } from "@src/hooks/useDashboard";
 import { Star } from "lucide-react";
-
+import DummyImage from "@src/assets/media/images/dashboard-images/userDummy.png";
 /**
  * Review object shape.
  */
@@ -13,75 +14,111 @@ export type Review = {
   createdAt: string | Date;
 };
 
-/**
- * Stars 1‑5 (filled).
- */
-function StarRating({ rating, className = "" }: { rating: number; className?: string }) {
+
+function StarRating({
+  rating,
+  className = "",
+}: {
+  rating: number;
+  className?: string;
+}) {
   return (
     <div className={`flex items-center gap-1 ${className}`.trim()}>
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
-          className={`h-4 w-4 ${star <= rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300 fill-gray-300"}`}
+          className={`h-4 w-4 ${
+            star <= rating
+              ? "text-yellow-400 fill-yellow-400"
+              : "text-gray-300 fill-gray-300"
+          }`}
         />
       ))}
     </div>
   );
 }
 
-/**
- * Individual review card.
- */
-function ReviewCard({ review }: { review: Review }) {
+
+function ReviewCard({ review, data }: { review: Review; data?: any }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
-      {/* Rating stars at top */}
-      <div className="flex items-center gap-2 mb-4">
-        <StarRating rating={review.rating} />
-        <span className="text-sm font-medium text-gray-900">({review.rating.toFixed(1)})</span>
-      </div>
-      
-      {/* Review content */}
-      <p className="text-gray-700 text-sm leading-relaxed mb-4">
-        "{review.content}"
-      </p>
-      
-      {/* Author info */}
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
-          {review.authorAvatar ? (
-            <img 
-              src={review.authorAvatar} 
-              alt={review.authorName}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <span className="text-white font-semibold text-lg">
-              {review.authorName.charAt(0).toUpperCase()}
+    <>
+      {data?.reviews_to_careprovider
+  ?.filter((single_review) => !single_review.review_flag)?.map((single_review) => (
+        <div
+          key={single_review.id}
+          className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition"
+        >
+          {/* Rating + Date */}
+          <div className="flex items-center justify-between mb-4">
+            <StarRating rating={single_review.rating} />
+            <span className="text-xs text-gray-400">
+              {new Date(single_review.created_at).toLocaleDateString()}
             </span>
+          </div>
+
+          {/* Review content */}
+          <p className="text-gray-700 text-base leading-relaxed mb-5 italic">
+            “{single_review.content}”
+          </p>
+
+          {/* Reviewer */}
+          <div className="flex items-center gap-3">
+            <img
+              src={
+                single_review?.patient?.image
+                  ? `${import.meta.env.VITE_APP_API_IMG_URL}${single_review.patient.image}`
+                  : DummyImage
+              }
+              alt="Reviewer"
+              className="rounded-full w-12 h-12 object-cover"
+            />
+            <div>
+              <h4 className="font-semibold text-gray-900 text-sm">
+                {single_review?.patient?.first_name}{" "}
+                {single_review?.patient?.last_name}
+              </h4>
+              <p className="text-xs text-gray-500">
+                {single_review?.patient?.email}
+              </p>
+            </div>
+          </div>
+
+          {/* Provider Reply */}
+          {single_review?.replies?.length > 0 && (
+            <div className="mt-6 pl-4 border-l-4 border-blue-200">
+              <p className="text-sm font-medium text-gray-800 mb-2">
+                Provider’s Reply:
+              </p>
+              {single_review.replies.map((reply: any) => (
+                <div key={reply.id} className="flex items-start gap-3 mt-2">
+                  <img
+                    src={
+                      data?.image
+                        ? `${import.meta.env.VITE_APP_API_IMG_URL}${data.image}`
+                        : DummyImage
+                    }
+                    alt="Provider"
+                    className="rounded-full w-10 h-10 object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-gray-900 text-sm">
+                      {data?.first_name} {data?.last_name}
+                    </h4>
+                    <p className="text-xs text-gray-500">{data?.email}</p>
+                    <p className="mt-1 text-gray-700 text-sm">
+                      {reply.content}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </div>
-        <div>
-          <h4 className="font-semibold text-gray-900 text-sm">{review.authorName}</h4>
-          {review.authorTitle && (
-            <p className="text-xs text-gray-500">{review.authorTitle}</p>
-          )}
-        </div>
-        
-        {/* Quote mark */}
-        <div className="ml-auto">
-          <svg 
-            className="w-8 h-8 text-gray-300" 
-            fill="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-10zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
-          </svg>
-        </div>
-      </div>
-    </div>
+      ))}
+    </>
   );
 }
+
 
 /**
  * Ratings & Reviews section props.
@@ -95,85 +132,43 @@ export interface RatingsReviewsSectionProps {
 /**
  * Ratings & Reviews section matching the provided design.
  */
-export default function RatingsReviewsSection({ 
-  rating = 4.2, 
-  reviewCount = 37, 
-  reviews = [] 
+export default function RatingsReviewsSection({
+  rating = 4.2,
+  reviewCount = 37,
+  reviews = [],
+  id,
 }: RatingsReviewsSectionProps) {
-  
   // Sample data if no reviews provided
-  const sampleReviews: Review[] = [
-    {
-      id: 1,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date()
-    },
-    {
-      id: 2,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date()
-    },
-    {
-      id: 3,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date()
-    },
-    {
-      id: 4,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date()
-    },
-    {
-      id: 5,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date()
-    },
-       {
-      id: 6,
-      authorName: "Patricia M.",
-      authorTitle: "Dash Private Villa Project Investor",
-      rating: 5.0,
-      content: "Golden Years Rehab treated my mother like family. The staff was patient, kind, and always available. I could finally breathe knowing she was in good hands.",
-      createdAt: new Date()
-    },
-  ];
-
-  const displayReviews = reviews.length > 0 ? reviews : sampleReviews;
+  const { data } = useCareProviderSingle(id);
 
   return (
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-xl font-semibold text-gray-900">Ratings & Reviews</h2>
-        <div className="flex items-center gap-2">
-          <StarRating rating={Math.round(rating)} />
-          <span className="font-semibold text-gray-900">{rating.toFixed(1)} / 5</span>
-          <span className="text-gray-600">based on</span>
-          <span className="font-semibold text-gray-900">{reviewCount} reviews</span>
+      <div className="flex items-center flex-wrap md:justify-between justify-center md:gap-0 gap-5 justify-between mb-8">
+        <h2 className="text-xl space-grotesk font-semibold text-gray-900">
+          Ratings & Reviews
+        </h2>
+        <div className="flex items-center flex-wrap md:justify-between justify-center gap-2">
+          <StarRating
+            rating={Math.round(rating)}
+            avg_rating={Math.round(rating)}
+          />
+
+          <span className="font-semibold space-grotesk text-gray-900">
+            {" "}
+            {data?.ratingData?.display}
+          </span>
         </div>
       </div>
 
       {/* Reviews grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {displayReviews.map((review) => (
-          <ReviewCard key={review.id} review={review} />
-        ))}
+        {/* {data?.reviews_to_careprovider?.map((review) => ( */}
+        <ReviewCard data={data} />
+        {/* ))} */}
       </div>
+
+
     </div>
   );
 }

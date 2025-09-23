@@ -1,197 +1,342 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-// import downarrow from "../../assets/media/svgs/dashboard-svgs/GreenDown.svg"
-import greenarrow from "@assets/media/svgs/dashboard-svgs/greendown.svg"
-import RatingStars  from "@components/Shared-components/RatingStars";
-import InputField from "@components/InputField";
-import SelectField from "@components/SelectField";
-import Methew from "@assets/media/svgs/dashboard-svgs/userImage.svg";
-import { GoPerson } from "react-icons/go";
-import leftarrow from "@assets/media/svgs/leftarrow.svg"
-import { useNavigate } from "react-router-dom";
+import RatingStars from "@components/Shared-components/RatingStars";
+import InputField from "@components/AdminInputField/AdminInputField";
+import SelectField from "@components/AdminSelectField/AdminSelectField";
+import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 
- 
+import { GoPerson } from "react-icons/go";
+import leftarrow from "@assets/media/svgs/leftarrow.svg";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+// import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+
+
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },
   { value: "Private", label: "Private" },
   { value: "Government", label: "Government" },
 ];
- 
-const stateOptions = [
-  { value: "Punjab", label: "Punjab" },
-  { value: "Sindh", label: "Sindh" },
-  { value: "Balochistan", label: "Balochistan" },
-  { value: "KPK", label: "Khyber Pakhtunkhwa" },
+
+const cityAllOptions = [
+  { value: "New York", label: "New York" },
+  { value: "London", label: "London" },
+  { value: "Paris", label: "Paris" },
+  { value: "Dubai", label: "Dubai" },
+  { value: "Singapore", label: "Singapore" },
+  { value: "Tokyo", label: "Tokyo" },
+  { value: "Hong Kong", label: "Hong Kong" },
+  { value: "Zurich", label: "Zurich" },
+  { value: "Los Angeles", label: "Los Angeles" },
+  { value: "Monaco", label: "Monaco" },
 ];
- 
-const cityOptions = [
-  { value: "Lahore", label: "Lahore" },
-  { value: "Karachi", label: "Karachi" },
-  { value: "Quetta", label: "Quetta" },
-  { value: "Peshawar", label: "Peshawar" },
-];
- 
-const EditDetails = ({goBack}) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [organization, setOrganization] = useState("");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const navigate=useNavigate()
- 
+
+const EditDetails = ({ goBack, userData, fetchUser }) => {
+  const [organization, setOrganization] = useState(
+    userData?.organization_name || ""
+  );
+  const [state, setState] = useState(userData?.state || "");
+  const [city, setCity] = useState(userData?.city || "");
+  const [cities, setCities] = useState([]);
+  const [name, setName] = useState(
+    userData?.full_name || userData?.user_name || ""
+  );
+  const [phone, setPhone] = useState(userData?.number || "");
+  const [email, setEmail] = useState(userData?.email || "");
+  const [website, setWebsite] = useState(userData?.website_url || "");
+  const [states, setStates] = useState([]);
+  const [zip, setZip] = useState(userData?.postal_code || "");
+  const [address, setAddress] = useState(userData?.address || "");
+  const [loading, setLoading] = useState(false);
+  // const [state,setState]=useState(userData?.state || "")
+  const navigate = useNavigate();
+
+  const [debounceTimer, setDebounceTimer] = useState<any>(null);
+  const getAllOptions = (baseOptions, apiValue) => {
+    if (!apiValue) return baseOptions; // agar value hi null/undefined hai toh base options return karo
+    const exists = baseOptions.some((opt) => opt.value === apiValue);
+    return exists
+      ? baseOptions
+      : [...baseOptions, { value: apiValue, label: apiValue }];
+  };
+
+  // const cityAllOptions = getAllOptions(cities, userData?.city);
+
+  const autoSave = async () => {
+    const formData = new FormData();
+    // formData.append("user_name", name);
+    formData.append("full_name", name);
+    formData.append("number", phone);
+    formData.append("email", email);
+    formData.append("website_url", website);
+    formData.append("state", state);
+    formData.append("city", city);
+    formData.append("postal_code", zip);
+    formData.append("address", address);
+    formData.append("status", status); // ✅ status bhi send karenge
+    formData.append("organization_name", organization); // ✅ status bhi send karenge
+
+    setLoading(true);
+    try {
+      // Token localStorage se uthao
+      // const token = localStorage.getItem("token");
+      const token: string | null = JSON.parse(
+        localStorage.getItem("token") || "null"
+      );
+
+      const response = await axios.put(
+        `${import.meta.env.VITE_APP_API_URL}user/${userData?.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status == "200") {
+        fetchUser();
+        setLoading(false);
+        toast.success("Careprovider Updated Successfully");
+      }
+
+    } catch (error) {
+      setLoading(false);
+      console.error("Auto-save error:", error);
+    }
+  };
+
+  const statusOptions = [
+    { value: "ACTIVE", label: "Active" },
+    { value: "INACTIVE", label: "Inactive" },
+  ];
+
+  const [status, setStatus] = useState(userData.status || "Active");
+  // const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newStatus = e.target.value;
+    setStatus(newStatus); // ✅ sirf state update
+  };
+
+  // const dummyImage = Methew;
+
   return (
-    <>
-      <div>
-         <div className="flex items-baseline gap-2">
-        <img src={leftarrow} alt="" className="cursor-pointer" onClick={()=>goBack(false)}/>
-        <h2 className=" text-[25px] font-bold text-[#181D27] font-[Space Grotesk] mb-6">
-         Edit Care Provider Details
+    <div>
+      <div className="flex items-baseline gap-2">
+        <img
+          src={leftarrow}
+          alt=""
+          className="cursor-pointer"
+          onClick={() => goBack(false)}
+        />
+        <h2 className="text-[25px] space-grotesk font-bold text-[#181D27] font-[Space Grotesk] mb-6">
+          Edit Care Provider Details
         </h2>
       </div>
- 
-        <div className="rounded-[10px] bg-white p-10 pb-0  mb-4">
-          <div className="overflow-y-auto h-[628px]">
-       
-          <div className=" flex items-center justify-between mb-7">
-            <div className="flex items-center gap-3">
-              <img src={Methew} alt="Methew" className="rounded-[50%]"/>
-                <div className="flex items-center">
-                          <RatingStars value="5" isDisabled={true} />
-                          <p className="text-[16px] text-[#252525]">5.0</p>
-                        </div>
-              <div className="">
-               <div className="border border-[#067647] rounded-[30px] flex items-center justify-center gap-2.5 py-[5px] px-3">
-                <span className="font-medium text-[14px] text-[#067647]">Active</span>
-                <img src={greenarrow} alt="downarrow" className="h-2.5 w-2.5" />
+
+      <div className="rounded-[10px] bg-white md:p-10 p-3 mb-4">
+        <div className="overflow-y-auto h-[628px]">
+          {/* Header */}
+          <div className="flex flex-wrap items-center justify-between mb-7">
+            <div className="flex flex-wrap  items-center gap-3">
+              <div className="flex items-center gap-3">
+                <img
+                  src={
+                    userData?.image
+                      ? `${import.meta.env.VITE_APP_API_IMG_URL}${
+                          userData.image
+                        }`
+                      : dummyImage
+                  }
+                  alt={name || "Care Provider"}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = dummyImage;
+                  }}
+                  className="rounded-full w-16 h-16 object-cover"
+                />
+                <div>
+                  <h3 className="space-grotesk">{userData.user_name}</h3>
+                  <div className="flex items-center">
+                    <RatingStars
+                      value={
+                        userData?.ratingData?.avg_rating > 0
+                          ? userData.ratingData.avg_rating.toString()
+                          : userData.role_id === 2
+                          ? "2"
+                          : "3"
+                      }
+                      isDisabled={true}
+                    />
+                    <p className="text-[16px] text-[#252525] ml-1">
+                      {userData?.ratingData?.avg_rating > 0
+                        ? userData.ratingData.avg_rating.toFixed(1)
+                        : userData.role_id === 2
+                        ? "2.0"
+                        : "3.0"}
+                    </p>
+                  </div>
+                </div>
               </div>
+
+              <div>
+                <SelectField
+                  value={status}
+                  onChange={handleChange}
+                  options={statusOptions}
+                  gray={false}
+                  id="status"
+                  className={`${
+                    status == "ACTIVE"
+                      ? "!border cursor-pointer text-[#067647] !border-[#067647] !rounded-[30px] px-5 !py-0 !h-9 !w-28"
+                      : "!border cursor-pointer text-red-500 !border-red-500 !rounded-[30px] px-5 !py-0 !h-9 !w-28"
+                  }`}
+                  optionsClass="!text-black"
+                />
               </div>
             </div>
- 
-            <PrimaryButton
-              btnText="Suspend Access"
-              showImg={false}
-              img=""
-              imgClass="w-[19px] h-[19px] object-cover"
-              imgPosition="left"
-              btnClass="border-1 border-[#25252533] w-[159px] h-[46px] bg-[#FFE6E6] !rounded-[10px] px-4 py-[10px] text-base text-[#C22E00] font-medium leading-[33px] gap-2 flex items-center justify-center"
-              onClick={() => setIsModalOpen(true)}
-            />
           </div>
- 
-          <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
+
+          {/* Personal Info */}
+          <h4 className="text-xl space-grotesk font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
             Add Personal Information
           </h4>
- 
-          <div className="pb-4 mb-3 border-b-2 border-dashed border-[#252525]/30">
-            <form>
-            <div className="flex flex-wrap items-center gap-x-4">
-              <InputField
-                label="Name:"
-                id="name"
-                name="name"
-                type="text"
-                fieldName="w-[49%]"
-                icon={GoPerson}
-                placeholder="e.g., Sunrise Rehabilitation Center"
-              />
- 
-              <SelectField
-                label="Organization Type"
-                id="organization"
-                value={organization}
-                onChange={(e) => setOrganization(e.target.value)}
-                options={organizationOptions}
-                selectName="w-[49%]"
-              />
-              
- 
-              <InputField
-                label="Phone:"
-                id="tel"
-                name="tel"
-                type="tel"
-                fieldName="w-[49%]"
-                placeholder="097-765-7654"
-              />
- 
-              <InputField
-                label="Email:"
-                id="email"
-                name="email"
-                type="email"
-                fieldName="w-[49%]"
-                placeholder="contact@organization.org"
-              />
-            </div>
- 
-            <InputField
-              label="Website:"
-              id="website"
-              name="web"
-              type="text"
-              placeholder="https://www.topseniorspot.org"
-              onChange={(e) => setWebsite(e.target.value)}
-              fieldName="w-full"
-            />
- 
-            <div className="mb-6 text-base font-medium text-black leading-[140%] tracking-[0%] font-[Geist]">
-              <p className="mb-2.5">Additional Details:</p>
-              <div className="text-sm font-normal text-[#252525] py-4 px-[15px] rounded-lg border border-[#2525251A] bg-[#FBFCFD]">
-                <p>
-                  Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care. Our mission is to provide compassionate, person-centered services in a comfortable, home-like setting.Sunrise Hills Nursing Home is a full-service assisted living facility specializing in post-acute rehabilitation and long-term senior care.
-                </p>
+
+          <div className="pb-4 mb-3 border-[#252525]/30">
+            <form
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  if (!loading) {
+                    autoSave();
+                  }
+                }
+              }}
+            >
+              {/* 🔥 Grid for personal info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <InputField
+                  label="User Name:"
+                  id="name"
+                  name="name"
+                  type="text"
+                  className="pr-9"
+                  icon={GoPerson}
+                  placeholder="Enter name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  disabled={true}
+                />
+
+                <SelectField
+                  label="Organization Type"
+                  id="organization"
+                  value={organization}
+                  onChange={(e) => setOrganization(e.target.value)}
+                  options={organizationOptions}
+                />
+
+                <InputField
+                  label="Phone:"
+                  id="tel"
+                  name="tel"
+                  type="number"
+                  placeholder="097-765-7654"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+
+                <InputField
+                  label="Email:"
+                  id="email"
+                  disabled={true}
+                  name="email"
+                  type="email"
+                  placeholder="contact@organization.org"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
-            </div>
- 
-            {/* Location Info */}
-            <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
-              Location Information
-            </h4>
- 
-            <div className="flex items-center gap-4">
-              <SelectField
-                label="State"
-                id="state"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                options={stateOptions}
-                selectName="w-[32%]"
-              />
- 
-              <SelectField
-                label="City"
-                id="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                options={cityOptions}
-                selectName="w-[32%]"
-              />
- 
+
               <InputField
-                label="Zip Code:"
-                id="zip"
-                name="zip"
+                label="Website:"
+                id="website"
+                name="web"
                 type="text"
-                placeholder="78701"
-                fieldName="w-[32%]"
+                placeholder="https://www.topseniorspot.org"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                className="mt-4"
               />
-            </div>
-            <InputField
-              label="Address:"
-              id="addres"
-              name="text"
-              type="text"
-              placeholder="123 main Street,Springfield,1L 62704"
-       
+
+              {/* Location Info */}
+              <h4 className="text-xl space-grotesk font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3 mt-6">
+                Location Information
+              </h4>
+
+              {/* 🔥 Grid for location */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <InputField
+                  label="State:"
+                  id="state"
+                  name="state"
+                  type="text"
+                  placeholder="California"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                />
+
+                <SelectField
+                  label="City"
+                  id="city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  options={cityAllOptions}
+                  className="py-0 mt-1"
+                />
+
+                <InputField
+                  label="Zip Code:"
+                  id="zip"
+                  name="zip"
+                  type="number"
+                  placeholder="78701"
+                  value={zip}
+                  isZipCode={true}
+                  onChange={(e) => setZip(e.target.value)}
+                />
+              </div>
+
+              <InputField
+                label="Address:"
+                id="address"
+                name="address"
+                type="text"
+                placeholder="123 main Street, Springfield, IL 62704"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="mt-4"
+              />
+            </form>
+          </div>
+
+          {/* Save Button */}
+          <div>
+            <PrimaryButton
+              btnText={loading ? `Saving...` : "Save Changes"}
+              showImg={true}
+              imgClass="w-4 h-4"
+              btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
+              onClick={autoSave}
+              disabled={loading}
             />
-           
-          </form>
           </div>
         </div>
-        </div>
       </div>
- 
-    </>
+    </div>
   );
 };
- 
+
 export default EditDetails;
