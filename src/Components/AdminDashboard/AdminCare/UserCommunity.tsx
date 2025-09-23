@@ -48,7 +48,7 @@ const UserCommunity: React.FC<any> = ({ userData }) => {
     },
     {
       accessor: "role",
-      header: <span className="ml-7 w-35">Role</span>,
+      header: <span className=" w-35">Role</span>,
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
         const { user } = row.original;

@@ -58,7 +58,7 @@ const CategorySidebar: FC = ({ setCategoryName }) => {
   };
 
   return (
-    <div className="w-full max-w-xs rounded-2xl bg-white shadow p-4">
+    <div className="w-full rounded-2xl md:mt-0 mt-10 bg-white shadow p-4">
       {/* Heading */}
       <h2 className="text-[20px] font-normal text-[#020202] mb-2">
         Categories

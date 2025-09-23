@@ -195,16 +195,10 @@ export const ApiGetCategories = async () => {
 };
 //topseniorspot.com/wp-json/wp/v2/posts?categories=63
 
-export const ApiGetBlogsCategory = async (id,currentPage) => {
-  // console.log("asdasd")
+export const ApiGetBlogsCategory = async (id, currentPage) => {
   // const BASE_URL = `https://topseniorspot.com/wp-json/wp/v2/posts?categories=${id}`;
   let BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts/category/${id}?per_page=10`;
-  BASE_URL+=`&page=${currentPage}`
-
-  // const token = JSON.parse(localStorage.getItem("token"));
-  // const token: string | null = JSON.parse(
-  //   localStorage.getItem("token") || "null"
-  // );
+  BASE_URL += `&page=${currentPage}`;
 
   const response = await axios.get(BASE_URL);
 
@@ -226,25 +220,22 @@ export const ApiGetFeaturedPosts = async (id) => {
 export const ApiGetSingleBlog = async (id) => {
   const BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts/${id}`;
   // const token = JSON.parse(localStorage.getItem("token"));
-  // const token: string | null = JSON.parse(
-  //   localStorage.getItem("token") || "null"
-  // );
 
   const response = await axios.get(BASE_URL);
 
   return response;
 };
 
-// export const ApiGetFBlogs = async (id) => {
-//   const BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts/featured`;
-//   // const token = JSON.parse(localStorage.getItem("token"));
-//   // const token: string | null = JSON.parse(
-//   //   localStorage.getItem("token") || "null"
-//   // );
+export const ApiContactUs = async (data) => {
+  const BASE_URL = `${import.meta.env.VITE_APP_API_URL}contact`;
 
-//   const response = await axios.get(BASE_URL);
-
-//   return response;
-// };
-
-// https://topseniorspot.com/wp-json/wp/v2/posts?meta_key=featured&meta_value=1&_embed
+  try {
+    const response = await axios.post(BASE_URL, data);
+    return response.data.payload;
+  } catch (error) {
+    toast.error(error?.response?.data?.errors[0]?.message)
+    console.error("Error in ApiContactUs:", error?.response?.data?.errors[0]?.message);
+    // Optionally, throw the error again so the caller can handle it
+    throw error;
+  }
+};

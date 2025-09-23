@@ -16,7 +16,6 @@ const Pagination: React.FC<PaginationProps> = ({
   // const totalPages = Math.ceil(totalRows / rowsPerPage);
   const totalPages = Math.ceil((totalRows || 0) / rowsPerPage);
 
-
   const getPageNumbers = () => {
     const pages: (number | string)[] = [];
 
@@ -57,9 +56,8 @@ const Pagination: React.FC<PaginationProps> = ({
           Showing {currentPage * rowsPerPage - rowsPerPage + 1} to{" "}
           {currentPage * rowsPerPage} of {totalRows} entries
         </p> */}
-         <p className="font-medium text-[14px]">
-          Showing {currentPage} to {" "}
-          {totalPages} of {totalRows} entries
+        <p className="font-medium text-[14px]">
+          Showing {currentPage} to {totalPages} of {totalRows} entries
         </p>
       </div>
       <div className="flex flex-wrap md:gap-2 gap-1 items-center py-4 ">
@@ -80,7 +78,8 @@ const Pagination: React.FC<PaginationProps> = ({
             <button
               key={page}
               onClick={() => onPageChange(Number(page))}
-              className={`sm:w-8 w-5 h-8 sm:h-8 rounded cursor-pointer ${
+              // className={`sm:w-8 w-5 h-8 sm:h-8 rounded cursor-pointer ${
+              className={` px-[10px] py-[5px] rounded cursor-pointer ${
                 currentPage === page
                   ? "bg-[#003CA6] text-white"
                   : "text-black hover:bg-blue-100"

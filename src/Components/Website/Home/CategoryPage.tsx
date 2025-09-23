@@ -198,6 +198,8 @@ const CategoryPage: React.FC = () => {
   //   (cat) => cat?.id === categoryId
   // );
 
+
+console.log("cccvvvvvccccvvvvcccvvvvcccvvv",currentPage)
   useEffect(() => {
     refetch();
   }, [currentPage]);
@@ -205,7 +207,7 @@ const CategoryPage: React.FC = () => {
   return (
     <div className="w-full">
       <TopBar />
-      <UtilityRow />
+      <UtilityRow setCurrentPage={setCurrentPage} />
 
       <BannerWeb pageName={categoryParam} />
 

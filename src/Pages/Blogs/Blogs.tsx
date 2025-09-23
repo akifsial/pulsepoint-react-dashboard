@@ -183,7 +183,7 @@ const Blogs: React.FC = () => {
   const columns: TanDataTableColumn<ReviewDataTypes>[] = [
     {
       accessor: "image",
-      header: <span className="ml-7">Post Image</span>,
+      header: <span className="">Post Image</span>,
       width: "50px",
       showSort: true,
       cell: (row) => {
@@ -212,11 +212,11 @@ const Blogs: React.FC = () => {
     },
     {
       accessor: "date",
-      header: <span className="ml-7">Date</span>,
+      header: <span className="">Date</span>,
       width: "200px",
       showSort: true,
       cell: (row) => (
-        <i className="ml-9 ">
+        <i className=" ">
           {dayjs(row?.original?.created_at).format("DD/MM/YY")}
         </i>
       ),

@@ -51,7 +51,7 @@ const CareProviderDashboard: React.FC = () => {
     rating,
     filterValue,
     page,
-    sort == true ? "asc" : "desc",
+    sort == true ? "desc" : "asc",
     limit
   );
 
@@ -304,7 +304,7 @@ const CareProviderDashboard: React.FC = () => {
                 imgSrc={searchIcon}
                 imgLeft={true}
                 inputClassName="text-sm placeholder-[#252525]"
-                containerClassName="w-full border-[#252525] inter rounded-lg py-3 max-w-sm"
+                containerClassName="min-w-[320px] w-full border-[#252525] inter rounded-lg py-3 max-w-sm"
               />
             </div>
             <p className="text-[#252525] font-medium inter text-sm">Filter by</p>

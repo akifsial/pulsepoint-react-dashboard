@@ -53,7 +53,7 @@ const PatientAllCommunites: React.FC = () => {
   } = useGetAllCommunities(
     debouncedSearchText,
     page,
-    sort == true ? "asc" : "desc"
+    sort == true ? "desc" : "asc"
   );
 
   const queryClient = useQueryClient();
@@ -195,7 +195,7 @@ const PatientAllCommunites: React.FC = () => {
 
         return (
           <div
-            className="flex cursor-pointer items-center gap-3 pe-10"
+            className="flex me-3 cursor-pointer items-center gap-3 pe-10"
             onClick={() => ( userInfo?.role_type=="PATIENT" ? navigate(`/patient/community-account/${id}`) : navigate(`/care-provider/community-account/${id}`))}
           >
             <img

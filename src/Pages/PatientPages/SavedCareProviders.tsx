@@ -26,7 +26,7 @@ function SavedCareProviders({
     debouncedSearchText,
     rating,
     page,
-    sort == true ? "asc" : "desc"
+    sort == true ? "desc" : "asc"
   );
 
   const onSortClick = () => {
@@ -48,7 +48,7 @@ function SavedCareProviders({
           row.original;
         return (
           <div
-            className="flex items-center gap-3 cursor-pointer"
+            className="flex me-5 items-center gap-3 cursor-pointer"
             // onClick={() => navigate(`/patient/hospital-profile/${id}`)}
             onClick={() => navigate(`/patient/care-provider/${id}`)}
           >
@@ -59,7 +59,9 @@ function SavedCareProviders({
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
-                {organization_name}
+                {organization_name?.length > 20
+                  ? organization_name?.slice(0, 20)+"..."
+                  : organization_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
                 {email}
@@ -71,10 +73,12 @@ function SavedCareProviders({
     },
     {
       accessor: "date",
-      header: <span className="ml-7">Date</span>,
+      header: <span className="">Date</span>,
       showSort: true,
       cell: ({ row }) => (
-        <i className="ml-9">{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
+        <i className="">
+          {dayjs(row?.original?.created_at).format("DD/MM/YY")}
+        </i>
       ),
     },
     // {
@@ -120,17 +124,60 @@ function SavedCareProviders({
       accessor: "specialization",
       header: "Specialization",
       showSort: true,
+      cell: ({ getValue }) => {
+        const specialization = getValue() || "N/A";
+
+        return (
+          <div className="max-w-[180px]">
+            <span
+              className={
+                specialization === "N/A"
+                  ? "text-gray-500 flex justify-center w-[180px]"
+                  : "truncate block w-[180px] text-left"
+              }
+              title={specialization !== "N/A" ? specialization : ""}
+            >
+              {specialization}
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      accessor: "state",
+      header: <span className="">State</span>,
+      width: 200,
+      showSort: true,
+      cell: ({ getValue }) => getValue() || "N/A",
     },
     {
       accessor: "address",
       header: "Location",
       showSort: true,
+      cell: ({ getValue }) => {
+        const specialization = getValue() || "N/A";
+
+        return (
+          <div className="max-w-[150px]">
+            <span
+              className={
+                specialization === "N/A"
+                  ? "text-gray-500 flex justify-center w-[150px]"
+                  : "truncate block w-[180px] text-left"
+              }
+              title={specialization !== "N/A" ? specialization : ""}
+            >
+              {specialization}
+            </span>
+          </div>
+        );
+      },
     },
-        {
-    accessor: "postal_code",
-    header: "Zip Code",
-    showSort: true,
-  },
+    {
+      accessor: "postal_code",
+      header: "Zip Code",
+      showSort: true,
+    },
   ];
 
   const handleRowSelect = (row: dataTypes) => {};
@@ -142,26 +189,27 @@ function SavedCareProviders({
 
   return (
     <div className="">
-     { isLoadingAllSavedCareProvider ? (
-      <TableSkeletonLoader />) : (
-      <div className="overflow-x-auto w-full">
-        <TanDataTable<dataTypes>
-          columns={columns}
-          data={AllSavedCareProviders?.records ?? []}
-          showCheckbox={false}
-          onRowSelect={handleRowSelect}
-          className="my-custom-class"
-          onSortClick={onSortClick}
-        />
-      <div className="">
-        <Pagination
-          onPageChange={handlePageChange}
-          totalRows={AllSavedCareProviders?.totalRecords}
-          currentPage={page}
-          rowsPerPage={3}
-        />
-      </div>{" "}
-      </div>
+      {isLoadingAllSavedCareProvider ? (
+        <TableSkeletonLoader />
+      ) : (
+        <div className="overflow-x-auto w-full">
+          <TanDataTable<dataTypes>
+            columns={columns}
+            data={AllSavedCareProviders?.records ?? []}
+            showCheckbox={false}
+            onRowSelect={handleRowSelect}
+            className="my-custom-class"
+            onSortClick={onSortClick}
+          />
+          <div className="">
+            <Pagination
+              onPageChange={handlePageChange}
+              totalRows={AllSavedCareProviders?.totalRecords}
+              currentPage={page}
+              rowsPerPage={3}
+            />
+          </div>{" "}
+        </div>
       )}
     </div>
   );

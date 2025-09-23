@@ -106,7 +106,7 @@ const InputField: React.FC<InputFieldProps> = ({
       </div>
 
       {/* ✅ Fixed height for error */}
-      <div className="min-h-[20px] mt-1">
+      <div className="min-h-[20px]">
         {errors?.[registerName] && (
           <p className="text-sm text-red-500">
             {errors[registerName]?.message as string}

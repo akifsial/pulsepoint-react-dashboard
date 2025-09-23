@@ -39,7 +39,7 @@ const AdminPatientReviews: React.FC = () => {
     MeDataFetch();
   });
 
-  const [limit,setLimit]=useState(10)
+  const [limit, setLimit] = useState(10);
 
   const {
     data,
@@ -51,9 +51,8 @@ const AdminPatientReviews: React.FC = () => {
     rating,
     filterValue,
     page,
-    sort == true ? "asc" : "desc",
+    sort == true ? "desc" : "asc",
     limit
-
   );
 
   const onSortClick = () => {
@@ -186,7 +185,7 @@ const AdminPatientReviews: React.FC = () => {
           row.original;
         return (
           <div
-            className="flex cursor-pointer items-center gap-3"
+            className="flex me-5 cursor-pointer items-center gap-3"
             onClick={() =>
               navigate(`/patient/care-provider/${care_provider?.id}`)
             }
@@ -198,7 +197,7 @@ const AdminPatientReviews: React.FC = () => {
             />
             <div className="flex flex-col">
               <span className="font-medium text-sm text-[#252525] leading-tight">
-                {care_provider?.organization_name}
+                {care_provider?.organization_name?.length>20 ? care_provider?.organization_name?.slice(0,20)+"..." : care_provider?.organization_name}
               </span>
               <span className="text-xs text-gray-500 leading-tight">
                 {care_provider?.email}
@@ -210,11 +209,11 @@ const AdminPatientReviews: React.FC = () => {
     },
     {
       accessor: "date",
-      header: <span className="ml-7">Date</span>,
+      header: <span className="">Date</span>,
       width: "200px",
       showSort: true,
       cell: (row) => (
-        <i className="ml-9">
+        <i className="">
           {dayjs(row?.original?.created_at).format("DD/MM/YY")}
         </i>
       ),
@@ -259,7 +258,7 @@ const AdminPatientReviews: React.FC = () => {
         const totalStars = 5;
 
         if (rating === 0) {
-          return <span className="text-gray-500">N/A</span>;
+          return <span className="text-gray-500 ">N/A</span>;
         }
 
         const StarIcon = ({ filled }: { filled: boolean }) => (
@@ -281,35 +280,45 @@ const AdminPatientReviews: React.FC = () => {
             ))}
           </div>
         );
-      }
+      },
     },
     {
       accessor: "content",
       header: "Content",
       width: "150px",
       showSort: false,
-      // cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
-      //   const { reviews } = row.original;
-      //   return (
-      //     <div className="max-w-xs">
-      //       <span className="text-sm text-[#252525] line-clamp-2">
-      //         "{reviews}"
-      //       </span>
-      //     </div>
-      //   );
-      // },
+      cell: ({ getValue }) => (
+        <div className="flex max-w-[180px] justify-center">
+          {getValue() ? (
+            <span className="truncate block w-[150px] text-left">
+              {getValue()}
+            </span>
+          ) : (
+            <span className="text-gray-500">N/A</span>
+          )}
+        </div>
+      ),
     },
     {
       accessor: "address",
       header: "Location",
-      width: "180px",
       showSort: true,
-      // cell: (row) => <i>{row?.original?.care_provider?.address}</i>,
       cell: ({ row }: { row: { original: ReviewDataTypes } }) => {
         const { care_provider } = row.original;
+        const address = care_provider?.address || "N/A";
+
         return (
-          <div className="flex items-center gap-3">
-            {care_provider?.address}
+          <div className="max-w-[150px]">
+            <span
+              className={
+                address === "N/A"
+                  ? "text-gray-500 flex justify-center w-[180px]"
+                  : "truncate block w-[180px] text-left"
+              }
+              title={address !== "N/A" ? address : ""}
+            >
+              {address}
+            </span>
           </div>
         );
       },
@@ -440,14 +449,14 @@ const AdminPatientReviews: React.FC = () => {
             onDelete={handleDelete}
             // loading={deleteMutationLoading}
           />
-      <div>
-        <Pagination
-          onPageChange={handlePageChange}
-          totalRows={data?.totalRecords}
-          currentPage={page}
-          rowsPerPage={10}
-        />
-      </div>
+          <div>
+            <Pagination
+              onPageChange={handlePageChange}
+              totalRows={data?.totalRecords}
+              currentPage={page}
+              rowsPerPage={10}
+            />
+          </div>
         </div>
       </div>
     </div>

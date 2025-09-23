@@ -97,13 +97,13 @@ const HomePage = () => {
   };
   // const {data:catData}=useCategory()
 
-  if (isLoading) {
-    return (
-      <p className="text-center">
-        <Spinner />
-      </p>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <p className="text-center">
+  //       <Spinner />
+  //     </p>
+  //   );
+  // }
 
   console.log("_____________________", getBlogs);
 

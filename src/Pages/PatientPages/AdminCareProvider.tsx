@@ -30,7 +30,7 @@ export const getColumns = (
         row.original;
       return (
         <div
-          className="flex items-center gap-3 cursor-pointer"
+          className="flex me-5 max-w-[250px] items-center gap-3 cursor-pointer"
           // onClick={() => navigate(`/patient/hospital-profile/${id}`)}
           onClick={() => navigate(`/patient/care-provider/${id}`)}
         >
@@ -41,7 +41,9 @@ export const getColumns = (
           />
           <div className="flex flex-col">
             <span className="font-medium text-sm text-[#252525] leading-tight">
-              {organization_name}
+              {organization_name?.length > 20
+                ? organization_name?.slice(0, 20) + "..."
+                : organization_name}
             </span>
             <span className="text-xs text-gray-500 leading-tight">{email}</span>
           </div>
@@ -51,12 +53,10 @@ export const getColumns = (
   },
   {
     accessor: "date",
-    header: <span className="ml-7">Date</span>,
+    header: <span className="">Date</span>,
     showSort: true,
     cell: ({ row }) => (
-      <i className="ml-9">
-        {dayjs(row?.original?.created_at).format("DD/MM/YY")}
-      </i>
+      <i className="">{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
     ),
   },
   // {
@@ -77,7 +77,11 @@ export const getColumns = (
       const rating = Number(getValue()) || 0;
 
       if (rating === 0) {
-        return <span className="text-gray-500">N/A</span>;
+        return (
+          <div className="flex justify-center">
+            <span className="text-gray-500">N/A</span>
+          </div>
+        );
       }
 
       const totalStars = 5;
@@ -95,7 +99,7 @@ export const getColumns = (
       );
 
       return (
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center justify-center gap-0.5">
           {Array.from({ length: totalStars }).map((_, index) => (
             <StarIcon key={index} filled={index < rating} />
           ))}
@@ -111,22 +115,75 @@ export const getColumns = (
       const rating = Number(row.original?.overall_rating ?? 0);
 
       return rating === 0 ? (
-        <span className="text-gray-500">N/A</span>
+        <div className="flex justify-center">
+          <span className="text-gray-500">N/A</span>
+        </div>
       ) : (
-        <RatingStars value={rating} isDisabled={true} />
+        <div className="flex justify-center">
+          <RatingStars value={rating} isDisabled={true} />
+        </div>
       );
     },
   },
+  // {
+  //   accessor: "specialization",
+  //   header: "Specialization",
+  //   showSort: true,
+  //   cell: ({ getValue }) => (
+  //     <div className="flex max-w-[150px] justify-center">
+  //       {getValue() || <span className="text-gray-500">N/A</span>}
+  //     </div>
+  //   ),
+  // },
   {
     accessor: "specialization",
     header: "Specialization",
     showSort: true,
+    cell: ({ getValue }) => (
+      <div className="flex max-w-[150px] justify-center">
+        {getValue() ? (
+          <span className="truncate block w-[150px] text-left">
+            {getValue()}
+          </span>
+        ) : (
+          <span className="text-gray-500">N/A</span>
+        )}
+      </div>
+    ),
   },
   {
     accessor: "address",
     header: "Location",
     showSort: true,
+    cell: ({ getValue }) => (
+      <div className="max-w-[180px]">
+        {getValue() ? (
+          <span className="truncate block w-[180px] text-left">
+            {getValue()}
+          </span>
+        ) : (
+          <span className="text-gray-500 flex justify-center">N/A</span>
+        )}
+      </div>
+    ),
   },
+  {
+    accessor: "state",
+    header: <span className="">State</span>,
+    width: 200,
+    showSort: true,
+    cell: ({ getValue }) => getValue() || "N/A",
+
+    // cell: (info) => {
+    //   const row = info.row.original;
+    //   return (
+    //     <div className=" font-normal">
+    //       {dayjs(row?.created_at).format("DD/MM/YY") ?? "N/A"}
+    //     </div>
+    //   );
+    // },
+  },
+
   {
     accessor: "postal_code",
     header: "Zip Code",
@@ -158,7 +215,7 @@ const CareProviderDashboard: React.FC = () => {
     debouncedSearchText,
     rating,
     page,
-    sort == true ? "asc" : "desc"
+    sort == true ? "desc" : "asc"
   );
   // const {
   //   data: AllSavedCareProviders,

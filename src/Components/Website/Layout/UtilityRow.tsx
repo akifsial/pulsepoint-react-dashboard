@@ -19,7 +19,11 @@ const options = [
   { value: "strawberry", label: "Strawberry" },
   { value: "vanilla", label: "Vanilla" },
 ];
-const UtilityRow: FC = ({}) => {
+
+// interface UtilityRowProps {
+//   setCurrentPage: Dispatch<SetStateAction<number>>;
+// }
+const UtilityRow: FC = ({setCurrentPage}) => {
   const [query, setQuery] = useState("");
   const { data } = useCategory();
   const { data: CategoryData } = useGetCategories();
@@ -77,8 +81,10 @@ const UtilityRow: FC = ({}) => {
 
   const handleCategory = (id: string, name, slug) => {
     // console.log("asdasdasda", name);
+    
     setActiveCategoryId(id);
     navigate(`/web/category?id=${id}&category=${slug}`);
+    setCurrentPage(1);
   };
 
   const handleClick = () => {
@@ -96,8 +102,14 @@ const UtilityRow: FC = ({}) => {
     navigate("/login");
   };
 
-  const allowedCategories = [ "Facilities", "Health &amp; Wellness","Technology Guides","Travel &amp; Leisure","Lifestyle","Financial Advice"];
-
+  const allowedCategories = [
+    "Facilities",
+    "Health &amp; Wellness",
+    "Technology Guides",
+    "Travel &amp; Leisure",
+    "Lifestyle",
+    "Financial Advice",
+  ];
 
   // console.log("dddddddddddddd",CategoryData?.data?.data)
 

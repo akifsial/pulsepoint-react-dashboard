@@ -55,7 +55,7 @@ const TestimonialCard = ({
           alt={name}
           className="w-[50px] h-[50px] rounded-[0px] object-cover mr-4"
         />
-        <div className="flex items-center">
+      <div className="flex items-center">
           <h4 className="font-bold text-[#252525] text-[20px]">
             {feedback?.patient?.first_name} {feedback?.patient?.last_name}
           </h4>

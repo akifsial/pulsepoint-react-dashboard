@@ -167,7 +167,7 @@ const TanDataTable = <T extends object>({
                           <td
                             key={cell.id}
                             style={{ width: colDef?.width || "auto" }}
-                            className="px-2 py-5"
+                            className="px-4 py-5 "
                           >
                             {flexRender(
                               cell.column.columnDef.cell,
