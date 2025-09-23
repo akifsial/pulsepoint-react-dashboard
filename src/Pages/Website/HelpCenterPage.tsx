@@ -1,17 +1,17 @@
 import React from "react";
-import TopBar from "@components/Website/Layout/TopBar";
-import UtilityRow from "@components/Website/Layout/UtilityRow";
+import TopBar from "@src/components/Website/Layout/TopBar";
+import UtilityRow from "@src/components/Website/Layout/UtilityRow";
 import HealthPic from "@assets/media/images/dashboard-images/health-doc-banner.jpg";
-import Footer from "@components/Website/Layout/Footer";
+import Footer from "@src/components/Website/Layout/Footer";
 import BannerWeb from "@pages/Web-pages/Components/BannerWeb";
-import InputField from "@components/InputField";
+import InputField from "@src/components/InputField";
 import CategorySidebar from "@pages/Web-pages/Components/CategorySidebar";
-import { PrimaryButton } from "@components/Buttons/PrimaryButton";
+import { PrimaryButton } from "@src/components/Buttons/PrimaryButton";
 import { ApiContactUs } from "@src/api/ApiWebsite";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 
 const HelpCenterPage = () => {
   const { register,handleSubmit,formState:{errors},setValue } = useForm();

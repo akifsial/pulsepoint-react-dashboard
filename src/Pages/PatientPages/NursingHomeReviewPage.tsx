@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import NursingHomeReviews from "@components/NursingHomeReview"
+import NursingHomeReviews from "@src/components/NursingHomeReview"
 
 const NursingHomeReviewPage = () => {
   return (

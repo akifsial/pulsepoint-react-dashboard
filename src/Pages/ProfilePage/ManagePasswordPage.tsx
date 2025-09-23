@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import ManagePassword from '../../Components/Profile/ManagePassword'
+import ManagePassword from '../../components/Profile/ManagePassword'
 import { useMeApi } from '@src/hooks/useUsers';
 import { useNavigate } from 'react-router-dom';
 

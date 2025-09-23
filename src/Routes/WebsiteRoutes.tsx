@@ -1,20 +1,20 @@
 import AboutUs from "@pages/Web-pages/about-us/AboutUs";
 import HomePage from "@pages/Web-pages/home-page/HomePage";
-import SignupForm from "@components/auth/SignupForm";
-import AccountCreatedPage from "@components/auth/AccountCreatedPage";
-import LoginPage from "@components/auth/LoginPage";
-import ForgotPasswordPage from "@components/auth/ForgotPasswordPage"; // Import ForgotPasswordPage
-import ResetPasswordPage from "@components/auth/ResetPasswordPage";
-import PasswordResetSuccessPage from "@components/auth/PasswordResetSuccessPage";
-import OTPPage from "@components/auth/OTPPage";
-import PatientSignupForm from "@components/auth/PatientSignupForm";
-import RegisterForm from "@components/auth/RegisterForm/RegisterForm";
-import Fallback from "@components/auth/Fallback";
-import AdminLoginPage from "@components/auth/AdminLoginPage";
+import SignupForm from "@src/components/auth/SignupForm";
+import AccountCreatedPage from "@src/components/auth/AccountCreatedPage";
+import LoginPage from "@src/components/auth/LoginPage";
+import ForgotPasswordPage from "@src/components/auth/ForgotPasswordPage"; // Import ForgotPasswordPage
+import ResetPasswordPage from "@src/components/auth/ResetPasswordPage";
+import PasswordResetSuccessPage from "@src/components/auth/PasswordResetSuccessPage";
+import OTPPage from "@src/components/auth/OTPPage";
+import PatientSignupForm from "@src/components/auth/PatientSignupForm";
+import RegisterForm from "@src/components/auth/RegisterForm/RegisterForm";
+import Fallback from "@src/components/auth/Fallback";
+import AdminLoginPage from "@src/components/auth/AdminLoginPage";
 import AboutPage from "@pages/Website/AboutPage";
-import CategoryPage from "@components/Website/Home/CategoryPage";
+import CategoryPage from "@src/components/Website/Home/CategoryPage";
 import { PublicProtectRoute } from "./ProtectedRoutes";
-import CommunityAccountWeb from "@components/CareProvider/CommunityForum/CommunityAccountWeb";
+import CommunityAccountWeb from "@src/components/CareProvider/CommunityForum/CommunityAccountWeb";
 import FacilitiesPage from "@pages/Website/FacilitiesPage";
 import HealthPage from "@pages/Website/HealthPage";
 import HelpCenterPage from "@pages/Website/HelpCenterPage";

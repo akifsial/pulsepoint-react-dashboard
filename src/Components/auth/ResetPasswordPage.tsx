@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 
 const ResetPasswordPage = () => {
   const {

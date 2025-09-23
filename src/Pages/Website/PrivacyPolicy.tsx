@@ -1,6 +1,6 @@
-import TopBar from "@components/Website/Layout/TopBar";
-import UtilityRow from "@components/Website/Layout/UtilityRow";
-import Footer from "@components/Website/Layout/Footer";
+import TopBar from "@src/components/Website/Layout/TopBar";
+import UtilityRow from "@src/components/Website/Layout/UtilityRow";
+import Footer from "@src/components/Website/Layout/Footer";
 
 const PrivacyPolicy = () => {
   return (

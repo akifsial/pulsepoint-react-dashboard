@@ -1,5 +1,5 @@
-import InputField from "@components/InputField";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import InputField from "@src/components/InputField";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import React, { useState } from "react";
 import backArrow from "../../assets/media/svgs/dashboard-svgs/arrow-left.svg";
 import { useNavigate } from "react-router-dom";

@@ -3,7 +3,7 @@ import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
 import share from "@assets/media/svgs/dashboard-svgs/share.svg";
 import comment from "@assets/media/svgs/dashboard-svgs/comment.svg";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
+import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
 import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
 import postImage from "@assets/media/images/dashboard-images/postFallback.png";
 import dummyImage from "@assets/media/images/dummyUser.png";
@@ -23,7 +23,7 @@ import {
   useGetPopularPost,
 } from "@src/hooks/useWebsite";
 import { Link, useNavigate } from "react-router-dom";
-import LoginOrSignupModal from "@components/Model/LoginOrSignupModal";
+import LoginOrSignupModal from "@src/components/Model/LoginOrSignupModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   ApiDeleteComment,
@@ -33,11 +33,11 @@ import {
   ApiPostComment,
 } from "@src/api/ApiCommunityForum";
 import { useGetCommunityPost } from "@src/hooks/useCommunity";
-import { CommentItem } from "@components/CareProvider/CommunityForum/CommentBlock";
-import Spinner from "@components/Loaders/Spinner";
+import { CommentItem } from "@src/components/CareProvider/CommunityForum/CommentBlock";
+import Spinner from "@src/components/Loaders/Spinner";
 import { Send } from "lucide-react";
-import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
-import PostContent from "@components/PostContent";
+import FeedSkeleton from "@src/components/Loaders/CommunityFeedLoader";
+import PostContent from "@src/components/PostContent";
 import toast from "react-hot-toast";
 
 export default function Convience() {
@@ -569,8 +569,8 @@ console.log("POPOPOPO",popularPost)
                         localLikes={localLikes}
                         localCounts={localCounts}
                         handleReaction={handleReaction}
-                        localLikes={localLikes}
-                        localCounts={localCounts}
+                        // localLikes={localLikes}
+                        // localCounts={localCounts}
                         post={popularPost}
                       />
                     </div>

@@ -8,9 +8,9 @@ import {
   useGetCategories,
 } from "@src/hooks/useWebsite";
 import { useQueryClient } from "@tanstack/react-query";
-import LoginOrSignupModal from "@components/Model/LoginOrSignupModal";
+import LoginOrSignupModal from "@src/components/Model/LoginOrSignupModal";
 import friendPlus from "@assets/media/svgs/dashboard-svgs/friend-login.svg";
-import LoginModal from "@components/Model/LoginModal";
+import LoginModal from "@src/components/Model/LoginModal";
 import he from "he";
 import Select from "react-select";
 
@@ -23,7 +23,7 @@ const options = [
 // interface UtilityRowProps {
 //   setCurrentPage: Dispatch<SetStateAction<number>>;
 // }
-const UtilityRow: FC = ({setCurrentPage}) => {
+const UtilityRow: FC = ({ setCurrentPage }) => {
   const [query, setQuery] = useState("");
   const { data } = useCategory();
   const { data: CategoryData } = useGetCategories();
@@ -81,7 +81,7 @@ const UtilityRow: FC = ({setCurrentPage}) => {
 
   const handleCategory = (id: string, name, slug) => {
     // console.log("asdasdasda", name);
-    
+
     setActiveCategoryId(id);
     navigate(`/web/category?id=${id}&category=${slug}`);
     setCurrentPage(1);

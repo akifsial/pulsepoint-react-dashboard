@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import RatingStars from "@components/Shared-components/RatingStars";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import TextField from "@components/CareProvider/CommunityForum/TextField";
-import HospitalHeader from "@components/HospitalHeader";
+import RatingStars from "@src/components/Shared-components/RatingStars";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import TextField from "@src/components/CareProvider/CommunityForum/TextField";
+import HospitalHeader from "@src/components/HospitalHeader";
 import ProfilePic from "@assets/media/svgs/patient-db-svgs/hospital-prof-img.svg";
 import FeedbackForm from "@pages/PatientPages/EditFeedbackForm";
 import EditFeedbackForm from "@pages/PatientPages/EditFeedbackForm";

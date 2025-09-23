@@ -1,4 +1,4 @@
-import SiteHeader from "@components/Web-components/Site-header/SiteHeader";
+import SiteHeader from "@src/components/Web-components/Site-header/SiteHeader";
 import React from "react";
 
 const WebMainLayout: React.FC<{ children: React.ReactNode }> = ({

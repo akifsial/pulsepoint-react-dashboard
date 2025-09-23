@@ -1,8 +1,8 @@
 
 
 import React, { useState } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
 // import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 // import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 // import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
@@ -11,7 +11,7 @@ import DropdownActions from "@components/Dashboard-components/Dropdown-actions/D
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 // import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 // import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
 
 const UserTable: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);

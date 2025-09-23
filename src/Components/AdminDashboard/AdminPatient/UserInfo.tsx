@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import User from "./User";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import PatientDetails from "@components/AdminDashboard/AdminPatient/PatientDetails";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import PatientDetails from "@src/components/AdminDashboard/AdminPatient/PatientDetails";
 import downarrow from "@assets/media/svgs/downarrow.svg";
 import whitearrow from "@assets/media/svgs/whitearrow.svg";
 import edit from "@assets/media/svgs/edit.svg";

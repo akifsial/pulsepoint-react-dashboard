@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import InputField from "@components/InputField";
-import SelectField from "@components/SelectField";
+import InputField from "@src/components/InputField";
+import SelectField from "@src/components/SelectField";
 
 import { Link, useNavigate } from "react-router-dom";
-import SocialLoginSection from "@components/SocialLoginSection";
+import SocialLoginSection from "@src/components/SocialLoginSection";
 import {
   IoPersonOutline,
   IoMailOutline,
@@ -13,7 +13,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/AuthApi/AuthApi";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 import { useAllApiInsuranceTypes } from "@src/hooks/useUsers";
 import dummyImage from "@assets/media/images/signup-img.png";
 import signupLogo from "@assets/media/images/signup-logo.png";

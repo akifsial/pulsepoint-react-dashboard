@@ -12,10 +12,10 @@ import Flagblue from "@assets/media/svgs/dashboard-svgs/flag3.svg";
 import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
-import Model from "@components/Model/Model";
+import Model from "@src/components/Model/Model";
 import FlagPost from "./FlagPost";
 import SubmitReport from "./SubmitReport";
-import ShareModal from "@components/ShareModal";
+import ShareModal from "@src/components/ShareModal";
 import {
   ApiDeleteComment,
   ApiDeletePost,
@@ -34,11 +34,11 @@ import {
 import toast from "react-hot-toast";
 import { useGetCommunityPostSaved } from "@src/hooks/useCommunity";
 import { useGetSingleUser } from "@src/hooks/useCommunity";
-import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
+import FeedSkeleton from "@src/components/Loaders/CommunityFeedLoader";
 import { CommentItem } from "./CommentBlock";
 import DeleteModal from "@src/components/Model/DeleteModal";
-import Spinner from "@components/Loaders/Spinner";
-import PostContent from "@components/PostContent";
+import Spinner from "@src/components/Loaders/Spinner";
+import PostContent from "@src/components/PostContent";
 
 
 const CommunityFeed = ({ setOpenBackFeed, setPostIdFeed, data }) => {

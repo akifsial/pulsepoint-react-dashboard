@@ -11,8 +11,8 @@ import FlagReviewIcon from "@assets/media/svgs/dashboard-svgs/flag4.svg";
 import { ApiReplyOnReview } from "@src/api/ApiCommunityForum";
 import { useForm } from "react-hook-form";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import FlagModal from "@components/Model/FlagModal";
-import PatientReviewLoader from "@components/Loaders/PatientReviewLoader";
+import FlagModal from "@src/components/Model/FlagModal";
+import PatientReviewLoader from "@src/components/Loaders/PatientReviewLoader";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 
 interface PatientReviewsCardProps {

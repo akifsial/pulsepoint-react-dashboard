@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
 
 const UserCommunityPatient: React.FC<any> = (userData) => {
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import OnBoardingLayout from "./OnBoradingLayout";
 import OtpInput from "react-otp-input";
-import { PrimaryButton } from "@components/Buttons/PrimaryButton";
+import { PrimaryButton } from "@src/components/Buttons/PrimaryButton";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { ApiVerifyOtp } from "@src/api/AuthApi/AuthApi";
 import { useNavigate } from "react-router-dom";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 
 const OTPPage: React.FC = () => {
   const [otp, setOtp] = useState("");

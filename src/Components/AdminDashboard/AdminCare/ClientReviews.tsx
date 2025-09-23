@@ -1,6 +1,6 @@
 import React from "react";
 // import { IoIosCloseCircleOutline } from "react-icons/io";
-import RatingStars from "@components/Shared-components/RatingStars";
+import RatingStars from "@src/components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 
 interface Review {

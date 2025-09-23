@@ -1,7 +1,7 @@
-import TopBar from "@components/Website/Layout/TopBar";
-import UtilityRow from "@components/Website/Layout/UtilityRow";
+import TopBar from "@src/components/Website/Layout/TopBar";
+import UtilityRow from "@src/components/Website/Layout/UtilityRow";
 import facilityImg from "@assets/media/images/dashboard-images/about-banner.png"; // replace with your image
-import Footer from "@components/Website/Layout/Footer";
+import Footer from "@src/components/Website/Layout/Footer";
 
 const FacilitiesPage = () => {
   return (

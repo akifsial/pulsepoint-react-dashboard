@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminPatient from '@components/AdminDashboard/AdminPatient/AdminPatient'
+import AdminPatient from '@src/components/AdminDashboard/AdminPatient/AdminPatient'
 
 const AdminPatientsManagement = () => {
   return (

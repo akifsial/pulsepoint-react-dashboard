@@ -10,11 +10,11 @@ import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 import postImage from "../../../assets/media/images/dashboard-images/postImage.png";
-import Model from "@components/Model/Model";
+import Model from "@src/components/Model/Model";
 // import FlagPost from "./FlagPost";
 import FlagPost from "./CareProvider/CommunityForum/FlagPost";
 import SubmitReport from "./CareProvider/CommunityForum/SubmitReport";
-import ShareModal from "@components/ShareModal";
+import ShareModal from "@src/components/ShareModal";
 import {
   ApiDeleteComment,
   ApieSaveCreatePost,
@@ -33,9 +33,9 @@ import toast from "react-hot-toast";
 import arrowUpTrans from "@assets/media/svgs/dashboard-svgs/arrowUp.svg";
 import { useGetCommunityPost } from "@src/hooks/useCommunity";
 import { useGetSingleUser } from "@src/hooks/useCommunity";
-import FeedSkeleton from "@components/Loaders/CommunityFeedLoader";
+import FeedSkeleton from "@src/components/Loaders/CommunityFeedLoader";
 import { CommentItem } from "./CareProvider/CommunityForum/CommentBlock";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
 
 const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [activeTab, setActiveTab] = useState("home");

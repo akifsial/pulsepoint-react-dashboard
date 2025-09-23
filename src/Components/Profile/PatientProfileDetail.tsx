@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
-import Model from "@components/Model/Model";
+import Model from "@src/components/Model/Model";
 import ChangePhoto from "./ChangePhoto";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import InputField from "@components/InputField";
-import SelectField from "@components/SelectField";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import InputField from "@src/components/InputField";
+import SelectField from "@src/components/SelectField";
 
 import Methew from "../../assets/media/svgs/dashboard-svgs/methew.svg";
 import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";

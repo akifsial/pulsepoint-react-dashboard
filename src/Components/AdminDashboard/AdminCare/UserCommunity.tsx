@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
-import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
 import { divide } from "lodash";
 
 const UserCommunity: React.FC<any> = ({ userData }) => {

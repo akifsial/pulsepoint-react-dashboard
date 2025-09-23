@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Clock, Heart, Users } from "lucide-react";
-import Button from "@components/Website/Shared/Button";
-import CategoryCard from "@components/Website/Home/CategoryCard";
-import ServiceCard from "@components/Website/Home/ServiceCard";
-import ProfessionalCard from "@components/Website/Home/ProfessionalCard";
-import { TestimonialCarousel } from "@components/Website/Home/TestimonialCard";
-import ResourceCard from "@components/Website/Home/ResourceCard";
-import ProcessStep from "@components/Website/Home/ProcessStep";
-import Header from "@components/Website/Layout/Header";
+import Button from "@src/components/Website/Shared/Button";
+import CategoryCard from "@src/components/Website/Home/CategoryCard";
+import ServiceCard from "@src/components/Website/Home/ServiceCard";
+import ProfessionalCard from "@src/components/Website/Home/ProfessionalCard";
+import { TestimonialCarousel } from "@src/components/Website/Home/TestimonialCard";
+import ResourceCard from "@src/components/Website/Home/ResourceCard";
+import ProcessStep from "@src/components/Website/Home/ProcessStep";
+import Header from "@src/components/Website/Layout/Header";
 import { useBlog, useCategory, useGetBlogs } from "@src/hooks/useWebsite";
 import dummyImage from "@assets/media/images/dummyUser.png"
 const HomePage = () => {

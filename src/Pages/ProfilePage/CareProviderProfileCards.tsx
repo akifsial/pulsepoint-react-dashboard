@@ -2,7 +2,7 @@ import React from "react";
 import tickGreen from "../../assets/media/svgs/dashboard-svgs/tick-circle.svg";
 import crown from "../../assets/media/svgs/dashboard-svgs/crown.svg";
 import crownWhite from "../../assets/media/svgs/dashboard-svgs/crownWhite.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 
 const plans = [
   {

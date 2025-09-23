@@ -1,5 +1,5 @@
 // import ChartComponent from "../../../AdminDashboard/ChartComponent/Chart.jsx"
-import ChartComponent from "@components/AdminDashboard/ChartComponent/Chart";
+import ChartComponent from "@src/components/AdminDashboard/ChartComponent/Chart";
 
 const TopReview = () => {
   return (

@@ -1,4 +1,4 @@
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 
 interface DeleteConfirmationModalProps {
   userId: string | number;

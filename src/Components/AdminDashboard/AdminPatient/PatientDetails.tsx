@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import InputField from "@components/AdminInputField/AdminInputField";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import InputField from "@src/components/AdminInputField/AdminInputField";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import SelectField from "@components/AdminSelectField/AdminSelectField";
+import SelectField from "@src/components/AdminSelectField/AdminSelectField";
 import { GoPerson } from "react-icons/go";
 import leftarrow from "@assets/media/svgs/leftarrow.svg";
 import { useNavigate } from "react-router-dom";

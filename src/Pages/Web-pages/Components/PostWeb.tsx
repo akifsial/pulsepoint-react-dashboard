@@ -1,4 +1,4 @@
-import Pagination from "@components/Pagination/Pagination";
+import Pagination from "@src/components/Pagination/Pagination";
 import {
   useGetBlogsCategory,
   useGetCategoryBlogs,

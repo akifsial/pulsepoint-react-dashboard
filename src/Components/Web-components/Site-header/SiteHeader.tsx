@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
-import { siteHeaderLinks } from "@components/Web-components/Site-header/SiteHeaderLinks";
+import { siteHeaderLinks } from "@src/components/Web-components/Site-header/SiteHeaderLinks";
 import siteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import "./SiteHeader.css";
 
 const SiteHeader: React.FC = () => {

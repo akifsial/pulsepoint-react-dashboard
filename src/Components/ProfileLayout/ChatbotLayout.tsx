@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
-import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
-import { PatientSidebarLinks } from "@components/Dashboard-components/Sidebar/SidebarLinks";
-import ChatbotSidebar from "@components/ChatbotSidebar";
-import ChatbotAi from "@components/ChatbotAi";
-import NursingHomeReview from "@components/NursingHomeReview";
+import DashboardHeader from "@src/components/Dashboard-components/Dashboard-header/DashboardHeader";
+import Sidebar from "@src/components/Dashboard-components/Sidebar/Sidebar";
+import { PatientSidebarLinks } from "@src/components/Dashboard-components/Sidebar/SidebarLinks";
+import ChatbotSidebar from "@src/components/ChatbotSidebar";
+import ChatbotAi from "@src/components/ChatbotAi";
+import NursingHomeReview from "@src/components/NursingHomeReview";
 import {
   AdminSidebarLinks,
   CareProfileSidebarLinks,
   ProfileSidebarLinks,
   sidebarLinks,
-} from "@components/Dashboard-components/Sidebar/SidebarLinks";
+} from "@src/components/Dashboard-components/Sidebar/SidebarLinks";
 
 // Chatbot-specific links
 const chatbotSidebarLinks = [

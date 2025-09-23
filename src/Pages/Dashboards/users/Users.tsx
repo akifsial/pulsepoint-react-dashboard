@@ -1,7 +1,7 @@
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import React from "react";
 import { Person } from "./types";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
 
 const Users: React.FC = () => {
   const columns = [

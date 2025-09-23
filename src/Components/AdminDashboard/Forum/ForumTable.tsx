@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useMemo } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
+import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
 import ViewCommunity from "./ViewCommunity";
-import Model from "@components/Model/Model";
+import Model from "@src/components/Model/Model";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
+import RatingFilterDropdown from "@src/components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import { apiServices } from "@src/Shared/apiServices";
 import apiEndpoint from "@src/Shared/apiEndPoint";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { apiGet, apiPost, apiPut } from "@src/Auth/Auth";
-import Pagination from "@components/Pagination/Pagination";
-import SkeletonTableLoader from "@components/Loader/SkeltonTableLoader";
+import Pagination from "@src/components/Pagination/Pagination";
+import SkeletonTableLoader from "@src/components/Loader/SkeltonTableLoader";
 import AdminDropdownAction from "../AdminDropdownAction/AdminDropdownAction";
 
 // Define the dataTypes type

@@ -11,9 +11,9 @@ import dayjs from "dayjs";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
 import arrowUp from "@assets/media/svgs/arrowUp.svg";
 import { IoEllipsisHorizontal, IoEllipsisVerticalSharp } from "react-icons/io5";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
-import DeleteDropdownActions from "@components/Dashboard-components/Dropdown-actions/DeleteDropdownActions";
-import Spinner from "@components/Loaders/Spinner";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
+import DeleteDropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DeleteDropdownActions";
+import Spinner from "@src/components/Loaders/Spinner";
 
 export const CommentItem = ({
   comment,

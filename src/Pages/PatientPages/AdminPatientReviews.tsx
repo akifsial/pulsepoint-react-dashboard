@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
-import RatingStars from "@components/Shared-components/RatingStars";
+import RatingFilterDropdown from "@src/components/Dashboard-components/Dropdowns/RatingFilterDropdown";
+import RatingStars from "@src/components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
-import ReviewForm from "@components/Review/ReviewForm";
-import Toast from "@components/Toast/Toast";
+import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
+import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
+import ReviewForm from "@src/components/Review/ReviewForm";
+import Toast from "@src/components/Toast/Toast";
 import { useApiMyReviews } from "@src/hooks/useMyReviews";
 import dayjs from "dayjs";
-import Pagination from "@components/Pagination/Pagination";
+import Pagination from "@src/components/Pagination/Pagination";
 import DeleteModal from "@src/components/Model/DeleteModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiDeleteMyReviews } from "@src/api/ApiMyReviews";
 import { useNavigate } from "react-router-dom";
-import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import TableSkeletonLoader from "@src/components/Loaders/TableSkeletonLoader";
 import { useMeApi } from "@src/hooks/useUsers";
 
 const AdminPatientReviews: React.FC = () => {

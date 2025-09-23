@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
+import StatsCommonCards from "@src/components/Dashboard-components/Cards/StatsCommonCards";
 import flag from "@assets/media/svgs/flag.svg";
 import hospital from "@assets/media/svgs/hospital.svg";
 import people from "@assets/media/svgs/people.svg";

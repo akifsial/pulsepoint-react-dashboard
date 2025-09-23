@@ -1,6 +1,6 @@
-import DashboardHeader from "@components/Dashboard-components/Dashboard-header/DashboardHeader";
-import Sidebar from "@components/Dashboard-components/Sidebar/Sidebar";
-import {AdminSidebarLinks } from "@components/Dashboard-components/Sidebar/SidebarLinks";
+import DashboardHeader from "@src/components/Dashboard-components/Dashboard-header/DashboardHeader";
+import Sidebar from "@src/components/Dashboard-components/Sidebar/Sidebar";
+import {AdminSidebarLinks } from "@src/components/Dashboard-components/Sidebar/SidebarLinks";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 

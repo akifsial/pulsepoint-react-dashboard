@@ -143,8 +143,8 @@
 
 import { useState, useEffect } from "react";
 
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import InputField from "@components/AdminInputField/AdminInputField";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import InputField from "@src/components/AdminInputField/AdminInputField";
 import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
 import { RxPerson } from "react-icons/rx";
 import { RiMailOpenLine } from "react-icons/ri";

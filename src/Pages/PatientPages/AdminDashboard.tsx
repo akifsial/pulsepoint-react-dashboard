@@ -1,20 +1,20 @@
-import StatsCommonCards from "@components/Dashboard-components/Cards/StatsCommonCards";
+import StatsCommonCards from "@src/components/Dashboard-components/Cards/StatsCommonCards";
 import React, { useState, useRef, useEffect } from "react";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
-import RatingStars from "@components/Shared-components/RatingStars";
+import RatingFilterDropdown from "@src/components/Dashboard-components/Dropdowns/RatingFilterDropdown";
+import RatingStars from "@src/components/Shared-components/RatingStars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import ReviewCard from "@components/ReviewCard";
+import ReviewCard from "@src/components/ReviewCard";
 import MessageIcon from "@assets/media/svgs/dashboard-svgs/message-time.svg";
 import dayjs from "dayjs";
 import { Search, Clock } from "lucide-react";
@@ -36,12 +36,12 @@ import ActiveInactiveModal from "@src/components/Model/ActiveInactiveModal";
 import toast from "react-hot-toast";
 // Import or define your Modal component
 import { X } from "lucide-react";
-import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import TableSkeletonLoader from "@src/components/Loaders/TableSkeletonLoader";
 import { useMeApi } from "@src/hooks/useUsers";
 import LikeIcon from "@assets/media/svgs/dashboard-svgs/like-tag2.svg";
 import axios from "axios";
 import userDown from "@assets/media/svgs/dashboard-svgs/user-down-01.svg";
-import Pagination from "@components/Pagination/Pagination";
+import Pagination from "@src/components/Pagination/Pagination";
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">

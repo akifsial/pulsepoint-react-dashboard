@@ -12,7 +12,7 @@ import {
   ApiCreatePostCommunity,
 } from "@src/api/ApiCommunityForum";
 import { useForm } from "react-hook-form";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 // import {
 //   QueryClient,
 //   useMutation,

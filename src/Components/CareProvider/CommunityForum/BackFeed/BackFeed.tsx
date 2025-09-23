@@ -5,12 +5,12 @@ import topSenior from "../../../../assets/media/images/dashboard-images/topSerni
 import Calender from "../../../../assets/media/svgs/dashboard-svgs/calendar.svg";
 import PrivateLock from "@assets/media/svgs/dashboard-svgs/PrivateLock.png";
 import Global from "../../../../assets/media/svgs/dashboard-svgs/global.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
 import OurFeed from "../OurFeed";
-import Model from "@components/Model/Model";
+import Model from "@src/components/Model/Model";
 import CreatePost from "./CreatePost";
-import PatientInfo from "@components/CareProvider/PatientInfo";
+import PatientInfo from "@src/components/CareProvider/PatientInfo";
 
 const BackFeed = ({ setOpenBackFeed, selectedCommunity }) => {
   const [joined, setJoined] = useState(false);

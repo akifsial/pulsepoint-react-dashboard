@@ -22,7 +22,7 @@ import {
   CommunityIconWhite,
   CommunityIconBlack,
   CommunityIconBlue,
-} from "@components/CommunitiesSVG";
+} from "@src/components/CommunitiesSVG";
 import moneyIcon from "@assets/media/svgs/dashboard-svgs/money.svg";
 import manage from "@assets/media/svgs/dashboard-svgs/manage.svg";
 import manageActive from "@assets/media/svgs/dashboard-svgs/manageActive.svg";

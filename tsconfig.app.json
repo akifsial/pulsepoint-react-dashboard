@@ -28,7 +28,7 @@
     "baseUrl": ".",
     "paths": {
       "@types/*": ["src/types/*"],
-      "@components/*": ["src/Components/*"],
+      "@components/*": ["src/components/*"],
       "@pages/*": ["src/Pages/*"],
       "@assets/*": ["src/assets/*"],
       "@layouts/*": ["src/Layouts/*"],
@@ -37,5 +37,5 @@
       "@src/*": ["src/*"]
     }
   },
-  "include": ["src", "src/Components/AdminDashboard/Reports/ReportCharts/VisitorChart.tsx"]
+  "include": ["src", "src/components/AdminDashboard/Reports/ReportCharts/VisitorChart.tsx"]
 }

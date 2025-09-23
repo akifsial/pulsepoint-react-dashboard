@@ -147,13 +147,13 @@ import TopBar from "../Layout/TopBar";
 import UtilityRow from "../Layout/UtilityRow";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 import BannerWeb from "@pages/Web-pages/Components/BannerWeb";
 import PostWeb from "@pages/Web-pages/Components/PostWeb";
 import CategoriesTab from "@pages/Web-pages/Components/CategoriesTab";
 import CategorySidebar from "@pages/Web-pages/Components/CategorySidebar";
-import Pagination from "@components/Pagination/Pagination";
-import WebPagination from "@components/Pagination/WebPagination";
+import Pagination from "@src/components/Pagination/Pagination";
+import WebPagination from "@src/components/Pagination/WebPagination";
 
 const CategoryPage: React.FC = () => {
   // const [categoryId, setCategoryId] = useState<string | null>(null);

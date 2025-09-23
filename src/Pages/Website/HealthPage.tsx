@@ -1,9 +1,9 @@
-import TopBar from "@components/Website/Layout/TopBar";
-import UtilityRow from "@components/Website/Layout/UtilityRow";
+import TopBar from "@src/components/Website/Layout/TopBar";
+import UtilityRow from "@src/components/Website/Layout/UtilityRow";
 import HealthPhoto from "@assets/media/images/dashboard-images/health-care-page.jpg";
 
 import React from "react";
-import Footer from "@components/Website/Layout/Footer";
+import Footer from "@src/components/Website/Layout/Footer";
 
 const HealthPage = () => {
   return (

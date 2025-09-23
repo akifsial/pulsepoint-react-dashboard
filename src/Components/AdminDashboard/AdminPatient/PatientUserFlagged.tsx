@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
 
 // Type definition for the post_flag API structure
 interface PostFlag {

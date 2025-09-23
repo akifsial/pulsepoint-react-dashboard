@@ -5,7 +5,7 @@ import { PatientRoutes } from "./PatientRoutes";
 import { AdminRoutes } from "./AdminRoutes";
 import NotFoundPage from "@pages/NotFoundPage";
 import { ProfileRoutes } from "./ProfileRoutes";
-import ChatbotLayout from "@components/ProfileLayout/ChatbotLayout";
+import ChatbotLayout from "@src/components/ProfileLayout/ChatbotLayout";
 import { ProtectedRoutes, PublicProtectRoute } from "./ProtectedRoutes";
 import { TokenHandler } from "./TokenHandler";
 import PatientLayout from "@layouts/PatientLayout";

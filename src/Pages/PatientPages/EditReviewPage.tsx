@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import ReviewForm from "@components/Review/ReviewForm";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import ReviewForm from "@src/components/Review/ReviewForm";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 
 interface LocationState {
   reviewData: {

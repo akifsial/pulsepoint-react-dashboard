@@ -7,14 +7,14 @@ import AdminReportsandAnalytics from "@pages/AdminDashboardPages/AdminReportsand
 import AdminDashboard from "@pages/AdminDashboardPages/AdminDashboard";
 import AdminReviews from "@pages/AdminDashboardPages/AdminReviews";
 import NotificationPage from "@pages/Dashboards/Care-provider/NotificationPage";
-import UserInfoWrapper from "@components/AdminDashboard/AdminPatient/UserInfoWrapper";
-import UserInfoWrapperCareProvider from "@components/AdminDashboard/AdminCare/UserInfoWrapperCareProvider";
-import ViewCommunity from "@components/AdminDashboard/Forum/ViewCommunity";
-import ReviewDetail from "@components/AdminDashboard/Reviews/ReviewDetail";
+import UserInfoWrapper from "@src/components/AdminDashboard/AdminPatient/UserInfoWrapper";
+import UserInfoWrapperCareProvider from "@src/components/AdminDashboard/AdminCare/UserInfoWrapperCareProvider";
+import ViewCommunity from "@src/components/AdminDashboard/Forum/ViewCommunity";
+import ReviewDetail from "@src/components/AdminDashboard/Reviews/ReviewDetail";
 import Blogs from "@pages/Blogs/Blogs";
 import HomePage from "@pages/Web-pages/home-page/HomePage";
-import CategoryPage from "@components/Website/Home/CategoryPage";
-import CommunitiesSpinner from "@components/Loaders/CommunitiesSpinner";
+import CategoryPage from "@src/components/Website/Home/CategoryPage";
+import CommunitiesSpinner from "@src/components/Loaders/CommunitiesSpinner";
 
 export const AdminRoutes = [
   {

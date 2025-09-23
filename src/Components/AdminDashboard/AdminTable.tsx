@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import apiEndpoint from "@src/Shared/apiEndPoint";
 import { apiServices } from "@src/Shared/apiServices";
-import SkeletonTableLoader from "@components/Loader/SkeltonTableLoader";
-import Pagination from "@components/Pagination/Pagination";
+import SkeletonTableLoader from "@src/components/Loader/SkeltonTableLoader";
+import Pagination from "@src/components/Pagination/Pagination";
 
 // Interface for the trending topic data structure
 interface TrendingTopicData {

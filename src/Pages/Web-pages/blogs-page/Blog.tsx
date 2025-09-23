@@ -1,5 +1,5 @@
-import TopBar from "@components/Website/Layout/TopBar";
-import UtilityRow from "@components/Website/Layout/UtilityRow";
+import TopBar from "@src/components/Website/Layout/TopBar";
+import UtilityRow from "@src/components/Website/Layout/UtilityRow";
 import { useGetSingleBlog } from "@src/hooks/useWebsite";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";

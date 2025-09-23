@@ -10,7 +10,7 @@ import {
   SortingState,
 } from "@tanstack/react-table";
 
-import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import TableSkeletonLoader from "@src/components/Loaders/TableSkeletonLoader";
 import { TanDataTableProps } from "./types";
 
 const TanDataTable = <T extends object>({

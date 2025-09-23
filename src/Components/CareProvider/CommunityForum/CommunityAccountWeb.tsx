@@ -5,13 +5,13 @@ import topSenior from "@assets/media/images/dashboard-images/topSernior.jpg";
 import PrivateLock from "@assets/media/svgs/dashboard-svgs/PrivateLock.png";
 import Calender from "@assets/media/svgs/dashboard-svgs/calendar.svg";
 import Global from "@assets/media/svgs/dashboard-svgs/global.svg";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
 import OurFeed from "./OurFeed";
-import Model from "@components/Model/Model";
+import Model from "@src/components/Model/Model";
 // import CreatePost from "./Notification/Notification";
 import CreatePost from "./BackFeed/CreatePost";
-import PatientInfo from "@components/CareProvider/PatientInfo";
+import PatientInfo from "@src/components/CareProvider/PatientInfo";
 import { useGetSpecificCommunity } from "@src/hooks/useCommunity";
 import { useLocation, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -20,15 +20,15 @@ import {
   ApiJoinCommunity,
 } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
-import LeaveCommunityModal from "@components/Model/LeaveCommunityModal";
+import LeaveCommunityModal from "@src/components/Model/LeaveCommunityModal";
 import { useNavigate } from "react-router-dom";
-import Spinner from "@components/Loaders/Spinner";
-import CommunityAccountPosts from "@components/CommunityAccountPosts";
+import Spinner from "@src/components/Loaders/Spinner";
+import CommunityAccountPosts from "@src/components/CommunityAccountPosts";
 import PopularCommunity from "./PopularCommunity";
-import CommunitiesSpinner from "@components/Loaders/CommunitiesSpinner";
+import CommunitiesSpinner from "@src/components/Loaders/CommunitiesSpinner";
 import DeleteModal from "@src/components/Model/DeleteModal";
-import TopBar from "@components/Website/Layout/TopBar";
-import UtilityRow from "@components/Website/Layout/UtilityRow";
+import TopBar from "@src/components/Website/Layout/TopBar";
+import UtilityRow from "@src/components/Website/Layout/UtilityRow";
 import { useCategory } from "@src/hooks/useWebsite";
 
 const CommunityAccountWeb = ({ setOpenBackFeed }) => {

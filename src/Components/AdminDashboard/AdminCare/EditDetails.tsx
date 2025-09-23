@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-import RatingStars from "@components/Shared-components/RatingStars";
-import InputField from "@components/AdminInputField/AdminInputField";
-import SelectField from "@components/AdminSelectField/AdminSelectField";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import RatingStars from "@src/components/Shared-components/RatingStars";
+import InputField from "@src/components/AdminInputField/AdminInputField";
+import SelectField from "@src/components/AdminSelectField/AdminSelectField";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 
 import { GoPerson } from "react-icons/go";

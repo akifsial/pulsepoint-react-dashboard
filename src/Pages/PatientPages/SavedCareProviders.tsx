@@ -1,11 +1,11 @@
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import { useAllSavedCareProviders } from "@src/hooks/useUsers";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import Pagination from "@components/Pagination/Pagination";
-import TableSkeletonLoader from "@components/Loaders/TableSkeletonLoader";
+import Pagination from "@src/components/Pagination/Pagination";
+import TableSkeletonLoader from "@src/components/Loaders/TableSkeletonLoader";
 // import columns from "@pages/PatientPages/";
 function SavedCareProviders({
   debouncedSearchText,

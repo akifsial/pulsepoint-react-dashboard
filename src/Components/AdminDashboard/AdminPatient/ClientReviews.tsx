@@ -3,7 +3,7 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import userImage from "@assets/media/svgs/dashboard-svgs/userImage.svg";
 import userReview from "@assets/media/svgs/dashboard-svgs/userReview.svg";
 import flag from "@assets/media/svgs/dashboard-svgs/flag2.svg";
-import RatingStars from "@components/Shared-components/RatingStars";
+import RatingStars from "@src/components/Shared-components/RatingStars";
 import close from "@assets/media/svgs/dashboard-svgs/close-circle.svg"
 
 interface ClientReviewsProps {

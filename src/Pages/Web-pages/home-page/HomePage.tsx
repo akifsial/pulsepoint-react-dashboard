@@ -13,17 +13,17 @@
 
 // import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Button from "@components/Website/Shared/Button";
-import CategoryCard from "@components/Website/Home/CategoryCard";
-import ServiceCard from "@components/Website/Home/ServiceCard";
-import ProfessionalCard from "@components/Website/Home/ProfessionalCard";
-import { TestimonialCarousel } from "@components/Website/Home/TestimonialCard";
-import ResourceCard from "@components/Website/Home/ResourceCard";
-import ProcessStep from "@components/Website/Home/ProcessStep";
-import TopBar from "@components/Website/Layout/TopBar";
-import Header from "@components/Website/Layout/Header";
-import UtilityRow from "@components/Website/Layout/UtilityRow";
-import FeaturedArticleCard from "@components/Website/Home/FeaturedArticleCard";
+import Button from "@src/components/Website/Shared/Button";
+import CategoryCard from "@src/components/Website/Home/CategoryCard";
+import ServiceCard from "@src/components/Website/Home/ServiceCard";
+import ProfessionalCard from "@src/components/Website/Home/ProfessionalCard";
+import { TestimonialCarousel } from "@src/components/Website/Home/TestimonialCard";
+import ResourceCard from "@src/components/Website/Home/ResourceCard";
+import ProcessStep from "@src/components/Website/Home/ProcessStep";
+import TopBar from "@src/components/Website/Layout/TopBar";
+import Header from "@src/components/Website/Layout/Header";
+import UtilityRow from "@src/components/Website/Layout/UtilityRow";
+import FeaturedArticleCard from "@src/components/Website/Home/FeaturedArticleCard";
 import Independent from "@assets/media/website/independent.svg";
 import Memory from "@assets/media/website/memory.svg";
 import NursingFacility from "@assets/media/website/nursing-facility.svg";
@@ -41,10 +41,10 @@ import Bluprint from "@assets/media/website/blueprint.svg";
 import Rating from "@assets/media/website/rating.svg";
 import Agreement from "@assets/media/website/agreement.svg";
 import Carousal from "@assets/media/website/icons/carousal-icon.svg";
-import SmallArticleCard from "@components/Website/Home/SmallArticleCard";
-import Footer from "@components/Website/Layout/Footer";
-import ArrowButtonGroup from "@components/Website/Shared/ArrowButtonGroup";
-import Convience from "@components/Website/Home/Convience";
+import SmallArticleCard from "@src/components/Website/Home/SmallArticleCard";
+import Footer from "@src/components/Website/Layout/Footer";
+import ArrowButtonGroup from "@src/components/Website/Shared/ArrowButtonGroup";
+import Convience from "@src/components/Website/Home/Convience";
 
 import {
   useCategory,
@@ -57,11 +57,11 @@ import {
 } from "@src/hooks/useWebsite";
 
 // import arrowrigh
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 // import Button from "../components/Shared/Button";
 
 import { useRef, useState } from "react";
-import LoginOrSignupModal from "@components/Model/LoginOrSignupModal";
+import LoginOrSignupModal from "@src/components/Model/LoginOrSignupModal";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 

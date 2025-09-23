@@ -7,8 +7,8 @@ import { ApiReportPost } from "@src/api/ApiCommunityForum";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import PrimaryInput from "@components/PrimaryInput";
-import { PrimaryButton } from "@components/Buttons/PrimaryButton";
+import PrimaryInput from "@src/components/PrimaryInput";
+import { PrimaryButton } from "@src/components/Buttons/PrimaryButton";
 import { useGetReportsPost } from "@src/hooks/useCommunity";
 
 const FlagPost = ({ onSubmit, post_id, community_id,setIsFlagModalOpen }) => {

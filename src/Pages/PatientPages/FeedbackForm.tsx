@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { FaFaceGrinStars } from "react-icons/fa6";
-import TextField from "@components/CareProvider/CommunityForum/TextField";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import TextField from "@src/components/CareProvider/CommunityForum/TextField";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import { useNavigate, useParams } from "react-router-dom";
-import Model from "@components/Model/Model";
+import Model from "@src/components/Model/Model";
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 import { ApiCreateFeedback } from "@src/api/ApiDashboard";
 import toast from "react-hot-toast";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 
 const FeedbackForm = ({ setFeedbackOpen }) => {
   const { id } = useParams();

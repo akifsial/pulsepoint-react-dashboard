@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 
 import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
 import community1 from "@assets/media/svgs/dashboard-svgs/community1.svg";
@@ -10,7 +10,7 @@ import community4 from "@assets/media/svgs/dashboard-svgs/community4.svg";
 import community5 from "@assets/media/svgs/dashboard-svgs/community5.svg";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
 
-import Model from "@components/Model/Model";
+import Model from "@src/components/Model/Model";
 import Community1 from "./Community1";
 import Community2 from "./Community2";
 import Community3 from "./Community3";
@@ -18,7 +18,7 @@ import { usePopularCommunities } from "@src/hooks/useCommunity";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
 import toast from "react-hot-toast";
-import PopularCommunitySkeleton from "@components/Loaders/PopularCommunityLoader";
+import PopularCommunitySkeleton from "@src/components/Loaders/PopularCommunityLoader";
 import { Link, useLocation } from "react-router-dom";
 
 const PopularCommunity = () => {

@@ -1,4 +1,4 @@
-import CategoryCard from "@components/Website/Home/CategoryCard";
+import CategoryCard from "@src/components/Website/Home/CategoryCard";
 import { useCategory } from "@src/hooks/useWebsite";
 import React from "react";
 

@@ -1,7 +1,7 @@
 import React from "react";
 
-import InputField from "@components/InputField";
-import TextField from "@components/CareProvider/CommunityForum/TextField";
+import InputField from "@src/components/InputField";
+import TextField from "@src/components/CareProvider/CommunityForum/TextField";
 
 const CreateCommunity = () => {
   return (

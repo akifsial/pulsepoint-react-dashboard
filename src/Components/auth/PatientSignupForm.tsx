@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/AuthApi/AuthApi";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 import { useAllApiInsuranceTypes } from "@src/hooks/useUsers";
 import { ArrowLeft } from "lucide-react";
 

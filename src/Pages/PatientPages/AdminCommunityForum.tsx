@@ -127,7 +127,7 @@
 
 
 
-import Community from '@components/CareProvider/CommunityForum/Community'
+import Community from '@src/components/CareProvider/CommunityForum/Community'
 import React from 'react'
 
 const AdminCommunityForum = () => {

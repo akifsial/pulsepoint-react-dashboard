@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
-import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
+import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
 import UserInfo from "./UserInfo";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
 import { FaRegFileAlt } from "react-icons/fa";
 import { apiServices } from "@src/Shared/apiServices";
 import apiEndpoint from "@src/Shared/apiEndPoint";
-import ExportTable from "@components/Shared-components/ExportTable";
+import ExportTable from "@src/components/Shared-components/ExportTable";
 import autoTable from "jspdf-autotable";
 import { debounce } from "lodash";
-import SkeletonTableLoader from "@components/Loader/SkeltonTableLoader";
-import Pagination from "@components/Pagination/Pagination";
+import SkeletonTableLoader from "@src/components/Loader/SkeltonTableLoader";
+import Pagination from "@src/components/Pagination/Pagination";
 import { useNavigate } from "react-router-dom";
 import AdminDropdownAction from "../AdminDropdownAction/AdminDropdownAction";
 

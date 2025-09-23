@@ -1,6 +1,6 @@
 import React from "react";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
 import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
 
 const ForumActivityCard: React.FC = () => {

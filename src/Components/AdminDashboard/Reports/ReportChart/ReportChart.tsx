@@ -5,7 +5,7 @@ import TopInsurancesChart from "./TopInsurancesChart";
 import AgeGroupPieChart from "./AgeGroupPieChart";
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import SelectField from "@components/SelectField";
-import SelectField from "@components/AdminSelectField/AdminSelectField";
+import SelectField from "@src/components/AdminSelectField/AdminSelectField";
 
 const ReportChart = () => {
   const timeOptions = [

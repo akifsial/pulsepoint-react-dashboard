@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 // import arrowIcon from "@assets/media/images/arrow-down.svg";
-import InputField from "@components/InputField";
-import SelectField from "@components/SelectField";
-import OnBoardingLayout from "@components/auth/OnBoradingLayout";
+import InputField from "@src/components/InputField";
+import SelectField from "@src/components/SelectField";
+import OnBoardingLayout from "@src/components/auth/OnBoradingLayout";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Globe } from "lucide-react";
-import SocialLoginSection from "@components/SocialLoginSection";
+import SocialLoginSection from "@src/components/SocialLoginSection";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { isValidPhoneNumber } from "react-phone-number-input";
@@ -22,7 +22,7 @@ import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/AuthApi/AuthApi";
 import dummyImage from "@assets/media/images/signup-img.png";
 import signupLogo from "@assets/media/images/signup-logo.png";
-import Spinner from "@components/Loaders/Spinner";
+import Spinner from "@src/components/Loaders/Spinner";
 import {
   useAllApiInsuranceTypes,
   useAllApiProviderTypes,

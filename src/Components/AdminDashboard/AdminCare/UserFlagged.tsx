@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import TanDataTable from "@components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@components/Dashboard-components/Dropdown-actions/DropdownActions";
-import { TanDataTableColumn } from "@components/Dashboard-components/Tanstack-data-table/types";
+import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
+import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
+import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
 
 interface PostFlag {
   id: number;
