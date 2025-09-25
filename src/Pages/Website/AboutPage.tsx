@@ -8,6 +8,7 @@ import CategoriesTab from "@pages/Web-pages/Components/CategoriesTab";
 import nursingImg from "@assets/media/images/dashboard-images/nursing.png";
 import { Link } from "react-router-dom";
 
+
 const AboutPage = () => {
   return (
     <div className="min-h-screen bg-white">
@@ -72,22 +73,11 @@ const AboutPage = () => {
                 </h2>
                 <div className="space-y-4">
                   <p>
-                    I am passionate about enriching the lives of older adults
-                    and creating environments where seniors feel respected,
-                    supported, and truly at home. With a background in
-                    [healthcare | lifestyle | financial advice | technology
-                    guides], etc., I’ve dedicated my career to ensuring that
-                    ageing adults receive compassionate care and have access to
-                    meaningful, engaging experiences every day.
+                    {/* <span onClick={()=>(navigate(""))} className="text-[#2DB3FF] hover:underline cursor-pointer">TopSeniorSpot.com</span>  */}
+                    TopSeniorSpot.com is a streamlined Senior Care Comparison Directory dedicated to helping U.S. families quickly find, compare, and review local care providers. Our free ZIP-code-based searches, user-generated ratings, and authentic reviews empower informed decisions, while our premium AI chatbot offers fast, personalized support and deeper provider comparisons. With a responsive community forum and a commitment to transparency, accuracy, and accessibility, we simplify the search for high-quality senior care and connect families with trusted options in their area.
+
                   </p>
-                  <p>
-                    Whether I’m helping families navigate care options,
-                    coordinating wellness programs, or supporting residents in
-                    their daily routines, my goal is always to promote dignity,
-                    independence, and joy in later life. I believe that senior
-                    living is not just about care—it’s about community,
-                    connection, and quality of life.
-                  </p>
+
                 </div>
               </div>
               <div className="relative">
