@@ -68,17 +68,14 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   // Sample data arrays following your pattern of using arrays for similar components
 
-  const { data } = useRecentBlogs();
   const { data: popularPost } = useGetPopularPost();
 
-  const { data: categories, isLoading, isError } = useGetCategories();
+  // const { data: categories, isLoading, isError } = useGetCategories();
   const { data: featuredReviews } = useFeaturedWeakReviews();
   const [loginModal, setLoginModal] = useState(false);
   const { data: FeaturedPosts } = useGetFeaturedPosts();
 
-  console.log("OOOOOOOOOOOOOO", FeaturedPosts);
 
-  console.log("FFFFFFFFFFFFFFFFF", categories);
 
   const { data: getBlogs } = useGetBlogs();
   const queryClient = useQueryClient();
@@ -95,25 +92,6 @@ const HomePage = () => {
   const scrollRight = () => {
     scrollRef.current?.scrollBy({ left: 500, behavior: "smooth" });
   };
-  // const {data:catData}=useCategory()
-
-  // if (isLoading) {
-  //   return (
-  //     <p className="text-center">
-  //       <Spinner />
-  //     </p>
-  //   );
-  // }
-
-  console.log("_____________________", getBlogs);
-
-  // if (isError) {
-  //   return (
-  //     <p className="text-center text-red-500">Failed to load categories</p>
-  //   );
-  // }
-
-  // Agar API me `records` hai
 
   const services = [
     {
@@ -530,7 +508,7 @@ const HomePage = () => {
 
       {(userInfo?.role_type === "PATIENT" ||
         userInfo?.role_type === "CARE_PROVIDER") &&
-        popularPost !== null && (
+        popularPost?.payload !== null && (
           <Convience setLoginModal={setLoginModal} />
         )}
 

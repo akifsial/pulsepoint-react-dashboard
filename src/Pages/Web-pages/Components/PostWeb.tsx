@@ -16,18 +16,8 @@ function PostWeb({ categoryId, setCategoryName ,data }) {
 
   const { data: blogsCategories, isLoading } = useGetBlogsCategory(categoryId);
 
-  console.log("QWERTY", blogsCategories);
+ 
 
-  console.log("KKKKKKKKKKKKKK", data);
-
-  // useEffect(() => {
-  //   const category = categoryBlogs?.records?.find(
-  //     (cat) => cat?.category_id == categoryId
-  //   );
-
-  //   console.log("OOOOOOOOOOO", category);
-  //   setCategoryName(category?.category?.name || ""); // set default empty string if undefined
-  // }, [categoryBlogs]);
 
   const navigate=useNavigate()
 

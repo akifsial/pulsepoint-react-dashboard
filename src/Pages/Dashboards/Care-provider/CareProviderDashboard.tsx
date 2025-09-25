@@ -241,7 +241,7 @@ const CareProviderDashboard: React.FC = () => {
   ];
 
   const handleRowSelect = (row: Person) => {
-    console.log("Selected row:", row);
+    // console.log("Selected row:", row);
   };
 
   const renderActions = (row: Person) => (

@@ -32,7 +32,6 @@ export const CommentItem = ({
   replyId,
   setReplyParentId,
   handleDeleteComment,
-  key,
   inputRef,
 }) => {
   const [activeReplyId, setActiveReplyId] = useState<number | null>(null);
@@ -300,7 +299,7 @@ const handleReactionClick = async (status: "like" | "dislike") => {
               {comment.replies.map((reply) => (
                 <div className="flex items-center gap-5">
                   <CommentItem
-                    key={reply.id}
+                    // key={reply.id}
                     comment={reply}
                     myId={myId}
                     postId={postId}

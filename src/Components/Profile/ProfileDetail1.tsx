@@ -326,7 +326,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     setLongitude(e.longitude);
   };
 
-  console.log("hhhhhhhhhhhhhhh", longitude);
 
   return (
     <>

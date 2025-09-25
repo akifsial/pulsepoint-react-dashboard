@@ -151,7 +151,7 @@ export const ApiGetPopularPost = async (search: string) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response.data.payload;
+  return response.data;
 };
 
 export const ApiGetCategoryBlogs = async (id) => {

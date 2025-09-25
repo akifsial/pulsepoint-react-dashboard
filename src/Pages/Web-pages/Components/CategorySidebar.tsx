@@ -31,7 +31,7 @@ const CategorySidebar: FC = ({ setCategoryName }) => {
 
   const { data: CategoryData } = useGetCategories();
 
-  console.log("*&788888", CategoryData);
+  // console.log("*&788888", CategoryData);
 
   const isActiveLink = (href: string) => {
     return location.pathname === href;

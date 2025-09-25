@@ -47,7 +47,6 @@ export default function Convience() {
   // -------------------
   const { data: popularPost } = useGetPopularPost();
 
-console.log("POPOPOPO",popularPost)
   const {
     data: postData,
     isPending: PostsPending,
@@ -89,7 +88,7 @@ console.log("POPOPOPO",popularPost)
   useEffect(() => {
     const initialState: { [postId: number]: boolean | null } = {};
     // popularPost?.records?.forEach((post) => {
-    initialState[popularPost?.id] = popularPost?.userLike?.is_like ?? null;
+    initialState[popularPost?.payload?.id] = popularPost?.payload?.userLike?.is_like ?? null;
     // });
     setLocalLikes(initialState);
   }, [popularPost]);
@@ -145,13 +144,13 @@ console.log("POPOPOPO",popularPost)
     const data = {
       type:
         status === "like"
-          ? localLikes[post.id] === true
+          ? localLikes[post?.id] === true
             ? "" // remove like
             : "like"
-          : localLikes[post.id] === false
-          ? "" // remove dislike
-          : "dislike",
-      post_id: post.id,
+          : localLikes[post?.id] === false
+            ? "" // remove dislike
+            : "dislike",
+      post_id: post?.id,
     };
 
     await LikeMutation(data);
@@ -382,7 +381,7 @@ console.log("POPOPOPO",popularPost)
   };
 
   return (
-    
+
     <section className="bg-[#F3F8FC] text-black py-16 max-w-8xl mx-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex md:flex-nowrap flex-wrap gap-4">
@@ -392,10 +391,9 @@ console.log("POPOPOPO",popularPost)
               <img
                 // src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
                 src={
-                  popularPost?.user?.image
-                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                        popularPost?.user?.image
-                      }`
+                  popularPost?.payload?.user?.image
+                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${popularPost?.payload?.user?.image
+                    }`
                     : dummyImage
                 }
                 alt="Cody Fisher"
@@ -403,36 +401,35 @@ console.log("POPOPOPO",popularPost)
               />
               <div>
                 <h3 className="font-semibold">
-                  {popularPost?.user?.first_name} {popularPost?.user?.last_name}
+                  {popularPost?.payload?.user?.first_name} {popularPost?.payload?.user?.last_name}
                 </h3>
                 <p className="text-sm text-gray-400">
-                  Posted by: {popularPost?.user?.user_name}
+                  Posted by: {popularPost?.payload?.user?.user_name}
                 </p>
               </div>
             </div>
 
-            <h2 className="text-[24px] font-bold mb-0">{popularPost?.title}</h2>
+            <h2 className="text-[24px] font-bold mb-0">{popularPost?.payload?.title}</h2>
             <p className="text-black mb-3 font-normal text-[16px]">
-              {popularPost?.content?.length > 250 ? (
+              {popularPost?.payload?.content?.length > 250 ? (
                 <>
-                  {popularPost?.content.slice(0, 250)}...
+                  {popularPost?.payload?.content.slice(0, 250)}...
                   <span className="text-[#8d8d8d] cursor-pointer">
                     {" "}
                     Read more
                   </span>
                 </>
               ) : (
-                popularPost?.content
+                popularPost?.payload?.content
               )}
             </p>
 
             <div className="grid grid-cols-1 gap-2.5">
               <img
                 src={
-                  popularPost?.image
-                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                        popularPost?.image
-                      }`
+                  popularPost?.payload?.image
+                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${popularPost?.payload?.image
+                    }`
                     : postImage
                 }
                 alt="Community discussion"
@@ -444,13 +441,13 @@ console.log("POPOPOPO",popularPost)
             <div>
               <div className="flex gap-2.5 mb-2.5">
                 <div className="flex flex-wrap gap-2.5 mb-2.5">
-                  <div className="flex items-center gap-2 bg-black rounded-[5px] px-1.5 py-1.5 min-w-[128px] justify-center">
+                  <div className="flex items-center gap-2 bg-black rounded-[5px] px-1.5 py-1.5 min-w-[145px] min-h-[50px] justify-center">
                     <button
                       className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
-                      onClick={() => handleReaction("like", popularPost)}
+                      onClick={() => handleReaction("like", popularPost?.payload)}
                       disabled={localLock || LikeIsPending || PostsPending}
                     >
-                      {localLikes[popularPost?.id] === true ? (
+                      {localLikes[popularPost?.payload?.id] === true ? (
                         <div className="bg-[#2A2A2A]  p-2 rounded-full">
                           <img
                             src={goldenArrowUpIcon}
@@ -466,18 +463,18 @@ console.log("POPOPOPO",popularPost)
                         />
                       )}
                       {/* {localCounts[popularPost?.id] ?? 0} */}
-<span className="text-white font-normal">Vote</span>
+                      <span className="text-white font-normal">Vote</span>
 
                     </button>
                     <button
                       className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
-                      onClick={() => handleReaction("dislike", popularPost)}
+                      onClick={() => handleReaction("dislike", popularPost?.payload)}
                       disabled={localLock || LikeIsPending || PostsPending}
                     >
-                      {localLikes[popularPost?.id] === false ? (
+                      {localLikes[popularPost?.payload?.id] === false ? (
                         <div className="bg-[#2A2A2A] p-1 rounded-full">
                           <img
-                            src={ goldenArrowUpIcon}
+                            src={goldenArrowUpIcon}
                             className="rotate-180 py-1.5 px-2"
                             alt="Dislike"
                           />
@@ -489,16 +486,16 @@ console.log("POPOPOPO",popularPost)
                   </div>
 
                   <button
-                    onClick={() => toggleComments(popularPost.id)}
+                    onClick={() => toggleComments(popularPost?.payload?.id)}
                     className="flex items-center bg-black text-white rounded-[5px]  cursor-pointer gap-2 bg-[#E6E9EB] px-1.5 py-1.5 min-w-[88px] justify-center"
                   >
                     <img src={goldenCommentIcon} alt="Comments" />
-                    {popularPost?._count?.comments}
+                    {popularPost?.payload?._count?.comments}
                   </button>
 
                   <button
                     onClick={() => {
-                      setSharePostId(popularPost?.id);
+                      setSharePostId(popularPost?.payload?.id);
                     }}
                     className="flex items-center cursor-pointer gap-2 bg-black text-white rounded-[5px]  px-[15px] py-1 min-w-[78px] justify-center"
                   >
@@ -507,7 +504,7 @@ console.log("POPOPOPO",popularPost)
                   </button>
                 </div>
               </div>
-              {openComments === popularPost?.id && (
+              {openComments === popularPost?.payload?.id && (
                 <div>
                   <div className="relative mb-3">
                     <input
@@ -530,11 +527,10 @@ console.log("POPOPOPO",popularPost)
 
                     <button
                       disabled={!comment || commentsIsPending}
-                      className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${
-                        comment
+                      className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${comment
                           ? "bg-[#007AB2] hover:bg-[#005f8e] cursor-pointer"
                           : "bg-gray-300"
-                      }`}
+                        }`}
                       onClick={handleComments}
                     >
                       {commentsIsPending ? (
@@ -545,13 +541,13 @@ console.log("POPOPOPO",popularPost)
                     </button>
                   </div>
 
-                  {popularPost?.comments?.map((comment) => (
+                  {popularPost?.payload?.comments?.map((comment) => (
                     <div className="flex  items-center">
                       <CommentItem
-                        key={comment.id}
+                        // key={comment.id}
                         comment={comment}
                         myId={myId}
-                        postId={popularPost.id}
+                        postId={popularPost?.payload?.id}
                         LikeIsPending={LikeIsPending}
                         PostsPending={PostsPending}
                         handleCommentReaction={handleCommentReaction}
@@ -571,7 +567,7 @@ console.log("POPOPOPO",popularPost)
                         handleReaction={handleReaction}
                         // localLikes={localLikes}
                         // localCounts={localCounts}
-                        post={popularPost}
+                        post={popularPost?.payload}
                       />
                     </div>
                   ))}
@@ -905,9 +901,8 @@ console.log("POPOPOPO",popularPost)
                       <img
                         src={
                           community?.profile_icon_image
-                            ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                                community.profile_icon_image
-                              }`
+                            ? `${import.meta.env.VITE_APP_API_IMG_URL}${community.profile_icon_image
+                            }`
                             : dummyImage
                         }
                         alt={community.name}

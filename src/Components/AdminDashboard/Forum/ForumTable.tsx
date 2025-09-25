@@ -231,7 +231,7 @@ const ForumTable: React.FC = () => {
         `/admin/forum-moderation/view/${selectedCommunity.type}/${selectedCommunity.id}`
       );
     } else {
-      console.log("selectedCommunity or selectedCommunity.id is undefined");
+      // console.log("selectedCommunity or selectedCommunity.id is undefined");
     }
   };
 
@@ -275,7 +275,7 @@ const ForumTable: React.FC = () => {
                   { replace: true }
                 );
               } else {
-                console.log("ID not found for this row", row.original);
+                // console.log("ID not found for this row", row.original);
               }
             }}
           >
@@ -447,7 +447,7 @@ const ForumTable: React.FC = () => {
                   // navigate(`?type=${row.original.type}&id=${idToUse}`, {
                   // });
                 } else {
-                  console.log("ID not found for this row", row.original);
+                  // console.log("ID not found for this row", row.original);
                 }
               },
               type: "view",

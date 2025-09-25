@@ -764,7 +764,7 @@ const PopularPostsCommunity = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                   {post?.comments?.map((comment) => (
                     <div className="flex  items-center">
                       <CommentItem
-                        key={comment.id}
+                        // key={comment.id}
                         comment={comment}
                         myId={myId}
                         postId={post.id}

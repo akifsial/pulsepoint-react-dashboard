@@ -158,7 +158,6 @@ import WebPagination from "@src/components/Pagination/WebPagination";
 const CategoryPage: React.FC = () => {
   // const [categoryId, setCategoryId] = useState<string | null>(null);
   const [category, setCategory] = useState<string | null>(null);
-  console.log();
   const [expandedPosts, setExpandedPosts] = useState<Record<number, boolean>>(
     {}
   );
@@ -181,7 +180,6 @@ const CategoryPage: React.FC = () => {
     refetch,
   } = useGetBlogsCategory(category, currentPage);
 
-  console.log("------------------------------------", blogsCategories);
 
   const categoryParam = queryParams.get("category");
 
@@ -199,7 +197,6 @@ const CategoryPage: React.FC = () => {
   // );
 
 
-console.log("cccvvvvvccccvvvvcccvvvvcccvvv",currentPage)
   useEffect(() => {
     refetch();
   }, [currentPage]);

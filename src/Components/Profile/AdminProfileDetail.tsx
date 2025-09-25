@@ -206,7 +206,6 @@ const AdminProfileDetail = () => {
     fetchUserProfile();
   }, []);
 
-  console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", selectedImage);
 
   const handleSaveChanges = async () => {
     if (!userId) return toast.error("User ID not found");

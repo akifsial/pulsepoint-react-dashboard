@@ -561,7 +561,7 @@ const ReviewsTable: React.FC = () => {
                 filteredReviews
               } /* server returns the current page; we keep local highlight-only filtering */
               showCheckbox={false}
-              onRowSelect={(row) => console.log("Selected row:", row)}
+              // onRowSelect={(row) => console.log("Selected row:", row)}
               showActions={true}
               className="my-custom-class"
               actions={(row) => (
@@ -672,5 +672,5 @@ const ReviewsTable: React.FC = () => {
 export default ReviewsTable;
 
 function toast(arg0: { description: string; variant: string }) {
-  console.log(`[${arg0.variant.toUpperCase()}] ${arg0.description}`);
+  // console.log(`[${arg0.variant.toUpperCase()}] ${arg0.description}`);
 }

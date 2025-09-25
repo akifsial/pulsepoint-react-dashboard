@@ -164,9 +164,9 @@ const UserFlagged: React.FC<Props> = ({ post_flag }) => {
               className="my-custom-class"
               actions={(row) => (
                 <DropdownActions
-                  onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit", row.id)}
-                  onDelete={() => console.log("Delete", row.id)}
+                  // onView={() => console.log("View Detail", row.id)}
+                  // onEdit={() => console.log("Edit", row.id)}
+                  // onDelete={() => console.log("Delete", row.id)}
                 />
               )}
             />

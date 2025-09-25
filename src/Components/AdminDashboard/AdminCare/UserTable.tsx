@@ -201,7 +201,7 @@ const [selectedUser, setSelectedUser]=useState(false);
               className="my-custom-class"
               actions={(row) => (
                 <DropdownActions
-                  onView={() => console.log("View Detail", row.id)}
+                  // onView={() => console.log("View Detail", row.id)}
                   variant="simple"
                 />
               )}

@@ -9,7 +9,6 @@ function Blog() {
   const [post, setPost] = useState<any>(null);
 
   const { data } = useGetSingleBlog(id);
-  console.log("ppppppppppppppp", data);
 
   // Simulate fetching a single blog post
   useEffect(() => {

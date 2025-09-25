@@ -452,7 +452,7 @@ const CareProviderDashboard: React.FC = () => {
                     columns={columns}
                     data={providerData} /* now server provides current page */
                     // showCheckbox={true}
-                    onRowSelect={(row) => console.log("Selected row:", row)}
+                    // onRowSelect={(row) => console.log("Selected row:", row)}
                     showActions={true}
                     actions={(row) => (
                       <AdminDropdownAction

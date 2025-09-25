@@ -87,7 +87,7 @@ export default function ContactInformationCard({
       <Map
         // defaultCenter={[71.5249, 34.0151]}
         defaultCenter={[10.4515, 51.1657]} // Germany
-        onLocationSelect={(e) => console.log("eeeeee", e)}
+        // onLocationSelect={(e) => console.log("eeeeee", e)}
       />
     </div>
   );

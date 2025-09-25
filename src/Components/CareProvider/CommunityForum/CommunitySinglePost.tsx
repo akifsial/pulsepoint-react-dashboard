@@ -696,7 +696,7 @@ const CommunitySinglePost = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                 {singlePostData?.comments?.map((comment) => (
                   <div className="flex  items-center">
                     <CommentItem
-                      key={comment.id}
+                      // key={comment.id}
                       comment={comment}
                       myId={myId}
                       postId={singlePostData.id}

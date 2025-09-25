@@ -25,7 +25,7 @@ const options = [
 // }
 const UtilityRow: FC = ({ setCurrentPage }) => {
   const [query, setQuery] = useState("");
-  const { data } = useCategory();
+  // const { data } = useCategory();
   const { data: CategoryData } = useGetCategories();
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | number | null>(null);
@@ -80,7 +80,6 @@ const UtilityRow: FC = ({ setCurrentPage }) => {
   }, [location.pathname, location.search]);
 
   const handleCategory = (id: string, name, slug) => {
-    // console.log("asdasdasda", name);
 
     setActiveCategoryId(id);
     navigate(`/web/category?id=${id}&category=${slug}`);
@@ -111,7 +110,6 @@ const UtilityRow: FC = ({ setCurrentPage }) => {
     "Financial Advice",
   ];
 
-  // console.log("dddddddddddddd",CategoryData?.data?.data)
 
   return (
     <>

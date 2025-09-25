@@ -141,7 +141,6 @@ const SignupForm = () => {
     const { value, checked } = e.target;
     setFormData((prev) => {
       let updatedPreferredCommunication = [...prev.preferredCommunication];
-      console.log("____________________", updatedPreferredCommunication);
       if (checked) {
         updatedPreferredCommunication.push(value);
       } else {

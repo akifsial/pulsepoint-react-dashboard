@@ -176,9 +176,9 @@ const UserTable: React.FC = () => {
               className="my-custom-class"
               actions={(row) => (
                 <DropdownActions
-                  onView={() => console.log("View Detail", row.id)}
-                  onEdit={() => console.log("Edit Detail", row.id)}
-                  onDelete={() => console.log("Delete Provider", row.id)}
+                  // onView={() => console.log("View Detail", row.id)}
+                  // onEdit={() => console.log("Edit Detail", row.id)}
+                  // onDelete={() => console.log("Delete Provider", row.id)}
                   variant="simple"
                 />
               )}

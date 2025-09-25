@@ -49,10 +49,9 @@ const UserComments: React.FC<Props> = ({ commentData }) => {
     })) || [];
 
   const handleRowSelect = (row: dataTypes) => {
-    console.log("Selected row:", row);
+    // console.log("Selected row:", row);
   };
 
-  console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", commentData);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -189,9 +188,9 @@ const UserComments: React.FC<Props> = ({ commentData }) => {
             className="my-custom-class"
             actions={(row) => (
               <DropdownActions
-                onView={() => console.log("View Detail", row.id)}
-                onEdit={() => console.log("Edit", row.id)}
-                onDelete={() => console.log("Delete", row.id)}
+                // onView={() => console.log("View Detail", row.id)}
+                // onEdit={() => console.log("Edit", row.id)}
+                // onDelete={() => console.log("Delete", row.id)}
               />
             )}
           />
