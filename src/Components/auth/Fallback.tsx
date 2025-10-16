@@ -1,4 +1,4 @@
-import { useMeApi } from "@src/hooks/useUsers";
+import { useMeApi } from "@src/hooks/use-users";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

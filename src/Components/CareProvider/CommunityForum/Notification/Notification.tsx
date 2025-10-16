@@ -6,9 +6,9 @@ import Progress from "../../../../assets/media/svgs/dashboard-svgs/progress.svg"
 import Resource from "../../../../assets/media/svgs/dashboard-svgs/resource.svg";
 import NewCode from "../../../../assets/media/svgs/dashboard-svgs/newcode.svg";
 import dayjs from "dayjs";
-import { useGetNotifications } from "@src/hooks/useCommunity";
+import { useGetNotifications } from "@src/hooks/use-community";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ApiAcceptPrivateCommunity } from "@src/api/ApiCommunityForum";
+import { ApiAcceptPrivateCommunity } from "@src/api/api-community-forum";
 import toast from "react-hot-toast";
 
 const fallbackIcons = [NewMember, Progress, Resource, NewCode];

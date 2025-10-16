@@ -1,9 +1,9 @@
-import Router from "@routes/Router";
+import Router from "@routes/router";
 import React, { useEffect, useRef } from "react";
 import { Toaster } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setupInterceptors } from "./interceptor";
-import { useMeApi } from "./hooks/useUsers";
+import { useMeApi } from "./hooks/use-users";
 // import { connectSocket } from "@src/socket/";
 
 const App: React.FC = () => {

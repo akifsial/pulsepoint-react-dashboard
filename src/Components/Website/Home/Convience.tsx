@@ -3,7 +3,7 @@ import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
 import share from "@assets/media/svgs/dashboard-svgs/share.svg";
 import comment from "@assets/media/svgs/dashboard-svgs/comment.svg";
-import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
+import CommonInput from "@components/shared-components/inputs/common-input/common-input";
 import searchCommunity from "@assets/media/svgs/dashboard-svgs/searchCommunity.svg";
 import postImage from "@assets/media/images/dashboard-images/postFallback.png";
 import dummyImage from "@assets/media/images/dummyUser.png";
@@ -21,9 +21,9 @@ import {
   useGetPopularCommunities,
   useGetPopularDoctors,
   useGetPopularPost,
-} from "@src/hooks/useWebsite";
+} from "@src/hooks/use-website";
 import { Link, useNavigate } from "react-router-dom";
-import LoginOrSignupModal from "@src/components/Model/LoginOrSignupModal";
+import LoginOrSignupModal from "@components/model/login-or-signup-modal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   ApiDeleteComment,
@@ -31,13 +31,13 @@ import {
   ApiLikePost,
   ApiParentCommentReply,
   ApiPostComment,
-} from "@src/api/ApiCommunityForum";
-import { useGetCommunityPost } from "@src/hooks/useCommunity";
-import { CommentItem } from "@src/components/CareProvider/CommunityForum/CommentBlock";
-import Spinner from "@src/components/Loaders/Spinner";
+} from "@src/api/api-community-forum";
+import { useGetCommunityPost } from "@src/hooks/use-community";
+import { CommentItem } from "@components/careprovider/communityforum/comment-block";
+import Spinner from "@components/loaders/spinner";
 import { Send } from "lucide-react";
-import FeedSkeleton from "@src/components/Loaders/CommunityFeedLoader";
-import PostContent from "@src/components/PostContent";
+import FeedSkeleton from "@components/loaders/community-feed-loader";
+import PostContent from "@components/post-content";
 import toast from "react-hot-toast";
 
 export default function Convience() {

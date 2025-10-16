@@ -1,6 +1,6 @@
-import { useCareProviderSingle } from "@src/hooks/useDashboard";
+import { useCareProviderSingle } from "@src/hooks/use-dashboard";
 import { MapPin, Phone, Clock } from "lucide-react";
-import Map from "./Map/Map";
+import Map from "./map/map";
 
 export interface ContactInformationCardProps {
   address: string;

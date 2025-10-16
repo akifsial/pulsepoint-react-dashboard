@@ -29,13 +29,13 @@
     "paths": {
       "@types/*": ["src/types/*"],
       "@components/*": ["src/components/*"],
-      "@pages/*": ["src/Pages/*"],
+      "@pages/*": ["src/pages/*"],
       "@assets/*": ["src/assets/*"],
-      "@layouts/*": ["src/Layouts/*"],
-      "@routes/*": ["src/Routes/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@routes/*": ["src/routes/*"],
       "@styles/*": ["src/styles/*"],
       "@src/*": ["src/*"]
     }
   },
-  "include": ["src", "src/components/AdminDashboard/Reports/ReportCharts/VisitorChart.tsx"]
+  "include": ["src", "src/components/admindashboard/reports/ReportCharts/VisitorChart.tsx"]
 }

@@ -1,33 +1,33 @@
 import React, { useState, useEffect, useRef } from "react";
-import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
+import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
+import DropdownActions from "@components/dashboard-components/dropdown-actions/dropdown-actions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@src/components/Dashboard-components/Dropdowns/RatingFilterDropdown";
+import RatingFilterDropdown from "@components/dashboard-components/dropdowns/rating-filter-dropdown";
 import addBlog from "@assets/media/images/dashboard-images/addBlog.png";
 import postFallbackImage from "@assets/media/images/dashboard-images/postFallback.png";
 
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 
-import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
-import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
-import ReviewForm from "@src/components/Review/ReviewForm";
-import Toast from "@src/components/Toast/Toast";
-import { useApiMyReviews } from "@src/hooks/useMyReviews";
+import CommonInput from "@components/shared-components/inputs/common-input/common-input";
+import { TanDataTableColumn } from "@components/dashboard-components/tanstack-data-table/types";
+import ReviewForm from "@components/review/review-form";
+import Toast from "@components/toast/toast";
+import { useApiMyReviews } from "@src/hooks/use-my-reviews";
 import dayjs from "dayjs";
-import Pagination from "@src/components/Pagination/Pagination";
-import DeleteModal from "@src/components/Model/DeleteModal";
+import Pagination from "@components/pagination/pagination";
+import DeleteModal from "@components/model/delete-modal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiDeleteMyReviews } from "@src/api/ApiMyReviews";
+import { apiDeleteMyReviews } from "@src/api/api-my-reviews";
 import { useNavigate } from "react-router-dom";
-import TableSkeletonLoader from "@src/components/Loaders/TableSkeletonLoader";
-import { useMeApi } from "@src/hooks/useUsers";
-import { useBlog } from "@src/hooks/useWebsite";
-import AddBlogs from "./AddBlogs";
-import { ApiDeleteBlog } from "@src/api/ApiWebsite";
+import TableSkeletonLoader from "@components/loaders/table-skeleton-loader";
+import { useMeApi } from "@src/hooks/use-users";
+import { useBlog } from "@src/hooks/use-website";
+import AddBlogs from "./add-blogs";
+import { ApiDeleteBlog } from "@src/api/api-website";
 import toast from "react-hot-toast";
-import EditBlogs from "./EditBlogs";
+import EditBlogs from "./edit-blogs";
 
 const Blogs: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);

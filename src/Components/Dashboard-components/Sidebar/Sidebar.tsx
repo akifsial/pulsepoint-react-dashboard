@@ -2,13 +2,13 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import SiteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
 import miniLogo from "@assets/media/svgs/mini-logo.svg";
-import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
+import CommonInput from "@components/shared-components/inputs/common-input/common-input";
 import searchIcon from "@assets/media/svgs/dashboard-svgs/search.svg";
-import { SidebarLink } from "./SidebarLinks";
+import { SidebarLink } from "./sidebar-links";
 import Chatbot from "../../../assets/media/svgs/chatbot.svg";
 import AiIcon from "../../../assets/media/svgs/ai-icon.svg";
 import ChatbotIcon from "@assets/media/svgs/chatbot-icon.svg";
-import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
 
 interface SidebarProps {
   sidebarData: SidebarLink[];

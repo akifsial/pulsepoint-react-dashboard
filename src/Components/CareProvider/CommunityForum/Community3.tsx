@@ -1,11 +1,11 @@
 import React from "react";
-import CommunityTopics from "./CommunityTopics";
-import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import CommunityTopics from "./community-topics";
+import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
 import { useMutation } from "@tanstack/react-query";
-import { ApiCreateCommunity } from "@src/api/ApiCommunityForum";
+import { ApiCreateCommunity } from "@src/api/api-community-forum";
 import toast from "react-hot-toast";
-import Spinner from "@src/components/Loaders/Spinner";
-import { useGetAllCommunityTopics } from "@src/hooks/useCommunity";
+import Spinner from "@components/loaders/spinner";
+import { useGetAllCommunityTopics } from "@src/hooks/use-community";
 
 const Community3 = ({
   onBack,

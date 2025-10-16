@@ -1,6 +1,6 @@
 import React from 'react'
-import TopReview from './ActionCenter.tsx/TopReview'
-import Action from './ActionCenter.tsx/Action'
+import TopReview from './actioncenter.tsx/TopReview'
+import Action from './actioncenter.tsx/action'
 
 const Reviewed = () => {
   return (

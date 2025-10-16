@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import DragMedia from "./DragMedia";
-import { PrimaryButton } from "@src/components/Shared-components/Buttons/Common-button/CommonButton";
+import DragMedia from "./drag-media";
+import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
 
 const Community2 = ({ onNext, onBack,img1, setImg1, img2, setImg2 }) => {
 

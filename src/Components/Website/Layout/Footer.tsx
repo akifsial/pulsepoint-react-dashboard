@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Twitter, Linkedin, Youtube } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Youtube, Mail } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,10 +19,24 @@ const Footer = () => {
                 TopSenior<span className="text-blue-500">Spot</span>
               </span>
             </p>
-            <p className="text-gray-300 text-sm leading-relaxed max-w-md">
-              Connecting seniors with quality healthcare providers, care facilities, and resources. 
+            {/* <p className="text-gray-300 text-sm leading-relaxed max-w-md">
+              Connecting seniors with quality healthcare providers, care facilities, and resources. Making informed decisions about senior care has never been easier. For support, contact us at support@topseniorspot.com
+            </p> */}
+            <p className="text-gray-700">
+              Connecting seniors with quality healthcare providers, care facilities, and resources.
               Making informed decisions about senior care has never been easier.
+              For support, contact us at{" "}
+
+
+              <p
+                // href="mailto:support@topseniorspot.com"
+                className="text-blue-600 underline hover:text-blue-800 inline-flex items-center gap-1"
+              >
+                <Mail size={16} /> support@topseniorspot.com
+              </p>
+             
             </p>
+
           </div>
 
           {/* Quick Links */}
@@ -56,29 +70,29 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-3">
-              <a 
-                href="#" 
+              <a
+                href="#"
                 className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
-              <a 
-                href="#" 
+              <a
+                href="#"
                 className="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </a>
-              <a 
-                href="#" 
+              <a
+                href="#"
                 className="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a 
-                href="#" 
+              <a
+                href="#"
                 className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors"
                 aria-label="YouTube"
               >

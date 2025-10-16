@@ -1,5 +1,5 @@
 import React from 'react'
-import ForumTable from './ForumTable'
+import ForumTable from './forumtable'
 
 const Forum = () => {
   return (

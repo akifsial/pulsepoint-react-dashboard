@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
-import { apiServices } from "@src/Shared/apiServices";
-import apiEndpoint from "@src/Shared/apiEndPoint";
+import { apiServices } from "@src/shared/api-services";
+import apiEndpoint from "@src/shared/api-end-point";
 
 // Define the type for the User Activity data
 interface UserActivityData {

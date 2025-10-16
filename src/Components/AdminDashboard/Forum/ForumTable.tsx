@@ -1,21 +1,21 @@
 import React, { useEffect, useState, useMemo } from "react";
-import TanDataTable from "@src/components/Dashboard-components/Tanstack-data-table/TanDataTable";
-import DropdownActions from "@src/components/Dashboard-components/Dropdown-actions/DropdownActions";
+import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
+import DropdownActions from "@components/dashboard-components/dropdown-actions/dropdown-actions";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-import CommonInput from "@src/components/Shared-components/Inputs/Common-Input/CommonInput";
-import { TanDataTableColumn } from "@src/components/Dashboard-components/Tanstack-data-table/types";
-import ViewCommunity from "./ViewCommunity";
-import Model from "@src/components/Model/Model";
+import CommonInput from "@components/shared-components/inputs/common-input/common-input";
+import { TanDataTableColumn } from "@components/dashboard-components/tanstack-data-table/types";
+import ViewCommunity from "./view-community";
+import Model from "@components/model/model";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@src/components/Dashboard-components/Dropdowns/RatingFilterDropdown";
-import { apiServices } from "@src/Shared/apiServices";
-import apiEndpoint from "@src/Shared/apiEndPoint";
+import RatingFilterDropdown from "@components/dashboard-components/dropdowns/rating-filter-dropdown";
+import { apiServices } from "@src/shared/api-services";
+import apiEndpoint from "@src/shared/api-end-point";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { apiGet, apiPost, apiPut } from "@src/Auth/Auth";
-import Pagination from "@src/components/Pagination/Pagination";
-import SkeletonTableLoader from "@src/components/Loader/SkeltonTableLoader";
-import AdminDropdownAction from "../AdminDropdownAction/AdminDropdownAction";
+import { apiGet, apiPost, apiPut } from "@src/auth/auth";
+import Pagination from "@components/pagination/pagination";
+import SkeletonTableLoader from "@components/loader/skelton-table-loader";
+import AdminDropdownAction from "../admindropdownaction/admin-dropdown-action";
 
 // Define the dataTypes type
 type dataTypes = {

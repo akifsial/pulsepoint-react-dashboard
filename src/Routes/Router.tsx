@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import { DashboardRoutes } from "./DashboardRoutes";
-import { websitePublicRoutes } from "./WebsiteRoutes";
-import { PatientRoutes } from "./PatientRoutes";
-import { AdminRoutes } from "./AdminRoutes";
-import NotFoundPage from "@pages/NotFoundPage";
-import { ProfileRoutes } from "./ProfileRoutes";
-import ChatbotLayout from "@src/components/ProfileLayout/ChatbotLayout";
-import { ProtectedRoutes, PublicProtectRoute } from "./ProtectedRoutes";
-import { TokenHandler } from "./TokenHandler";
-import PatientLayout from "@layouts/PatientLayout";
-import HomePage from "@pages/Web-pages/home-page/HomePage";
+import { DashboardRoutes } from "./dashboard-routes";
+import { websitePublicRoutes } from "./website-routes";
+import { PatientRoutes } from "./patient-routes";
+import { AdminRoutes } from "./admin-routes";
+import NotFoundPage from "@pages/not-found-page";
+import { ProfileRoutes } from "./profile-routes";
+import ChatbotLayout from "@components/profilelayout/chatbot-layout";
+import { ProtectedRoutes, PublicProtectRoute } from "./protected-routes";
+import { TokenHandler } from "./token-handler";
+import PatientLayout from "@layouts/patient-layout";
+import HomePage from "@pages/web-pages/home-page/home-page";
 
 const Router: React.FC = () => {
   return (

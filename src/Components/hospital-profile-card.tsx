@@ -2,13 +2,13 @@ import { Bookmark } from "lucide-react";
 import Tick from "@assets/media/svgs/patient-db-svgs/tick-circle.svg";
 import ProfilePic from "@assets/media/svgs/patient-db-svgs/hospital-prof-img.svg";
 import { useState } from "react";
-import HospitalHeader from "./HospitalHeader";
-import { useCareProviderSingle } from "@src/hooks/useDashboard";
-import { ApiSavedCareProviders } from "@src/api/ApiDashboard";
+import HospitalHeader from "./hospital-header";
+import { useCareProviderSingle } from "@src/hooks/use-dashboard";
+import { ApiSavedCareProviders } from "@src/api/api-dashboard";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import UnSavedModal from "./Model/UnSavedModal";
-import SavedModal from "./Model/SavedModal";
+import UnSavedModal from "./model/un-saved-modal";
+import SavedModal from "./model/saved-modal";
 
 interface HospitalProfileCardProps {
   name: string;

@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import EditReviewPage from '@pages/PatientPages/EditReviewPage';
+import EditReviewPage from '@pages/patientpages/edit-review-page';
 
 interface Review {
   currentReview: {

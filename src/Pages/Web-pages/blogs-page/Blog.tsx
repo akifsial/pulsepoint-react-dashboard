@@ -1,6 +1,6 @@
-import TopBar from "@src/components/Website/Layout/TopBar";
-import UtilityRow from "@src/components/Website/Layout/UtilityRow";
-import { useGetSingleBlog } from "@src/hooks/useWebsite";
+import TopBar from "@components/website/layout/top-bar";
+import UtilityRow from "@components/website/layout/utility-row";
+import { useGetSingleBlog } from "@src/hooks/use-website";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
