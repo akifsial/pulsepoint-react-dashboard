@@ -76,29 +76,30 @@ import ReplyLoader from "@components/loaders/reply-loader";
 const newsData = [
   {
     id: 1,
-    title: "Tech Innovations 2025",
+    title: "Dr. Emily Johnson — Cardiologist",
     description:
-      "Explore the latest breakthroughs in AI, robotics, and clean energy reshaping industries worldwide.",
+      "Based in New York, Dr. Emily Johnson has over 15 years of experience in treating heart diseases, performing cardiac surgeries, and promoting preventive heart care.",
     image:
-      "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: 2,
-    title: "Global Market Trends",
+    title: "Dr. Michael Anderson — Orthopedic Surgeon",
     description:
-      "Economic experts predict steady growth in emerging markets with digital transformation at the core.",
+      "Practicing in Los Angeles, Dr. Anderson specializes in bone and joint health, focusing on sports injuries and advanced joint replacement procedures.",
     image:
-      "https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: 3,
-    title: "Health and Wellness",
+    title: "Dr. Sophia Martinez — Pediatrician",
     description:
-      "Discover how modern lifestyles are evolving with a renewed focus on mental health and sustainability.",
+      "A compassionate pediatrician from Chicago, Dr. Martinez provides preventive and diagnostic care for children, from newborns to teenagers.",
     image:
-      "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80",
   },
 ];
+
 
 
 const HomePage = () => {
@@ -112,7 +113,7 @@ const HomePage = () => {
   const { data: FeaturedPosts } = useGetFeaturedPosts();
   const [prod, setProd] = useState(false)
   const [loading, setLoading] = useState(false)
-
+  const [careproviders, setCareproviders] = useState(false)
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -191,9 +192,9 @@ const HomePage = () => {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
+      setCareproviders(true)
       setProd(true)
     }, [2000])
-    console.log("kkkkkkkkkkk")
   }
 
   return (
@@ -270,7 +271,7 @@ const HomePage = () => {
 
         {/* Buttons and Ratings */}
         <div className="flex flex-col sm:flex-row items-center gap-5 text-gray-700">
-          <button onClick={()=>(navigate("/explore/reviews"))} className="cursor-pointer border border-blue-500 text-blue-600 px-5 py-2 rounded-lg font-medium hover:bg-blue-50 transition-all">
+          <button onClick={() => (navigate("/explore/reviews"))} className="cursor-pointer border border-blue-500 text-blue-600 px-5 py-2 rounded-lg font-medium hover:bg-blue-50 transition-all">
             Explore Reviews
           </button>
           <div className="flex items-center gap-2 text-gray-600 text-sm">
@@ -281,8 +282,12 @@ const HomePage = () => {
         </div>
 
         {
-          loading ? <div className="mt-20"><ReplyLoader /></div> :
+          loading == true ? <div className="mt-20"><ReplyLoader /></div> : ""
 
+
+        }
+        {
+          careproviders == true ?
             <div className="py-12 px-4 md:px-10 lg:px-20 mt-10">
               <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
                 Our Care Providers
@@ -319,8 +324,7 @@ const HomePage = () => {
               <button className="mt-10 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 cursor-pointer transition">
                 Show More
               </button>
-            </div>
-
+            </div> : ""
         }
       </section>
 

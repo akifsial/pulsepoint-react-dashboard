@@ -155,7 +155,7 @@ const LoginPage = () => {
 
           {/* Submit Button */}
           <button type="submit" className="w-full bg-[#28A2FF] flex justify-center items-center text-white h-[50px] px-4 rounded-lg font-medium text-lg transition-colors cursor-pointer mb-1">
-            <span>{isLoginLoading ? <Spinner /> : "Login"}</span>
+            <span>{isLoginLoading ? <Spinner height={4} width={5} /> : "Login"}</span>
           </button>
           {/* calling component for Social icons */}
           <SocialLoginSection action="signup" handleSocialLogin={handleSocialLogin} />
