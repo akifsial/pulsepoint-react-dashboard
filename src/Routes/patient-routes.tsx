@@ -1,5 +1,5 @@
 import PatientLayout from "@layouts/patient-layout";
-import AdminCommunityForum from "@pages/patientpages/admin-community-forum";
+import AdminCommunityForum from "@src/Pages/PatientPages/admincommunityforum";
 import AdminDashboard from "@pages/patientpages/admin-dashboard";
 import AdminCareProvider from "@pages/patientpages/admin-care-provider";
 import AdminPatientReviews from "@pages/patientpages/admin-patient-reviews";
