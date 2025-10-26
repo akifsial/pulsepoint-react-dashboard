@@ -31,12 +31,10 @@ const HelpCenterPage = () => {
 
       },
       onError: (error) => {
-        // toast.error(error?.response?.data?.message);
       },
     });
 
   const handleContactUs = async (customText) => {
-    // const messageToSend = customText || question;
     const data = {
       first_name: customText?.first_name,
       last_name: customText?.last_name,
@@ -50,11 +48,9 @@ const HelpCenterPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Topbar + Header */}
       <TopBar />
       <UtilityRow />
 
-      {/* Hero Section */}
       <div className="relative  bg-blue-50">
         <BannerWeb pageName={"Contact Us"} />
 
@@ -119,7 +115,6 @@ const HelpCenterPage = () => {
               <PrimaryButton btnClass="min-h-[55px] min-w-[130px] !w-fit ps-8 pe-8" type="submit" btnText={isPendingContactUs ? <Spinner/> : `Submit`} />
             </form>
           </div>
-          {/* <div className="col-span-1">2222222222</div> */}
           <div className="col-span-1">
             <CategorySidebar />
           </div>

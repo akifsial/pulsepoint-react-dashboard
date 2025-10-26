@@ -14,7 +14,7 @@ interface InputFieldProps {
   errorMessage?: string;
   fieldName?: string;
   iconUrl?: string;
-  register?: any; // from react-hook-form
+  register?: any; 
 
   disabled?: boolean;
   [rest: string]: any;
@@ -25,7 +25,6 @@ const InputField: React.FC<InputFieldProps> = ({
   id = "",
   type = "text",
   placeholder = "",
-  // value,
   onChange,
   icon: IconComponent,
   gray,
@@ -61,7 +60,6 @@ const InputField: React.FC<InputFieldProps> = ({
       <div className="relative ">
         <input
           id={id}
-          // maxLength={5}
           type={isPassword && showPassword ? "text" : type}
           disabled={disabled}
           placeholder={placeholder}
@@ -70,7 +68,7 @@ const InputField: React.FC<InputFieldProps> = ({
               ? (e) => {
                 const target = e.target as HTMLInputElement;
                 if (target.value.length > 5) {
-                  target.value = target.value.slice(0, 5); // ✅ cut to 5 digits
+                  target.value = target.value.slice(0, 5); 
                 }
               }
               : undefined
@@ -88,11 +86,6 @@ const InputField: React.FC<InputFieldProps> = ({
 
         {isPassword && <div className="absolute right-3 top-[50%] transform -translate-y-1/2 cursor-pointer">{showPassword ? <IoEyeOutline size={18} onClick={handleToggle} color="#292D32" /> : <IoEyeOffOutline size={18} onClick={handleToggle} color="#292D32" />}</div>}
       </div>
-
-      {/* ✅ Fixed height for error */}
-      {/* <div className="min-h-[20px]">{errors?.[registerName] && <p className="text-sm text-red-500">{errors[registerName]?.message as string}</p>}</div> */}
-
-      {/* ✅ Only show this if there’s an error */}
       {hasError && (
         <div className="min-h-[20px]">
           <p className="text-sm text-red-500">

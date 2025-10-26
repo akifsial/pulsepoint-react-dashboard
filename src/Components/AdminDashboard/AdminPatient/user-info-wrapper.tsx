@@ -16,7 +16,6 @@ const UserInfoWrapper: React.FC = () => {
         alert("Failed to fetch user details.");
       }
     } catch (error) {
-      console.error(error);
       alert("Error fetching user details");
     }
   };

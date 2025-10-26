@@ -9,7 +9,6 @@ import { PrimaryButton } from "@components/shared-components/buttons/common-butt
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
 import OurFeed from "./our-feed";
 import Model from "@components/model/model";
-// import CreatePost from "./Notification/Notification";
 import CreatePost from "./backfeed/create-post";
 import PatientInfo from "@components/careprovider/patient-info";
 import { useGetSpecificCommunity } from "@src/hooks/use-community";
@@ -47,7 +46,7 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
     useGetSpecificCommunity(id ?? "");
 
 
-  const location = useLocation(); // detects route changes
+  const location = useLocation(); 
 
   useEffect(() => {
     refetch();
@@ -63,7 +62,7 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
 
     onSuccess: async () => {
       setIsLeaveModalOpen(false);
-      queryClient.invalidateQueries(["useGetSpecificCommunity"]); // refetch list
+      queryClient.invalidateQueries(["useGetSpecificCommunity"]); 
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
@@ -71,9 +70,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
   });
 
   const handleJoinCommunity = async () => {
-    // if (isLeaveModalOpen==false) {
-    //   return setIsLeaveModalOpen(true)
-    // }
     const data1 = {
       community_id: id,
     };
@@ -83,18 +79,15 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
 
   const [showInitialLoader, setShowInitialLoader] = useState(true);
 
-  // hide spinner after first fetch
   useEffect(() => {
     if (!isLoading) {
       setShowInitialLoader(false);
     }
   }, [isLoading]);
 
-  // DELETE COMMUNITY
 
   const {
     mutateAsync: deleteCommunityMutation,
-    // isPending: savedCareProvidersPending,
   } = useMutation({
     mutationFn: ({ communityId }) => ApiDeleteCommunity(communityId),
 
@@ -109,7 +102,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
       }
     },
     onError: (error) => {
-      // toast.error("Something Went Wrong");
     },
   });
 
@@ -118,7 +110,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
   };
   return (
     <>
-      {/* {!showPatientInfo ? ( */}
 
       {showInitialLoader ? (
         <div className="text-center flex mt-30 justify-center">
@@ -128,7 +119,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
         <p className="!text-[30px]">something went wrong</p>
       ) : data ? (
         <div className="mb-[25px]">
-          {/* Fixed header */}
           <div
             className="flex items-center gap-2.5 cursor-pointer pb-4 bg-transparent sticky top-0 z-10"
             onClick={() => {
@@ -143,7 +133,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
             </h2>
           </div>
 
-          {/* Scrollable content area */}
           <div
             className="h-[603px] overflow-y-scroll pr-2"
             style={{
@@ -151,7 +140,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
               msOverflowStyle: "none",
             }}
           >
-            {/* Hide scrollbar in WebKit browsers */}
             <style jsx>{`
               ::-webkit-scrollbar {
                 display: none;
@@ -270,7 +258,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
                         btnText="Delete Community"
                         showImg={false}
                         btnClass="w-fit h-[46px] !rounded-[10px] bg-red-600 !px-4 py-[10px] text-sm text-white font-semibold leading-[33px] gap-2 flex items-center justify-center"
-                        // onClick={() => handleDeleteCommunity(data?.id)}
                         onClick={() => setIsDeleteModal(true)}
                       />
                     ) : (
@@ -288,11 +275,9 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
                           />
                         ) : data?.is_pending_private ?   (
                           <PrimaryButton
-                            // btnText="Request Sent"
                             btnText={isPendingCommunityJoin ? <Spinner/> : `Request Sent`}
 
                             showImg={false}
-                            // disabled={true}
                             btnClass="min-w-[150px] h-[46px]  !rounded-[10px] bg-[#D3D3D3] !px-4 py-[10px] text-sm text-black font-semibold leading-[33px] gap-2 flex items-center justify-center"
                             onClick={handleJoinCommunity}
                           />
@@ -312,7 +297,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
                       isOpen={isDeleteModal}
                       onClose={() => setIsDeleteModal(false)}
                       onDelete={()=>handleDeleteCommunity(data?.id)}
-                      // loading={isLoading}
                     />
 
                     <LeaveCommunityModal
@@ -347,9 +331,6 @@ const CommunityAccount = ({ setOpenBackFeed }) => {
           No communities found
         </p>
       )}
-      {/* ) : ( */}
-      {/* <PatientInfo setShowPatientInfo={setShowPatientInfo} /> */}
-      {/* )} */}
 
       {showCreatePostModal && (
         <Model setIsOpen={setShowCreatePostModal} className="max-w-[600px]">

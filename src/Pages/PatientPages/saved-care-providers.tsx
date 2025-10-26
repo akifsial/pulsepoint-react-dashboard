@@ -6,17 +6,15 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import Pagination from "@components/pagination/pagination";
 import TableSkeletonLoader from "@components/loaders/table-skeleton-loader";
-// import columns from "@pages/PatientPages/";
+import alice from "@assets/media/images/dashboard-images/alice.svg";
+import RatingStars from "@components/shared-components/rating-stars";
 function SavedCareProviders({
   debouncedSearchText,
   rating,
   page,
   setPage,
-  // sort,
-  // onSortClick,
 }) {
   const [sort, setSort] = useState(true);
-  // const [page, setPage] = useState(1);
 
   const {
     data: AllSavedCareProviders,
@@ -34,7 +32,6 @@ function SavedCareProviders({
     refetch();
   };
 
-  //   const [page, setPage] = useState(1);
 
   const getColumns = (
     navigate: ReturnType<typeof useNavigate>
@@ -49,7 +46,6 @@ function SavedCareProviders({
         return (
           <div
             className="flex me-5 items-center gap-3 cursor-pointer"
-            // onClick={() => navigate(`/patient/hospital-profile/${id}`)}
             onClick={() => navigate(`/patient/care-provider/${id}`)}
           >
             <img
@@ -81,16 +77,6 @@ function SavedCareProviders({
         </i>
       ),
     },
-    // {
-    //   accessor: "total_rating",
-    //   header: "Rating",
-    //   showSort: true,
-    //   cell: ({ getValue }) => {
-    //     const rating = getValue();
-    //     return rating ? rating : ""
-    //   },
-    // },
-
     {
       accessor: "total_rating",
       header: "Rating",
@@ -103,7 +89,7 @@ function SavedCareProviders({
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            fill={filled ? "#FACC15" : "#D1D5DB"} 
             width="20"
             height="20"
           >
@@ -186,6 +172,78 @@ function SavedCareProviders({
   const handlePageChange = (page) => {
     setPage(page);
   };
+    type dataTypes = {
+      id?: number;
+      first_name?: string;
+      last_name?: string;
+      date?: string;
+      email?: string;
+      image?: string;
+      rating?: number | string | React.ReactNode;
+      reviews?: string;
+      specialization?: string;
+      location?: string;
+      onSortClick?: number;
+    };
+  
+
+    const data: dataTypes[] = [
+    {
+      id: 1,
+      first_name: "Alice",
+      last_name: "Border",
+      date: "9/04/12",
+      email: "alice.border@example.com",
+      image: alice,
+      rating: <RatingStars value={5} isDisabled={true} />,
+      specialization: "Elderly care",
+      location: "📍200 1st St SW, Rochester",
+    },
+    {
+      id: 2,
+      first_name: "Michael",
+      last_name: "Schofield",
+      date: "9/04/16",
+      email: "michael.schofield@example.com",
+      image: "/images/michael.png",
+      rating: <RatingStars value={3} isDisabled={true} />,
+      specialization: "Post-surgical rehab",
+      location: "📍190 E Bannock St, Boise, ID 83712",
+    },
+    {
+      id: 3,
+      first_name: "Sarah",
+      last_name: "Johnson",
+      date: "10/04/19",
+      email: "sarah.johnson@example.com",
+      image: "/images/sarah.png",
+      rating: <RatingStars value={4} isDisabled={true} />,
+      specialization: "Harmony Memory Care",
+      location: "📍T9500 Euclid Ave, Cleveland,",
+    },
+    {
+      id: 4,
+      first_name: "John",
+      last_name: "Doe",
+      date: "12/04/22",
+      email: "john.doe@example.com",
+      image: "/images/john.png",
+      rating: <RatingStars value={5} isDisabled={true} />,
+      specialization: "Fitness  services.",
+      location: "📍1468 Madison Ave, NY 10029",
+    },
+    {
+      id: 5,
+      first_name: "Emily",
+      last_name: "Davis",
+      date: "15/04/23",
+      email: "emily.davis@example.com",
+      image: "/images/emily.png",
+      rating: <RatingStars value={2} isDisabled={true} />,
+      specialization: "Rehabilitation Center",
+      location: "📍8900 N Kendall Dr, Miami, FL 33176",
+    },
+  ];
 
   return (
     <div className="">
@@ -195,7 +253,7 @@ function SavedCareProviders({
         <div className="overflow-x-auto w-full">
           <TanDataTable<dataTypes>
             columns={columns}
-            data={AllSavedCareProviders?.records ?? []}
+            data={data}
             showCheckbox={false}
             onRowSelect={handleRowSelect}
             className="my-custom-class"

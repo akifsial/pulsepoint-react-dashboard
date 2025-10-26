@@ -20,7 +20,6 @@ import SkeletonTableLoader from "@components/loader/skelton-table-loader";
 import AdminDropdownAction from "../admindropdownaction/admin-dropdown-action";
 import AdminRatingFilterDropDown from "../admindropdownaction/admin-rating-filter-drop-down";
 
-// ---- Small, safe highlighter for exact matches (word-boundary by default)
 const Highlighter: React.FC<{ text?: string | number; query: string }> = ({
   text,
   query,
@@ -29,13 +28,10 @@ const Highlighter: React.FC<{ text?: string | number; query: string }> = ({
   const q = query.trim();
   if (!q) return <>{source}</>;
 
-  // Escape regex special chars from user input
   const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-  // Word-boundary regex to show EXACT term the user typed
   const re = new RegExp(`\\b(${escaped})\\b`, "gi");
 
-  // If no word-boundary hit, fall back to a plain case-insensitive find so IDs/emails still highlight
   if (!re.test(source)) {
     const soft = new RegExp(`(${escaped})`, "gi");
     return (
@@ -53,7 +49,6 @@ const Highlighter: React.FC<{ text?: string | number; query: string }> = ({
     );
   }
 
-  // Reset lastIndex since we used .test
   re.lastIndex = 0;
   return (
     <>
@@ -85,7 +80,6 @@ type DataRow = {
   status?: string;
 };
 
-// ReviewRecord type from backend
 type ReviewRecord = {
   feedback: { review_id: string | number };
   id: string | number;
@@ -113,19 +107,153 @@ const ReviewsTable: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const [data, setData] = useState();
-  // --- Pagination (SERVER-SIDE) ---
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 3;
   const [totalRecords, setTotalRecords] = useState<number>(0);
-  // --------------------------
 
-  // Debounce for search -> server request
   const searchDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Sequence guard to prevent stale response overwrites
   const requestSeq = useRef(0);
 
-  // ---------------- Columns (with highlight support)
+  const dummyData = [
+    {
+      id: 1,
+      reviewed: "RVW-001",
+      first_name: "Dr. Sarah Johnson",
+      organization_name: "CareWell Clinic",
+      email: "sarah.johnson@carewellclinic.com",
+      image: "uploads/providers/sarah-johnson.jpg",
+      first_name1: "Emma Brown",
+      email1: "emma.brown@example.com",
+      rating: 5,
+      reviews:
+        "Dr. Sarah was very attentive and professional. Highly recommended!",
+      date: "2025-09-12",
+    },
+    {
+      id: 2,
+      reviewed: "RVW-002",
+      first_name: "Dr. James Carter",
+      organization_name: "HealthLine Associates",
+      email: "james.carter@healthline.co.uk",
+      image: "",
+      first_name1: "Oliver Smith",
+      email1: "oliver.smith@example.com",
+      rating: 4,
+      reviews:
+        "The appointment started a bit late, but overall I received excellent care.",
+      date: "2025-08-29",
+    },
+    {
+      id: 3,
+      reviewed: "RVW-003",
+      first_name: "Dr. Aisha Khan",
+      organization_name: "London Health Centre",
+      email: "aisha.khan@londonhealth.co.uk",
+      image: "",
+      first_name1: "Sophie Taylor",
+      email1: "sophie.taylor@example.com",
+      rating: 5,
+      reviews:
+        "Very understanding and helpful. Answered all my questions clearly.",
+      date: "2025-09-05",
+    },
+    {
+      id: 4,
+      reviewed: "RVW-004",
+      first_name: "Dr. Robert Allen",
+      organization_name: "VisionCare Optics",
+      email: "robert.allen@visioncare.co.uk",
+      image: "",
+      first_name1: "Jack Wilson",
+      email1: "jack.wilson@example.com",
+      rating: 3,
+      reviews:
+        "The eye exam was thorough, but the waiting time was longer than expected.",
+      date: "2025-07-15",
+    },
+    {
+      id: 5,
+      reviewed: "RVW-005",
+      first_name: "Dr. Olivia Green",
+      organization_name: "NHS Specialist Dermatology",
+      email: "olivia.green@nhs.uk",
+      image: "",
+      first_name1: "Mia Johnson",
+      email1: "mia.johnson@example.com",
+      rating: 4,
+      reviews:
+        "Good experience overall, but I wish the follow-up instructions were clearer.",
+      date: "2025-08-03",
+    },
+    {
+      id: 6,
+      reviewed: "RVW-006",
+      first_name: "Dr. David Patel",
+      organization_name: "Medicare Plus",
+      email: "david.patel@medicareplus.co.uk",
+      image: "",
+      first_name1: "Lucas Anderson",
+      email1: "lucas.anderson@example.com",
+      rating: 5,
+      reviews: "Dr. Patel’s consultation was very detailed and reassuring.",
+      date: "2025-09-20",
+    },
+    {
+      id: 7,
+      reviewed: "RVW-007",
+      first_name: "Dr. Emma Thompson",
+      organization_name: "BrightSmile Dental",
+      email: "emma.thompson@brightsmile.com",
+      image: "",
+      first_name1: "Charlotte Evans",
+      email1: "charlotte.evans@example.com",
+      rating: 4,
+      reviews:
+        "Professional and caring staff, but dental prices were quite high.",
+      date: "2025-07-28",
+    },
+    {
+      id: 8,
+      reviewed: "RVW-008",
+      first_name: "Dr. Michael Ross",
+      organization_name: "EverCare Health",
+      email: "michael.ross@evercare.com",
+      image: "",
+      first_name1: "Harry White",
+      email1: "harry.white@example.com",
+      rating: 5,
+      reviews: "One of the best neurologists I’ve visited. Strongly recommend.",
+      date: "2025-09-10",
+    },
+    {
+      id: 9,
+      reviewed: "RVW-009",
+      first_name: "Dr. Emily Davis",
+      organization_name: "WellMind Psychiatry",
+      email: "emily.davis@wellmind.co.uk",
+      image: "",
+      first_name1: "Isabella Moore",
+      email1: "isabella.moore@example.com",
+      rating: 4,
+      reviews: "A very calm and empathetic doctor. Helped me feel comfortable.",
+      date: "2025-09-18",
+    },
+    {
+      id: 10,
+      reviewed: "RVW-010",
+      first_name: "Dr. Daniel Lee",
+      organization_name: "CityCare Clinic",
+      email: "daniel.lee@citycare.co.uk",
+      image: "",
+      first_name1: "William Harris",
+      email1: "william.harris@example.com",
+      rating: 3,
+      reviews: "The doctor was good but the clinic was a bit crowded.",
+      date: "2025-08-17",
+    },
+  ];
+
   const columns: TanDataTableColumn<DataRow>[] = useMemo(
     () => [
       {
@@ -145,11 +273,6 @@ const ReviewsTable: React.FC = () => {
           const providerName = first_name;
           return (
             <div className="flex w-55 items-center gap-3">
-              {/* <img
-              src={`${import.meta.env.VITE_APP_API_IMG_URL}${image}`}
-              alt={`${providerName ?? "Provider"}`}
-              className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
-            /> */}
               <img
                 src={
                   row.original.image
@@ -159,26 +282,22 @@ const ReviewsTable: React.FC = () => {
                     : dummyImage
                 }
                 onError={(e) => {
-                  // if broken URL, fallback to dummyImage
                   (e.currentTarget as HTMLImageElement).src = dummyImage;
                 }}
                 alt={row.original.first_name || "Patient"}
                 className="w-[38px] h-[38px] rounded-full object-cover border border-gray-200"
               />
               <div className="flex flex-col">
-                {/* Name (always first line) */}
                 <span className="font-medium text-sm text-[#252525] leading-tight">
                   <Highlighter text={providerName} query={searchText} />
                 </span>
 
-                {/* Organization (second line, when present) */}
                 {organization_name ? (
                   <span className="text-xs text-[#252525] leading-tight">
                     <Highlighter text={organization_name} query={searchText} />
                   </span>
                 ) : null}
 
-                {/* Email (last line) */}
                 <span className="text-xs text-gray-500 leading-tight">
                   <Highlighter text={email} query={searchText} />
                 </span>
@@ -198,13 +317,10 @@ const ReviewsTable: React.FC = () => {
               <img
                 src={
                   image
-                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${
-                        image
-                      }`
+                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${image}`
                     : dummyImage
                 }
                 onError={(e) => {
-                  // if broken URL, fallback to dummyImage
                   (e.currentTarget as HTMLImageElement).src = dummyImage;
                 }}
                 alt={first_name1 || "Patient"}
@@ -252,7 +368,6 @@ const ReviewsTable: React.FC = () => {
     [searchText]
   );
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -268,17 +383,15 @@ const ReviewsTable: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showRatingDropdown]);
 
-  // Function to fetch reviews — supports server-side pagination + optional search
   const fetchReviews = async (ratingFilter: string, page = 1, search = "") => {
     const seq = ++requestSeq.current;
     setIsLoading(true);
 
-    // Always send page & limit
     let url = `feedback?page=${page}&limit=${pageSize}`;
     const params: string[] = [];
     if (ratingFilter) params.push(`rating=${encodeURIComponent(ratingFilter)}`);
     if (search.trim())
-      params.push(`search=${encodeURIComponent(search.trim())}`); // only send when user searched
+      params.push(`search=${encodeURIComponent(search.trim())}`); 
 
     if (params.length) url += `&${params.join("&")}`;
 
@@ -295,7 +408,6 @@ const ReviewsTable: React.FC = () => {
         const transformed: DataRow[] = records.map(
           (item: ReviewRecord, index: number) => ({
             id: item?.feedback?.review_id ?? item?.id,
-            // care_provider_id: item?.care_provider?.id,
             reviewed: `RV-${(page - 1) * pageSize + (index + 1)}`,
             first_name: `${item.care_provider?.first_name ?? ""} ${
               item.care_provider?.last_name ?? ""
@@ -319,7 +431,6 @@ const ReviewsTable: React.FC = () => {
         setTotalRecords(0);
       }
     } catch (error) {
-      console.error("🔥 Error fetching reviews", error);
       if (seq === requestSeq.current) {
         setTableData([]);
         setTotalRecords(0);
@@ -329,20 +440,15 @@ const ReviewsTable: React.FC = () => {
     }
   };
 
-  // Initial load & when rating changes -> reset to page 1 (include current search)
   useEffect(() => {
     setCurrentPage(1);
     fetchReviews(selectedRating, 1, searchText);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedRating]);
 
-  // Re-fetch when page changes (include current search)
   useEffect(() => {
     fetchReviews(selectedRating, currentPage, searchText);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
-  // Debounced server search when searchText changes -> reset to page 1
   useEffect(() => {
     if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
     searchDebounceRef.current = setTimeout(() => {
@@ -352,31 +458,24 @@ const ReviewsTable: React.FC = () => {
     return () => {
       if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText]);
 
-  // Input handler
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
-  // Rating selection
   const handleRatingSelect = (rating: string) => {
     setSelectedRating(rating);
   };
 
-  // local highlight filtering (now also checks organization_name)
   const filteredReviews = useMemo(() => {
     const q = searchText.trim();
     if (!q) return tableData;
 
-    // Escape regex characters from user input
     const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-    // Word-boundary exact match for human names/review text
     const wordBoundary = new RegExp(`\\b${escaped}\\b`, "i");
 
-    // Equality / soft contains for IDs or emails
     const equalsCI = (a?: string | number) =>
       a !== undefined &&
       a !== null &&
@@ -417,14 +516,12 @@ const ReviewsTable: React.FC = () => {
     });
   }, [searchText, tableData]);
 
-  // ---------- Pagination calculations (SERVER totals) ----------
   const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
 
   useEffect(() => {
     if (currentPage > totalPages) setCurrentPage(totalPages);
   }, [totalPages, currentPage, totalRecords]);
 
-  // Approve / Delete logic
   const [selectedToApprove, setSelectedToApprove] = useState<null | DataRow>(
     null
   );
@@ -444,7 +541,6 @@ const ReviewsTable: React.FC = () => {
           description: "Review approved successfully.",
           variant: "success",
         });
-        // Update the table data to reflect the approval status
         setTableData((prev) =>
           prev.map((item) =>
             item.id === selectedToApprove.id
@@ -458,12 +554,10 @@ const ReviewsTable: React.FC = () => {
         toast({ description: "Failed to approve review.", variant: "error" });
       }
     } catch (error) {
-      console.error("🔥 Error approving review", error);
       toast({ description: "Something went wrong.", variant: "error" });
     }
   };
 
-  // Delete Api Integration
   const [selectedToDelete, setSelectedToDelete] = useState<null | DataRow>(
     null
   );
@@ -489,7 +583,6 @@ const ReviewsTable: React.FC = () => {
         toast({ description: "Failed to delete review.", variant: "error" });
       }
     } catch (error) {
-      console.error("🔥 Error deleting review", error);
       toast({ description: "Something went wrong.", variant: "error" });
     }
   };
@@ -501,7 +594,9 @@ const ReviewsTable: React.FC = () => {
 
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 ">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 space-grotesk text-[20px] font-bold mb-3">All Reviews</h3>
+          <h3 className="md:mb-0 space-grotesk text-[20px] font-bold mb-3">
+            All Reviews
+          </h3>
 
           <div className="hidden lg:flex lg:flex-1 lg:justify-end px-5">
             <CommonInput
@@ -517,7 +612,9 @@ const ReviewsTable: React.FC = () => {
           </div>
 
           <div className="flex md:flex-row flex-col md:items-center gap-3">
-            <p className="text-[#252525] font-medium inter text-sm">Filter by</p>
+            <p className="text-[#252525] font-medium inter text-sm">
+              Filter by
+            </p>
             <div className="relative" ref={dropdownRef}>
               <PrimaryButton
                 btnText={
@@ -539,7 +636,9 @@ const ReviewsTable: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute md:right-0 top-[60px] w-50 z-50"
                   >
-                    <AdminRatingFilterDropDown onRatingSelect={handleRatingSelect} />
+                    <AdminRatingFilterDropDown
+                      onRatingSelect={handleRatingSelect}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -547,7 +646,6 @@ const ReviewsTable: React.FC = () => {
           </div>
         </div>
 
-        {/* If no reviews are found, display the message */}
 
         {isLoading ? (
           <div className="text-center text-gray-500 px-10 mt-6">
@@ -557,11 +655,8 @@ const ReviewsTable: React.FC = () => {
           <>
             <TanDataTable<DataRow>
               columns={columns}
-              data={
-                filteredReviews
-              } /* server returns the current page; we keep local highlight-only filtering */
+              data={dummyData}
               showCheckbox={false}
-              // onRowSelect={(row) => console.log("Selected row:", row)}
               showActions={true}
               className="my-custom-class"
               actions={(row) => (
@@ -573,46 +668,21 @@ const ReviewsTable: React.FC = () => {
                       onClick: () => navigate(`/admin/reviewdetail/${row.id}`),
                       type: "view",
                     },
-                    // {
-                    //   label: "Approve Review",
-                    //   onClick: () => {
-                    //     setSelectedToApprove(row);
-                    //     setShowApproveModel(true);
-                    //   },
-                    //   type: "edit",
-                    // },
-                    // {
-                    //   label: "Delete Review",
-                    //   onClick: () => {
-
-                    //     setSelectedToDelete(row);
-                    //     setShowDeleteModel(true);
-                    //   },
-                    //   type: "delete",
-                    // },
                   ]}
                 />
               )}
             />
-            {/* <Pagination /> */}
-            {/* Pagination */}
           </>
         )}
       </div>
       <div>
         <Pagination
           rowsPerPage={pageSize}
-          totalRows={totalRecords || 0} // ✅ API ka totalRecords use karo
+          totalRows={totalRecords || 0} 
           currentPage={currentPage}
           onPageChange={setCurrentPage}
         />
       </div>
-      {/* {showDeleteModel && (
-        <Model className="max-w-lg" setIsOpen={setShowDeleteModel}>
-          <DeleteReview />
-        </Model>
-      )} */}
-      {/* Delete review modal */}
       {showDeleteModel && (
         <Model className="max-w-lg" setIsOpen={setShowDeleteModel}>
           {!deleteCompleted ? (
@@ -641,7 +711,6 @@ const ReviewsTable: React.FC = () => {
         </Model>
       )}
 
-      {/* Approve review modal */}
       {showApproveModel && (
         <Model className="max-w-lg" setIsOpen={setShowApproveModel}>
           <div className="p-6 text-center">
@@ -671,6 +740,4 @@ const ReviewsTable: React.FC = () => {
 
 export default ReviewsTable;
 
-function toast(arg0: { description: string; variant: string }) {
-  // console.log(`[${arg0.variant.toUpperCase()}] ${arg0.description}`);
-}
+function toast(arg0: { description: string; variant: string }) {}

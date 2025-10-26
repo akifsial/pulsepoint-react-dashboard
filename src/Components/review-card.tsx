@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Search, Clock } from 'lucide-react';
 import { X } from "lucide-react";
-// Import your actual image
 import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
 
-// Your existing Model component (simplified for demo)
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
@@ -66,14 +64,11 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       className="relative w-[340px] h-[142px] rounded-[10px] bg-cover bg-center"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      {/* Content container with flex column layout */}
       <div className="relative h-full p-4 flex flex-col justify-between">
-        {/* Title text - positioned at top left */}
         <h2 className="text-white text-sm leading-[22px] tracking-[0%] font-normal font-sans max-w-[140px] text-start">
           {title}
         </h2>
 
-        {/* Button - positioned at bottom right */}
         <div className="flex justify-start">
           <button
             onClick={handleReviewClick}
@@ -84,11 +79,9 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
         </div>
       </div>
 
-      {/* Provider Search Modal */}
       {isDropdownOpen && (
         <Model setIsOpen={setIsDropdownOpen} className="max-w-[500px]">
           <div className="pt-4">
-            {/* Search Input */}
             <div className="mb-6">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -103,7 +96,6 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
               </div>
             </div>
 
-            {/* Recents Section */}
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-gray-600 font-medium text-base">Recents</h3>
@@ -115,7 +107,6 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
                 </button>
               </div>
 
-              {/* Recent Searches List */}
               <div className="space-y-1 max-h-[250px] overflow-y-auto">
                 {recentSearches.map((search) => (
                   <div

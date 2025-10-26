@@ -18,7 +18,7 @@ const StripeSuccessPage = () => {
     }
     const timer = setTimeout(() => setCounter(counter - 1), 1000);
 
-    return () => clearTimeout(timer); // cleanup on unmount or counter change
+    return () => clearTimeout(timer); 
   }, [counter, navigate]);
 
   return (

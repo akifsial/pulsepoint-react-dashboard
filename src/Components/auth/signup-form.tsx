@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import arrowIcon from "@assets/media/images/arrow-down.svg";
 import InputField from "../input-field";
 import SelectField from "../select-field";
 import OnBoardingLayout from "./on-borading-layout";
@@ -54,24 +53,6 @@ const SignupForm = () => {
     preferredCommunication: [],
   });
 
-  // const [errors, setErrors] = useState<FormData>({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   phone: "",
-  //   age: "",
-  //   gender: "",
-  //   maritalStatus: "",
-  //   insuranceType: "",
-  //   password: "",
-  //   confirmPassword: "",
-  //   zipCode: "",
-  //   city: "",
-  //   state: "",
-  //   streetAddress: "",
-  //   preferredCommunication: [],
-  //   careNeeds: "",
-  // });
 
   const {
     register,
@@ -83,13 +64,10 @@ const SignupForm = () => {
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
-  const navigate = useNavigate(); // Hook to navigate
-  // select data population
+  const navigate = useNavigate(); 
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
-    // { value: "other", label: "Other" },
-    // { value: "prefer-not-to-say", label: "Prefer not to say" },
   ];
 
   const maritalStatusOptions = [
@@ -136,7 +114,6 @@ const SignupForm = () => {
     setPreferredMethod(e.target.value);
   };
 
-  // handle checkbox changes
   const handleCommunicationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
     setFormData((prev) => {
@@ -155,7 +132,6 @@ const SignupForm = () => {
 
     onSuccess: async () => {
       toast.success("Care Provider Created Successfully");
-      // navigate("/login");
       navigate("/care-provider/login");
     },
     onError: (err) => {},
@@ -163,7 +139,6 @@ const SignupForm = () => {
 
   const RegisterSubmit = async (data) => {
     const registerData = {
-      // for care_provider
       organization_name: data.organizationName,
 
       email: data.email,
@@ -186,7 +161,6 @@ const SignupForm = () => {
       website_url: "yeah.com",
       working_hours: "Uk Bargingham Street ",
       marital_status: data.maritalStatus,
-      // communication_method_id: preferredMethod,
     };
     await registerMutation({ data: registerData });
   };
@@ -199,8 +173,6 @@ const SignupForm = () => {
             <div className="px-4 py-6">
               <p className="text-[#1A1A1A] text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">Sign Up</p>
               <p className="text-[#252525CC] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">Create Your Provider Account</p>
-              {/* Name Fields */}
-              {/* Name Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -255,7 +227,6 @@ const SignupForm = () => {
                 />
               </div>
 
-              {/* Email and Phone */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -297,7 +268,6 @@ const SignupForm = () => {
                 </div>
               </div>
 
-              {/* Zip & City */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -333,7 +303,6 @@ const SignupForm = () => {
                 </div>
               </div>
 
-              {/* State & Street */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -371,7 +340,6 @@ const SignupForm = () => {
                 </div>
               </div>
 
-              {/* Website & Working Hours */}
               <div className="grid grid-cols-1">
                 <div>
                   <InputField label="Website Url (optional)" icon={IoPersonOutline} id="website" name="website" type="text" placeholder="e.g., www.topseniorspot.com" register={register} registerName="website" errors={errors} />
@@ -381,7 +349,6 @@ const SignupForm = () => {
                 </div>
               </div>
 
-              {/* Password Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -391,7 +358,6 @@ const SignupForm = () => {
                     name="password"
                     type="password"
                     placeholder="Enter your password"
-                    // icon={lockIcon} // ✅ lock icon here
                     register={register}
                     registerName="password"
                     errors={errors}
@@ -408,7 +374,6 @@ const SignupForm = () => {
                     name="confirmPassword"
                     type="password"
                     placeholder="Confirm your password"
-                    // icon={lockIcon} // ✅ lock icon here
                     register={register}
                     registerName="confirmPassword"
                     errors={errors}
@@ -421,70 +386,14 @@ const SignupForm = () => {
                 </div>
               </div>
 
-              {/* <div className="space-y-4">
-                <p className="text-md font-semibold">
-                  Preferred Communication Method
-                </p>
-                <div className="flex text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="email"
-                      name="preferredCommunication"
-                      value="email"
-                      checked={formData.preferredCommunication.includes(
-                        "email"
-                      )}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="email" className="ml-1">
-                      Via Email Address
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="phone"
-                      name="preferredCommunication"
-                      value="phone"
-                      checked={formData.preferredCommunication.includes(
-                        "phone"
-                      )}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="phone" className="ml-1">
-                      Via Phone Number
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="sms"
-                      name="preferredCommunication"
-                      value="sms"
-                      checked={formData.preferredCommunication.includes("sms")}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="sms" className="ml-1">
-                      Via SMS Text
-                    </label>
-                  </div>
-                </div>
-              </div> */}
+             
 
-              {/* Submit Button */}
               <button type="submit" className="w-full flex justify-center bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer">
                 {isRegisterPending ? <Spinner /> : "Sign Up"}
               </button>
-              {/* calling component for Social icons */}
               <SocialLoginSection
                 action="login"
-                // handleSocialLogin={handleSocialLogin}
               />
-              {/* "Don't have an account yet?" Section */}
               <div className="flex justify-center mt-6">
                 <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
                   Already have an account?{" "}

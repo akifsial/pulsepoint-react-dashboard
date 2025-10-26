@@ -46,7 +46,7 @@ const ViewCommunity = () => {
   const { type, id } = useParams<{ type: string; id: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const forumId = searchParams.get("forumId"); // this is a string
+  const forumId = searchParams.get("forumId"); 
 
   const [postData, setPostData] = useState<PostData | null>(null);
   const [isApproveLoading, setIsApproveLoading] = useState(false);
@@ -55,7 +55,6 @@ const ViewCommunity = () => {
 
 
 
-  // ✅ Fetch Data
   useEffect(() => {
     if (!type || !id) return;
 
@@ -74,7 +73,6 @@ const ViewCommunity = () => {
           setPostData(res.data.payload);
         }
       } catch (err) {
-        console.error("Fetch error:", err);
       }
     };
 
@@ -83,13 +81,11 @@ const ViewCommunity = () => {
 
   
 
-  // ✅ Approve Post/Comment/Report
   const UpdatePost = async () => {
     if (!type || !postData) return;
 
     try {
       setIsApproveLoading(true);
-      // const token = localStorage.getItem("token");
         const token: string | null = JSON.parse(
       localStorage.getItem("token") || "null"
     );
@@ -123,14 +119,12 @@ const ViewCommunity = () => {
         setPostData((prev) => prev && { ...prev, status: "APPROVED" });
       }
     } catch (error) {
-      console.error("Approve error:", error);
       toast.error("Something went wrong!");
     } finally {
       setIsApproveLoading(false);
     }
   };
 
-  // ✅ Delete
  const handleDelete = async () => {
   if (!type || !postData) return;
 
@@ -159,7 +153,7 @@ const ViewCommunity = () => {
         ? `${import.meta.env.VITE_APP_API_URL}community/post/${apiId}`
         : type === "COMMENT"
         ? `${import.meta.env.VITE_APP_API_URL}community/comment/${apiId}`
-        : `${import.meta.env.VITE_APP_API_URL}community/post/report/${apiId}`; // REPORT
+        : `${import.meta.env.VITE_APP_API_URL}community/post/report/${apiId}`; 
 
     const response = await apiServices.delete(url);
 
@@ -169,7 +163,6 @@ const ViewCommunity = () => {
       navigate("/admin/forum-moderation");
     }
   } catch (error) {
-    console.error("Delete error:", error);
     toast.error("Failed to delete. Please try again.");
   } finally {
     setIsDeleteLoading(false);
@@ -184,7 +177,6 @@ const ViewCommunity = () => {
 
   return (
     <>
-      {/* Header */}
       <div className="mb-[25px]">
         <div className="flex items-center mb-4.5 gap-2.5">
           <img
@@ -199,10 +191,8 @@ const ViewCommunity = () => {
         </div>
       </div>
 
-      {/* Post Content */}
       <div className="post mb-6 relative">
         <div className="post_content bg-white rounded-[10px] p-4 pb-9 relative">
-          {/* User Info */}
           <div className="md:flex justify-between">
             <div className="flex items-center gap-3 mb-6 mt-2.5">
               <img
@@ -233,7 +223,6 @@ const ViewCommunity = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex flex-wrap md:justify-start justify-center md:mb-0 mb-5 items-center gap-[13px]">
               <PrimaryButton
                 btnText={
@@ -273,7 +262,6 @@ const ViewCommunity = () => {
             </div>
           </div>
 
-          {/* Content */}
           <div className="text-sm text-[#252525] mb-7 max-w-[755px]">
             <h3 className="mb-2 font-[Space Grotesk] space-grotesk  font-bold text-xl">
               {type === "REPORT" ? postData?.post?.title : postData?.title}
@@ -283,7 +271,6 @@ const ViewCommunity = () => {
             </p>
           </div>
 
-          {/* Images */}
           {type === "REPORT" && postData?.post?.image && (
             <img
               src={`${import.meta.env.VITE_APP_API_IMG_URL}${
@@ -301,7 +288,6 @@ const ViewCommunity = () => {
             />
           )}
 
-          {/* Flags */}
           <div className="mt-6 font-semibold text-[#252525]/50">
             <p className="mb-2.5 space-grotesk">Flag provided by Patient</p>
             <div className="flex items-center gap-3.5">
@@ -352,12 +338,9 @@ const ViewCommunity = () => {
             )}
           </div>
 
-          {/* Comments */}
-          {/* {type === "COMMENT" && <CommentsForum commentId={postData?.id} />} */}
         </div>
       </div>
 
-      {/* Delete Modal */}
       {isDeleteModalOpen && (
         <Model setIsOpen={setIsDeleteModalOpen} className="max-w-[488px]">
           <DeleteReview />

@@ -62,7 +62,7 @@ const InputField: React.FC<InputFieldProps> = ({
               ? (e) => {
                   const target = e.target as HTMLInputElement;
                   if (target.value.length > 5) {
-                    target.value = target.value.slice(0, 5); // ✅ cut to 5 digits
+                    target.value = target.value.slice(0, 5); 
                   }
                 }
               : undefined

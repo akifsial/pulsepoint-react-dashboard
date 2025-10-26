@@ -7,7 +7,6 @@ const ViewCommunityWrapper = () => {
   const type = searchParams.get("type");
   const id = searchParams.get("id");
 
-  // Only render ViewCommunity if type & id exist
   if (!type || !id) return <div>Select a post/comment/report</div>;
 
   return <ViewCommunity type={type} id={id} />;

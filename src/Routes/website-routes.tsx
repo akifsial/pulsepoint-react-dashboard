@@ -3,7 +3,7 @@ import HomePage from "@pages/web-pages/home-page/home-page";
 import SignupForm from "@components/auth/signup-form";
 import AccountCreatedPage from "@components/auth/account-created-page";
 import LoginPage from "@components/auth/login-page";
-import ForgotPasswordPage from "@components/auth/forgot-password-page"; // Import ForgotPasswordPage
+import ForgotPasswordPage from "@components/auth/forgot-password-page"; 
 import ResetPasswordPage from "@components/auth/reset-password-page";
 import PasswordResetSuccessPage from "@components/auth/password-reset-success-page";
 import OTPPage from "@components/auth/otp-page";
@@ -13,7 +13,6 @@ import Fallback from "@components/auth/fallback";
 import AdminLoginPage from "@components/auth/admin-login-page";
 import AboutPage from "@pages/website/about-page";
 import CategoryPage from "@components/website/home/category-page";
-import { PublicProtectRoute } from "./protected-routes";
 import CommunityAccountWeb from "@components/careprovider/communityforum/community-account-web";
 import FacilitiesPage from "@pages/website/facilities-age";
 import HealthPage from "@pages/website/health-page";
@@ -26,14 +25,19 @@ import ExploreReviews from "@pages/website/explore-reviews";
 
 export const websitePublicRoutes = [
   // { path: "/", element: <HomePage /> },
+  // {
+  //   path: "/",
+  //   element: (
+  //     <PublicProtectRoute forceRedirectToDashboard={false}>
+  //       <HomePage />
+  //     </PublicProtectRoute>
+  //   ),
+  // },
   {
-    path: "/",
-    element: (
-      <PublicProtectRoute forceRedirectToDashboard={false}>
-        <HomePage />
-      </PublicProtectRoute>
-    ),
-  },
+  path: "/",
+  element: <HomePage />,
+},
+
   { path: "/blog/:id", element: <Blog /> },
   { path: "/explore/reviews", element: <ExploreReviews /> },
 
@@ -46,7 +50,6 @@ export const websitePublicRoutes = [
   { path: "/patient/login", element: <LoginPage /> },
 
   { path: "/login", element: <LoginPage /> },
-  // { path: "/admin/login", element: <AdminLoginPage /> },
 
   { path: "/fallback", element: <Fallback /> },
 
@@ -66,9 +69,5 @@ export const websitePublicRoutes = [
   { path: "/terms-of-service", element: <TermsOfService /> },
   { path: "/disclosure-policy", element: <DisclosurePolicy /> },
 
-  // privacy-policy
 ];
 
-// export const websitePrivateRoutes = [
-
-// ];

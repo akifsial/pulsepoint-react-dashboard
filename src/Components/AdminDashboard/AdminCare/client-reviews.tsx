@@ -1,5 +1,4 @@
 import React from "react";
-// import { IoIosCloseCircleOutline } from "react-icons/io";
 import RatingStars from "@components/shared-components/rating-stars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 
@@ -32,7 +31,6 @@ const ClientReviews: React.FC<ClientReviewsProps> = ({ reviews }) => {
           key={item.id}
           className="bg-[#FAFAFA] rounded-[8px] p-2 sm:p-5 mb-5 md:max-w-[49%] max-w-full w-full"
         >
-          {/* Header */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-[18px]">
               <img
@@ -53,24 +51,17 @@ const ClientReviews: React.FC<ClientReviewsProps> = ({ reviews }) => {
                 </p>
               </div>
             </div>
-            {/* <div className="flex item-center gap-1 border border-[#000]/50 rounded-[10px] p-2 cursor-pointer">
-              <IoIosCloseCircleOutline className="h-6 w-6" />
-              <span>Deleted Review</span>
-            </div> */}
           </div>
 
-          {/* Rating */}
           <div className="flex items-center gap-2 mb-2">
             <RatingStars value={item.rating} isDisabled={true} />
             <p className="text-[16px] text-[#252525]">({item.rating})</p>
           </div>
 
-          {/* Review Content */}
           <div>
             <p className="text-[16px] text-[#252525]">“{item.content}”</p>
           </div>
 
-          {/* Replies */}
           {item.replies && item.replies.length > 0 && (
             <div
               className="flex items-start gap-4 px-4 py-2.5 rounded-[5px] mt-3"

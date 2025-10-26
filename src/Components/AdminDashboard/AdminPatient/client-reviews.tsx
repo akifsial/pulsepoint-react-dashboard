@@ -71,28 +71,6 @@ const ClientReviews: React.FC<ClientReviewsProps> = ({ filterValue }) => {
           <div>
             <p className="text-[16px] text-[#252525] ">“{item.sliderDesc}”</p>
           </div>
-
-          {/* <div
-            className="flex items-center gap-4 px-4 py-2.5 rounded-[5px]"
-            style={item.comment ? { backgroundColor: "#EEF2F5" } : {}}
-          >
-            <img
-              src={item.userIcon}
-              alt=""
-              className="w-[43px] h-[43px] object-cover rounded-full"
-            />
-
-            {item.comment ? (
-              <p>{item.comment}</p>
-            ) : (
-              <input
-                type="text"
-                placeholder="Add a reply"
-                className="w-full bg-white outline-0 border-[1px] rounded-[5px] p-2.5 text-sm"
-                style={{ borderColor: "#D3D3D3" }}
-              />
-            )}
-          </div> */}
         </div>
       ))}
      </div>

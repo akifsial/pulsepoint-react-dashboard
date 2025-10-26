@@ -1,15 +1,12 @@
 import { useCareProviderSingle } from "@src/hooks/use-dashboard";
 import { Star } from "lucide-react";
 import DummyImage from "@src/assets/media/images/dashboard-images/userDummy.png";
-/**
- * Review object shape.
- */
 export type Review = {
   id: string | number;
   authorName: string;
   authorTitle?: string;
   authorAvatar?: string;
-  rating: number; // 1‒5
+  rating: number; 
   content: string;
   createdAt: string | Date;
 };
@@ -114,31 +111,22 @@ function ReviewCard({ review, data }: { review: Review; data?: any }) {
   );
 }
 
-
-/**
- * Ratings & Reviews section props.
- */
 export interface RatingsReviewsSectionProps {
-  rating?: number; // average rating 0‑5
+  rating?: number; 
   reviewCount?: number;
   reviews?: Review[];
 }
 
-/**
- * Ratings & Reviews section matching the provided design.
- */
 export default function RatingsReviewsSection({
   rating = 4.2,
   reviewCount = 37,
   reviews = [],
   id,
 }: RatingsReviewsSectionProps) {
-  // Sample data if no reviews provided
   const { data } = useCareProviderSingle(id);
 
   return (
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
-      {/* Header */}
       <div className="flex items-center flex-wrap md:justify-between justify-center md:gap-0 gap-5 justify-between mb-8">
         <h2 className="text-xl space-grotesk font-semibold text-gray-900">
           Ratings & Reviews
@@ -177,11 +165,8 @@ export default function RatingsReviewsSection({
         }
       </div>
 
-      {/* Reviews grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {/* {data?.reviews_to_careprovider?.map((review) => ( */}
         <ReviewCard data={data} />
-        {/* ))} */}
       </div>
 
 

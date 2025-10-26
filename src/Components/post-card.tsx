@@ -3,17 +3,11 @@ import Flagwhite from "@assets/media/svgs/dashboard-svgs/flag4.svg";
 import Flagblue from "@assets/media/svgs/dashboard-svgs/flag3.svg";
 import Save from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
-// import userProfile from "@assets/media/svgs/dashboard-svgs/userProfile.svg";
-// import arrowUp from "@assets/media/svgs/dashboard-svgs/arrow-up-btn.svg";
-// import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
-// import share from "@assets/media/svgs/dashboard-svgs/share.svg";
-// import comment from "@assets/media/svgs/dashboard-svgs/comment.svg";
 import SubmitReport from "./careprovider/communityforum/submit-report";
 import Model from "./model/model";
 import FlagPost from "./careprovider/communityforum/flag-post";
 
 
-// Define the interface for post data
 export interface PostData {
   userImage: string;
   userName: string;
@@ -25,21 +19,18 @@ export interface PostData {
   userReview: string;
 }
 
-// Define the interface for button data
 export interface ButtonData {
   btnText: string;
   btnIcon: string;
   downarrow?: string;
 }
 
-// Define the props interface for PostCard component
 interface PostCardProps {
   post: PostData;
   buttons: ButtonData[];
   showComments?: boolean;
   showFullPost?: boolean;
   onSavePost?: (post: PostData) => void; 
-  // Pass components as props to avoid import issues
   FlagPostComponent?: React.ComponentType<{onSubmit: () => void}>;
   ModalComponent?: React.ComponentType<{children: React.ReactNode, setIsOpen: (open: boolean) => void, className?: string}>;
 }
@@ -70,7 +61,6 @@ const PostCard: React.FC<PostCardProps> = ({
 
   const handleSubmitReport = () => {
     setIsFlagModalOpen(false);
-    // You can add additional logic here for after report submission
   };
 
   const handleSavePost = () => {
@@ -83,7 +73,6 @@ const PostCard: React.FC<PostCardProps> = ({
   return (
     <div className="post mb-6 relative">
       <div className="post_content bg-white rounded-[10px] p-4 relative">
-        {/* Post Header */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -142,21 +131,17 @@ const PostCard: React.FC<PostCardProps> = ({
           </button>
         </div>
 
-        {/* Post Content */}
         <div className="">
           <h3 className="mb-2.5">{post.title}</h3>
           <p className="text-sm text-[#252525] mb-7">
             {post.desc}{" "}
-            {/* <span className="text-[#868686]">Read more..</span> */}
           </p>
         </div>
 
-        {/* Post Image */}
         <div className="mb-2.5">
           <img src={post.postImage} alt="" className="rounded-md" />
         </div>
 
-        {/* Action Buttons */}
         <div className="flex gap-2.5 mb-2.5">
           {buttons.map((btn, idx) => (
             <button
@@ -176,7 +161,6 @@ const PostCard: React.FC<PostCardProps> = ({
           ))}
         </div>
 
-        {/* Comment Input */}
         {showFullPost && (
           <div>
             <input
@@ -188,7 +172,6 @@ const PostCard: React.FC<PostCardProps> = ({
           </div>
         )}
 
-        {/* Comments Section */}
         {showComments && showFullPost && (
           <>
             <div className="flex items-start gap-3 mb-5">
@@ -242,7 +225,6 @@ const PostCard: React.FC<PostCardProps> = ({
           </>
         )}
 
-        {/* 3-Dot Menu Dropdown */}
         {activePostActions && (
           <div className="absolute top-14 right-4 bg-white border border-gray-300 rounded-[10px] shadow-md p-1.5 z-50">
             <button

@@ -205,7 +205,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
       isCommentSection: true,
     },
   ];
-  // Api
 
   const totalSteps = surveySections.length;
 
@@ -225,8 +224,7 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
     e.preventDefault();
     setShowThankYou(true);
     setTimeout(() => {
-      // navigate("/patient/patient-reviews");
-    }, 2000); // 2 seconds delay
+    }, 2000); 
   };
 
   const currentSection = surveySections[currentStep];
@@ -238,14 +236,12 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
 
       onSuccess: async () => {
         toast.success("Review Updated Successfully");
-        queryClient.invalidateQueries(["useApiMySingleReviews"]); // refetch list
+        queryClient.invalidateQueries(["useApiMySingleReviews"]); 
         navigate(`/patient/patient-reviews`);
 
         setFeedbackOpen(false);
-        // navigate(`/patient/hospital-profile/${id}`);
       },
       onError: (error) => {
-        // toast.error("Error While Updating Review");
       },
     });
 
@@ -253,23 +249,10 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
     await feedbackMutation();
   };
 
-  // useEffect(() => {
-  //   if (data?.feedback) {
-  //     setResponses(data.feedback);
-  //   }
-  // }, [data?.feedback]);
-
-  //   useEffect(() => {
-  //   setResponses((prev) => ({
-  //     ...prev,
-  //     data?.feedback,
-  //     care_id: 4,
-  //   }));
-  // }, [data?.feedback]);
 
   useEffect(() => {
     setResponses((prev) => ({
-      ...(data?.feedback || {}), // safely spread feedback if it exists
+      ...(data?.feedback || {}), 
       care_provider_id: data?.care_provider_id,
       content: data?.content,
     }));
@@ -318,19 +301,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
                     feedback:
                   </strong>
                   <div className="mb-4 w-full max-w-sm">
-                    {/* <TextField
-                      label="Add A Comment"
-                      id="comment"
-                      placeholder="Enter your comment here..."
-                      value={data?.content}
-                      row={5}
-                      onChange={(e) =>
-                        setResponses((prev) => ({
-                          ...prev,
-                          content: e.target.value,
-                        }))
-                      }
-                    /> */}
                     <TextField
                       label="Add A Comment"
                       value={responses.content || ""}
@@ -345,13 +315,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
                 </div>
               ) : (
                 currentSection?.questions.map((q, qIdx) => {
-                  // const feedbackExists = data?.feedback?.hasOwnProperty(q.name);
-                  // const feedbackValue = data?.feedback?.[q.name];
-                  // const keyExists = q.name in data?.feedback;
-                  // const feedbackKey = Object.keys(data?.feedback || {}).find(
-                  //   (key) => key === q.name
-                  // );
-
                   return (
                     <div key={qIdx} className="text-sm  mb-6">
                       <div className="mb-3">
@@ -381,7 +344,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
                               <input
                                 type={q.type}
                                 name={q.name}
-                                // value={option}
                                 value={value}
                                 className="form-radio"
                                 checked={responses[q.name] == value}
@@ -389,7 +351,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
                                   setResponses((prev) => ({
                                     ...prev,
                                     [q.name]: value,
-                                    // care_id: 4, // ✅ add this line
                                   }))
                                 }
                               />
@@ -427,12 +388,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
                 Next
               </button>
             ) : (
-              // <PrimaryButton
-              //   btnText="Next"
-              //   btnClass="border-1 w-[100px] h-[46px] !rounded-[10px] px-4 py-[10px] text-white font-semibold leading-[33px] gap-[10px] flex items-center justify-center bg-[#28A2FF] hover:bg-[#2196F3] transition-colors"
-              //   onClick={handleNext}
-
-              // />
               <PrimaryButton
                 btnText={`${
                   isFeedbackPending ? "Posting..." : "Post A Review"
@@ -443,11 +398,6 @@ const EditFeedbackForm = ({ setFeedbackOpen }) => {
               />
             )}
           </div>
-          {/* {showThankYou && (
-            <div className="text-sm">
-              <p>Thank you for your valuable feedback!</p>
-            </div>
-          )} */}
         </form>
       </div>
     </>

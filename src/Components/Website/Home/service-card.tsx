@@ -11,7 +11,6 @@ interface ServiceCardProps {
 const ServiceCard = ({ title, description, image, link }: ServiceCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Kitne characters tak short description dikhani hai
   const previewLength = 120;
   const shouldTruncate = description.length > previewLength;
 
@@ -45,13 +44,6 @@ const ServiceCard = ({ title, description, image, link }: ServiceCardProps) => {
             </button>
           )}
 
-          {/* Optional link below description */}
-          {/* <Link
-            to={link}
-            className="inline-flex items-center text-blue-500 hover:text-blue-600 font-medium text-sm mt-3"
-          >
-            Go to Service
-          </Link> */}
         </div>
       </div>
     </div>

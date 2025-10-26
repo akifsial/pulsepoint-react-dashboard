@@ -8,7 +8,6 @@ import PatientReviewsCard from "@components/dashboard-components/cards/patient-r
 import { v4 as uuid } from "uuid";
 import { useMeApi } from "@src/hooks/use-users";
 import { useNavigate } from "react-router-dom";
-// import { useApiMyReviews } from "@src/hooks/useMyReviews";
 
 const PatinetReviews: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
@@ -22,7 +21,6 @@ const PatinetReviews: React.FC = () => {
       MeDataFetch()
     })
   
-  // const { data, isLoading } = useApiMyReviews("", rating);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,39 +49,12 @@ const PatinetReviews: React.FC = () => {
     { id: uuid(), label: "None", value: "0" },
   ];
 
-  // const {
-  //   mutateAsync: savedCareProvidersMutation,
-  //   isPending: savedCareProvidersPending,
-  // } = useMutation({
-  //   mutationFn: () => ApiSavedCareProviders({ care_provider_id: data?.id }),
-
-  //   onSuccess: async () => {
-  //     toast.success("Care Provider Saved Successfully");
-  //     queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
-  //   },
-  //   onError: (error) => {
-  //     toast.error("Something Went Wrong");
-  //   },
-  // });
-
-  // const handleBookmarkToggle = async () => {
-  //   setIsBookmarked(!isBookmarked);
-
-  //   if (data?.is_saved_care_provider == true) {
-  //     // handleSaved()
-  //     setSavedModal(true);
-  //     return;
-  //   }
-
-  //   await savedCareProvidersMutation();
-  // };
 
 
   return (
     <div>
       <h2 className="mb-4 text-[25px] font-bold space-grotesk">Patient Reviews</h2>
       <div className="bg-[#FFFFFF] rounded-[10px] md:px-5 md:py-5 px-3 py-3">
-        {/* Fixed Header */}
         <div className="mb-7 flex lg:flex-row flex-col lg:items-center lg:justify-between">
           <h3 className="lg:mb-0 space-grotesk text-[20px] font-bold mb-3">View and respond to feedback</h3>
           <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-3">
@@ -112,7 +83,6 @@ const PatinetReviews: React.FC = () => {
                 />
               </div>
 
-              {/* Dropdown */}
               <AnimatePresence>
                 {showRatingDropdown && (
                   <motion.div
@@ -138,8 +108,6 @@ const PatinetReviews: React.FC = () => {
           <PatientReviewsCard
             filterValue={filterValue}
             rating={rating}
-            // data={data}
-            // isLoading={isLoading}
           />
         </div>
       </div>

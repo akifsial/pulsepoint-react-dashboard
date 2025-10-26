@@ -27,7 +27,6 @@ const FlagPost = ({ onSubmit, post_id, community_id,setIsFlagModalOpen }) => {
 
   const {
     mutateAsync: ReportPostMutation,
-    // isPending: savedCareProvidersPending,
     isPending: isReporting,
   } = useMutation({
     mutationFn: (formData: FormData) => ApiReportPost(formData),
@@ -35,12 +34,10 @@ const FlagPost = ({ onSubmit, post_id, community_id,setIsFlagModalOpen }) => {
     onSuccess: async () => {
       toast.success("Report Successfully");
       setIsFlagModalOpen(false)
-      queryClient.invalidateQueries(["useGetCommunityPost"]); // refetch list
-      // onSubmit();
+      queryClient.invalidateQueries(["useGetCommunityPost"]); 
     },
     onError: (error) => {
 
-      // toast.error("Something Went Wrong");
     },
   });
 
@@ -58,7 +55,6 @@ const FlagPost = ({ onSubmit, post_id, community_id,setIsFlagModalOpen }) => {
     if (file) {
       formData.append("image_url", file);
     }
-    // formData.append("")
 
     await ReportPostMutation(formData);
   };
@@ -80,32 +76,13 @@ const FlagPost = ({ onSubmit, post_id, community_id,setIsFlagModalOpen }) => {
           className="overflow-y-auto"
         >
           <CommunityTopics
-            // asterisk
             title={"Select a reason for flagging"}
-            // options={[
-            //   { id: 1, text: "Spam or advertising" },
-            //   { id: 2, text: "Harassment or bullying" },
-            //   { id: 3, text: "Misinformation" },
-            //   { id: 4, text: "Off-topic or irrelevant" },
-            //   { id: 5, text: "Hate speech or abusive content" },
-            // ]}
             options={data?.records?.map((item, index) => ({
-              id: item.id, // Fallback if item.id is missing
-              text: item.name, // Adjust based on your API keys
+              id: item.id, 
+              text: item.name, 
             }))}
             onSelect={(id) => setReportReasonId(id)}
           />
-
-          {/* <TextField
-          label="Additional Comments (optional):"
-          asterisk
-          id="msg"
-          placeholder="Enter description"
-          row={2}
-          className="h-[90px] mb-6"
-          onChange={(e) => setComment(e.target.value)}
-          
-        /> */}
 
           <PrimaryInput
             label="Additional Comments (optional):"

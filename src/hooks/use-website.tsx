@@ -18,8 +18,6 @@ import {
 } from "@src/api/api-website";
 import { useQuery } from "@tanstack/react-query";
 
-//  category api ------------------------
-
 export const useCategory = () => {
   return useQuery({
     queryKey: ["useCategory"],
@@ -33,8 +31,6 @@ export const useSingleCategory = (id) => {
     queryFn: () => ApiSingleCategory(id),
   });
 };
-
-//  blog api --------------------------
 
 export const useBlog = (search) => {
   return useQuery({
@@ -56,8 +52,6 @@ export const useRecentBlogs = () => {
     queryFn: () => ApiRecentBlogs(),
   });
 };
-
-// review api -------------------------
 
 export const useFeaturedWeakReviews = (search) => {
   return useQuery({
@@ -100,8 +94,6 @@ export const useGetCategories = () => {
     queryFn: () => ApiGetCategories(),
   });
 };
-
-// ApiGetBlogsCategory
 
 export const useGetBlogsCategory = (id, currentPage) => {
   return useQuery({

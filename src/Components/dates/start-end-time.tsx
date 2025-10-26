@@ -6,7 +6,7 @@ interface StartEndTimeProps {
   endTime: string;
   setStartTime: (time: string) => void;
   setEndTime: (time: string) => void;
-  control: Control<any>; // React Hook Form control
+  control: Control<any>; 
 }
 
 const StartEndTime: React.FC<StartEndTimeProps> = ({
@@ -61,7 +61,6 @@ const StartEndTime: React.FC<StartEndTimeProps> = ({
         />
       </div>
 
-      {/* End Time */}
       <div className="flex flex-col w-full">
         <label className="mb-1 font-medium text-gray-700">End Time</label>
         <Controller

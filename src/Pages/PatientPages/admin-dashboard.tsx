@@ -34,7 +34,6 @@ import { apiDeleteCareProvider } from "@src/api/api-dashboard";
 import EditModal from "@components/model/active-inactive-modal";
 import ActiveInactiveModal from "@components/model/active-inactive-modal";
 import toast from "react-hot-toast";
-// Import or define your Modal component
 import { X } from "lucide-react";
 import TableSkeletonLoader from "@components/loaders/table-skeleton-loader";
 import { useMeApi } from "@src/hooks/use-users";
@@ -82,7 +81,6 @@ const AdminDashboard: React.FC = () => {
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(true);
-  // Apis
   const { data: StatsData, isLoading } = useStatsApi();
   const {
     data: CareProvidersData,
@@ -107,19 +105,16 @@ const AdminDashboard: React.FC = () => {
     refetch();
   };
   const [searchParams] = useSearchParams();
-  const urlToken = searchParams.get("token"); // token from URL
-  const [token, setToken] = useState<string | null>(null); // token state
+  const urlToken = searchParams.get("token"); 
+  const [token, setToken] = useState<string | null>(null); 
 
-  // Step 1: Save token from URL to localStorage (once)
   useEffect(() => {
     if (urlToken) {
-      // localStorage.setItem("token", urlToken);
       localStorage.setItem("token", JSON.stringify(urlToken));
       ApiMe();
 
-      setToken(urlToken); // update state
+      setToken(urlToken); 
     } else {
-      // Step 2: If no URL token, get from localStorage
       const savedToken = localStorage.getItem("token");
       if (savedToken) {
         setToken(savedToken);
@@ -168,7 +163,153 @@ const AdminDashboard: React.FC = () => {
     location?: string;
   };
 
-  const dropdownRef = useRef<HTMLDivElement>(null); // Make sure it's declared at the top
+  const dropdownRef = useRef<HTMLDivElement>(null); 
+  const dummyCareProvidersData = {
+    payload: {
+      records: [
+        {
+          id: 1,
+          organization_name: "Sunrise Health Clinic",
+          first_name: "Dr. Emily",
+          last_name: "Johnson",
+          email: "emily.johnson@sunriseclinic.com",
+          created_at: "2025-09-10T10:00:00Z",
+          total_rating: 5,
+          overall_rating: 4.9,
+          specialization: "Family Medicine",
+          state: "California",
+          address: "123 Maple Street, Los Angeles, CA",
+          postal_code: "90001",
+        },
+        {
+          id: 2,
+          organization_name: "Green Valley Medical Center",
+          first_name: "Dr. Michael",
+          last_name: "Smith",
+          email: "michael.smith@greenvalleymed.com",
+          created_at: "2025-08-22T14:30:00Z",
+          total_rating: 4,
+          overall_rating: 4.3,
+          specialization: "Cardiology",
+          state: "Texas",
+          address: "245 Oak Avenue, Houston, TX",
+          postal_code: "77002",
+        },
+        {
+          id: 3,
+          organization_name: "Healing Touch Hospital",
+          first_name: "Dr. Olivia",
+          last_name: "Brown",
+          email: "olivia.brown@healingtouch.com",
+          created_at: "2025-07-15T09:20:00Z",
+          total_rating: 3,
+          overall_rating: 3.5,
+          specialization: "Dermatology",
+          state: "Florida",
+          address: "456 Palm Street, Miami, FL",
+          postal_code: "33101",
+        },
+        {
+          id: 4,
+          organization_name: "New Hope Medical Center",
+          first_name: "Dr. James",
+          last_name: "Williams",
+          email: "james.williams@newhopehealth.com",
+          created_at: "2025-06-03T11:45:00Z",
+          total_rating: 4,
+          overall_rating: 4.2,
+          specialization: "Neurology",
+          state: "New York",
+          address: "789 Broadway, New York, NY",
+          postal_code: "10001",
+        },
+        {
+          id: 5,
+          organization_name: "Evercare Wellness Hospital",
+          first_name: "Dr. Sophia",
+          last_name: "Davis",
+          email: "sophia.davis@evercarewellness.com",
+          created_at: "2025-05-29T13:15:00Z",
+          total_rating: 5,
+          overall_rating: 4.8,
+          specialization: "Pediatrics",
+          state: "Illinois",
+          address: "321 Lakeview Drive, Chicago, IL",
+          postal_code: "60601",
+        },
+        {
+          id: 6,
+          organization_name: "Trinity Heart Institute",
+          first_name: "Dr. William",
+          last_name: "Miller",
+          email: "william.miller@trinityheart.com",
+          created_at: "2025-04-17T08:30:00Z",
+          total_rating: 4,
+          overall_rating: 4.6,
+          specialization: "Cardiology",
+          state: "Ohio",
+          address: "88 Central Blvd, Columbus, OH",
+          postal_code: "43085",
+        },
+        {
+          id: 7,
+          organization_name: "Harmony General Hospital",
+          first_name: "Dr. Ava",
+          last_name: "Garcia",
+          email: "ava.garcia@harmonygeneral.com",
+          created_at: "2025-03-21T15:50:00Z",
+          total_rating: 3,
+          overall_rating: 3.9,
+          specialization: "Orthopedics",
+          state: "Washington",
+          address: "990 Pine Street, Seattle, WA",
+          postal_code: "98101",
+        },
+        {
+          id: 8,
+          organization_name: "Unity Health Partners",
+          first_name: "Dr. Benjamin",
+          last_name: "Martinez",
+          email: "benjamin.martinez@unityhealth.com",
+          created_at: "2025-02-10T12:00:00Z",
+          total_rating: 5,
+          overall_rating: 5.0,
+          specialization: "Internal Medicine",
+          state: "Colorado",
+          address: "400 Aspen Avenue, Denver, CO",
+          postal_code: "80201",
+        },
+        {
+          id: 9,
+          organization_name: "WellSpring Medical Group",
+          first_name: "Dr. Isabella",
+          last_name: "Lopez",
+          email: "isabella.lopez@wellspringgroup.com",
+          created_at: "2025-01-26T16:45:00Z",
+          total_rating: 4,
+          overall_rating: 4.4,
+          specialization: "Endocrinology",
+          state: "Georgia",
+          address: "550 Peachtree Street, Atlanta, GA",
+          postal_code: "30301",
+        },
+        {
+          id: 10,
+          organization_name: "Riverside Care Center",
+          first_name: "Dr. Ethan",
+          last_name: "Anderson",
+          email: "ethan.anderson@riversidecare.com",
+          created_at: "2024-12-19T11:10:00Z",
+          total_rating: 2,
+          overall_rating: 2.8,
+          specialization: "Gastroenterology",
+          state: "Arizona",
+          address: "789 Desert Road, Phoenix, AZ",
+          postal_code: "85001",
+        },
+      ],
+    },
+  };
 
   const columns = [
     {
@@ -182,7 +323,6 @@ const AdminDashboard: React.FC = () => {
           <div
             className="max-w-[250px] flex me-5 items-center gap-3 cursor-pointer"
             onClick={() => navigate(`/patient/care-provider/${id}`)}
-            // onClick={() => navigate("/patient/hospital-profile")}
           >
             <img
               src={dummyImage}
@@ -244,7 +384,7 @@ const AdminDashboard: React.FC = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            fill={filled ? "#FACC15" : "#D1D5DB"} 
             width="17"
             height="17"
           >
@@ -294,7 +434,6 @@ const AdminDashboard: React.FC = () => {
                   : "flex justify-center w-[120px]"
               }
             `}
-            // style={{ minWidth: "150px", maxWidth: "150px" }} // ✅ inline style fallback
           >
             {value || <span className="text-gray-500">N/A</span>}
           </div>
@@ -325,7 +464,6 @@ const AdminDashboard: React.FC = () => {
                   : "flex justify-center w-[250px]"
               }
             `}
-            // style={{ minWidth: "150px", maxWidth: "150px" }} // ✅ inline style fallback
           >
             {value || <span className="text-gray-500">N/A</span>}
           </div>
@@ -345,7 +483,6 @@ const AdminDashboard: React.FC = () => {
 
   const handleReviewClick = () => {};
 
-  // Search dropdown handlers
   const handleSearchFocus = () => {
     setIsSearchDropdownOpen(true);
   };
@@ -357,7 +494,6 @@ const AdminDashboard: React.FC = () => {
     setIsSearchDropdownOpen(false);
   };
 
-  // Close dropdown when clicking outside
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
@@ -379,13 +515,11 @@ const AdminDashboard: React.FC = () => {
     useMutation({
       mutationFn: () => apiDeleteCareProvider(selectedRowId),
       onSuccess: async () => {
-        queryClient.invalidateQueries(["useCareProviders"]); // refetch list
+        queryClient.invalidateQueries(["useCareProviders"]); 
         setIsDeleteModalOpen(false);
 
-        // queryClient.invalidateQueries(["detailersFranchise"]);
       },
       onError: (error) => {
-        console.error("Error deleting user:", error);
       },
     });
 
@@ -401,12 +535,11 @@ const AdminDashboard: React.FC = () => {
         ApiCareProviderStatusUpdate(data, selectedRowId),
 
       onSuccess: async () => {
-        queryClient.invalidateQueries(["useCareProviders"]); // refetch list
+        queryClient.invalidateQueries(["useCareProviders"]); 
         toast.success("Status Update Successfully");
         setIsEditModalOpen(false);
       },
       onError: (error) => {
-        console.error("Error updating user:", error);
       },
     });
 
@@ -426,7 +559,7 @@ const AdminDashboard: React.FC = () => {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setShowRatingDropdown(false); // close dropdown if clicked outside
+        setShowRatingDropdown(false); 
       }
     }
 
@@ -444,13 +577,11 @@ const AdminDashboard: React.FC = () => {
   const { mutateAsync: deleteSearchesAllMutation } = useMutation({
     mutationFn: () => ApiDeleteRecentSearches(),
 
-    // onMutate: () => setLoadingId(currentId),
     onSuccess: async () => {
-      queryClient.invalidateQueries(["useRecentSearches"]); // refetch list
+      queryClient.invalidateQueries(["useRecentSearches"]); 
       toast.success("Delete All Searches Successfully");
     },
     onError: (error) => {
-      console.error("Error updating user:", error);
     },
   });
 
@@ -523,7 +654,6 @@ const AdminDashboard: React.FC = () => {
 
       <div className="mt-6 overflow-y-auto w-[100%] bg-[#FFFFFF] rounded-tr-[10px] rounded-tl-[10px] h-fit px-4 mb-0 py-6">
         <div className="mb-6 flex gap-2 md:mt-0 mt-5 md:flex-row flex-col md:items-center md:justify-between">
-          {/* Updated searchbar with dropdown */}
           <div className="lg:flex md:flex-nowrap flex-wrap items-center gap-5">
             <h3 className="lg:mb-0 space-grotesk text-[20px] font-bold text-gray-900 mb-3">
               Care Providers
@@ -540,10 +670,8 @@ const AdminDashboard: React.FC = () => {
               />
               <div className="sm:block hidden lg:flex lg:flex-1 lg:justify-end px-0 mt-2 lg:px-5 relative">
                 <div className="w-full max-w-sm search-dropdown-container">
-                  {/* Search Dropdown - positioned below input */}
                   {isSearchDropdownOpen && (
                     <div className="absolute top-0 left-0  mt-2 bg-white rounded-lg  shadow-lg z-50 min-w-[300px] max-h-[400px] overflow-hidden">
-                      {/* Recents Section */}
 
                       {recentSearchesData?.length == 0 ? (
                         ""
@@ -561,7 +689,6 @@ const AdminDashboard: React.FC = () => {
                             </button>
                           </div>
 
-                          {/* Recent Searches List */}
 
                           <div className="space-y-0.5 max-h-[250px] min-h-[50px] overflow-y-auto">
                             {recentSearchesData?.length == 0 ? (
@@ -648,17 +775,14 @@ const AdminDashboard: React.FC = () => {
           {isLoadingCareProviderData ? (
             <TableSkeletonLoader />
           ) : (
-            // <div className="w-full overflow-x-auto">
 
             <TanDataTable
               columns={columns ?? []}
-              data={CareProvidersData?.payload?.records ?? []}
+              data={dummyCareProvidersData.payload.records}
               pageCount={2}
               fetchData={CareProvidersData}
               onSortClick={onSortClick}
-              // isLoading={loading}
             />
-            // </div>
           )}
 
           <DeleteModal
@@ -668,7 +792,6 @@ const AdminDashboard: React.FC = () => {
               setSelectedRowId(null);
             }}
             onDelete={handleDelete}
-            // loading={deleteMutationLoading}
           />
 
           {isEditModalOpen ? (

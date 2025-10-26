@@ -66,7 +66,6 @@ const TestimonialCard = ({
   );
 };
 
-// TestimonialCarousel.tsx
 import { useRef, forwardRef } from "react";
 
 interface TestimonialCarouselProps {

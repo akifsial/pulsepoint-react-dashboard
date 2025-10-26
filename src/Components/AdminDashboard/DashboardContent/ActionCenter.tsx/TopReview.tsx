@@ -1,4 +1,3 @@
-// import ChartComponent from "../../../AdminDashboard/ChartComponent/Chart.jsx"
 import ChartComponent from "@components/admindashboard/chartcomponent/chart";
 
 const TopReview = () => {

@@ -7,12 +7,11 @@ import { GoPerson } from "react-icons/go";
 import leftarrow from "@assets/media/svgs/leftarrow.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { toast } from "react-toastify";
 import toast from "react-hot-toast";
 
 
 const getAllOptions = (baseOptions, apiValue) => {
-  if (!apiValue) return baseOptions; // agar value hi null/undefined hai toh base options return karo
+  if (!apiValue) return baseOptions; 
   const exists = baseOptions.some((opt) => opt.value === apiValue);
   return exists
     ? baseOptions
@@ -52,7 +51,6 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
 
   const [image, setImage] = useState(null);
 
-  // const genderAllOptions = getAllOptions(GenderOptions, userData?.gender);
   const genderAllOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -62,7 +60,6 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
 
   const autoSave = async () => {
     const formData = new FormData();
-    // formData.append("name", fullName);
     formData.append("email", email);
     formData.append("number", phone);
     formData.append("age", age);
@@ -72,12 +69,11 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
     formData.append("address", address);
     formData.append("first_name", firstName);
     formData.append("last_name", lastName);
-    formData.append("status", status); // ✅ status bhi send karenge
+    formData.append("status", status); 
 
     if (image) formData.append("image", image);
     setLoading(true);
     try {
-      // const token = localStorage.getItem("token"); // token from localStorage
       const token: string | null = JSON.parse(
         localStorage.getItem("token") || "null"
       );
@@ -98,23 +94,19 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
         setLoading(false);
       }
     } catch (error) {
-      console.error("Auto-save error:", error);
       toast.error(error?.response?.data?.errors[0]?.message);
       setLoading(false);
     }
   };
 
-  // sabse upar state rakho
   const [status, setStatus] = useState(userData?.status || "ACTIVE");
   const [loading, setLoading] = useState(false);
 
-  // fir useEffect likho
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
         e.preventDefault();
 
-        // ✅ Agar loading true hai to kuch mat karo
         if (loading) return;
 
         autoSave();
@@ -138,7 +130,6 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
     loading,
   ]);
 
-  // statusOptions ab niche bhi chalega
   const statusOptions = [
     { value: "ACTIVE", label: "Active" },
     { value: "INACTIVE", label: "Inactive" },
@@ -166,7 +157,6 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
 
         <div className="rounded-[10px] bg-white md:p-10 p-3 mb-4">
           <div className="overflow-y-auto h-[628px]">
-            {/* Profile Header */}
             <div className="flex flex-wrap md:gap-0 gap-3 items-center justify-between mb-7">
               <div className="flex items-center gap-3">
                 <img
@@ -200,7 +190,6 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
               />
             </div>
 
-            {/* Personal Info */}
             <h4 className="text-xl space-grotesk font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
               Add Personal Information
             </h4>
@@ -212,7 +201,6 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
                   autoSave();
                 }}
               >
-                {/* Personal Info Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <InputField
                     label="First Name"
@@ -275,7 +263,6 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
                   />
                 </div>
 
-                {/* Location Info */}
                 <div className="mt-8">
                   <span className="font-semibold text-xl space-grotesk">Add Location</span>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
@@ -314,7 +301,6 @@ const PatientDetail = ({ goBack, userData, fetchUser }) => {
               </form>
             </div>
 
-            {/* Save Button */}
             <div>
               <PrimaryButton
                 btnText={loading ? "Saving..." : "Save Changes"}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChatbotSearchbar from "./chatbot-search-bar";
-import MsgIcon from "@assets/media/svgs/patient-db-svgs/chat-send-icon.png"; // New icon
+import MsgIcon from "@assets/media/svgs/patient-db-svgs/chat-send-icon.png"; 
 
 interface Facility {
   name: string;
@@ -25,7 +25,6 @@ const NursingHomeReviews: React.FC = () => {
 
   const handleInputSubmit = () => {
     if (inputMessage.trim()) {
-      // Handle input submission logic here
       setInputMessage("");
     }
   };
@@ -43,7 +42,6 @@ const NursingHomeReviews: React.FC = () => {
   return (
     <div className="w-full max-w-screen mx-auto bg-white rounded-lg p-8 shadow-sm">
       <div className="space-y-4">
-        {/* Initial question */}
         <div className="flex justify-end">
           <div className="bg-[#E7EFF3] rounded-[30px] p-[20px] shadow-sm w-[523px] h-[50px] flex items-center gap-[10px]">
             <p className="text-[#252525] text-[14px] font-semibold leading-[120%] tracking-[0.2px] font-geist">
@@ -53,7 +51,6 @@ const NursingHomeReviews: React.FC = () => {
           </div>
         </div>
 
-        {/* Assistant response */}
         <div className="flex justify-start">
           <div className="rounded-[30px] p-[20px]">
             <p className="text-[#252525] text-[14px] font-normal leading-[24px] tracking-[0.2px] font-geist">
@@ -63,7 +60,6 @@ const NursingHomeReviews: React.FC = () => {
           </div>
         </div>
 
-        {/* User confirmation */}
         <div className="flex justify-end">
           <div className="bg-[#E7EFF3] rounded-[30px] p-[20px] shadow-sm w-[197px] h-[50px] flex items-center gap-[10px]">
             <p className="text-[#252525] text-[14px] font-semibold leading-[120%] tracking-[0.2px]">
@@ -72,37 +68,29 @@ const NursingHomeReviews: React.FC = () => {
           </div>
         </div>
 
-        {/* Results */}
         <div className="flex justify-start w-[815px] h-auto gap-[25px]">
           <div className="bg-white rounded-2xl px-6 py-4 w-full">
-            {/* Title Text */}
             <p className="text-[#252525] text-[14px] font-normal leading-[24px] tracking-[0.2px]">
               Here are top-rated facilities near 75001:
             </p>
 
             <div className="space-y-[10px]">
-              {/* Facilities Label */}
               <p className="text-[#252525] text-[14px] font-bold leading-[24px] tracking-[0.2px]">
                 Facilities near me:
               </p>
 
-              {/* List of Facilities */}
               {facilities.map((facility, index) => (
                 <div key={index} className="flex items-center">
-                  {/* Facility Index */}
                   <span className="text-[#252525] text-[16px] font-bold leading-[24px] tracking-[0.2px] mr-2">
                     {index + 1}:
                   </span>
 
-                  {/* Facility Name */}
                   <span className="text-[#333333] text-[14px] font-medium leading-[22px] tracking-[0.2px]">
                     {facility.name}
                   </span>
 
-                  {/* Separator */}
                   <span className="text-[#252525] text-[14px] ml-2">—</span>
 
-                  {/* Rating */}
                   <div className="flex items-center ml-2">
                     <span className="text-yellow-500 text-[14px]">⭐</span>
                     <span className="text-[#252525] text-[14px] ml-1">
@@ -115,7 +103,6 @@ const NursingHomeReviews: React.FC = () => {
           </div>
         </div>
 
-        {/* Second user response */}
         <div className="flex justify-end">
           <div className="bg-[#E7EFF3] rounded-[30px] p-[20px] shadow-sm w-[197px] h-[50px] flex items-center gap-[10px]">
             <p className="text-[#252525] text-[14px] font-semibold leading-[120%] tracking-[0.2px]">
@@ -124,7 +111,6 @@ const NursingHomeReviews: React.FC = () => {
           </div>
         </div>
 
-        {/* Chatbot Searchbar with custom icon */}
         <ChatbotSearchbar onAskAI={handleAskAI} iconSrc={MsgIcon} />
       </div>
     </div>

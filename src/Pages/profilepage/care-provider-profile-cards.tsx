@@ -9,12 +9,6 @@ const plans = [
     title: "Basic",
     price: "$49/month",
     features: [
-      // "Highlighted listing in search results",
-      // "Featured badge on profile",
-      // "Up to 5 photos",
-      // "Insights dashboard (views, clicks, contacts)",
-      // "Increased profile detail (more photos, description)",
-      // "AI chatbot use",
        "Increased profile detail (more photos, description)",
        "AI chatbot use"
     ],
@@ -25,31 +19,13 @@ const plans = [
     title: "Premium",
     price: "$79.99/month",
     features: [
-      // "All Basic Plan features",
       "All Basic Plan features",
       "Featured placement on homepage or category pages",
       "Increased visibility and ranking across the platform",
-    //   "AI chatbot use",
-      // "Everything in Starter",
-      // "Appear in featured sections (homepage, category pages)",
-      // "Insights dashboard (views, clicks, contacts)",
-      // "Link to booking form or EHR system",
     ],
     highlighted: true,
     slug: "PREMIUM",
   },
-  // {
-  //   title: "Enterprise Plan",
-  //   price: "$120/month",
-  //   features: [
-  //     "Everything in Professional",
-  //     "Priority support",
-  //     "Quarterly performance report & SEO audit",
-  //     "Multi-location support",
-  //   ],
-  //   highlighted: false,
-  //   slug: "ENTERPRISE",
-  // },
 ];
 
 const CareProviderProfileCards = ({ onUpgrade }) => {

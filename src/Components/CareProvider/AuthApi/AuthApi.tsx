@@ -62,7 +62,7 @@ export const ApiVerifyOtp = async (data) => {
 
 export const ApiResetPassword = async (data) => {
 
-  const resetToken = localStorage.getItem("resetToken"); // no need to parse
+  const resetToken = localStorage.getItem("resetToken"); 
   const id = localStorage.getItem("id");
 
   try {
@@ -76,7 +76,6 @@ export const ApiResetPassword = async (data) => {
 
     return response.data?.payload?.records;
   } catch (error) {
-    // ✅ Proper error throwing
     throw new Error(error?.response?.data?.message || "Password reset failed");
   }
 };
@@ -94,7 +93,6 @@ export const ApiChangePassword = async (data) => {
 
     return response.data?.payload?.records;
   } catch (error) {
-    // ✅ Proper error throwing
     throw new Error(error?.response?.data?.message || "Password reset failed");
   }
 };

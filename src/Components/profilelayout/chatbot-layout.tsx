@@ -12,7 +12,6 @@ import {
   sidebarLinks,
 } from "@components/dashboard-components/sidebar/sidebar-links";
 
-// Chatbot-specific links
 const chatbotSidebarLinks = [
   "Senior Care Platform Design",
   "Nursing home in 90210.",
@@ -28,7 +27,6 @@ const ChatbotLayout = () => {
   const [selectedConversationId, setSelectedConversationId] = useState();
   const [chatBotData, setChatBotData] = useState([]);
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
-  // Function to handle tab clicks
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
   };
@@ -52,16 +50,12 @@ const ChatbotLayout = () => {
 
   return (
     <div className="dashboard flex min-h-screen">
-      {/* Main Sidebar */}
-
-      {/* Main Sidebar */}
       <Sidebar
         sidebarData={sidebarLinks}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
       />
 
-      {/* Chatbot Sidebar */}
       <div ref={sidebarRef}>
         <ChatbotSidebar
           sidebarData={chatbotSidebarLinks}
@@ -75,7 +69,6 @@ const ChatbotLayout = () => {
         />
       </div>
 
-      {/* Main Content Area */}
       <div
         className={`relative lg:ml-16 ml-0 flex flex-col flex-1 sm:px-4 pt-3`}
       >
@@ -92,9 +85,7 @@ const ChatbotLayout = () => {
         ) : (
           ""
         )}
-        {/* <h5>hhh</h5> */}
         <main className="mt-12">
-          {/* Render the active component based on the selected tab */}
           {activeTab === "Nursing home in 90210." ? (
             <NursingHomeReview />
           ) : activeTab === "Senior Care Platform Design" ? (

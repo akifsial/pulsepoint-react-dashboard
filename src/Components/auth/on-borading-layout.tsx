@@ -8,7 +8,6 @@ interface OnBoardingLayoutProps {
   logoParentClass?: string; 
 }
 
-// const OnBoardingLayout = ({ children }) => {
 const OnBoardingLayout: React.FC<OnBoardingLayoutProps> = ({
   children,
   noShowLogo,
@@ -24,10 +23,8 @@ const OnBoardingLayout: React.FC<OnBoardingLayoutProps> = ({
           className="w-full h-full min-h-[759px] rounded-[10px]"
         />
       </div>
-      {/* Form */}
       <div className="h-full relative min-h-[759px] w-full lg:w-1/2 xl:w-1/2 sm:rounded-[10px] bg-white shadow-sm p-3 lg:p-[28px] flex flex-col justify-center gap-[10px] overflow-y-auto">
         {" "}
-        {/* Logo Image: Only render if noShowLogo is false */}
         {!noShowLogo && (
           <div className={`flex justify-center ${logoParentClass}`}>
             <img

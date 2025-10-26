@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const ApiStats = async () => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}stats`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -35,7 +34,6 @@ export const ApiGetCareProviders = async (
     BASE_URL += `&sort=created_at:${sort}`;
     
   }
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -52,7 +50,6 @@ export const ApiGetCareProvidersSingle = async (id: number) => {
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
-  // const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
@@ -62,17 +59,14 @@ export const ApiGetCareProvidersSingle = async (id: number) => {
 };
 
 export const apiDeleteCareProvider = async (id: number) => {
-  //   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}v1/user/customers?page=${page}&limit=${5}`;
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/${id}`;
 
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
 
   const response = await axios.delete(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
-    // params: queryParams,
   });
 
   return response.data.payload;
@@ -83,7 +77,6 @@ export const ApiCareProviderStatusUpdate = async (
   id: number
 ) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/${id}`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -99,7 +92,6 @@ export const ApiCareProviderStatusUpdate = async (
 
 export const ApiCreateFeedback = async (responses) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -113,7 +105,6 @@ export const ApiCreateFeedback = async (responses) => {
 
 export const ApiSavedCareProviders = async (id: number) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}user/save-care-provider`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -130,7 +121,6 @@ export const ApiGetRecentSearches = async () => {
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
-  // const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
@@ -147,7 +137,6 @@ export const ApiDeleteRecentSearches = async () => {
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
-  // const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.delete(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },

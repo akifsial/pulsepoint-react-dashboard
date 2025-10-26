@@ -2,9 +2,9 @@ import { PrimaryButton } from "@components/shared-components/buttons/common-butt
 
 interface DeleteConfirmationModalProps {
   userId: string | number;
-  type: string; // Type (post or comment)
+  type: string; 
   onClose: () => void;
-  onDelete: (userId: string | number, type: string) => void; // Pass the type here as well
+  onDelete: (userId: string | number, type: string) => void; 
 }
 
 const DeleteConfirmationModal = ({
@@ -28,7 +28,7 @@ const DeleteConfirmationModal = ({
           />
           <PrimaryButton
             btnText={loading ? "Loading..." : "Delete"}
-            onClick={() => onDelete(userId, type)} // Pass both id and type
+            onClick={() => onDelete(userId, type)} 
             btnClass="w-full h-[46px] bg-[#FF4D4D] text-white px-4 py-2 text-sm font-semibold"
           />
         </div>

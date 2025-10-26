@@ -2,7 +2,6 @@ import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import successIcon from "@assets/media/images/reset-success-icon.png";
 
-// Success check mark SVG component (using imported image)
 const SuccessIcon: React.FC<{ className?: string }> = ({ className = "w-8 h-8" }) => (
   <img 
     src={successIcon} 
@@ -11,7 +10,6 @@ const SuccessIcon: React.FC<{ className?: string }> = ({ className = "w-8 h-8" }
   />
 );
 
-// Close button SVG component
 const CloseIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5" }) => (
   <svg 
     className={className} 
@@ -50,24 +48,21 @@ const Toast: React.FC<ToastProps> = ({
     <AnimatePresence>
       {isVisible && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/40  flex justify-center items-center z-50"
-            onClick={onClose} // Close when clicking outside of the toast
+            onClick={onClose} 
           >
-            {/* Toast Container */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="bg-white p-7.5 rounded-[10px] relative w-full  mx-4 max-w-[516px]"
-              onClick={(e) => e.stopPropagation()} // Prevent the toast container from closing when clicked
+              onClick={(e) => e.stopPropagation()} 
             >
-              {/* Close Button */}
               {showCloseButton && (
                 <button
                   onClick={onClose}
@@ -78,19 +73,14 @@ const Toast: React.FC<ToastProps> = ({
                 </button>
               )}
 
-              {/* Content */}
               <div className="text-center">
-                {/* Icon */}
                 <div className="flex justify-center mb-4">
                 <SuccessIcon className="w-12 h-12" />
                 </div>
-
-                {/* Title */}
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   {title}
                 </h3>
 
-                {/* Message */}
                 <p className="text-gray-600 text-sm leading-relaxed">
                   {message}
                 </p>

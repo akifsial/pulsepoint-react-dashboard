@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { CommonInputsProps } from "./types/index";
-// import searchIcon from "@assets/media/images";
 import {
   Eye,
   EyeClosed,
@@ -24,16 +23,12 @@ const PrimaryInput: React.FC<CommonInputsProps> = ({
   label,
   disabled = false,
   onChange,
-  // passwordShow,
-  // setPasswordShow
 }) => {
   const [passwordShow, setPasswordShow] = useState(false);
   return (
-    // max-w-[366px]
     <div className="relative ">
       {showImg && (
         <img
-          // src={searchIcon}
           alt="Search"
           className="absolute left-3 top-1/2 -translate-y-1/2 size-5"
         />
@@ -52,7 +47,6 @@ const PrimaryInput: React.FC<CommonInputsProps> = ({
             {...(register && registerName
               ? register(
                   registerName,
-                  // validation || { required: "This field is required" }
                 )
               : {})}
             className={`w-full rounded-xl bg-white placeholder:text-[12px] shadow_bg placeholder:text-[var(--text-muted)] outline-none resize-none ${
@@ -99,11 +93,6 @@ const PrimaryInput: React.FC<CommonInputsProps> = ({
           ""
         )}
       </div>
-      {/* {errors?.[registerName] && (
-        <p className="text-sm text-red-500 mt-1">
-          {errors[registerName]?.message as string}
-        </p>
-      )} */}
       {errors && registerName && errors[registerName]?.message && (
         <p className="text-sm text-red-500 mt-1">
           {String(errors[registerName]?.message)}

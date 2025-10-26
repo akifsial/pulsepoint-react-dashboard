@@ -5,11 +5,9 @@ import Footer from "@components/website/layout/footer";
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar + Utility */}
       <TopBar />
       <UtilityRow />
 
-      {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-blue-50 via-white to-blue-50 py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
@@ -23,10 +21,8 @@ const PrivacyPolicy = () => {
         </div>
       </div>
 
-      {/* Content Section */}
       <div className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 text-left">
-          {/* Section 1 */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               1. Information We Collect
@@ -39,7 +35,6 @@ const PrivacyPolicy = () => {
             </p>
           </div>
 
-          {/* Section 2 */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               2. How We Use Your Information
@@ -51,7 +46,6 @@ const PrivacyPolicy = () => {
             </p>
           </div>
 
-          {/* Section 3 */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               3. Cookies & Tracking
@@ -64,7 +58,6 @@ const PrivacyPolicy = () => {
             </p>
           </div>
 
-          {/* Section 4 */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               4. Data Security
@@ -76,7 +69,6 @@ const PrivacyPolicy = () => {
             </p>
           </div>
 
-          {/* Section 5 */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               5. Your Rights
@@ -88,7 +80,6 @@ const PrivacyPolicy = () => {
             </p>
           </div>
 
-          {/* Section 6 */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               6. Updates to This Policy
@@ -99,7 +90,6 @@ const PrivacyPolicy = () => {
             </p>
           </div>
 
-          {/* Contact Info */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               Contact Us

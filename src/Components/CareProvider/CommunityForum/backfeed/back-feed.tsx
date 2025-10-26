@@ -22,9 +22,7 @@ const BackFeed = ({ setOpenBackFeed, selectedCommunity }) => {
 
   return (
     <>
-      {/* {!showPatientInfo ? ( */}
       <div className="mb-[25px]">
-        {/* Fixed header */}
         <div
           className="flex items-center gap-2.5 cursor-pointer py-4 bg-transparent sticky top-0 z-10"
           onClick={() => setOpenBackFeed(false)}
@@ -35,7 +33,6 @@ const BackFeed = ({ setOpenBackFeed, selectedCommunity }) => {
           </h2>
         </div>
 
-        {/* Scrollable content area */}
         <div
           className="h-[603px] overflow-y-scroll pr-"
           style={{
@@ -43,7 +40,6 @@ const BackFeed = ({ setOpenBackFeed, selectedCommunity }) => {
             msOverflowStyle: "none",
           }}
         >
-          {/* Hide scrollbar in WebKit browsers */}
           <style jsx>{`
             ::-webkit-scrollbar {
               display: none;
@@ -170,9 +166,6 @@ const BackFeed = ({ setOpenBackFeed, selectedCommunity }) => {
           <OurFeed />
         </div>
       </div>
-      {/* ) : ( */}
-      {/* <PatientInfo setShowPatientInfo={setShowPatientInfo} /> */}
-      {/* )} */}
 
       {showCreatePostModal && (
         <Model setIsOpen={setShowCreatePostModal} className="max-w-[600px]">

@@ -46,13 +46,11 @@ const formattedDate = date
       <div className=" bg-gray-100">
         <img
           src={featured_image?.url}
-          // alt={}
           className="!w-full h-[150px] object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </div>
       <div className="p-0">
         <div className="flex items-center text-xs text-blue-500 font-medium mb-2">
-          {/* <span className="bg-blue-100 px-2 py-1 rounded">{category}</span> */}
           <span><img src={Calndar} alt="" /></span>
           <span className="text-[#252525] font-normal text-[15px] px-2 py-1 rounded">{formattedDate}</span>
 

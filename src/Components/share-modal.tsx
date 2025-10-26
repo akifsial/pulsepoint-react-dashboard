@@ -33,7 +33,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
     const link = `https://phpstack-1250693-5723234.cloudwaysapps.com/patient/community/post/${postId}`;
     navigator.clipboard.writeText(link).then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // 2s baad reset
+      setTimeout(() => setCopied(false), 2000); 
     });
   };
 
@@ -47,10 +47,8 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          {/* Title */}
           <h2 className="text-xl font-semibold mb-6">Share this post</h2>
 
-          {/* Close Button */}
           <button
             onClick={onClose}
             className="cursor-pointer mb-7 text-gray-400 hover:text-gray-600 text-xl"
@@ -58,7 +56,6 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
             <X />
           </button>
         </div>
-        {/* Social Icons */}
         <div className="flex justify-start gap-5 items-center mb-6 px-4">
         
        
@@ -66,7 +63,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
           <FacebookShareButton
             url={shareUrl}
             quote="Check out this post!"
-            onClick={() => setActiveIcon("facebook")} // optional: mark as active
+            onClick={() => setActiveIcon("facebook")} 
           >
             <FaFacebookF
               size={24}
@@ -78,7 +75,6 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
 
         </div>
 
-        {/* Link Share */}
         <div className="text-left text-sm font-medium text-gray-500 mb-2">
           Or copy link
         </div>
@@ -102,7 +98,6 @@ const ShareModal: React.FC<ShareModalProps> = ({ onClose, postId }) => {
 
 export default ShareModal;
 
-// Reusable IconButton component
 const IconButton = ({
   icon,
   active,

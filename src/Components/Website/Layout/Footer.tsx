@@ -7,21 +7,16 @@ const Footer = () => {
   return (
     <footer className="bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
             <p className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
-                <span className="text-white font-bold text-lg">TS</span>
+                <span className="text-white font-bold text-lg">PP</span>
               </div>
               <span className="text-xl font-bold">
-                TopSenior<span className="text-blue-500">Spot</span>
+                Pulse<span className="text-blue-500">Point</span>
               </span>
             </p>
-            {/* <p className="text-gray-300 text-sm leading-relaxed max-w-md">
-              Connecting seniors with quality healthcare providers, care facilities, and resources. Making informed decisions about senior care has never been easier. For support, contact us at support@topseniorspot.com
-            </p> */}
             <p className="text-gray-700">
               Connecting seniors with quality healthcare providers, care facilities, and resources.
               Making informed decisions about senior care has never been easier.
@@ -29,17 +24,15 @@ const Footer = () => {
 
 
               <p
-                // href="mailto:support@topseniorspot.com"
                 className="text-blue-600 underline hover:text-blue-800 inline-flex items-center gap-1"
               >
-                <Mail size={16} /> support@topseniorspot.com
+                <Mail size={16} /> support@pulsepoint.com
               </p>
              
             </p>
 
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
@@ -66,7 +59,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Social Media */}
           <div>
             <h3 className="text-white font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-3">
@@ -102,7 +94,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Footer */}
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-300 text-sm mb-4 md:mb-0">

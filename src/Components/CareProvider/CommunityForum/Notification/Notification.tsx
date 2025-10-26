@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import NewMember from "../../../../assets/media/svgs/dashboard-svgs/newMember.svg";
 import Progress from "../../../../assets/media/svgs/dashboard-svgs/progress.svg";
@@ -14,26 +12,73 @@ import toast from "react-hot-toast";
 const fallbackIcons = [NewMember, Progress, Resource, NewCode];
 
 const Notification = () => {
-  const [activeTab, setActiveTab] = useState<"notification" | "all">("notification");
+  const [activeTab, setActiveTab] = useState<"notification" | "all">(
+    "notification"
+  );
   const [page, setPage] = useState(1);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [totalPages, setTotalPages] = useState(1);
 
+
+  const dummyNotifications = [
+    {
+      id: 1,
+      message: "Your request to join ‘UK Health Support Group’ was approved 🎉",
+      created_at: "2025-10-06T10:15:00Z",
+      member_id: "m001",
+    },
+    {
+      id: 2,
+      message:
+        "Dr. Smith mentioned you in a discussion on ‘Cardiac Care Updates’ ❤️",
+      created_at: "2025-10-06T09:42:00Z",
+    },
+    {
+      id: 3,
+      message: "You have 3 new messages in ‘Mental Health Awareness’ group 💬",
+      created_at: "2025-10-06T08:22:00Z",
+    },
+    {
+      id: 4,
+      message: "Your post ‘Nutrition Tips for Elderly’ got 12 new replies 🥗",
+      created_at: "2025-10-05T21:55:00Z",
+    },
+    {
+      id: 5,
+      message: "A new community ‘UK Nurses Hub’ has been created 🏥",
+      created_at: "2025-10-04T18:10:00Z",
+    },
+    {
+      id: 6,
+      message: "Weekly report: You gained 14 new followers 👥",
+      created_at: "2025-10-03T14:35:00Z",
+    },
+  ];
+
+
+
   const { data, isLoading } = useGetNotifications({ page, limit: 5 });
 
-  useEffect(() => {
-    if (data?.records) {
-      setNotifications((prev) => [...prev, ...data.records]);
-      setTotalPages(data.totalPages);
-    }
-  }, [data]);
+useEffect(() => {
+  if (data?.records) {
+    setNotifications((prev) => [...prev, ...data.records]);
+    setTotalPages(data.totalPages);
+  } else {
+    setNotifications(dummyNotifications);
+    setTotalPages(1);
+  }
+}, [data]);
+
+
 
   const queryClient = useQueryClient();
   const { mutateAsync: acceptCommunity } = useMutation({
-    mutationFn: ({ memberId, status }) => ApiAcceptPrivateCommunity(memberId, status),
+    mutationFn: ({ memberId, status }) =>
+      ApiAcceptPrivateCommunity(memberId, status),
     onSuccess: (data) => {
       queryClient.invalidateQueries(["useGetNotifications"]);
-      if (data?.record?.status === "APPROVED") toast.success("Request Accepted!");
+      if (data?.record?.status === "APPROVED")
+        toast.success("Request Accepted!");
       else toast.success("Request Declined!");
     },
   });
@@ -82,9 +127,10 @@ const Notification = () => {
 
   return (
     <>
-      <h2 className="mb-5 space-grotesk text-[25px] font-bold">Notifications</h2>
+      <h2 className="mb-5 space-grotesk text-[25px] font-bold">
+        Notifications
+      </h2>
       <div className="bg-white p-5 rounded-[10px] h-[607px]">
-        {/* Tabs */}
         <div className="flex flex-wrap md:justify-start justify-center mb-2.5 border-b-2 border-b-[#007AB2]">
           {["notification", "all"].map((tab) => (
             <button
@@ -94,27 +140,34 @@ const Notification = () => {
                 activeTab === tab ? "bg-[#E9F2F6]" : "bg-white cursor-pointer"
               }`}
             >
-              {tab === "notification" ? "New Notifications" : "All Notifications"}
+              {tab === "notification"
+                ? "New Notifications"
+                : "All Notifications"}
             </button>
           ))}
         </div>
 
-        {/* Content */}
         <div className="overflow-y-scroll h-[510px] pr-2">
           {isLoading && page === 1 ? (
-            <p className="text-sm text-gray-500 text-center mt-10">Loading...</p>
+            <p className="text-sm text-gray-500 text-center mt-10">
+              Loading...
+            </p>
           ) : notifications.length === 0 ? (
-            <p className="text-sm text-gray-500 text-center mt-10">No notifications found.</p>
+            <p className="text-sm text-gray-500 text-center mt-10">
+              No notifications found.
+            </p>
           ) : (
             <>
               {activeTab === "notification" &&
-                notifications.slice(0, 4).map((item, index) =>
-                  renderNotification(item, index)
-                )}
+                notifications
+                  .slice(0, 4)
+                  .map((item, index) => renderNotification(item, index))}
 
               {activeTab === "all" && (
                 <>
-                  {notifications.map((item, index) => renderNotification(item, index))}
+                  {notifications.map((item, index) =>
+                    renderNotification(item, index)
+                  )}
                   {page < totalPages && (
                     <div className="text-center mt-4">
                       <button

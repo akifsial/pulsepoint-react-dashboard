@@ -15,7 +15,6 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import UserComments from "./user-comments";
 import UserFlagged from "./user-flagged";
 import leftarrow from "@assets/media/svgs/leftarrow.svg";
-// Export libs
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 
@@ -54,7 +53,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ goBack, userData,fetchUser }) => {
     return <div className="p-6 text-red-500">User data not found.</div>;
   }
 
-  // Move dynamic field mapping inside component
   const infoItems = [
     {
       label: "Name:",
@@ -82,7 +80,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ goBack, userData,fetchUser }) => {
     { label: "Phone", value: userData?.number || "N/A" },
     {
       label: "Working hours",
-      // value: userData?.working_hours || "N/A",
       value: `${userData?.start_day || "N/A"}, ${
         userData?.end_day || "N/A"
       } | ${userData?.time_in || "N/A"}-${userData?.time_out || "N/A"} `,
@@ -99,7 +96,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ goBack, userData,fetchUser }) => {
     const doc = new jsPDF();
     doc.setFontSize(16);
 
-    // Helper function to add text and check if we need to add a page
     let yPosition = 10;
     const pageMargin = 10;
     const addText = (text: string) => {
@@ -111,15 +107,12 @@ const UserInfo: React.FC<UserInfoProps> = ({ goBack, userData,fetchUser }) => {
       yPosition += 10;
     };
 
-    // Add Personal Information
     addText("Personal Information");
     infoItems.forEach((item) => addText(`${item.label}: ${item.value}`));
 
-    // Add Contact Information
     addText("Contact Information");
     arrayinfo.forEach((item) => addText(`${item.label}: ${item.value}`));
 
-    // Save the generated PDF
     doc.save(`UserDetails_${userData?.id ?? ""}.pdf`);
   };
 
@@ -187,16 +180,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ goBack, userData,fetchUser }) => {
                   "N/A"}
               </h4>
 
-              {/* <span className="text-base text-[#181D27]/50 leading-tight">
-                ({userData?.status || "Unknown"})
-              </span> */}
             </div>
-            {/* <div className="border border-[#067647] rounded-[30px] flex items-center justify-center gap-2.5 py-[5px] px-3">
-              <span className="font-medium text-[14px] text-[#067647] capitalize">
-                {userData?.status?.toLowerCase() || "active"}
-              </span>
-              <img src={downarrow} alt="downarrow" className="h-2.5 w-2.5" />
-            </div> */}
             <div
               className={
                 userData?.status == "ACTIVE"
@@ -212,16 +196,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ goBack, userData,fetchUser }) => {
 
           <div className="flex items-center gap-3.5 pt-1.5">
             <div className="relative" ref={dropdownRef}>
-              {/* <PrimaryButton
-                btnText="Export Table"
-                showImg={true}
-                img={exports}
-                imgClass="w-4 h-4"
-                suffixImg={whitearrow}
-                suffixImgClass="w-4 h-4"
-                onClick={() => setIsOpen(!isOpen)}
-                btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
-              /> */}
+      
               {isOpen && (
                 <div className="absolute z-10 top-full left-0 w-[159px] bg-white rounded-[10px] shadow-md p-1.5">
                   <button
@@ -266,18 +241,14 @@ const UserInfo: React.FC<UserInfoProps> = ({ goBack, userData,fetchUser }) => {
             <User data={arrayinfo} />
           </div>
           <div>
-            {/* <img src={map} alt="map" className="rounded-[5px]" /> */}
           </div>
         </div>
       </div>
 
-      {/* Passing reviews_to_careprovider data as prop */}
       <ClientReviews reviews={userData?.reviews_to_careprovider || []} />
 
-      {/* <UserTable /> */}
       <UserCommunity userData={userData} />
       <UserComments commentData={userData?.comment || []} />
-      {/* <UserFlagged userData={userData?.post_flag} /> */}
       <UserFlagged post_flag={userData?.post_flag || []} />
     </div>
   );

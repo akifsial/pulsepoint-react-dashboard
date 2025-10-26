@@ -14,8 +14,6 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
   conversationId,
   onClose,
   linkId,
-  // handleEditChatName,
-  // handleDeleteChat,
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -30,8 +28,7 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
       onSuccess: async () => {
         toast.success("Chat Successfully Deleted");
         setIsDeleteModalOpen(false);
-        // queryClient.invalidateQueries(["useGetAllConversations"]); // refetch listuseGetConversationChatSpecific
-        queryClient.invalidateQueries(["useGetConversationChatSpecific"]); // refetch listuseGetConversationChatSpecific
+        queryClient.invalidateQueries(["useGetConversationChatSpecific"]); 
 
       },
       onError: (error) => {
@@ -50,7 +47,7 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
       onSuccess: async () => {
         toast.success("Chat Successfully Updated");
         setIsDeleteModalOpen(false);
-        queryClient.invalidateQueries(["useGetAllConversations"]); // refetch list
+        queryClient.invalidateQueries(["useGetAllConversations"]); 
       },
       onError: (error) => {
         toast.error("Something Went Wrong");
@@ -67,7 +64,6 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
   return (
     <>
       <div
-        // ref={menuRef}
         className="absolute right-2 top-10 bg-white shadow-md rounded-md p-2 w-33 z-50"
       >
         <button
@@ -95,9 +91,7 @@ const ChatbotSidebarOptions: React.FC<Props> = ({
         onEdit={handleEditChatName}
         setEditName={setEditName}
         loading={IsPendingEditChat}
-        // onDelete={}
       />
-      {/* <Chat */}
     </>
   );
 };

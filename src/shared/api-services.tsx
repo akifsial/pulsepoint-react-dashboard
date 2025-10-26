@@ -21,33 +21,9 @@ const axiosInstance = axios.create({
   },
 });
 
-// Response interceptor for handling 401
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response?.status === 401) {
-//       localStorage.clear();
-//       window.location.href = "/login";
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-
 export const apiServices = {
-  // get: async (
-  //   endPoint: string,
-  //   params?: Record<string, any>,
-  //   responseType?: AxiosRequestConfig["responseType"]
-  // ): Promise<AxiosResponse> => {
-  //   return axios.get(API_URL + endPoint, {
-  //     headers,
-  //     params,
-  //     responseType: responseType ?? "json",
-  //   });
-  // },
 
   get: async (endPoint: string, paramData?: Record<string, unknown>) => {
-    // const token = localStorage.getItem("token");
     const token: string | null = JSON.parse(
       localStorage.getItem("token") || "null"
     );
@@ -61,7 +37,6 @@ export const apiServices = {
     endPoint: string,
     data?: unknown
   ): Promise<AxiosResponse> => {
-    // const token = localStorage.getItem("token");
     const token: string | null = JSON.parse(
       localStorage.getItem("token") || "null"
     );
@@ -74,16 +49,6 @@ export const apiServices = {
     return axiosInstance.post(endPoint, data ?? {});
   },
 
-  // update: async (data: unknown, endPoint: string): Promise<AxiosResponse> => {
-  //   // const token = localStorage.getItem("token");
-  //   const token: string | null = JSON.parse(
-  //     localStorage.getItem("token") || "null"
-  //   );
-  //   return axiosInstance.put(endPoint, data, {
-  //     headers: token ? { Authorization: `Bearer ${token}` } : {},
-  //   });
-  // },
-
   update: async (data: unknown, endPoint: string): Promise<AxiosResponse> => {
     const token: string | null = JSON.parse(
       localStorage.getItem("token") || "null"
@@ -95,7 +60,6 @@ export const apiServices = {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    // 👇 Check if data is FormData, then set proper headers
     if (data instanceof FormData) {
       headers["Content-Type"] = "multipart/form-data";
     }
@@ -107,7 +71,6 @@ export const apiServices = {
     endPoint: string,
     body?: Record<string, unknown>
   ): Promise<AxiosResponse> => {
-    // const token = localStorage.getItem("token");
     const token: string | null = JSON.parse(
       localStorage.getItem("token") || "null"
     );
@@ -117,28 +80,11 @@ export const apiServices = {
     });
   },
 
-  // delete: async (
-  //   endPoint: string,
-  //   params?: Record<string, unknown>
-  // ): Promise<AxiosResponse> => {
-  //   const token = localStorage.getItem("token");
-
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     ...(token && { Authorization: `Bearer ${token}` }),
-  //   };
-
-  //   return axios.delete(API_URL + endPoint, {
-  //     headers,
-  //     params,
-  //   });
-  // },
 
   delete: async (
     endPoint: string,
     params?: Record<string, unknown>
   ): Promise<AxiosResponse> => {
-    // const token = localStorage.getItem("token");
     const token: string | null = JSON.parse(
       localStorage.getItem("token") || "null"
     );

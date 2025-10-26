@@ -3,7 +3,6 @@ import Model from "@components/model/model";
 import ChangePhoto from "./change-photo";
 import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
 import userProfile from "../../assets/media/svgs/dashboard-svgs/profile1.svg";
-// import fallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
 import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
 import InputField from "@components/input-field";
 import SelectField from "@components/select-field";
@@ -27,16 +26,16 @@ const organizationOptions = [
 ];
 
 const stateOptions = [
-  { value: "California", label: "California" }, // USA – Tech & Hollywood hub
-  { value: "New York", label: "New York" }, // USA – NYC is world-famous
-  { value: "Texas", label: "Texas" }, // USA – Known for size, oil, culture
-  { value: "Florida", label: "Florida" }, // USA – Famous for tourism & Miami
-  { value: "Bavaria", label: "Bavaria" }, // Germany – Munich & BMW
-  { value: "Île-de-France", label: "Île-de-France" }, // France – Includes Paris
-  { value: "Dubai", label: "Dubai" }, // UAE – Luxury and architecture
-  { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, // Japan – Tokyo is iconic
-  { value: "Ontario", label: "Ontario" }, // Canada – Includes Toronto
-  { value: "Maharashtra", label: "Maharashtra" }, // India – Includes Mumbai
+  { value: "California", label: "California" },
+  { value: "New York", label: "New York" },
+  { value: "Texas", label: "Texas" },
+  { value: "Florida", label: "Florida" },
+  { value: "Bavaria", label: "Bavaria" },
+  { value: "Île-de-France", label: "Île-de-France" },
+  { value: "Dubai", label: "Dubai" },
+  { value: "Tokyo Prefecture", label: "Tokyo Prefecture" },
+  { value: "Ontario", label: "Ontario" },
+  { value: "Maharashtra", label: "Maharashtra" },
 ];
 
 const cityOptions = [
@@ -85,7 +84,7 @@ const PatientProfile = ({ onChangePassword }) => {
   const [selectedImage, setSelectedImage] = useState("");
 
   const [singleUser, setSingleUser] = useState();
-const navigate=useNavigate()
+  const navigate = useNavigate();
   const { data: meData } = useMeApi(navigate);
   const { data: ProviderData } = useAllApiProviderTypes();
 
@@ -97,7 +96,6 @@ const navigate=useNavigate()
   const queryClient = useQueryClient();
 
   const [preferredMethod, setPreferredMethod] = useState("");
-  // Handler to update state on radio change
   const handleMethodChange = (e) => {
     setPreferredMethod(e.target.value);
   };
@@ -110,7 +108,7 @@ const navigate=useNavigate()
 
     onSuccess: async () => {
       toast.success("Profile Updated Successfully");
-      queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+      queryClient.invalidateQueries(["useCareProviderSingle"]);
     },
     onError: (error) => {},
   });
@@ -119,15 +117,12 @@ const navigate=useNavigate()
     if (updatePatientProfileLoader) return;
 
     const formData = new FormData();
-    // formData.append("image", selectedImage);
-    // formData.append("user_name", data.user_name);
     formData.append("first_name", data.first_name);
     formData.append("last_name", data.last_name);
 
     formData.append("address", data.address);
     formData.append("age", data.age);
     formData.append("city", data.city);
-    // formData.append("email", data.email);
     formData.append("gender", data.gender);
     formData.append("number", data.number);
     formData.append("postal_code", data.postal_code);
@@ -136,11 +131,6 @@ const navigate=useNavigate()
     formData.append("communication_method_id", data?.communication_method_id);
     formData.append("insurance_type_id", data?.insurance_type_id);
     formData.append("marital_status", data?.maritalStatus);
-
-    // formData.append("marital_status", data?.maritalStatus);
-
-    // insurance_type_id: data.insurance_type_id,
-    // marital_status: data.maritalStatus,
 
     if (selectedImage) {
       formData.append("image", selectedImage);
@@ -151,7 +141,6 @@ const navigate=useNavigate()
   useEffect(() => {
     if (meData) {
       setSingleUser(meData);
-      // setValue("name", meData.name || "");
       setValue("user_name", meData.user_name || "");
       setValue("first_name", meData.first_name || "");
       setValue("last_name", meData.last_name || "");
@@ -170,10 +159,6 @@ const navigate=useNavigate()
       setValue("insurance_type_id", meData.insurance_type_id || "");
       setValue("maritalStatus", meData.marital_status || "");
 
-      // formData.append("website_url", data.website);
-      // formData.append("communication_method_id", preferredMethod);
-      // formData.append("insurance_type_id", data?.insurance_type_id);
-      // Optional: If you're also maintaining local state for select dropdowns
       setGender(meData.gender || "");
       setState(meData.state || "");
       setCity(meData.city || "");
@@ -203,7 +188,6 @@ const navigate=useNavigate()
           <form onSubmit={handleSubmit(profileSubmit)}>
             <div className="lg:flex lg:items-center lg:justify-between mb-9">
               <div className="flex items-center gap-3">
-                {/* <img src={userProfile} alt="Methew" /> */}
                 <div className="flex items-center flex-wrap gap-4 px-3 py-3 rounded-[15px]">
                   <img
                     src={
@@ -216,7 +200,7 @@ const navigate=useNavigate()
                         : userFallbackImg
                     }
                     onError={(e) => {
-                      e.currentTarget.onerror = null; // Prevent infinite loop
+                      e.currentTarget.onerror = null;
                       e.currentTarget.src = userFallbackImg;
                     }}
                     alt="Profile"
@@ -244,13 +228,7 @@ const navigate=useNavigate()
                     {meData?.first_name
                       ? meData?.first_name
                       : meData?.user_name}
-                    {/* {meData?.user_name} */}
                   </h4>
-                  {/* {meData?.specialization && (
-                    <span className="text-base font-medium text-[#181D27]/50 leading-tight">
-                      ({meData.specialization})
-                    </span>
-                  )} */}
                 </div>
               </div>
               <div className="flex flex-wrap gap-5">
@@ -276,18 +254,6 @@ const navigate=useNavigate()
               Add Personal Information
             </h4>
             <div className="sm:flex sm:flex-wrap items-center gap-x-4">
-              {/* <InputField
-                label="Full Name:"
-                id="name"
-                name="name"
-                type="text"
-                fieldName="sm:w-[32%]"
-                iconUrl={""}
-                placeholder="Methew Thompson"
-                register={register}
-                registerName={"name"}
-              /> */}
-
               <InputField
                 disabled
                 label="User Name:"
@@ -405,21 +371,6 @@ const navigate=useNavigate()
             </h4>
 
             <div className="sm:flex  items-center gap-4">
-              {/* <SelectField
-                label="State"
-                id="state"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                options={stateOptions}
-                selectName="sm:w-[32%] !mb-8.5 w-full"
-                register={register}
-                registerName={"state"}
-                validation={{
-                  required: "Select a state",
-                }}
-                errors={errors}
-              /> */}
-
               <div>
                 <InputField
                   label="State"
@@ -480,7 +431,6 @@ const navigate=useNavigate()
                   options={maritalStatusOptions}
                   register={register}
                   registerName="maritalStatus"
-                  // errors={errors}
                   validation={{
                     required: "Marital status is required",
                   }}
@@ -497,7 +447,6 @@ const navigate=useNavigate()
                   options={insuranceOptions}
                   register={register}
                   registerName="insurance_type_id"
-                  // errors={errors}
                   validation={{
                     required: "Insurance type is required",
                   }}
@@ -520,56 +469,6 @@ const navigate=useNavigate()
               errors={errors}
             />
 
-            {/* <div className="space-y-4">
-              <p className="text-md font-semibold">
-                Preferred Communication Method
-              </p>
-              <div className="flex flex-wrap gap-3 text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="1"
-                    name="preferredCommunication"
-                    value="1"
-                    checked={preferredMethod === "1"}
-                    onChange={handleMethodChange}
-                    className="mr-2 text-[14px] scale-150 border-[#FFFFFF] align-middle"
-                  />
-                  <label htmlFor="1" className="ml-1">
-                    Via Email Address
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="2"
-                    name="preferredCommunication"
-                    value="2"
-                    checked={preferredMethod === "2"}
-                    onChange={handleMethodChange}
-                    className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                  />
-                  <label htmlFor="2" className="ml-1">
-                    Via Phone Number
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="3"
-                    name="preferredCommunication"
-                    value="3"
-                    checked={preferredMethod === "3"}
-                    onChange={handleMethodChange}
-                    className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                  />
-                  <label htmlFor="3" className="ml-1">
-                    Via SMS Text
-                  </label>
-                </div>
-              </div>
-            </div> */}
-
             <div className="space-y-4">
               <p className="text-md space-grotesk font-semibold">
                 Preferred Communication Method
@@ -587,7 +486,6 @@ const navigate=useNavigate()
                           id="1"
                           value="1"
                           checked={field.value === 1}
-                          // onChange={(e) => field.onChange(e.target.value)}
                           onChange={(e) =>
                             field.onChange(Number(e.target.value))
                           }
@@ -604,7 +502,6 @@ const navigate=useNavigate()
                           id="2"
                           value="2"
                           checked={field.value === 2}
-                          // onChange={(e) => field.onChange(e.target.value)}
                           onChange={(e) =>
                             field.onChange(Number(e.target.value))
                           }
@@ -621,7 +518,6 @@ const navigate=useNavigate()
                           id="3"
                           value="3"
                           checked={field.value === 3}
-                          // onChange={(e) => field.onChange(e.target.value)}
                           onChange={(e) =>
                             field.onChange(Number(e.target.value))
                           }

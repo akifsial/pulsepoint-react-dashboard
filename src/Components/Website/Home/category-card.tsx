@@ -21,7 +21,6 @@ const CategoryCard = ({ id, title, image, url_key,categoryName }: CategoryCardPr
   };
   return (
     <p
-      // to={link}oncli
       onClick={handleCategory}
       className="group cursor-pointer relative overflow-hidden rounded-lg  hover:shadow-md transition-shadow duration-300"
     >

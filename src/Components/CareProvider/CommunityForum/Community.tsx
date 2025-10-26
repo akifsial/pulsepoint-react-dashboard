@@ -15,7 +15,6 @@ import SavedCommunityFeed from "./saved-community-feed";
 import PopularPostsCommunity from "./popular-posts-community";
 import { useMeApi } from "@src/hooks/use-users";
 import { useNavigate } from "react-router-dom";
-// import ReactSVG from "react-svg";
 
 const Community = () => {
   const navigate=useNavigate()
@@ -84,15 +83,7 @@ const Community = () => {
                 ) : (
                   <img src={SaveBlack} alt="Saved" className="w-5 h-5" />
                 )}
-                {/* <img
-                  src={activeTab === "Saved" ? Saved : Saved}
-                  alt="Popular"
-                /> */}
-                {/* {activeTab == "Saved" ? (
-                  <ReactSVG src={Saved} />
-                ) : (
-                  <ReactSVG src={Saved} />
-                )} */}
+                
                 Save Posts
               </button>
             </div>

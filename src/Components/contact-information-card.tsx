@@ -7,7 +7,7 @@ export interface ContactInformationCardProps {
   phone: string;
   weekdayHours: string;
   weekendHours: string;
-  city?: string; // displayed under the map placeholder
+  city?: string; 
 }
 
 export default function ContactInformationCard({
@@ -26,7 +26,6 @@ export default function ContactInformationCard({
         Contact Information
       </h3>
 
-      {/* Location */}
       <div className="mb-4">
         <label className="text-sm text-gray-500 flex items-center gap-1 mb-1">
           Location:
@@ -43,7 +42,6 @@ export default function ContactInformationCard({
       </div> : ""
 }
 
-      {/* Phone */}
       <div className="mb-4">
         <label className="text-sm text-gray-500 flex items-center gap-1 mb-1">
           <Phone className="h-3 w-3" />
@@ -52,11 +50,9 @@ export default function ContactInformationCard({
         <p className="text-sm text-gray-900">{data?.number}</p>
       </div>
 
-      {/* Working Hours */}
       <div className="mb-6">
         <div className="space-y-1">
           <div className="flex justify-between text-sm">
-            {/* <span className="text-gray-700">{data?.working_hours}</span> */}
           </div>
           <div className="flex justify-between text-sm">
             {data?.start_day ||
@@ -83,11 +79,8 @@ export default function ContactInformationCard({
         </div>
       </div>
 
-      {/* Map Placeholder */}
       <Map
-        // defaultCenter={[71.5249, 34.0151]}
-        defaultCenter={[10.4515, 51.1657]} // Germany
-        // onLocationSelect={(e) => console.log("eeeeee", e)}
+        defaultCenter={[10.4515, 51.1657]} 
       />
     </div>
   );

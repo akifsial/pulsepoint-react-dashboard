@@ -1,5 +1,4 @@
 const User = ({data}) => {
-  // Safety check: ensure data is an array before mapping
   if (!data || !Array.isArray(data)) {
     return null; 
   }

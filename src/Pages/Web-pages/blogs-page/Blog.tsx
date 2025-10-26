@@ -9,10 +9,7 @@ function Blog() {
   const [post, setPost] = useState<any>(null);
 
   const { data } = useGetSingleBlog(id);
-
-  // Simulate fetching a single blog post
   useEffect(() => {
-    // Replace this with your API call, e.g. axios.get(`/api/blogs/${id}`)
     const fakePost = {
       id,
       title: "The Future of Web Development with React & Tailwind",
@@ -36,14 +33,13 @@ function Blog() {
 
   const rawUrl = data?.data?.data?._video_url;
 
-  // Convert watch URL to embed URL if needed
   const getEmbedUrl = (url?: string) => {
     if (!url) return "";
     const youtubeMatch = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
     if (youtubeMatch && youtubeMatch[1]) {
       return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
     }
-    return url; // fallback if already embed url
+    return url;
   };
 
   const embedUrl = getEmbedUrl(rawUrl);
@@ -55,17 +51,14 @@ function Blog() {
 
       <main className="max-w-4xl mx-auto px-4 py-10">
         <div className="w-full overflow-hidden">
-          {/* Label */}
           <p className="text-xs underline font-medium uppercase text-gray-400 px-4 ps-0 pt-4">
             Facilities
           </p>
 
-          {/* Title */}
           <h2 className="px-4 ps-0 mt-2 text-sm font-semibold text-gray-900">
             Advantage Care Facility | Highland, CA | Assisted
           </h2>
 
-          {/* Video */}
           <div className="relative w-full aspect-video mt-4">
             {embedUrl ? (
               <iframe
@@ -84,18 +77,11 @@ function Blog() {
           </div>
         </div>
         <div className="flex gap-5 mt-7">
-          {/* <p className="text-[12px] w-[70%] mt-3">
-            Call Us Today at (909) 259-9483 or go to{" "}
-            <span className="text-[#0166FF]">http://www.CarePatrol.com</span>.
-            Advantage Care Facility is a Modest 6 bed Assisted Living …
-          </p> */}
           <div className="w-72  rounded-md shadow-sm p-3 bg-[#F0F0F0]">
-            {/* Title */}
             <h3 className="text-sm font-semibold text-blue-600 underline mb-3">
               CarePatrol
             </h3>
 
-            {/* URL Input */}
             <div className="mb-3">
               <label className="block text-xs font-medium text-gray-600 mb-1">
                 URL:
@@ -108,7 +94,6 @@ function Blog() {
               />
             </div>
 
-            {/* Embed Input */}
             <div>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1">
@@ -134,32 +119,6 @@ function Blog() {
             </div>
           </div>
         </div>
-
-        {/* <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          {data?.data?.data?.title}
-        </h1>
-        <div className="flex items-center gap-4 text-gray-500 text-sm mb-8">
-          <span>By {data?.data?.data?.author?.name}</span>
-          <span>•</span>
-          <span>{data?.data?.data?.date}</span>
-        </div>
-
-        <div className="rounded-2xl overflow-hidden shadow-lg mb-10">
-          <img
-            src={data?.data?.data?.featured_image?.url}
-            alt={data?.data?.data?.title}
-            className="w-full h-[400px] object-cover"
-          />
-        </div>
-
-        <article className="prose prose-lg max-w-none text-gray-700 leading-relaxed"> */}
-        {/* {post.content.split("\n").map((p, i) => (
-            <p key={i}>{p}</p>
-          ))} */}
-        {/* {data?.data?.data?.content}
-        </article> */}
-
-        {/* Author Box */}
       </main>
     </div>
   );

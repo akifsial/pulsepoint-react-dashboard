@@ -1,19 +1,16 @@
 import TopBar from "@components/website/layout/top-bar";
 import UtilityRow from "@components/website/layout/utility-row";
-import facilityImg from "@assets/media/images/dashboard-images/about-banner.png"; // replace with your image
+import facilityImg from "@assets/media/images/dashboard-images/about-banner.png"; 
 import Footer from "@components/website/layout/footer";
 
 const FacilitiesPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar + Utility */}
       <TopBar />
       <UtilityRow />
 
-      {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-blue-50 via-white to-blue-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
           <div className="space-y-6">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
               Senior Care <span className="text-blue-600">Facilities</span>
@@ -28,12 +25,8 @@ const FacilitiesPage = () => {
               we guide you to make the best choices for senior care.
             </p>
 
-            {/* <button className="mt-6 px-8 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 hover:shadow-lg transition">
-              Explore Options
-            </button> */}
           </div>
 
-          {/* Right Image */}
           <div className="flex justify-center">
             <img
               src={facilityImg}
@@ -44,7 +37,6 @@ const FacilitiesPage = () => {
         </div>
       </div>
 
-      {/* Facility Types Section */}
       <div className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
@@ -55,7 +47,6 @@ const FacilitiesPage = () => {
             lifestyles to full-time medical support.
           </p>
 
-          {/* Facilities Grid */}
           <div className="grid gap-8 md:grid-cols-3">
             <div className="bg-blue-50 p-8 rounded-xl shadow hover:shadow-lg transition text-left">
               <h3 className="font-bold text-xl text-gray-800 mb-3">

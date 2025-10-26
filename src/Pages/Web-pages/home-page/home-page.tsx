@@ -1,17 +1,3 @@
-// import React from "react";
-// import WebMainLayout from "@layouts/WebMainLayout";
-
-// const HomePage: React.FC = () => {
-//   return (
-//     <WebMainLayout>
-//       <div className="default_container">Home Page</div>
-//     </WebMainLayout>
-//   );
-// };
-
-// export default HomePage;
-
-// import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Button from "@components/website/shared/button";
 import CategoryCard from "@components/website/home/category-card";
@@ -62,9 +48,7 @@ import {
   useRecentBlogs,
 } from "@src/hooks/use-website";
 
-// import arrowrigh
 import Spinner from "@components/loaders/spinner";
-// import Button from "../components/Shared/Button";
 
 import { useRef, useState } from "react";
 import LoginOrSignupModal from "@components/model/login-or-signup-modal";
@@ -103,11 +87,9 @@ const newsData = [
 
 
 const HomePage = () => {
-  // Sample data arrays following your pattern of using arrays for similar components
 
   const { data: popularPost } = useGetPopularPost();
 
-  // const { data: categories, isLoading, isError } = useGetCategories();
   const { data: featuredReviews } = useFeaturedWeakReviews();
   const [loginModal, setLoginModal] = useState(false);
   const { data: FeaturedPosts } = useGetFeaturedPosts();
@@ -173,7 +155,6 @@ const HomePage = () => {
   const handleLogin = () => {
     queryClient.clear();
 
-    // disconnectSocket();
 
     localStorage.clear();
     navigate("/login");
@@ -182,7 +163,6 @@ const HomePage = () => {
   const handleSignup = () => {
     queryClient.clear();
 
-    // disconnectSocket();
 
     localStorage.clear();
     navigate("/signup");
@@ -207,36 +187,8 @@ const HomePage = () => {
         isOpen={loginModal}
         onClose={() => setLoginModal(false)}
       />
-      {/* <Header /> */}
-
-      {/* FEATURED + SIDEBAR WRAPPER */}
-      {/* <section className="bg-white py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <FeaturedArticleCard
-              image={getBlogs?.data?.data?.[0]?.featured_image}
-              category="Facilities"
-              published={new Date(
-                getBlogs?.data?.data?.[0]?.date
-              ).toLocaleString()}
-              typeLabel="Article"
-              readTime="4 min read"
-              title={getBlogs?.data?.data?.[0]?.title}
-              link={getBlogs?.data?.data?.[0]?.link}
-              id={getBlogs?.data?.data?.[0]?.id}
-            />
-
-            <div className="space-y-6 flex flex-col items-end ">
-              {getBlogs?.data?.data?.slice(1, 4).map((blog, i) => (
-                <SmallArticleCard key={i} {...blog} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       <section className="min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-br from-blue-50 to-green-50 text-center px-4">
-        {/* Headings */}
         <h1 className="text-5xl md:text-7xl font-bold text-gray-900 leading-tight mt-10">
           <span className="text-blue-600">Find, Compare, and Review</span>
           <br />
@@ -245,19 +197,13 @@ const HomePage = () => {
           <span className="text-blue-600">in Your Area</span>
         </h1>
 
-        {/* Subtext */}
         <p className="text-lg md:text-2xl text-gray-600 mb-8 mt-4">
           Free ZIP-code-based searches • Real user reviews • AI-powered support
           (Premium)
         </p>
 
-        {/* Input and Button */}
         <div className="flex items-center justify-center flex-col sm:flex-row items-center gap-3 mb-10 w-full max-w-[700px]">
-          {/* <input
-            type="text"
-            placeholder="Enter your ZIP code"
-            className="w-full sm:flex-1 px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
-          /> */}
+         
           <div>
 
             <InputField type="text" placeholder="Enter your ZIP code" className="!w-[500px] !mb-0 h-[60px] sm:flex-1 px-5 py-3 rounded-xl border border-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700" />
@@ -269,7 +215,6 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* Buttons and Ratings */}
         <div className="flex flex-col sm:flex-row items-center gap-5 text-gray-700">
           <button onClick={() => (navigate("/explore/reviews"))} className="cursor-pointer border border-blue-500 text-blue-600 px-5 py-2 rounded-lg font-medium hover:bg-blue-50 transition-all">
             Explore Reviews
@@ -328,51 +273,6 @@ const HomePage = () => {
         }
       </section>
 
-      {/* <section className="bg-gray-50 py-[40px]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="md:text-[36px] text-[20px] font-bold md:mb-[50px] mb-[25px] ">
-            Explore Categories
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {categories?.data?.data?.map((category: any, index) => (
-              <CategoryCard
-                key={category.id}
-                id={category.id}
-                categoryName={category?.slug}
-
-                title={category.name}
-                // image={
-                //   category.image
-                //     ? `${import.meta.env.VITE_APP_API_IMG_URL}${category.image}`
-                //     : WorkImg
-                // }
-                // link={`/category/${category.url_key}`}
-                // image={`https://picsum.photos/id/237/300/${2}`}
-              />
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-      {/* Explore Our Services Section */}
-      {/* <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="md:text-3xl text-2xl font-bold text-gray-900 mb-4">
-              Explore Our Services
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              There are various types of seniors living options, including:
-            </p>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <ServiceCard key={index} {...service} />
-            ))}
-          </div>
-        </div>
-      </section> */}
-
       <section className="bg-gradient-to-r from-blue-50 to-green-50 py-16">
         <div className="text-center mb-12">
           <h2 className="text-[#155DFC] text-4xl font-bold">How It Works</h2>
@@ -380,7 +280,6 @@ const HomePage = () => {
         </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6">
-          {/* <!-- Card 1 --> */}
           <div className="bg-white rounded-2xl shadow-md p-6 text-center relative hover:shadow-lg transition">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
               <span className="text-white text-2xl"><img src={searchIcon} /></span>
@@ -390,7 +289,6 @@ const HomePage = () => {
             <p className="text-gray-500 text-sm">Locate providers in your area instantly with our comprehensive database.</p>
           </div>
 
-          {/* <!-- Card 2 --> */}
           <div className="bg-white rounded-2xl shadow-md p-6 text-center relative hover:shadow-lg transition">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
               <span className="text-white text-2xl"><img src={readReviews} /></span>
@@ -400,7 +298,6 @@ const HomePage = () => {
             <p className="text-gray-500 text-sm">Compare providers side-by-side and read authentic user reviews.</p>
           </div>
 
-          {/* <!-- Card 3 --> */}
           <div className="bg-white rounded-2xl shadow-md p-6 text-center relative hover:shadow-lg transition">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
               <span className="text-white text-2xl"><img src={tickIcon} /></span>
@@ -410,7 +307,6 @@ const HomePage = () => {
             <p className="text-gray-500 text-sm">Move forward with or without AI help, and join our community forum.</p>
           </div>
 
-          {/* <!-- Card 4 --> */}
           <div className="bg-white rounded-2xl shadow-md p-6 text-center relative hover:shadow-lg transition">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
               <span className="text-white text-2xl"><img src={heartIcon} alt="" /></span>
@@ -423,17 +319,14 @@ const HomePage = () => {
       </section>
 
 
-      {/* Featured This Week Section */}
       <section className="bg-gray-50 py-[50px]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Header row */}
           <div className="mb-8 flex flex-wrap md:gap-0 gap-5 items-center justify-between">
             <h2 className="md:text-3xl text-2xl font-bold text-gray-900">
               Featured this week
             </h2>
           </div>
 
-          {/* Grid of professional cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredReviews?.records?.map((professional) => (
               <ProfessionalCard key={professional.id} {...professional} />
@@ -442,7 +335,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* What Seniors are Saying Section */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -460,7 +352,6 @@ const HomePage = () => {
                   </p>
                 </div>
 
-                {/* 👇 Buttons directly below the paragraph */}
                 <div className="flex gap-2 mt-4">
                   <button
                     onClick={scrollLeft}
@@ -488,20 +379,13 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Featured Resources Section */}
       <section className="bg-[#F3F8FC] py-[80px]">
         <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* header */}
           <div className="mb-8 flex md:gap-0 gap-5 flex-wrap items-center justify-between">
             <h2 className="md:text-3xl text-2xl font-bold text-gray-900">
               Featured Resources
             </h2>
-            {/* <Button variant="primary" className="flex items-center gap-2">
-              <span>See All News</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button> */}
           </div>
-          {/* cards */}
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {FeaturedPosts?.data?.data?.map((item, i) => (
               <ResourceCard key={i} {...item} />
@@ -510,7 +394,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -534,107 +417,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
-      {/* Community Forum Preview Section */}
-      {/* <section className="bg-[#F3F8FC] text-black py-16 max-w-8xl mx-auto block justify-between sm:flex sm:items-start sm:gap-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="flex-1">
-              <div className="flex items-center space-x-3 mb-4">
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
-                  alt="Cody Fisher"
-                  className="w-10 h-10 rounded-full"
-                />
-                <div>
-                  <h3 className="font-semibold">Cody Fisher</h3>
-                  <p className="text-sm text-gray-400">
-                    Posted by: caregiverSon89
-                  </p>
-                </div>
-              </div>
-
-              <h2 className="text-2xl font-bold mb-4">
-                How do I convince my dad to accept home care?
-              </h2>
-              <p className="text-black-300 mb-6">
-                My 78-year-old dad is struggling with mobility, but refuses help
-                at home. Has anyone had success getting through to a stubborn
-                parent?
-                <span className="text-blue-400 cursor-pointer hover:text-blue-300">
-                  {" "}
-                  Read more...
-                </span>
-              </p>
-
-              <div className="relative mb-6">
-                <img
-                  src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&h=300&fit=crop"
-                  alt="Community discussion"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-              </div>
-                     <div className="flex gap-2.5 mb-2.5">
-                  {buttons.map((btn, idx) => (
-                    <button
-                      key={idx}
-                      className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1 py-1 min-w-[78px] justify-center"
-                    >
-                      <img src={btn.btnIcon} alt="icon" />
-                      {btn.btnText}
-                      {btn.downarrow && <img src={btn.downarrow} alt="" />}
-                    </button>
-                  ))}
-                </div>
-            </div>
-            <div className="flex-shrink-0 w-[292px]">
-              <div>
-                <CommonInput
-                  placeholder="Search Communities "
-                  showImg={true}
-                  imgSrc={searchCommunity}
-                  imgLeft={true}
-                  inputClassName="text-base"
-                  containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
-                  imgClassName="w-5 h-5"
-                />
-
-                <div className="bg-white rounded-[10px] px-5 pt-4.5 pb-[4px] mb-4">
-                  <h4 className="mb-1.5">Popular Communities</h4>
-                  {popularCommunity.map((community, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-3.5 py-[13px] border-b border-b-[#E6E6E6] last:border-b-0"
-                    >
-                      <img
-                        src={community.icon}
-                        alt={community.title}
-                        className="rounded-full h-[37px] w-[37px]"
-                      />
-                      <p className="font-semibold">{community.title}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <PrimaryButton
-                  btnText="Create Community"
-                  showImg={true}
-                  img={addCommunity}
-                  imgclassName="w-[19px] h-[19px] object-cover"
-                  imgPosition="left"
-                  btnclassName="border-1 border-[#000] w-[292px] h-[46px] !rounded-[10px] px-4 py-[10px] text-[#252525] font-semibold leading-[33px] gap-[10px] flex items-center justify-center"
-                  onClick={() => setStep(1)}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-      {/* {
-        userInfo?.role_type=="PATIENT" || userInfo?.role_type=="CARE_PROVIDER" ?
-        <Convience setLoginModal={setLoginModal} /> : ""
-      } */}
-
       {(userInfo?.role_type === "PATIENT" ||
         userInfo?.role_type === "CARE_PROVIDER") &&
         popularPost?.payload !== null && (

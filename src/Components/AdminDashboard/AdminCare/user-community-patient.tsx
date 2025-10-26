@@ -8,11 +8,6 @@ const UserCommunityPatient: React.FC<any> = (userData) => {
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  // const pageSize = 3;
-  // const [totalRecords, setTotalRecords] = useState<number>(0);
-  // const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
-
-  // Map community_members with user info
   const communityData: dataTypes[] = Array.isArray(
     userData?.userData?.community_members
   )
@@ -23,20 +18,18 @@ const UserCommunityPatient: React.FC<any> = (userData) => {
         email: member.user?.email || userData.userData.email,
         role_type: member.user?.role_type || userData.userData.role_type,
         image: member.user?.image || null,
-        status: member.status, // member status
-        updated_at: member.created_at, // or use updated_at
+        status: member.status, 
+        updated_at: member.created_at, 
         community: member?.community,
-        asdasd:"asd"
+        asdasd: "asd",
       }))
     : [];
-
 
   const pageSize = 3;
   const totalRecords = communityData?.length;
   const totalPages = Math.ceil(totalRecords / pageSize);
 
   const Pagination = () => {
-    // if (totalRecords <= pageSize) return null;
 
     const canPrev = currentPage > 1;
     const canNext = currentPage < totalPages;
@@ -76,14 +69,12 @@ const UserCommunityPatient: React.FC<any> = (userData) => {
     return (
       <div className="py-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          {/* LEFT: statement */}
           <div className="text-sm text-[#6b7280]">
             Showing <span className="font-medium">{startIdx}</span> to{" "}
             <span className="font-medium">{endIdx}</span> of{" "}
             <span className="font-medium">{totalRecords}</span> results
           </div>
 
-          {/* RIGHT: buttons */}
           <div className="flex items-center gap-2 md:justify-end">
             <button
               type="button"
@@ -98,7 +89,6 @@ const UserCommunityPatient: React.FC<any> = (userData) => {
               Prev
             </button>
 
-            {/* Page numbers with ellipsis */}
             {items.map((it, idx) =>
               it === "ELLIPSIS" ? (
                 <span key={`e-${idx}`} className="px-2 text-sm text-[#111827]">
@@ -261,17 +251,15 @@ const UserCommunityPatient: React.FC<any> = (userData) => {
     },
   ];
 
-  const handleRowSelect = (row: dataTypes) => {
-  };
+  const handleRowSelect = (row: dataTypes) => {};
 
-  // Pagination UI
 
   return (
     <div className="mb-10">
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
           <h3 className="md:mb-0 mb-3 text-[20px] font-bold space-grotesk">
-           Community Participation
+            Community Participation
           </h3>
         </div>
         <div>
@@ -282,19 +270,12 @@ const UserCommunityPatient: React.FC<any> = (userData) => {
               onRowSelect={handleRowSelect}
               showActions={false}
               className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  // onView={() => console.log("View Detail", row.id)}
-                  // onEdit={() => console.log("Edit", row.id)}
-                  // onDelete={() => console.log("Delete", row.id)}
-                />
-              )}
+              actions={(row) => <DropdownActions />}
             />
           ) : (
             <p>No saved communities yet.</p>
           )}
         </div>
-        {/* <Pagination /> */}
 
         <Pagination
           totalRecords={totalRecords}

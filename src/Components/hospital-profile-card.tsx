@@ -33,7 +33,6 @@ export default function HospitalProfileCard({
   const [unSavedModal, setUnSavedModal] = useState();
   const [savedModal, setSavedModal] = useState(false);
 
-  // Example services data; replace or populate as needed
   const servicesData = [
     { id: 1, name: "24/7 Nursing Care" },
     { id: 2, name: "Assisted Living Apartments" },
@@ -54,26 +53,12 @@ export default function HospitalProfileCard({
       } else {
         toast.success("Care Provider Saved Successfully");
       }
-      queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+      queryClient.invalidateQueries(["useCareProviderSingle"]);
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
     },
   });
-
-  // const handleBookmarkToggle = async () => {
-  //   if (savedCareProvidersPending) return;
-
-  //   setIsBookmarked(!isBookmarked);
-
-  //   if (data?.is_saved_care_provider == true) {
-  //     // handleSaved()
-  //     setUnSavedModal(true);
-  //     return;
-  //   }
-
-  //   await savedCareProvidersMutation();
-  // };
 
   const handleBookmarkToggle = async () => {
     if (savedCareProvidersPending) return;
@@ -81,12 +66,10 @@ export default function HospitalProfileCard({
     setIsBookmarked(!isBookmarked);
 
     if (data?.is_saved_by_patients == true) {
-      // agar already saved hai → Unsave modal dikhana
       setUnSavedModal(true);
       return;
     }
 
-    // agar abhi tak saved nahi hai → SaveModal dikhana
     handleSaveClick();
   };
 
@@ -97,11 +80,9 @@ export default function HospitalProfileCard({
 
   const handleSaveClick = () => {
     if (savedCareProvidersPending) return;
-    // Pehle modal kholna
     setSavedModal(true);
   };
 
-  // jab modal me confirm ho
   const handleConfirmSave = async () => {
     await savedCareProvidersMutation();
     setSavedModal(false);
@@ -109,33 +90,13 @@ export default function HospitalProfileCard({
 
   return (
     <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6">
-      {/* Header */}
       <div className="flex items-center gap-3 flex-wrap justify-between mb-6">
-        {/* Left: Use HospitalHeader Component */}
         <HospitalHeader
           name="Johns Hopkins Hospital"
           imageUrl={ProfilePic}
           email="support@hopkinshospital.org"
           id={id}
         />
-
-        {/* right: bookmark button */}
-        {/* <button 
-          type="button"
-          onClick={handleBookmarkToggle}
-          aria-label={isBookmarked ? "Remove bookmark" : "Bookmark hospital"}
-          className="w-10 h-10 mt-3 sm:mt-0 grid cursor-pointer place-items-center rounded-full border border-gray-300
-               hover:bg-gray-100 transition-colors"
-        >
-          <Bookmark
-            className={`w-4 h-4 ${
-              data?.is_saved_care_provider
-                ? "fill-current text-medical-blue"
-                : "text-gray-700"
-            }`}
-          />
-        </button> */}
-
         <button
           type="button"
           onClick={handleBookmarkToggle}
@@ -155,13 +116,6 @@ export default function HospitalProfileCard({
           />
         </button>
       </div>
-      {/* {unSavedModal && (
-        <UnSavedModal
-          onSaved={handleSaved}
-          onClose={() => setUnSavedModal(false)}
-          isOpen={true}
-        />
-      )} */}
 
       {savedModal && (
         <SavedModal
@@ -169,7 +123,6 @@ export default function HospitalProfileCard({
           onClose={() => setSavedModal(false)}
           isOpen={true}
           loading={savedCareProvidersPending}
-
         />
       )}
 
@@ -179,11 +132,9 @@ export default function HospitalProfileCard({
           onClose={() => setUnSavedModal(false)}
           isOpen={true}
           loading={savedCareProvidersPending}
-
         />
       )}
 
-      {/* About Section */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">About</h3>
         <div className="mb-3">
@@ -199,7 +150,6 @@ export default function HospitalProfileCard({
         <p className="text-sm text-gray-700 leading-relaxed">{description}</p>
       </div>
 
-      {/* Services Offered Section */}
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-3">
           Services Offered:

@@ -9,7 +9,6 @@ import { GoPerson } from "react-icons/go";
 import leftarrow from "@assets/media/svgs/leftarrow.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// import { toast } from "react-toastify";
 import toast from "react-hot-toast";
 
 
@@ -49,23 +48,20 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
   const [zip, setZip] = useState(userData?.postal_code || "");
   const [address, setAddress] = useState(userData?.address || "");
   const [loading, setLoading] = useState(false);
-  // const [state,setState]=useState(userData?.state || "")
   const navigate = useNavigate();
 
   const [debounceTimer, setDebounceTimer] = useState<any>(null);
   const getAllOptions = (baseOptions, apiValue) => {
-    if (!apiValue) return baseOptions; // agar value hi null/undefined hai toh base options return karo
+    if (!apiValue) return baseOptions; 
     const exists = baseOptions.some((opt) => opt.value === apiValue);
     return exists
       ? baseOptions
       : [...baseOptions, { value: apiValue, label: apiValue }];
   };
 
-  // const cityAllOptions = getAllOptions(cities, userData?.city);
 
   const autoSave = async () => {
     const formData = new FormData();
-    // formData.append("user_name", name);
     formData.append("full_name", name);
     formData.append("number", phone);
     formData.append("email", email);
@@ -74,13 +70,11 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
     formData.append("city", city);
     formData.append("postal_code", zip);
     formData.append("address", address);
-    formData.append("status", status); // ✅ status bhi send karenge
-    formData.append("organization_name", organization); // ✅ status bhi send karenge
+    formData.append("status", status); 
+    formData.append("organization_name", organization); 
 
     setLoading(true);
     try {
-      // Token localStorage se uthao
-      // const token = localStorage.getItem("token");
       const token: string | null = JSON.parse(
         localStorage.getItem("token") || "null"
       );
@@ -104,7 +98,6 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
 
     } catch (error) {
       setLoading(false);
-      console.error("Auto-save error:", error);
     }
   };
 
@@ -114,14 +107,12 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
   ];
 
   const [status, setStatus] = useState(userData.status || "Active");
-  // const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newStatus = e.target.value;
-    setStatus(newStatus); // ✅ sirf state update
+    setStatus(newStatus); 
   };
 
-  // const dummyImage = Methew;
 
   return (
     <div>
@@ -139,7 +130,6 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
 
       <div className="rounded-[10px] bg-white md:p-10 p-3 mb-4">
         <div className="overflow-y-auto h-[628px]">
-          {/* Header */}
           <div className="flex flex-wrap items-center justify-between mb-7">
             <div className="flex flex-wrap  items-center gap-3">
               <div className="flex items-center gap-3">
@@ -199,7 +189,6 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
             </div>
           </div>
 
-          {/* Personal Info */}
           <h4 className="text-xl space-grotesk font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
             Add Personal Information
           </h4>
@@ -215,7 +204,6 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
                 }
               }}
             >
-              {/* 🔥 Grid for personal info */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <InputField
                   label="User Name:"
@@ -271,12 +259,10 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
                 className="mt-4"
               />
 
-              {/* Location Info */}
               <h4 className="text-xl space-grotesk font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3 mt-6">
                 Location Information
               </h4>
 
-              {/* 🔥 Grid for location */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <InputField
                   label="State:"
@@ -322,7 +308,6 @@ const EditDetails = ({ goBack, userData, fetchUser }) => {
             </form>
           </div>
 
-          {/* Save Button */}
           <div>
             <PrimaryButton
               btnText={loading ? `Saving...` : "Save Changes"}

@@ -46,7 +46,6 @@ const ProfessionalCard = ({
               ? `${import.meta.env.VITE_APP_API_IMG_URL}${image}`
               : DummyUser
           }
-          // alt={name}
           className="w-16 h-16 rounded-full object-cover mb-4"
         />
         <div className="">
@@ -54,18 +53,11 @@ const ProfessionalCard = ({
             {" "}
             {organization_name}{" "}
           </h3>
-          {/* <p className="text-sm text-black mb-3">{title}</p> */}
           <p className="text-[14px] text-start text-normal text-black mb-3">
             {"Geriatric Specialist"}
           </p>
         </div>
 
-        {/* <Link
-          to={profileLink}
-          className="bg-black text-white px-6 py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
-        >
-          Profile
-        </Link> */}
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center">

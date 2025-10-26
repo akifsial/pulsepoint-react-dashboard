@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ArrowBigRight, ArrowRight, ChevronRight } from "lucide-react"; // npm install lucide-react
+import { ArrowBigRight, ArrowRight, ChevronRight } from "lucide-react"; 
 import { useCategory, useGetCategories } from "@src/hooks/use-website";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import he from "he";
@@ -31,7 +31,6 @@ const CategorySidebar: FC = ({ setCategoryName }) => {
 
   const { data: CategoryData } = useGetCategories();
 
-  // console.log("*&788888", CategoryData);
 
   const isActiveLink = (href: string) => {
     return location.pathname === href;
@@ -59,13 +58,11 @@ const CategorySidebar: FC = ({ setCategoryName }) => {
 
   return (
     <div className="w-full rounded-2xl md:mt-0 mt-10 bg-white shadow p-4">
-      {/* Heading */}
       <h2 className="text-[20px] font-normal text-[#020202] mb-2">
         Categories
       </h2>
       <hr className="mb-4 border-gray-200" />
 
-      {/* Category List */}
       <ul className="space-y-2">
         {CategoryData?.data?.data?.map((cat) => (
           <li

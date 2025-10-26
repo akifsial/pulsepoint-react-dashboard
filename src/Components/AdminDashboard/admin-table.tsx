@@ -5,7 +5,6 @@ import { apiServices } from "@src/shared/api-services";
 import SkeletonTableLoader from "@components/loader/skelton-table-loader";
 import Pagination from "@components/pagination/pagination";
 
-// Interface for the trending topic data structure
 interface TrendingTopicData {
   id: number;
   topic_name: string;
@@ -13,6 +12,8 @@ interface TrendingTopicData {
   users: number;
   last_active: string;
 }
+
+
 
 const CareProviderDashboard: React.FC = () => {
   const [trendingTopics, setTrendingTopics] = useState<TrendingTopicData[]>([]);
@@ -23,44 +24,39 @@ const CareProviderDashboard: React.FC = () => {
 
   const pageSize = 3;
 
-  // Function to fetch trending topics data from API
   const fetchTrendingTopics = async (page: number) => {
     setLoading(true);
     setError(null);
 
     try {
-      // Include pagination params
       const response = await apiServices.get(
-        apiEndpoint.trendingTopics(`trending_topics&page=${page}&limit=${pageSize}`)
+        apiEndpoint.trendingTopics(
+          `trending_topics&page=${page}&limit=${pageSize}`
+        )
       );
 
       if (response.data.success) {
-        const dataWithId = response.data.payload.map((item: any, index: number) => ({
-          ...item,
-          id: (page - 1) * pageSize + index + 1, // unique id across pages
-        }));
+        const dataWithId = response.data.payload.map(
+          (item: any, index: number) => ({
+            ...item,
+            id: (page - 1) * pageSize + index + 1, 
+          })
+        );
         setTrendingTopics(dataWithId);
 
-        // Use total count from API if available, otherwise fallback
         setTotalRows(response.data.total || response.data.payload.length);
       } else {
         setError("Error: Failed to fetch data");
       }
     } catch (err) {
-      console.error("Error fetching data:", err);
       setError("Failed to fetch data");
     } finally {
       setLoading(false);
     }
   };
+
+
   
-
-  // Fetch data when page changes
-  useEffect(() => {
-    fetchTrendingTopics(currentPage);
-  }, [currentPage]);
-
-  // Define columns for the TanDataTable
   const columns = [
     { accessor: "id", header: "Id", showSort: true },
     { accessor: "topic_name", header: "Topic Names", showSort: true },
@@ -69,13 +65,34 @@ const CareProviderDashboard: React.FC = () => {
     { accessor: "last_active", header: "Last Active", showSort: true },
   ];
 
+
+  useEffect(() => {
+    const dummyTrendingTopics: TrendingTopicData[] = [
+      { id: 1, topic_name: "Improving Patient Communication", replies: 124, users: 45, last_active: "2 hours ago" },
+      { id: 2, topic_name: "Best Practices in Home Care", replies: 87, users: 33, last_active: "5 hours ago" },
+      { id: 3, topic_name: "Handling Insurance Claims Efficiently", replies: 56, users: 20, last_active: "1 day ago" },
+      { id: 4, topic_name: "Reducing Caregiver Burnout", replies: 102, users: 40, last_active: "3 days ago" },
+      { id: 5, topic_name: "Telehealth Adoption Challenges", replies: 74, users: 29, last_active: "5 days ago" },
+      { id: 6, topic_name: "HIPAA Compliance & Data Security", replies: 91, users: 37, last_active: "1 week ago" },
+      { id: 7, topic_name: "Hospital Readmission Reduction Strategies", replies: 43, users: 18, last_active: "2 weeks ago" },
+      { id: 8, topic_name: "AI in Healthcare Documentation", replies: 120, users: 55, last_active: "3 weeks ago" },
+      { id: 9, topic_name: "Patient Feedback Systems & Surveys", replies: 68, users: 25, last_active: "1 month ago" },
+    ];
+  
+    setTrendingTopics(dummyTrendingTopics);
+    setTotalRows(dummyTrendingTopics.length);
+  }, [currentPage]);
+
+  
   if (error) return <div>{error}</div>;
 
   return (
     <div className="mb-10">
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-3 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h4 className=" space-grotesk  text-[20px] font-bold ">Trending Topics in Communities</h4>
+          <h4 className=" space-grotesk  text-[20px] font-bold ">
+            Trending Topics in Communities
+          </h4>
         </div>
         <div>
           {loading ? (
@@ -91,11 +108,9 @@ const CareProviderDashboard: React.FC = () => {
           )}
         </div>
 
-        {/* Pagination */}
         <div className="mt-4">
           <Pagination
-            // rowsPerPage={pageSize}
-              rowsPerPage={pageSize} // 3 rows per page
+            rowsPerPage={pageSize} 
             totalRows={totalRows}
             currentPage={currentPage}
             onPageChange={setCurrentPage}

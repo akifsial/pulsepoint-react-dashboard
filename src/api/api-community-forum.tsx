@@ -13,17 +13,6 @@ import {
 import toast from "react-hot-toast";
 import { Navigate, useNavigate } from "react-router-dom";
 
-// export const ApiReportPost = async (data: FormData): Promise<any> => {
-//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/report`;
-
-//   const token = JSON.parse(localStorage.getItem("token"));
-
-//   const response = await axios.post(BASE_URL, data, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response.data.payload;
-// };
 
 export const ApiReportPost = async (data: FormData): Promise<any> => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post/report`;
@@ -38,7 +27,7 @@ export const ApiReportPost = async (data: FormData): Promise<any> => {
     return response.data?.payload;
   } catch (error) {
     toast.error(error?.response?.data?.errors[0]?.message);
-    throw error; // rethrow it so caller can handle it
+    throw error;
   }
 };
 
@@ -96,10 +85,9 @@ export const ApiGetCommunityPost = async (popular = false) => {
   });
 
 
-  // return response.data.payload;
   return {
     records: response.data.payload.records,
-    hasMore: response.data.payload.records.length > 0, // or use actual flag from API
+    hasMore: response.data.payload.records.length > 0, 
   };
 };
 
@@ -129,16 +117,6 @@ export const ApiGetSingleUser = async () => {
   return response.data.payload;
 };
 
-// export const ApiCreatePostCommunity = async (data: FormData) => {
-//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}community/post`;
-//   const token = JSON.parse(localStorage.getItem("token"));
-
-//   const response = await axios.post(BASE_URL, data, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response.data.payload;
-// };
 
 export const ApiCreatePostCommunity = async (data: FormData) => {
   try {
@@ -151,9 +129,8 @@ export const ApiCreatePostCommunity = async (data: FormData) => {
 
     return response.data.payload;
   } catch (error) {
-    console.error("Error creating community post:", error);
     toast.error(error?.response?.data?.message);
-    throw error; // rethrow error so the caller can handle it
+    throw error; 
   }
 };
 
@@ -174,9 +151,6 @@ export const ApiGellAllCommunity = async (
     localStorage.getItem("token") || "null"
   );
 
-  // if(search){
-  //   BASE_URL+=`&${}`
-  // }
   if (sort) {
     URL += `&sort=created_at:${sort}`;
   }
@@ -286,19 +260,6 @@ export const ApiJoinCommunity = async (data: JOIN_COMMUNITY_TYPE) => {
   return response.data.payload;
 };
 
-// export const ApiChatPost = async (data: AIBOT_SEND_MESSAGE_TYPE) => {
-//   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}chat`;
-//   const token = JSON.parse(localStorage.getItem("token"));
-
-//   const response = await axios.post(BASE_URL, data, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response.data.payload;
-// };
-
-    // const role_type = localStorage.getItem("userInfo")?.role_type;
-
 
 export const ApiChatPost = async (data: AIBOT_SEND_MESSAGE_TYPE, navigate) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}chat`;
@@ -312,7 +273,7 @@ export const ApiChatPost = async (data: AIBOT_SEND_MESSAGE_TYPE, navigate) => {
   } catch (error) {
     
       const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
-    const role_type = userInfo?.role_type;  // ✅ Get fresh role_type here
+    const role_type = userInfo?.role_type;  
     Swal.fire({
       title: "<strong>Error</strong>",
       icon: "error",
@@ -337,18 +298,16 @@ export const ApiChatPost = async (data: AIBOT_SEND_MESSAGE_TYPE, navigate) => {
       if (result.isConfirmed) {
         if (role_type == "PATIENT") {
           navigate("/patient/feature", { replace: true });
-          // ✅ URL will be http://localhost:5173/patient/feature
+          
         } 
         if (role_type=="CARE_PROVIDER") {
           navigate("/care-provider/feature", { replace: true });
-          // navigate("/patient/feature", { replace: true });
 
 
         }
       }
     });
 
-    // throw error; // 🔁 rethrow so the caller can handle it
   }
 };
 
@@ -389,18 +348,6 @@ export const ApiGetConversationChatSpecific = async (
   return response.data.payload;
 };
 
-// export const ApiDeleteChat = async (selectedConversationId: number) => {
-//   const BASE_URL = `${
-//     import.meta.env.VITE_APP_API_URL
-//   }chat/conversations/${selectedConversationId}`;
-//   const token = JSON.parse(localStorage.getItem("token"));
-
-//   const response = await axios.delete(BASE_URL, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response.data.payload;
-// };
 
 export const ApiDeleteChat = async (selectedConversationId: number) => {
   const BASE_URL = `${
@@ -415,9 +362,7 @@ export const ApiDeleteChat = async (selectedConversationId: number) => {
 
     return response.data.payload;
   } catch (error) {
-    console.error("Error deleting chat:", error);
 
-    // Optional: rethrow so caller can handle it
     toast.error(error?.response?.data?.errors[0]?.message);
     throw error;
   }
@@ -481,7 +426,7 @@ export const ApiGetNotifications = async (page = 1, limit = 5) => {
 
   const response = await axios.get(BASE_URL, {
     headers: { Authorization: `Bearer ${token}` },
-    params: { page, limit }, // pass page and limit as query params
+    params: { page, limit }, 
   });
 
   return response.data.payload;
@@ -501,7 +446,6 @@ export const ApiAcceptPrivateCommunity = async (memberId, status) => {
     { status: status },
     {
       headers: { Authorization: `Bearer ${token}` },
-      // params: { page, limit }, // pass page and limit as query params
     }
   );
 
@@ -523,18 +467,6 @@ export const ApiDeleteComment = async (
   return response.data.payload;
 };
 
-// export const ApiDeletePost = async (postId: number) => {
-//   const BASE_URL = `${
-//     import.meta.env.VITE_APP_API_URL
-//   }community/post/${postId}`;
-//   const token = JSON.parse(localStorage.getItem("token"));
-
-//   const response = await axios.delete(BASE_URL, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response.data.payload;
-// };
 
 export const ApiDeletePost = async (postId: number) => {
   const BASE_URL = `${
@@ -549,10 +481,8 @@ export const ApiDeletePost = async (postId: number) => {
 
     return response.data?.payload;
   } catch (error) {
-    console.error("Error deleting post:", error?.response?.data?.message);
     toast.error(error?.response?.data?.message);
 
-    // You can throw the error again if you want to handle it in react-query
     throw error;
   }
 };

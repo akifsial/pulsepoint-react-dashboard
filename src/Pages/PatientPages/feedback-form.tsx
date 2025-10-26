@@ -220,8 +220,7 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
     e.preventDefault();
     setShowThankYou(true);
     setTimeout(() => {
-      // navigate("/patient/patient-reviews");
-    }, 2000); // 2 seconds delay
+    }, 2000); 
   };
 
   const currentSection = surveySections[currentStep];
@@ -232,11 +231,11 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
 
       onSuccess: async () => {
         toast.success("Review Added Successfully");
-      queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+      queryClient.invalidateQueries(["useCareProviderSingle"]); 
 
         
         setFeedbackOpen(false);
-        // navigate(`/patient/hospital-profile/${id}`);
+      
       },
       onError: (error) => {
         toast.error("Error While Adding Review");
@@ -248,7 +247,7 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
   };
 
   const isCurrentStepValid = currentSection.isCommentSection
-    ? responses.content?.trim().length > 0 // comment must not be empty
+    ? responses.content?.trim().length > 0 
     : currentSection.questions.every((q) => responses.hasOwnProperty(q.name));
 
   return (
@@ -321,10 +320,6 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                       {q.options.map((option, optIdx) => {
-                        // const value =
-                        //   q.type === "radio" && option.includes("-")
-                        //     ? option.split(" ")[0]
-                        //     : option; // For Yes/No
                         const value =
                           option.toLowerCase() === "yes"
                             ? true
@@ -342,7 +337,6 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
                             <input
                               type={q.type}
                               name={q.name}
-                              // value={option}
                               value={value}
                               className="form-radio"
                               checked={responses[q.name] === value}
@@ -407,11 +401,6 @@ const FeedbackForm = ({ setFeedbackOpen }) => {
               />
             )}
           </div>
-          {/* {showThankYou && (
-            <div className="text-sm">
-              <p>Thank you for your valuable feedback!</p>
-            </div>
-          )} */}
         </form>
       </div>
     </>

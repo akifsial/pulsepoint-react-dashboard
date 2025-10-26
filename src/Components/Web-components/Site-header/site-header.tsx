@@ -57,7 +57,7 @@ const SiteHeader: React.FC = () => {
                   <Link
                     to={item.path}
                     className="flex w-full justify-between items-center py-2 cursor-pointer"
-                    onClick={() => setMenuOpen(false)} // Close menu on click
+                    onClick={() => setMenuOpen(false)} 
                   >
                     {item.linkName}
                   </Link>
@@ -77,7 +77,7 @@ const SiteHeader: React.FC = () => {
                           <Link
                             to={option.path}
                             className="block py-1 text-sm"
-                            onClick={() => setMenuOpen(false)} // Also close mobile menu
+                            onClick={() => setMenuOpen(false)} 
                           >
                             {option.linkName}
                           </Link>

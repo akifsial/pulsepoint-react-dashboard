@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import arrowIcon from "@assets/media/images/arrow-down.svg";
 import InputField from "../input-field";
 import SelectField from "../select-field";
 import OnBoardingLayout from "./on-borading-layout";
@@ -58,24 +57,6 @@ const PatientSignupForm = () => {
     preferredCommunication: [],
   });
 
-  // const [errors, setErrors] = useState<FormData>({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   phone: "",
-  //   age: "",
-  //   gender: "",
-  //   maritalStatus: "",
-  //   insuranceType: "",
-  //   password: "",
-  //   confirmPassword: "",
-  //   zipCode: "",
-  //   city: "",
-  //   state: "",
-  //   streetAddress: "",
-  //   preferredCommunication: [],
-  //   careNeeds: "",
-  // });
 
   const {
     register,
@@ -87,13 +68,10 @@ const PatientSignupForm = () => {
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
-  const navigate = useNavigate(); // Hook to navigate
-  // select data population
+  const navigate = useNavigate(); 
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
-    // { value: "other", label: "Other" },
-    // { value: "prefer-not-to-say", label: "Prefer not to say" },
   ];
 
   const maritalStatusOptions = [
@@ -127,12 +105,10 @@ const PatientSignupForm = () => {
     })) || [];
 
   const [preferredMethod, setPreferredMethod] = useState("");
-  // Handler to update state on radio change
   const handleMethodChange = (e) => {
     setPreferredMethod(e.target.value);
   };
 
-  // handle checkbox changes
   const handleCommunicationChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -159,16 +135,11 @@ const PatientSignupForm = () => {
         navigate("/patient/login");
       },
       onError: (error) => {
-        // toast.error("Failed to Create Care Provid
-        // // er");
-        // toast.error(error?.response?.data?.message);
       },
     });
 
   const RegisterSubmit = async (data) => {
     const registerData = {
-      // for care_provider
-      //   organization_name: "Joe Hospital",\
       user_name: data.userName,
       email: data.email,
       first_name: data.firstName,
@@ -209,7 +180,6 @@ const PatientSignupForm = () => {
               <p className="text-[#252525] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
                 Join to explore and share care insights
               </p>
-              {/* Name Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -266,25 +236,8 @@ const PatientSignupForm = () => {
                 </div>
               </div>
 
-              {/* Other Form Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* <div>
-                  <InputField
-                    label="Last Name"
-                    asterisk={true}
-                    icon={IoPersonOutline}
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    placeholder="Enter your last name"
-                    register={register}
-                    registerName="lastName"
-                    errors={errors}
-                    validation={{
-                      required: "Last Name is required",
-                    }}
-                  />
-                </div> */}
+             
                 <div>
                   <InputField
                     label="Email Address"
@@ -306,9 +259,7 @@ const PatientSignupForm = () => {
                     }}
                   />
 
-                  {/* {errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                  )} */}
+                 
                 </div>
 
                 <div>
@@ -365,7 +316,6 @@ const PatientSignupForm = () => {
                 </div>
               </div>
 
-              {/* Marital Status, and Insurance Type */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <SelectField
@@ -400,7 +350,6 @@ const PatientSignupForm = () => {
                 </div>
               </div>
 
-              {/* care needs */}
               <div className="grid grid-cols-1 md:grid-cols-1 ">
                 <InputField
                   label="Care Needs (Optional)"
@@ -417,7 +366,6 @@ const PatientSignupForm = () => {
                 />
               </div>
 
-              {/* zip code and city */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -453,7 +401,6 @@ const PatientSignupForm = () => {
                 </div>
               </div>
 
-              {/* state and street adress */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -490,7 +437,6 @@ const PatientSignupForm = () => {
                 </div>
               </div>
 
-              {/* Password Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -531,59 +477,7 @@ const PatientSignupForm = () => {
                     " "}
                 </div>
               </div>
-              {/* <div className="space-y-4">
-                <p className="text-md font-semibold">
-                  Preferred Communication Method
-                </p>
-                <div className="flex text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="email"
-                      name="preferredCommunication"
-                      value="email"
-                      checked={formData.preferredCommunication.includes(
-                        "email"
-                      )}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="email" className="ml-1">
-                      Via Email Address
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="phone"
-                      name="preferredCommunication"
-                      value="phone"
-                      checked={formData.preferredCommunication.includes(
-                        "phone"
-                      )}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="phone" className="ml-1">
-                      Via Phone Number
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="sms"
-                      name="preferredCommunication"
-                      value="sms"
-                      checked={formData.preferredCommunication.includes("sms")}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="sms" className="ml-1">
-                      Via SMS Text
-                    </label>
-                  </div>
-                </div>
-              </div> */}
+            
 
               <div className="space-y-4">
                 <p className="text-md font-semibold">
@@ -635,19 +529,15 @@ const PatientSignupForm = () => {
                 </div>
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 className="w-full flex justify-center bg-[#28A2FF] text-white py-3 px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
               >
                 {isRegisterPending ? <Spinner /> : "Sign Up"}
               </button>
-              {/* calling component for Social icons */}
               <SocialLoginSection
                 action="login"
-                // handleSocialLogin={handleSocialLogin}
               />
-              {/* "Don't have an account yet?" Section */}
               <div className="flex justify-center mt-6">
                 <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
                   Already have an account?{" "}

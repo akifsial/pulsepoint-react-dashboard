@@ -1,145 +1,3 @@
-// import { useState } from "react";
-// import Model from "@components/Model/Model";
-// import ChangePhoto from "./ChangePhoto";
-// import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-// import InputField from "@components/InputField";
-// import Methew from "../../assets/media/svgs/dashboard-svgs/methew.svg";
-// import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
-// // import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
-// // import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";
-// import { RxPerson } from "react-icons/rx";
-// import { RiMailOpenLine } from "react-icons/ri";
-// import { FiPhone } from "react-icons/fi";
-// import share from "@assets/media/svgs/share.svg"
-// import profile from "@assets/media/svgs/profileimg.svg"
-
-// const organizationOptions = [
-//   { value: "Hospital", label: "Hospital" },
-//   { value: "Private", label: "Private" },
-//   { value: "Government", label: "Government" },
-//   { value: "Other", label: "Other" },
-// ];
-
-// const stateOptions = [
-//   { value: "California", label: "California" },          // USA – Tech & Hollywood hub
-//   { value: "New York", label: "New York" },              // USA – NYC is world-famous
-//   { value: "Texas", label: "Texas" },                    // USA – Known for size, oil, culture
-//   { value: "Florida", label: "Florida" },                // USA – Famous for tourism & Miami
-//   { value: "Bavaria", label: "Bavaria" },                // Germany – Munich & BMW
-//   { value: "Île-de-France", label: "Île-de-France" },    // France – Includes Paris
-//   { value: "Dubai", label: "Dubai" },                    // UAE – Luxury and architecture
-//   { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, // Japan – Tokyo is iconic
-//   { value: "Ontario", label: "Ontario" },                // Canada – Includes Toronto
-//   { value: "Maharashtra", label: "Maharashtra" },        // India – Includes Mumbai
-// ];
-
-// const cityOptions = [
-//   { value: "New York", label: "New York" },
-//   { value: "London", label: "London" },
-//   { value: "Paris", label: "Paris" },
-//   { value: "Dubai", label: "Dubai" },
-//   { value: "Singapore", label: "Singapore" },
-//   { value: "Tokyo", label: "Tokyo" },
-//   { value: "Hong Kong", label: "Hong Kong" },
-//   { value: "Zurich", label: "Zurich" },
-//   { value: "Los Angeles", label: "Los Angeles" },
-//   { value: "Monaco", label: "Monaco" },
-// ];
-
-// const AdminProfileDetail = ({ onChangePassword }) => {
-//      const [activeTab, setActiveTab] = useState("home");
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [organization, setOrganization] = useState("");
-//   const [state, setState] = useState("");
-//   const [city, setCity] = useState("");
-
-//   return (
-//     <>
-//       <div>
-//         <div className="overflow-y-auto rounded-[10px] bg-white p-10 h-[508px]">
-//           <div className="flex items-center justify-between mb-9">
-//             <div className="flex items-center gap-3">
-//               <img src={profile} alt="Methew" />
-//               <div>
-//                 <h4 className="font-bold mb-1 text-[#252525] text-xl leading-tight">
-//                   Methew Thompson
-//                 </h4>
-//               </div>
-//             </div>
-
-//             <PrimaryButton
-//               btnText="Change Profile  Picture"
-//               showImg={true}
-//               img={share}
-//               btnClass="border-1 border-[#25252533] w-[220px] h-[46px] bg-[#F3F3F3] !rounded-[10px] px-4 py-[10px] text-base text-[#252525] font-medium leading-[33px] gap-2 flex items-center justify-center"
-//               onClick={() => setIsModalOpen(true)}
-//             />
-//           </div>
-
-//           <h4 className="text-xl font-bold text-[#1A1A1A] font-[Space Grotesk] mb-3">
-//             Add Personal Information
-//           </h4>
-
-//           <form>
-//             <div className="flex flex-wrap items-center gap-x-4">
-//               <InputField
-//                 label="Name:"
-//                 id="name"
-//                 name="name"
-//                 type="text"
-//                 fieldName="w-[49%]"
-//                 icon={RxPerson}
-//                 placeholder="Admin"
-//               />
-//               <InputField
-//                 label="Speciality/Role:"
-//                 id="text"
-//                 name="text"
-//                 type="text"
-//                 fieldName="w-[49%]"
-//                 iconUrl={inputUser}
-//                 placeholder="Admin"
-//               />
-
-//               <InputField
-//                 label="Phone:"
-//                 id="tel"
-//                 name="tel"
-//                 type="tel"
-//                 fieldName="w-[49%]"
-//                 icon={FiPhone}
-//                 placeholder="097-765-7654"
-//               />
-//               <InputField
-//                 label="Email:"
-//                 id="email"
-//                 name="email"
-//                 type="email"
-//                 fieldName="w-[49%]"
-//                 icon={RiMailOpenLine}
-//                 placeholder="admin@organization.com"
-//               />
-//             </div>
-
-//             <PrimaryButton
-//               btnText="Save Changes"
-//               showImg={false}
-//               btnClass="w-[30%] h-[46px] mt-9 !rounded-[10px] border border-[#28A2FF] bg-[#28A2FF] text-white px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2 flex items-center justify-center"
-//             />
-//           </form>
-//         </div>
-//       </div>
-
-//       {isModalOpen && (
-//         <Model setIsOpen={setIsModalOpen} className="max-w-[488px]">
-//           <ChangePhoto />
-//         </Model>
-//       )}
-//     </>
-//   );
-// };
-
-// export default AdminProfileDetail;
 
 import { useState, useEffect } from "react";
 
@@ -160,19 +18,15 @@ const AdminProfileDetail = () => {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [userId, setUserId] = useState<number | null>(null);
-  // const [selectedImage, setSelectedImage] = useState("");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null); // only File or null
-  const [profileImage, setProfileImage] = useState<string | null>(null); // backend image URL
+  const [selectedImage, setSelectedImage] = useState<File | null>(null); 
+  const [profileImage, setProfileImage] = useState<string | null>(null); 
 
-  // State to hold user profile data
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  // const [profileImage, setProfileImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Fetch user profile data
   const fetchUserProfile = async () => {
     try {
       const response = await apiServices.get(apiEndpoint.me);
@@ -189,10 +43,8 @@ const AdminProfileDetail = () => {
         setProfileImage(userData.image || null);
       }
     } catch (error) {
-      console.error("Error fetching user profile:", error);
     }
   };
-  // Helper function to capitalize the first letter of a string
   const capitalizeFirstLetter = (str: string) => {
     if (!str) return str;
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -221,7 +73,7 @@ const AdminProfileDetail = () => {
       formData.append("city", city);
 
       if (selectedImage) {
-        formData.append("image", selectedImage); // ✅ only File
+        formData.append("image", selectedImage); 
       }
 
       const response = await apiServices.update(
@@ -231,13 +83,11 @@ const AdminProfileDetail = () => {
 
       if (response.data.success) {
         toast.success("Profile updated successfully!");
-        fetchUserProfile(); // refresh backend image
-        // setSelectedImage(null); // reset local file
+        fetchUserProfile(); 
       } else {
         toast.error(response.data.message || "Update failed");
       }
     } catch (err) {
-      console.error(err);
       toast.error("An error occurred while updating.");
     } finally {
       setLoading(false);
@@ -253,10 +103,10 @@ const AdminProfileDetail = () => {
               <img
                 src={
                   selectedImage
-                    ? URL.createObjectURL(selectedImage) // preview selected file
+                    ? URL.createObjectURL(selectedImage) 
                     : profileImage
-                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${profileImage}` // backend image
-                    : dummyImage // fallback
+                    ? `${import.meta.env.VITE_APP_API_IMG_URL}${profileImage}` 
+                    : dummyImage 
                 }
                 alt={name || "User"}
                 className="w-20 h-20 rounded-full object-cover"

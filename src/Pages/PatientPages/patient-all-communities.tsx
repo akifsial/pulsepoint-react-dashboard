@@ -57,8 +57,6 @@ const PatientAllCommunites: React.FC = () => {
   );
 
   const queryClient = useQueryClient();
-  // const navigate = useNavigate();
-  // State for managing the review form page
   const [currentView, setCurrentView] = React.useState<"table" | "form">(
     "table"
   );
@@ -70,7 +68,6 @@ const PatientAllCommunites: React.FC = () => {
   const [currentEditingReview, setCurrentEditingReview] =
     React.useState<ReviewDataTypes | null>(null);
 
-  // Add toast state
   const [showSuccessToast, setShowSuccessToast] = React.useState(false);
   const [selectedCommunityId, setSelectedCommunityId] = useState();
   type ReviewDataTypes = {
@@ -116,24 +113,18 @@ const PatientAllCommunites: React.FC = () => {
     };
   }, [showRatingDropdown]);
 
-  // Handler functions for the review form
   const handleEditReview = (id: number | string) => {
-    // setCurrentEditingReview(row);
-    // setCurrentView("form");
-    // navigate(`/patient/patient-feedback/edit/${id}`);
   };
 
   const { mutateAsync: deleteMutation, isPending: deleteMutationLoading } =
     useMutation({
       mutationFn: () => apiDeleteMyReviews(selectedRowId),
       onSuccess: async () => {
-        queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
+        queryClient.invalidateQueries(["useApiMyReviews"]); 
         setIsDeleteModalOpen(false);
 
-        // queryClient.invalidateQueries(["detailersFranchise"]);
       },
       onError: (error) => {
-        console.error("Error deleting user:", error);
       },
     });
 
@@ -143,21 +134,13 @@ const PatientAllCommunites: React.FC = () => {
     }
   };
 
-  // Updated handleSaveReview function with toast
   const handleSaveReview = (updatedReview: {
     rating: number;
     comment: string;
   }) => {
     if (currentEditingReview) {
-      // Here you would typically update your data source (API call, state update, etc.)
-
-      // You can update the reviewsData here or make an API call
-      // For now, we'll just log it and show success toast
-
-      // Show success toast
       setShowSuccessToast(true);
 
-      // Go back to table view after a short delay to show the toast
       setTimeout(() => {
         setCurrentView("table");
         setCurrentEditingReview(null);
@@ -170,10 +153,8 @@ const PatientAllCommunites: React.FC = () => {
     setCurrentEditingReview(null);
   };
 
-  // Add toast close handler
   const handleToastClose = () => {
     setShowSuccessToast(false);
-    // Ensure we go back to table view when toast is closed
     if (currentView === "form") {
       setCurrentView("table");
       setCurrentEditingReview(null);
@@ -240,15 +221,6 @@ const PatientAllCommunites: React.FC = () => {
       ),
     },
 
-    //  {
-    //   accessor: "status",
-    //   width: "150px",
-    //   header: "Status",
-    //   showSort: true,
-    //   // cell: (row) => (
-    //   //   <i>{dayjs(row?.original?.status)}</i>
-    //   // ),
-    // },
   ];
 
   const handleRowSelect = (row: ReviewDataTypes) => {};
@@ -271,12 +243,10 @@ const PatientAllCommunites: React.FC = () => {
   } = useMutation({
     mutationFn: (data) => ApiJoinCommunity(data),
     onSuccess: async () => {
-      // queryClient.invalidateQueries(["useApiMyReviews"]); // refetch list
       setIsUnSubscribeModalOpen(false);
       queryClient.invalidateQueries(["useGetAllCommunities"]);
     },
     onError: (error) => {
-      console.error("Error deleting user:", error);
     },
   });
 
@@ -289,7 +259,6 @@ const PatientAllCommunites: React.FC = () => {
 
   const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
 
-  // Render the Reviews Table View
   const renderTableView = () => (
     <div className="mb-10">
       <h2
@@ -328,18 +297,8 @@ const PatientAllCommunites: React.FC = () => {
                 showActions={true}
                 className="my-custom-class"
                 actions={(row) => {
-                  //   <DropdownActions
-                  //     onJoin={() => handleEditReview(row?.feedback?.review_id)}
-                  //     variant="reviews"
-                  //     // onDelete={() => {
-                  //     //   setSelectedRowId(row.id);
-                  //     //   setIsDeleteModalOpen(true);
-                  //     // }}
-                  //   />
-                  // <PrimaryButton btnClass="bg-red-500" btnText="Unjoin" />
                   return (
                     <div className="flex justify-center gap-3 items-center">
-                      {/* <Trash onClick={()=>(handleDeleteMyCommunity(row))} className="text-red-500 cursor-pointer"/> */}
 
                       <PrimaryButton
                         btnText="Leave"
@@ -350,7 +309,6 @@ const PatientAllCommunites: React.FC = () => {
                         }}
                       >
                         <XCircleIcon className="w-4 h-4" />{" "}
-                        {/* Use Lucide or Heroicons */}
                       </PrimaryButton>
                     </div>
                   );

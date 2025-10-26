@@ -18,8 +18,8 @@ import toast from "react-hot-toast";
 import { useMeApi } from "@src/hooks/use-users";
 
 import { DateRangePicker } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css"; 
 
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
@@ -37,16 +37,16 @@ const organizationOptions = [
   { value: "Other", label: "Other" },
 ];
 const stateOptions = [
-  { value: "California", label: "California" }, // USA – Tech & Hollywood hub
-  { value: "New York", label: "New York" }, // USA – NYC is world-famous
-  { value: "Texas", label: "Texas" }, // USA – Known for size, oil, culture
-  { value: "Florida", label: "Florida" }, // USA – Famous for tourism & Miami
-  { value: "Bavaria", label: "Bavaria" }, // Germany – Munich & BMW
-  { value: "Île-de-France", label: "Île-de-France" }, // France – Includes Paris
-  { value: "Dubai", label: "Dubai" }, // UAE – Luxury and architecture
-  { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, // Japan – Tokyo is iconic
-  { value: "Ontario", label: "Ontario" }, // Canada – Includes Toronto
-  { value: "Maharashtra", label: "Maharashtra" }, // India – Includes Mumbai
+  { value: "California", label: "California" }, 
+  { value: "New York", label: "New York" }, 
+  { value: "Texas", label: "Texas" }, 
+  { value: "Florida", label: "Florida" }, 
+  { value: "Bavaria", label: "Bavaria" }, 
+  { value: "Île-de-France", label: "Île-de-France" }, 
+  { value: "Dubai", label: "Dubai" }, 
+  { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, 
+  { value: "Ontario", label: "Ontario" }, 
+  { value: "Maharashtra", label: "Maharashtra" }, 
 ];
 
 const cityOptions = [
@@ -94,7 +94,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [organization, setOrganization] = useState("");
   const [state, setState] = useState("");
-  // const [userName, setUserName] = useState()
   const [city, setCity] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [singleUser, setSingleUser] = useState();
@@ -117,7 +116,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     setRange([range.selection]);
   };
 
-  // -------------------------------------------
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
   const navigate = useNavigate();
@@ -141,13 +139,12 @@ const ProfileDetail1 = ({ onChangePassword }) => {
       email: "",
       startTime: "",
       endTime: "",
-      // other fields
     },
   });
 
   const { data: meData } = useMeApi(navigate);
 
-  const userId = JSON.parse(localStorage.getItem("userInfo")).id;
+  const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
   const userRole = JSON.parse(localStorage.getItem("userInfo"))?.role_type;
   const [longitude, setLongitude] = useState();
   const [latitude, setLatitude] = useState();
@@ -162,12 +159,9 @@ const ProfileDetail1 = ({ onChangePassword }) => {
 
     onSuccess: async () => {
       toast.success("Profile Updated Successfully");
-      // setSelectedImage(null)
-      // setExistingImages(null)
-      queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+      queryClient.invalidateQueries(["useCareProviderSingle"]); 
     },
     onError: (error) => {
-      // toast.error("Something Went Wrong");
     },
   });
 
@@ -197,7 +191,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     formData.append("city", data.city);
     formData.append("state", data.state);
     formData.append("postal_code", data.zip);
-    // formData.append("organization", data.organization);
     formData.append("website_url", data.web);
     formData.append("additional_details", data.additional_details);
     formData.append("image", selectedImage);
@@ -206,8 +199,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     formData.append("time_in", startTime);
     formData.append("time_out", endTime);
     formData.append("specialization", data?.specialization);
-    // formData.append("long", longitude);
-    // formData.append("lat", latitude);
 
     fields?.map((field) => formData.append("services[]", field));
 
@@ -215,7 +206,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
       formData.append("remove_image_ids[]", removeId)
     );
 
-    // formData.append("gallery_images", selectedImages?.map(()=>));
     selectedImages?.map((image) => formData.append("gallery_images", image));
 
     await profileUpdateMutation(formData);
@@ -228,7 +218,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
   useEffect(() => {
     if (meData) {
       setSingleUser(meData);
-      // setValue("name", meData.name || "");
       setValue("name", meData.organization_name || "");
       setValue("email", meData.email || "");
       setValue("web", meData.website_url || "");
@@ -241,13 +230,12 @@ const ProfileDetail1 = ({ onChangePassword }) => {
       setValue("additional_details", meData.additional_details || "");
       setValue("zip", meData.postal_code || "");
 
-      setStartDay(meData?.start_day || ""); // pre-fill start day
+      setStartDay(meData?.start_day || ""); 
       setEndDay(meData?.end_day || "");
       setStartTime(meData?.time_in || "");
       setEndTime(meData?.time_out || "");
       setValue("userName", meData?.user_name || "");
 
-      // setValue("specialization", meData.specialization || "");
 
       if (
         meData.specialization &&
@@ -255,16 +243,9 @@ const ProfileDetail1 = ({ onChangePassword }) => {
       ) {
         setValue("specialization", meData.specialization);
       } else {
-        setValue("specialization", ""); // keep empty
+        setValue("specialization", ""); 
       }
 
-      // setValue("startDay", meData.startDay || "");
-      // setValue("endDay", meData.endDay || "");
-
-      // Optional: If you're also maintaining local state for select dropdowns
-      // setGender(meData.gender || "");
-      // setState(meData.state || "");
-      // setCity(meData.city || "");
     }
   }, [meData, setValue]);
 
@@ -282,19 +263,15 @@ const ProfileDetail1 = ({ onChangePassword }) => {
   };
 
   const removeExistingImage = (index: number, imgId) => {
-    // setExistingImages((prev) => prev.filter((_, i) => i !== index));
     setExistingImages((prev) => prev.filter((_, i) => i !== index));
-    // setRemoveImagesIds((prev) => prev.filter((_, i) => i !== index));
     setRemoveImagesIds((prev) => [...prev, imgId]);
 
-    // Optional: Call API to remove from backend here
   };
 
   const removeSelectedImage = (index: number) => {
     setSelectedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // ___________________________-
 
   const [fields, setFields] = useState<string[]>([""]);
 
@@ -304,17 +281,14 @@ const ProfileDetail1 = ({ onChangePassword }) => {
     }
   }, [meData]);
 
-  // Add new empty input
   const addField = () => {
     setFields([...fields, ""]);
   };
 
-  // Remove input at index
   const removeField = (index: number) => {
     setFields(fields.filter((_, i) => i !== index));
   };
 
-  // Update input value
   const handleChange = (index: number, value: string) => {
     const newFields = [...fields];
     newFields[index] = value;
@@ -349,7 +323,7 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                       : fallbackImg
                   }
                   onError={(e) => {
-                    e.currentTarget.onerror = null; // Prevent infinite loop
+                    e.currentTarget.onerror = null; 
                     e.currentTarget.src = fallbackImg;
                   }}
                   alt="Profile"
@@ -525,7 +499,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                   rows="4"
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Write your thoughts here..."
-                  // {...register("additional_details")}
                   {...register("additional_details", {
                     required: "Additional Detail is required",
                   })}
@@ -612,58 +585,14 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 <label className="block mb-3 text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]">
                   Add Your Location
                 </label>
-                {/* {asterisk && <span className="text-red-500 ml-1">*</span>} */}
               </div>
               <Map onLocationSelect={(e) => handleMap(e)} />
             </div>
 
-            {/* Multi Image Uploader */}
 
-            {/* <div className="w-full">
-              <label
-                htmlFor="image-upload"
-                className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-              >
-                <p className="text-gray-500 text-sm">
-                  Click or drag to upload images
-                </p>
-                <input
-                  id="image-upload"
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-              </label>
-
-              {selectedImages?.length > 0 && (
-                <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                  {selectedImages?.map((file, index) => (
-                    <div
-                      key={index}
-                      className="relative w-full h-32 rounded-lg overflow-hidden border"
-                    >
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={`upload-${index}`}
-                        className="w-full h-full object-cover"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => removeImage(index)}
-                        className="absolute top-1 cursor-pointer right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div> */}
+          
 
             <div className="w-full mb-8">
-              {/* Upload Box */}
               <p className="mb-3 mt-6 font-bold space-grotesk text-black">
                 Upload Gallery
               </p>
@@ -684,7 +613,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 />
               </label>
 
-              {/* Existing Images from API */}
               {existingImages?.length > 0 && (
                 <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {existingImages?.map((img, index) => (
@@ -711,7 +639,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 </div>
               )}
 
-              {/* New Uploaded Images */}
               {selectedImages?.length > 0 && (
                 <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {selectedImages?.map((file, index) => (
@@ -737,16 +664,12 @@ const ProfileDetail1 = ({ onChangePassword }) => {
               )}
             </div>
 
-            {/* Multi Image Uploader */}
-
-            {/* REpeater Field */}
             <p className="mb-3 mt-6 space-grotesk font-bold text-black">
               Careprovider Support Services
             </p>
 
             {fields?.map((field, index) => (
               <div
-                // key={field.id}
                 className="flex mb-4 items-center sm:gap-3 border border-gray-200 p-2 sm:p-4 rounded-lg"
               >
                 <input
@@ -774,20 +697,11 @@ const ProfileDetail1 = ({ onChangePassword }) => {
               + Add Row
             </button>
 
-            {/* REpeater Field */}
 
             <p className="mb-5 mt-18 font-bold text-black">
               Pick your timeslots
             </p>
             <div className="sm:flex sm:justify-start gap-10">
-              {/* <DateTimePicker onChange={onChange} value={value} /> */}
-              {/* <div className="">
-                <DateRangePicker ranges={range} onChange={handleSelect} />
-              </div> */}
-              {/* <div>
-                <TimePicker onChange={onChange} value={value} />
-              </div> */}
-              {/* TIMEPICKER */}
 
               <StartEndDay
                 startDay={startDay}
@@ -805,14 +719,6 @@ const ProfileDetail1 = ({ onChangePassword }) => {
                 control={control}
               />
 
-              {/* TIMPICKER */}
-
-              {/* Display selected times
-                {startTime && endTime && (
-                  <div className="mt-4 text-gray-800 font-medium">
-                    Selected: {startTime} - {endTime}
-                  </div>
-                )} */}
             </div>
           </form>
         </div>

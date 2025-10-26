@@ -17,7 +17,6 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({
   iconSrc,
   handleChatPost,
 }) => {
-  // const [question, setQuestion] = useState("");
   const userId = JSON.parse(localStorage.getItem("userInfo"))?.id;
 
   const handleAskAI = () => {
@@ -49,7 +48,7 @@ const ChatbotSearchbar: React.FC<ChatbotSearchbarProps> = ({
           />
           <button
             onClick={() => handleChatPost()}
-            disabled={!question.trim()} // agar empty ho to disable
+            disabled={!question.trim()} 
             className={`text-white cursor-pointer rounded-full mr-0 transition-colors ${
               !question.trim() ? "opacity-50 !cursor-not-allowed" : ""
             }`}

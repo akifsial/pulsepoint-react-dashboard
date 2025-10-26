@@ -5,7 +5,6 @@ import { Send } from "lucide-react";
 import commentIcon from "@assets/media/svgs/dashboard-svgs/comment.svg";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 
-// import arrowUpTrans from "@assets/arrowUpTrans.svg";
 import arrowUpTrans from "@assets/media/svgs/dashboard-svgs/arrowUp.svg";
 import dayjs from "dayjs";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
@@ -40,9 +39,9 @@ export const CommentItem = ({
 
   const toggleReplies = () => {
     if (isReplyVisible) {
-      setActiveReplyId(null); // dobara click → band
+      setActiveReplyId(null); 
     } else {
-      setActiveReplyId(comment.id); // click → open
+      setActiveReplyId(comment.id); 
     }
   };
 
@@ -54,7 +53,6 @@ export const CommentItem = ({
     try {
       setReplyLoading(true);
       await handleParentCommentReply(postId, commentId, value[commentId]);
-      // clear only that field
       setReplyValues((prev) => ({ ...prev, [commentId]: "" }));
     } finally {
       setReplyLoading(false);
@@ -63,7 +61,6 @@ export const CommentItem = ({
 
   const [replyValues, setReplyValues] = useState({});
 
-  // update handler
   const handleReplyChange = (id, value) => {
     setReplyValues((prev) => ({ ...prev, [id]: value }));
   };
@@ -78,47 +75,36 @@ const handleReactionClick = async (status: "like" | "dislike") => {
 
   if (status === "like") {
     if (localLike === true) {
-      // undo like
       newStatus = null;
       newCount = Math.max(0, newCount - 1);
     } else {
-      // like
       newStatus = true;
       newCount = newCount + 1;
       if (localLike === false) {
-        // switching from dislike → just +1
       }
     }
   }
 
   if (status === "dislike") {
     if (localLike === false) {
-      // undo dislike
       newStatus = null;
     } else {
-      // dislike
       newStatus = false;
       if (localLike === true) {
-        // switch from like → remove one
         newCount = Math.max(0, newCount - 1);
       }
     }
   }
 
-  // Update UI instantly
   setLocalLike(newStatus);
   setLocalCount(newCount);
 
-  // Call API
   await handleCommentReaction(status, comment, postId);
 };
 
 
   return (
     <div className="ml-4 mt-3">
-      {/*  */}
-
-      {/*  */}
       <div className="flex items-start relative gap-3 mb-3">
         <img
           src={
@@ -139,10 +125,8 @@ const handleReactionClick = async (status: "like" | "dislike") => {
             </p>
             <p className="text-sm text-gray-700 mb-2.5">{comment?.content}</p>
 
-            {/* Like & Reply Buttons */}
             <div className="flex items-center gap-2.5 mb-2.5">
               <div className="flex  items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
-                {/* LIKEEEEE */}
                     <button
                 disabled={LikeIsPending}
                 className="flex items-center gap-2"
@@ -158,7 +142,6 @@ const handleReactionClick = async (status: "like" | "dislike") => {
                 {localCount}
               </button>
 
-              {/* Dislike */}
               <button
                 className="ps-2"
                 disabled={LikeIsPending}
@@ -177,41 +160,9 @@ const handleReactionClick = async (status: "like" | "dislike") => {
                 )}
               </button>
 
-                {/* <button
-                  className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
-                  onClick={() => handleReaction("like", post)}
-                  disabled={localLock || LikeIsPending || PostsPending}
-                >
-                  {localLikes[postId] === true ? (
-                    <div className="bg-black p-2 rounded-full">
-                      <img src={arrowUp} className="py-0.5 px-1" alt="Liked" />
-                    </div>
-                  ) : (
-                    <img src={arrowDowm} className="rotate-180" alt="Like" />
-                  )}
-                  {localCounts[post.id] ?? 0}
-                </button>
-
-                <button
-                  className="flex cursor-pointer items-center gap-2 min-w-[40px] justify-center"
-                  onClick={() => handleReaction("dislike", post)}
-                  disabled={localLock || LikeIsPending || PostsPending}
-                >
-                  {localLikes[post.id] === false ? (
-                    <div className="bg-black p-1 rounded-full">
-                      <img
-                        src={arrowUp}
-                        className="rotate-180 py-1.5 px-2"
-                        alt="Dislike"
-                      />
-                    </div>
-                  ) : (
-                    <img src={arrowDowm} alt="Dislike" />
-                  )}
-                </button> */}
+               
               </div>
 
-              {/* Reply Icon Button */}
               <button
                 onClick={toggleReplies}
                 className="flex cursor-pointer items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-2 py-3 justify-center min-w-[78px]"
@@ -228,28 +179,10 @@ const handleReactionClick = async (status: "like" | "dislike") => {
                   />
                 </div>
               )}
-              {/* _______________________________/ */}
             </div>
-            {/* Input Box for Reply */}
             {isReplyVisible && (
               <div className="relative mb-3">
-                {/* <input
-                  type="text"
-                  ref={inputRef}
-                  value={parentCommentReplyValue}
-                  onChange={(e) => setParentCommentReplyValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (
-                      e.key === "Enter" &&
-                      parentCommentReplyValue.trim() &&
-                      !replyLoading
-                    ) {
-                      handleReply();
-                    }
-                  }}
-                  placeholder="Reply..."
-                  className="w-full outline-none border border-gray-300 rounded-[32px] py-3 pr-14 pl-6 text-sm"
-                /> */}
+                
 
                 <input
                   type="text"
@@ -271,11 +204,7 @@ const handleReactionClick = async (status: "like" | "dislike") => {
                 />
 
                 <button
-                  // disabled={!replyValues.trim() || replyLoading}
                   onClick={() => handleReply(postId, comment.id, replyValues)}
-                  // className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition
-
-                  // `}
 
                   className={`absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center w-9 h-9 rounded-full transition ${
                     !replyValues[comment?.id]?.trim() || replyLoading
@@ -293,13 +222,11 @@ const handleReactionClick = async (status: "like" | "dislike") => {
             )}
           </div>
 
-          {/* Show Replies if toggled */}
           {isReplyVisible && comment?.replies?.length > 0 && (
             <div className="mt-2">
               {comment.replies.map((reply) => (
                 <div className="flex items-center gap-5">
                   <CommentItem
-                    // key={reply.id}
                     comment={reply}
                     myId={myId}
                     postId={postId}

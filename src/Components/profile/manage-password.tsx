@@ -30,7 +30,7 @@ const ManagePassword = () => {
 
     onSuccess: async () => {
       toast.success("Profile Updated Successfully");
-      queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+      queryClient.invalidateQueries(["useCareProviderSingle"]); 
     },
     onError: (error) => {
       toast.error(
@@ -45,7 +45,6 @@ const ManagePassword = () => {
     if (data.confirm_new_password !== data.new_password) {
       return toast.error("New Password & Confirm Password Not Matched");
     }
-    // const password={password:data?.pasword}
     await updatePatientProfile({
       old_password: data.old_password,
       new_password: data?.new_password,
@@ -74,7 +73,6 @@ const ManagePassword = () => {
             type="password"
             id="password1"
             placeholder="**********************"
-            // value={password}
             fieldName="sm:w-[300px] w-full"
             onChange={(e) => setPassword(e.target.value)}
             asterisk={false}
@@ -88,7 +86,6 @@ const ManagePassword = () => {
             type="password"
             id="password2"
             placeholder="**********************"
-            // value={password1}
             fieldName="sm:w-[300px] w-full"
             onChange={(e) => setPassword1(e.target.value)}
             asterisk={false}
@@ -102,7 +99,6 @@ const ManagePassword = () => {
             type="password"
             id="password3"
             placeholder="**********************"
-            // value={password2}
             fieldName="sm:w-[300px] w-full"
             onChange={(e) => setPassword2(e.target.value)}
             asterisk={false}

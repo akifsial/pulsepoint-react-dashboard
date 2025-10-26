@@ -48,11 +48,6 @@ const UserComments: React.FC<Props> = ({ commentData }) => {
       reviews: item.content || "—",
     })) || [];
 
-  const handleRowSelect = (row: dataTypes) => {
-    // console.log("Selected row:", row);
-  };
-
-
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const pageSize = 3;
@@ -65,39 +60,37 @@ const UserComments: React.FC<Props> = ({ commentData }) => {
   );
 
   const Pagination = () => {
-    // if (totalRecords <= pageSize) return null;
 
     const canPrev = currentPage > 1;
     const canNext = currentPage < totalPages;
 
     type PageItem = number | "ELLIPSIS";
 
-  const getPageItems = (): (number | "ELLIPSIS")[] => {
-  const items: (number | "ELLIPSIS")[] = [];
-  const siblings = 1; // number of pages to show on each side of current
-  const firstPage = 1;
-  const lastPage = totalPages;
+    const getPageItems = (): (number | "ELLIPSIS")[] => {
+      const items: (number | "ELLIPSIS")[] = [];
+      const siblings = 1; 
+      const firstPage = 1;
+      const lastPage = totalPages;
 
-  if (totalPages <= 5 + siblings * 2) {
-    // show all pages if total is small
-    for (let i = 1; i <= totalPages; i++) items.push(i);
-  } else {
-    const left = Math.max(currentPage - siblings, 2);
-    const right = Math.min(currentPage + siblings, totalPages - 1);
+      if (totalPages <= 5 + siblings * 2) {
+        for (let i = 1; i <= totalPages; i++) items.push(i);
+      } else {
+        const left = Math.max(currentPage - siblings, 2);
+        const right = Math.min(currentPage + siblings, totalPages - 1);
 
-    items.push(firstPage);
+        items.push(firstPage);
 
-    if (left > 2) items.push("ELLIPSIS");
+        if (left > 2) items.push("ELLIPSIS");
 
-    for (let i = left; i <= right; i++) items.push(i);
+        for (let i = left; i <= right; i++) items.push(i);
 
-    if (right < totalPages - 1) items.push("ELLIPSIS");
+        if (right < totalPages - 1) items.push("ELLIPSIS");
 
-    items.push(lastPage);
-  }
+        items.push(lastPage);
+      }
 
-  return items;
-};
+      return items;
+    };
 
     const items = getPageItems();
 
@@ -107,14 +100,12 @@ const UserComments: React.FC<Props> = ({ commentData }) => {
     return (
       <div className="py-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          {/* LEFT: statement */}
           <div className="text-sm text-[#6b7280]">
             Showing <span className="font-medium">{startIdx}</span> to{" "}
             <span className="font-medium">{endIdx}</span> of{" "}
             <span className="font-medium">{totalRecords}</span> results
           </div>
 
-          {/* RIGHT: buttons */}
           <div className="flex items-center gap-2 md:justify-end">
             <button
               type="button"
@@ -129,7 +120,6 @@ const UserComments: React.FC<Props> = ({ commentData }) => {
               Prev
             </button>
 
-            {/* Page numbers with ellipsis */}
             {items.map((it, idx) =>
               it === "ELLIPSIS" ? (
                 <span key={`e-${idx}`} className="px-2 text-sm text-[#111827]">
@@ -175,24 +165,19 @@ const UserComments: React.FC<Props> = ({ commentData }) => {
     <div className="mb-10">
       <div className="mt-6 bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
         <div className="mb-6 flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="md:mb-0 mb-3 font-bold text-[20px] space-grotesk">Comments on Posts</h3>
+          <h3 className="md:mb-0 mb-3 font-bold text-[20px] space-grotesk">
+            Comments on Posts
+          </h3>
         </div>
 
         {data?.length > 0 ? (
           <TanDataTable<dataTypes>
             columns={columns}
             data={paginatedData}
-            // showCheckbox={true}
             onRowSelect={handleRowSelect}
             showActions={false}
             className="my-custom-class"
-            actions={(row) => (
-              <DropdownActions
-                // onView={() => console.log("View Detail", row.id)}
-                // onEdit={() => console.log("Edit", row.id)}
-                // onDelete={() => console.log("Delete", row.id)}
-              />
-            )}
+            actions={(row) => <DropdownActions />}
           />
         ) : (
           <div className="text-center text-sm text-gray-500 py-10">

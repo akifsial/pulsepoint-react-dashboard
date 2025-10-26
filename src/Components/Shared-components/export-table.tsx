@@ -44,7 +44,6 @@ const ExportTable: React.FC<ExportTableProps> = ({ data, fileName, columnNames, 
   const exportToPDF = () => {
     const doc = new jsPDF();
 
-    // Columns will be dynamic based on props
     const tableColumn = columnNames;
     const tableRows = data.map((item) =>
       columnKeys.map((key) => item[key] || "")
@@ -64,16 +63,7 @@ const ExportTable: React.FC<ExportTableProps> = ({ data, fileName, columnNames, 
 
   return (
     <div>
-      {/* <PrimaryButton
-        btnText="Export Table"
-        showImg={true}
-        img={exports}
-        imgClass="w-4 h-4"
-        suffixImg={whitearrow}
-        suffixImgClass="w-4 h-4"
-        onClick={() => setIsExportOpen(!isExportOpen)}
-        btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
-      /> */}
+  
       <AnimatePresence>
         {isExportOpen && (
           <motion.div

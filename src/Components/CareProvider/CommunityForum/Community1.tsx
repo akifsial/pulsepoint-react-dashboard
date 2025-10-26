@@ -60,14 +60,10 @@ const Community1 = ({
       </label>
 
       <textarea
-        // id={id}
-        // name={id}
         placeholder={"Enter description"}
         value={description}
-        // rows={row}
         className={`w-full  h-[90px] rounded-[8px] px-[15px] bg-[#FBFCFD] border border-[#2525251A] font-[Geist] py-2.5 font-normal text-[16px] leading-[140%] text-[#1A1A1A] mb-1 focus:outline-none placeholder:text-sm placeholder:font-medium `}
         onChange={(e) => setDescription(e.target.value)}
-        // value={value}
       />
 
       <div className="flex items-center gap-2 mt-4">

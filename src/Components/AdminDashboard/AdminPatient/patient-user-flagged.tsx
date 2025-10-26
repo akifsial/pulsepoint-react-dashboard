@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
 import { TanDataTableColumn } from "@components/dashboard-components/tanstack-data-table/types";
 
-// Type definition for the post_flag API structure
 interface PostFlag {
   id: number;
   user_id: number;
@@ -27,12 +26,10 @@ interface PostFlag {
   };
 }
 
-// Props passed from UserInfo.tsx
 interface Props {
   postFlagData: PostFlag[];
 }
 
-// Table row type used for rendering
 type DataTypes = {
   id: number;
   community: string;
@@ -42,7 +39,6 @@ type DataTypes = {
 };
 
 const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
-  // Define table columns
   const columns: TanDataTableColumn<DataTypes>[] = [
     { accessor: "community", header: "Community", showSort: true },
     { accessor: "post", header: "Post Title", showSort: true },
@@ -51,19 +47,9 @@ const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
   ];
 
 
-  // Convert postFlagData to the table's row format
-  // const data: DataTypes[] =
-  //   postFlagData?.map((item) =>  ({
-  //     id: item.id,
-  //     community: item.post?.community?.title || "—",
-  //     post: item.post?.title || "—",
-  //     date: new Date(item.created_at).toLocaleDateString(),
-  //     reason: item.post?.post_report?.[0]?.report_reason?.name || "—",
-  //   })) || [];
-
   const data: DataTypes[] =
     postFlagData
-      ?.filter((item) => item?.deleted === true) // ✅ only keep deleted ones
+      ?.filter((item) => item?.deleted === true) 
       .map((item) => ({
         id: item.id,
         community: item.post?.community?.title || "—",
@@ -72,7 +58,7 @@ const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
         reason: item.post?.post_report?.[0]?.report_reason?.name || "—",
       })) || [];
 
-  // Optional: Handle row selection
+  
   const handleRowSelect = (row: DataTypes) => {
   };
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -83,7 +69,6 @@ const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
   const totalPages = Math.ceil(totalRecords / pageSize);
 
   const Pagination = () => {
-    // if (totalRecords <= pageSize) return null;
 
     const canPrev = currentPage > 1;
     const canNext = currentPage < totalPages;
@@ -123,14 +108,12 @@ const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
     return (
       <div className="py-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          {/* LEFT: statement */}
           <div className="text-sm text-[#6b7280]">
             Showing <span className="font-medium">{startIdx}</span> to{" "}
             <span className="font-medium">{endIdx}</span> of{" "}
             <span className="font-medium">{totalRecords}</span> results
           </div>
 
-          {/* RIGHT: buttons */}
           <div className="flex items-center gap-2 md:justify-end">
             <button
               type="button"
@@ -145,7 +128,6 @@ const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
               Prev
             </button>
 
-            {/* Page numbers with ellipsis */}
             {items.map((it, idx) =>
               it === "ELLIPSIS" ? (
                 <span key={`e-${idx}`} className="px-2 text-sm text-[#111827]">
@@ -187,15 +169,6 @@ const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
     );
   };
 
-  // useEffect(() => {
-  //   const paginatedData =
-  //     postFlagData?.slice(
-  //       (currentPage - 1) * pageSize,
-  //       currentPage * pageSize
-  //     ) || [];
-
-  // setPaginationData(paginatedData?.reverse());
-  // }, [currentPage, pageSize]);
 
   useEffect(() => {
     const paginatedData =
@@ -209,7 +182,7 @@ const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
           reason: item.post?.post_report?.[0]?.report_reason?.name || "—",
         })) || [];
 
-    setPaginationData(paginatedData.reverse()); // ✅ ab sirf strings/numbers honge
+    setPaginationData(paginatedData.reverse()); 
   }, [currentPage, pageSize, postFlagData]);
 
   return (
@@ -223,9 +196,7 @@ const PatientUserFlagged: React.FC<Props> = ({ postFlagData }) => {
 
         <TanDataTable<DataTypes>
           columns={columns}
-          // data={data}
           data={[...paginationData].reverse()}
-          // showCheckbox={true}
           onRowSelect={handleRowSelect}
           showActions={false}
           className="my-custom-class"

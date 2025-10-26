@@ -45,13 +45,6 @@ const LoginModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       onSuccess: async (response) => {
         const token = localStorage.getItem("token");
 
-        // const socket = connectSocket(token);
-        // connectSocket(token);
-
-        // socket.on("connect", () => {
-        //   console.log("Socket connected ✅");
-        // });
-
         if (response?.user?.role_type == "PATIENT") {
           navigate("/patient/dashboard");
         } else if (response?.user?.role_type == "CARE_PROVIDER") {
@@ -78,13 +71,11 @@ const LoginModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm text-center animate-fadeIn"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Title */}
         <h2 className="text-xl font-bold text-gray-800 mb-3">
           You need to Login
         </h2>
         <p className="text-gray-600 mb-6">to view this view</p>
 
-        {/* Input Fields */}
           <form
           onSubmit={handleSubmit(LoginSubmit)}
           className="space-y-6 w-full items-center"
@@ -112,7 +103,6 @@ const LoginModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             }}
           />
 
-          {/* Password Input */}
           <InputField
             label="Password"
             asterisk={true}
@@ -120,7 +110,6 @@ const LoginModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             id="password"
             name="password"
             type="password"
-            // value={formData.password}
             onChange={handleChange}
             placeholder="***************"
             register={register}
@@ -133,7 +122,6 @@ const LoginModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           />
         </div>
 
-        {/* Submit Btn */}
         <button
           type="submit"
           className="w-full bg-[#28A2FF] flex justify-center items-center text-white h-[50px] px-4 rounded-lg font-medium text-lg transition-colors cursor-pointer mb-1"
@@ -141,7 +129,6 @@ const LoginModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <span>{isLoginLoading ? <Spinner /> : "Login"}</span>
         </button>
 
-        {/* Close Btn */}
         <button
           onClick={onClose}
           className="mt-4 cursor-pointer text-sm text-gray-400 hover:text-gray-600 transition"

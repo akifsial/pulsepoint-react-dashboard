@@ -13,7 +13,6 @@ const ChangePhoto = () => {
         required
         imgType
         className="p-4"
-        // onChange={(e) => console.log("Selected file:", e.target.files[0])}
       />
       <button
         type="submit"

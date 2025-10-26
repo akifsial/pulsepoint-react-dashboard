@@ -11,7 +11,6 @@ import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 import postImage from "../../../assets/media/images/dashboard-images/postImage.png";
 import Model from "@components/model/model";
-// import FlagPost from "./FlagPost";
 import FlagPost from "./careprovider/communityforum/flag-post";
 import SubmitReport from "./careprovider/communityforum/submit-report";
 import ShareModal from "@components/share-modal";
@@ -80,7 +79,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
     onSuccess: async () => {
       toast.success("Get Single User Successfully");
-      // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
@@ -115,14 +113,11 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
     await commentsMutation(data);
   };
 
-  // Like\\
-
   const { mutateAsync: LikeMutation, isPending: LikeIsPending } = useMutation({
     mutationFn: (data) => ApiLikePost(data),
 
     onSuccess: async () => {
       queryClient.invalidateQueries(["useGetCommunityPost"]);
-      // toast.success("Liked Successfully");
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
@@ -137,17 +132,17 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
     if (status === "like") {
       if (alreadyLiked) {
-        newStatus = ""; // remove like
+        newStatus = ""; 
       } else {
-        newStatus = "like"; // set like
+        newStatus = "like"; 
       }
     }
 
     if (status === "dislike") {
       if (alreadyDisliked) {
-        newStatus = ""; // remove dislike
+        newStatus = ""; 
       } else {
-        newStatus = "dislike"; // set dislike
+        newStatus = "dislike"; 
       }
     }
 
@@ -161,32 +156,26 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const handleParentComment = (parentCommentId) => {
     setParentCommentReplyValue("");
     if (parentCommentReplyId.includes(parentCommentId)) {
-      // Remove if already active
       setParentCommentReplyId((prev) =>
         prev.filter((id) => id !== parentCommentId)
       );
     } else {
-      // Add if not active
       setParentCommentReplyId((prev) => [...prev, parentCommentId]);
     }
   };
 
-  // Parent Comment Reply
 
   const {
     mutateAsync: ParentCommentReplyMutation,
-    // isPending: isPendingParentCommentReply,
   } = useMutation({
     mutationFn: ({ data, commentId }) => ApiParentCommentReply(data, commentId),
 
     onSuccess: async () => {
       queryClient.invalidateQueries(["useGetCommunityPost"]);
-      // toast.success("Reply Posted Successfully");
       setComment("");
       setParentCommentReplyValue("");
     },
     onError: (error) => {
-      // toast.error("Something Went Wrong");
     },
   });
 
@@ -199,77 +188,23 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
       post_id: postId,
       parent_id: parentCommentId,
     };
-    // await ParentCommentReplyMutation(data,commentId:parentCommentId);
     await ParentCommentReplyMutation({
       data,
       commentId: parentCommentId,
     });
   };
 
-  // MAIN CODE____________________________________
 
   const { mutateAsync: LikeParentCommentMutation } = useMutation({
-    // mutationFn: ({commentId,data}) => ApiLikePost(data),
     mutationFn: ({ commentId, data }) => ApiLikeComment(commentId, data),
 
     onSuccess: async () => {
       queryClient.invalidateQueries(["useGetCommunityPost"]);
-      // toast.success("Liked Successfully");
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
     },
   });
-  // ___________________
-  // const handleCommentReaction = async (status, comment, postId) => {
-  //   let newStatus = "";
-
-  //   // const alreadyLiked = comment?.comment_likes?.filter(
-  //   //   (item) => item.user_id == myId?.id
-  //   // );
-
-  //   // const alreadyLiked = comment?.userLike?.filter(
-  //   //   (item) => item.is_like == myId?.id
-  //   // );
-
-  //   // const alreadyLiked =
-  //   //   Array.isArray(comment?.userLike) &&
-  //   //   comment.userLike.length > 0
-  //   //     ? comment.userLike[0].is_like
-  //   //     : null;
-
-  //   if (status === "like") {
-  //     if (comment?.userLike?.is_like==true ) {
-  //       newStatus = ""; // remove like
-  //     } else {
-  //       newStatus = "like"; // set like
-  //     }
-  //   }
-
-  //   if (status === "dislike") {
-  //     if (comment?.userLike?.is_like == true || comment?.userLike==null ) {
-  //       // newStatus = ""; // remove dislike
-  //       newStatus = "dislike"; // set dislike
-  //     } else {
-  //       newStatus = ""; // remove dislike
-  //     }
-  //   }
-
-  //   const data = {
-  //     post_id: postId,
-  //     type: newStatus,
-  //   };
-
-  //   // const data = {
-  //   //   type: newStatus,
-  //   //   // post_id: post.id,
-  //   // };
-
-  //   await LikeParentCommentMutation({ commentId: comment?.id, data });
-  // };
-
-  // MAIN CODE____________________________________
-  // ___________________
 
   const handleCommentReaction = async (status, comment, postId) => {
     let newStatus = "";
@@ -278,9 +213,9 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
     if (status === "like") {
       if (userLike?.is_like === true) {
-        newStatus = ""; // remove like
+        newStatus = ""; 
       } else {
-        newStatus = "like"; // add like or switch from dislike
+        newStatus = "like"; 
       }
     }
 
@@ -324,13 +259,12 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
 
   const {
     mutateAsync: deleteCommentMutation,
-    // isPending: savedCareProvidersPending,
   } = useMutation({
     mutationFn: (commentId, post_id) => ApiDeleteComment(commentId, post_id),
 
     onSuccess: async () => {
       toast.success("Comment Deleted Successfully");
-      queryClient.invalidateQueries(["useGetCommunityPost"]); // refetch list
+      queryClient.invalidateQueries(["useGetCommunityPost"]); 
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
@@ -452,7 +386,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
               <div className="flex gap-2.5 mb-2.5">
                 <div className="flex gap-2.5 mb-2.5">
                   <div className="flex items-center gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center">
-                    {/* Like Button */}
                     <button
                       disabled={LikeIsPending}
                       onClick={() => handleReaction("like", post)}
@@ -468,7 +401,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                       {post?.like_count}
                     </button>
 
-                    {/* Dislike Button */}
                     <button
                       disabled={LikeIsPending}
                       onClick={() => handleReaction("dislike", post)}
@@ -484,7 +416,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     </button>
                   </div>
 
-                  {/* Comments Button */}
                   <button
                     onClick={() => toggleComments(post.id)}
                     className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1.5 py-1.5 min-w-[88px] justify-center"
@@ -493,7 +424,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     {post?.comment_count}
                   </button>
 
-                  {/* Share Button */}
                   <button
                     onClick={() => setShareModal(true)}
                     className="flex items-center cursor-pointer gap-2 bg-[#E6E9EB] rounded-[32px] px-1 py-1 min-w-[78px] justify-center"
@@ -539,7 +469,6 @@ const CommunityAccountPosts = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                     .map((comment) => (
                       <div className="flex items-center">
                         <CommentItem
-                          // key={comment.id}
                           comment={comment}
                           myId={myId}
                           postId={post.id}

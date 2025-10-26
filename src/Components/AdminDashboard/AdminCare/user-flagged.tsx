@@ -23,7 +23,7 @@ interface Props {
 
 const UserFlagged: React.FC<Props> = ({ post_flag }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const pageSize = 3; // ✅ Show 3 rows per page
+  const pageSize = 3; 
 
   type dataTypes = {
     id: number;
@@ -58,7 +58,6 @@ const UserFlagged: React.FC<Props> = ({ post_flag }) => {
     currentPage * pageSize
   );
 
-  const handleRowSelect = (row: dataTypes) => console.log("Selected row:", row);
 
   const Pagination = () => {
     if (totalPages <= 1) return null;
@@ -153,7 +152,9 @@ const UserFlagged: React.FC<Props> = ({ post_flag }) => {
   return (
     <div className="mb-10">
       <div className="mt-6 bg-white rounded-[10px] px-4 py-6 mb-6">
-        <h3 className="mb-4 text-[20px] font-bold space-grotesk">Flagged Posts</h3>
+        <h3 className="mb-4 text-[20px] font-bold space-grotesk">
+          Flagged Posts
+        </h3>
         {paginatedData.length > 0 ? (
           <>
             <TanDataTable<dataTypes>
@@ -162,13 +163,7 @@ const UserFlagged: React.FC<Props> = ({ post_flag }) => {
               onRowSelect={handleRowSelect}
               showActions={false}
               className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  // onView={() => console.log("View Detail", row.id)}
-                  // onEdit={() => console.log("Edit", row.id)}
-                  // onDelete={() => console.log("Delete", row.id)}
-                />
-              )}
+              actions={(row) => <DropdownActions />}
             />
             <Pagination />
           </>

@@ -28,7 +28,6 @@ const CareProfileLayout = () => {
 
   return (
     <div className="dashboard flex min-h-screen">
-      {/* Main Sidebar */}
       <Sidebar
         sidebarData={sidebarLinks}
         isOpen={isSidebarOpen}
@@ -43,7 +42,6 @@ const CareProfileLayout = () => {
         />
       )}
 
-      {/* Main Content Area */}
       <div className={`flex flex-col flex-1 px-4 pt-3 ml-0  ${mainMargin}`}>
         <DashboardHeader
           showProfileSidebar={showProfileSidebar}

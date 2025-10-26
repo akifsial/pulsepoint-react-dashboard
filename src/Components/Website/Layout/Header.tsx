@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import TopBar from "./top-bar";
 import { useCategory } from "@src/hooks/use-website";
-// Navigation types
 interface NavigationItem {
   label: string;
   href: string;
@@ -103,11 +102,9 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
     <>
       <TopBar />
 
-      {/* Main Header */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo */}
             <div className="flex items-center space-x-2">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
@@ -119,12 +116,10 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
               </div>
             </div>
 
-            {/* Desktop Navigation */}
             <nav className="hidden lg:flex overflow-scroll items-center space-x-8">
               {data?.records?.map((item) => (
                 <div key={item?.name} className="relative group">
                   <p
-                    // to={item?.url_key}
                     onClick={() => handleCategory(item?.id)}
                     className={`flex items-center  text-sm font-medium transition-colors ${
                       isActiveLink(item?.url_key)
@@ -133,32 +128,13 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                     }`}
                   >
                     {item?.name}
-                    {/* {item.hasDropdown && (
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    )} */}
                   </p>
 
-                  {/* Dropdown Menu */}
-                  {/* {item.hasDropdown && item.subItems && (
-                    <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                      <div className="py-1">
-                        {item.subItems.map((subItem) => (
-                          <Link
-                            key={subItem.label}
-                            to={subItem.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-500"
-                          >
-                            {subItem.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )} */}
+            
                 </div>
               ))}
             </nav>
 
-            {/* Search and Login */}
             <div className="hidden lg:flex items-center space-x-4">
               <div className="relative">
                 <input
@@ -175,7 +151,6 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
               </button>
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
@@ -189,11 +164,9 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-200">
             <div className="px-4 pt-2 pb-3 space-y-1 bg-white">
-              {/* Mobile Search */}
               <div className="relative mb-4">
                 <input
                   type="text"
@@ -205,7 +178,6 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               </div>
 
-              {/* Mobile Navigation */}
               {navigationItems.map((item) => (
                 <div key={item.label}>
                   <Link
@@ -236,7 +208,6 @@ const Header = ({ isMobileMenuOpen, setIsMobileMenuOpen }: HeaderProps) => {
                 </div>
               ))}
 
-              {/* Mobile Login */}
               <button className="w-full mt-4 bg-black text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-gray-800">
                 Login
               </button>

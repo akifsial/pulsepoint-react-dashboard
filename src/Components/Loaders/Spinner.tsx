@@ -2,7 +2,6 @@ import React from "react";
 
 const Spinner: React.FC = (height = 4, width = 5, color = "gray") => {
   return (
-    // <div role="status">
     <svg
       aria-hidden="true"
       className={`w-${width} h-${height} text-${color}-200 animate-spin fill-white`}
@@ -19,8 +18,6 @@ const Spinner: React.FC = (height = 4, width = 5, color = "gray") => {
         fill="currentFill"
       />
     </svg>
-    //   <span className="sr-only">Loading...</span>
-    // </div>
   );
 };
 

@@ -60,7 +60,7 @@ const NotficationBar = ({ noticationLink }) => {
       ApiAcceptPrivateCommunity(memberId, status),
 
     onSuccess: async (data) => {
-      queryClient.invalidateQueries(["useGetNotifications"]); // refetch list
+      queryClient.invalidateQueries(["useGetNotifications"]); 
       if (data?.record?.status == "APPROVED") {
         toast.success("Request Accepted!");
       } else {
@@ -68,7 +68,6 @@ const NotficationBar = ({ noticationLink }) => {
       }
     },
     onError: (error) => {
-      // toast.error("Something Went Wrong");
     },
   });
 
@@ -91,14 +90,8 @@ const NotficationBar = ({ noticationLink }) => {
           data.records.map((item, index) => (
             <div
               key={index}
-              // className="relative py-[3px] flex flex-col  items-start gap-10 font-medium leading-5.5 text-sm mb-[5px] last:mb-0"
             >
               <div
-                // onClick={() =>
-                //   userRole == "PATIENT"
-                //     ? navigate("/patient/notification")
-                //     : navigate("/care-provider/notification")
-                // }
                 onClick={() =>
                   userRole == "PATIENT"
                     ? navigate("/patient/notification")
@@ -121,7 +114,6 @@ const NotficationBar = ({ noticationLink }) => {
               </div>
               {item?.member_id ? (
                 <div className="flex pl-12 bg-red-500 gap-[8px]">
-                  {/* Accept Button */}
                   <button
                     onClick={(e) =>{
                       e.stopPropagation(); 
@@ -129,7 +121,6 @@ const NotficationBar = ({ noticationLink }) => {
                     }}
                     className="flex items-center cursor-pointer justify-center text-white !mt-3 bg-[#2291E3] text-[12px] !w-[70px] !h-[30px] !rounded-[6px]"
                   >
-                    {/* Tick Icon */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4"
@@ -144,14 +135,12 @@ const NotficationBar = ({ noticationLink }) => {
                     </svg>
                   </button>
 
-                  {/* Cancel Button */}
                   <button
                     onClick={() =>
                       handleAcceptPrivateCommunity(item?.member_id, "DECLINED")
                     }
                     className="flex items-center cursor-pointer justify-center text-white !mt-3 bg-red-600 text-[12px] !w-[70px] !h-[30px] !rounded-[6px]"
                   >
-                    {/* Cross Icon */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4"

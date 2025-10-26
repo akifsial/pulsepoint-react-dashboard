@@ -1,57 +1,53 @@
 import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
-import { apiServices } from "@src/shared/api-services";  
-import apiEndpoint from "@src/shared/api-end-point";  
 
-// Interface for the response data structure
 interface AgeGroupData {
   age_group: string;
   count: number;
   percentage: number;
 }
 
-const AgeGroupPieChart: React.FC = ({ timeRange }) => {
+const AgeGroupPieChart: React.FC<{ timeRange: string }> = ({ timeRange }) => {
   const [data, setData] = useState<AgeGroupData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Function to fetch age group data
-  const fetchAgeGroupData = async (type: string,range) => {
+  const dummyData: AgeGroupData[] = [
+    { age_group: "0-17", count: 120, percentage: 15 },
+    { age_group: "18-24", count: 180, percentage: 22 },
+    { age_group: "25-34", count: 240, percentage: 30 },
+    { age_group: "35-44", count: 160, percentage: 20 },
+    { age_group: "45-60", count: 90, percentage: 10 },
+    { age_group: "60+", count: 50, percentage: 6 },
+  ];
+
+  const fetchAgeGroupData = async (type: string, range: string) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await apiServices.get(`${apiEndpoint.ageGroups(type)}&data_range=${range}`);
-
-      if (response.data.success) {
-        setData(response.data?.payload?.age_groups); 
-      } else {
-        setError("Error: Failed to fetch data");
-      }
+      setTimeout(() => {
+        setData(dummyData);
+        setLoading(false);
+      }, 600);
     } catch (err) {
       setError("Failed to fetch data");
-      console.error("Error fetching data:", err);
-    } finally {
       setLoading(false);
     }
   };
 
-  // Fetch data when the component mounts
   useEffect(() => {
-    fetchAgeGroupData("age_groups",timeRange);
+    fetchAgeGroupData("age_groups", timeRange);
   }, [timeRange]);
 
-  // Handle loading or error states
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
-  // Prepare data for the chart
-  const series = data.map(item => item.count);  
-  const labels = data.map(item => item.age_group);
+  const series = data.map((item) => item.count);
+  const labels = data.map((item) => item.age_group);
 
-
-  const tableData = data.map(item => ({
-    color: "#2D9CDB",  
+  const tableData = data.map((item, index) => ({
+    color: ["#27AE60", "#2D9CDB", "#1B75BC", "#F2C94C", "#E67E22", "#8E44AD"][index % 6],
     label: item.age_group,
     count: item.count,
     percentage: item.percentage,
@@ -62,8 +58,8 @@ const AgeGroupPieChart: React.FC = ({ timeRange }) => {
       type: "donut",
       toolbar: { show: false },
     },
-    labels: labels, 
-    colors: ["#27AE60", "#2D9CDB", "#1B75BC", "#F2C94C", "#F2C94C", "#000000"],
+    labels: labels,
+    colors: ["#27AE60", "#2D9CDB", "#1B75BC", "#F2C94C", "#E67E22", "#8E44AD"],
     dataLabels: {
       enabled: false,
     },

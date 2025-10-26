@@ -26,7 +26,6 @@ const HospitalProfile = () => {
         <FeedbackForm setFeedbackOpen={setFeedbackOpen} />
       ) : (
         <div className="h-[661px] overflow-y-auto transition-colors duration-300 bg-medical-bg">
-          {/* Header */}
           <header
             className="md:max-w-7xl max-w-full py-7 mx-auto  sm:px-6 px-3 flex flex-wrap justify-between items-center md:justify-between md:gap-0 gap-3 items-center relative "
             style={{
@@ -34,7 +33,6 @@ const HospitalProfile = () => {
                 "linear-gradient(107.76deg, #f4f7ff -2.99%, #ddeff7 64.85%, #d6e0f9 113.61%)",
             }}
           >
-            {/* Left: Back Arrow + Hospital Name */}
             <div className="flex items-center space-x-2">
               <ArrowLeft
                 className="h-5 w-5 cursor-pointer text-black"
@@ -46,7 +44,6 @@ const HospitalProfile = () => {
               </h1>
             </div>
 
-            {/* Right: Add A Review Button */}
             <PrimaryButton
               btnText="Add A Review"
               showImg
@@ -58,9 +55,7 @@ const HospitalProfile = () => {
             />
           </header>
 
-          {/* Main Content */}
           <main className="  max-w-7xl mx-auto md:px-4 md:px-6 px-0 lg:px-8 md:pt-12 pt-4 pb-6">
-            {/* Hospital Profile and Contact Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
               <HospitalProfileCard
                 name={""}

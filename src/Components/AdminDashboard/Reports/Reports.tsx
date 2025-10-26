@@ -6,7 +6,6 @@ const Reports = () => {
   return (
     <>
        <ReportChart/>
-       {/* <ReportTable/> */}
     </>
   )
 }

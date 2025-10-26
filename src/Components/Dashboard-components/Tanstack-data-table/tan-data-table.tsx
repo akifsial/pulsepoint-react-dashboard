@@ -84,7 +84,6 @@ const TanDataTable = <T extends object>({
         className="relative  w-full overflow-x-auto"
         style={
           {
-            // scrollbarGutter: "stable",
           }
         }
       >

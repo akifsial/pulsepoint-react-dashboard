@@ -1,7 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-// Defining types for the component props
 interface SelectFieldProps {
   label?: string;
   asterisk?: boolean;
@@ -30,7 +29,6 @@ const SelectField: React.FC<SelectFieldProps> = ({
   errorMessage,
   ...rest
 }) => {
-  // Automatically select the first option if no value is provided
   const currentValue = value || (options?.length > 0 ? options[0]?.value : "");
 
   return (
@@ -68,9 +66,6 @@ const SelectField: React.FC<SelectFieldProps> = ({
           ))}
         </select>
 
-        {/* <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black">
-          <IoIosArrowDown color={`${iconClass}`} />
-        </div> */}
 
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
   {id === "status" ? (

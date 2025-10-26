@@ -48,9 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
     onClose();
   }, [location.pathname]);
 
-  // const userRole=JSON.stringify(localStorage.getItem("userInfo")).role_type
-
-  // click outside close logic
+ 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -94,20 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 className="w-[64px] h-[58px] object-cover"
               />
             </div>
-            {/* <div>
-              <div className="flex-1 flex md:hidden">
-                <CommonInput
-                  placeholder="Search here..."
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  showImg={true}
-                  imgSrc={searchIcon}
-                  imgLeft={true}
-                  inputClassName="text-sm"
-                  containerClassName="w-full max-w-sm overflow-hidden"
-                />
-              </div>
-            </div> */}
+
             {sidebarData?.map((link, index) => {
               const isActive = location.pathname === link.path;
 
@@ -132,10 +117,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 </NavLink>
               );
             })}
-            {/* Add the ChatbotIcon image*/}
           </div>
           {}
-          {/* <Link to="/patient/chatbot" aria-label="Open chatbot"> */}
           <div
             onClick={
               userRole == "PATIENT"
@@ -150,7 +133,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
               className="w-[70px] h-[50px] object-cover cursor-pointer"
             />
           </div>
-          {/* </Link> */}
         </aside>
       ) : (
         <aside
@@ -163,35 +145,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
             ${isOpen ? "translate-x-0  bg-white" : "-translate-x-full"}
           `}
         >
-          <div className=" space-y-2 mt-3 mb-5 ">
-            <div
-              className="mb-7 max-w-[250px] mx-auto cursor-pointer"
-              onClick={
-                userRole == "PATIENT"
-                  ? () => navigate("/patient/dashboard")
-                  : () => navigate("/care-provider")
-              }
-            >
-              <img
-                src={SiteLogo}
-                alt="Vskill Hub"
-                className="w-[250px] h-[70px] object-cover"
-              />
-            </div>
-            <div>
-              {/* <div className="flex-1 flex md:hidden">
-                <CommonInput
-                  placeholder="Search here..."
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  showImg={true}
-                  imgSrc={searchIcon}
-                  imgLeft={true}
-                  inputClassName="text-sm"
-                  containerClassName="w-full max-w-md"
-                />
-              </div> */}
-            </div>
+          <div className=" space-y-2">
+            <div></div>
             {sidebarData.map((link, index) => {
               const userInfo = JSON.parse(localStorage.getItem("userInfo"));
               let isActive = false;
@@ -248,7 +203,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, sidebarData }) => {
                 img={AiIcon}
                 imgPosition="left"
                 btnClass="bg-[#252525] px-4  w-full pb-[10px] rounded-[10px] text-white text-[16px] font-semibold"
-                // onClick={() => navigate("/patient/feature")}
                 onClick={() => navigate("/patient/chatbot")}
               />
             </div>

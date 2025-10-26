@@ -1,6 +1,4 @@
 import { useParams } from "react-router-dom";
-// import UserInfo from "./UserInfo";
-// import UserInfo from "../AdminPatient/UserInfo";
 import UserInfo from "./user-info";
 import { useEffect, useState } from "react";
 import { apiServices } from "@src/shared/api-services";
@@ -13,11 +11,10 @@ const UserInfoWrapperCareProvider: React.FC = () => {
     try {
       const res = await apiServices.get(`user/${id}`);
       if (res.data.success) {
-        setUserData(res.data.payload); // payload is the user object
+        setUserData(res.data.payload); 
       } else {
       }
     } catch (error) {
-      console.error(error);
     }
   };
   useEffect(() => {

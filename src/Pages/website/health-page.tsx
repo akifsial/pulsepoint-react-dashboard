@@ -10,7 +10,6 @@ const HealthPage = () => {
     <div className="min-h-screen bg-white">
       <TopBar />
       <UtilityRow />
-      {/* Hero Section */}
       <div className="relative bg-blue-50">
         <div className="absolute inset-0">
           <img
@@ -30,10 +29,8 @@ const HealthPage = () => {
         </div>
       </div>
 
-      {/* Content Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left Text Content */}
           <div>
             <h2 className="text-3xl font-bold text-gray-900 mb-6">
               Stay Healthy, Stay Strong
@@ -51,7 +48,6 @@ const HealthPage = () => {
             </ul>
           </div>
 
-          {/* Right Image */}
           <div>
             <img
               src={HealthPhoto}

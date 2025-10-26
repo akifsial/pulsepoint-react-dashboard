@@ -55,6 +55,5 @@ export const PrimaryButton: React.FC<PrimaryBtnProps> = ({
     </button>
   );
 
-  // If `linkTo` is passed, wrap with react-router Link
   return linkTo ? <Link to={linkTo}>{button}</Link> : button;
 };

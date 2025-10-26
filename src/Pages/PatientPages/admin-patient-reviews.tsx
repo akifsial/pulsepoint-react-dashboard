@@ -60,15 +60,12 @@ const AdminPatientReviews: React.FC = () => {
     refetch();
   };
   const queryClient = useQueryClient();
-  // const navigate = useNavigate();
-  // State for managing the review form page
   const [currentView, setCurrentView] = React.useState<"table" | "form">(
     "table"
   );
   const [currentEditingReview, setCurrentEditingReview] =
     React.useState<ReviewDataTypes | null>(null);
 
-  // Add toast state
   const [showSuccessToast, setShowSuccessToast] = React.useState(false);
 
   type ReviewDataTypes = {
@@ -114,10 +111,7 @@ const AdminPatientReviews: React.FC = () => {
     };
   }, [showRatingDropdown]);
 
-  // Handler functions for the review form
   const handleEditReview = (id: number | string) => {
-    // setCurrentEditingReview(row);
-    // setCurrentView("form");
     navigate(`/patient/patient-feedback/edit/${id}`);
   };
 
@@ -137,21 +131,13 @@ const AdminPatientReviews: React.FC = () => {
     }
   };
 
-  // Updated handleSaveReview function with toast
   const handleSaveReview = (updatedReview: {
     rating: number;
     comment: string;
   }) => {
     if (currentEditingReview) {
-      // Here you would typically update your data source (API call, state update, etc.)
-
-      // You can update the reviewsData here or make an API call
-      // For now, we'll just log it and show success toast
-
-      // Show success toast
       setShowSuccessToast(true);
 
-      // Go back to table view after a short delay to show the toast
       setTimeout(() => {
         setCurrentView("table");
         setCurrentEditingReview(null);
@@ -164,10 +150,8 @@ const AdminPatientReviews: React.FC = () => {
     setCurrentEditingReview(null);
   };
 
-  // Add toast close handler
   const handleToastClose = () => {
     setShowSuccessToast(false);
-    // Ensure we go back to table view when toast is closed
     if (currentView === "form") {
       setCurrentView("table");
       setCurrentEditingReview(null);
@@ -219,36 +203,6 @@ const AdminPatientReviews: React.FC = () => {
       ),
     },
 
-    // {
-    //   accessor: "rating",
-    //   header: "Rating",
-    //   showSort: true,
-    //   cell: ({ getValue }) => {
-    //     const rating = Number(getValue()) || 0;
-    //     const totalStars = 5;
-
-    //     const StarIcon = ({ filled }: { filled: boolean }) => (
-    //       <svg
-    //         xmlns="http://www.w3.org/2000/svg"
-    //         viewBox="0 0 24 24"
-    //         fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
-    //         width="20"
-    //         height="20"
-    //       >
-    //         <path d="M12 .587l3.668 7.431L24 9.753l-6 5.847 1.416 8.267L12 19.771l-7.416 4.096L6 15.6 0 9.753l8.332-1.735z" />
-    //       </svg>
-    //     );
-
-    //     return (
-    //       <div className="flex items-center gap-0.5">
-    //         {Array.from({ length: totalStars }).map((_, index) => (
-    //           <StarIcon key={index} filled={index < rating} />
-    //         ))}
-    //       </div>
-    //     );
-    //   },
-    // },
-
     {
       accessor: "rating",
       header: "Rating",
@@ -265,7 +219,7 @@ const AdminPatientReviews: React.FC = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            fill={filled ? "#FACC15" : "#D1D5DB"} 
             width="20"
             height="20"
           >
@@ -337,7 +291,6 @@ const AdminPatientReviews: React.FC = () => {
     };
   }, [searchText]);
 
-  // Render the Reviews Table View
   const renderTableView = () => (
     <div className="mb-10">
       <h2
@@ -360,7 +313,6 @@ const AdminPatientReviews: React.FC = () => {
           <h3 className="md:mb-0 mb-3 space-grotesk text-[20px] font-bold">
             Given Reviews
           </h3>
-          {/* searchbar */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:px-5 px-0">
             <CommonInput
               placeholder="Search with Provider name, zipcode"
@@ -431,7 +383,7 @@ const AdminPatientReviews: React.FC = () => {
                     onEdit={() => handleEditReview(row?.feedback?.review_id)}
                     variant="reviews"
                     onDelete={() => {
-                      setSelectedRowId(row?.feedback?.review_id); // ✅ match what API expects
+                      setSelectedRowId(row?.feedback?.review_id); 
                       setIsDeleteModalOpen(true);
                     }}
                   />
@@ -447,7 +399,6 @@ const AdminPatientReviews: React.FC = () => {
               setSelectedRowId(null);
             }}
             onDelete={handleDelete}
-            // loading={deleteMutationLoading}
           />
           <div>
             <Pagination
@@ -462,7 +413,6 @@ const AdminPatientReviews: React.FC = () => {
     </div>
   );
 
-  // Render the Review Form View
   const renderFormView = () => (
     <div className="mb-10 w-full h-[474px] p-[20px_23px_20px_23px] gap-[25px] rounded-[10px]">
       <h2
@@ -493,12 +443,10 @@ const AdminPatientReviews: React.FC = () => {
     </div>
   );
 
-  // Main render - conditionally show table or form with toast
   return (
     <>
       {currentView === "table" ? renderTableView() : renderFormView()}
 
-      {/* Global Success Toast */}
       <Toast
         isVisible={showSuccessToast}
         title="Review Added Successfully"

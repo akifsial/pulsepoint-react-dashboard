@@ -17,7 +17,6 @@ import Pagination from "@components/pagination/pagination";
 import SkeletonTableLoader from "@components/loader/skelton-table-loader";
 import AdminDropdownAction from "../admindropdownaction/admin-dropdown-action";
 
-// Define the dataTypes type
 type dataTypes = {
   id?: number;
   name?: string;
@@ -47,19 +46,16 @@ const ForumTable: React.FC = () => {
   );
   const [searchText, setSearchText] = useState<string>("");
   const [data, setData] = useState();
-  // Approve modal state
   const [showApproveModel, setShowApproveModel] = useState(false);
   const [selectedToApprove, setSelectedToApprove] = useState<dataTypes | null>(
     null
   );
 
-  // delete modal state
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedToDelete, setSelectedToDelete] = useState<dataTypes | null>(
     null
   );
 
-  // forum api integration
   const [forumData, setForumData] = useState<dataTypes[]>([]);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -68,15 +64,13 @@ const ForumTable: React.FC = () => {
     null
   );
 
-  const { type, id } = useParams(); // ya useLocation se query params nikalo
+  const { type, id } = useParams(); 
 
   const [searchParams] = useSearchParams();
   const singleId = searchParams.get("id");
   const isType = searchParams.get("type");
 
-  // --- Pagination ---
   const pageSize = 3;
-  // ------------------
 
   useEffect(() => {
     fetchForumData(searchText);
@@ -110,7 +104,7 @@ const ForumTable: React.FC = () => {
               community_id: item.community?.id,
               post_report_id: item.post_report_id,
 
-              post: `FM-${(page - 1) * pageSize + (index + 1)}`, // ✅ global numbering
+              post: `FM-${(page - 1) * pageSize + (index + 1)}`, 
               first_name: item.community?.title,
               first_name1: item.user?.first_name
                 ? `${item.user?.first_name ?? ""} ${
@@ -132,22 +126,18 @@ const ForumTable: React.FC = () => {
           }
         );
 
-        // ✅ Replace data (pagination) instead of appending
         setForumData(transformedData);
       }
     } catch (error) {
-      console.error("Error fetching forum data:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  // 🔹 Fetch when searchText or currentPage changes
   useEffect(() => {
     fetchForumData(searchText, currentPage);
   }, [searchText, currentPage]);
 
-  // Helper function to break content into lines of 12 words each
   const breakContentIntoLines = (content: string, wordLimit: number = 12) => {
     const words = content.split(" ");
     const lines = [];
@@ -181,7 +171,7 @@ const ForumTable: React.FC = () => {
     }
 
     if (res?.data?.success) {
-      setShowApproveModel(false); // ✅ close approve modal
+      setShowApproveModel(false); 
       fetchForumData();
     }
   };
@@ -201,37 +191,32 @@ const ForumTable: React.FC = () => {
     }
 
     if (res?.data?.success) {
-      setShowDeleteModal(false); // ✅ close delete modal
+      setShowDeleteModal(false); 
       fetchForumData();
     }
   };
 
   const [typeOf, setTypeOf] = useState();
 
-  // --- Pagination calculations ---
   const totalPages = Math.max(1, Math.ceil(forumData.length / pageSize));
 
   const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
     if ((type || id) && !hasFetched) {
-      // Remove query params immediately
       navigate(window.location.pathname, { replace: true });
     }
   }, []);
 
   const navigate = useNavigate();
 
-  // const selectCom=selectedCommunity?.type
 
   const handleButtonClick = () => {
     if (selectedCommunity?.type && selectedCommunity?.id) {
-      // navigate(`?type=${selectedCommunity.type}&id=${selectedCommunity.id}`);
       navigate(
         `/admin/forum-moderation/view/${selectedCommunity.type}/${selectedCommunity.id}`
       );
     } else {
-      // console.log("selectedCommunity or selectedCommunity.id is undefined");
     }
   };
 
@@ -268,14 +253,11 @@ const ForumTable: React.FC = () => {
                   : null;
 
               if (idToUse) {
-                // ✅ navigate ke sath type & id bhej rahe hain
-                // navigate(`?type=${row.original.type}&id=${idToUse}`, {
                 navigate(
                   `/admin/forum-moderation/view/${row.original.type}/${idToUse}?forumId=${row.original.forumId}`,
                   { replace: true }
                 );
               } else {
-                // console.log("ID not found for this row", row.original);
               }
             }}
           >
@@ -288,7 +270,6 @@ const ForumTable: React.FC = () => {
                   : dummyImage
               }
               onError={(e) => {
-                // if broken URL, fallback to dummyImage
                 (e.currentTarget as HTMLImageElement).src = dummyImage;
               }}
               alt={row.original.first_name || "Patient"}
@@ -378,7 +359,6 @@ const ForumTable: React.FC = () => {
       header: "Status",
       showSort: true,
       cell: ({ row }) => {
-        // const status = row.original.status?.toLowerCase();
         const status =
           row?.original?.type == "POST"
             ? row.original.post_data?.status?.toLowerCase()
@@ -398,7 +378,6 @@ const ForumTable: React.FC = () => {
             }`}
           >
             {status?.charAt(0).toUpperCase() + status?.slice(1)}
-            {/* {row?.original?.type=="POST" && row.original.post?.status} */}
           </span>
         );
       },
@@ -411,7 +390,7 @@ const ForumTable: React.FC = () => {
       cell: ({ row }) => (
         <AdminDropdownAction
           variant="default"
-          onAction={() => setSelectedRow(row.original)} // 👈 entire row here
+          onAction={() => setSelectedRow(row.original)} 
           actions={[
             {
               label:
@@ -431,23 +410,18 @@ const ForumTable: React.FC = () => {
                     ? row.original.post_id
                     : row.original.type === "COMMENT"
                     ? row.original.comment_id
-                    : // row.original.comment_id ?? row.original.forumId // fallback
+                    : 
                     row.original.type === "REPORT"
                     ? row.original.post_report_id
                     : null;
 
                 if (idToUse) {
-                  // navigate(`/admin/forum-moderation/view/${row.original.type}/${row.original.id}`,{
-                  // navigate(
                   navigate(
                     `/admin/forum-moderation/view/${row.original.type}/${idToUse}?forumId=${row.original.forumId}`,
                     { replace: true }
                   );
 
-                  // navigate(`?type=${row.original.type}&id=${idToUse}`, {
-                  // });
                 } else {
-                  // console.log("ID not found for this row", row.original);
                 }
               },
               type: "view",
@@ -461,31 +435,10 @@ const ForumTable: React.FC = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  // --- Pagination UI ---
 
   return (
     <div className="mb-10">
-      {/* {selectedCommunity ? (
-        <ViewCommunity
-          selectedCommunity={selectedCommunity}
-          // fetchForumData={fetchForumData}
-          community={
-            selectedCommunity
-              ? {
-                  id: String(selectedCommunity.id ?? ""),
-                  name: selectedCommunity.first_name ?? "",
-                  status: selectedCommunity.status ?? "",
-                }
-              : { id: "", name: "" }
-          }
-          goBack={() => {
-            setSelectedCommunity(null);
-            fetchForumData(); // ✅ back aane pe fresh data load
-          }}
-          singleId={singleId} // ✅ send id
-          isType={isType}
-        />
-      ) : ( */}
+    
       <>
         <h2 className="text-[25px] space-grotesk font-bold text-heading leading-8 text-brand-ink">
           Forum Moderation
@@ -501,7 +454,7 @@ const ForumTable: React.FC = () => {
                 value={searchText}
                 onChange={(e) => {
                   setSearchText(e.target.value);
-                  setCurrentPage(1); // ✅ reset page on search
+                  setCurrentPage(1); 
                 }}
                 showImg={true}
                 imgSrc={searchIcon}
@@ -536,15 +489,9 @@ const ForumTable: React.FC = () => {
                 data={forumData}
                 showCheckbox={false}
               />
-              {/* <Pagination
-                  rowsPerPage={3}
-                  totalRows={data?.totalRecords}
-                  currentPage={currentPage}
-                  onPageChange={handlePageChange}
-                /> */}
               <Pagination
                 rowsPerPage={pageSize}
-                totalRows={data?.totalRecords || 0} // ✅ API ka totalRecords use karo
+                totalRows={data?.totalRecords || 0}
                 currentPage={currentPage}
                 onPageChange={setCurrentPage}
               />
@@ -552,7 +499,6 @@ const ForumTable: React.FC = () => {
           )}
         </div>
       </>
-      {/* )} */}
       {showApproveModel && (
         <Model className="max-w-lg" setIsOpen={setShowApproveModel}>
           <div className="p-6 text-center">
@@ -576,7 +522,6 @@ const ForumTable: React.FC = () => {
           </div>
         </Model>
       )}
-      {/* The delete confirmation modal inside the ForumTable component */}
       {showDeleteModal && selectedToDelete && (
         <Model className="max-w-lg" setIsOpen={setShowDeleteModal}>
           <div className="p-6 text-center">

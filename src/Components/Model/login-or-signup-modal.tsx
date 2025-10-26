@@ -26,13 +26,11 @@ const LoginOrSignupModal: React.FC<AuthModalProps> = ({
         className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm text-center animate-fadeIn"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Title */}
         <h2 className="text-xl font-bold text-gray-800 mb-3">
           You need first Login
         </h2>
         <p className="text-gray-600 mb-6">to view this community</p>
 
-        {/* Buttons */}
         <div className="flex justify-center gap-4">
           <button
             onClick={onLogin}
@@ -48,7 +46,6 @@ const LoginOrSignupModal: React.FC<AuthModalProps> = ({
           </button>
         </div>
 
-        {/* Close Btn */}
         <button
           onClick={onClose}
           className="mt-6 cursor-pointer text-sm text-gray-400 hover:text-gray-600 transition"

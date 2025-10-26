@@ -28,8 +28,7 @@ export const PatientRoutes = [
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "care-provider", element: <AdminCareProvider /> },
       { path: "patient-reviews", element: <AdminPatientReviews /> },
-      // { path: "patient-reviews/edit", element: <EditReviewPage /> }, // Add this line
-      { path: "patient-feedback/edit/:id", element: <EditFeedbackForm /> }, // Add this line
+      { path: "patient-feedback/edit/:id", element: <EditFeedbackForm /> }, 
 
       { path: "community-forum", element: <AdminCommunityForum /> },
       { path: "communities", element: <PatientAllCommunities /> },
@@ -41,9 +40,6 @@ export const PatientRoutes = [
       { path: "community-account/:id", element: <CommunityAccount /> },
       { path: "community/post/:id", element: <CommunitySinglePost /> },
       { path: "blogs", element: <Blogs /> },
-      // { path: "/profile/:id", element: <CareProviderProfile /> },
-
-      // { path: "payment-history", element: <NursingHomeReviews /> },
     ],
   },
   {

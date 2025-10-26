@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import arrowIcon from "@assets/media/images/arrow-down.svg";
 import InputField from "@components/input-field";
 import SelectField from "@components/select-field";
 import OnBoardingLayout from "@components/auth/on-borading-layout";
@@ -75,20 +74,17 @@ const RegisterCareprovider = ({ setSelectUser }) => {
     control,
   } = useForm({
     defaultValues: {
-      number: "+44", // initialize with Pakistan code
+      number: "+44", 
     },
   });
 
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
-  const navigate = useNavigate(); // Hook to navigate
-  // select data population
+  const navigate = useNavigate(); 
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
-    // { value: "other", label: "Other" },
-    // { value: "prefer-not-to-say", label: "Prefer not to say" },
   ];
 
   const maritalStatusOptions = [
@@ -106,14 +102,6 @@ const RegisterCareprovider = ({ setSelectUser }) => {
     { value: "life", label: "Life Insurance" },
     { value: "disability", label: "Disability Insurance" },
   ];
-  // const cityOptions = [
-  //   { value: "new_york", label: "New York" },
-  //   { value: "los_angeles", label: "Los Angeles" },
-  //   { value: "chicago", label: "Chicago" },
-  //   { value: "houston", label: "Houston" },
-  //   { value: "miami", label: "Miami" },
-  // ];
-
   const cityOptions = [
     { value: "New York", label: "New York" },
     { value: "London", label: "London" },
@@ -150,7 +138,6 @@ const RegisterCareprovider = ({ setSelectUser }) => {
 
       onSuccess: async () => {
         toast.success("Care Provider Created Successfully");
-        // navigate("/login");
         navigate("/login");
       },
       onError: (err) => {},
@@ -166,7 +153,6 @@ const RegisterCareprovider = ({ setSelectUser }) => {
       setPhoneValidation(false);
     }
     const registerData = {
-      // for care_provider
       organization_name: data.organizationName,
 
       email: data.email,
@@ -186,11 +172,9 @@ const RegisterCareprovider = ({ setSelectUser }) => {
       provider_type_id: 1,
       state: data.state,
       address: data.streetAddress,
-      // website_url: "yeah.com",
       website_url: data.website || "",
       working_hours: "Uk Bargingham Street ",
       marital_status: data.maritalStatus,
-      // communication_method_id: preferredMethod,
     };
     await registerMutation({ data: registerData });
   };
@@ -222,9 +206,14 @@ const RegisterCareprovider = ({ setSelectUser }) => {
               <div className="sm:px-4 py-6">
                 <p className="text-[#1A1A1A] flex items-center gap-5 text-[25px] sm:text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
                   <span
-                    onClick={() => {setSelectUser(""); // Remove hash from URL
-window.history.replaceState(null, "", window.location.pathname + window.location.search);
-}}
+                    onClick={() => {
+                      setSelectUser(""); 
+                      window.history.replaceState(
+                        null,
+                        "",
+                        window.location.pathname + window.location.search
+                      );
+                    }}
                     className="cursor-pointer"
                   >
                     <ArrowLeft />{" "}
@@ -234,9 +223,7 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                 <p className="text-[#252525] text-[14px] sm:text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
                   Join to explore and share care insights
                 </p>
-                {/* Name Fields */}
-                {/* Name Fields */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 mb-3 gap-6">
                   <div>
                     <InputField
                       label="Organization Name"
@@ -278,22 +265,20 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="">
-
-                  <SelectField
-                    label="Provider Type"
-                    id="providerType"
-                    name="providerType"
-                    asterisk={true}
-                    options={providersOptions}
-                    register={register}
-                    registerName="providerType"
-                    errors={errors}
-                    validation={{
-                      required: "Provider Type is required",
-                    }}
-                  />
+                    <SelectField
+                      label="Provider Type"
+                      id="providerType"
+                      name="providerType"
+                      asterisk={true}
+                      options={providersOptions}
+                      register={register}
+                      registerName="providerType"
+                      errors={errors}
+                      validation={{
+                        required: "Provider Type is required",
+                      }}
+                    />
                   </div>
-
 
                   <div className="">
                     <InputField
@@ -302,7 +287,6 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       name="specialization"
                       type="text"
                       fieldName="w-full"
-                      // iconUrl={Global}
                       placeholder="eg.Eye Specialist"
                       className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
                       register={register}
@@ -315,7 +299,6 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                   </div>
                 </div>
 
-                {/* Email and Phone */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="w-full">
                     <InputField
@@ -340,24 +323,6 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                     />
                   </div>
 
-                  {/* <div>
-                  <InputField
-                    label="Phone Number"
-                    asterisk={true}
-                    icon={IoCallOutline}
-                    id="number"
-                    className="pr-10"
-                    name="number"
-                    type="text"
-                    placeholder="e.g., +1 800 555 1234"
-                    register={register}
-                    registerName="number"
-                    errors={errors}
-                    validation={{
-                      required: "Phone is required",
-                    }}
-                  />
-                </div> */}
 
                   <div
                     className={`relative grid grid-cols-1 md:grid-cols-1 gap-2 ${
@@ -368,29 +333,7 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       Phone Number<span className="text-red-500 ml-1">*</span>
                     </label>
 
-                    {/* <Controller
-                      name="number"
-                      control={control}
-                      render={({ field, fieldState }) => (
-                        <>
-                          <PhoneInput
-                            placeholder="Enter phone number"
-                            value={field.value}
-                            onChange={field.onChange}
-                            defaultCountry="US"
-                            className="w-full h-[50px] border border-[#2525251A] rounded-[8px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
-                          />
-                        
-                          <div className="h-[20px]">
-                            {fieldState.error && (
-                              <p className="text-red-500 text-sm">
-                                {fieldState.error.message}
-                              </p>
-                            )}
-                          </div>
-                        </>
-                      )}
-                    /> */}
+            
 
                     <Controller
                       name="number"
@@ -404,12 +347,11 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       }}
                       render={({ field, fieldState }) => {
                         const handleChange = (value: string) => {
-                          // Remove all non-digit characters
                           const cleanValue = value.replace(/\D/g, "");
                           if (!cleanValue) {
-                            field.onChange(""); // Clear value if empty
+                            field.onChange(""); 
                           } else {
-                            field.onChange(value); // Otherwise update normally
+                            field.onChange(value);
                           }
                         };
 
@@ -425,7 +367,7 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                                 required: true,
                               }}
                             />
-                            <div className="h-[20px]">
+                            <div className="h-[10px]">
                               {fieldState.error && (
                                 <p className="text-red-500 text-sm">
                                   {fieldState.error.message}
@@ -437,7 +379,7 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       }}
                     />
 
-                    <div className="h-[20px]">
+                    <div className="h-[10px]">
                       {phoneValidation && (
                         <p className="text-red-500 text-sm">
                           Phone number is required
@@ -447,7 +389,6 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                   </div>
                 </div>
 
-                {/* Zip & City */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
@@ -484,7 +425,6 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                     />
                   </div>
                 </div>
-                {/* State & Street */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
@@ -523,8 +463,7 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                     />
                   </div>
                 </div>
-                {/* Website & Working Hours */}
-                <div className="grid grid-cols-1">
+                <div className="grid grid-cols-1 mb-4">
                   <div>
                     <InputField
                       label="Website Url (optional)"
@@ -539,22 +478,8 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       errors={errors}
                     />
                   </div>
-                  {/* <div>
-                  <InputField
-                    label="Working Hours"
-                    id="workingHours"
-                    name="workingHours"
-                    className="pr-10"
-                    icon={Globe}
-                    type="text"
-                    placeholder="Type your working hours"
-                    register={register}
-                    registerName="workingHours"
-                    errors={errors}
-                  />
-                </div> */}
+                
                 </div>
-                {/* Password Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
@@ -565,7 +490,6 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       type="password"
                       className="pr-10"
                       placeholder="Enter your password"
-                      // icon={lockIcon} // ✅ lock icon here
                       register={register}
                       registerName="password"
                       errors={errors}
@@ -583,7 +507,6 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       className="pr-10"
                       type="password"
                       placeholder="Confirm your password"
-                      // icon={lockIcon} // ✅ lock icon here
                       register={register}
                       registerName="confirmPassword"
                       errors={errors}
@@ -599,72 +522,12 @@ window.history.replaceState(null, "", window.location.pathname + window.location
                       " "}
                   </div>
                 </div>
-                {/* <div className="space-y-4">
-                <p className="text-md font-semibold">
-                  Preferred Communication Method
-                </p>
-                <div className="flex text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="email"
-                      name="preferredCommunication"
-                      value="email"
-                      checked={formData.preferredCommunication.includes(
-                        "email"
-                      )}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="email" className="ml-1">
-                      Via Email Address
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="phone"
-                      name="preferredCommunication"
-                      value="phone"
-                      checked={formData.preferredCommunication.includes(
-                        "phone"
-                      )}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="phone" className="ml-1">
-                      Via Phone Number
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="sms"
-                      name="preferredCommunication"
-                      value="sms"
-                      checked={formData.preferredCommunication.includes("sms")}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="sms" className="ml-1">
-                      Via SMS Text
-                    </label>
-                  </div>
-                </div>
-              </div> */}
-                {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full flex justify-center bg-[#28A2FF] items-center text-white h-[50px] px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
                 >
                   {isRegisterPending ? <Spinner /> : "Sign Up"}
                 </button>
-                {/* calling component for Social icons */}
-                {/* <SocialLoginSection
-                action="login"
-                // handleSocialLogin={handleSocialLogin}
-              /> */}
-                {/* "Don't have an account yet?" Section */}
                 <div className="flex justify-center mt-6">
                   <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
                     Already have an account?{" "}

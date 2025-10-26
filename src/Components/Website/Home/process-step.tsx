@@ -16,9 +16,6 @@ const ProcessStep = ({ icon, title, description, stepNumber }: ProcessStepProps)
         </div>
       </div>
       <div className="flex-1">
-        {/* {stepNumber && (
-          <span className="text-sm text-blue-500 font-medium">Step {stepNumber}</span>
-        )} */}
         <h3 className="font-bold text-[16px] text-[#252525] ">{title}</h3>
         <p className="text-[#252525] text-sm leading-relaxed">{description}</p>
       </div>

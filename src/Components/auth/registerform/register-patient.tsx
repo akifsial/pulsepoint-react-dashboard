@@ -67,7 +67,7 @@ const RegisterPatient = ({ setSelectUser }) => {
     control,
   } = useForm({
     defaultValues: {
-      number: "+44", // initialize with Pakistan code
+      number: "+44", 
     },
   });
   const [phoneValidation, setPhoneValidation] = useState(false);
@@ -75,8 +75,7 @@ const RegisterPatient = ({ setSelectUser }) => {
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
-  const navigate = useNavigate(); // Hook to navigate
-  // select data population
+  const navigate = useNavigate(); 
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -114,12 +113,10 @@ const RegisterPatient = ({ setSelectUser }) => {
   ];
 
   const [preferredMethod, setPreferredMethod] = useState("");
-  // Handler to update state on radio change
   const handleMethodChange = (e) => {
     setPreferredMethod(e.target.value);
   };
 
-  // handle checkbox changes
   const handleCommunicationChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -215,7 +212,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                 <p className="text-[#1A1A1A] flex items-center gap-5 text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
                   <span
                     onClick={() => {
-                      setSelectUser(""); // Remove hash from URL
+                      setSelectUser(""); 
                       window.history.replaceState(
                         null,
                         "",
@@ -231,8 +228,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                 <p className="text-[#252525] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
                   Join to explore and share care insights
                 </p>
-                {/* Name Fields */}
-                <div>
+                <div className="mb-4">
                   <InputField
                     label="User Name"
                     asterisk={true}
@@ -250,7 +246,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                     }}
                   />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 mb-4 gap-6">
                   <div>
                     <InputField
                       label="First Name"
@@ -290,7 +286,6 @@ const RegisterPatient = ({ setSelectUser }) => {
                   </div>
                 </div>
 
-                {/* Other Form Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
@@ -314,9 +309,6 @@ const RegisterPatient = ({ setSelectUser }) => {
                       }}
                     />
 
-                    {/* {errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                  )} */}
                   </div>
 
                   <div
@@ -329,28 +321,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                       <span className="text-red-500 ml-1">*</span>
                     </label>
 
-                    {/* <Controller
-                      name="number"
-                      control={control}
-                      render={({ field, fieldState }) => (
-                        <>
-                          <PhoneInput
-                            placeholder="Enter phone number"
-                            value={field.value}
-                            onChange={field.onChange}
-                            defaultCountry="US"
-                            className="w-full h-[50px] border border-[#2525251A] rounded-[8px] font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
-                          />
-                          <div className="h-[20px]">
-                            {fieldState.error && (
-                              <p className="text-red-500 text-sm">
-                                {fieldState.error.message}
-                              </p>
-                            )}
-                          </div>
-                        </>
-                      )}
-                    /> */}
+                 
 
                     <Controller
                       name="number"
@@ -364,12 +335,11 @@ const RegisterPatient = ({ setSelectUser }) => {
                       }}
                       render={({ field, fieldState }) => {
                         const handleChange = (value: string) => {
-                          // Remove all non-digit characters
                           const cleanValue = value.replace(/\D/g, "");
                           if (!cleanValue) {
-                            field.onChange(""); // Clear value if empty
+                            field.onChange(""); 
                           } else {
-                            field.onChange(value); // Otherwise update normally
+                            field.onChange(value); 
                           }
                         };
 
@@ -385,7 +355,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                                 required: true,
                               }}
                             />
-                            <div className="h-[20px]">
+                            <div className="h-[10px]">
                               {fieldState.error && (
                                 <p className="text-red-500 text-sm">
                                   {fieldState.error.message}
@@ -397,7 +367,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                       }}
                     />
 
-                    <div className="h-[20px]">
+                    <div className="h-[10px]">
                       {phoneValidation && (
                         <p className="text-red-500 text-sm">
                           Phone number is required
@@ -407,17 +377,15 @@ const RegisterPatient = ({ setSelectUser }) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 mb-2   gap-6">
                   <div>
                     <InputField
                       label="Age"
                       asterisk={true}
-                      // icon={IoPersonOutline}
                       id="age"
                       name="age"
                       type="number"
                       placeholder="Enter your age"
-                      // className="pr-10"
                       register={register}
                       registerName="age"
                       errors={errors}
@@ -443,8 +411,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                   </div>
                 </div>
 
-                {/* Marital Status, and Insurance Type */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 mb-2 gap-6">
                   <div>
                     <SelectField
                       label="Marital Status"
@@ -470,7 +437,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                       options={insuranceOptions}
                       register={register}
                       registerName="insurance_type_id"
-                      errorMessage={errors?.insurance_type_id?.message} // ✅ this was missing
+                      errorMessage={errors?.insurance_type_id?.message} 
                       validation={{
                         required: "Insurance Type is required",
                       }}
@@ -478,8 +445,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                   </div>
                 </div>
 
-                {/* care needs */}
-                <div className="grid grid-cols-1 md:grid-cols-1 ">
+                <div className="grid grid-cols-1 mb-3 md:grid-cols-1 ">
                   <InputField
                     label="Care Needs"
                     id="careNeeds"
@@ -496,8 +462,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                   />
                 </div>
 
-                {/* zip code and city */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 mb-2 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
                       label="Zip Code"
@@ -534,8 +499,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                   </div>
                 </div>
 
-                {/* state and street adress */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 mb-4 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
                       label="State"
@@ -574,7 +538,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                   </div>
                 </div>
 
-                <div>
+                <div className="mb-3">
                   <InputField
                     label="Birth Date"
                     id="birth_date"
@@ -582,19 +546,14 @@ const RegisterPatient = ({ setSelectUser }) => {
                     asterisk={true}
                     type="date"
                     placeholder="e.g., 21 Sep 2020"
-                    // icon={IoLocationSharp}
                     register={register}
                     registerName="birth_date"
                     className="pr-10"
                     errors={errors}
-                    // validation={{
-                    //   required: "Birth Date is required",
-                    // }}
                   />
                 </div>
 
-                {/* Password Fields */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid mb-4 grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
                       label="Create a Password"
@@ -636,60 +595,7 @@ const RegisterPatient = ({ setSelectUser }) => {
                       " "}
                   </div>
                 </div>
-                {/* <div className="space-y-4">
-                <p className="text-md font-semibold">
-                  Preferred Communication Method
-                </p>
-                <div className="flex text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="email"
-                      name="preferredCommunication"
-                      value="email"
-                      checked={formData.preferredCommunication.includes(
-                        "email"
-                      )}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="email" className="ml-1">
-                      Via Email Address
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="phone"
-                      name="preferredCommunication"
-                      value="phone"
-                      checked={formData.preferredCommunication.includes(
-                        "phone"
-                      )}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="phone" className="ml-1">
-                      Via Phone Number
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="sms"
-                      name="preferredCommunication"
-                      value="sms"
-                      checked={formData.preferredCommunication.includes("sms")}
-                      onChange={handleCommunicationChange}
-                      className="mr-2 scale-150 border-[#FFFFFF] align-middle"
-                    />
-                    <label htmlFor="sms" className="ml-1">
-                      Via SMS Text
-                    </label>
-                  </div>
-                </div>
-              </div> */}
-
+               
                 <div className="space-y-4">
                   <p className="text-md font-semibold">
                     Preferred Communication Method
@@ -741,19 +647,15 @@ const RegisterPatient = ({ setSelectUser }) => {
                   </div>
                 </div>
 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full flex justify-center bg-[#28A2FF] text-white items-center h-[50px] px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
                 >
                   {isRegisterPending ? <Spinner /> : "Sign Up"}
                 </button>
-                {/* calling component for Social icons */}
                 <SocialLoginSection
                   action="login"
-                  // handleSocialLogin={handleSocialLogin}
                 />
-                {/* "Don't have an account yet?" Section */}
                 <div className="flex justify-center mt-6">
                   <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
                     Already have an account?{" "}

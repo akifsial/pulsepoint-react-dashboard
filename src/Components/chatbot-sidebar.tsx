@@ -12,7 +12,7 @@ interface SidebarProps {
   sidebarData: string[];
   isOpen: boolean;
   onClose: () => void;
-  onTabClick: (tab: string) => void; // Add this prop to handle tab clicks
+  onTabClick: (tab: string) => void; 
 }
 
 const ChatbotSidebar: React.FC<SidebarProps> = ({
@@ -29,15 +29,9 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
 
   const { data, isLoading } = useGetAllConversations();
 
-  // Close the sidebar when the location changes
-  // useEffect(() => {
-  //   onClose();
-  // }, [location.pathname, onClose]);
-
-  // Handle the click event to trigger the onTabClick function
   const handleLinkClick = (link: string) => {
-    onTabClick(link); // Trigger the tab click function passed from the parent
-    onClose(); // Close the sidebar after clicking
+    onTabClick(link); 
+    onClose(); 
   };
 
   return (
@@ -71,8 +65,8 @@ const ChatbotSidebar: React.FC<SidebarProps> = ({
                     isActive ? "inline" : "hidden group-hover:inline"
                   }`}
                   onClick={(e) => {
-                    e.stopPropagation(); // prevent parent click
-                    setActiveOptionsId(isActive ? null : link?.id); // toggle open/close
+                    e.stopPropagation(); 
+                    setActiveOptionsId(isActive ? null : link?.id); 
                   }}
                 >
                   <img src={icon} alt="options" />

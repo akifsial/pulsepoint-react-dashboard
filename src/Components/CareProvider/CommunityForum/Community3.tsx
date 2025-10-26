@@ -37,16 +37,7 @@ const Community3 = ({
         </p>
       </div>
       <div className="h-[262px] overflow-y-auto pr-2">
-        {/* {
-          data?.records?.filter((dt)=>(
-          ))
-        } */}
-
-        {/* {
-          data?.records?.filter((dt)=>(dt?.categories=="Art")).map((art)=>(
-        
-          ))
-        } */}
+      
         <CommunityTopics
           title={"🍣Anime & Cosplay"}
           options={data?.records
@@ -57,14 +48,6 @@ const Community3 = ({
 
         <CommunityTopics
           title={"🧑‍🎨Art"}
-          // text1={"Architecture"}
-          // text2={"Design"}
-          // text3={"Art"}
-          // options={[
-          //   { text: "Architecture", id: 4 },
-          //   { text: "Design", id: 5 },
-          //   { text: "Art", id: 6 },
-          // ]}
           options={data?.records
             ?.filter((dt) => dt?.category == "Art")
             .map((dt) => ({ text: dt?.name, id: dt.id }))}
@@ -72,29 +55,12 @@ const Community3 = ({
         />
         <CommunityTopics
           title={"💵Business & Finance"}
-          // text1={"Spam or advertising"}
-          // text2={"Harassment or bullying"}
-          // text3={"Misinformation"}
-          // text4={"Off-topic or irrelevent"}
-          // text5={"Hate speech or abusive content"}
-          // options={[
-          //   { text: "Spam or advertising", id: 7 },
-          //   { text: "Harassment or bullying", id: 8 },
-          //   { text: "Misinformation", id: 9 },
-          // ]}
           options={data?.records
             ?.filter((dt) => dt?.category == "Business & Finance")
             .map((dt) => ({ text: dt?.name, id: dt.id }))}
           setSelectedTopicId={setSelectedTopicId3}
         />
-        {/* <CommunityTopics
-          title={"🧑‍🎨History"}
-         
-          options={data?.records
-            ?.filter((dt) => dt?.category == "History")
-            .map((dt) => ({ text: dt?.name, id: dt.id }))}
-          setSelectedTopicId={setSelectedTopicId4}
-        /> */}
+       
       </div>
 
       <div className="flex items-center gap-2.5 pt-[25px]">

@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
-import { apiServices } from "@src/shared/api-services";
-import apiEndpoint from "@src/shared/api-end-point";
 
-// Define the type for the User Activity data
 interface UserActivityData {
   month: string;
   patients_activity: number;
@@ -12,33 +9,27 @@ interface UserActivityData {
 }
 
 const ApexChartComponent = () => {
-  // State to store data, loading state, and error state
   const [data, setData] = useState<UserActivityData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Function to fetch the data from the API
-  const fetchUserActivityData = async (type: string) => {
-    setLoading(true); 
-    setError(null); 
-    try {
-      const response = await apiServices.get(apiEndpoint.userActivity(type));
-            if (response.data.success) {
-        setData(response.data?.payload?.data);
-      }
-    } catch (err) {
-      setError("Failed to fetch data");
-      console.error("Error fetching data:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const dummyData: UserActivityData[] = [
+    { month: "January", patients_activity: 120, care_providers_activity: 80, admin_interventions: 30 },
+    { month: "February", patients_activity: 150, care_providers_activity: 95, admin_interventions: 40 },
+    { month: "March", patients_activity: 180, care_providers_activity: 100, admin_interventions: 35 },
+    { month: "April", patients_activity: 140, care_providers_activity: 110, admin_interventions: 45 },
+    { month: "May", patients_activity: 200, care_providers_activity: 130, admin_interventions: 50 },
+    { month: "June", patients_activity: 170, care_providers_activity: 120, admin_interventions: 55 },
+  ];
 
   useEffect(() => {
-    fetchUserActivityData("user_activity_over_time");
+    setLoading(true);
+    setTimeout(() => {
+      setData(dummyData);
+      setLoading(false);
+    }, 800);
   }, []);
 
-  // Prepare the chart data series based on the fetched data
   const series = [
     {
       name: "Patients Activity",
@@ -54,40 +45,39 @@ const ApexChartComponent = () => {
     },
   ];
 
-  // Chart options
   const options = {
     chart: {
       id: "user-activity",
       toolbar: {
-        show: false, 
+        show: false,
       },
       zoom: {
-        enabled: false, 
+        enabled: false,
       },
     },
     xaxis: {
       categories: data.map((item) => item.month),
     },
     yaxis: {
-      min: 0, 
-      tickAmount: 5, 
+      min: 0,
+      tickAmount: 5,
     },
     grid: {
       borderColor: "#E0E0E0",
-      strokeDashArray: 3, 
+      strokeDashArray: 3,
     },
     legend: {
-      position: "top", 
+      position: "top",
     },
     tooltip: {
       theme: "light",
     },
-      responsive: [
+    responsive: [
       {
-        breakpoint: 300, // screen <= 300px
+        breakpoint: 300,
         options: {
           chart: {
-            width: 200, // force width to 200px
+            width: 200,
           },
         },
       },

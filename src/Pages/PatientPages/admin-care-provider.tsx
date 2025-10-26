@@ -31,7 +31,6 @@ export const getColumns = (
       return (
         <div
           className="flex me-5 max-w-[250px] items-center gap-3 cursor-pointer"
-          // onClick={() => navigate(`/patient/hospital-profile/${id}`)}
           onClick={() => navigate(`/patient/care-provider/${id}`)}
         >
           <img
@@ -59,16 +58,6 @@ export const getColumns = (
       <i className="">{dayjs(row?.original?.created_at).format("DD/MM/YY")}</i>
     ),
   },
-  // {
-  //   accessor: "total_rating",
-  //   header: "Rating",
-  //   showSort: true,
-  //   cell: ({ getValue }) => {
-  //     const rating = getValue();
-  //     return rating ? rating : ""
-  //   },
-  // },
-
   {
     accessor: "total_rating",
     header: "Rating",
@@ -90,7 +79,7 @@ export const getColumns = (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+          fill={filled ? "#FACC15" : "#D1D5DB"} 
           width="17"
           height="17"
         >
@@ -125,16 +114,6 @@ export const getColumns = (
       );
     },
   },
-  // {
-  //   accessor: "specialization",
-  //   header: "Specialization",
-  //   showSort: true,
-  //   cell: ({ getValue }) => (
-  //     <div className="flex max-w-[150px] justify-center">
-  //       {getValue() || <span className="text-gray-500">N/A</span>}
-  //     </div>
-  //   ),
-  // },
   {
     accessor: "specialization",
     header: "Specialization",
@@ -174,14 +153,6 @@ export const getColumns = (
     showSort: true,
     cell: ({ getValue }) => getValue() || "N/A",
 
-    // cell: (info) => {
-    //   const row = info.row.original;
-    //   return (
-    //     <div className=" font-normal">
-    //       {dayjs(row?.created_at).format("DD/MM/YY") ?? "N/A"}
-    //     </div>
-    //   );
-    // },
   },
 
   {
@@ -217,15 +188,6 @@ const CareProviderDashboard: React.FC = () => {
     page,
     sort == true ? "desc" : "asc"
   );
-  // const {
-  //   data: AllSavedCareProviders,
-  //   isLoading: isLoadingAllSavedCareProvider,
-  // } = useAllSavedCareProviders(
-  //   debouncedSearchText,
-  //   rating,
-  //   page,
-  //   sort == true ? "asc" : "desc"
-  // );
 
   useEffect(() => {
     if (rating) {
@@ -258,7 +220,6 @@ const CareProviderDashboard: React.FC = () => {
       last_name: "Border",
       date: "9/04/12",
       email: "alice.border@example.com",
-      // image: "/images/dashboard-images/alice.svg",
       image: alice,
       rating: <RatingStars value={5} isDisabled={true} />,
       specialization: "Elderly care",
@@ -324,7 +285,7 @@ const CareProviderDashboard: React.FC = () => {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setShowRatingDropdown(false); // close dropdown
+        setShowRatingDropdown(false); 
       }
     }
 
@@ -379,7 +340,6 @@ const CareProviderDashboard: React.FC = () => {
           <h3 className="md:mb-0 mb-3 font-bold text-[20px] space-grotesk">
             Care Providers
           </h3>
-          {/* searchbar */}
           <div className="lg:flex lg:flex-1 lg:justify-end lg:px-5 px-0">
             <CommonInput
               placeholder="Search with Provider name,zipcode"
@@ -424,7 +384,6 @@ const CareProviderDashboard: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute md:left-[-100px] top-[50px] w-50 z-50"
                   >
-                    {/* 👇 This must be inside ref wrapper */}
                     <RatingFilterDropdown
                       setShowRatingDropdown={setShowRatingDropdown}
                       setRating={setRating}
@@ -444,7 +403,6 @@ const CareProviderDashboard: React.FC = () => {
             } `}
             onClick={() => handleTabClick("all")}
             style={{
-              // width: "213px",
               height: "47px",
               gap: "10px",
               paddingTop: "18px",
@@ -470,7 +428,6 @@ const CareProviderDashboard: React.FC = () => {
             } `}
             onClick={() => handleTabClick("saved")}
             style={{
-              // width: "213px",
               height: "47px",
               gap: "10px",
               paddingTop: "18px",
@@ -509,14 +466,7 @@ const CareProviderDashboard: React.FC = () => {
             )
           ) : (
             <>
-              {/* <TanDataTable<dataTypes>
-              columns={columns}
-              data={AllSavedCareProviders ?? []}
-              showCheckbox={false}
-              onRowSelect={handleRowSelect}
-              className="my-custom-class"
-              onSortClick={onSortClick}
-            /> */}
+            
               <SavedCareProviders
                 onSortClick={onSortClick}
                 debouncedSearchText={debouncedSearchText}

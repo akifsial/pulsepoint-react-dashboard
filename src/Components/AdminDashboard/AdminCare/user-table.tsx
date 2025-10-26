@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
 import DropdownActions from "@components/dashboard-components/dropdown-actions/dropdown-actions";
-// import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-// import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
-// import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
-// import { AnimatePresence, motion } from "framer-motion";
-// import RatingFilterDropdown from "@components/Dashboard-components/Dropdowns/RatingFilterDropdown";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-// import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-// import CommonInput from "@components/Shared-components/Inputs/Common-Input/CommonInput";
 import { TanDataTableColumn } from "@components/dashboard-components/tanstack-data-table/types";
 import { FaRegFileAlt } from "react-icons/fa";
 import UserInfo from "./user-info";
@@ -16,7 +9,7 @@ import UserInfo from "./user-info";
 const UserTable: React.FC = () => {
   const [showRatingDropdown, setShowRatingDropdown] = React.useState(false);
   const [activeTab, setActiveTab] = useState<"all" | "saved">("all");
-const [selectedUser, setSelectedUser]=useState(false);
+  const [selectedUser, setSelectedUser] = useState(false);
 
   type dataTypes = {
     id?: number;
@@ -94,30 +87,7 @@ const [selectedUser, setSelectedUser]=useState(false);
         );
       },
     },
-    //      {
-    //       accessor: "status",
-    //       header: "Status",
-    //       showSort: true,
-    //       cell: ({ row }: { row: { original: dataTypes } }) => {
-    //         const status = row.original.status?.toLowerCase();
-    //         const statusStyles = {
-    //           pending: "text-[#067647] border-[1.5px] border-[#079455]",
-    //           approved: "text-[blue] border-[1.5px] border-[blue]",
-    //           flagged: "text-[#C22E00] border-[1.5px] border-[#C22E00]",
-    //         };
 
-    //         return (
-    //           <span
-    //   className={`text-xs font-medium px-3 py-1 rounded-full ${
-    //     statusStyles[status as keyof typeof statusStyles] || "bg-gray-200 text-gray-700"
-    //   }`}
-    // >
-    //   {status?.charAt(0).toUpperCase() + status?.slice(1)}
-    // </span>
-
-    //         );
-    //       },
-    //     },
   ];
 
   const data: dataTypes[] = [
@@ -153,8 +123,7 @@ const [selectedUser, setSelectedUser]=useState(false);
     },
   ];
 
-  const handleRowSelect = (row: dataTypes) => {
-  };
+  const handleRowSelect = (row: dataTypes) => {};
 
   const handleTabClick = (tab: "all" | "saved") => {
     setActiveTab(tab);
@@ -163,55 +132,53 @@ const [selectedUser, setSelectedUser]=useState(false);
 
   return (
     <>
-    {selectedUser? (<UserInfo/>):(<div className="mb-10">
-      <div className=" bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
-        <div className=" flex md:flex-row flex-col md:items-center md:justify-between">
-          <h3 className="mb-3 font-space-grotesk">Added Patients</h3>
-        </div>
-        <div>
-          {activeTab === "all" ? (
-            <TanDataTable<dataTypes>
-              columns={columns}
-              data={data}
-              showCheckbox={false}
-              onRowSelect={handleRowSelect}
-              showActions={true}
-              className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  variant="default"
-                  actions={[
-                    {
-                      label: "View Detail",
-                      icon: <FaRegFileAlt className="text-gray-600" />,
-                      onClick: () => setSelectedUser(true),
-                      type: "view",
-                    },
-                  ]}
+      {selectedUser ? (
+        <UserInfo />
+      ) : (
+        <div className="mb-10">
+          <div className=" bg-[#FFFFFF] rounded-[10px] px-4 py-6 mb-6">
+            <div className=" flex md:flex-row flex-col md:items-center md:justify-between">
+              <h3 className="mb-3 font-space-grotesk">Added Patients</h3>
+            </div>
+            <div>
+              {activeTab === "all" ? (
+                <TanDataTable<dataTypes>
+                  columns={columns}
+                  data={data}
+                  showCheckbox={false}
+                  onRowSelect={handleRowSelect}
+                  showActions={true}
+                  className="my-custom-class"
+                  actions={(row) => (
+                    <DropdownActions
+                      variant="default"
+                      actions={[
+                        {
+                          label: "View Detail",
+                          icon: <FaRegFileAlt className="text-gray-600" />,
+                          onClick: () => setSelectedUser(true),
+                          type: "view",
+                        },
+                      ]}
+                    />
+                  )}
+                />
+              ) : (
+                <TanDataTable<dataTypes>
+                  columns={columns}
+                  data={data.slice(0, 3)}
+                  showCheckbox={false}
+                  onRowSelect={handleRowSelect}
+                  showActions={true}
+                  className="my-custom-class"
+                  actions={(row) => <DropdownActions variant="simple" />}
                 />
               )}
-            />
-          ) : (
-            <TanDataTable<dataTypes>
-              columns={columns}
-              data={data.slice(0, 3)}
-              showCheckbox={false}
-              onRowSelect={handleRowSelect}
-              showActions={true}
-              className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  // onView={() => console.log("View Detail", row.id)}
-                  variant="simple"
-                />
-              )}
-            />
-          )}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>)}
+      )}
     </>
-    
   );
 };
 

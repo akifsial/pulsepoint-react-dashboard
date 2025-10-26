@@ -25,7 +25,6 @@ const FeaturedArticleCard: React.FC<FeaturedArticleCardProps> = ({
   const navigate = useNavigate();
   return (
     <article onClick={() => navigate(`/blog/${id}`)} className="w-full cursor-pointer">
-      {/* image */}
       <figure className="w-full  aspect-[723/387] overflow-hidden rounded-lg">
         <img
           src={image?.url}
@@ -34,13 +33,11 @@ const FeaturedArticleCard: React.FC<FeaturedArticleCardProps> = ({
         />
       </figure>
 
-      {/* meta row */}
       <div className="mt-4 flex flex-wrap  justify-between items-center text-[16px] font-medium text-gray-700">
         <div>
           <span className="font-semibold text-black">{category}</span>
           <span className="mx-1">•</span>
           <span>Published:&nbsp;{published}</span>
-          {/* <span className="mx-1">•</span> */}
         </div>
 
         <div>
@@ -50,7 +47,6 @@ const FeaturedArticleCard: React.FC<FeaturedArticleCardProps> = ({
         </div>
       </div>
 
-      {/* title */}
       <h1 className="mt-2 md:text-[30px] text-[20px] font-bold text-gray-900">
         {title?.length > 15 ? title?.slice(0, 100) + "..." : title}
       </h1>
@@ -64,13 +60,6 @@ const FeaturedArticleCard: React.FC<FeaturedArticleCardProps> = ({
         </Link>
       )}
 
-      {/* read-more */}
-      {/* <Link
-      to={link}
-      className="mt-3 inline-block text-sm font-semibold text-blue-600 hover:text-blue-500"
-    >
-      Read&nbsp;More
-    </Link> */}
     </article>
   );
 };

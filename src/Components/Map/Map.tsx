@@ -16,21 +16,17 @@ const Map = ({ onLocationSelect,defaultCenter=[10.4515, 51.1657] }) => {
   useEffect(() => {
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
-    // Initialize map
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      // center: [-74.006, 40.7128], // New York coordinates
       center: defaultCenter,
       zoom: 10.12,
     });
 
-    // Add marker at New York
     new mapboxgl.Marker()
       .setLngLat(defaultCenter)
       .addTo(mapRef.current);
 
-    // Add Geocoder control
     const geocoder = new MapboxGeocoder({
       accessToken: MAPBOX_ACCESS_TOKEN,
       mapboxgl: mapboxgl,
@@ -58,7 +54,6 @@ const Map = ({ onLocationSelect,defaultCenter=[10.4515, 51.1657] }) => {
         });
       }
 
-      // Add a marker at selected location
       new mapboxgl.Marker().setLngLat(center).addTo(mapRef.current);
     });
 

@@ -65,7 +65,7 @@ const PopularCommunity = () => {
 
     onSuccess: async () => {
       toast.success("Community Create Successfully");
-      queryClient.invalidateQueries(["useGetAllCommunities"]); // refetch list
+      queryClient.invalidateQueries(["useGetAllCommunities"]); 
       setImg1(null)
       setImg2(null)
       setName("")
@@ -124,13 +124,10 @@ const PopularCommunity = () => {
 
   return (
     <>
-      {/* Sidebar */}
       <div className="md:mt-0 mt-10">
         <CommonInput
           placeholder="Search Communities "
           showImg={true}
-          // imgSrc={searchCommunity}
-          // imgLeft={true}
           inputClassName="text-base"
           containerClassName="w-full max-w-md border-0 px-5 py-3.5 rounded-[10px] mb-4"
           imgClassName="w-5 h-5"
@@ -185,7 +182,6 @@ const PopularCommunity = () => {
         />
       </div>
 
-      {/* Step-based Modal Views */}
       {step === 1 && (
         <Model className="max-w-[596px]" setIsOpen={closeModal}>
           <Community1

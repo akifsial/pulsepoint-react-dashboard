@@ -157,7 +157,7 @@ const CareProviderDashboard: React.FC = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill={filled ? "#FACC15" : "#D1D5DB"} // yellow-400 or gray-300
+            fill={filled ? "#FACC15" : "#D1D5DB"} 
             width="20"
             height="20"
           >
@@ -241,7 +241,6 @@ const CareProviderDashboard: React.FC = () => {
   ];
 
   const handleRowSelect = (row: Person) => {
-    // console.log("Selected row:", row);
   };
 
   const renderActions = (row: Person) => (
@@ -319,15 +318,7 @@ const CareProviderDashboard: React.FC = () => {
                   btnClass="border inter border-[#252525] px-4 md:w-[101px] h-[44px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
                   onClick={() => setShowRatingDropdown(!showRatingDropdown)}
                 />
-                {/* <PrimaryButton
-                  btnText="View All Reviews"
-                  btnTextClass="text-[#FFFFFF] text-sm font-semibold"
-                  showImg={true}
-                  imgClass="w-[14px] h-[13px]"
-                  img={ForwardArrow}
-                  imgPosition="right"
-                  btnClass="border border-[#252525] px-4 py-3 md:w-[159px] h-[46px] w-full rounded-lg bg-[#000000]"
-                /> */}
+        
               </div>
               <AnimatePresence>
                 {showRatingDropdown && (
@@ -350,17 +341,7 @@ const CareProviderDashboard: React.FC = () => {
           </div>
         </div>
         <div>
-          {/* <TanDataTable<dataTypes>
-            columns={columns}
-            data={CareproviderData?.records ?? ""}
-            showCheckbox={false}
-            onRowSelect={handleRowSelect}
-            actions={renderActions}
-            onSortClick={onSortClick}
-           
-            className="my-custom-class"
-          
-          /> */}
+
 
           <div className="overflow-x-auto w-full h-fit overflow-y-auto">
             {CareProviderLoading ? (
@@ -368,7 +349,7 @@ const CareProviderDashboard: React.FC = () => {
             ) : (
               <TanDataTable<dataTypes>
                 columns={columns}
-                data={CareproviderData?.records ?? []} // better to use [] instead of ""
+                data={CareproviderData?.records ?? []} 
                 showCheckbox={false}
                 onRowSelect={handleRowSelect}
                 actions={renderActions}
@@ -385,28 +366,7 @@ const CareProviderDashboard: React.FC = () => {
           rowsPerPage={3}
         />
       </div>
-      {/* <div className="bg-[#FFFFFF] rounded-[10px] px-4 p-5">
-        <div>
-          <div className="flex md:flex-row flex-col md:items-center md:justify-between mb-6.5">
-            <h3 className="mb-3 md:mb-0">Community Forum Activity</h3>
-            <div className="flex items-center gap-3">
-              <p className="text-[#252525] font-medium text-sm">Filter by</p>
-              <PrimaryButton
-                btnText="Today"
-                showImg={true}
-                imgClass="w-[24px] h-[24px] object-cover"
-                img={filterIcon}
-                imgPosition="left"
-                btnClass="border border-[#252525] px-4 md:w-[91px] h-[46px] w-full py-[10px] rounded-lg text-[#252525] text-sm font-medium"
-              />
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2  grid-cols-1 gap-[13px]">
-            <ForumActivityCard />
-            <ForumActivityCard />
-          </div>
-        </div>
-      </div> */}
+
     </div>
   );
 };

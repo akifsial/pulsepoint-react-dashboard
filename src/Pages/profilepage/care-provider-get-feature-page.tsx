@@ -45,7 +45,6 @@ const CareProviderGetFeaturePage = () => {
       mutationFn: (data) => ApiCreatePayment(data),
 
       onSuccess: async (data) => {
-        // navigate(data?.url)
         window.location.href = data?.url;
       },
       onError: (error) => {

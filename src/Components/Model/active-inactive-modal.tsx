@@ -41,8 +41,7 @@ const ActiveInactiveModal: React.FC<EditModalProps> = ({
         <div className="flex justify-end gap-4">
           <button
             className="px-4 py-2 cursor-pointer bg-red-600 text-white rounded hover:bg-red-700 transition"
-            // onClick={()=>{onEdit(); setStatus(data?.status)}}
-              onClick={() => onEdit(data?.status)} // send the correct current status
+              onClick={() => onEdit(data?.status)} 
 
           >
             {loading ? <Spinner /> : data?.status=="ACTIVE" ? "InActive" : "Active" }

@@ -22,10 +22,8 @@ const EditReviewPage: React.FC = ({setShowAddModal}) => {
   const location = useLocation();
   const state = location.state as LocationState;
 
-  // If no review data is passed, redirect back to reviews page
   React.useEffect(() => {
     if (!state?.reviewData) {
-      // navigate('/patient/patient-reviews'); // Updated path
     }
   }, [state, navigate]);
 
@@ -33,10 +31,6 @@ const EditReviewPage: React.FC = ({setShowAddModal}) => {
     rating: number;
     comment: string;
   }) => {
-    // Here you would typically make an API call to save the updated review
-
-    // After successful save, navigate back to reviews page
-    // You might want to show a success message here
     navigate("/patient/patient-reviews", {
       state: {
         message: "Review updated successfully!",
@@ -68,7 +62,6 @@ const EditReviewPage: React.FC = ({setShowAddModal}) => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
-        {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
@@ -87,7 +80,6 @@ const EditReviewPage: React.FC = ({setShowAddModal}) => {
           </div>
         </div>
 
-        {/* Provider Info Card */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex items-center gap-4">
             <img
@@ -105,7 +97,6 @@ const EditReviewPage: React.FC = ({setShowAddModal}) => {
           </div>
         </div>
 
-        {/* Review Form */}
         <div className="bg-white rounded-lg shadow-sm">
           <div className="p-6">
             <ReviewForm
@@ -118,11 +109,9 @@ const EditReviewPage: React.FC = ({setShowAddModal}) => {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="mt-6 flex gap-4 justify-end">
           <PrimaryButton
             btnText="Cancel"
-            // onClick={handleCancel}
             onClick={()=>(setShowAddModal(false))}
             btnClass="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-md"
           />

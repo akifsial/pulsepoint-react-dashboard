@@ -41,7 +41,7 @@ const EditBlogs: React.FC<AddBlogModalProps> = ({
     ...(data?.records?.map((category) => ({
       label: category.name,
       value: category.id,
-    })) || []), // <-- default to empty array
+    })) || []), 
   ];
 
   const {
@@ -69,8 +69,7 @@ const EditBlogs: React.FC<AddBlogModalProps> = ({
         toast.success("Blog updated!");
         setShowEditModal(false)
 
-        queryClient.invalidateQueries(["useBlog"]); // refetch list
-        // reset();
+        queryClient.invalidateQueries(["useBlog"]); 
       },
       onError: () => {},
     });
@@ -96,7 +95,6 @@ const EditBlogs: React.FC<AddBlogModalProps> = ({
   });
 
 
-  // if (!isOpen) return null;
 
   const modalContent = (
     <div
@@ -115,14 +113,12 @@ const EditBlogs: React.FC<AddBlogModalProps> = ({
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* ✅ Image Upload using Controller */}
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">Blog Image</label>
 
             <Controller
               name="image"
               control={control}
-              // rules={{ required: "Blog image is required" }}
               render={({ field: { onChange, value } }) => (
                 <div className="relative w-full h-30 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-[#007AB2] transition">
                   {value ? (
@@ -167,8 +163,6 @@ const EditBlogs: React.FC<AddBlogModalProps> = ({
             <SelectField
               label="Category"
               id="category"
-              // value={city}
-              // onChange={(e) => setCity(e.target.value)}
               options={categoryOption}
               selectName="sm:sm:w-[100%] !mb-8.5 w-full"
               register={register}
@@ -180,7 +174,6 @@ const EditBlogs: React.FC<AddBlogModalProps> = ({
             />
           </div>
 
-          {/* ✅ Title field */}
           <InputField
             label="Title:"
             id="title"
@@ -191,7 +184,6 @@ const EditBlogs: React.FC<AddBlogModalProps> = ({
             errors={errors}
           />
 
-          {/* ✅ Description field */}
           <InputField
             label="Description:"
             id="description"
@@ -203,7 +195,6 @@ const EditBlogs: React.FC<AddBlogModalProps> = ({
             errors={errors}
           />
 
-          {/* ✅ Buttons */}
           <div className="flex justify-end gap-4">
             <button
               type="submit"

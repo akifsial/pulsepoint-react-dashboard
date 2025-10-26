@@ -11,7 +11,6 @@ import Header from "@components/website/layout/header";
 import { useBlog, useCategory, useGetBlogs } from "@src/hooks/use-website";
 import dummyImage from "@assets/media/images/dummyUser.png"
 const HomePage = () => {
-  // Sample data arrays following your pattern of using arrays for similar components
   const categories = [
     {
       title: "Activities",
@@ -201,90 +200,8 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen">
-      {/* < TopBar /> */}
       <Header />
-      {/* Hero Section */}
-      {/* <section className="bg-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <div className="relative overflow-hidden rounded-lg">
-                <img
-                  src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&h=500&fit=crop"
-                  alt="Featured Article"
-                  className="w-full h-96 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-6 text-white">
-                  <div className="flex items-center text-sm mb-2">
-                    <span className="bg-blue-500 px-2 py-1 rounded text-xs font-medium mr-3 text-black">
-                      Facilities
-                    </span>
-                    <span>Published: February 24, 2025</span>
-                    <span className="mx-2">•</span>
-                    <span>Article</span>
-                    <span className="mx-2">•</span>
-                    <span>4 min read</span>
-                  </div>
-                  <h1 className="text-2xl lg:text-3xl font-bold mb-3">
-                    East Bay | Constance Wu (Crazy Rich Asians) | DRAMA | Full
-                    Movie in English
-                  </h1>
-
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              {[
-                {
-                  title:
-                    "Learning to Live Improve Your English Story Learn English Stori...",
-                  readTime: "2 MIN READ",
-                  image:
-                    "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=150&h=100&fit=crop",
-                },
-                {
-                  title:
-                    "30 Min Senior Workout Routines – Standing & Seated Chair Exercise...",
-                  readTime: "2 MIN READ",
-                  image:
-                    "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=150&h=100&fit=crop",
-                },
-                {
-                  title:
-                    "3 Simple At-Home `Exercises for Seniors | Stay Active and Strong...",
-                  readTime: "2 MIN READ",
-                  image:
-                    "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=150&h=100&fit=crop",
-                },
-              ].map((article, index) => (
-                <div key={index} className="flex space-x-4">
-
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-20 h-16 object-cover rounded flex-shrink-0"
-                  />
-                  <div className="flex-1">
-                    <div className="text-xs text-gray-500 mb-1">
-                      {article.readTime}
-                    </div>
-                    <h3 className="text-sm font-medium text-gray-900 line-clamp-3 hover:text-blue-500 cursor-pointer">
-                      {article.title}
-                    </h3>
-
-
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section> */}
-
-      {/* HERO SECTION */}
-      {/* Explore Categories Section */}
+    
       <section className="bg-gray-50 py-[50px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
@@ -304,7 +221,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Explore Our Services Section */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -323,7 +239,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Featured This Week Section */}
       <section className="bg-gray-50 py-[50px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
@@ -343,7 +258,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* What Seniors are Saying Section */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -369,17 +283,12 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Featured Resources Section */}
       <section className="bg-gray-50 py-[50px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900">
               Featured Resources
             </h2>
-            {/* <Button variant="primary" className="flex items-center space-x-2">
-              <span>See All News</span>
-              <ArrowRight className="w-4 h-4" />
-            </Button> */}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredResources.map((resource, index) => (
@@ -389,7 +298,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -414,11 +322,9 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Community Forum Preview Section */}
       <section className="bg-black text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Forum Post */}
             <div>
               <div className="flex items-center space-x-3 mb-4">
                 <img
@@ -441,10 +347,6 @@ const HomePage = () => {
                 My 78-year-old dad is struggling with mobility, but refuses help
                 at home. Has anyone had success getting through to a stubborn
                 parent?
-                {/* <span className="text-blue-400 cursor-pointer hover:text-blue-300">
-                  {" "}
-                  Read more...
-                </span> */}
               </p>
 
               <div className="relative mb-6">
@@ -472,7 +374,6 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* Top Doctors Sidebar */}
             <div>
               <h3 className="text-xl font-semibold mb-6">
                 Top Communities
@@ -486,7 +387,6 @@ const HomePage = () => {
                 ].map((doctor, index) => (
                   <div key={index} className="flex items-center space-x-3">
                     <img
-                      // src={`${import.meta.env.VITE_APP_API_IMG_URL}${doctor?.profile_icon_image}`}
                       src={
                         doctor?.profile_icon_image
                           ? `${import.meta.env.VITE_APP_API_IMG_URL}${doctor.profile_icon_image

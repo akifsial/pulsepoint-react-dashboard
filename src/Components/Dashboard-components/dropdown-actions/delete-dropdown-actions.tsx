@@ -3,8 +3,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 
 interface DropdownActionsProps {
-  // onDelete: () => void;
-  onDelete: () => Promise<void> | void; // allow async
+  onDelete: () => Promise<void> | void; 
 
   variant?: "default" | "simple";
 }
@@ -44,7 +43,7 @@ const DeleteDropdownActions: React.FC<DropdownActionsProps> = ({
   const handleDelete = async () => {
     try {
       setLoading(true);
-      await onDelete(); // wait for API
+      await onDelete(); 
       setOpen(false);
     } finally {
       setLoading(false);

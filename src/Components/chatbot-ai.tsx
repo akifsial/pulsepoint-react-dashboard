@@ -28,7 +28,6 @@ const ChatbotAi: React.FC = ({
   const [question, setQuestion] = useState("");
   const [botAnswers, setBotAnswers] = useState([]);
   const [userAnswer, setUserAnswer] = useState([]);
-  // const [chatBotData, setChatBotData] = useState([]);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -45,11 +44,9 @@ const ChatbotAi: React.FC = ({
   }, []);
 
   useEffect(() => {
-    setQuestion(""); // Clear input when chat changes
+    setQuestion(""); 
   }, [selectedConversationId]);
 
-  // const chatId=selectedConversationId
-  // const [conversationId, setConversationId] = useState();
   const { data: conversationsData } = useGetConversationChatSpecific(
     selectedConversationId
   );
@@ -67,12 +64,10 @@ const ChatbotAi: React.FC = ({
   }, [chatBotData, conversationsData, selectedConversationId]);
 
   const handleAskAI = () => {
-    // Handle AI suggestion functionality
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
   };
 
   const navigate = useNavigate();
@@ -81,20 +76,16 @@ const ChatbotAi: React.FC = ({
       mutationFn: (data) => ApiChatPost(data, navigate),
 
       onSuccess: async (data) => {
-        // setConversationId()
-        // selectedConversationId(data?.record?.conversation_id);
         setSelectedConversationId(data?.record?.conversation_id);
         setQuestion("");
-        queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+        queryClient.invalidateQueries(["useCareProviderSingle"]); 
 
         const userMsg = data?.record?.content;
         const botMsg = data?.record?.bot_reply?.content;
         setChatBotData((prev) => [...prev, { user: userMsg, bot: botMsg }]);
 
-        // queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
       },
       onError: (error) => {
-        // toast.error(error?.response?.data?.message);
       },
     });
 
@@ -105,7 +96,6 @@ const ChatbotAi: React.FC = ({
       content: messageToSend,
       userIds: [],
       type: "chatbot",
-      // conversationId: selectedConversationId,
     };
 
     if (selectedConversationId) {
@@ -119,7 +109,6 @@ const ChatbotAi: React.FC = ({
   return (
     <div className="w-full max-w-screen mx-auto bg-white rounded-lg px-2 sm:p-8  shadow-sm">
       <div className="flex flex-col gap-8 h-full justify-center items-center">
-        {/* Header Section */}
         <div className="w-full flex justify-end">
           <button
             onClick={() => {
@@ -149,7 +138,6 @@ const ChatbotAi: React.FC = ({
           {selectedConversationId
             ? conversationsData?.records?.map((conversation, index) => (
               <React.Fragment key={index}>
-                {/* User Message */}
                 {conversation?.content && (
                   <div className="flex justify-end">
                     <p className="bg-[#E4E6E7] mt-5 text-black p-2 mb-5 rounded-[10px] w-fit">
@@ -158,7 +146,6 @@ const ChatbotAi: React.FC = ({
                   </div>
                 )}
 
-                {/* Bot Reply */}
                 {conversation?.bot_reply?.content && (
                   <p className="prose prose-sm prose-slate dark:prose-invert max-w-none">
                     <ReactMarkdown>
@@ -170,7 +157,6 @@ const ChatbotAi: React.FC = ({
             ))
             : chatBotData?.map((bot, index) => (
               <React.Fragment key={index}>
-                {/* User Message */}
                 {bot.user && (
                   <div className="flex justify-end">
                     <p className="bg-[#E4E6E7] text-black p-2 mb-3 rounded-[10px] w-fit">
@@ -179,7 +165,6 @@ const ChatbotAi: React.FC = ({
                   </div>
                 )}
 
-                {/* Bot Reply */}
                 {bot.bot && <p>{bot.bot}</p>}
               </React.Fragment>
             ))}
@@ -195,7 +180,6 @@ const ChatbotAi: React.FC = ({
           handleChatPost={handleChatPost}
         />
 
-        {/* Notice Text */}
         <div className="font-geist sm:!text-[16px] !text-[14px] font-medium text-base leading-relaxed text-customGray text-center">
           It will need to know if the business is on cash vs accrual, from
           website and user provided description

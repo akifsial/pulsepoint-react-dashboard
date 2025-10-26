@@ -10,7 +10,6 @@ const SkeletonTableLoader = () => {
               key={index}
               className="bg-white border-b border-[#2525251a] hover:bg-[var(--primary-color-hover-light)] transition-colors duration-200"
             >
-              {/* Data cell 1 - Avatar and name */}
               <td className="px-2 py-5">
                 <div className="flex items-center gap-3 animate-pulse">
                   <div className="w-8 h-8 bg-gray-300 rounded-full" />
@@ -18,17 +17,14 @@ const SkeletonTableLoader = () => {
                 </div>
               </td>
 
-              {/* Data cell 2 */}
               <td className="px-2 py-5">
                 <div className="h-4 w-16 bg-gray-200 rounded animate-pulse" />
               </td>
 
-              {/* Data cell 3 */}
               <td className="px-2 py-5">
                 <div className="h-4 w-16 bg-gray-200 rounded animate-pulse" />
               </td>
 
-              {/* Action buttons */}
               <td className="px-2 py-5">
                 <div className="h-4 w-16 bg-gray-300 rounded animate-pulse" />
               </td>

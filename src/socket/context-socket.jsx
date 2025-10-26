@@ -1,4 +1,3 @@
-// src/context/ConversationContext.js
 import { createContext, useContext, useEffect, useState } from "react";
 import { socket } from "./socket";
 
@@ -17,7 +16,6 @@ export const ConversationProvider = ({ children }) => {
     });
 
     socket.on("connect_error", (err) => {
-      console.error("Socket connection error:", err.message);
     });
 
     socket.connect();
@@ -28,9 +26,8 @@ export const ConversationProvider = ({ children }) => {
     setIsConnected(false);
   };
 
-  // ✅ Auto-connect if token exists (e.g., from localStorage)
   useEffect(() => {
-    const token = localStorage.getItem("token"); // or sessionStorage / cookie
+    const token = localStorage.getItem("token"); 
 
     if (token) {
       connectSocket(token);

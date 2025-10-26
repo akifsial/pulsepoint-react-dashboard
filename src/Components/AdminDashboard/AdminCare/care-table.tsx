@@ -35,7 +35,6 @@ const CareProviderDashboard: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState<number | null>(null);
 
-  // --- Pagination (dynamic/API) ---
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 3;
   const [totalRecords, setTotalRecords] = useState<number>(0);
@@ -57,7 +56,6 @@ const CareProviderDashboard: React.FC = () => {
     image?: string;
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -73,13 +71,11 @@ const CareProviderDashboard: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showRatingDropdown]);
 
-  // Initial load & when rating changes -> reset to page 1 (include current search)
   useEffect(() => {
     setCurrentPage(1);
     fetchProviders(selectedRating, 1, searchText);
   }, [selectedRating]);
 
-  // Re-fetch when page changes (include current search)
   useEffect(() => {
     fetchProviders(selectedRating, currentPage, searchText);
   }, [currentPage]);
@@ -96,7 +92,6 @@ const CareProviderDashboard: React.FC = () => {
   const capitalizeFirstLetter = (str: string) =>
     str.charAt(0).toUpperCase() + str.slice(1);
 
-  // me api integration for getting dynamic user id for search
   const fetchUserProfile = async () => {
     try {
       const response = await apiServices.get(apiEndpoint.me);
@@ -108,11 +103,9 @@ const CareProviderDashboard: React.FC = () => {
         setUserId(userData.id);
       }
     } catch (error) {
-      console.error("Error fetching user profile:", error);
     }
   };
 
-  // integrating api for fetching provider data (now paginated on server)
   const fetchProviders = async (
     rating: string = "",
     page: number = currentPage,
@@ -154,13 +147,11 @@ const CareProviderDashboard: React.FC = () => {
 
       setProviderData(mappedData);
     } catch (error) {
-      console.error("Failed to fetch provider data:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  // recent search api and filteration;
   const fetchRecentSearches = async () => {
     if (!userId) return;
     try {
@@ -171,7 +162,6 @@ const CareProviderDashboard: React.FC = () => {
         setRecentSearches(response.data.payload || []);
       }
     } catch (error) {
-      console.error("Error fetching recent searches:", error);
     }
   };
 
@@ -179,12 +169,10 @@ const CareProviderDashboard: React.FC = () => {
     fetchUserProfile();
   }, []);
 
-  // fetch when userId is known and page changes (search handled via debounce below)
   useEffect(() => {
     if (userId !== null) {
       fetchProviders(searchText);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, currentPage]);
 
   const debouncedFetchProviders = debounce((search: string) => {
@@ -194,7 +182,7 @@ const CareProviderDashboard: React.FC = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchText(value);
-    setCurrentPage(1); // reset to page 1 on new search (UI-only change)
+    setCurrentPage(1); 
     debouncedFetchProviders(value);
   };
 
@@ -202,7 +190,6 @@ const CareProviderDashboard: React.FC = () => {
     fetchRecentSearches();
   };
 
-  // delete provider api integration
   const handleDeleteProvider = async (id: number) => {
     try {
       setLoading(true);
@@ -219,7 +206,6 @@ const CareProviderDashboard: React.FC = () => {
     } catch (error) {
       setLoading(false);
 
-      console.error("Failed to delete provider:", error);
       alert("Error deleting provider.");
     }
   };
@@ -254,7 +240,6 @@ const CareProviderDashboard: React.FC = () => {
                   : dummyImage
               }
               onError={(e) => {
-                // if broken URL, fallback to dummyImage
                 (e.currentTarget as HTMLImageElement).src = dummyImage;
               }}
               alt={row.original.first_name || "Patient"}
@@ -290,7 +275,6 @@ const CareProviderDashboard: React.FC = () => {
       cell: ({ row }) => {
         const rating = Number(row.original?.rating ?? 0);
 
-        // Show N/A if rating is 0
         if (rating === 0) {
           return <span className="text-gray-500">N/A</span>;
         }
@@ -349,7 +333,6 @@ const CareProviderDashboard: React.FC = () => {
     },
   ];
 
-  // (no non-pagination changes)
   const filteredProviderData = useMemo(
     () =>
       (providerData ?? []).filter((item) =>
@@ -361,12 +344,9 @@ const CareProviderDashboard: React.FC = () => {
     [providerData, searchText]
   );
 
-  // Dynamic totals from server
   const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
 
-  // ---------- Pagination UI ----------
 
-  // ----------------------------------------------------------
 
   return (
     <div className="mb-10">
@@ -450,9 +430,7 @@ const CareProviderDashboard: React.FC = () => {
                 <>
                   <TanDataTable<dataTypes>
                     columns={columns}
-                    data={providerData} /* now server provides current page */
-                    // showCheckbox={true}
-                    // onRowSelect={(row) => console.log("Selected row:", row)}
+                    data={providerData} 
                     showActions={true}
                     actions={(row) => (
                       <AdminDropdownAction

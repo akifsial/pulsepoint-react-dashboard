@@ -1,4 +1,3 @@
-/* components/ArrowButtonGroup.tsx */
 import { FC } from "react";
 
 interface ArrowButtonGroupProps {
@@ -8,7 +7,6 @@ interface ArrowButtonGroupProps {
 
 const ArrowButtonGroup: FC<ArrowButtonGroupProps> = ({ onPrev, onNext }) => (
   <div className="w-[136.974px] h-[40px] flex gap-[15px]">
-    {/* left / previous */}
     <button
       aria-label="Previous"
       onClick={onPrev}
@@ -34,7 +32,6 @@ const ArrowButtonGroup: FC<ArrowButtonGroupProps> = ({ onPrev, onNext }) => (
       </svg>
     </button>
 
-    {/* right / next */}
     <button
       aria-label="Next"
       onClick={onNext}

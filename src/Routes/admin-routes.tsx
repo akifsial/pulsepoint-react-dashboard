@@ -3,7 +3,6 @@ import AdminCareProvidersControl from "@pages/admindashboardpages/admin-care-pro
 import AdminForumModeration from "@pages/admindashboardpages/admin-forum-moderation";
 import AdminPatientsManagement from "@pages/admindashboardpages/admin-patients-management";
 import AdminReportsandAnalytics from "@pages/admindashboardpages/admin-reportsand-analytics";
-// import AdminReviews from "@pages/AdminDashboardPages/AdminReviews";
 import AdminDashboard from "@pages/admindashboardpages/admin-dashboard";
 import AdminReviews from "@pages/admindashboardpages/admin-reviews";
 import NotificationPage from "@pages/dashboards/care-provider/notification-page";

@@ -4,8 +4,8 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
 import { HiDotsVertical } from "react-icons/hi";
-import { MdFlag } from "react-icons/md"; // For Flag icon
-import { MdDone } from "react-icons/md"; // For Approve icon
+import { MdFlag } from "react-icons/md"; 
+import { MdDone } from "react-icons/md"; 
 
 interface DropdownActionsProps {
   onEdit?: () => void;

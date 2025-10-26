@@ -27,15 +27,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   const [comment, setComment] = useState(currentReview.comment);
 
   const handleSave = () => {
-    // Save the review
     onSave({ rating, comment });
 
-    // Show success toast
     setShowToast(true); 
   };
 
   const handleCancel = () => {
-    // Reset form to original values
     setRating(currentReview.rating);
     setComment(currentReview.comment);
 
@@ -46,42 +43,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 
   return (
     <div className="w-full max-w-md h-[350px]">
-      {/* <div className="max-w-2xl mx-auto">
-        <div className="space-y-6">
-          <HospitalHeader
-            name="Johns Hopkins Hospital"
-            imageUrl={ProfilePic}
-            email="support@hopkinshospital.org"
-          />
-          <div>
-            <label className="block text-gray-700 font-medium mb-3">
-              Add A Rating
-            </label>
-            <RatingStars value={rating} onChange={setRating} />
-          </div>
-
-          <div className="mb-4">
-            <TextField
-              label="Add A Comment"
-              id="comment"
-              placeholder="Enter your comment here..."
-              row={4}
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </div>
-
-          <div className="flex gap-4">
-            <PrimaryButton
-              btnText="Post A Comment"
-              showImg={false}
-              btnClass="border-1 w-[252px] h-[46px] !rounded-[10px] px-4 py-[10px] text-white font-semibold leading-[33px] gap-[10px] flex items-center justify-center bg-[#28A2FF] hover:bg-[#2196F3] transition-colors"
-              onClick={handleSave}
-            />
-          </div>
-        </div>
-      </div> */}
-      {/* <EditFeedbackForm/> */}
+      
     </div>
   );
 };

@@ -1,7 +1,4 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-// import { ToastContainer, toast } from "react-toastify";
-
-// Define types for API responses
 interface ApiResponse<T = any> {
   success: boolean;
   message: string;
@@ -13,7 +10,6 @@ interface ErrorResponse {
   message: string;
 }
 
-// POST Request
 export async function apiPost<T>(
   url: string,
   params: any,
@@ -33,9 +29,7 @@ export async function apiPost<T>(
     const response: AxiosResponse = await axios.post(url, params, config);
 
     if (response.data.success) {
-    //   toast.success(response.data.message);
     } else {
-    //   toast.error(response.data.message);
     }
 
     return response.data;
@@ -44,7 +38,6 @@ export async function apiPost<T>(
       error.response?.data?.errors && error.response.data.errors.length > 0
         ? error.response.data.errors[0].message
         : error?.response?.data?.message || "Network error";
-    // toast.error(errorMessage);
 
     return {
       success: false,
@@ -53,14 +46,12 @@ export async function apiPost<T>(
   }
 }
 
-// GET Request with authorization
 export const apiGet = async (
   url: string,
   params: object = {},
   token: string | undefined
 ): Promise<ApiResponse<any> | ErrorResponse> => {
   if (!token) {
-    // toast.error("Authorization token is missing.");
     return { success: false, message: "Authorization token is required." };
   }
 
@@ -75,7 +66,6 @@ export const apiGet = async (
     if (response.data.success) {
       return { success: true, data: response.data.payload };
     } else {
-    //   toast.error(response.data.message || "Request failed.");
       return { success: false, message: response.data.message || "Request failed." };
     }
   } catch (error: any) {
@@ -83,7 +73,6 @@ export const apiGet = async (
   }
 };
 
-// GET Request without authorization (Public API)
 export const apiGetPublic = async (
   url: string,
   params: object = {}
@@ -94,7 +83,6 @@ export const apiGetPublic = async (
     if (response.data.success) {
       return { success: true, data: response.data };
     } else {
-    //   toast.error(response.data.message || "Request failed.");
       return { success: false, message: response.data.message || "Request failed." };
     }
   } catch (error: any) {
@@ -102,7 +90,6 @@ export const apiGetPublic = async (
   }
 };
 
-// PUT Request
 export async function apiPut<T>(
   url: string,
   data: any = {},
@@ -123,9 +110,7 @@ export async function apiPut<T>(
     const response: AxiosResponse = await axios.put(url, data, config);
 
     if (response.data.success) {
-    //   toast.success(response.data.message);
     } else {
-    //   toast.error(response.data.message);
     }
 
     return response.data;
@@ -134,7 +119,6 @@ export async function apiPut<T>(
       error.response?.data?.errors && error.response.data.errors.length > 0
         ? error.response.data.errors[0].message
         : error?.response?.data?.message || "Network error";
-    // toast.error(errorMessage);
 
     return {
       success: false,
@@ -143,13 +127,11 @@ export async function apiPut<T>(
   }
 }
 
-// DELETE Request
 export const apiDelete = async (
   url: string,
   token: string | undefined
 ): Promise<ApiResponse<any> | ErrorResponse> => {
   if (!token) {
-    // toast.error("Authorization token is missing.");
     return { success: false, message: "Authorization token is required." };
   }
 
@@ -163,9 +145,7 @@ export const apiDelete = async (
     const response: AxiosResponse = await axios.delete(url, config);
 
     if (response.data.success) {
-    //   toast.success(response.data.message);
     } else {
-    //   toast.error(response.data.message);
     }
 
     return response.data;
@@ -174,7 +154,6 @@ export const apiDelete = async (
       error.response?.data?.errors && error.response.data.errors.length > 0
         ? error.response.data.errors[0].message
         : error.response?.data?.message || "Network error";
-    // toast.error(errorMessage);
 
     return {
       success: false,

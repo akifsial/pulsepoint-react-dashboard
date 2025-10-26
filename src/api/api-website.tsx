@@ -1,11 +1,9 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-//  category api --------------------
 
 export const ApiCategories = async () => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}category`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -19,21 +17,15 @@ export const ApiCategories = async () => {
 
 export const ApiSingleCategory = async (id) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}category/${id}`;
-  // const token = JSON.parse(localStorage.getItem("token"));
-  // const token: string | null = JSON.parse(
-  //   localStorage.getItem("token") || "null"
-  // );
 
   const response = await axios.get(BASE_URL);
 
   return response.data.payload;
 };
 
-//  blog api -----------------------
 
 export const ApiBlog = async (search) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}blog?search=${search}`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -57,7 +49,6 @@ export const ApiRecentBlogs = async () => {
 
 export const ApiSingleBlog = async (id) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}blog/${id}`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -71,7 +62,6 @@ export const ApiSingleBlog = async (id) => {
 
 export const ApiAddBlog = async (data) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}blog`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -85,7 +75,6 @@ export const ApiAddBlog = async (data) => {
 
 export const ApiDeleteBlog = async (id) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}blog/${id}`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -100,7 +89,7 @@ export const ApiDeleteBlog = async (id) => {
 export const ApiEditBlog = async (id: string, data: any) => {
   try {
     const BASE_URL = `${import.meta.env.VITE_APP_API_URL}blog/${id}`;
-    const token = JSON.parse(localStorage.getItem("token")); // safer than JSON.parse
+    const token = JSON.parse(localStorage.getItem("token")); 
 
     const response = await axios.put(BASE_URL, data, {
       headers: { Authorization: `Bearer ${token}` },
@@ -109,16 +98,13 @@ export const ApiEditBlog = async (id: string, data: any) => {
     return response.data.payload;
   } catch (error: any) {
     toast.error("Edit blog error:", error?.response?.data?.errors[0]);
-    // You can throw the error so the calling function (e.g., React Query) can handle it
     throw error;
   }
 };
 
-//  review api
 
 export const ApiFeaturedWeakReviews = async (search) => {
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback/top-providers?search=${search}}`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -135,7 +121,6 @@ export const ApiGetPopularDoctors = async (search: string) => {
     import.meta.env.VITE_APP_API_URL
   }community/popular?search=${search}`;
 
-  // const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL);
 
@@ -158,7 +143,6 @@ export const ApiGetCategoryBlogs = async (id) => {
   const BASE_URL = `${
     import.meta.env.VITE_APP_API_URL
   }blog/category/${id}?page=1&limit=5`;
-  // const token = JSON.parse(localStorage.getItem("token"));
   const token: string | null = JSON.parse(
     localStorage.getItem("token") || "null"
   );
@@ -172,10 +156,6 @@ export const ApiGetCategoryBlogs = async (id) => {
 
 export const ApiGetBlogs = async () => {
   const BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts`;
-  // const token = JSON.parse(localStorage.getItem("token"));
-  // const token: string | null = JSON.parse(
-  //   localStorage.getItem("token") || "null"
-  // );
 
   const response = await axios.get(BASE_URL);
 
@@ -184,19 +164,12 @@ export const ApiGetBlogs = async () => {
 
 export const ApiGetCategories = async () => {
   const BASE_URL = `https://topseniorspot.com/wp-json/topsenior/v1/categories`;
-  // const token = JSON.parse(localStorage.getItem("token"));
-  // const token: string | null = JSON.parse(
-  //   localStorage.getItem("token") || "null"
-  // );
-
   const response = await axios.get(BASE_URL);
 
   return response;
 };
-//topseniorspot.com/wp-json/wp/v2/posts?categories=63
 
 export const ApiGetBlogsCategory = async (id, currentPage) => {
-  // const BASE_URL = `https://topseniorspot.com/wp-json/wp/v2/posts?categories=${id}`;
   let BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts/category/${id}?per_page=10`;
   BASE_URL += `&page=${currentPage}`;
 
@@ -207,10 +180,6 @@ export const ApiGetBlogsCategory = async (id, currentPage) => {
 
 export const ApiGetFeaturedPosts = async (id) => {
   const BASE_URL = `https://topseniorspot.com/wp-json/topsenior/v1/posts/featured`;
-  // const token = JSON.parse(localStorage.getItem("token"));
-  // const token: string | null = JSON.parse(
-  //   localStorage.getItem("token") || "null"
-  // );
 
   const response = await axios.get(BASE_URL);
 
@@ -219,7 +188,6 @@ export const ApiGetFeaturedPosts = async (id) => {
 
 export const ApiGetSingleBlog = async (id) => {
   const BASE_URL = ` https://topseniorspot.com/wp-json/topsenior/v1/posts/${id}`;
-  // const token = JSON.parse(localStorage.getItem("token"));
 
   const response = await axios.get(BASE_URL);
 
@@ -234,8 +202,6 @@ export const ApiContactUs = async (data) => {
     return response.data.payload;
   } catch (error) {
     toast.error(error?.response?.data?.errors[0]?.message)
-    console.error("Error in ApiContactUs:", error?.response?.data?.errors[0]?.message);
-    // Optionally, throw the error again so the caller can handle it
     throw error;
   }
 };

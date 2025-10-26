@@ -4,14 +4,13 @@ import toast from "react-hot-toast";
 let unauthorizedHandled = false;
 
 const handleUnauthorized = (error, navigate) => {
-  if (unauthorizedHandled) return; // ✅ prevent multiple executions
+  if (unauthorizedHandled) return;
   unauthorizedHandled = true;
 
   if (error === "remove" || (axios.isAxiosError(error) && error.response?.status === 401)) {
     localStorage.removeItem("token");
     localStorage.removeItem("userInfo");
     toast.error("Your account has been suspended!");
-    // navigate("/login");
     setTimeout(() => {
       navigate("/login");
     }, 1000);
@@ -28,15 +27,6 @@ export const ApiMe = async (navigate) => {
     });
 
     if (response?.data?.payload?.status == "INACTIVE") {
-      // Swal.fire({
-      //   title: "<strong>Error</strong>",
-      //   icon: "error",
-      //   html: `
-      //     // ${"Your Session has been expired!"}
-      //     <br/><br/>
-      //   `,
-
-      //  });
 
       handleUnauthorized("remove", navigate);
     }
@@ -75,10 +65,9 @@ export const ApiUpdateUser = async (id: number, data) => {
 
     return response.data.payload;
   } catch (error) {
-    console.error("x", error);
     handleUnauthorized(error);
     toast.error(error?.response?.data?.errors[0]?.message);
-    throw error; // rethrow so calling code can handle it
+    throw error; 
   }
 };
 

@@ -5,9 +5,6 @@ import user1 from "@assets/media/images/user1.png";
 import user2 from "@assets/media/images/user2.png";
 import stars from "@assets/media/svgs/stars.svg";
 import DummyImage from "@assets/media/images/dummyUser.png";
-// import trash from "@assets/media/svgs/dashboard-svgs/trash.svg";
-// import eye from "@assets/media/svgs/dashboard-svgs/eye.svg";
-// import { PrimaryButton } from "@components/Shared-components/Buttons/Common-button/CommonButton";
 import { apiServices } from "@src/shared/api-services";
 import apiEndpoint from "@src/shared/api-end-point";
 
@@ -35,7 +32,6 @@ const ReviewDetail: React.FC = () => {
   const [reviewDetail, setReviewDetail] = useState<ReviewDetailType>({});
   const [loading, setLoading] = useState(false);
 
-  // Fetch review details from API
   const fetchReviewDetail = async () => {
     if (!id) return;
 
@@ -45,10 +41,8 @@ const ReviewDetail: React.FC = () => {
       if (response.data.success) {
         setReviewDetail(response.data.payload);
       } else {
-        console.error("Failed to fetch review detail");
       }
     } catch (err) {
-      console.error("🔥 Error fetching review detail", err);
     } finally {
       setLoading(false);
     }
@@ -85,7 +79,6 @@ const ReviewDetail: React.FC = () => {
               </div>
             </div>
 
-            {/* Care Provider Info */}
             <div className="flex items-center gap-3 mb-6 mt-2.5">
               <img
                 src={
@@ -102,7 +95,6 @@ const ReviewDetail: React.FC = () => {
 
               <div className="flex flex-col">
                 <p className="font-semibold mb-1 space-grotesk text-[#252525] leading-tight">
-                  {/* {reviewDetail.care_provider?.organization_name} */}
                   {reviewDetail.care_provider?.first_name}
                   {reviewDetail.care_provider?.last_name}
                 </p>
@@ -112,7 +104,6 @@ const ReviewDetail: React.FC = () => {
               </div>
             </div>
 
-            {/* Patient Info */}
             <div>
               <h6 className="text-[#25252580] font-semibold">Patient:</h6>
             </div>
@@ -140,7 +131,6 @@ const ReviewDetail: React.FC = () => {
               </div>
             </div>
 
-            {/* Rating */}
             <div className="mb-5">
               <h6 className="text-[#25252580] mb-1.5 font-semibold">Rating:</h6>
               <div className="flex gap-1.5">
@@ -149,7 +139,6 @@ const ReviewDetail: React.FC = () => {
               </div>
             </div>
 
-            {/* Comment */}
             <div className="mb-5">
               <h6 className="text-[#25252580] mb-2 font-semibold">Comment:</h6>
               <p>{reviewDetail.content}</p>

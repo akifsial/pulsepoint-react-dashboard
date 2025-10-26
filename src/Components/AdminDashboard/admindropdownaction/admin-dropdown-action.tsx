@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-// import { MdDelete } from "react-icons/md";
-// import { MdFlag } from "react-icons/md"; // For Flag icon
-// import { MdDone } from "react-icons/md"; // For Approve icon
-// import { CgFileDocument } from "react-icons/cg"; // 🔄 Make sure this is imported at the top
-// import { IoCreate } from "react-icons/io5"; 
 import { HiDotsVertical } from "react-icons/hi";
 
 export interface DropdownActionItem {
@@ -59,8 +54,6 @@ const AdminDropdownAction: React.FC<DropdownActionsProps> = ({
       variant === "simple"
         ? "text-black"
         : type === "delete"
-        // ? "text-red-600"
-        // : "text-gray-600";
 
     return `${base} ${hover} ${color}`;
   };

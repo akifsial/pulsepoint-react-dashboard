@@ -9,12 +9,6 @@ const plans = [
     title: "Free Plan",
     price: "$0/month",
     features: [
-      // "Highlighted listing in search results",
-      // "Featured badge on profile",
-      // "Up to 5 photos",
-      // "Insights dashboard (views, clicks, contacts)",
-      // "Increased profile detail (more photos, description)",
-      // "AI chatbot use",
       "All Premium Plan features",
       "Users can interact with the chatbot up to *5 times per month free",
     ],
@@ -25,44 +19,23 @@ const plans = [
     title: "Basic",
     price: "$5.99/month",
     features: [
-      // "All Basic Plan features",
-      // "Featured placement on homepage or category pages",
-      // "Increased visibility and ranking across the platform",
-      // "Increased profile detail (more photos, description)",
       "Unlimited AI Chatbot Use",
-      // "Everything in Starter",
-      // "Appear in featured sections (homepage, category pages)",
-      // "Insights dashboard (views, clicks, contacts)",
-      // "Link to booking form or EHR system",
     ],
     highlighted: true,
     slug: "BASIC",
   },
-  // {
-  //   title: "Enterprise Plan",
-  //   price: "$120/month",
-  //   features: [
-  //     "Everything in Professional",
-  //     "Priority support",
-  //     "Quarterly performance report & SEO audit",
-  //     "Multi-location support",
-  //   ],
-  //   highlighted: false,
-  //   slug: "ENTERPRISE",
-  // },
 ];
 
 const ProfileCards = ({ onUpgrade, subscriptionTime, user }) => {
   const [loadingSlug, setLoadingSlug] = useState("");
 
   const handleUpgrade = async (slug: string) => {
-    setLoadingSlug(slug); // Show loader on selected button
+    setLoadingSlug(slug); 
     try {
-      await onUpgrade(slug); // Call API or parent function
+      await onUpgrade(slug); 
     } catch (error) {
-      console.error("Upgrade failed:", error);
     } finally {
-      setLoadingSlug(""); // Hide loader
+      setLoadingSlug(""); 
     }
   };
 
@@ -114,42 +87,6 @@ const ProfileCards = ({ onUpgrade, subscriptionTime, user }) => {
               </ul>
             </div>
 
-            {/* <PrimaryButton
-              btnText={loadingSlug ? "Processing..." : "Subscribe Now"}
-              showImg={!loadingSlug}
-              img={isHighlighted ? crown : crownWhite}
-              disabled={loadingSlug}
-              onClick={() => handleUpgrade(plan.slug)}
-              btnClass={`w-full h-[46px] !rounded-[10px] px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2.5 flex items-center justify-center ${
-                isHighlighted
-                  ? "bg-[#F8C01A] border border-[#F8C01A] text-[#252525]"
-                  : "bg-[#28A2FF] border border-[#28A2FF] text-white"
-              }`}
-            /> */}
-
-            {/* {isCurrentPlan ? ( */}
-            {/* <button
-                disabled
-                className={`w-full h-[46px] cursor-not-allowed rounded-[10px] px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2.5 flex items-center justify-center ${
-                  isHighlighted
-                    ? "bg-gray-300 border border-gray-300 text-gray-600"
-                    : "bg-gray-200 border border-gray-200 text-gray-500"
-                }`}
-              >
-                Current Plan
-              </button> */}
-            {/* ) : loadingSlug === plan.slug ? ( */}
-            {/* <button
-                disabled
-                className={`w-full h-[46px] cursor-not-allowed rounded-[10px] px-4 py-[10px] text-sm font-semibold leading-[33px] gap-2.5 flex items-center justify-center ${
-                  isHighlighted
-                    ? "bg-yellow-400 border border-yellow-400 text-gray-800"
-                    : "bg-blue-400 border border-blue-400 text-white"
-                }`}
-              >
-                Processing...
-              </button> */}
-            {/* ) : ( */}
             <button
               onClick={() => handleUpgrade(plan.slug)}
               disabled={loadingSlug === plan.slug}
@@ -172,7 +109,6 @@ const ProfileCards = ({ onUpgrade, subscriptionTime, user }) => {
                 </>
               )}
             </button>
-            {/* )} */}
           </div>
         );
       })}

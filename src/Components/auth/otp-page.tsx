@@ -15,13 +15,13 @@ const OTPPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (timer <= 0) return; // Stop when timer reaches 50
+    if (timer <= 0) return; 
 
     const id = setTimeout(() => {
       setTimer(timer - 1);
     }, 1000);
 
-    return () => clearTimeout(id); // Cleanup on re-render
+    return () => clearTimeout(id); 
   }, [timer]);
 
   const { mutateAsync: otpVerifyMutation, isPending: otpVerifyLoading } = useMutation({
@@ -32,7 +32,6 @@ const OTPPage: React.FC = () => {
       navigate("/reset-password");
     },
     onError: (error) => {
-      console.error("OTP Not Matched:", error);
     },
   });
 
@@ -66,14 +65,6 @@ const OTPPage: React.FC = () => {
 
           <PrimaryButton btnText={`${otpVerifyLoading ? "Loading..." : `Verify Code In ${timer}s`}`} onClick={otpVerifySubmit} disabled={timer == 50 && true} />
 
-          {/* <PrimaryButton
-            btnText="Resend Code"
-            btnClass={`text-center text-sm text-[#000] mt-3 cursor-pointer  ${
-              timer == 0 ? "hover:underline" : ""
-            }`}
-            onClick={handleResendCode}
-            disabled={timer == 0 ? false : true}
-          /> */}
         </div>
       </div>
     </OnBoardingLayout>

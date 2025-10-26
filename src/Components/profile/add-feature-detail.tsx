@@ -3,13 +3,9 @@ import Model from "@components/model/model";
 import ChangePhoto from "./change-photo";
 import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
 import InputField from "@components/input-field";
-// import SelectField from "@components/SelectField";
-
-// import Methew from "../../assets/media/svgs/dashboard-svgs/methew.svg";
 import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
 import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
 import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";
-// import Global from "../../assets/media/svgs/dashboard-svgs/globalField.svg";
 import circle from "@assets/media/svgs/addcircle.svg"
 import { LuSave } from "react-icons/lu";
 import { MdOutlinePriceChange } from "react-icons/md";
@@ -26,16 +22,16 @@ const organizationOptions = [
 ];
 
 const stateOptions = [
-  { value: "California", label: "California" },          // USA – Tech & Hollywood hub
-  { value: "New York", label: "New York" },              // USA – NYC is world-famous
-  { value: "Texas", label: "Texas" },                    // USA – Known for size, oil, culture
-  { value: "Florida", label: "Florida" },                // USA – Famous for tourism & Miami
-  { value: "Bavaria", label: "Bavaria" },                // Germany – Munich & BMW
-  { value: "Île-de-France", label: "Île-de-France" },    // France – Includes Paris
-  { value: "Dubai", label: "Dubai" },                    // UAE – Luxury and architecture
-  { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, // Japan – Tokyo is iconic
-  { value: "Ontario", label: "Ontario" },                // Canada – Includes Toronto
-  { value: "Maharashtra", label: "Maharashtra" },        // India – Includes Mumbai
+  { value: "California", label: "California" },          
+  { value: "New York", label: "New York" },              
+  { value: "Texas", label: "Texas" },                    
+  { value: "Florida", label: "Florida" },                
+  { value: "Bavaria", label: "Bavaria" },                
+  { value: "Île-de-France", label: "Île-de-France" },    
+  { value: "Dubai", label: "Dubai" },                    
+  { value: "Tokyo Prefecture", label: "Tokyo Prefecture" }, 
+  { value: "Ontario", label: "Ontario" },                
+  { value: "Maharashtra", label: "Maharashtra" },        
 ];
 
 

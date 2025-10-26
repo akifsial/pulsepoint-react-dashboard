@@ -1,4 +1,3 @@
-// RatingFilterDropdown.tsx
 import React from "react";
 import { v4 as uuid } from "uuid";
 
@@ -9,14 +8,14 @@ interface DropdownOption {
 }
 
 interface RatingFilterDropdownProps {
-  onRatingSelect: (rating: string) => void; // Function passed as a prop
+  onRatingSelect: (rating: string) => void; 
 }
 
 const AdminRatingFilterDropDown: React.FC<RatingFilterDropdownProps> = ({
   onRatingSelect,
 }) => {
   const dropdownOptions: DropdownOption[] = [
-    { id: uuid(), name: "All Ratings", value: "" }, // ✅ All option added
+    { id: uuid(), name: "All Ratings", value: "" }, 
     { id: uuid(), name: "5 Star Rating", value: "5" },
     { id: uuid(), name: "4 Star Rating", value: "4" },
     { id: uuid(), name: "3 Star Rating", value: "3" },

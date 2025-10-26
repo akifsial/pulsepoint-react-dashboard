@@ -13,11 +13,6 @@ import {
 } from "@src/api/api-community-forum";
 import { useForm } from "react-hook-form";
 import Spinner from "@components/loaders/spinner";
-// import {
-//   QueryClient,
-//   useMutation,
-//   useQueryClient,
-// } from "@tanstack/react-query";
 const CreatePost = ({ setIsOpen, communityId }) => {
   const [imageFile, setImageFile] = useState(null);
 
@@ -34,10 +29,9 @@ const CreatePost = ({ setIsOpen, communityId }) => {
       mutationFn: (data) => ApiCreatePostCommunity(data),
       onSuccess: async () => {
         toast.success("Post Under Review");
-        queryClient.invalidateQueries(["useGetSpecificCommunity"]); // refetch list
+        queryClient.invalidateQueries(["useGetSpecificCommunity"]); 
       },
       onError: () => {
-        // toast.error("Something Went Wrong");
       },
     });
 

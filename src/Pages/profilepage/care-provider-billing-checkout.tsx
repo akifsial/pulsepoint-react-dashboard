@@ -1,40 +1,10 @@
 import React, { useState } from "react";
 import InputField from "@components/input-field";
 import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
-import successIcon from "@assets/media/images/reset-success-icon.png"; // Adjust the path if necessary
+import successIcon from "@assets/media/images/reset-success-icon.png"; 
 import { IoCalendarOutline, IoCardOutline, IoEllipsisHorizontal, IoPersonOutline } from "react-icons/io5";
 
 const CreProviderBillingCheckout: React.FC = () => {
-  // Define state for the input fields
-//   const [formData, setFormData] = useState({
-//     cardName: "",
-//     cardNumber: "",
-//     expirationDate: "",
-//     cvc: "",
-//   });
-
-//   const [errors, setErrors] = useState({
-//     cardName: "",
-//     cardNumber: "",
-//     expirationDate: "",
-//     cvc: "",
-//   });
-
-//   const [isCheckoutSuccessful, setIsCheckoutSuccessful] = useState(false);
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleCheckout = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     setIsCheckoutSuccessful(true);
-//   };
-
   return (
     <>
         <div className="bg-white rounded-lg shadow-lg w-full min-h-screen sm:w-full lg:w-full xl:w-full max-w-full p-8 flex justify-center items-center">
@@ -60,14 +30,12 @@ const CreProviderBillingCheckout: React.FC = () => {
         <div className="min-h-screen bg-gradient-to-r flex">
           <div className="bg-white rounded-lg shadow-lg w-full max-h-[450px] sm:w-full lg:w-full xl:w-full max-w-full p-8">
             <div className="space-y-6">
-              {/* Heading */}
               <div>
                 <p className="text-[#1A1A1A] text-[20px] font-[700] leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
                   Add Account Information
                 </p>
               </div>
 
-              {/* Name on Card */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField
@@ -88,7 +56,6 @@ const CreProviderBillingCheckout: React.FC = () => {
                   )}
                 </div>
 
-                {/* Card Number */}
                 <div>
                   <InputField
                     label="Card Number:"
@@ -109,7 +76,6 @@ const CreProviderBillingCheckout: React.FC = () => {
                 </div>
               </div>
 
-              {/* Expiration Date and CVC */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <InputField

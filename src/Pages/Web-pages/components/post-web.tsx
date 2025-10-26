@@ -7,13 +7,6 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function PostWeb({ categoryId, setCategoryName ,data }) {
-  // const {
-  //   data: categoryBlogs,
-  //   isLoading,
-  //   isError,
-  //   refetch,
-  // } = useGetCategoryBlogs(categoryId);
-
   const { data: blogsCategories, isLoading } = useGetBlogsCategory(categoryId);
 
  

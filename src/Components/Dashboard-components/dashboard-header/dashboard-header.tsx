@@ -56,7 +56,6 @@ const DashboardHeader: React.FC<Props> = ({
 
   useEffect(() => {
     setShowMenu(false);
-    // setShowNotifications(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -107,17 +106,13 @@ const DashboardHeader: React.FC<Props> = ({
           <h2 className="sm:!text-[25px] !text-[16px] space-grotesk font-bold">👋 Welcome Back!</h2>
         </div>
 
-        {/* Right Section */}
         <div className="flex items-center gap-2 relative">
-          {/* min with fit removed */}
-          {/* Mobile menu button */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="cursor-pointer rounded-full hover:bg-gray-100 block lg:hidden"
           >
             <MdMenu size={20} />
           </button>
-          {/* Search Bar */}
           <div className="hidden lg:block relative provider-search-dropdown w-[300px] transition-all duration-300">
             {isSearchDropdownOpen && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg border border-gray-200 shadow-lg z-50 max-h-[400px] overflow-hidden">
@@ -151,7 +146,6 @@ const DashboardHeader: React.FC<Props> = ({
               </div>
             )}
           </div>
-          {/* Notification Icon */}
           <div
             onClick={() => handleNotifications()}
             className=" cursor-pointer relative"
@@ -164,21 +158,7 @@ const DashboardHeader: React.FC<Props> = ({
             />
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
           </div>
-          {/* <div className="relative">
-            <AnimatePresence>
-              {showNotifications && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute sm:right-68 right-26 md:right-12 top-[25px] md:w-[370px] w-[10px] z-50"
-                >
-                  <NotficationBar noticationLink={noticationLink} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div> */}
+          
 
           <div className="relative">
             <AnimatePresence>
@@ -189,7 +169,7 @@ const DashboardHeader: React.FC<Props> = ({
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
                   className="absolute sm:right-68 right-26 md:right-12 top-[25px] md:w-[370px] w-[10px] z-50"
-                  ref={notificationRef} // Move the ref here
+                  ref={notificationRef} 
                 >
                   <NotficationBar noticationLink={noticationLink} />
                 </motion.div>
@@ -197,7 +177,6 @@ const DashboardHeader: React.FC<Props> = ({
             </AnimatePresence>
           </div>
 
-          {/* Profile */}
           <div
             onClick={() => setShowMenu(!showMenu)}
             className="flex items-center gap-2 cursor-pointer"
@@ -220,7 +199,6 @@ const DashboardHeader: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* Dropdowns */}
       <AnimatePresence>
         {showMenu && (
           <motion.div
@@ -238,7 +216,10 @@ const DashboardHeader: React.FC<Props> = ({
           </motion.div>
         )}
       </AnimatePresence>
+
     </header>
+
+    
   );
 };
 

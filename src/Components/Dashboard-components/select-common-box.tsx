@@ -54,7 +54,6 @@ const SelectCommonBox: React.FC<SelectCommonBoxProps> = ({
             </option>
           ))}
         </select>
-        {/* Lucide dropdown icon */}
         <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
       </div>
     </div>

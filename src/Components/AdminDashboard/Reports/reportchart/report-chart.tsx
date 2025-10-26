@@ -4,7 +4,6 @@ import PeakVisitorChart from "./peak-visitor-chart";
 import TopInsurancesChart from "./top-insurances-chart";
 import AgeGroupPieChart from "./age-group-pie-chart";
 import { RiArrowDropDownLine } from "react-icons/ri";
-// import SelectField from "@components/SelectField";
 import SelectField from "@components/admin-select-field/AdminSelectField";
 
 const ReportChart = () => {
@@ -26,7 +25,6 @@ const ReportChart = () => {
     { value: "last_30_days", label: "Last 30 Days" },
     { value: "this_year", label: "This Year" },
 
-    // { value: "today", label: "Today" },
   ]
 
   const genderOptions = [
@@ -35,7 +33,6 @@ const ReportChart = () => {
     { value: "female", label: "Female" },
   ];
 
-  // 🔹 states for dropdowns
   const [timeRange1, setTimeRange1] = useState("last_7_days");
   const [timeRange2, setTimeRange2] = useState("last_7_days");
   const [timeRange3, setTimeRange3] = useState("last_7_days");
@@ -44,7 +41,6 @@ const ReportChart = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* User Activity */}
       <div className="p-4 rounded bg-white">
         <div className="flex justify-between items-center">
           <h3 className="space-grotesk text-[18px] font-bold ">User Activity Over Time</h3>
@@ -58,7 +54,6 @@ const ReportChart = () => {
         <UserActivityChart timeRange={timeRange1} />
       </div>
 
-      {/* Peak Visitor */}
       <div className="p-4 rounded bg-white">
         <div className="flex justify-between items-center">
           <h3 className="space-grotesk text-[18px] font-bold">Peak Visitor Profile</h3>
@@ -80,7 +75,6 @@ const ReportChart = () => {
         <PeakVisitorChart timeRange={timeRange2} gender={gender} />
       </div>
 
-      {/* Top Insurances */}
       <div className="p-4 rounded bg-white">
         <div className="flex justify-between items-center">
           <h3 className="space-grotesk text-[18px] font-bold">Top Insurances Used</h3>
@@ -94,7 +88,6 @@ const ReportChart = () => {
         <TopInsurancesChart timeRange={timeRange3} />
       </div>
 
-      {/* Age Groups */}
       <div className="p-4 rounded bg-white">
         <div className="flex justify-between items-center mb-8">
           <h3 className="space-grotesk text-[18px] font-bold">Most Visited Age Groups</h3>

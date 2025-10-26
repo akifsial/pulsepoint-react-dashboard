@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
 import InputField from "../input-field";
 import OnBoardingLayout from "./on-borading-layout";
 import { IoLockClosedOutline } from "react-icons/io5";
@@ -34,7 +33,6 @@ const ResetPasswordPage = () => {
   const resetSubmit = async (data) => {
     const pass = {
       password: data.old_password,
-      // new_password: data?.createPassword,
     };
     await resetMutation({ data: pass });
   };

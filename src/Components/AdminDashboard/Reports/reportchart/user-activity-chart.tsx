@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
-import { apiServices } from "@src/shared/api-services"; 
-import apiEndpoint from "@src/shared/api-end-point";
 
 interface UserActivityData {
   month: string;
@@ -15,27 +13,32 @@ const UserActivityChart = ({ timeRange }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchUserActivityData = async (type: string,range) => {
+  const dummyData: UserActivityData[] = [
+    { month: "Jan", patients_activity: 40, care_providers_activity: 30, admin_interventions: 10 },
+    { month: "Feb", patients_activity: 60, care_providers_activity: 45, admin_interventions: 15 },
+    { month: "Mar", patients_activity: 55, care_providers_activity: 50, admin_interventions: 12 },
+    { month: "Apr", patients_activity: 70, care_providers_activity: 60, admin_interventions: 20 },
+    { month: "May", patients_activity: 65, care_providers_activity: 55, admin_interventions: 18 },
+    { month: "Jun", patients_activity: 80, care_providers_activity: 65, admin_interventions: 25 },
+  ];
+
+  const fetchUserActivityData = async (type: string, range: string) => {
     setLoading(true);
     setError(null);
     try {
-      // const response = await apiServices.get(apiEndpoint.userActivity(type));
-       const response = await apiServices.get(
-        `${apiEndpoint.userActivity(type)}&data_range=${range}`
-      );
-      if (response.data.success) {
-        setData(response.data?.payload?.data);
-      }
+      setTimeout(() => {
+        setData(dummyData);
+        setLoading(false);
+      }, 800);
+
     } catch (err) {
       setError("Failed to fetch data");
-      console.error("Error fetching data:", err);
-    } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUserActivityData("user_activity_over_time",timeRange);
+    fetchUserActivityData("user_activity_over_time", timeRange);
   }, [timeRange]);
 
   const series = [
@@ -53,24 +56,19 @@ const UserActivityChart = ({ timeRange }) => {
     }
   ];
 
-  // Chart options
   const options = {
     chart: {
       id: 'user-activity',
-      toolbar: {
-        show: false
-      },
-      zoom: {
-        enabled: false
-      }
+      toolbar: { show: false },
+      zoom: { enabled: false },
     },
     xaxis: {
-      categories: data?.map(item => item.month), 
+      categories: data?.map(item => item.month),
     },
   };
 
-  if (loading) return <div>Loading...</div>; 
-  if (error) return <div>{error}</div>; 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-lg">

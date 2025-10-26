@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import arrowIcon from "@assets/media/images/arrow-down.svg";
 
 import OnBoardingLayout from "../on-borading-layout";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,7 +11,6 @@ import {
   IoLocationSharp,
 } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-// import { ArrowDown } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import dummyImage from "@assets/media/images/signup-img.png";
@@ -66,25 +64,6 @@ const RegisterForm = () => {
     preferredCommunication: [],
   });
 
-  // const [errors, setErrors] = useState<FormData>({
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   phone: "",
-  //   age: "",
-  //   gender: "",
-  //   maritalStatus: "",
-  //   insuranceType: "",
-  //   password: "",
-  //   confirmPassword: "",
-  //   zipCode: "",
-  //   city: "",
-  //   state: "",
-  //   streetAddress: "",
-  //   preferredCommunication: [],
-  //   careNeeds: "",
-  // });
-
   const {
     register,
     handleSubmit,
@@ -96,13 +75,10 @@ const RegisterForm = () => {
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
-  const navigate = useNavigate(); // Hook to navigate
-  // select data population
+  const navigate = useNavigate(); 
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
-    // { value: "other", label: "Other" },
-    // { value: "prefer-not-to-say", label: "Prefer not to say" },
   ];
 
   const maritalStatusOptions = [
@@ -149,7 +125,6 @@ const RegisterForm = () => {
     setPreferredMethod(e.target.value);
   };
 
-  // handle checkbox changes
   const handleCommunicationChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -181,7 +156,6 @@ const RegisterForm = () => {
 
       onSuccess: async () => {
         toast.success("Care Provider Created Successfully");
-        // navigate("/login");
         navigate("/care-provider/login");
       },
       onError: (err) => {},
@@ -192,17 +166,14 @@ const RegisterForm = () => {
     setSelectUser(value);
 
     if (value) {
-      // Set hash in URL
       window.location.hash = value;
     } else {
-      // clear hash
       window.location.hash = "";
     }
   };
 
   const RegisterSubmit = async (data) => {
     const registerData = {
-      // for care_provider
       organization_name: data.organizationName,
 
       email: data.email,
@@ -225,7 +196,6 @@ const RegisterForm = () => {
       website_url: "yeah.com",
       working_hours: "Uk Bargingham Street ",
       marital_status: data.maritalStatus,
-      // communication_method_id: preferredMethod,
     };
     await registerMutation({ data: registerData });
   };
@@ -289,7 +259,6 @@ const RegisterForm = () => {
                 ))}
               </select>
 
-              {/* Custom Icon (replace with your pana icon) */}
               <span className="absolute inset-y-0 top-9 right-3 flex items-center pointer-events-none">
                 <ChevronDown />
               </span>

@@ -5,14 +5,11 @@ import Footer from "@components/website/layout/footer";
 const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar + Utility */}
       <TopBar />
       <UtilityRow />
 
-      {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-purple-50 via-white to-purple-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
           <div className="space-y-6">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
               Terms of <span className="text-[#2DB2FD]">Service</span>
@@ -28,7 +25,6 @@ const TermsOfService = () => {
             </p>
           </div>
 
-          {/* Right Illustration */}
           <div className="flex justify-center">
             <div className="w-full max-w-md md:max-w-lg rounded-2xl shadow-xl bg-purple-100 flex items-center justify-center p-10">
               <span className="text-6xl">📜</span>
@@ -37,7 +33,6 @@ const TermsOfService = () => {
         </div>
       </div>
 
-      {/* Terms Section */}
       <div className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 text-center">

@@ -17,13 +17,6 @@ function CategoriesTab({categoryTitle,className="bg-white"}) {
               key={category.id}
               id={category.id}
               title={category.name}
-              // image={
-              //   category.image
-              //     ? `${import.meta.env.VITE_APP_API_IMG_URL}${category.image}`
-              //     : WorkImg
-              // }
-              // link={`/category/${category.url_key}`}
-              // image={`https://picsum.photos/id/237/300/${2}`}
             />
           ))}
         </div>

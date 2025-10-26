@@ -1,41 +1,11 @@
 import axios from "axios";
 
-// export const ApiMyReviews = async (
-//   search: string,
-//   rating: number,
-//   filterValue,
-//   page: number,
-//   sort:number
-
-// ) => {
-//   let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?search=${search}&limit=3&page=${1}`;
-
-//   if (rating) {
-//     BASE_URL += `&rating=${rating}`;
-//   }
-//   if (filterValue) {
-//     BASE_URL += `&is_flagged=${filterValue}`;
-//   }
-//     if(sort){
-//     BASE_URL += `&sort=created_at:${sort}`;
-
-//   }
-
-//   const token = JSON.parse(localStorage.getItem("token"));
-
-//   const response = await axios.get(BASE_URL, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   });
-
-//   return response?.data?.payload;
-// };
-
 export const ApiMyReviews = async (
   search: string,
   rating: number,
   filterValue: boolean,
   page: number,
-  sort: string, // 👈 should be string ("asc" | "desc")
+  sort: string, 
   limit
 ) => {
   let BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback?search=${search}`;
@@ -68,7 +38,7 @@ export const ApiMyReviews = async (
 };
 
 export const apiDeleteMyReviews = async (id: number) => {
-  const userInfoString = JSON.parse(localStorage.getItem("userInfo")); // ← returns string
+  const userInfoString = JSON.parse(localStorage.getItem("userInfo")); 
 
   const care_provider_id = { care_provider_id: userInfoString?.id };
   const BASE_URL = `${import.meta.env.VITE_APP_API_URL}feedback/${id}`;

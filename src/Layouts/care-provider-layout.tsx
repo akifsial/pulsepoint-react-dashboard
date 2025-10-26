@@ -4,12 +4,16 @@ import { sidebarLinks } from "@components/dashboard-components/sidebar/sidebar-l
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import ModalRedirect from "@src/Components/Model/ModalRedirect";
 
 const CareProviderLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
+  const [showModal, setShowModal] = useState(false);
 
-  const isCareProviderChatbotPage = location.pathname.includes("/care-provider/chatbot");
+  const isCareProviderChatbotPage = location.pathname.includes(
+    "/care-provider/chatbot"
+  );
 
   return (
     <div className="dashboard flex min-h-screen">
@@ -28,8 +32,17 @@ const CareProviderLayout = () => {
           routeSetting="/care-provider/manage-password"
           className={isCareProviderChatbotPage ? "max-w-[91%] ml-20" : ""}
         />
+        <div className="mt-4.5 flex items-end justify-end">
+          <button
+            onClick={() => setShowModal(true)}
+            className="cursor-pointer h-10 min-w-[180px] rounded-lg bg-[#2DB2FD] px-2 font-geist text-base font-semibold text-white transition-colors duration-150 active:scale-95 sm:w-[131px] w-full"
+          >
+            Change dashboard
+          </button>
 
-        <main className="mt-9">
+          <ModalRedirect show={showModal} onClose={() => setShowModal(false)} />
+        </div>
+        <main className="mt-4.5">
           <Outlet />
         </main>
       </div>

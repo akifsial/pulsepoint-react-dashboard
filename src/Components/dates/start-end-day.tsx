@@ -6,7 +6,7 @@ interface DayPickerProps {
   endDay: string;
   setStartDay: (day: string) => void;
   setEndDay: (day: string) => void;
-  control: Control<any>; // React Hook Form control
+  control: Control<any>; 
 }
 
 const dayOptions = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -21,7 +21,6 @@ const StartEndDay: React.FC<DayPickerProps> = ({
 
   return (
     <div className="flex flex-col gap-4 sm:mb-0 mb-6 sm:p-4 max-w-md">
-      {/* Start Day */}
       <div className="flex flex-col w-full">
         <label className="mb-1 font-medium text-gray-700">Start Day</label>
         <Controller
@@ -30,7 +29,7 @@ const StartEndDay: React.FC<DayPickerProps> = ({
           render={({ field }) => (
             <select
               {...field}
-              value={startDay} // keep local state in sync
+              value={startDay} 
               onChange={(e) => {
                 field.onChange(e.target.value);
                 setStartDay(e.target.value);
@@ -48,7 +47,6 @@ const StartEndDay: React.FC<DayPickerProps> = ({
         />
       </div>
 
-      {/* End Day */}
       <div className="flex flex-col w-full">
         <label className="mb-1 font-medium text-gray-700">End Day</label>
         <Controller

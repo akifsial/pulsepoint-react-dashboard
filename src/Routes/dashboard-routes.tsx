@@ -14,7 +14,6 @@ import PatientAllCommunites from "@pages/patientpages/patient-all-communities";
 import HomePage from "@pages/web-pages/home-page/home-page";
 import AboutPage from "@pages/website/about-page";
 import { Navigate } from "react-router-dom";
-// /care-provider/communities
 export const DashboardRoutes = [
   {
     path: "/care-provider",
@@ -24,14 +23,12 @@ export const DashboardRoutes = [
       { path: "patient-reviews", element: <PatinetReviews /> },
       { path: "community-form", element: <CommunityForm /> },
       { path: "notification", element: <NotificationPage /> },
-      // { path: "notification", element: <NotificationPage /> },
       { path: "community-account/:id", element: <CommunityAccount /> },
       { path: "chatbot", element: <ChatbotLayout /> },
       { path: "communities", element: <PatientAllCommunites /> },
       { path: "blogs", element: <Blogs /> },
     ],
   },
-  // { path: "/care-provider/web", element: <HomePage /> },
   { path: "/", element: <HomePage /> },
   {
     path: "/care-provider/web",
@@ -47,11 +44,6 @@ export const DashboardRoutes = [
     element: <CommunityAccountWeb />,
   },
 
-  // { path: "/care-provider/web/category", element: <CategoryPage /> },
-  // { path: "category/blog", element: <CategoryPage /> },
   { path: "/web/category", element: <CategoryPage /> },
   { path: "/care-provider/profile/:id", element: <CareProviderProfile /> },
-  // { path: "/patient/care-provider/profile/:id", element: <CareProviderProfile /> },
-
-  // { path: "/about-us", element: <AboutPage /> },
 ];

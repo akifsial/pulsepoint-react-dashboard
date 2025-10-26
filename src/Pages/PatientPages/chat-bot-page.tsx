@@ -1,10 +1,8 @@
-// import React from 'react'
-import ChatbotAi from '@components/chatbot-ai'
+import React from "react";
+import ChatbotAi from "@components/chatbot-ai";
 
 const ChatBotPage = () => {
-  return (
-   <ChatbotAi />
-  )
-}
+  return <ChatbotAi />;
+};
 
-export default ChatBotPage
+export default ChatBotPage;

@@ -34,18 +34,16 @@ export default function CareProviderProfile({
   email,
   specialty,
   description,
-}: // id,
+}: 
 HospitalProfileCardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { id } = useParams<{ id: string }>();
 
-  // const providerId=JSON.parse(localStorage.getItem("userInfo")).id
   const { data } = useCareProviderSingle(id);
   const queryClient = useQueryClient();
   const [unSavedModal, setUnSavedModal] = useState();
   const [savedModal, setSavedModal] = useState(false);
 
-  // Example services data; replace or populate as needed
 
   const {
     mutateAsync: savedCareProvidersMutation,
@@ -59,7 +57,7 @@ HospitalProfileCardProps) {
       } else {
         toast.success("Care Provider Saved Successfully");
       }
-      queryClient.invalidateQueries(["useCareProviderSingle"]); // refetch list
+      queryClient.invalidateQueries(["useCareProviderSingle"]); 
     },
     onError: (error) => {
       toast.error("Something Went Wrong");
@@ -72,12 +70,10 @@ HospitalProfileCardProps) {
     setIsBookmarked(!isBookmarked);
 
     if (data?.is_saved_by_patients == true) {
-      // agar already saved hai → Unsave modal dikhana
       setUnSavedModal(true);
       return;
     }
 
-    // agar abhi tak saved nahi hai → SaveModal dikhana
     handleSaveClick();
   };
 
@@ -90,11 +86,9 @@ HospitalProfileCardProps) {
 
   const handleSaveClick = () => {
     if (savedCareProvidersPending) return;
-    // Pehle modal kholna
     setSavedModal(true);
   };
 
-  // jab modal me confirm ho
   const handleConfirmSave = async () => {
     await savedCareProvidersMutation();
     setSavedModal(false);
@@ -122,7 +116,6 @@ HospitalProfileCardProps) {
             Back to Web
           </h2>
         </div>
-        {/* Hospital Profile and Contact Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
           <HospitalProfileCard
             name={""}

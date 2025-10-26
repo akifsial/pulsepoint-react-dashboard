@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// Default icons
 import defaultUser from "@assets/media/svgs/dashboard-svgs/user.svg";
 import defaultUserHover from "@assets/media/svgs/dashboard-svgs/user-hover.svg";
 import defaultLogout from "@assets/media/svgs/dashboard-svgs/login.svg";
@@ -12,7 +11,7 @@ import webIcon from "@assets/media/images/dashboard-images/web.png";
 import { useNavigate } from "react-router-dom";
 import { useMeApi } from "@src/hooks/use-users";
 import { disconnectSocket } from "@src/socket/socket";
-import { queryClient } from "./queryClient"; // jahan aapne client banaya hai
+import { queryClient } from "./queryClient"; 
 import { useQueryClient } from "@tanstack/react-query";
 
 interface ProfileDropdownProps {
@@ -37,17 +36,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ userIcon = defaultUse
 
     localStorage.clear();
 
-    // if (userRole == "PATIENT" ) {
-    //   navigate("/login");
-    // } else if(userRole=="CARE_PROVIDER") {
-    //   navigate("/admin/login");
-    // }
-
-    // if (userRole == "ADMIN") {
-    //   navigate("/admin/login");
-    // } else {
-    //   navigate("/login");
-    // }
 
     navigate("/login");
   };
@@ -67,17 +55,8 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ userIcon = defaultUse
 
         <div
           className="flex items-center gap-3 w-full mb-2 text-left py-2 px-4 rounded-lg hover:bg-[#E7F2F9] transition-colors cursor-pointer text-[#235969]"
-          // onMouseEnter={() => setHovered("user")}
-          // onMouseLeave={() => setHovered(null)}
-          // onClick={() =>
-          //   userRole == "CARE_PROVIDER"
-          //     ? navigate("/care-provider/web")
-          //     : userRole == "PATIENT"
-          //     ? navigate("/patient/web")
-          //     : navigate("/admin/web")
-          // }
           onClick={
-            () => navigate("/") // Everyone else goes to main website root
+            () => navigate("/") 
           }
         >
           <img src={webIcon} alt="User" className="w-[22px] h-[22px] object-cover" />

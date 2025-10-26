@@ -28,24 +28,6 @@ const CommentsForum: React.FC<CommentsForumProps> = ({ commentId }) => {
   const [comment, setComment] = useState<CommentData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   if (!commentId) return;
-
-  //   const fetchComment = async () => {
-  //     try {
-  //       const res = await apiServices.get(apiEndpoint.getCommentsType(commentId));
-  //       if (res?.data?.success) {
-  //         setComment(res.data.payload);
-  //       }
-  //     } catch (err) {
-  //       console.error("Error fetching comment:", err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchComment();
-  // }, [commentId]);
 useEffect(() => {
   if (commentId === undefined || commentId === null) return;
 
@@ -57,7 +39,6 @@ useEffect(() => {
 
       }
     } catch (err) {
-      console.error("Error fetching comment:", err);
     } finally {
       setLoading(false);
     }
@@ -93,7 +74,6 @@ useEffect(() => {
         <div className="flex flex-col text-[#252525] font-normal">
           <div>
             <p className="font-semibold text-[14px]">
-              {/* {comment.user?.first_name} {comment.user?.last_name} */}
               John
             </p>
             <p className="text-[#000000] text-[12px]">

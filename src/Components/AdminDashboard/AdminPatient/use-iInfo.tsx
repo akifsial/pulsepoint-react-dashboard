@@ -13,7 +13,6 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import exports from "../../../assets/media/svgs/export.svg";
 import PatientUserFlagged from "./patient-user-flagged";
 
-// Export libs
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 import UserCommunityPatient from "../admincare/user-community-patient";
@@ -23,8 +22,6 @@ interface UserInfoProps {
     id?: string | number;
     first_name?: string;
     last_name?: string;
-    // specialization?: string;
-    // organization_name?: string;
     saved_by_patients?: Array<{ id: string; name: string; age: number }>;
     last_login?: string;
     assigned_provider_name?: string;
@@ -70,12 +67,6 @@ const infoItems = (userData: UserInfoProps["userData"]) => [
     value: `${userData?.first_name || ""} ${userData?.last_name || ""}`,
   },
   { label: "Provider ID:", value: `CP-${userData?.id || "N/A"}` },
-  // { label: "Specialty:", value: userData?.specialization || "N/A" },
-  // { label: "Organization:", value: userData?.organization_name || "N/A" },
-  // {
-  //   label: "Assigned Patients:",
-  //   value: userData?.saved_by_patients?.length?.toString() || "0",
-  // },
   {
     label: "Last Login:",
     value: userData?.last_login
@@ -111,10 +102,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
   const [showPatientDetailsPage, setShowEditPage] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ ADD: Ref to the content we want to export
   const contentRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ ADD: Build exportable data from current UI sections
   const buildExportData = () => {
     const personal = infoItems(userData).map((i) => ({
       Section: "Personal Information",
@@ -163,7 +152,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
     return { personal, clinical, appointments, comments, flagged };
   };
 
-  // ✅ ADD: Simple CSV creator
   const toCSV = (rows: Record<string, any>[]) => {
     if (!rows.length) return "";
     const headers = Array.from(new Set(rows.flatMap((r) => Object.keys(r))));
@@ -175,7 +163,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
     return lines.join("\r\n");
   };
 
-  // ✅ ADD: Export handlers for PDF
   const handleExportPDF = () => {
     const { personal, clinical, appointments, comments, flagged } =
       buildExportData();
@@ -183,7 +170,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
     const doc = new jsPDF();
     doc.setFontSize(16);
 
-    // Helper function to add text and check if we need to add a page
     let yPosition = 10;
     const pageMargin = 10;
     const addText = (text: string) => {
@@ -195,31 +181,25 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
       yPosition += 10;
     };
 
-    // Add Personal Information
     addText("Personal Information");
     personal.forEach((item) => addText(`${item.Label}: ${item.Value}`));
 
-    // Add Clinical Profile
     addText("Clinical Profile");
     clinical.forEach((item) => addText(`${item.Label}: ${item.Value}`));
 
-    // Add Appointment History
     addText("Appointment History");
     appointments.forEach((item) => addText(`${item.Label}: ${item.Value}`));
 
-    // Add Comments Section
     addText("Comments");
     comments.forEach((item) =>
       addText(`Comment ID: ${item.CommentID} - ${item.Content}`)
     );
 
-    // Add Flagged Posts Section
     addText("Flagged Posts");
     flagged.forEach((item) =>
       addText(`Post Title: ${item.PostTitle} - Report: ${item.ReportReasons}`)
     );
 
-    // Save the generated PDF
     doc.save(`Patient_Details_${userData?.id ?? ""}.pdf`);
   };
 
@@ -265,7 +245,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
       <div className="p-5 bg-[#ffffff] rounded-lg mb-5">
         <div className="flex flex-wrap  items-center justify-between mb-7">
           <div className="flex flex-wrap items-center mb-5 gap-4">
-            {/* <img src={patient} alt="Methew" className="rounded-[50%]" /> */}
             <img 
               src={
                 userData?.image
@@ -275,7 +254,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
                   : dummyImage
               }
               onError={(e) => {
-                // Agar broken URL hai to dummy dikhao
                 (e.currentTarget as HTMLImageElement).src = dummyImage;
               }}
               alt={userData?.first_name || "Patient"}
@@ -287,9 +265,6 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
                 {userData?.first_name || "Methew"}{" "}
                 {userData?.last_name || "Thompson"}
               </h4>
-              {/* <span className="text-base text-[#181D27]/50 leading-tight">
-                (Discharged Patient)
-              </span> */}
               
             </div>
             <div className={userData?.status=="ACTIVE" ?  ` text-[#067647] border border-[#067647] rounded-[30px] flex items-center justify-center gap-2.5 py-[5px] px-3` : `border border-red-500 !text-red-500 rounded-[30px] flex items-center justify-center gap-2.5 py-[5px] px-3` }>
@@ -300,23 +275,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
           </div>
 
           <div className="flex items-center  sm:gap-3.5">
-            {/* <PrimaryButton
-              btnText="Ban User"
-              showImg={true}
-              onClick={() => setShowEditPage(true)}
-              btnClass="flex items-center justify-center h-[46px] w-[159px] cursor-pointer bg-[#F3F3F3] border text-black border-[#25252533] py-[13px] px-4 rounded-lg font-semibold text-sm"
-            /> */}
+        
             <div className="relative" ref={dropdownRef}>
-              {/* <PrimaryButton
-                btnText="Export Table"
-                showImg={true}
-                img={exports}
-                imgClass="w-4 h-4"
-                suffixImg={whitearrow}
-                suffixImgClass="w-4 h-4"
-                onClick={() => setIsOpen(!isOpen)}
-                btnClass="flex items-center justify-center gap-[5px] h-[46px] cursor-pointer w-[159px] bg-[#28A2FF] text-white px-4 rounded-lg font-semibold text-sm"
-              /> */}
+            
               {isOpen && (
                 <div className="absolute z-10 top-full left-0 w-[159px] bg-white rounded-[10px] shadow-md p-1.5">
                   <button
@@ -357,35 +318,16 @@ const UserInfo: React.FC<UserInfoProps> = ({ userData, goBack,fetchUser }) => {
             <User data={infoItems(userData)} />
           </div>
         </div>
-        {/* hiding on requirement of backend */}
 
-        {/* <div className="bg-[#FAFAFA] flex items-center justify-between p-6 gap-5 mb-5 rounded-[10px]">
-          <div className="max-w-[600px]">
-            <h4 className="font-bold mb-4 font-[Space Grotesk]">
-              Clinical Profile
-            </h4>
-            <User data={arrayinfo(userData)} />
-
-            <h4 className="font-bold mb-4 font-[Space Grotesk]">
-              Appointment History
-            </h4>
-            <User data={history(userData)} />
-          </div>
-        </div> */}
+        
       </div>
 
-      {/* <UserCommunity /> */}
-      {/* <UserCommunityPatient /> */}
       <UserCommunityPatient userData={userData} />
 
 
-      {/* ✅ Dynamic Comments */}
       <UserComments commentData={userData?.comment || []} />
 
-      {/* ✅ Dynamic Flagged Posts */}
-      {/* {userData?.post_flag?.length ? ( */}
         <PatientUserFlagged postFlagData={userData.post_flag} />
-      {/* // ) : null} */}
     </div>
   );
 };

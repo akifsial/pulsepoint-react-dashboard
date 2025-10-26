@@ -98,13 +98,11 @@ const UserCommunity: React.FC<any> = ({ userData }) => {
       showSort: true,
       cell: ({ row }: { row: { original: dataTypes } }) => {
         const status = row.original?.status?.toLowerCase();
-        // Styles based on condition
         const isActive = status === "approved";
         const statusClass = isActive
           ? "text-[#067647] border-[1.5px] border-[#079455] bg-[#ECFDF3]"
           : "text-gray-600 border border-gray-400 bg-gray-100";
 
-        // Text to display
         const displayStatus = status
           ? status.charAt(0).toUpperCase() + status.slice(1)
           : "Unknown";
@@ -131,8 +129,7 @@ const UserCommunity: React.FC<any> = ({ userData }) => {
     currentPage * pageSize
   );
 
-  const handleRowSelect = (row: dataTypes) => {
-  };
+  const handleRowSelect = (row: dataTypes) => {};
 
   const Pagination = () => {
     if (totalPages <= 1) return null;
@@ -142,7 +139,7 @@ const UserCommunity: React.FC<any> = ({ userData }) => {
 
     const getPageItems = (): (number | "ELLIPSIS")[] => {
       const items: (number | "ELLIPSIS")[] = [];
-      const siblings = 1; // pages around current
+      const siblings = 1; 
       const firstPage = 1;
       const lastPage = totalPages;
 
@@ -240,13 +237,7 @@ const UserCommunity: React.FC<any> = ({ userData }) => {
               onRowSelect={handleRowSelect}
               showActions={false}
               className="my-custom-class"
-              actions={(row) => (
-                <DropdownActions
-                  // onView={() => console.log("View Detail", row.id)}
-                  // onEdit={() => console.log("Edit", row.id)}
-                  // onDelete={() => console.log("Delete", row.id)}
-                />
-              )}
+              actions={(row) => <DropdownActions />}
             />
             <Pagination />
           </>
