@@ -84,7 +84,7 @@ import { DashboardRoutes } from "./dashboard-routes";
 import { ProfileRoutes } from "./profile-routes";
 import NotFoundPage from "@pages/not-found-page";
 import PatientLayout from "@layouts/patient-layout";
-import AdminDashboard from "@pages/patientpages/admin-dashboard";
+import AdminDashboard from "@src/Pages/PatientPages/admindashboard";
 import ModalRedirect from "@src/Components/Model/ModalRedirect";
 import HomePage from "@src/Pages/Web-pages/home-page/homepage";
 
