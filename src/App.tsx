@@ -1,4 +1,5 @@
-import Router from "@routes/router";
+// import Router from "@routes/router";
+import Router from "./Routes/Router";
 import React, { useEffect, useRef } from "react";
 import { Toaster } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";

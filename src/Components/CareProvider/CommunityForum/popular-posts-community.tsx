@@ -656,8 +656,6 @@ const PopularPostsCommunity = ({ setOpenBackFeed, setPostIdFeed, data }) => {
                         localLikes={localLikes}
                         localCounts={localCounts}
                         handleReaction={handleReaction}
-                        localLikes={localLikes}
-                        localCounts={localCounts}
                         post={post}
                       />
 
