@@ -3975,7 +3975,7 @@ style-to-object@1.0.9:
   dependencies:
     inline-style-parser "0.2.4"
 
-"styled-components@>= 5.0.0":
+styled-components@^6.1.19, "styled-components@>= 5.0.0":
   version "6.1.19"
   resolved "https://registry.npmjs.org/styled-components/-/styled-components-6.1.19.tgz"
   integrity sha512-1v/e3Dl1BknC37cXMhwGomhO8AkYmN41CqyX9xhUDxry1ns3BFQy2lLDRQXJRdVVWB9OHemv/53xaStimvWyuA==
