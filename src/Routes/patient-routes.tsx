@@ -15,7 +15,7 @@ import CommunityAccount from "@components/careprovider/communityforum/community-
 import CommunityAccountPosts from "@components/community-account-posts";
 import CommunitySinglePost from "@components/careprovider/communityforum/community-single-post";
 import Blogs from "@pages/blogs/blogs";
-import HomePage from "@pages/web-pages/home-page/home-page";
+import HomePage from "@src/Pages/Web-pages/home-page/homepage";
 import CommunityAccountWeb from "@components/careprovider/communityforum/community-account-web";
 import CategoryPage from "@components/website/home/category-page";
 import { Navigate } from "react-router-dom";

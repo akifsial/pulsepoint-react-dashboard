@@ -1,5 +1,5 @@
 import AboutUs from "@pages/web-pages/about-us/about-us";
-import HomePage from "@pages/web-pages/home-page/home-page";
+import HomePage from "@src/Pages/Web-pages/home-page/homepage";
 import SignupForm from "@components/auth/signup-form";
 import AccountCreatedPage from "@components/auth/account-created-page";
 import LoginPage from "@components/auth/login-page";

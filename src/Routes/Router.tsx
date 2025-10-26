@@ -86,7 +86,7 @@ import NotFoundPage from "@pages/not-found-page";
 import PatientLayout from "@layouts/patient-layout";
 import AdminDashboard from "@pages/patientpages/admin-dashboard";
 import ModalRedirect from "@src/Components/Model/ModalRedirect";
-import HomePage from "@pages/web-pages/home-page/home-page";
+import HomePage from "@src/Pages/Web-pages/home-page/homepage";
 
 const Router: React.FC = () => {
   return (
