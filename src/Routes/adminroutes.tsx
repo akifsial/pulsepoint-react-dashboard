@@ -6,14 +6,14 @@ import AdminReportsandAnalytics from "@src/Pages/admindashboardpages/adminreport
 import AdminDashboard from "@src/Pages/admindashboardpages/admindashboard";
 import AdminReviews from "@src/Pages/admindashboardpages/adminreviews";
 import NotificationPage from "@src/Pages/dashboards/careprovider/notificationpage";
-import UserInfoWrapper from "@src/Components/AdminDashboard/AdminPatient/userinfowrapper";
-import UserInfoWrapperCareProvider from "@src/Components/AdminDashboard/AdminCare/userinfowrappercareprovider";
-import ViewCommunity from "@src/Components/AdminDashboard/Forum/viewcommunity";
+import UserInfoWrapper from "@components/admindashboard/AdminPatient/userinfowrapper";
+import UserInfoWrapperCareProvider from "@components/admindashboard/AdminCare/userinfowrappercareprovider";
+import ViewCommunity from "@components/admindashboard/Forum/viewcommunity";
 import ReviewDetail from "@components/admindashboard/reviews/review-detail";
 import Blogs from "@src/Pages/blogs/blogs";
 import HomePage from "@src/Pages/webpages/homepage/homepage";
-import CategoryPage from "@src/Components/Website/Home/categorypage";
-import CommunitiesSpinner from "@src/Components/Loaders/communitiesspinner";
+import CategoryPage from "@components/Website/Home/categorypage";
+import CommunitiesSpinner from "@components/Loaders/communitiesspinner";
 
 export const AdminRoutes = [
   {

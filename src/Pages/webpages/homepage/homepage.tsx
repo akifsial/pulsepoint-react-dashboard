@@ -1,15 +1,15 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Button from "@src/Components/Website/Shared/button";
-import CategoryCard from "@src/Components/Website/Home/categorycard";
-import ServiceCard from "@src/Components/Website/Home/servicecard";
-import ProfessionalCard from "@src/Components/Website/Home/professionalcard";
-import { TestimonialCarousel } from "@src/Components/Website/Home/testimonialcard";
-import ResourceCard from "@src/Components/Website/Home/resourcecard";
-import ProcessStep from "@src/Components/Website/Home/processstep";
-import TopBar from "@src/Components/Website/Layout/topbar";
+import Button from "@components/Website/Shared/button";
+import CategoryCard from "@components/Website/Home/categorycard";
+import ServiceCard from "@components/Website/Home/servicecard";
+import ProfessionalCard from "@components/Website/Home/professionalcard";
+import { TestimonialCarousel } from "@components/Website/Home/testimonialcard";
+import ResourceCard from "@components/Website/Home/resourcecard";
+import ProcessStep from "@components/Website/Home/processstep";
+import TopBar from "@components/Website/Layout/topbar";
 import Header from "@components/website/layout/header";
-import UtilityRow from "@src/Components/Website/Layout/utilityrow";
-import FeaturedArticleCard from "@src/Components/Website/Home/featuredarticlecard";
+import UtilityRow from "@components/Website/Layout/utilityrow";
+import FeaturedArticleCard from "@components/Website/Home/featuredarticlecard";
 import Independent from "@assets/media/website/independent.svg";
 import Memory from "@assets/media/website/memory.svg";
 import NursingFacility from "@assets/media/website/nursing-facility.svg";
@@ -27,9 +27,9 @@ import Bluprint from "@assets/media/website/blueprint.svg";
 import Rating from "@assets/media/website/rating.svg";
 import Agreement from "@assets/media/website/agreement.svg";
 import Carousal from "@assets/media/website/icons/carousal-icon.svg";
-import SmallArticleCard from "@src/Components/Website/Home/smallarticlecard";
+import SmallArticleCard from "@components/Website/Home/smallarticlecard";
 import Footer from "@components/website/layout/footer";
-import ArrowButtonGroup from "@src/Components/Website/Shared/arrowbuttongroup";
+import ArrowButtonGroup from "@components/Website/Shared/arrowbuttongroup";
 import Convience from "@components/website/home/convience";
 import starIcon from "@assets/media/svgs/web-svgs/star.svg"
 import userIcon from "@assets/media/svgs/dashboard-svgs/user.svg"
@@ -54,8 +54,8 @@ import { useRef, useState } from "react";
 import LoginOrSignupModal from "@components/model/login-or-signup-modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import InputField from "@src/Components/inputfield";
-import ReplyLoader from "@src/Components/Loaders/replyloader";
+import InputField from "@components/inputfield";
+import ReplyLoader from "@components/Loaders/replyloader";
 
 const newsData = [
   {

@@ -1,8 +1,8 @@
 import { ArrowLeft } from "lucide-react";
-import ContactInformationCard from "@src/Components/contactinformationcard";
-import RatingsReviewsSection from "@src/Components/Review/ratingsreviewssection";
-import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
-import HospitalProfileCard from "@src/Components/hospitalprofilecard";
+import ContactInformationCard from "@components/contactinformationcard";
+import RatingsReviewsSection from "@components/Review/ratingsreviewssection";
+import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import HospitalProfileCard from "@components/hospitalprofilecard";
 import PlusIcon from "@assets/media/svgs/patient-db-svgs/add-circle.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";

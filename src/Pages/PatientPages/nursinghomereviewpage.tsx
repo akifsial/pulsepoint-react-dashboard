@@ -1,5 +1,5 @@
 import React from 'react'
-import NursingHomeReviews from "@src/Components/nursinghomereview"
+import NursingHomeReviews from "@components/nursinghomereview"
 
 const NursingHomeReviewPage = () => {
   return (

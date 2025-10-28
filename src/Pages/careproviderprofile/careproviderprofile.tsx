@@ -2,21 +2,21 @@ import { Bookmark } from "lucide-react";
 import Tick from "@assets/media/svgs/patient-db-svgs/tick-circle.svg";
 import ProfilePic from "@assets/media/svgs/patient-db-svgs/hospital-prof-img.svg";
 import { useState } from "react";
-import HospitalHeader from "@src/Components/hospitalheader";
+import HospitalHeader from "@components/hospitalheader";
 import { useCareProviderSingle } from "@src/hooks/usedashboard";
 import { ApiSavedCareProviders } from "@src/api/apidashboard";
 import toast from "react-hot-toast";
 import backArrow from "@assets/media/svgs/dashboard-svgs/arrow-left.svg";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import UnSavedModal from "@src/Components/Model/unsavedmodal";
-import SavedModal from "@src/Components/Model/savedmodal";
+import UnSavedModal from "@components/Model/unsavedmodal";
+import SavedModal from "@components/Model/savedmodal";
 import { useNavigate, useParams } from "react-router-dom";
-import HospitalProfileCard from "@src/Components/hospitalprofilecard";
-import ContactInformationCard from "@src/Components/contactinformationcard";
-import RatingsReviewsSection from "@src/Components/Review/ratingsreviewssection";
-import TopBar from "@src/Components/Website/Layout/topbar";
-import UtilityRow from "@src/Components/Website/Layout/utilityrow";
+import HospitalProfileCard from "@components/hospitalprofilecard";
+import ContactInformationCard from "@components/contactinformationcard";
+import RatingsReviewsSection from "@components/Review/ratingsreviewssection";
+import TopBar from "@components/Website/Layout/topbar";
+import UtilityRow from "@components/Website/Layout/utilityrow";
 import { useGetBlogs } from "@src/hooks/usewebsite";
 
 interface HospitalProfileCardProps {

@@ -1,5 +1,5 @@
 
-import PatientProfileDetail from '@src/Components/profile/patientprofiledetail'
+import PatientProfileDetail from '@components/profile/patientprofiledetail'
 
 const PatientProfileDetailPage = () => {
 

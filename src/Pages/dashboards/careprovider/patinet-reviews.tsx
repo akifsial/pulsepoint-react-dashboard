@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import SelectCommonBox from "@src/Components/Dashboardcomponents/select-common-box";
-import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import SelectCommonBox from "@components/Dashboardcomponents/select-common-box";
+import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { AnimatePresence, motion } from "framer-motion";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import RatingFilterDropdown from "@src/Components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
-import PatientReviewsCard from "@src/Components/Dashboardcomponents/Cards/patientreviewscard";
+import RatingFilterDropdown from "@components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
+import PatientReviewsCard from "@components/Dashboardcomponents/Cards/patientreviewscard";
 import { v4 as uuid } from "uuid";
 import { useMeApi } from "@src/hooks/useusers";
 import { useNavigate } from "react-router-dom";

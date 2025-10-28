@@ -1,5 +1,5 @@
-import TopBar from "@src/Components/Website/Layout/topbar";
-import UtilityRow from "@src/Components/Website/Layout/utilityrow";
+import TopBar from "@components/Website/Layout/topbar";
+import UtilityRow from "@components/Website/Layout/utilityrow";
 import facilityImg from "@assets/media/images/dashboard-images/about-banner.png"; 
 import Footer from "@components/website/layout/footer";
 

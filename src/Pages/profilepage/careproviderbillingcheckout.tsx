@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import InputField from "@src/Components/inputfield";
-import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import InputField from "@components/inputfield";
+import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import successIcon from "@assets/media/images/reset-success-icon.png"; 
 import { IoCalendarOutline, IoCardOutline, IoEllipsisHorizontal, IoPersonOutline } from "react-icons/io5";
 

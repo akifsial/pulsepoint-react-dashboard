@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaFaceGrinStars } from "react-icons/fa6";
-import TextField from "@src/Components/CareProvider/CommunityForum/textfield";
-import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import TextField from "@components/CareProvider/CommunityForum/textfield";
+import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { useNavigate, useParams } from "react-router-dom";
 import Model from "@components/model/model";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

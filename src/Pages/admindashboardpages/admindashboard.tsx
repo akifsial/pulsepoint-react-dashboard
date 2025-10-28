@@ -1,5 +1,5 @@
 import React from 'react'
-import AdDashboard from '@src/Components/AdminDashboard/addashboard'
+import AdDashboard from '@components/admindashboard/addashboard'
 
 const AdminDashboard = () => {
   return (

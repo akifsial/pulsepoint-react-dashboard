@@ -1,7 +1,7 @@
-import DashboardHeader from "@src/Components/Dashboardcomponents/dashboardheader/dashboardheader";
+import DashboardHeader from "@components/Dashboardcomponents/dashboardheader/dashboardheader";
 import Sidebar from "@components/dashboard-components/sidebar/sidebar";
 import { AdminSidebarLinks } from "@components/dashboard-components/sidebar/sidebar-links";
-import ModalRedirect from "@src/Components/Model/modalredirect";
+import ModalRedirect from "@components/Model/modalredirect";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import ChatbotAi from "@src/Components/chatbotai";
+import ChatbotAi from "@components/chatbotai";
 
 const ChatBotPage = () => {
   return <ChatbotAi />;

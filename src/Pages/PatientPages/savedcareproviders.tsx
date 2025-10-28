@@ -4,10 +4,10 @@ import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import Pagination from "@src/Components/Pagination/pagination";
-import TableSkeletonLoader from "@src/Components/Loaders/tableskeletonloader";
+import Pagination from "@components/Pagination/pagination";
+import TableSkeletonLoader from "@components/Loaders/tableskeletonloader";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
-import RatingStars from "@src/Components/Sharedcomponents/ratingstars";
+import RatingStars from "@components/Sharedcomponents/ratingstars";
 function SavedCareProviders({
   debouncedSearchText,
   rating,

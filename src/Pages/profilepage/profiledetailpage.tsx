@@ -1,4 +1,4 @@
-import ProfileDetail1 from "@src/Components/profile/profiledetail1"
+import ProfileDetail1 from "@components/profile/profiledetail1"
 
 const ProfileDetailPage = () => {
   return (

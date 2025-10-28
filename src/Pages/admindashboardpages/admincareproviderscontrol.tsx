@@ -1,4 +1,4 @@
-import AdminCare from '@src/Components/AdminDashboard/AdminCare/admincare'
+import AdminCare from '@components/admindashboard/AdminCare/admincare'
 import React from 'react'
 
 const AdminCareProvidersControl = () => {

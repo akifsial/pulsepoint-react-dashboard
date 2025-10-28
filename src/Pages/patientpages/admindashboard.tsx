@@ -1,20 +1,20 @@
-import StatsCommonCards from "@src/Components/Dashboardcomponents/Cards/statscommoncards";
+import StatsCommonCards from "@components/Dashboardcomponents/Cards/statscommoncards";
 import React, { useState, useRef, useEffect } from "react";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
-import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@src/Components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
-import RatingStars from "@src/Components/Sharedcomponents/ratingstars";
+import RatingFilterDropdown from "@components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
+import RatingStars from "@components/Sharedcomponents/ratingstars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import ReviewCard from "@src/Components/reviewcard";
+import ReviewCard from "@components/reviewcard";
 import MessageIcon from "@assets/media/svgs/dashboard-svgs/message-time.svg";
 import dayjs from "dayjs";
 import { Search, Clock } from "lucide-react";
@@ -29,18 +29,18 @@ import {
   ApiDeleteRecentSearches,
   ApiGetCareProviders,
 } from "@src/api/apidashboard";
-import DeleteModal from "@src/Components/Model/deletemodal";
+import DeleteModal from "@components/Model/deletemodal";
 import { apiDeleteCareProvider } from "@src/api/apidashboard";
-import EditModal from "@src/Components/Model/activeinactivemodal";
-import ActiveInactiveModal from "@src/Components/Model/activeinactivemodal";
+import EditModal from "@components/Model/activeinactivemodal";
+import ActiveInactiveModal from "@components/Model/activeinactivemodal";
 import toast from "react-hot-toast";
 import { X } from "lucide-react";
-import TableSkeletonLoader from "@src/Components/Loaders/tableskeletonloader";
+import TableSkeletonLoader from "@components/Loaders/tableskeletonloader";
 import { useMeApi } from "@src/hooks/useusers";
 import LikeIcon from "@assets/media/svgs/dashboard-svgs/like-tag2.svg";
 import axios from "axios";
 import userDown from "@assets/media/svgs/dashboard-svgs/user-down-01.svg";
-import Pagination from "@src/Components/Pagination/pagination";
+import Pagination from "@components/Pagination/pagination";
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">

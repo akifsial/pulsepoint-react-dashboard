@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Clock, Heart, Users } from "lucide-react";
-import Button from "@src/Components/Website/Shared/button";
-import CategoryCard from "@src/Components/Website/Home/categorycard";
-import ServiceCard from "@src/Components/Website/Home/servicecard";
-import ProfessionalCard from "@src/Components/Website/Home/professionalcard";
-import { TestimonialCarousel } from "@src/Components/Website/Home/testimonialcard";
-import ResourceCard from "@src/Components/Website/Home/resourcecard";
-import ProcessStep from "@src/Components/Website/Home/processstep";
+import Button from "@components/Website/Shared/button";
+import CategoryCard from "@components/Website/Home/categorycard";
+import ServiceCard from "@components/Website/Home/servicecard";
+import ProfessionalCard from "@components/Website/Home/professionalcard";
+import { TestimonialCarousel } from "@components/Website/Home/testimonialcard";
+import ResourceCard from "@components/Website/Home/resourcecard";
+import ProcessStep from "@components/Website/Home/processstep";
 import Header from "@components/website/layout/header";
 import { useBlog, useCategory, useGetBlogs } from "@src/hooks/usewebsite";
 import dummyImage from "@assets/media/images/dummyUser.png"

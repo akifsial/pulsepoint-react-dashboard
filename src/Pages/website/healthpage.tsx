@@ -1,5 +1,5 @@
-import TopBar from "@src/Components/Website/Layout/topbar";
-import UtilityRow from "@src/Components/Website/Layout/utilityrow";
+import TopBar from "@components/Website/Layout/topbar";
+import UtilityRow from "@components/Website/Layout/utilityrow";
 import HealthPhoto from "@assets/media/images/dashboard-images/health-care-page.jpg";
 
 import React from "react";

@@ -1,0 +1,34 @@
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .site_logo {
+    width: 130px;
+  }
+  .site_link {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 992px) {
+  .site_logo {
+    width: 130px;
+  }
+  .site_link {
+    font-size: 55px;
+  }
+}
+
+@media (max-width: 992px) and (min-width: 768px) {
+  .site_logo {
+    width: 130px;
+  }
+  .site_link {
+    font-size: 55px;
+  }
+}
+@media (max-width: 767px) {
+  .site_logo {
+    width: 120px;
+  }
+  .site_link {
+    font-size: 55px;
+  }
+}

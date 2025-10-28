@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BadgeCheck, XCircle } from "lucide-react";
 import { UseApiPaymentsHistory } from "@src/hooks/usepayments";
-import PaymentHistoryLoader from "@src/Components/Loaders/paymenthistoryloader";
+import PaymentHistoryLoader from "@components/Loaders/paymenthistoryloader";
 import { useMeApi } from "@src/hooks/useusers";
 import { useNavigate } from "react-router-dom";
 

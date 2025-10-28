@@ -1,12 +1,12 @@
 import React from "react";
-import TopBar from "@src/Components/Website/Layout/topbar";
-import UtilityRow from "@src/Components/Website/Layout/utilityrow";
+import TopBar from "@components/Website/Layout/topbar";
+import UtilityRow from "@components/Website/Layout/utilityrow";
 import HealthPic from "@assets/media/images/dashboard-images/health-doc-banner.jpg";
 import Footer from "@components/website/layout/footer";
 import BannerWeb from "@src/Pages/webpages/components/bannerweb";
-import InputField from "@src/Components/inputfield";
+import InputField from "@components/inputfield";
 import CategorySidebar from "@src/Pages/webpages/components/categorysidebar";
-import { PrimaryButton } from "@src/Components/Buttons/primarybutton";
+import { PrimaryButton } from "@components/Buttons/primarybutton";
 import { ApiContactUs } from "@src/api/apiwebsite";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";

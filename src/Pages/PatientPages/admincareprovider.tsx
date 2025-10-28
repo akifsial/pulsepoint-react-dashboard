@@ -1,21 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@src/Components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
-import RatingStars from "@src/Components/Sharedcomponents/ratingstars";
+import RatingFilterDropdown from "@components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
+import RatingStars from "@components/Sharedcomponents/ratingstars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-import Pagination from "@src/Components/Pagination/pagination";
-import CommonInput from "@src/Components/Sharedcomponents/Inputs/CommonInput/commoninput";
+import Pagination from "@components/Pagination/pagination";
+import CommonInput from "@components/Sharedcomponents/Inputs/CommonInput/commoninput";
 import { TanDataTableColumn } from "@components/dashboard-components/tanstack-data-table/types";
 import { useNavigate } from "react-router-dom";
 import { useCareProviders } from "@src/hooks/usedashboard";
 import dayjs from "dayjs";
 import { useAllSavedCareProviders, useMeApi } from "@src/hooks/useusers";
-import TableSkeletonLoader from "@src/Components/Loaders/tableskeletonloader";
+import TableSkeletonLoader from "@components/Loaders/tableskeletonloader";
 import SavedCareProviders from "./savedcareproviders";
 import { spawn } from "child_process";
 export const getColumns = (

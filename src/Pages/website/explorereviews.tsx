@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Star } from "lucide-react";
-import TopBar from "@src/Components/Website/Layout/topbar";
-import UtilityRow from "@src/Components/Website/Layout/utilityrow";
+import TopBar from "@components/Website/Layout/topbar";
+import UtilityRow from "@components/Website/Layout/utilityrow";
 import { useFeaturedWeakReviews } from "@src/hooks/usewebsite";
 import userDummy from "@assets/media/images/dummyUser.png";
 import Spinner from "@components/loaders/spinner";

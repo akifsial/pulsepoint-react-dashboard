@@ -1,32 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
 import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
-import DropdownActions from "@src/Components/Dashboardcomponents/dropdownactions/dropdownactions";
+import DropdownActions from "@components/Dashboardcomponents/dropdownactions/dropdownactions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@src/Components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
-import RatingStars from "@src/Components/Sharedcomponents/ratingstars";
+import RatingFilterDropdown from "@components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
+import RatingStars from "@components/Sharedcomponents/ratingstars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
-import CommonInput from "@src/Components/Sharedcomponents/Inputs/CommonInput/commoninput";
+import CommonInput from "@components/Sharedcomponents/Inputs/CommonInput/commoninput";
 import { TanDataTableColumn } from "@components/dashboard-components/tanstack-data-table/types";
-import ReviewForm from "@src/Components/Review/reviewform";
-import Toast from "@src/Components/Toast/toast";
-import Pagination from "@src/Components/Pagination/pagination";
+import ReviewForm from "@components/Review/reviewform";
+import Toast from "@components/Toast/toast";
+import Pagination from "@components/Pagination/pagination";
 import { useApiMyReviews } from "@src/hooks/usemyreviews";
 import dayjs from "dayjs";
-import DeleteModal from "@src/Components/Model/deletemodal";
+import DeleteModal from "@components/Model/deletemodal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiDeleteMyReviews } from "@src/api/apimyreviews";
 import { useNavigate } from "react-router-dom";
 import { useGetAllCommunities } from "@src/hooks/usecommunity";
-import JoinModal from "@src/Components/Model/joinmodal";
+import JoinModal from "@components/Model/joinmodal";
 import { Trash, XCircleIcon } from "lucide-react";
 import {
   ApiGetPopularCommunities,
   ApiJoinCommunity,
 } from "@src/api/apicommunityforum";
-import TableSkeletonLoader from "@src/Components/Loaders/tableskeletonloader";
+import TableSkeletonLoader from "@components/Loaders/tableskeletonloader";
 import { useMeApi } from "@src/hooks/useusers";
 
 const PatientAllCommunites: React.FC = () => {
