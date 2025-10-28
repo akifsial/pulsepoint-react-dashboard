@@ -5,13 +5,13 @@ import AdminPatientsManagement from "@src/Pages/admindashboardpages/adminpatient
 import AdminReportsandAnalytics from "@src/Pages/admindashboardpages/adminreportsandanalytics";
 import AdminDashboard from "@src/Pages/admindashboardpages/admindashboard";
 import AdminReviews from "@src/Pages/admindashboardpages/adminreviews";
-import NotificationPage from "@src/Pages/Dashboards/care-provider/notificationpage";
+import NotificationPage from "@src/Pages/dashboards/careprovider/notificationpage";
 import UserInfoWrapper from "@src/Components/AdminDashboard/AdminPatient/userinfowrapper";
 import UserInfoWrapperCareProvider from "@src/Components/AdminDashboard/AdminCare/userinfowrappercareprovider";
 import ViewCommunity from "@src/Components/AdminDashboard/Forum/viewcommunity";
 import ReviewDetail from "@components/admindashboard/reviews/review-detail";
-import Blogs from "@pages/blogs/blogs";
-import HomePage from "@src/Pages/Web-pages/homepage/homepage";
+import Blogs from "@src/Pages/blogs/blogs";
+import HomePage from "@src/Pages/webpages/homepage/homepage";
 import CategoryPage from "@src/Components/Website/Home/categorypage";
 import CommunitiesSpinner from "@src/Components/Loaders/communitiesspinner";
 

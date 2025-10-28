@@ -4,8 +4,8 @@ import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbu
 import TextField from "@src/Components/CareProvider/CommunityForum/textfield";
 import HospitalHeader from "@src/Components/hospitalheader";
 import ProfilePic from "@assets/media/svgs/patient-db-svgs/hospital-prof-img.svg";
-import FeedbackForm from "@src/Pages/PatientPages/editfeedbackform";
-import EditFeedbackForm from "@src/Pages/PatientPages/editfeedbackform";
+import FeedbackForm from "@src/Pages/patientpages/editfeedbackform";
+import EditFeedbackForm from "@src/Pages/patientpages/editfeedbackform";
 
 interface ReviewFormProps {
   currentReview: {

@@ -9,10 +9,10 @@ import UtilityRow from "../Layout/utilityrow";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Spinner from "@components/loaders/spinner";
-import BannerWeb from "@src/Pages/Web-pages/components/bannerweb";
-import PostWeb from "@src/Pages/Web-pages/components/postweb";
-import CategoriesTab from "@src/Pages/Web-pages/components/categoriestab";
-import CategorySidebar from "@src/Pages/Web-pages/components/categorysidebar";
+import BannerWeb from "@src/Pages/webpages/components/bannerweb";
+import PostWeb from "@src/Pages/webpages/components/postweb";
+import CategoriesTab from "@src/Pages/webpages/components/categoriestab";
+import CategorySidebar from "@src/Pages/webpages/components/categorysidebar";
 import Pagination from "@src/Components/Pagination/pagination";
 import WebPagination from "@src/Components/Pagination/webpagination";
 

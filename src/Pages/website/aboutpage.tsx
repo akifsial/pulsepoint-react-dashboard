@@ -3,8 +3,8 @@ import aboutBanner2 from "@assets/media/images/dashboard-images/about-banner2.pn
 import Footer from "@components/website/layout/footer";
 import TopBar from "@src/Components/Website/Layout/topbar";
 import UtilityRow from "@src/Components/Website/Layout/utilityrow";
-import BannerWeb from "@src/Pages/Web-pages/components/bannerweb";
-import CategoriesTab from "@src/Pages/Web-pages/components/categoriestab";
+import BannerWeb from "@src/Pages/webpages/components/bannerweb";
+import CategoriesTab from "@src/Pages/webpages/components/categoriestab";
 import nursingImg from "@assets/media/images/dashboard-images/nursing.png";
 import { Link } from "react-router-dom";
 

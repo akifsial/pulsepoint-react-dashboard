@@ -1,25 +1,25 @@
 import PatientLayout from "@src/Layouts/patientlayout";
-import AdminCommunityForum from "@src/Pages/PatientPages/admincommunityforum";
-import AdminDashboard from "@src/Pages/PatientPages/admindashboard";
-import AdminCareProvider from "@src/Pages/PatientPages/admincareprovider";
-import AdminPatientReviews from "@src/Pages/PatientPages/adminpatientreviews";
-import HospitalProfile from "@src/Pages/PatientPages/hospitalprofile";
-import NotificationPage from "@src/Pages/Dashboards/care-provider/notificationpage";
+import AdminCommunityForum from "@src/Pages/patientpages/admincommunityforum";
+import AdminDashboard from "@src/Pages/patientpages/admindashboard";
+import AdminCareProvider from "@src/Pages/patientpages/admincareprovider";
+import AdminPatientReviews from "@src/Pages/patientpages/adminpatientreviews";
+import HospitalProfile from "@src/Pages/patientpages/hospitalprofile";
+import NotificationPage from "@src/Pages/dashboards/careprovider/notificationpage";
 import ChatbotLayout from "@src/Components/profilelayout/chatbotlayout";
 import NursingHomeReviews from "@src/Components/nursinghomereview";
-import EditFeedbackForm from "@src/Pages/PatientPages/editfeedbackform";
-import PatientAllCommunities from "@src/Pages/PatientPages/patientallcommunities";
+import EditFeedbackForm from "@src/Pages/patientpages/editfeedbackform";
+import PatientAllCommunities from "@src/Pages/patientpages/patientallcommunities";
 import StripeSuccessPage from "@src/Components/auth/stripesuccesspage";
 import StripeCancelPage from "@src/Components/auth/stripecancelledpage";
 import CommunityAccount from "@src/Components/CareProvider/CommunityForum/communityaccount";
 import CommunityAccountPosts from "@src/Components/communityaccountposts";
 import CommunitySinglePost from "@src/Components/CareProvider/CommunityForum/communitysinglepost";
-import Blogs from "@pages/blogs/blogs";
-import HomePage from "@src/Pages/Web-pages/homepage/homepage";
+import Blogs from "@src/Pages/blogs/blogs";
+import HomePage from "@src/Pages/webpages/homepage/homepage";
 import CommunityAccountWeb from "@src/Components/CareProvider/CommunityForum/communityaccountweb";
 import CategoryPage from "@src/Components/Website/Home/categorypage";
 import { Navigate } from "react-router-dom";
-import CareProviderProfile from "@pages/care-provider-profile/care-provider-profile";
+import CareProviderProfile from "@src/Pages/careproviderprofile/careproviderprofile";
 export const PatientRoutes = [
   {
     path: "/patient",

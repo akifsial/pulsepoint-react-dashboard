@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import RatingStars from "@src/Components/Sharedcomponents/ratingstars";
 import InputField from "@src/Components/adminInputfield/admininputfield";
-import SelectField from "@components/admin-select-field/AdminSelectField";
+import SelectField from "@src/Components/adminselectfield/AdminSelectField";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 
 import { GoPerson } from "react-icons/go";
