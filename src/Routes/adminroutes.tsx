@@ -1,19 +1,19 @@
 import AdminLayout from "@src/Layouts/adminlayout";
-import AdminCareProvidersControl from "@src/Pages/admindashboardpages/admincareproviderscontrol";
-import AdminForumModeration from "@src/Pages/admindashboardpages/adminforummoderation";
-import AdminPatientsManagement from "@src/Pages/admindashboardpages/adminpatientsmanagement";
-import AdminReportsandAnalytics from "@src/Pages/admindashboardpages/adminreportsandanalytics";
-import AdminDashboard from "@src/Pages/admindashboardpages/admindashboard";
-import AdminReviews from "@src/Pages/admindashboardpages/adminreviews";
-import NotificationPage from "@src/Pages/dashboards/careprovider/notificationpage";
-import UserInfoWrapper from "@components/admindashboard/AdminPatient/userinfowrapper";
-import UserInfoWrapperCareProvider from "@components/admindashboard/AdminCare/userinfowrappercareprovider";
-import ViewCommunity from "@components/admindashboard/Forum/viewcommunity";
-import ReviewDetail from "@components/admindashboard/Reviews/reviewdetail";
-import Blogs from "@src/Pages/blogs/blogs";
-import HomePage from "@src/Pages/webpages/homepage/homepage";
-import CategoryPage from "@components/Website/Home/categorypage";
-import CommunitiesSpinner from "@components/Loaders/communitiesspinner";
+import AdminCareProvidersControl from "@src/Pages/Admin-dashboard-pages/admincareproviderscontrol";
+import AdminForumModeration from "@src/Pages/Admin-dashboard-pages/adminforummoderation";
+import AdminPatientsManagement from "@src/Pages/Admin-dashboard-pages/adminpatientsmanagement";
+import AdminReportsandAnalytics from "@src/Pages/Admin-dashboard-pages/adminreportsandanalytics";
+import AdminDashboard from "@src/Pages/Admin-dashboard-pages/admindashboard";
+import AdminReviews from "@src/Pages/Admin-dashboard-pages/adminreviews";
+import NotificationPage from "@src/Pages/Dashboards/Careprovider/notificationpage";
+import UserInfoWrapper from "@components/Admin-dashboard/AdminPatient/userinfowrapper";
+import UserInfoWrapperCareProvider from "@components/Admin-dashboard/AdminCare/userinfowrappercareprovider";
+import ViewCommunity from "@components/Admin-dashboard/Forum/viewcommunity";
+import ReviewDetail from "@components/Admin-dashboard/Reviews/reviewdetail";
+import Blogs from "@src/Pages/Blogs/blogs";
+import HomePage from "@src/Pages/Web-pages/homepage/homepage";
+import CategoryPage from "@src/Components/Website/Home/categorypage";
+import CommunitiesSpinner from "@src/Components/Loaders/communitiesspinner";
 
 export const AdminRoutes = [
   {

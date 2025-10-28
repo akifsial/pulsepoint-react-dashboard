@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import InputField from "../inputfield";
 import OnBoardingLayout from "./onboradinglayout";
 import { IoLockClosedOutline } from "react-icons/io5";
-import { ApiResetPassword } from "@src/api/authapi/authapi";
+import { ApiResetPassword } from "@src/api/Auth-api/authapi";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 
 const ResetPasswordPage = () => {
   const {

@@ -1,6 +1,6 @@
-import Spinner from "@components/loaders/spinner";
-import PrimaryInput from "@components/primaryinput";
-import CommonInput from "@components/Sharedcomponents/Inputs/CommonInput/commoninput";
+import Spinner from "@src/Components/loaders/spinner";
+import PrimaryInput from "@src/Components/primaryinput";
+import CommonInput from "@src/Components/Sharedcomponents/Inputs/CommonInput/commoninput";
 import React from "react";
 import ReactDOM from "react-dom";
 

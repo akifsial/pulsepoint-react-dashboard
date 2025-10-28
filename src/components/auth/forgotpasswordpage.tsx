@@ -4,9 +4,9 @@ import InputField from "../inputfield";
 import OnBoardingLayout from "./onboradinglayout";
 import { IoMailOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
-import { ApiForgot } from "@src/api/authapi/authapi";
+import { ApiForgot } from "@src/api/Auth-api/authapi";
 import toast from "react-hot-toast";
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 import { useMutation } from "@tanstack/react-query";
 
 const ForgotPasswordPage = () => {

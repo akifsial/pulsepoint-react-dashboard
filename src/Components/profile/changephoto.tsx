@@ -1,4 +1,4 @@
-import DragMedia from "@components/CareProvider/CommunityForum/dragmedia";
+import DragMedia from "@src/Components/CareProvider/CommunityForum/dragmedia";
 import React from "react";
 const ChangePhoto = () => {
   return (

@@ -5,12 +5,12 @@ import topSenior from "@assets/media/images/dashboard-images/topSernior.jpg";
 import PrivateLock from "@assets/media/svgs/dashboard-svgs/PrivateLock.png";
 import Calender from "@assets/media/svgs/dashboard-svgs/calendar.svg";
 import Global from "@assets/media/svgs/dashboard-svgs/global.svg";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import addCommunity from "@assets/media/svgs/dashboard-svgs/addCommunity.svg";
 import OurFeed from "./ourfeed";
-import Model from "@components/model/model";
-import CreatePost from "./backfeed/createpost";
-import PatientInfo from "@components/CareProvider/patientinfo";
+import Model from "@src/Components/model/model";
+import CreatePost from "./Back-feed/createpost";
+import PatientInfo from "@src/Components/CareProvider/patientinfo";
 import { useGetSpecificCommunity } from "@src/hooks/usecommunity";
 import { useLocation, useParams } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -19,15 +19,15 @@ import {
   ApiJoinCommunity,
 } from "@src/api/apicommunityforum";
 import toast from "react-hot-toast";
-import LeaveCommunityModal from "@components/Model/leavecommunitymodal";
+import LeaveCommunityModal from "@src/Components/Model/leavecommunitymodal";
 import { useNavigate } from "react-router-dom";
-import Spinner from "@components/loaders/spinner";
-import CommunityAccountPosts from "@components/communityaccountposts";
+import Spinner from "@src/Components/loaders/spinner";
+import CommunityAccountPosts from "@src/Components/communityaccountposts";
 import PopularCommunity from "./popularcommunity";
-import CommunitiesSpinner from "@components/Loaders/communitiesspinner";
-import DeleteModal from "@components/Model/deletemodal";
-import TopBar from "@components/Website/Layout/topbar";
-import UtilityRow from "@components/Website/Layout/utilityrow";
+import CommunitiesSpinner from "@src/Components/Loaders/communitiesspinner";
+import DeleteModal from "@src/Components/Model/deletemodal";
+import TopBar from "@src/Components/Website/Layout/topbar";
+import UtilityRow from "@src/Components/Website/Layout/utilityrow";
 import { useCategory } from "@src/hooks/usewebsite";
 
 const CommunityAccountWeb = ({ setOpenBackFeed }) => {

@@ -1,10 +1,10 @@
-import DashboardHeader from "@components/Dashboardcomponents/dashboardheader/dashboardheader";
+import DashboardHeader from "@src/Components/Dashboard-components/Dashboard-header/dashboardheader";
 import Sidebar from "@components/dashboard-components/sidebar/sidebar";
-import { sidebarLinks } from "@components/dashboard-components/sidebar/sidebar-links";
+import { sidebarLinks } from "@src/Components/Dashboard-components/Side-bar/sidebarlinks";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import ModalRedirect from "@components/Model/modalredirect";
+import ModalRedirect from "@src/Components/Model/modalredirect";
 
 const CareProviderLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

@@ -8,12 +8,12 @@ import {
   useGetCategories,
 } from "@src/hooks/usewebsite";
 import { useQueryClient } from "@tanstack/react-query";
-import LoginOrSignupModal from "@components/model/login-or-signup-modal";
+import LoginOrSignupModal from "@src/Components/model/login-or-signup-modal";
 import friendPlus from "@assets/media/svgs/dashboard-svgs/friend-login.svg";
-import LoginModal from "@components/Model/loginmodal";
+import LoginModal from "@src/Components/Model/loginmodal";
 import he from "he";
 import Select from "react-select";
-import ModalRedirect from "@components/Model/modalredirect";
+import ModalRedirect from "@src/Components/Model/modalredirect";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },

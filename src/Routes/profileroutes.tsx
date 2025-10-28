@@ -1,16 +1,16 @@
-import AddFeatureDetail from "@components/profile/addfeaturedetail";
-import AdminProfileDetail from "@components/profile/adminprofiledetail";
-import PatientProfile from "@components/profile/patientprofile";
-import CareProfileLayout from "@components/profilelayout/careprofilelayout";
-import PatientProfileLayout from "@components/profilelayout/patientprofilelayout";
-import ProfileLayout from "@components/profilelayout/profilelayout";
-import GetFeaturePage from "@src/Pages/profilepage/getfeaturepage";
-import CareProviderGetFeaturePage from "@src/Pages/profilepage/careprovidergetfeaturepage";
-import ManagePasswordPage from "@src/Pages/profilepage/managepasswordpage";
-import PatientProfileDetailPage from "@src/Pages/profilepage/patientprofiledetailpage";
-import ProfileDetailPage from "@src/Pages/profilepage/profiledetailpage";
+import AddFeatureDetail from "@src/Components/profile/addfeaturedetail";
+import AdminProfileDetail from "@src/Components/profile/adminprofiledetail";
+import PatientProfile from "@src/Components/profile/patientprofile";
+import CareProfileLayout from "@src/Components/Profile-layout/careprofilelayout";
+import PatientProfileLayout from "@src/Components/Profile-layout/patientprofilelayout";
+import ProfileLayout from "@src/Components/Profile-layout/profilelayout";
+import GetFeaturePage from "@src/Pages/Profile-page/getfeaturepage";
+import CareProviderGetFeaturePage from "@src/Pages/Profile-page/careprovidergetfeaturepage";
+import ManagePasswordPage from "@src/Pages/Profile-page/managepasswordpage";
+import PatientProfileDetailPage from "@src/Pages/Profile-page/patientprofiledetailpage";
+import ProfileDetailPage from "@src/Pages/Profile-page/profiledetailpage";
 import ProtectedRoutes from "./protectedroutes";
-import PaymentHistoryPage from "@src/Pages/profilepage/paymenthistory";
+import PaymentHistoryPage from "@src/Pages/Profile-page/paymenthistory";
 export const ProfileRoutes = [
   {
     path: "/admin",

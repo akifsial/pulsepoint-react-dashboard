@@ -1,12 +1,12 @@
-import InputField from "@components/inputfield";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import InputField from "@src/Components/inputfield";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import React, { useState } from "react";
 import backArrow from "../../assets/media/svgs/dashboard-svgs/arrow-left.svg";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { ApiChangePassword } from "@src/api/authapi/authapi";
+import { ApiChangePassword } from "@src/api/Auth-api/authapi";
 
 const ManagePassword = () => {
   const [password, setPassword] = useState("");

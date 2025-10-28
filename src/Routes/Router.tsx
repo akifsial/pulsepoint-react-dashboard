@@ -84,9 +84,9 @@ import { DashboardRoutes } from "./dashboardroutes";
 import { ProfileRoutes } from "./profileroutes";
 import NotFoundPage from "@src/Pages/notfoundpage";
 import PatientLayout from "@src/Layouts/patientlayout";
-import AdminDashboard from "@src/Pages/patientpages/admindashboard";
-import ModalRedirect from "@components/Model/modalredirect";
-import HomePage from "@src/Pages/webpages/homepage/homepage";
+import AdminDashboard from "@src/Pages/Patient-pages/admindashboard";
+import ModalRedirect from "@src/Components/Model/modalredirect";
+import HomePage from "@src/Pages/Web-pages/homepage/homepage";
 
 const Router: React.FC = () => {
   return (

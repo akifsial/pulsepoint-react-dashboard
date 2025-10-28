@@ -7,12 +7,12 @@ import OnBoardingLayout from "./onboradinglayout";
 import SocialLoginSection from "../socialloginsection"; 
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { ApiLogin } from "@src/api/authapi/authapi";
+import { ApiLogin } from "@src/api/Auth-api/authapi";
 import dummyImage from "@assets/media/images/signup-img.png";
 import signupLogo from "@assets/media/images/signup-logo.png";
 
 import { useForm } from "react-hook-form";
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 import toast from "react-hot-toast";
 import { connectSocket } from "@src/socket/socket";
 

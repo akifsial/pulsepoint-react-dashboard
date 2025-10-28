@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import RatingStars from "@components/Sharedcomponents/ratingstars";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
-import TextField from "@components/CareProvider/CommunityForum/textfield";
-import HospitalHeader from "@components/hospitalheader";
+import RatingStars from "@src/Components/Sharedcomponents/ratingstars";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import TextField from "@src/Components/CareProvider/CommunityForum/textfield";
+import HospitalHeader from "@src/Components/hospitalheader";
 import ProfilePic from "@assets/media/svgs/patient-db-svgs/hospital-prof-img.svg";
-import FeedbackForm from "@src/Pages/patientpages/editfeedbackform";
-import EditFeedbackForm from "@src/Pages/patientpages/editfeedbackform";
+import FeedbackForm from "@src/Pages/Patient-pages/editfeedbackform";
+import EditFeedbackForm from "@src/Pages/Patient-pages/editfeedbackform";
 
 interface ReviewFormProps {
   currentReview: {

@@ -1,4 +1,4 @@
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 import React from "react";
 import ReactDOM from "react-dom";
 

@@ -5,7 +5,7 @@ import WhiteHome from "@assets/media/svgs/dashboard-svgs/homeWhite.svg";
 import Whitepopular from "@assets/media/svgs/dashboard-svgs/popularWhite.svg";
 import home from "@assets/media/svgs/dashboard-svgs/home.svg";
 import popular from "@assets/media/svgs/dashboard-svgs/popular.svg";
-import BackFeed from "./backfeed/backfeed";
+import BackFeed from "./Back-feed/backfeed";
 import Saved from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SavedBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
 import SaveWhite from "@assets/media/svgs/dashboard-svgs/save-white.svg";

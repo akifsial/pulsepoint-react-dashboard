@@ -11,10 +11,10 @@ import SaveBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
 import DummyUser from "@assets/media/images/dashboard-images/userDummy.png";
 import arrowDown from "@assets/media/svgs/arrowDown.svg";
 import postImage from "../../../assets/media/images/dashboard-images/postImage.png";
-import Model from "@components/model/model";
+import Model from "@src/Components/model/model";
 import FlagPost from "./flagpost";
 import SubmitReport from "./submitreport";
-import ShareModal from "@components/sharemodal";
+import ShareModal from "@src/Components/sharemodal";
 import {
   ApiDeleteComment,
   ApiDeletePost,
@@ -34,12 +34,12 @@ import toast from "react-hot-toast";
 import arrowUpTrans from "@assets/media/svgs/dashboard-svgs/arrowUp.svg";
 import { useGetCommunityPost } from "@src/hooks/usecommunity";
 import { useGetSingleUser } from "@src/hooks/usecommunity";
-import FeedSkeleton from "@components/Loaders/communityfeedloader";
+import FeedSkeleton from "@src/Components/Loaders/communityfeedloader";
 import { CommentItem } from "./commentblock";
-import DropdownActions from "@components/Dashboardcomponents/dropdownactions/dropdownactions";
-import DeleteModal from "@components/Model/deletemodal";
-import Spinner from "@components/loaders/spinner";
-import PostContent from "@components/postcontent";
+import DropdownActions from "@src/Components/Dashboard-components/dropdownactions/dropdownactions";
+import DeleteModal from "@src/Components/Model/deletemodal";
+import Spinner from "@src/Components/loaders/spinner";
+import PostContent from "@src/Components/postcontent";
 
 const PopularPostsCommunity = ({ setOpenBackFeed, setPostIdFeed, data }) => {
   const [activeTab, setActiveTab] = useState("home");

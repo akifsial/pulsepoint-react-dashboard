@@ -4,7 +4,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { siteHeaderLinks } from "@components/web-components/site-header/site-header-links";
 import siteLogo from "@assets/media/svgs/top-senior-spot-logo.svg";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import "./SiteHeader.css";
 
 const SiteHeader: React.FC = () => {

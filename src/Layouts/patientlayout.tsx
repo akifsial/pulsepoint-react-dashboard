@@ -1,7 +1,7 @@
-import DashboardHeader from "@components/Dashboardcomponents/dashboardheader/dashboardheader";
+import DashboardHeader from "@src/Components/Dashboard-components/Dashboard-header/dashboardheader";
 import Sidebar from "@components/dashboard-components/sidebar/sidebar";
-import { PatientSidebarLinks } from "@components/dashboard-components/sidebar/sidebar-links";
-import ModalRedirect from "@components/Model/modalredirect";
+import { PatientSidebarLinks } from "@src/Components/Dashboard-components/Side-bar/sidebarlinks";
+import ModalRedirect from "@src/Components/Model/modalredirect";
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 

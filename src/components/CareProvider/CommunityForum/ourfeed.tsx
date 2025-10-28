@@ -1,7 +1,7 @@
 import React from "react";
 import CommunityFeed from "./communityfeed";
 import PopularCommunity from "./popularcommunity";
-import CommunityAccountPosts from "@components/communityaccountposts";
+import CommunityAccountPosts from "@src/Components/communityaccountposts";
 
 const OurFeed = (data) => {
   return (

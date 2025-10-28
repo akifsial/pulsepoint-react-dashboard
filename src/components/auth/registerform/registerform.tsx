@@ -16,8 +16,8 @@ import { useMutation } from "@tanstack/react-query";
 import dummyImage from "@assets/media/images/signup-img.png";
 import signupLogo from "@assets/media/images/signup-logo.png";
 import toast from "react-hot-toast";
-import { ApiRegister } from "@src/api/authapi/authapi";
-import Spinner from "@components/loaders/spinner";
+import { ApiRegister } from "@src/api/Auth-api/authapi";
+import Spinner from "@src/Components/loaders/spinner";
 import {
   useAllApiInsuranceTypes,
   useAllApiProviderTypes,

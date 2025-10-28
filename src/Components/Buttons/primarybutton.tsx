@@ -4,7 +4,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { PrimaryBtnProps } from "./types";
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 
 export const PrimaryButton: React.FC<PrimaryBtnProps> = ({
   btnText,

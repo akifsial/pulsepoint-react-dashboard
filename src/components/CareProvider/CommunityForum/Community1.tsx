@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import InputField from "@components/inputfield";
+import InputField from "@src/Components/inputfield";
 import TextField from "./textfield";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { useForm } from "react-hook-form";
 
 const Community1 = ({

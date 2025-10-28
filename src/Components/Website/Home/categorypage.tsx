@@ -8,13 +8,13 @@ import TopBar from "../Layout/topbar";
 import UtilityRow from "../Layout/utilityrow";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import Spinner from "@components/loaders/spinner";
-import BannerWeb from "@src/Pages/webpages/components/bannerweb";
-import PostWeb from "@src/Pages/webpages/components/postweb";
-import CategoriesTab from "@src/Pages/webpages/components/categoriestab";
-import CategorySidebar from "@src/Pages/webpages/components/categorysidebar";
-import Pagination from "@components/Pagination/pagination";
-import WebPagination from "@components/Pagination/webpagination";
+import Spinner from "@src/Components/loaders/spinner";
+import BannerWeb from "@src/Pages/Web-pages/Components/bannerweb";
+import PostWeb from "@src/Pages/Web-pages/Components/postweb";
+import CategoriesTab from "@src/Pages/Web-pages/Components/categoriestab";
+import CategorySidebar from "@src/Pages/Web-pages/Components/categorysidebar";
+import Pagination from "@src/Components/Pagination/pagination";
+import WebPagination from "@src/Components/Pagination/webpagination";
 
 const CategoryPage: React.FC = () => {
   const [category, setCategory] = useState<string | null>(null);

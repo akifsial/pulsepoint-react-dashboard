@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from "react";
 
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
-import InputField from "@components/adminInputfield/admininputfield";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import InputField from "@components/Admin-Inputfield/admininputfield";
 import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
 import { RxPerson } from "react-icons/rx";
 import { RiMailOpenLine } from "react-icons/ri";

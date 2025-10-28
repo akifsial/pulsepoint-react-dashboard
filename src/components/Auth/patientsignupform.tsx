@@ -13,8 +13,8 @@ import {
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { ApiRegister } from "@src/api/authapi/authapi";
-import Spinner from "@components/loaders/spinner";
+import { ApiRegister } from "@src/api/Auth-api/authapi";
+import Spinner from "@src/Components/loaders/spinner";
 import { useAllApiInsuranceTypes } from "@src/hooks/useusers";
 import { ArrowLeft } from "lucide-react";
 

@@ -1,14 +1,14 @@
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import uploadImage from "@assets/media/images/dashboard-images/uploadImage.png";
-import InputField from "@components/inputfield";
+import InputField from "@src/Components/inputfield";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiAddBlog, ApiEditBlog } from "@src/api/apiwebsite";
 import { useForm, Controller } from "react-hook-form";
 import { useBlog, useCategory, useSingleBlog } from "@src/hooks/usewebsite";
-import SelectField from "@components/selectfield";
+import SelectField from "@src/Components/selectfield";
 import { IoClose } from "react-icons/io5";
 
 interface AddBlogModalProps {

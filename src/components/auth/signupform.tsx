@@ -10,8 +10,8 @@ import { IoPersonOutline, IoCallOutline, IoMailOutline, IoLocationSharp } from "
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { ApiRegister } from "@src/api/authapi/authapi";
-import Spinner from "@components/loaders/spinner";
+import { ApiRegister } from "@src/api/Auth-api/authapi";
+import Spinner from "@src/Components/loaders/spinner";
 import { useAllApiInsuranceTypes, useAllApiProviderTypes } from "@src/hooks/useusers";
 
 interface FormData {

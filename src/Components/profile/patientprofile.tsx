@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import Model from "@components/model/model";
+import Model from "@src/Components/model/model";
 import ChangePhoto from "./changephoto";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import userProfile from "../../assets/media/svgs/dashboard-svgs/profile1.svg";
 import userFallbackImg from "@assets/media/images/dashboard-images/userDummy.png";
-import InputField from "@components/inputfield";
-import SelectField from "@components/selectfield";
+import InputField from "@src/Components/inputfield";
+import SelectField from "@src/Components/selectfield";
 import { IoLocationSharp } from "react-icons/io5";
 import {
   useAllApiInsuranceTypes,
@@ -16,7 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiMe, ApiUpdateUser } from "@src/api/apiusers";
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 import { useNavigate } from "react-router-dom";
 
 const organizationOptions = [

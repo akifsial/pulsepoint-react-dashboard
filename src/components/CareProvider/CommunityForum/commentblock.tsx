@@ -10,9 +10,9 @@ import dayjs from "dayjs";
 import arrowDowm from "@assets/media/svgs/dashboard-svgs/arrow-down-btn.svg";
 import arrowUp from "@assets/media/svgs/arrowUp.svg";
 import { IoEllipsisHorizontal, IoEllipsisVerticalSharp } from "react-icons/io5";
-import DropdownActions from "@components/Dashboardcomponents/dropdownactions/dropdownactions";
-import DeleteDropdownActions from "@components/Dashboardcomponents/dropdownactions/deletedropdownactions";
-import Spinner from "@components/loaders/spinner";
+import DropdownActions from "@src/Components/Dashboard-components/dropdownactions/dropdownactions";
+import DeleteDropdownActions from "@src/Components/Dashboard-components/dropdownactions/deletedropdownactions";
+import Spinner from "@src/Components/loaders/spinner";
 
 export const CommentItem = ({
   comment,

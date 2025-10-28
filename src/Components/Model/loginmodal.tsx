@@ -1,5 +1,5 @@
-import InputField from "@components/inputfield";
-import Spinner from "@components/loaders/spinner";
+import InputField from "@src/Components/inputfield";
+import Spinner from "@src/Components/loaders/spinner";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import ReactDOM from "react-dom";

@@ -3,7 +3,7 @@ import ChatDeleteModal from "./chatdeletemodal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiDeleteChat, ApiEditChatName } from "@src/api/apicommunityforum";
 import toast from "react-hot-toast";
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 import EditChatModal from "./editchatmodal";
 
 interface Props {

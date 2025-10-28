@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Model from "@components/model/model";
+import Model from "@src/Components/model/model";
 import ChangePhoto from "./changephoto";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
-import InputField from "@components/inputfield";
-import SelectField from "@components/selectfield";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import InputField from "@src/Components/inputfield";
+import SelectField from "@src/Components/selectfield";
 import { ApiUpdateUser } from "@src/api/apiusers";
 import Methew from "../../assets/media/svgs/dashboard-svgs/methew.svg";
 import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
@@ -24,11 +24,11 @@ import "react-date-range/dist/theme/default.css";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import StartEndDate from "@components/dates/startendtime";
-import StartEndTime from "@components/dates/startendtime";
-import StartEndDay from "@components/dates/startendday";
+import StartEndDate from "@src/Components/dates/startendtime";
+import StartEndTime from "@src/Components/dates/startendtime";
+import StartEndDay from "@src/Components/dates/startendday";
 import { useNavigate } from "react-router-dom";
-import Map from "@components/map/map";
+import Map from "@src/Components/map/map";
 
 const organizationOptions = [
   { value: "Hospital", label: "Hospital" },

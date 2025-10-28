@@ -1,10 +1,10 @@
 import React from "react";
 import CommunityTopics from "./communitytopics";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { useMutation } from "@tanstack/react-query";
 import { ApiCreateCommunity } from "@src/api/apicommunityforum";
 import toast from "react-hot-toast";
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 import { useGetAllCommunityTopics } from "@src/hooks/usecommunity";
 
 const Community3 = ({

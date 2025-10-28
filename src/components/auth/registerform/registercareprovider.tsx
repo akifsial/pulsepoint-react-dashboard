@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import InputField from "@components/inputfield";
-import SelectField from "@components/selectfield";
-import OnBoardingLayout from "@components/Auth/onboradinglayout";
+import InputField from "@src/Components/inputfield";
+import SelectField from "@src/Components/selectfield";
+import OnBoardingLayout from "@src/Components/Auth/onboradinglayout";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Globe } from "lucide-react";
-import SocialLoginSection from "@components/socialloginsection";
+import SocialLoginSection from "@src/Components/socialloginsection";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { isValidPhoneNumber } from "react-phone-number-input";
@@ -18,10 +18,10 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { ApiRegister } from "@src/api/authapi/authapi";
+import { ApiRegister } from "@src/api/Auth-api/authapi";
 import dummyImage from "@assets/media/images/signup-img.png";
 import signupLogo from "@assets/media/images/signup-logo.png";
-import Spinner from "@components/loaders/spinner";
+import Spinner from "@src/Components/loaders/spinner";
 import {
   useAllApiInsuranceTypes,
   useAllApiProviderTypes,

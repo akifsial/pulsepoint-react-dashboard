@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Model from "@components/model/model";
+import Model from "@src/Components/model/model";
 import ChangePhoto from "./changephoto";
-import { PrimaryButton } from "@components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
-import InputField from "@components/inputfield";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import InputField from "@src/Components/inputfield";
 import inputUser from "../../assets/media/svgs/dashboard-svgs/inputuser.svg";
 import Call from "../../assets/media/svgs/dashboard-svgs/call.svg";
 import Sms from "../../assets/media/svgs/dashboard-svgs/sms.svg";

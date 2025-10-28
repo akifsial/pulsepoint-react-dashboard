@@ -1,6 +1,6 @@
 import React from 'react';
 import backArrow from "../../assets/media/svgs/dashboard-svgs/arrow-left.svg";
-import User from "../admindashboard/admincare/user";
+import User from "../Admin-dashboard/admincare/user";
 import Profile from "../../assets/media/svgs/dashboard-svgs/Avatar.svg"
 
 const infoItems = [
