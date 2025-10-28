@@ -9,7 +9,7 @@ import NotificationPage from "@src/Pages/dashboards/careprovider/notificationpag
 import UserInfoWrapper from "@components/admindashboard/AdminPatient/userinfowrapper";
 import UserInfoWrapperCareProvider from "@components/admindashboard/AdminCare/userinfowrappercareprovider";
 import ViewCommunity from "@components/admindashboard/Forum/viewcommunity";
-import ReviewDetail from "@components/admindashboard/reviews/review-detail";
+import ReviewDetail from "@components/admindashboard/Reviews/reviewdetail";
 import Blogs from "@src/Pages/blogs/blogs";
 import HomePage from "@src/Pages/webpages/homepage/homepage";
 import CategoryPage from "@components/Website/Home/categorypage";

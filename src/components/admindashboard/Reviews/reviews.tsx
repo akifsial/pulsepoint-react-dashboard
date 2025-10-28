@@ -1,4 +1,4 @@
-import ReviewsTable from './reviews-table'
+import ReviewsTable from './reviewstable'
 
 const Reviews = () => {
   return (
