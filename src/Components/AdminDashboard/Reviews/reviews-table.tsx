@@ -1,24 +1,24 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
-import DropdownActions from "@components/dashboard-components/dropdown-actions/dropdown-actions";
+import DropdownActions from "@src/Components/Dashboardcomponents/dropdownactions/dropdownactions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
-import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
-import CommonInput from "@components/shared-components/inputs/common-input/common-input";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
+import CommonInput from "@src/Components/Sharedcomponents/Inputs/CommonInput/commoninput";
 import { TanDataTableColumn } from "@components/dashboard-components/tanstack-data-table/types";
-import RatingStars from "@components/shared-components/rating-stars";
+import RatingStars from "@src/Components/Sharedcomponents/ratingstars";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/dashboard-components/dropdowns/rating-filter-dropdown";
+import RatingFilterDropdown from "@src/Components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
 import { useNavigate } from "react-router-dom";
 import Model from "@components/model/model";
-import Pagination from "@components/pagination/pagination";
-import DeleteReview from "../forum/delete-review";
-import apiEndpoint from "@src/shared/api-end-point";
-import { apiServices } from "@src/shared/api-services";
-import SkeletonTableLoader from "@components/loader/skelton-table-loader";
-import AdminDropdownAction from "../admindropdownaction/admin-dropdown-action";
-import AdminRatingFilterDropDown from "../admindropdownaction/admin-rating-filter-drop-down";
+import Pagination from "@src/Components/Pagination/pagination";
+import DeleteReview from "../Forum/deletereview";
+import apiEndpoint from "@src/shared/apiendpoint";
+import { apiServices } from "@src/shared/apiservices";
+import SkeletonTableLoader from "@src/Components/loader/skeltontableloader";
+import AdminDropdownAction from "../admindropdownaction/admindropdownaction";
+import AdminRatingFilterDropDown from "../admindropdownaction/adminratingfilterdropdown";
 
 const Highlighter: React.FC<{ text?: string | number; query: string }> = ({
   text,

@@ -5,8 +5,8 @@ import user1 from "@assets/media/images/user1.png";
 import user2 from "@assets/media/images/user2.png";
 import stars from "@assets/media/svgs/stars.svg";
 import DummyImage from "@assets/media/images/dummyUser.png";
-import { apiServices } from "@src/shared/api-services";
-import apiEndpoint from "@src/shared/api-end-point";
+import { apiServices } from "@src/shared/apiservices";
+import apiEndpoint from "@src/shared/apiendpoint";
 
 interface ReviewDetailType {
   care_provider?: {

@@ -1,31 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
-import DropdownActions from "@components/dashboard-components/dropdown-actions/dropdown-actions";
+import DropdownActions from "@src/Components/Dashboardcomponents/dropdownactions/dropdownactions";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/dashboard-components/dropdowns/rating-filter-dropdown";
+import RatingFilterDropdown from "@src/Components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
 import addBlog from "@assets/media/images/dashboard-images/addBlog.png";
 import postFallbackImage from "@assets/media/images/dashboard-images/postFallback.png";
 
 import searchIcon from "@assets/media/svgs/patient-db-svgs/search-icon.svg";
 
-import CommonInput from "@components/shared-components/inputs/common-input/common-input";
+import CommonInput from "@src/Components/Sharedcomponents/Inputs/CommonInput/commoninput";
 import { TanDataTableColumn } from "@components/dashboard-components/tanstack-data-table/types";
-import ReviewForm from "@components/review/review-form";
-import Toast from "@components/toast/toast";
-import { useApiMyReviews } from "@src/hooks/use-my-reviews";
+import ReviewForm from "@src/Components/Review/reviewform";
+import Toast from "@src/Components/Toast/toast";
+import { useApiMyReviews } from "@src/hooks/usemyreviews";
 import dayjs from "dayjs";
-import Pagination from "@components/pagination/pagination";
-import DeleteModal from "@components/model/delete-modal";
+import Pagination from "@src/Components/Pagination/pagination";
+import DeleteModal from "@src/Components/Model/deletemodal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiDeleteMyReviews } from "@src/api/api-my-reviews";
+import { apiDeleteMyReviews } from "@src/api/apimyreviews";
 import { useNavigate } from "react-router-dom";
-import TableSkeletonLoader from "@components/loaders/table-skeleton-loader";
-import { useMeApi } from "@src/hooks/use-users";
-import { useBlog } from "@src/hooks/use-website";
+import TableSkeletonLoader from "@src/Components/Loaders/tableskeletonloader";
+import { useMeApi } from "@src/hooks/useusers";
+import { useBlog } from "@src/hooks/usewebsite";
 import AddBlogs from "./add-blogs";
-import { ApiDeleteBlog } from "@src/api/api-website";
+import { ApiDeleteBlog } from "@src/api/apiwebsite";
 import toast from "react-hot-toast";
 import EditBlogs from "./edit-blogs";
 

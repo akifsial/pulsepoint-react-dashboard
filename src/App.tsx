@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { Toaster } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setupInterceptors } from "./interceptor";
-import { useMeApi } from "./hooks/use-users";
+import { useMeApi } from "./hooks/useusers";
 
 const App: React.FC = () => {
   return (

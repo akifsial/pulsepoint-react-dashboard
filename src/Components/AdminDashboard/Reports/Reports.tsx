@@ -1,6 +1,6 @@
 import React from 'react'
-import ReportChart from './reportchart/report-chart'
-import ReportTable from './report-table'
+import ReportChart from './reportchart/reportchart'
+import ReportTable from './reporttable'
 
 const Reports = () => {
   return (

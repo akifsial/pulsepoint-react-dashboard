@@ -1,20 +1,20 @@
-import StatsCommonCards from "@components/dashboard-components/cards/stats-common-cards";
+import StatsCommonCards from "@src/Components/Dashboardcomponents/Cards/statscommoncards";
 import React, { useState, useRef, useEffect } from "react";
 import userSearch from "@assets/media/svgs/dashboard-svgs/user-search.svg";
 import TanDataTable from "@components/dashboard-components/tanstack-data-table/tan-data-table";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
 import ForwardArrow from "@assets/media/svgs/dashboard-svgs/arrow-forward-white.svg";
-import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { AnimatePresence, motion } from "framer-motion";
-import RatingFilterDropdown from "@components/dashboard-components/dropdowns/rating-filter-dropdown";
-import RatingStars from "@components/shared-components/rating-stars";
+import RatingFilterDropdown from "@src/Components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
+import RatingStars from "@src/Components/Sharedcomponents/ratingstars";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import WriteReview from "@assets/media/svgs/dashboard-svgs/writen-review.svg";
 import ThumbsUp from "@assets/media/svgs/dashboard-svgs/thumbs-up.svg";
 import Patientdbimg from "@assets/media/svgs/patient-db-svgs/patient-dashboard.jpeg";
 import alice from "@assets/media/images/dashboard-images/alice.svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import ReviewCard from "@components/review-card";
+import ReviewCard from "@src/Components/reviewcard";
 import MessageIcon from "@assets/media/svgs/dashboard-svgs/message-time.svg";
 import dayjs from "dayjs";
 import { Search, Clock } from "lucide-react";
@@ -22,25 +22,25 @@ import {
   useCareProviders,
   useRecentSearches,
   useStatsApi,
-} from "@src/hooks/use-dashboard";
+} from "@src/hooks/usedashboard";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ApiCareProviderStatusUpdate,
   ApiDeleteRecentSearches,
   ApiGetCareProviders,
-} from "@src/api/api-dashboard";
-import DeleteModal from "@components/model/delete-modal";
-import { apiDeleteCareProvider } from "@src/api/api-dashboard";
-import EditModal from "@components/model/active-inactive-modal";
-import ActiveInactiveModal from "@components/model/active-inactive-modal";
+} from "@src/api/apidashboard";
+import DeleteModal from "@src/Components/Model/deletemodal";
+import { apiDeleteCareProvider } from "@src/api/apidashboard";
+import EditModal from "@src/Components/Model/activeinactivemodal";
+import ActiveInactiveModal from "@src/Components/Model/activeinactivemodal";
 import toast from "react-hot-toast";
 import { X } from "lucide-react";
-import TableSkeletonLoader from "@components/loaders/table-skeleton-loader";
-import { useMeApi } from "@src/hooks/use-users";
+import TableSkeletonLoader from "@src/Components/Loaders/tableskeletonloader";
+import { useMeApi } from "@src/hooks/useusers";
 import LikeIcon from "@assets/media/svgs/dashboard-svgs/like-tag2.svg";
 import axios from "axios";
 import userDown from "@assets/media/svgs/dashboard-svgs/user-down-01.svg";
-import Pagination from "@components/pagination/pagination";
+import Pagination from "@src/Components/Pagination/pagination";
 const Model = ({ setIsOpen, children, className = "" }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">

@@ -77,16 +77,16 @@
 // export default Router;
 
 import { Routes, Route, Navigate } from "react-router-dom";
-import { websitePublicRoutes } from "./website-routes";
-import { PatientRoutes } from "./patient-routes";
-import { AdminRoutes } from "./admin-routes";
-import { DashboardRoutes } from "./dashboard-routes";
-import { ProfileRoutes } from "./profile-routes";
-import NotFoundPage from "@pages/not-found-page";
-import PatientLayout from "@layouts/patient-layout";
+import { websitePublicRoutes } from "./websiteroutes";
+import { PatientRoutes } from "./patientroutes";
+import { AdminRoutes } from "./adminroutes";
+import { DashboardRoutes } from "./dashboardroutes";
+import { ProfileRoutes } from "./profileroutes";
+import NotFoundPage from "@src/Pages/notfoundpage";
+import PatientLayout from "@src/Layouts/patientlayout";
 import AdminDashboard from "@src/Pages/PatientPages/admindashboard";
-import ModalRedirect from "@src/Components/Model/ModalRedirect";
-import HomePage from "@src/Pages/Web-pages/home-page/homepage";
+import ModalRedirect from "@src/Components/Model/modalredirect";
+import HomePage from "@src/Pages/Web-pages/homepage/homepage";
 
 const Router: React.FC = () => {
   return (

@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import SelectCommonBox from "@components/dashboard-components/select-common-box";
-import { PrimaryButton } from "@components/shared-components/buttons/common-button/common-button";
+import SelectCommonBox from "@src/Components/Dashboardcomponents/select-common-box";
+import { PrimaryButton } from "@src/Components/Sharedcomponents/Buttons/Commonbutton/commonbutton";
 import { AnimatePresence, motion } from "framer-motion";
 import filterIcon from "@assets/media/svgs/dashboard-svgs/filter-icon.svg";
-import RatingFilterDropdown from "@components/dashboard-components/dropdowns/rating-filter-dropdown";
-import PatientReviewsCard from "@components/dashboard-components/cards/patient-reviews-card";
+import RatingFilterDropdown from "@src/Components/Dashboardcomponents/dropdowns/rating-filter-dropdown";
+import PatientReviewsCard from "@src/Components/Dashboardcomponents/Cards/patientreviewscard";
 import { v4 as uuid } from "uuid";
-import { useMeApi } from "@src/hooks/use-users";
+import { useMeApi } from "@src/hooks/useusers";
 import { useNavigate } from "react-router-dom";
 
 const PatinetReviews: React.FC = () => {

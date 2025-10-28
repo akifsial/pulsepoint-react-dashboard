@@ -4,7 +4,7 @@ import App from "@src/App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { ConversationProvider } from "@src/socket/context-socket";
+import { ConversationProvider } from "@src/socket/contextsocket";
 
 const queryClient = new QueryClient({
   defaultOptions: {

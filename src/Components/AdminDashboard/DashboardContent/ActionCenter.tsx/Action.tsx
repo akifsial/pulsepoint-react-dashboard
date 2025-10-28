@@ -1,5 +1,5 @@
 import React from 'react'
-import ActionDetail from './action-detail'
+import ActionDetail from './actiondetail'
 
 const Action = () => {
   return (

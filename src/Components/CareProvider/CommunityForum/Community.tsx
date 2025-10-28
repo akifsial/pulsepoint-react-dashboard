@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import CommunityFeed from "./community-feed";
-import PopularCommunity from "./popular-community";
+import CommunityFeed from "./communityfeed";
+import PopularCommunity from "./popularcommunity";
 import WhiteHome from "@assets/media/svgs/dashboard-svgs/homeWhite.svg";
 import Whitepopular from "@assets/media/svgs/dashboard-svgs/popularWhite.svg";
 import home from "@assets/media/svgs/dashboard-svgs/home.svg";
 import popular from "@assets/media/svgs/dashboard-svgs/popular.svg";
-import BackFeed from "./backfeed/back-feed";
+import BackFeed from "./backfeed/backfeed";
 import Saved from "@assets/media/svgs/dashboard-svgs/save.svg";
 import SavedBlue from "@assets/media/svgs/dashboard-svgs/saveBlue.svg";
 import SaveWhite from "@assets/media/svgs/dashboard-svgs/save-white.svg";
 import SaveBlack from "@assets/media/svgs/dashboard-svgs/save-black.svg";
 
-import SavedCommunityFeed from "./saved-community-feed";
-import PopularPostsCommunity from "./popular-posts-community";
-import { useMeApi } from "@src/hooks/use-users";
+import SavedCommunityFeed from "./savedcommunityfeed";
+import PopularPostsCommunity from "./popularpostscommunity";
+import { useMeApi } from "@src/hooks/useusers";
 import { useNavigate } from "react-router-dom";
 
 const Community = () => {

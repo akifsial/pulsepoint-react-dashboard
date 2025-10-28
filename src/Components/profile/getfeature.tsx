@@ -1,14 +1,14 @@
 import React, { use, useEffect, useState } from "react";
 import featureBg from "../../assets/media/images/dashboard-images/featureBg.png";
-import ProfileCards from "./profile-cards";
-import BillingCheckout from "./billing-checkout";
+import ProfileCards from "./profilecards";
+import BillingCheckout from "./billingcheckout";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ApiCreatePayment } from "@src/api/api-community-forum";
+import { ApiCreatePayment } from "@src/api/apicommunityforum";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { ApiMe } from "@src/api/api-users";
+import { ApiMe } from "@src/api/apiusers";
 import { useQuery } from "@tanstack/react-query";
-import SelectField from "@components/select-field";
+import SelectField from "@src/Components/selectfield";
 const GetFeature = () => {
   const [billingCheck, setBillingCheck] = useState(false);
   const navigate = useNavigate();

@@ -9,8 +9,8 @@ import {
   Linkedin,
   Instagram,
 } from "lucide-react";
-import TopBar from "./top-bar";
-import { useCategory } from "@src/hooks/use-website";
+import TopBar from "./topbar";
+import { useCategory } from "@src/hooks/usewebsite";
 interface NavigationItem {
   label: string;
   href: string;

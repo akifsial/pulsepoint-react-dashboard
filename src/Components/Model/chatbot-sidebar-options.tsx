@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import ChatDeleteModal from "./chat-delete-modal";
+import ChatDeleteModal from "./chatdeletemodal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ApiDeleteChat, ApiEditChatName } from "@src/api/api-community-forum";
+import { ApiDeleteChat, ApiEditChatName } from "@src/api/apicommunityforum";
 import toast from "react-hot-toast";
 import Spinner from "@components/loaders/spinner";
-import EditChatModal from "./edit-chat-modal";
+import EditChatModal from "./editchatmodal";
 
 interface Props {
   conversationId: number;
