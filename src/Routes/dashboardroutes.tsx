@@ -1,4 +1,4 @@
-import StripeSuccessPage from "@components/auth/stripesuccesspage";
+import StripeSuccessPage from "@components/Auth/stripesuccesspage";
 import CommunityAccount from "@components/CareProvider/CommunityForum/communityaccount";
 import CommunityAccountWeb from "@components/CareProvider/CommunityForum/communityaccountweb";
 import ChatbotLayout from "@components/profilelayout/chatbotlayout";

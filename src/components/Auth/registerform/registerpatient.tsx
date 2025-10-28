@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import InputField from "@components/inputfield";
 import SelectField from "@components/selectfield";
-import OnBoardingLayout from "@components/Auth/onboradinglayout";
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Globe } from "lucide-react";
-import SocialLoginSection from "@components/socialloginsection";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import { isValidPhoneNumber } from "react-phone-number-input";
 
+import { Link, useNavigate } from "react-router-dom";
+import SocialLoginSection from "@components/socialloginsection";
 import {
   IoPersonOutline,
-  IoCallOutline,
   IoMailOutline,
   IoLocationSharp,
 } from "react-icons/io5";
@@ -19,13 +13,12 @@ import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { ApiRegister } from "@src/api/authapi/authapi";
+import Spinner from "@components/loaders/spinner";
+import { useAllApiInsuranceTypes } from "@src/hooks/useusers";
 import dummyImage from "@assets/media/images/signup-img.png";
 import signupLogo from "@assets/media/images/signup-logo.png";
-import Spinner from "@components/loaders/spinner";
-import {
-  useAllApiInsuranceTypes,
-  useAllApiProviderTypes,
-} from "@src/hooks/useusers";
+import { ArrowLeft } from "lucide-react";
+import PhoneInput from "react-phone-input-2";
 
 interface FormData {
   firstName: string;
@@ -46,7 +39,7 @@ interface FormData {
   preferredCommunication: string[];
 }
 
-const RegisterCareprovider = ({ setSelectUser }) => {
+const RegisterPatient = ({ setSelectUser }) => {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -77,6 +70,7 @@ const RegisterCareprovider = ({ setSelectUser }) => {
       number: "+44", 
     },
   });
+  const [phoneValidation, setPhoneValidation] = useState(false);
 
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
@@ -95,13 +89,6 @@ const RegisterCareprovider = ({ setSelectUser }) => {
     { value: "separated", label: "Separated" },
   ];
 
-  const insuranceTypeOptions = [
-    { value: "health", label: "Health Insurance" },
-    { value: "dental", label: "Dental Insurance" },
-    { value: "vision", label: "Vision Insurance" },
-    { value: "life", label: "Life Insurance" },
-    { value: "disability", label: "Disability Insurance" },
-  ];
   const cityOptions = [
     { value: "New York", label: "New York" },
     { value: "London", label: "London" },
@@ -115,35 +102,48 @@ const RegisterCareprovider = ({ setSelectUser }) => {
     { value: "Monaco", label: "Monaco" },
   ];
 
-  const providerOptions = [
-    { value: "new_york", label: "New York" },
-    { value: "los_angeles", label: "Los Angeles" },
-    { value: "chicago", label: "Chicago" },
-    { value: "houston", label: "Houston" },
-    { value: "miami", label: "Miami" },
+  const { data: InsuranceData } = useAllApiInsuranceTypes();
+
+  const insuranceOptions = [
+    { label: "Select Insurance", value: "" },
+    ...(InsuranceData?.records?.map((insurance) => ({
+      label: insurance.name,
+      value: insurance.id,
+    })) || []),
   ];
 
   const [preferredMethod, setPreferredMethod] = useState("");
-  const { data: ProviderData } = useAllApiProviderTypes();
+  const handleMethodChange = (e) => {
+    setPreferredMethod(e.target.value);
+  };
 
-  const providersOptions =
-    ProviderData?.records?.map((insurance) => ({
-      label: insurance.name,
-      value: insurance.id,
-    })) || [];
+  const handleCommunicationChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value, checked } = e.target;
+    setFormData((prev) => {
+      let updatedPreferredCommunication = [...prev.preferredCommunication];
+      if (checked) {
+        updatedPreferredCommunication.push(value);
+      } else {
+        updatedPreferredCommunication = updatedPreferredCommunication.filter(
+          (item) => item !== value
+        );
+      }
+      return { ...prev, preferredCommunication: updatedPreferredCommunication };
+    });
+  };
 
   const { mutateAsync: registerMutation, isPending: isRegisterPending } =
     useMutation({
       mutationFn: ({ data }) => ApiRegister(data),
 
       onSuccess: async () => {
-        toast.success("Care Provider Created Successfully");
+        toast.success("Patient Create Successfully");
         navigate("/login");
       },
-      onError: (err) => {},
+      onError: (error) => {},
     });
-
-  const [phoneValidation, setPhoneValidation] = useState(false);
 
   const RegisterSubmit = async (data) => {
     if (data?.number == "") {
@@ -152,29 +152,34 @@ const RegisterCareprovider = ({ setSelectUser }) => {
     } else {
       setPhoneValidation(false);
     }
-    const registerData = {
-      organization_name: data.organizationName,
 
+    if (preferredMethod == "") {
+      return toast.error("Select atleast one communition method");
+    }
+
+    const registerData = {
+      user_name: data.userName,
       email: data.email,
-      user_name: data?.userName,
       first_name: data.firstName,
       last_name: data.lastName,
       number: data.number,
       password: data.password,
       gender: data.gender,
-      insuranceType: data.insuranceType,
+      insurance_type_id: data.insurance_type_id,
       care_needs: data.careNeeds,
       age: data.age,
-      role_type: "CARE_PROVIDER",
-      postal_code: data.zipCode,
+      role_type: "PATIENT",
+      postal_code: data.postal_code,
       specialization: data?.specialization,
       city: data.city,
       provider_type_id: 1,
       state: data.state,
       address: data.streetAddress,
-      website_url: data.website || "",
+      website_url: "yeah.com",
       working_hours: "Uk Bargingham Street ",
       marital_status: data.maritalStatus,
+      communication_method_id: Number(preferredMethod),
+      birth_date: data.birth_date,
     };
     await registerMutation({ data: registerData });
   };
@@ -190,7 +195,7 @@ const RegisterCareprovider = ({ setSelectUser }) => {
           />
         </div>
         <div className="bg-white rounded-[10px] lg:py-0 py-8 flex flex-col justify-center h-full">
-          <div className="flex items-center mb-10 justify-center">
+          <div className="flex items-center mb-8  justify-center">
             <img
               src={signupLogo}
               alt="Signup Logo"
@@ -204,7 +209,7 @@ const RegisterCareprovider = ({ setSelectUser }) => {
               noValidate
             >
               <div className="sm:px-4 py-6">
-                <p className="text-[#1A1A1A] flex items-center gap-5 text-[25px] sm:text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
+                <p className="text-[#1A1A1A] flex items-center gap-5 text-[35px] font-bold leading-[140%] tracking-normal font-[Space Grotesk] mb-3">
                   <span
                     onClick={() => {
                       setSelectUser(""); 
@@ -220,109 +225,91 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                   </span>{" "}
                   Sign Up
                 </p>
-                <p className="text-[#252525] text-[14px] sm:text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
+                <p className="text-[#252525] text-[16px] font-normal leading-[150%] tracking-[0%] font-[Geist] mb-6">
                   Join to explore and share care insights
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 mb-3 gap-6">
+                <div className="mb-4">
+                  <InputField
+                    label="User Name"
+                    asterisk={true}
+                    icon={IoPersonOutline}
+                    id="userName"
+                    name="userName"
+                    type="text"
+                    placeholder="Enter your user name"
+                    className="pr-10"
+                    register={register}
+                    registerName="userName"
+                    errors={errors}
+                    validation={{
+                      required: "First Name is required",
+                    }}
+                  />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 mb-4 gap-6">
                   <div>
                     <InputField
-                      label="Organization Name"
+                      label="First Name"
                       asterisk={true}
                       icon={IoPersonOutline}
-                      id="organizationName"
-                      name="organizationName"
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                      placeholder="Enter your user name"
+                      register={register}
                       className="pr-10"
-                      type="text"
-                      placeholder="St. Mary’s Rehabilitation Center"
-                      register={register}
-                      registerName="organizationName"
+                      registerName="firstName"
                       errors={errors}
                       validation={{
-                        required: "Organization Name is required",
+                        required: "First Name is required",
                       }}
                     />
                   </div>
+
                   <div>
-                    <div>
-                      <InputField
-                        label="User Name"
-                        asterisk={true}
-                        icon={IoPersonOutline}
-                        id="userName"
-                        name="userName"
-                        type="text"
-                        placeholder="@johndoe"
-                        register={register}
-                        className="pr-10"
-                        registerName="userName"
-                        errors={errors}
-                        validation={{
-                          required: "User Name is required",
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="">
-                    <SelectField
-                      label="Provider Type"
-                      id="providerType"
-                      name="providerType"
-                      asterisk={true}
-                      options={providersOptions}
-                      register={register}
-                      registerName="providerType"
-                      errors={errors}
-                      validation={{
-                        required: "Provider Type is required",
-                      }}
-                    />
-                  </div>
-
-                  <div className="">
                     <InputField
-                      label="Specialization:"
-                      id="specialization"
-                      name="specialization"
+                      label="Last Name"
+                      asterisk={true}
+                      icon={IoPersonOutline}
+                      className=" pr-10"
+                      id="lastName"
+                      name="lastName"
                       type="text"
-                      fieldName="w-full"
-                      placeholder="eg.Eye Specialist"
-                      className="w-full h-[50px] bg-[#FBFCFD] border border-[#2525251A] rounded-[8px] px-4 font-[Geist] text-[16px] font-normal text-[#1A1A1A] placeholder:text-gray-500 focus:outline-none"
+                      placeholder="Enter your last name"
                       register={register}
-                      registerName="specialization"
-                      validation={{
-                        required: "Specialization is required",
-                      }}
+                      registerName="lastName"
                       errors={errors}
+                      validation={{
+                        required: "Last Name is required",
+                      }}
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="w-full">
+                  <div>
                     <InputField
                       label="Email Address"
                       asterisk={true}
                       icon={IoMailOutline}
                       id="email"
-                      className="pr-10 !mb-0"
                       name="email"
                       type="email"
-                      placeholder="contact@organization.org"
+                      placeholder="e.g. username@mail.com"
+                      className="pr-10"
                       register={register}
                       registerName="email"
                       errors={errors}
                       validation={{
-                        required: "Email Address is required",
+                        required: "Email is required",
                         pattern: {
                           value: /^\S+@\S+$/i,
                           message: "Enter a valid email",
                         },
                       }}
                     />
-                  </div>
 
+                  </div>
 
                   <div
                     className={`relative grid grid-cols-1 md:grid-cols-1 gap-2 ${
@@ -330,10 +317,11 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                     }`}
                   >
                     <label className="block text-[16px] font-[500] text-black leading-[140%] tracking-[0%] font-[Geist]">
-                      Phone Number<span className="text-red-500 ml-1">*</span>
+                      Phone Number
+                      <span className="text-red-500 ml-1">*</span>
                     </label>
 
-            
+                 
 
                     <Controller
                       name="number"
@@ -351,7 +339,7 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                           if (!cleanValue) {
                             field.onChange(""); 
                           } else {
-                            field.onChange(value);
+                            field.onChange(value); 
                           }
                         };
 
@@ -389,23 +377,108 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 mb-2   gap-6">
                   <div>
                     <InputField
-                      label="Zip code"
+                      label="Age"
                       asterisk={true}
-                      icon={IoLocationSharp}
-                      id="zipCode"
-                      name="zipCode"
+                      id="age"
+                      name="age"
                       type="number"
-                      className="pr-10"
-                      placeholder="e.g., 78701"
+                      placeholder="Enter your age"
                       register={register}
-                      registerName="zipCode"
+                      registerName="age"
+                      errors={errors}
+                      validation={{
+                        required: "Age is required",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <SelectField
+                      label="Gender"
+                      id="gender"
+                      name="gender"
+                      asterisk={true}
+                      options={genderOptions}
+                      register={register}
+                      registerName="gender"
+                      errors={errors}
+                      validation={{
+                        required: "Gender is required",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 mb-2 gap-6">
+                  <div>
+                    <SelectField
+                      label="Marital Status"
+                      id="maritalStatus"
+                      name="maritalStatus"
+                      asterisk={true}
+                      options={maritalStatusOptions}
+                      register={register}
+                      registerName="maritalStatus"
+                      errors={errors}
+                      validation={{
+                        required: "Martial Status is required",
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <SelectField
+                      label="Insurance Type"
+                      id="insurance_type_id"
+                      name="insurance_type_id"
+                      asterisk={true}
+                      options={insuranceOptions}
+                      register={register}
+                      registerName="insurance_type_id"
+                      errorMessage={errors?.insurance_type_id?.message} 
+                      validation={{
+                        required: "Insurance Type is required",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 mb-3 md:grid-cols-1 ">
+                  <InputField
+                    label="Care Needs"
+                    id="careNeeds"
+                    name="careNeeds"
+                    asterisk={true}
+                    type="text"
+                    placeholder="Enter your care need"
+                    register={register}
+                    registerName="careNeeds"
+                    errors={errors}
+                    validation={{
+                      required: "Care Needs is required",
+                    }}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 mb-2 md:grid-cols-2 gap-6">
+                  <div>
+                    <InputField
+                      label="Zip Code"
+                      asterisk={true}
+                      id="postal_code"
+                      name="postal_code"
+                      className="pr-10"
+                      type="number"
+                      placeholder="Enter your zip code"
+                      icon={IoLocationSharp}
+                      register={register}
+                      registerName="postal_code"
                       isZipCode={true}
                       errors={errors}
                       validation={{
-                        required: "Zip code is required",
+                        required: "Zip Code is required",
                       }}
                     />
                   </div>
@@ -425,17 +498,18 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div className="grid grid-cols-1 mb-4 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
                       label="State"
                       asterisk={true}
-                      icon={IoLocationSharp}
                       id="state"
                       name="state"
-                      className="pr-10"
                       type="text"
+                      className="pr-10"
                       placeholder="e.g., California"
+                      icon={IoLocationSharp}
                       register={register}
                       registerName="state"
                       errors={errors}
@@ -447,48 +521,47 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                   <div>
                     <InputField
                       label="Street Address"
-                      asterisk={true}
-                      icon={IoLocationSharp}
                       id="streetAddress"
-                      className="pr-10"
                       name="streetAddress"
+                      asterisk={true}
                       type="text"
                       placeholder="e.g., 123 Main Street"
+                      icon={IoLocationSharp}
                       register={register}
                       registerName="streetAddress"
+                      className="pr-10"
                       errors={errors}
                       validation={{
-                        required: "Street Address is required",
+                        required: "Address is required",
                       }}
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-1 mb-4">
-                  <div>
-                    <InputField
-                      label="Website Url (optional)"
-                      icon={Globe}
-                      className="pr-10"
-                      id="website"
-                      name="website"
-                      type="text"
-                      placeholder="e.g., www.topseniorspot.com"
-                      register={register}
-                      registerName="website"
-                      errors={errors}
-                    />
-                  </div>
-                
+
+                <div className="mb-3">
+                  <InputField
+                    label="Birth Date"
+                    id="birth_date"
+                    name="birth_date"
+                    asterisk={true}
+                    type="date"
+                    placeholder="e.g., 21 Sep 2020"
+                    register={register}
+                    registerName="birth_date"
+                    className="pr-10"
+                    errors={errors}
+                  />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div className="grid mb-4 grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <InputField
                       label="Create a Password"
                       asterisk={true}
                       id="password"
+                      className="pr-10"
                       name="password"
                       type="password"
-                      className="pr-10"
                       placeholder="Enter your password"
                       register={register}
                       registerName="password"
@@ -504,12 +577,12 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                       asterisk={true}
                       id="confirmPassword"
                       name="confirmPassword"
-                      className="pr-10"
                       type="password"
                       placeholder="Confirm your password"
                       register={register}
                       registerName="confirmPassword"
                       errors={errors}
+                      className="pr-10"
                       validation={{
                         required: "Confirm Password is required",
                         validate: (value) =>
@@ -522,17 +595,72 @@ const RegisterCareprovider = ({ setSelectUser }) => {
                       " "}
                   </div>
                 </div>
+               
+                <div className="space-y-4">
+                  <p className="text-md font-semibold">
+                    Preferred Communication Method
+                    <span className="text-red-500 ml-1">*</span>
+                  </p>
+                  <div className="flex flex-wrap gap-3 text-[16px] font-[500] text-[#333333] leading-[140%] tracking-[0%] font-[Geist] space-x-6">
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="1"
+                        name="preferredCommunication"
+                        value="1"
+                        checked={preferredMethod === "1"}
+                        onChange={handleMethodChange}
+                        className="mr-2 text-[14px] scale-150 border-[#FFFFFF] align-middle"
+                      />
+                      <label htmlFor="1" className="ml-1">
+                        Via Email Address
+                      </label>
+                    </div>
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="2"
+                        name="preferredCommunication"
+                        value="2"
+                        checked={preferredMethod === "2"}
+                        onChange={handleMethodChange}
+                        className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                      />
+                      <label htmlFor="2" className="ml-1">
+                        Via Phone Number
+                      </label>
+                    </div>
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="3"
+                        name="preferredCommunication"
+                        value="3"
+                        checked={preferredMethod === "3"}
+                        onChange={handleMethodChange}
+                        className="mr-2 scale-150 border-[#FFFFFF] align-middle"
+                      />
+                      <label htmlFor="3" className="ml-1">
+                        Via SMS Text
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
                 <button
                   type="submit"
-                  className="w-full flex justify-center bg-[#28A2FF] items-center text-white h-[50px] px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
+                  className="w-full flex justify-center bg-[#28A2FF] text-white items-center h-[50px] px-4 rounded-lg font-medium text-lg transition-colors mt-6 cursor-pointer"
                 >
                   {isRegisterPending ? <Spinner /> : "Sign Up"}
                 </button>
+                <SocialLoginSection
+                  action="login"
+                />
                 <div className="flex justify-center mt-6">
                   <p className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal text-[#49475A] font-[Geist]">
                     Already have an account?{" "}
                     <Link
-                      to="/care-provider/login"
+                      to="/patient/login"
                       className="text-[16px] leading-[25px] tracking-[0.005em] text-center align-middle font-normal underline text-[#28A2FF] font-[Geist]"
                     >
                       Login now
@@ -548,4 +676,4 @@ const RegisterCareprovider = ({ setSelectUser }) => {
   );
 };
 
-export default RegisterCareprovider;
+export default RegisterPatient;

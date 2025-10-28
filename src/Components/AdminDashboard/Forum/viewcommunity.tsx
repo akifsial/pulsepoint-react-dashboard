@@ -10,7 +10,7 @@ import { apiServices } from "@src/shared/apiservices";
 import apiEndpoint from "@src/shared/apiendpoint";
 import CommentsForum from "./commentsforum";
 import { useNavigate, useParams } from "react-router-dom";
-import { apiPut } from "@src/auth/auth";
+import { apiPut } from "@src/Auth/Auth";
 import { toast } from "react-toastify";
 import { useSearchParams } from "react-router-dom";
 

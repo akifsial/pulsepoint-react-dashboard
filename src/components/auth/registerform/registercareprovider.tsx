@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputField from "@components/inputfield";
 import SelectField from "@components/selectfield";
-import OnBoardingLayout from "@components/auth/onboradinglayout";
+import OnBoardingLayout from "@components/Auth/onboradinglayout";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Globe } from "lucide-react";
 import SocialLoginSection from "@components/socialloginsection";

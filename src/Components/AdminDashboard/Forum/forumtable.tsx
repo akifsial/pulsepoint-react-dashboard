@@ -12,7 +12,7 @@ import RatingFilterDropdown from "@components/Dashboardcomponents/dropdowns/rati
 import { apiServices } from "@src/shared/apiservices";
 import apiEndpoint from "@src/shared/apiendpoint";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { apiGet, apiPost, apiPut } from "@src/auth/auth";
+import { apiGet, apiPost, apiPut } from "@src/Auth/Auth";
 import Pagination from "@components/Pagination/pagination";
 import SkeletonTableLoader from "@components/loader/skeltontableloader";
 import AdminDropdownAction from "../admindropdownaction/admindropdownaction";
