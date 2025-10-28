@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import DashboardHeader from "@src/Components/Dashboard-components/Dashboard-header/dashboardheader";
-import Sidebar from "@components/dashboard-components/sidebar/sidebar";
+import Sidebar from "@components/Dashboard-components/Side-bar/Sidebar";
 import ProfileSidebar from "@src/Components/Dashboard-components/Side-bar/profilesidebar";
 import {
   PatientProfileSidebarLinks,

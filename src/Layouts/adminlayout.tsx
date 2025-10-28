@@ -1,5 +1,5 @@
 import DashboardHeader from "@src/Components/Dashboard-components/Dashboard-header/dashboardheader";
-import Sidebar from "@components/dashboard-components/sidebar/sidebar";
+import Sidebar from "@components/Dashboard-components/Side-bar/Sidebar";
 import { AdminSidebarLinks } from "@src/Components/Dashboard-components/Side-bar/sidebarlinks";
 import ModalRedirect from "@src/Components/Model/modalredirect";
 import { useState } from "react";

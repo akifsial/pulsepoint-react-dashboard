@@ -8,7 +8,7 @@ import ProfileDropdown from "../dropdowns/profiledropdown";
 import NotficationBar from "./notificationbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Search, Clock } from "lucide-react";
-import { useMeApi } from "@src/hooks/use-users";
+import { useMeApi } from "@src/hooks/useusers";
 import dummyImage from "@assets/media/images/dashboard-images/userDummy.png";
 import { useQueryClient } from "@tanstack/react-query";
 

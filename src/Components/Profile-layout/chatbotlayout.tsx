@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import DashboardHeader from "@src/Components/Dashboard-components/Dashboard-header/dashboardheader";
-import Sidebar from "@components/dashboard-components/sidebar/sidebar";
+import Sidebar from "@components/Dashboard-components/Side-bar/Sidebar";
 import { PatientSidebarLinks } from "@src/Components/Dashboard-components/Side-bar/sidebarlinks";
 import ChatbotSidebar from "@src/Components/chatbotsidebar";
 import ChatbotAi from "@src/Components/chatbotai";
