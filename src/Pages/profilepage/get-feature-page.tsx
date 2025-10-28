@@ -1,5 +1,5 @@
 import React from 'react'
-import GetFeature from '../../components/profile/get-feature'
+import GetFeature from '../../Components/profile/getfeature'
 
 const GetFeaturePage = () => {
   return (
