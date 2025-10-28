@@ -7,7 +7,7 @@ import { TestimonialCarousel } from "@components/Website/Home/testimonialcard";
 import ResourceCard from "@components/Website/Home/resourcecard";
 import ProcessStep from "@components/Website/Home/processstep";
 import TopBar from "@components/Website/Layout/topbar";
-import Header from "@components/website/layout/header";
+import Header from "@components/Website/Layout/header";
 import UtilityRow from "@components/Website/Layout/utilityrow";
 import FeaturedArticleCard from "@components/Website/Home/featuredarticlecard";
 import Independent from "@assets/media/website/independent.svg";
@@ -28,7 +28,7 @@ import Rating from "@assets/media/website/rating.svg";
 import Agreement from "@assets/media/website/agreement.svg";
 import Carousal from "@assets/media/website/icons/carousal-icon.svg";
 import SmallArticleCard from "@components/Website/Home/smallarticlecard";
-import Footer from "@components/website/layout/footer";
+import Footer from "@components/Website/Layout/footer";
 import ArrowButtonGroup from "@components/Website/Shared/arrowbuttongroup";
 import Convience from "@components/website/home/convience";
 import starIcon from "@assets/media/svgs/web-svgs/star.svg"

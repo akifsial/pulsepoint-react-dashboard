@@ -1,6 +1,6 @@
 import medicalImage from "@assets/media/images/dashboard-images/about-banner.png";
 import aboutBanner2 from "@assets/media/images/dashboard-images/about-banner2.png";
-import Footer from "@components/website/layout/footer";
+import Footer from "@components/Website/Layout/footer";
 import TopBar from "@components/Website/Layout/topbar";
 import UtilityRow from "@components/Website/Layout/utilityrow";
 import BannerWeb from "@src/Pages/webpages/components/bannerweb";

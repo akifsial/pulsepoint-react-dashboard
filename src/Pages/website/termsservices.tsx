@@ -1,6 +1,6 @@
 import TopBar from "@components/Website/Layout/topbar";
 import UtilityRow from "@components/Website/Layout/utilityrow";
-import Footer from "@components/website/layout/footer";
+import Footer from "@components/Website/Layout/footer";
 
 const TermsOfService = () => {
   return (

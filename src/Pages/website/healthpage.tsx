@@ -3,7 +3,7 @@ import UtilityRow from "@components/Website/Layout/utilityrow";
 import HealthPhoto from "@assets/media/images/dashboard-images/health-care-page.jpg";
 
 import React from "react";
-import Footer from "@components/website/layout/footer";
+import Footer from "@components/Website/Layout/footer";
 
 const HealthPage = () => {
   return (

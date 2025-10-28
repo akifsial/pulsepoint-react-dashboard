@@ -7,7 +7,7 @@ import ProfessionalCard from "@components/Website/Home/professionalcard";
 import { TestimonialCarousel } from "@components/Website/Home/testimonialcard";
 import ResourceCard from "@components/Website/Home/resourcecard";
 import ProcessStep from "@components/Website/Home/processstep";
-import Header from "@components/website/layout/header";
+import Header from "@components/Website/Layout/header";
 import { useBlog, useCategory, useGetBlogs } from "@src/hooks/usewebsite";
 import dummyImage from "@assets/media/images/dummyUser.png"
 const HomePage = () => {

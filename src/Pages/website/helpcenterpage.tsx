@@ -2,7 +2,7 @@ import React from "react";
 import TopBar from "@components/Website/Layout/topbar";
 import UtilityRow from "@components/Website/Layout/utilityrow";
 import HealthPic from "@assets/media/images/dashboard-images/health-doc-banner.jpg";
-import Footer from "@components/website/layout/footer";
+import Footer from "@components/Website/Layout/footer";
 import BannerWeb from "@src/Pages/webpages/components/bannerweb";
 import InputField from "@components/inputfield";
 import CategorySidebar from "@src/Pages/webpages/components/categorysidebar";
