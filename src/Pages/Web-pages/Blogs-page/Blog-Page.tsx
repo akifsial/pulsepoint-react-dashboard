@@ -13,7 +13,7 @@ function Blog() {
     const fakePost = {
       id,
       title: "The Future of Web Development with React & Tailwind",
-      author: "Fizza Khan",
+      author: "Khan",
       date: "September 17, 2025",
       image:
         "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80",
