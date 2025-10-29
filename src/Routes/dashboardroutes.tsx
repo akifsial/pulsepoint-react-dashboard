@@ -11,7 +11,7 @@ import CommunityForm from "@src/Pages/Dashboards/Careprovider/communityform";
 import NotificationPage from "@src/Pages/Dashboards/Careprovider/notificationpage";
 import PatinetReviews from "@src/Pages/Dashboards/Careprovider/patinet-reviews";
 import PatientAllCommunites from "@src/Pages/Patient-pages/patientallcommunities";
-import HomePage from "@src/Pages/Web-pages/homepage/homepage";
+import HomePage from "@src/Pages/Web-pages/Home-page/homepage";
 import AboutPage from "@src/Pages/Website/aboutpage";
 import { Navigate } from "react-router-dom";
 export const DashboardRoutes = [

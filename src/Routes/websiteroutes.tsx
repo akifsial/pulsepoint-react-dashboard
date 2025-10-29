@@ -1,5 +1,5 @@
 import AboutUs from "@src/Pages/Web-pages/About-Us/aboutus";
-import HomePage from "@src/Pages/Web-pages/homepage/homepage";
+import HomePage from "@src/Pages/Web-pages/Home-page/homepage";
 import SignupForm from "@src/Components/Auth/signupform";
 import AccountCreatedPage from "@src/Components/Auth/accountcreatedpage";
 import LoginPage from "@src/Components/Auth/loginpage";
@@ -25,7 +25,7 @@ import ExploreReviews from "@src/Pages/Website/explorereviews";
 
 export const websitePublicRoutes = [
   // { path: "/", element: <HomePage /> },
-  // {
+  // {  
   //   path: "/",
   //   element: (
   //     <PublicProtectRoute forceRedirectToDashboard={false}>

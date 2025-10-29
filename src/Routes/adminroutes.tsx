@@ -11,7 +11,7 @@ import UserInfoWrapperCareProvider from "@components/Admin-dashboard/AdminCare/u
 import ViewCommunity from "@components/Admin-dashboard/Forum/viewcommunity";
 import ReviewDetail from "@components/Admin-dashboard/Reviews/reviewdetail";
 import Blogs from "@src/Pages/Blogs/blogs";
-import HomePage from "@src/Pages/Web-pages/homepage/homepage";
+import HomePage from "@src/Pages/Web-pages/Home-page/homepage";
 import CategoryPage from "@src/Components/Website/Home/categorypage";
 import CommunitiesSpinner from "@src/Components/Loaders/communitiesspinner";
 
