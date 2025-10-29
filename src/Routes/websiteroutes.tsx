@@ -20,7 +20,7 @@ import HelpCenterPage from "@src/Pages/Website/helpcenterpage";
 import PrivacyPolicy from "@src/Pages/Website/privacypolicy";
 import TermsOfService from "@src/Pages/Website/termsservices";
 import DisclosurePolicy from "@src/Pages/Website/disclosurepolicy";
-import Blog from "@pages/web-pages/blogs-page/blog";
+import Blog from "@src/Pages/Web-pages/Blogs-page/Blog";
 import ExploreReviews from "@src/Pages/Website/explorereviews";
 
 export const websitePublicRoutes = [
