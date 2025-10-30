@@ -30,7 +30,7 @@ import Carousal from "@assets/media/website/icons/carousal-icon.svg";
 import SmallArticleCard from "@src/Components/Website/Home/smallarticlecard";
 import Footer from "@src/Components/Website/Layout/footer";
 import ArrowButtonGroup from "@src/Components/Website/Shared/arrowbuttongroup";
-import Convience from "@src/Components/website/home/convience";
+import Convience from "@src/Components/Website/Home/Convience";
 import starIcon from "@assets/media/svgs/web-svgs/star.svg"
 import userIcon from "@assets/media/svgs/dashboard-svgs/user.svg"
 import searchIcon from "@assets/media/svgs/web-svgs/searchWeb.svg"
